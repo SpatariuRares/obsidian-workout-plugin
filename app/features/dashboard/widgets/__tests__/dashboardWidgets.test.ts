@@ -12,6 +12,7 @@ const ALL = [
   "quickActions",
   "fileErrors",
   "muscleTags",
+  "trainingCalendar",
 ];
 
 describe("resolveWidgets", () => {

@@ -15,6 +15,8 @@ export class SummaryWidget {
     _params: EmbeddedDashboardParams,
     /** Every logged set, so records are judged against all of them */
     history: WorkoutLogData[] = data,
+    /** Training days a week that keep the streak */
+    weeklyGoal = 1,
   ): void {
     const widgetEl = WidgetContainer.create(container, {
       title: t("dashboard.summary.title"),
@@ -25,7 +27,11 @@ export class SummaryWidget {
       cls: "workout-summary-grid",
     });
 
-    const metrics = calculateSummaryMetrics(data, history);
+    const metrics = calculateSummaryMetrics(
+      data,
+      history,
+      weeklyGoal,
+    );
 
     this.createSummaryCard(
       summaryEl,

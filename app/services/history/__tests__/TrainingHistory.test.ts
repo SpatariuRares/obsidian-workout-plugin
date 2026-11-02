@@ -333,6 +333,90 @@ describe("TrainingHistory.streak", () => {
   it("should be zero without sessions", () => {
     expect(new TrainingHistory([]).streak(today)).toBe(0);
   });
+
+  it("should count only weeks with at least the weekly goal of training days", () => {
+    const history = new TrainingHistory([
+      at("2024-01-08T17:00:00.000Z"), // last week: Mon, Wed (and Wed again)
+      at("2024-01-10T17:00:00.000Z"),
+      set("2024-01-10T17:30:00.000Z", "Pull"),
+      at("2024-01-01T17:00:00.000Z"), // two weeks ago: one day only
+      at("2023-12-26T17:00:00.000Z"), // three weeks ago: two days
+      at("2023-12-27T17:00:00.000Z"),
+    ]);
+
+    expect(history.streak(today, 2)).toBe(1);
+  });
+
+  it("should not break while the current week is still short of the goal", () => {
+    const history = new TrainingHistory([
+      at("2024-01-15T17:00:00.000Z"), // this week: one day so far
+      at("2024-01-08T17:00:00.000Z"),
+      at("2024-01-09T17:00:00.000Z"),
+    ]);
+
+    expect(history.streak(today, 2)).toBe(1);
+  });
+});
+
+describe("TrainingHistory.weekProgress", () => {
+  // Wednesday 17 January 2024, local time
+  const today = new Date(2024, 0, 17, 12, 0);
+  const at = (iso: string) => set(iso, "Push");
+
+  it("should count this week's training days up to today against the goal", () => {
+    const history = new TrainingHistory([
+      at("2024-01-14T17:00:00.000Z"), // last Sunday
+      at("2024-01-15T17:00:00.000Z"),
+      set("2024-01-15T18:00:00.000Z", "Pull"), // same day
+      at("2024-01-17T08:00:00.000Z"),
+      at("2024-01-19T17:00:00.000Z"), // Friday: not trained yet
+    ]);
+
+    expect(history.weekProgress(today, 2)).toEqual({
+      days: 2,
+      goal: 2,
+      met: true,
+    });
+    expect(history.weekProgress(today, 3).met).toBe(false);
+  });
+
+  it("should treat a goal below one as one", () => {
+    expect(new TrainingHistory([]).weekProgress(today, 0)).toEqual({
+      days: 0,
+      goal: 1,
+      met: false,
+    });
+  });
+});
+
+describe("TrainingHistory.bestStreak", () => {
+  const at = (iso: string) => set(iso, "Push");
+
+  it("should give the longest run of weeks that met the goal, wherever it is", () => {
+    const history = new TrainingHistory([
+      // Three weeks in a row in 2023 with two days each
+      at("2023-03-06T17:00:00.000Z"),
+      at("2023-03-08T17:00:00.000Z"),
+      at("2023-03-13T17:00:00.000Z"),
+      at("2023-03-15T17:00:00.000Z"),
+      at("2023-03-20T17:00:00.000Z"),
+      at("2023-03-22T17:00:00.000Z"),
+      // Then one week with a single day, then a week with two
+      at("2023-03-27T17:00:00.000Z"),
+      at("2023-04-03T17:00:00.000Z"),
+      at("2023-04-05T17:00:00.000Z"),
+    ]);
+
+    expect(history.bestStreak(2)).toBe(3);
+    expect(history.bestStreak()).toBe(5);
+  });
+
+  it("should be zero when no week met the goal", () => {
+    const history = new TrainingHistory([at("2024-01-15T17:00:00.000Z")]);
+
+    expect(history.bestStreak(3)).toBe(0);
+    expect(new TrainingHistory([]).bestStreak()).toBe(0);
+  });
 });
 
 describe("TrainingHistory volume", () => {

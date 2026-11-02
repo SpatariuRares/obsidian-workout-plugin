@@ -109,7 +109,7 @@ recentWorkoutsLimit: 5
 volumeTrendDays: 30
 ```
 
-**11 widgets**: Summary (total workouts, streak, volume, PRs), Quick Stats (week/month/year), Recent Workouts, Volume Analytics (daily trend chart + top exercises), Muscle Heat Map (SVG body front/back with color-coded activation), Protocol Distribution (pie chart), Protocol Effectiveness (volume change per protocol), Duration Comparison (actual vs estimated), Quick Actions (log button), Muscle Tags, File Errors.
+**12 widgets**: Summary (total workouts, streak, volume, PRs), Quick Stats (week/month/year), Recent Workouts, Volume Analytics (daily trend chart + top exercises), Muscle Heat Map (SVG body front/back with color-coded activation), Protocol Distribution (pie chart), Protocol Effectiveness (volume change per protocol), Duration Comparison (actual vs estimated), Quick Actions (log button), Muscle Tags, File Errors, Training Calendar (a year of training days shaded by volume, current and best streak, this week against the weekly goal).
 
 ### 5. `workout-duration` - Session Time Estimator
 
@@ -214,7 +214,7 @@ The direction of a series of training-day values (for weight: the heaviest set o
 _Avoid_: progress, variation (for the direction itself)
 
 **Streak**:
-Consecutive calendar weeks (Monday to Sunday) with at least one session. The current week only breaks the streak once it has ended without a session.
+Consecutive calendar weeks (Monday to Sunday) that met the **weekly goal**: at least that many training days (setting `weeklyGoal`, 1 by default, so any session counts). The current week only breaks the streak once it has ended short of the goal. The **best streak** is the longest such run ever.
 
 ---
 

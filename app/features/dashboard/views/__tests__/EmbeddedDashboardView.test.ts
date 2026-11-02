@@ -91,7 +91,7 @@ const history = [
 
 const render = async (params: EmbeddedDashboardParams) => {
   const view = new EmbeddedDashboardView({
-    settings: {},
+    settings: { weeklyGoal: 3 },
     getWorkoutLogData: async () => history,
   } as unknown as WorkoutChartsPlugin);
   await view.createDashboard(createObsidianContainer(), logs, params);
@@ -132,7 +132,7 @@ describe("EmbeddedDashboardView widget params", () => {
     }
   });
 
-  it("gives the summary all history, so records are judged against it", async () => {
+  it("gives the summary all history and the weekly goal for its streak", async () => {
     await render({});
 
     expect(SummaryWidget.render).toHaveBeenCalledWith(
@@ -140,6 +140,7 @@ describe("EmbeddedDashboardView widget params", () => {
       logs,
       expect.any(Object),
       history,
+      3,
     );
   });
 

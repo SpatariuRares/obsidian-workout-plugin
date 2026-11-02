@@ -13,6 +13,7 @@ export const DASHBOARD_WIDGET_IDS = [
   "quickActions",
   "fileErrors",
   "muscleTags",
+  "trainingCalendar",
 ] as const;
 export type DashboardWidgetId = (typeof DASHBOARD_WIDGET_IDS)[number];
 

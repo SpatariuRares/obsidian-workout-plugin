@@ -14,16 +14,22 @@ export interface SummaryMetrics {
  * @param data The sets shown (the dashboard's period and filters)
  * @param history Every logged set, to judge records against; defaults to
  *   `data`
+ * @param weeklyGoal Training days a week that keep the streak
  */
 export function calculateSummaryMetrics(
   data: WorkoutLogData[],
   history: WorkoutLogData[] = data,
+  weeklyGoal = 1,
 ): SummaryMetrics {
   const shown = new TrainingHistory(data);
 
   return {
     totalWorkouts: shown.sessions().length,
-    currentStreak: shown.streak(),
+    // A streak spans weeks, so it reads every set, not just the period
+    currentStreak: new TrainingHistory(history).streak(
+      new Date(),
+      weeklyGoal,
+    ),
     totalVolume: Math.round(shown.totalVolume()),
     personalRecords: countExercisesWithNewRecord(data, history),
   };

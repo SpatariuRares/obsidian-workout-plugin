@@ -205,6 +205,19 @@
       "narrow": "{widget} needs at least {min} columns",
       "overlap": "{widget} overlaps {other}",
       "empty": "No widget is on the grid yet. Open Edit dashboard in the ⋮ menu to place some."
+    },
+    "trainingCalendar": {
+      "title": "Training calendar",
+      "currentStreak": "Current streak",
+      "bestStreak": "Best streak",
+      "thisWeek": "This week",
+      "daysOfGoal": "{days}/{goal} days",
+      "trainedDay": "{day}: {volume} {unit}",
+      "restDay": "{day}: rest",
+      "less": "Less",
+      "more": "More",
+      "trainedDayNoVolume": "{day}: trained",
+      "weeks": "{count} weeks"
     }
   },
   "duration": {
@@ -795,7 +808,8 @@
       "takeTour": "Walk through logging, charts, tables and timers on a short note.",
       "weightIncrement": "Default weight increment for progressive overload (e.g., 2.5 for 2.5 unit increments)",
       "weightUnit": "Unit for charts, totals and new logs. Each log keeps the unit it was entered in.",
-      "welcomeWindow": "Show the welcome window again to start with example data or from scratch."
+      "welcomeWindow": "Show the welcome window again to start with example data or from scratch.",
+      "weeklyGoal": "Training days a week that keep your streak going, in the dashboard summary and training calendar."
     },
     "labels": {
       "csvPath": "CSV log file path",
@@ -824,7 +838,8 @@
       "showRibbonIcon": "Show quick log icon",
       "takeTour": "Guided tour",
       "weightUnit": "Weight unit",
-      "welcomeWindow": "Welcome window"
+      "welcomeWindow": "Welcome window",
+      "weeklyGoal": "Weekly goal"
     },
     "messages": {
       "confirmDeletePreset": "Are you sure you want to delete this preset?",

@@ -4352,6 +4352,76 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   }
 }
 /* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
+/* ============================================================================
+   TRAINING CALENDAR (a year of training days, one column per week)
+   ============================================================================ */
+.workout-calendar-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--workout-space-md) var(--workout-space-xl);
+  margin-bottom: var(--workout-space-md);
+}
+.workout-calendar-stat-label {
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+}
+.workout-calendar-stat-value {
+  font-weight: var(--workout-font-weight-semibold);
+}
+.workout-calendar-stat-value.is-met {
+  color: var(--workout-text-success);
+}
+.workout-calendar-grid {
+  --workout-calendar-cell: 11px;
+  display: grid;
+  grid-template-rows: repeat(7, var(--workout-calendar-cell));
+  grid-auto-flow: column;
+  grid-auto-columns: var(--workout-calendar-cell);
+  gap: var(--workout-space-xs);
+  overflow-x: auto;
+  padding-bottom: var(--workout-space-xs);
+}
+.workout-calendar-cell {
+  width: var(--workout-calendar-cell, 11px);
+  height: var(--workout-calendar-cell, 11px);
+  border-radius: var(--workout-radius-xs);
+  background: var(--background-modifier-border);
+}
+.workout-calendar-cell.is-future {
+  background: transparent;
+}
+.workout-calendar-level-1 {
+  background: color-mix(in srgb, var(--workout-accent-fill) 40%, var(--background-secondary));
+}
+.workout-calendar-level-2 {
+  background: color-mix(in srgb, var(--workout-accent-fill) 60%, var(--background-secondary));
+}
+.workout-calendar-level-3 {
+  background: color-mix(in srgb, var(--workout-accent-fill) 80%, var(--background-secondary));
+}
+.workout-calendar-level-4 {
+  background: var(--workout-accent-fill);
+}
+.workout-calendar-legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--workout-space-xxs, 2px);
+  margin-top: var(--workout-space-sm);
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+}
+.workout-calendar-legend span {
+  margin: 0 var(--workout-space-xs);
+}
+
+/* ============================================================================
    SETTINGS PAGE STYLES
    Styles for the plugin settings tab UI enhancements
    ============================================================================ */

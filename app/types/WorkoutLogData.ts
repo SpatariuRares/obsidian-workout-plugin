@@ -138,6 +138,8 @@ export interface WorkoutChartsSettings {
   weightUnit: WeightUnit;
   /** Show the dumbbell ribbon icon that opens the create log modal */
   showRibbonIcon: boolean;
+  /** Training days a week counts towards the streak (1 = any session) */
+  weeklyGoal: number;
   /** The welcome modal was shown (set the first time, whatever the user picks) */
   welcomeShown: boolean;
 }

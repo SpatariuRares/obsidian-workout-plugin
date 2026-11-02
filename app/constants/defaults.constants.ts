@@ -82,6 +82,8 @@ workout: {{workout}}
   weightUnit: "kg",
   /** Show the dumbbell ribbon icon that opens the create log modal */
   showRibbonIcon: true,
+  /** Any week with a session keeps the streak */
+  weeklyGoal: 1,
   /** The welcome modal was shown */
   welcomeShown: false,
 };

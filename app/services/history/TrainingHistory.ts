@@ -35,22 +35,31 @@ export function trainingDay(date: string): string {
   return localDay(d);
 }
 
-function localDay(d: Date): string {
+/** The local YYYY-MM-DD of a date */
+export function localDay(d: Date): string {
   const month = String(d.getMonth() + 1).padStart(2, "0");
   const day = String(d.getDate()).padStart(2, "0");
   return `${d.getFullYear()}-${month}-${day}`;
 }
 
 /** Monday (local YYYY-MM-DD) of the calendar week containing `d`. */
-function weekStart(d: Date): string {
+export function weekStart(d: Date): string {
   const monday = new Date(d.getFullYear(), d.getMonth(), d.getDate());
   monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7));
   return localDay(monday);
 }
 
 function previousWeek(monday: string): string {
+  return shiftWeek(monday, -1);
+}
+
+function nextWeek(monday: string): string {
+  return shiftWeek(monday, 1);
+}
+
+function shiftWeek(monday: string, weeks: number): string {
   const [y, m, d] = monday.split("-").map(Number);
-  return localDay(new Date(y, m - 1, d - 7));
+  return localDay(new Date(y, m - 1, d + weeks * 7));
 }
 
 /** All sets of one workout on one training day. See "Session" in CONTEXT.md. */
@@ -271,16 +280,12 @@ export class TrainingHistory {
   }
 
   /**
-   * Consecutive calendar weeks (Monday to Sunday) with a session, counting
-   * back from `today`'s week; that week only breaks the streak once over.
+   * Consecutive calendar weeks (Monday to Sunday) with at least
+   * `weeklyGoal` training days, counting back from `today`'s week; that
+   * week only breaks the streak once over.
    */
-  streak(today: Date = new Date()): number {
-    const weeks = new Set(
-      this.sessions().map((session) => {
-        const [y, m, d] = session.day.split("-").map(Number);
-        return weekStart(new Date(y, m - 1, d));
-      }),
-    );
+  streak(today: Date = new Date(), weeklyGoal = 1): number {
+    const weeks = this.weeksMeeting(weeklyGoal);
     let week = weekStart(today);
     if (!weeks.has(week)) week = previousWeek(week);
     let count = 0;
@@ -289,6 +294,64 @@ export class TrainingHistory {
       week = previousWeek(week);
     }
     return count;
+  }
+
+  /** The longest run of consecutive weeks with at least `weeklyGoal` training days */
+  bestStreak(weeklyGoal = 1): number {
+    const weeks = this.weeksMeeting(weeklyGoal);
+    let best = 0;
+    for (const week of weeks) {
+      // Count each run once, back from its last week
+      if (weeks.has(nextWeek(week))) continue;
+      let length = 0;
+      for (let w = week; weeks.has(w); w = previousWeek(w)) length++;
+      best = Math.max(best, length);
+    }
+    return best;
+  }
+
+  /** Training days so far in `today`'s week, and whether they meet the goal */
+  weekProgress(
+    today: Date = new Date(),
+    weeklyGoal = 1,
+  ): { days: number; goal: number; met: boolean } {
+    const week = weekStart(today);
+    const upTo = localDay(today);
+    const days = new Set(
+      this.logs
+        .map((log) => trainingDay(log.date))
+        .filter((day) => {
+          const [y, m, d] = day.split("-").map(Number);
+          return (
+            day <= upTo && weekStart(new Date(y, m - 1, d)) === week
+          );
+        }),
+    ).size;
+    const goal = weeklyGoalOf(weeklyGoal);
+    return { days, goal, met: days >= goal };
+  }
+
+  /** Training days in each calendar week, by the week's Monday */
+  private trainingDaysPerWeek(): Map<string, number> {
+    const days = new Set(
+      this.logs.map((log) => trainingDay(log.date)),
+    );
+    const perWeek = new Map<string, number>();
+    for (const day of days) {
+      const [y, m, d] = day.split("-").map(Number);
+      const week = weekStart(new Date(y, m - 1, d));
+      perWeek.set(week, (perWeek.get(week) ?? 0) + 1);
+    }
+    return perWeek;
+  }
+
+  private weeksMeeting(weeklyGoal: number): Set<string> {
+    const goal = weeklyGoalOf(weeklyGoal);
+    return new Set(
+      [...this.trainingDaysPerWeek()]
+        .filter(([, days]) => days >= goal)
+        .map(([week]) => week),
+    );
   }
 
   totalVolume(): number {
@@ -342,6 +405,11 @@ export class TrainingHistory {
   private chronological(): WorkoutLogData[] {
     return [...this.logs].sort((a, b) => setTime(a) - setTime(b));
   }
+}
+
+/** A week needs at least one training day */
+function weeklyGoalOf(weeklyGoal: number): number {
+  return Math.max(1, Math.floor(weeklyGoal) || 1);
 }
 
 function workoutKey(workout: string | undefined): string {

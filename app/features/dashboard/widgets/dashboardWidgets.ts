@@ -17,6 +17,7 @@ import { DurationComparison } from "@app/features/dashboard/widgets/duration-com
 import { QuickActions } from "@app/features/dashboard/widgets/quick-actions/QuickActions";
 import { WidgetsFileError } from "@app/features/dashboard/widgets/file-errors/WidgetsFileError";
 import { MuscleTagsWidget } from "@app/features/dashboard/widgets/muscle-tags/MuscleTagsWidget";
+import { TrainingCalendarWidget } from "@app/features/dashboard/widgets/training-calendar/TrainingCalendarWidget";
 import { t } from "@app/i18n";
 
 /** What a widget can draw from */
@@ -60,6 +61,18 @@ export const DASHBOARD_WIDGETS: Record<
         ctx.data,
         ctx.params,
         await ctx.history(),
+        ctx.plugin.settings.weeklyGoal,
+      ),
+  },
+  trainingCalendar: {
+    label: () => t("dashboard.trainingCalendar.title"),
+    minColumns: 2,
+    // A year of training, whatever the dashboard's period
+    render: async (ctx) =>
+      TrainingCalendarWidget.render(
+        ctx.grid,
+        await ctx.history(),
+        ctx.plugin.settings.weeklyGoal,
       ),
   },
   quickStats: {

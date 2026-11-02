@@ -58,6 +58,11 @@ export class GeneralSettings {
             desc: t("settings.descriptions.weightUnit"),
             render: (setting) => this.renderWeightUnit(setting),
           },
+          {
+            name: t("settings.labels.weeklyGoal"),
+            desc: t("settings.descriptions.weeklyGoal"),
+            render: (setting) => this.renderWeeklyGoal(setting),
+          },
         ],
       },
       {
@@ -151,6 +156,27 @@ export class GeneralSettings {
           }
         }),
     );
+  }
+
+  private renderWeeklyGoal(setting: Setting): void {
+    setting.addDropdown((dropdown) => {
+      for (let days = 1; days <= 7; days++) {
+        dropdown.addOption(String(days), String(days));
+      }
+      dropdown
+        .setValue(String(this.plugin.settings.weeklyGoal))
+        .onChange(async (value) => {
+          const previousValue = this.plugin.settings.weeklyGoal;
+          const newValue = Number(value);
+          this.plugin.settings.weeklyGoal = newValue;
+          await this.plugin.saveSettings();
+          // Dashboards count their streaks again
+          this.plugin.eventBus.emit({
+            type: "settings:changed",
+            payload: { key: "weeklyGoal", previousValue, newValue },
+          });
+        });
+    });
   }
 
   private renderSetupCsv(setting: Setting): void {

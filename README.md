@@ -15,7 +15,7 @@ Charts show your trend, the muscle heat map shows what you trained, and each set
 - Tag sets with a protocol: drop set, myo-reps, rest-pause, superset, 21s, or your own
 - Tables of your sets, grouped by day with daily totals, editable with one tap
 - Charts for weight, volume, reps, duration, distance, pace and heart rate, and a trend that tells you plainly if you're improving
-- A dashboard with weekly streak, personal records, total volume, recent workouts and protocol stats
+- A dashboard with weekly streak (with a weekly goal), a training calendar, personal records, total volume, recent workouts and protocol stats
 - A muscle heat map, front and back, by volume, sets or reps
 - Rest timers (countdown, interval, stopwatch) with presets, that restart when you log a set and beep on iOS and Android
 - An estimate of how long a planned workout takes
@@ -161,7 +161,7 @@ showTrendLine: true
 
 ## Dashboard and muscle heat map
 
-A `workout-dashboard` block opens with four numbers: total workouts, weekly streak, total volume and personal records. Below them you get quick stats for the week, month and year, a volume trend, your recent workouts, protocol stats and planned vs. actual workout length. On a phone, quick actions come first and the summary is a 2 × 2 grid.
+A `workout-dashboard` block opens with four numbers: total workouts, weekly streak, total volume and personal records. Below them you get quick stats for the week, month and year, a volume trend, your recent workouts, protocol stats, planned vs. actual workout length and a training calendar: a year of training days, shaded by volume, with your current and best streak. A week counts towards the streak once it has the training days of your weekly goal (Settings → Weekly goal, 1 by default). On a phone, quick actions come first and the summary is a 2 × 2 grid.
 
 ![The dashboard on desktop with summary, quick stats, heat map, volume analytics and recent workouts, and on a phone with quick actions first](assets/dashboard.png)
 
@@ -194,7 +194,7 @@ The heat map shows which muscles you trained over the last week, month or year, 
 | --------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `title`               | —       | Heading above the dashboard                                                                                                                                                                                 |
 | `dateRange`           | all     | Only sets from the last N days                                                                                                                                                                              |
-| `widgets`             | all     | The widgets to show, in this order: `summary`, `quickStats`, `heatMap`, `volume`, `recentWorkouts`, `protocolDistribution`, `protocolEffectiveness`, `duration`, `quickActions`, `fileErrors`, `muscleTags` |
+| `widgets`             | all     | The widgets to show, in this order: `summary`, `quickStats`, `heatMap`, `volume`, `recentWorkouts`, `protocolDistribution`, `protocolEffectiveness`, `duration`, `quickActions`, `fileErrors`, `muscleTags`, `trainingCalendar` |
 | `layout`              | `list`  | `grid` places each widget in its cells (see above)                                                                                                                                                          |
 | `columns`             | —       | Grid: the columns the grid was made for                                                                                                                                                                     |
 | `grid.<widget>`       | —       | Grid: column, row, width and height of that widget                                                                                                                                                          |

@@ -129,7 +129,7 @@ export class ConvertExerciseDataModal extends ModalBase {
   }
 
   private createButtons(parent: HTMLElement): void {
-    const buttonsSection = Button.createContainer(parent);
+    const buttonsSection = Button.createModalActions(parent);
 
     const cancelButton = Button.create(buttonsSection, {
       text: t("common.cancel"),

@@ -2,11 +2,15 @@
 
 # Workout Planner
 
-Mobile-first workout tracker for Obsidian. Log every set from your phone at the gym, then watch your progress in tables, charts and a dashboard inside the same notes where you plan your training. Your sets go into one CSV file in your vault. No account, no cloud.
+English · [العربية](README.AR.md) · [Čeština](README.CZ.md) · [Dansk](README.DA.md) · [Deutsch](README.DE.md) · [Español](README.ES.md) · [Français](README.FR.md) · [हिन्दी](README.HI.md) · [Bahasa Indonesia](README.ID.md) · [Italiano](README.IT.md) · [日本語](README.JA.md) · [한국어](README.KO.md) · [Nederlands](README.NL.md) · [Norsk bokmål](README.NO.md) · [Polski](README.PL.md) · [Português (Brasil)](README.PT-BR.md) · [Português (Portugal)](README.PT.md) · [Română](README.RO.md) · [Русский](README.RU.md) · [Shqip](README.SQ.md) · [Türkçe](README.TR.md) · [Українська](README.UK.md) · [简体中文](README.ZH.md) · [繁體中文](README.ZH-TW.md)
 
-Charts show your trend, the muscle heat map shows what you trained, and each set keeps its own kg/lb unit. Available in 24 languages, with one CSV you can query from Dataview.
+**The all-in-one workout tracker for Obsidian.** Lifting, running, cycling, yoga or exercises with your own fields: log from your phone, follow a guided session, and see your progress in charts, a dashboard and a muscle heat map. One CSV, 24 languages.
 
-![Workout Planner on a phone: a workout note with rest timer and log table, the log form with +/− buttons and kg/lb picker, and the muscle heat map](assets/hero.png)
+Built for your phone: log each set, run or pose as you train, then watch your progress in tables, charts and a dashboard inside the same notes where you plan your training. Your sets go into one CSV file in your vault. No account, no cloud.
+
+Charts show your trend, the muscle heat map shows what you trained, and each set keeps its own kg/lb unit. You can query your sets from Dataview.
+
+![Workout Planner on a phone: a guided session with its rest timer running, the log form with +/− buttons and kg/lb picker, and the dashboard summary with the training calendar](assets/hero.png)
 
 ## Features
 
@@ -27,11 +31,7 @@ Charts show your trend, the muscle heat map shows what you trained, and each set
 
 ## Getting started
 
-The first time you install the plugin, a welcome window asks how you want to begin. You don't need to open settings.
-
-- **Try with example data** adds sample exercises, a few workouts with a month of logs, and a dashboard, points the plugin at them, and starts the guided tour on them (see below). Poke around before setting up your own.
-- **Start from scratch** starts the same guided tour on your own data. Its first step is logging your first set, and the log file is created when you save it.
-- **Later** closes the window without changing anything.
+The first time you install the plugin, it adds example notes (sample exercises, two workouts with six weeks of logs, a dashboard and a feature showcase), points the plugin at them and opens the **Getting started** guide: one short page per feature, with working examples you can try. You don't need to open settings. Poke around before setting up your own.
 
 ### The guided tour
 
@@ -49,11 +49,11 @@ The tour opens a "Guided tour" note with a table, a chart, a dashboard and a tim
 
 Use **Back** and **Next** to move around, or **Skip** to leave. If the part of the note the tour points at is out of view, **Show me** scrolls to it. Press `Esc` at any time to end it. The tour also ends when you close its note or switch to another file. Nothing is lost: your sets stay in the log.
 
-When the example data is in use, the tour runs on it. Otherwise it runs on your own log, so the chart and dashboard start nearly empty. If you already have a workout log, **Try with example data** still adds the examples as separate files, never in your log, and the tour runs on your own data (a notice tells you). The note is created once, next to the examples or at the top of your vault. An existing note is never overwritten, and you can edit or delete it. If a note called "Guided tour" already exists and isn't the tour's own, the tour uses "Guided tour 1" (or the next free number) instead.
+When the example data is in use, the tour runs on it. Otherwise it runs on your own log, so the chart and dashboard start nearly empty. The note is created once, next to the examples or at the top of your vault. An existing note is never overwritten, and you can edit or delete it. If a note called "Guided tour" already exists and isn't the tour's own, the tour uses "Guided tour 1" (or the next free number) instead.
 
 Want to take the tour again? Select **Take the tour** under **Settings → Workout Planner → Getting started**, or run **Start the tour** from the command palette.
 
-Closed the welcome window by accident, or want it again? Select **Show welcome** under **Settings → Workout Planner → Getting started** to open the window again. Or open the command palette (`Ctrl/Cmd + P`) and run **Create example notes** or **Open getting started guide**. Creating the examples never overwrites anything: running it again only adds the example files that are missing, and files you changed stay as they are. The guide offers to create the examples if they don't exist yet. An empty table, chart or dashboard also has an **Or explore with example data** link. If you already have a workout log, the examples get their own log file and yours stays untouched.
+Want the examples or the guide again? Select **Create examples** or **Open getting started guide** under **Settings → Workout Planner → Getting started**, or run **Create example notes** or **Open getting started guide** from the command palette (`Ctrl/Cmd + P`). Creating the examples never overwrites anything: running it again only adds the example files that are missing, and files you changed stay as they are. The guide offers to create the examples if they don't exist yet. An empty table, chart or dashboard also has an **Or explore with example data** link. If you already have a workout log, the examples get their own log file and yours stays untouched.
 
 To add a table to any note, for example `Push Day`:
 
@@ -77,9 +77,9 @@ When you log a set from a note, the note's name is saved as the set's **workout*
 
 ## Tables
 
-A `workout-log` block shows the sets of an exercise or workout, newest first. Sets from the same day are grouped under a row with that day's totals, and each row has edit and delete buttons. On a phone each set becomes a compact row with no sideways scrolling.
+A `workout-log` block shows the sets of an exercise or workout, newest first. Sets from the same day are grouped under a row with that day's totals, and each row has an edit button; delete a set from the edit form. On a phone each set becomes a compact row with no sideways scrolling.
 
-![The same workout-log table on desktop and on a phone, where each set becomes a compact row](assets/tables.png)
+<img src="assets/tables.png" width="720" alt="A workout-log table on a phone, sets grouped by day with their time and a drop-set badge, and the log form its + button opens">
 
 ```workout-log
 exercise: Bench Press
@@ -99,7 +99,7 @@ With `targetWeight` and `targetReps`, a progressive-overload target appears abov
 | `workout`                    | —       | Only this workout (note name)                      |
 | `exactMatch`                 | `false` | Match the exercise name exactly                    |
 | `dateRange`                  | all     | Today and the previous N days                      |
-| `limit`                      | `50`    | Maximum rows                                       |
+| `limit`                      | `50`    | Maximum rows; with `sets`, `sets × 2` (two workouts) |
 | `sortBy`                     | `date`  | `date`, `exercise`, `weight`, `reps` or `volume`   |
 | `sortOrder`                  | `desc`  | `asc` or `desc`                                    |
 | `columns`                    | all     | Columns to show, e.g. `["date", "reps", "weight"]` |
@@ -126,7 +126,7 @@ dateRange: 180
 
 The API adds `estimatedOneRepMax` to `getExerciseStats`: the best estimate in the configured weight unit, or `null` when no eligible set exists. Existing PR fields and CSV columns are unchanged.
 
-![A bench press volume chart with its increasing trend on desktop, and the same values as a table on a phone](assets/charts.png)
+![A bench press estimated 1RM chart with its increasing trend line on desktop, and the same values as a table on a phone](assets/charts.png)
 
 ```workout-chart
 exercise: Squat
@@ -165,7 +165,7 @@ showTrendLine: true
 
 A `workout-dashboard` block opens with four numbers: total workouts, weekly streak, total volume and personal records. Below them you get quick stats for the week, month and year, a volume trend, your recent workouts, protocol stats, planned vs. actual workout length and a training calendar: a year of training days, shaded by volume, with your current and best streak. A week counts towards the streak once it has the training days of your weekly goal (Settings → Weekly goal, 1 by default). On a phone, quick actions come first and the summary is a 2 × 2 grid.
 
-![The dashboard on desktop with summary, quick stats, heat map, volume analytics and recent workouts, and on a phone with quick actions first](assets/dashboard.png)
+<img src="assets/dashboard.png" width="720" alt="The dashboard on a phone: summary, training calendar with this week's goal met, recent workouts and quick stats">
 
 ```workout-dashboard
 title: Last three months
@@ -187,7 +187,7 @@ grid.recentWorkouts: 3 2 1 1
 
 The heat map shows which muscles you trained over the last week, month or year, front and back, by **Volume**, **Sets** or **Reps**. It's the quickest way to notice you've skipped legs for three weeks. Under it, a short training analysis warns you about imbalances, like a front that works much more than the back. It reads the muscle tags of your [exercise pages](#exercise-types). Bodyweight and timed exercises have no weight, so they light up only under Sets and Reps.
 
-<img src="assets/heatmap.png" width="720" alt="Muscle heat map for the week on desktop and on a phone: chest and quads trained">
+<img src="assets/heatmap.png" width="720" alt="Muscle heat map for the week on a phone, front and back: quads, glutes and hamstrings trained, with the training analysis below">
 
 <details>
 <summary>All parameters</summary>
@@ -237,6 +237,8 @@ A tag that is already a group name (`upper_chest`, `Upper chest`, `upper-chest`)
 
 A `workout-timer` block is a countdown, interval or stopwatch timer. Save your usual rest times as presets. Link a timer to an exercise or workout and it restarts every time you log a set, so you don't have to touch it between sets. With `autoStart: true` it starts as soon as the note opens.
 
+<img src="assets/timers.png" width="320" alt="Two timers on a phone: an interval timer in its rest phase and a Tabata preset in the work phase of round 2">
+
 It beeps on iOS and Android too. Phones only allow sound after you've tapped the page, so a timer started by `autoStart` stays silent until you tap **Start** once.
 
 Under **Settings → Workout Planner → Timer device cues**, **Keep screen awake while a timer runs** is on by default. It requests screen protection while at least one timer runs in the foreground, where the device allows it. **Vibrate when a timer completes** is off by default and adds a brief pulse at zero, independently of sound, on supported devices such as Android. iOS keeps the existing audio cue; web vibration is unavailable there. These features use browser APIs on a best-effort basis and have not yet been verified on physical Android/iOS devices. They do not provide background alarms. A timer with an `id` keeps running when you change notes; pause it or let it finish to release screen protection.
@@ -280,6 +282,8 @@ rounds: 8
 ## Guided session
 
 A `workout-session` block at the top of a workout note (command **Insert guided session**) walks you through it one exercise at a time: which set you're on, the target, what you did last time, a **Log set** button and the rest timer, which starts when you log a set.
+
+![A guided session on a phone: set 1 of 4 with what you did last time, the log form opened by Log set, then set 2 of 4 with the rest timer running](assets/session.png)
 
 ````markdown
 ```workout-session
@@ -333,6 +337,10 @@ tags:
 | `distance`           | distance, duration (optional)                | `running`, `run`                                             |
 | `cardio`             | duration, distance and heart rate (optional) | —                                                            |
 | `custom`             | only the fields you list under `parameters`  | —                                                            |
+
+Yoga works the same way: each pose is a `timed` exercise, so the form asks only how long you held it. The example notes include a morning yoga flow with a guided session.
+
+![A yoga flow on a phone: the guided session on Downward Dog, the log form asking only for the hold's duration, and the table of holds with the day's total](assets/yoga.png)
 
 `type:` works the same as `exercise_type:`. Add your own fields under `parameters`, for example rounds for jump rope:
 

@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "Genuflexiune la Multi Power"
+      },
+      "downwardDog": {
+        "name": "Câinele cu fața în jos"
+      },
+      "warriorTwo": {
+        "name": "Războinicul II"
+      },
+      "treePose": {
+        "name": "Copacul"
       }
     },
     "featureShowcase": {
@@ -410,6 +419,9 @@
       },
       "upperBodyPower": {
         "name": "Forță pentru partea superioară a corpului"
+      },
+      "yogaFlow": {
+        "name": "Flux de yoga dimineața"
       }
     },
     "notes": {
@@ -418,7 +430,12 @@
     },
     "createToOpenGuide": "Ghidul de pornire face parte din notele de exemplu, care nu există încă. Ar trebui să le creăm acum?",
     "pointedAtExamples": "Vizualizările tale citesc acum jurnalul și exercițiile de exemplu. Schimbă această opțiune în setările datelor.",
-    "usesSeparateLog": "Deoarece ai deja un jurnal de antrenament, acesta a rămas neschimbat. Exemplele folosesc propriul lor fișier de jurnal."
+    "usesSeparateLog": "Deoarece ai deja un jurnal de antrenament, acesta a rămas neschimbat. Exemplele folosesc propriul lor fișier de jurnal.",
+    "yoga": {
+      "intro": "Un flux scurt de dimineață, cu poziții ținute cronometrat. Pornește sesiunea ghidată, ține fiecare poziție, apoi notează cât timp ai ținut-o: cronometrul de pauză pornește singur.",
+      "holds": "{holds} poziții × {seconds} s",
+      "progressTitle": "Progres"
+    }
   },
   "forms": {
     "enterCsvPath": "Folderul pentru fișierele CSV",
@@ -595,7 +612,6 @@
     "layoutHorizontal": "Flux orizontal",
     "layoutType": "Tip de aranjament:",
     "layoutVertical": "Flux vertical",
-    "maxLogCount": "Număr maxim de înregistrări:",
     "muscleGroup": "Grup de mușchi",
     "newTag": "Etichetă nouă",
     "noTagsFound": "Nicio etichetă nu corespunde căutării tale.",
@@ -799,7 +815,8 @@
       "savePreset": "Salvează",
       "saveProtocol": "Salvează",
       "showWelcome": "Afișează mesajul de bun venit",
-      "takeTour": "Începe turul"
+      "takeTour": "Începe turul",
+      "createExampleNotes": "Creează exemple"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fișier CSV cu etichete pentru mușchi există deja. Vrei să îl suprascrii cu valorile implicite? Acest lucru va elimina toate etichetele personalizate.",
@@ -830,7 +847,8 @@
       "keepScreenAwake": "Încearcă să menții ecranul activ cât timp rulează un temporizator în prim-plan. Consumă mai multă baterie; disponibilitatea depinde de dispozitivul și de setările sistemului tău.",
       "vibrateOnCompletion": "Vibrație scurtă când un temporizator se termină, indiferent de sunet. Necesită un clic pe pagină și un dispozitiv compatibil (cum ar fi Android). Nu este disponibil pe iOS; nu există notificări în fundal.",
       "presetRestDesc": "Secunde de pauză după fiecare rundă de lucru (0 pentru fără pauză).",
-      "noCustomProtocols": "Nu există protocoale definite. Apasă pe „Adaugă protocol” ca să creezi unul."
+      "noCustomProtocols": "Nu există protocoale definite. Apasă pe „Adaugă protocol” ca să creezi unul.",
+      "createExampleNotes": "Adaugă notițe de exemplu și șase săptămâni de antrenamente de exemplu, ca să încerci toate funcțiile. Notițele pe care le ai deja nu sunt niciodată suprascrise."
     },
     "labels": {
       "csvPath": "Cale către fișierul de jurnal CSV",

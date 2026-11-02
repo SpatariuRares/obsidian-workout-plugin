@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "Squat Multi Power"
+      },
+      "downwardDog": {
+        "name": "Neerwaartse hond"
+      },
+      "warriorTwo": {
+        "name": "Krijger II"
+      },
+      "treePose": {
+        "name": "Boom"
       }
     },
     "featureShowcase": {
@@ -410,6 +419,9 @@
       },
       "upperBodyPower": {
         "name": "Kracht voor het bovenlichaam"
+      },
+      "yogaFlow": {
+        "name": "Ochtendyogaflow"
       }
     },
     "notes": {
@@ -418,7 +430,12 @@
     },
     "createToOpenGuide": "De handleiding voor het opstarten is onderdeel van de voorbeeldnotities, maar die bestaan nog niet. Maak ze nu?",
     "pointedAtExamples": "Je weergaven lezen nu het voorbeeldlogboek en de oefeningen. Wijzig dit in de gegevensinstellingen.",
-    "usesSeparateLog": "Je hebt al een trainingslog, dus die is ongewijzigd gebleven. De voorbeelden gebruiken hun eigen logbestand."
+    "usesSeparateLog": "Je hebt al een trainingslog, dus die is ongewijzigd gebleven. De voorbeelden gebruiken hun eigen logbestand.",
+    "yoga": {
+      "intro": "Een korte ochtendflow van getimede houdingen. Start de begeleide sessie, houd elke houding vast en registreer daarna hoe lang je die hebt aangehouden: de rusttimer start vanzelf.",
+      "holds": "{holds} houdingen × {seconds} s",
+      "progressTitle": "Voortgang"
+    }
   },
   "forms": {
     "enterCsvPath": "Map voor de CSV-bestanden",
@@ -595,7 +612,6 @@
     "layoutHorizontal": "Horizontale indeling",
     "layoutType": "Type indeling:",
     "layoutVertical": "Verticale indeling",
-    "maxLogCount": "Maximum aantal logs:",
     "muscleGroup": "Spiergroep",
     "newTag": "Nieuw label",
     "noTagsFound": "Geen labels komen overeen met je zoekopdracht",
@@ -799,7 +815,8 @@
       "savePreset": "Opslaan",
       "saveProtocol": "Opslaan",
       "showWelcome": "Welkomstscherm tonen",
-      "takeTour": "Begin de tour"
+      "takeTour": "Begin de tour",
+      "createExampleNotes": "Voorbeelden maken"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Er bestaat al een CSV-bestand met spierlabels. Wil je dit overschrijven met standaardwaarden? Dit verwijdert alle aangepaste labels.",
@@ -830,7 +847,8 @@
       "keepScreenAwake": "Probeer het scherm actief te houden terwijl een timer op de voorgrond draait. Dit verbruikt meer batterij; de beschikbaarheid hangt af van je apparaat en systeeminstellingen.",
       "vibrateOnCompletion": "Tril kort wanneer een timer afloopt, los van geluid. Vereist een aanraking op de pagina en een ondersteund apparaat (zoals Android). Niet beschikbaar op iOS; geen meldingen op de achtergrond.",
       "presetRestDesc": "Aantal seconden rust na het uitvoeren van elke ronde (0 voor geen rust).",
-      "noCustomProtocols": "Er zijn nog geen protocollen. Klik op 'Protocol toevoegen' om er een aan te maken."
+      "noCustomProtocols": "Er zijn nog geen protocollen. Klik op 'Protocol toevoegen' om er een aan te maken.",
+      "createExampleNotes": "Voegt voorbeeldnotities en zes weken voorbeeldtrainingen toe om elke functie uit te proberen. Notities die je al hebt, worden nooit overschreven."
     },
     "labels": {
       "csvPath": "Pad naar het CSV-logbestand",

@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "Squat në makinën Smith"
+      },
+      "downwardDog": {
+        "name": "Qen me kokë poshtë"
+      },
+      "warriorTwo": {
+        "name": "Luftëtari II"
+      },
+      "treePose": {
+        "name": "Pema"
       }
     },
     "featureShowcase": {
@@ -410,6 +419,9 @@
       },
       "upperBodyPower": {
         "name": "Forca e trupit të sipërm"
+      },
+      "yogaFlow": {
+        "name": "Flow joge mëngjesi"
       }
     },
     "notes": {
@@ -418,7 +430,12 @@
     },
     "createToOpenGuide": "Guida për fillimin është pjesë e notave të shembullit, të cilat ende nuk janë krijuar. A duhet t'i krijojmë tani?",
     "pointedAtExamples": "Pamjet tuaja tani lexojnë regjistrin dhe ushtrimet e shembullit. Ndryshojeni këtë te cilësimet e të dhënave.",
-    "usesSeparateLog": "Keni tashmë një regjistër stërvitjesh, ndaj nuk u prek. Shembujt përdorin skedarin e tyre të regjistrit."
+    "usesSeparateLog": "Keni tashmë një regjistër stërvitjesh, ndaj nuk u prek. Shembujt përdorin skedarin e tyre të regjistrit.",
+    "yoga": {
+      "intro": "Një flow i shkurtër mëngjesi me mbajtje të kohëmatura. Nis seancën e udhëzuar, mban çdo pozicion, pastaj regjistro sa kohë e ke mbajtur: kronometri i pushimit nis vetë.",
+      "holds": "{holds} mbajtje × {seconds} s",
+      "progressTitle": "Progresi"
+    }
   },
   "forms": {
     "enterCsvPath": "Dosja për skedarët CSV",
@@ -595,7 +612,6 @@
     "layoutHorizontal": "Rrjedhë horizontale",
     "layoutType": "Lloji i paraqitjes:",
     "layoutVertical": "Rrjedhë vertikale",
-    "maxLogCount": "Numri maksimal i regjistrimeve:",
     "muscleGroup": "Grupi muskulor",
     "newTag": "Etiketë e re",
     "noTagsFound": "Nuk u gjet asnjë etiketë që përputhet me kërkimin tuaj",
@@ -799,7 +815,8 @@
       "savePreset": "Ruaj",
       "saveProtocol": "Ruaj",
       "showWelcome": "Shfaq mirëseardhjen",
-      "takeTour": "Fillo turin"
+      "takeTour": "Fillo turin",
+      "createExampleNotes": "Krijo shembuj"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Një skedar CSV me etiketat e muskujve ekziston tashmë. Doni ta mbishkruani me vlerat e paracaktuara? Kjo do të fshijë të gjitha etiketat e personalizuara.",
@@ -830,7 +847,8 @@
       "keepScreenAwake": "Provo ta mbash ekranin të ndezur ndërsa ndonjë timer punon në plan. Konsumon më shumë bateri; disponueshmëria varet nga pajisja dhe cilësimet e sistemit.",
       "vibrateOnCompletion": "Vibron shkurtimisht kur mbaron një timer, pavarësisht nga zëri. Kërkon një prekje në faqe dhe një pajisje të mbështetur (si Android). Nuk është i disponueshëm në iOS dhe nuk ka njoftime kur aplikacioni është në sfond.",
       "presetRestDesc": "Sekondat e pushimit pas punës së çdo raunde (0 për pa pushim).",
-      "noCustomProtocols": "Aktualisht nuk ka protokole. Klikoni 'Shto protokol' për të krijuar një."
+      "noCustomProtocols": "Aktualisht nuk ka protokole. Klikoni 'Shto protokol' për të krijuar një.",
+      "createExampleNotes": "Shton shënime shembull dhe gjashtë javë stërvitje shembull për të provuar çdo veçori. Shënimet që ke tashmë nuk shkruhen kurrë mbi to."
     },
     "labels": {
       "csvPath": "Shtegu i skedarit të regjistrit CSV",

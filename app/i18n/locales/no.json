@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "Squat Multi Power"
+      },
+      "downwardDog": {
+        "name": "Nedovervendt hund"
+      },
+      "warriorTwo": {
+        "name": "Kriger II"
+      },
+      "treePose": {
+        "name": "Trærposen"
       }
     },
     "featureShowcase": {
@@ -410,6 +419,9 @@
       },
       "upperBodyPower": {
         "name": "Overkroppsstyrke"
+      },
+      "yogaFlow": {
+        "name": "Morgen-yogaflyt"
       }
     },
     "notes": {
@@ -418,7 +430,12 @@
     },
     "createToOpenGuide": "Veiledningen for å komme i gang er en del av eksempelnotatene, som ikke finnes ennå. Skal vi lage dem nå?",
     "pointedAtExamples": "Visningene dine leser nå eksempelloggen og øvelsene. Endre dette i datainnstillingene.",
-    "usesSeparateLog": "Du har allerede en treningslogg, så den ble ikke endret. Eksemplene bruker sin egen loggfil."
+    "usesSeparateLog": "Du har allerede en treningslogg, så den ble ikke endret. Eksemplene bruker sin egen loggfil.",
+    "yoga": {
+      "intro": "En kort morgenflyt med tidsstyrte holdeposisjoner. Start den veiledede økten, hold hver posisjon, og logg deretter hvor lenge du holdt den: hviletimeren starter av seg selv.",
+      "holds": "{holds} holdeposisjoner × {seconds} s",
+      "progressTitle": "Fremdrift"
+    }
   },
   "forms": {
     "enterCsvPath": "Mappe for CSV-filene",
@@ -595,7 +612,6 @@
     "layoutHorizontal": "Horisontalt oppsett",
     "layoutType": "Oppsettstype:",
     "layoutVertical": "Vertikalt oppsett",
-    "maxLogCount": "Maksimalt antall logger:",
     "muscleGroup": "Muskelgruppe",
     "newTag": "Ny tag",
     "noTagsFound": "Ingen tagger samsvarer med søket ditt",
@@ -799,7 +815,8 @@
       "savePreset": "Lagre",
       "saveProtocol": "Lagre",
       "showWelcome": "Vis velkomst",
-      "takeTour": "Følg guiden"
+      "takeTour": "Følg guiden",
+      "createExampleNotes": "Opprett eksempler"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "En CSV-fil med muskeltagger finnes allerede. Vil du overskrive den med standardverdier? Dette fjerner alle egendefinerte tagger.",
@@ -830,7 +847,8 @@
       "keepScreenAwake": "Prøv å holde skjermen aktiv mens en timer kjører i forgrunnen. Bruker mer batteri; tilgjengelighet avhenger av enheten og systeminnstillingene dine.",
       "vibrateOnCompletion": "Vibrer kort når en timer er ferdig, uavhengig av lyd. Krever et trykk på siden og en støttet enhet (f.eks. Android). Ikke tilgjengelig på iOS; ingen varsler i bakgrunnen.",
       "presetRestDesc": "Antall sekunder med hvile etter arbeidsdelen i hver runde (0 for ingen hvile).",
-      "noCustomProtocols": "Ingen protokoller er opprettet ennå. Klikk på «Legg til protokoll» for å opprette en."
+      "noCustomProtocols": "Ingen protokoller er opprettet ennå. Klikk på «Legg til protokoll» for å opprette en.",
+      "createExampleNotes": "Legger til eksempelnotater og seks uker med eksempeltrening for å prøve alle funksjoner. Notater du allerede har, blir aldri overskrevet."
     },
     "labels": {
       "csvPath": "Sti til CSV-loggfil",

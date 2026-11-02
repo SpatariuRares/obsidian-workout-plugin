@@ -375,6 +375,11 @@ export class Setting {
     containerEl.appendChild(this.settingEl);
     settingsByEl.set(this.settingEl, this);
   }
+  setClass(cls: string) {
+    this.settingEl.classList.add(cls);
+    return this;
+  }
+
   setName(name: string | DocumentFragment) {
     this.nameEl.replaceChildren(name);
     return this;

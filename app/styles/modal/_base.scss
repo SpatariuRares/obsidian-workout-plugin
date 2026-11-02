@@ -46,3 +46,24 @@
     padding-bottom: var(--workout-space-sm);
   }
 }
+
+/* A modal's main buttons (Button.createModalActions) stay at the bottom of
+   the modal, always visible, while the form scrolls under them */
+.workout-modal-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  margin-top: var(--workout-space-lg);
+  padding-block: var(--workout-space-md);
+  background: var(--modal-background, var(--background-primary));
+  border-top: var(--workout-border-thin) solid var(--workout-border-subtle);
+  /* Covers the modal's bottom padding, where the form would show through */
+  box-shadow: 0 var(--workout-space-lg) 0
+    var(--modal-background, var(--background-primary));
+}
+
+body.is-mobile .workout-modal-actions {
+  padding-bottom: calc(
+    var(--workout-space-md) + env(safe-area-inset-bottom, 0px)
+  );
+}

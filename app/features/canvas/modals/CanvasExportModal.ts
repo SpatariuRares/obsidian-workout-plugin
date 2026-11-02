@@ -138,7 +138,7 @@ export class CanvasExportModal extends ModalBase {
    * Create action buttons
    */
   private createButtons(container: HTMLElement): void {
-    const buttonsSection = Button.createContainer(container);
+    const buttonsSection = Button.createModalActions(container);
 
     // Cancel button
     const cancelButton = Button.create(buttonsSection, {

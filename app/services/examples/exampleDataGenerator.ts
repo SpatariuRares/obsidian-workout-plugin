@@ -9,7 +9,6 @@ import { serializeLog } from "@app/services/data/WorkoutLogCodec";
 const EXAMPLE_CUSTOM_COLUMNS = ["duration", "distance", "heartRate"];
 
 interface LogEntryData {
-  date: string;
   exercise: string;
   reps: number;
   weight: number;
@@ -17,7 +16,8 @@ interface LogEntryData {
   workout: string;
   notes?: string;
   protocol?: WorkoutProtocol;
-  timestamp?: number;
+  /** When the set was logged; also its date */
+  timestamp: number;
   origine?: string;
   customFields?: Record<string, number>;
 }
@@ -25,13 +25,10 @@ interface LogEntryData {
 function addLogEntry(entries: CSVWorkoutLogEntry[], data: LogEntryData): void {
   entries.push({
     ...data,
+    // A logged set's date is the moment it was saved, as in a real log
+    date: new Date(data.timestamp).toISOString(),
     notes: data.notes || undefined,
     protocol: data.protocol ?? WorkoutProtocol.STANDARD,
-    timestamp:
-      data.timestamp ??
-      new Date(data.date).getTime() +
-        Math.floor(Math.random() * 3600000) +
-        36000000,
   });
 }
 
@@ -71,7 +68,6 @@ export function generateExampleCSVData(): string {
   ) {
     const daysAgo = lowerBodyOffsets[sessionIdx];
     const date = new Date(now.getTime() - daysAgo * oneDay);
-    const dateStr = date.toISOString();
 
     const weeksTraining = Math.floor((42 - daysAgo) / 7);
 
@@ -100,7 +96,6 @@ export function generateExampleCSVData(): string {
     if (sessionIdx % 4 === 2) {
       const warmupWeight = Math.round((squatWeight * 0.5) / 2.5) * 2.5;
       addLogEntry(entries, {
-        date: dateStr,
         exercise: t("examples.exercises.squatMultiPower.name"),
         reps: 10,
         weight: warmupWeight,
@@ -121,7 +116,6 @@ export function generateExampleCSVData(): string {
       const protocol =
         set === 4 && sessionIdx % 3 === 0 ? WorkoutProtocol.MYO_REPS : WorkoutProtocol.STANDARD;
       addLogEntry(entries, {
-        date: dateStr,
         exercise: t("examples.exercises.squatMultiPower.name"),
         reps,
         weight: squatWeight,
@@ -150,7 +144,6 @@ export function generateExampleCSVData(): string {
       const protocol =
         set === 4 && sessionIdx % 4 === 1 ? WorkoutProtocol.REST_PAUSE : WorkoutProtocol.STANDARD;
       addLogEntry(entries, {
-        date: dateStr,
         exercise: t("examples.exercises.rdl.name"),
         reps,
         weight: rdlWeight,
@@ -180,7 +173,6 @@ export function generateExampleCSVData(): string {
       const protocol =
         set === 4 && sessionIdx % 5 === 0 ? WorkoutProtocol.DROP_SET : WorkoutProtocol.STANDARD;
       addLogEntry(entries, {
-        date: dateStr,
         exercise: t("examples.exercises.legPress45.name"),
         reps,
         weight: legPressWeight,
@@ -214,7 +206,6 @@ export function generateExampleCSVData(): string {
         set === 3 && sessionIdx % 6 === 0 ? WorkoutProtocol.TWENTYONE : WorkoutProtocol.STANDARD;
       const actualReps = protocol === WorkoutProtocol.TWENTYONE ? 21 : reps;
       addLogEntry(entries, {
-        date: dateStr,
         exercise: t("examples.exercises.legCurlSeated.name"),
         reps: actualReps,
         weight: legCurlWeight,
@@ -247,7 +238,6 @@ export function generateExampleCSVData(): string {
       const protocol =
         set % 2 === 0 && sessionIdx > 6 ? WorkoutProtocol.SUPERSET : WorkoutProtocol.STANDARD;
       addLogEntry(entries, {
-        date: dateStr,
         exercise: t("examples.exercises.calfMachine.name"),
         reps,
         weight: calfWeight,
@@ -270,7 +260,6 @@ export function generateExampleCSVData(): string {
       const duration =
         basePlankDuration + (3 - set) * 10 - (isToughDay ? 10 : 0);
       addLogEntry(entries, {
-        date: dateStr,
         exercise: t("examples.exercises.plank.name"),
         reps: 0,
         weight: 0,
@@ -303,7 +292,6 @@ export function generateExampleCSVData(): string {
   ) {
     const daysAgo = upperBodyOffsets[sessionIdx];
     const date = new Date(now.getTime() - daysAgo * oneDay);
-    const dateStr = date.toISOString();
 
     const weeksTraining = Math.floor((42 - daysAgo) / 7);
     const isToughDay = sessionIdx % 5 === 3;
@@ -338,9 +326,7 @@ export function generateExampleCSVData(): string {
         set === 4 && sessionIdx % 4 === set - 1
           ? protocols[sessionIdx % 4]
           : WorkoutProtocol.STANDARD;
-      const notes = protocol !== WorkoutProtocol.STANDARD ? `${protocol}` : "";
       addLogEntry(entries, {
-        date: dateStr,
         exercise: t("examples.exercises.benchPress.name"),
         reps,
         weight: benchWeight,
@@ -348,7 +334,6 @@ export function generateExampleCSVData(): string {
         origine: `[[${upperWorkoutName}]]`,
         workout: upperWorkoutName,
         timestamp: exerciseTime.getTime(),
-        notes,
         protocol,
       });
       exerciseTime = new Date(
@@ -370,7 +355,6 @@ export function generateExampleCSVData(): string {
       const notes =
         protocol === WorkoutProtocol.SUPERSET ? t("examples.notes.supersetLunges") : "";
       addLogEntry(entries, {
-        date: dateStr,
         exercise: t("examples.exercises.squat.name"),
         reps,
         weight: squatWeight,
@@ -398,7 +382,6 @@ export function generateExampleCSVData(): string {
   ) {
     const daysAgo = cardioOffsets[sessionIdx];
     const date = new Date(now.getTime() - daysAgo * oneDay);
-    const dateStr = date.toISOString();
 
     const weeksTraining = Math.floor((42 - daysAgo) / 7);
 
@@ -421,7 +404,6 @@ export function generateExampleCSVData(): string {
     const runHeartRate =
       150 - weeksTraining * 2 + Math.floor(Math.random() * 10);
     addLogEntry(entries, {
-      date: dateStr,
       exercise: t("examples.exercises.running.name"),
       reps: 0,
       weight: 0,
@@ -448,7 +430,6 @@ export function generateExampleCSVData(): string {
     const cycleHeartRate =
       135 - weeksTraining + Math.floor(Math.random() * 8);
     addLogEntry(entries, {
-      date: dateStr,
       exercise: t("examples.exercises.cycling.name"),
       reps: 0,
       weight: 0,
@@ -459,6 +440,40 @@ export function generateExampleCSVData(): string {
       protocol: WorkoutProtocol.STANDARD,
       customFields: { duration: cycleDuration, distance: cycleDistance, heartRate: cycleHeartRate },
     });
+  }
+
+  // Yoga: timed holds, ~2x per week in the morning, held a little longer each week
+  const yogaOffsets = [38, 35, 31, 28, 24, 21, 17, 14, 10, 7, 3];
+  const yogaWorkoutName = t("examples.workouts.yogaFlow.name");
+  const poses = [
+    { name: t("examples.exercises.downwardDog.name"), baseSeconds: 40 },
+    { name: t("examples.exercises.warriorTwo.name"), baseSeconds: 30 },
+    { name: t("examples.exercises.treePose.name"), baseSeconds: 30 },
+  ];
+
+  for (const daysAgo of yogaOffsets) {
+    const date = new Date(now.getTime() - daysAgo * oneDay);
+    const weeksTraining = Math.floor((42 - daysAgo) / 7);
+
+    let exerciseTime = new Date(date);
+    exerciseTime.setHours(7, Math.floor(Math.random() * 30), 0, 0);
+
+    for (const pose of poses) {
+      for (let hold = 1; hold <= 3; hold++) {
+        addLogEntry(entries, {
+          exercise: pose.name,
+          reps: 0,
+          weight: 0,
+          volume: 0,
+          origine: `[[${yogaWorkoutName}]]`,
+          workout: yogaWorkoutName,
+          timestamp: exerciseTime.getTime(),
+          protocol: WorkoutProtocol.STANDARD,
+          customFields: { duration: pose.baseSeconds + weeksTraining * 5 },
+        });
+        exerciseTime = new Date(exerciseTime.getTime() + 75000);
+      }
+    }
   }
 
   return serializeLog(entries, EXAMPLE_CUSTOM_COLUMNS);

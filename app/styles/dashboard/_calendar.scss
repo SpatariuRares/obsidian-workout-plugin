@@ -35,6 +35,9 @@
     gap: var(--workout-space-xs);
     overflow-x: auto;
     padding-bottom: var(--workout-space-xs);
+    /* Weeks come newest first: right to left keeps them in calendar order and
+       starts the scroll at the current week */
+    direction: rtl;
   }
 
   &-cell {

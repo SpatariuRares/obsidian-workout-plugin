@@ -84,17 +84,13 @@ async function flush(): Promise<void> {
 }
 
 describe("EditTableModal", () => {
-  it("rewrites only the limit and keeps sorting, columns, protocol and comments", async () => {
-    const { state, contentEl, update } = openModal();
-    const limit = [...contentEl.querySelectorAll<HTMLInputElement>("input")].find(
-      (el) => el.value === "12",
-    )!;
+  it("removes the limit and keeps sorting, columns, protocol and comments", async () => {
+    const { state, update } = openModal();
 
-    limit.value = "20";
     update();
     await flush();
 
-    expect(state.content).toBe(NOTE.replace("limit: 12", "limit: 20"));
+    expect(state.content).toBe(NOTE.replace("limit: 12\n", ""));
   });
 
   it("writes the planned sets typed in the form", async () => {
@@ -112,7 +108,7 @@ describe("EditTableModal", () => {
   });
 
   it("keeps planned sets already in the block", async () => {
-    const note = NOTE.replace("limit: 12", "limit: 12\nsets: 3");
+    const note = NOTE.replace("limit: 12", "sets: 3");
     const { state, update } = openModal(note);
 
     update();
@@ -121,12 +117,13 @@ describe("EditTableModal", () => {
     expect(state.content).toBe(note);
   });
 
-  it("leaves the block untouched when nothing changed", async () => {
-    const { state, update } = openModal();
+  it("leaves a block without limit untouched when nothing changed", async () => {
+    const note = NOTE.replace("limit: 12\n", "");
+    const { state, update } = openModal(note);
 
     update();
     await flush();
 
-    expect(state.content).toBe(NOTE);
+    expect(state.content).toBe(note);
   });
 });

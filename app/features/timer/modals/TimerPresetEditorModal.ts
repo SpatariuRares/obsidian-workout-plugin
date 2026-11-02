@@ -125,6 +125,7 @@ export class TimerPresetEditorModal extends ModalBase {
       );
 
     new Setting(contentEl)
+      .setClass("workout-modal-actions")
       .addButton((button) =>
         button
           .setButtonText(t("settings.buttons.savePreset"))

@@ -295,19 +295,6 @@
   touch-action: none;
 }
 
-.workout-dashboard-form > .workout-buttons-container {
-  position: sticky;
-  bottom: 0;
-  z-index: 1;
-  padding: var(--workout-space-md) 0;
-  background: var(--modal-background, var(--background-primary));
-  border-top: var(--workout-border-thin) solid
-    var(--background-modifier-border);
-  /* Covers the modal's bottom padding, where the list would show through */
-  box-shadow: 0 var(--workout-space-lg) 0
-    var(--modal-background, var(--background-primary));
-}
-
 /* The list or the grid, whichever the layout isn't, is [hidden]: keep it out
    of the layout even where a rule here sets its display */
 .workout-dashboard-form [hidden] {

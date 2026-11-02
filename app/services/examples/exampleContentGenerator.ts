@@ -355,6 +355,41 @@ ${generateExerciseChartBlock(cycling, CHART_DATA_TYPE.DISTANCE)}
 `;
 }
 
+/** A yoga flow: timed holds the guided session walks through, pose by pose */
+export function generateYogaContent(): string {
+  const workoutName = t("examples.workouts.yogaFlow.name");
+  // Targets one step (5 s) above the last holds in the example log
+  const poses = [
+    { id: "idDownwardDog", name: t("examples.exercises.downwardDog.name"), seconds: 70 },
+    { id: "idWarriorTwo", name: t("examples.exercises.warriorTwo.name"), seconds: 60 },
+    { id: "idTreePose", name: t("examples.exercises.treePose.name"), seconds: 60 },
+  ];
+  const restSeconds = 20;
+
+  return `${t("examples.yoga.intro")}
+
+## ${t("examples.workout.session")}
+
+${generateSessionBlock()}
+
+${poses
+  .map(
+    (pose) => `## ${pose.name}
+
+### ${t("examples.yoga.holds", { holds: "3", seconds: String(pose.seconds) })} ${t("examples.workout.recoverySuffix", { seconds: String(restSeconds) })}
+
+${generateCountdownTimerBlock(pose.id, restSeconds, pose.name)}
+
+${generateExerciseLogBlock(pose.name, workoutName, { sets: 3 })}`,
+  )
+  .join("\n\n")}
+
+## ${t("examples.yoga.progressTitle")}
+
+${generateExerciseChartBlock(poses[0].name, CHART_DATA_TYPE.DURATION, { dateRange: 60, showStats: true })}
+`;
+}
+
 export function generateDashboardContent(): string {
   return `# ${t("examples.dashboard.title")}
 

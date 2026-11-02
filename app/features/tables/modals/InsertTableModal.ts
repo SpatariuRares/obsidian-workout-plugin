@@ -28,7 +28,6 @@ import { INPUT_TYPE } from "@app/types/InputTypes";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { t } from "@app/i18n";
 
-const LIMIT_INCREMENT = 5;
 const DATE_RANGE_INCREMENT = 7;
 const TARGET_WEIGHT_INCREMENT = 5;
 const TARGET_REPS_INCREMENT = 1;
@@ -38,7 +37,6 @@ export class InsertTableModal extends BaseInsertModal {
   protected tableTypeChips: Map<string, HTMLButtonElement> =
     new Map();
   protected targetElements?: TargetSectionWithAutocompleteElements;
-  protected limitInput?: HTMLInputElement;
   protected dateRangeInput?: HTMLInputElement;
   protected advancedElements?: AdvancedOptionsElements;
   protected targetWeightInput?: HTMLInputElement;
@@ -144,16 +142,6 @@ export class InsertTableModal extends BaseInsertModal {
     const parametersContainer = configSection.createDiv({
       cls: "workout-parameters-container",
     });
-
-    // Limit with +/- adjust
-    this.limitInput = this.createAdjustField(
-      parametersContainer,
-      t("modal.maxLogCount"),
-      CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT,
-      CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT_MIN,
-      CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT_MAX,
-      LIMIT_INCREMENT,
-    );
 
     // Date range with +/- adjust
     this.dateRangeInput = this.createAdjustField(
@@ -292,11 +280,13 @@ export class InsertTableModal extends BaseInsertModal {
     Button.onClick(minusBtn, () => {
       const current = parseInt(input.value) || 0;
       input.value = Math.max(min, current - increment).toString();
+      input.dispatchEvent(new Event("input"));
     });
 
     Button.onClick(plusBtn, () => {
       const current = parseInt(input.value) || 0;
       input.value = Math.min(max, current + increment).toString();
+      input.dispatchEvent(new Event("input"));
     });
 
     return input;
@@ -340,7 +330,6 @@ export class InsertTableModal extends BaseInsertModal {
     if (
       !this.tableTypeSelect ||
       !this.targetElements ||
-      !this.limitInput ||
       !this.advancedElements
     ) {
       throw new Error(t("modal.errors.missingElements"));
@@ -380,8 +369,6 @@ export class InsertTableModal extends BaseInsertModal {
       id: this.getCodeBlockId(),
       exercise: target.exercise || undefined,
       workout: target.workout || undefined,
-      limit:
-        parseInt(this.limitInput.value) || tableBlock.defaults.limit,
       dateRange: dateRange > 0 ? dateRange : undefined,
       showAddButton: showAddButton ? undefined : false,
       exactMatch: advancedValues.exactMatch ? true : undefined,

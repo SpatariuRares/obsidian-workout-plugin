@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "스쿼트 멀티 파워"
+      },
+      "downwardDog": {
+        "name": "다운독"
+      },
+      "warriorTwo": {
+        "name": "전사 자세 II"
+      },
+      "treePose": {
+        "name": "나무 자세"
       }
     },
     "featureShowcase": {
@@ -410,6 +419,9 @@
       },
       "upperBodyPower": {
         "name": "상체 파워"
+      },
+      "yogaFlow": {
+        "name": "아침 요가 플로우"
       }
     },
     "notes": {
@@ -418,7 +430,12 @@
     },
     "createToOpenGuide": "시작 가이드에는 예제 노트가 포함되어 있으며, 아직 존재하지 않습니다. 지금 만들어 볼까요?",
     "pointedAtExamples": "이제 뷰에서 예제 로그와 운동 종목을 읽습니다. 데이터 설정에서 이를 변경할 수 있습니다.",
-    "usesSeparateLog": "이미 운동 기록이 있으므로, 변경하지 않았습니다. 예시에서는 자체 로그 파일을 사용합니다."
+    "usesSeparateLog": "이미 운동 기록이 있으므로, 변경하지 않았습니다. 예시에서는 자체 로그 파일을 사용합니다.",
+    "yoga": {
+      "intro": "시간을 재며 자세를 유지하는 짧은 아침 플로우입니다. 가이드 세션을 시작하고 각 자세를 유지한 뒤, 얼마나 오래 버텼는지 기록하세요. 휴식 타이머는 자동으로 시작됩니다.",
+      "holds": "{holds}회 유지 × {seconds}초",
+      "progressTitle": "진행 상황"
+    }
   },
   "forms": {
     "enterCsvPath": "CSV 파일 폴더",
@@ -595,7 +612,6 @@
     "layoutHorizontal": "수평 방향 흐름",
     "layoutType": "레이아웃 유형:",
     "layoutVertical": "수직 흐름",
-    "maxLogCount": "최대 로그 수:",
     "muscleGroup": "근육 그룹",
     "newTag": "새로운 태그",
     "noTagsFound": "검색 결과에 일치하는 태그가 없습니다.",
@@ -799,7 +815,8 @@
       "savePreset": "저장",
       "saveProtocol": "저장",
       "showWelcome": "환영 창 표시",
-      "takeTour": "투어 시작"
+      "takeTour": "투어 시작",
+      "createExampleNotes": "예시 만들기"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "이미 근육 태그 CSV 파일이 존재합니다. 기본값으로 덮어쓰시겠습니까? 이 작업으로 모든 사용자 지정 태그가 삭제됩니다.",
@@ -830,7 +847,8 @@
       "keepScreenAwake": "타이머가 실행되는 동안 화면이 꺼지지 않도록 유지하려고 합니다. 배터리를 더 많이 사용합니다. 사용 가능 여부는 기기와 시스템 설정에 따라 다릅니다.",
       "vibrateOnCompletion": "타이머가 끝나면 소리와 별개로 짧게 진동합니다. 페이지를 한 번 터치한 뒤 지원되는 기기(예: 안드로이드)에서만 작동합니다. iOS에서는 사용할 수 없으며, 백그라운드 알림도 없습니다.",
       "presetRestDesc": "각 라운드의 운동 후 휴식 시간 (0이면 휴식 없음).",
-      "noCustomProtocols": "현재 프로토콜이 설정되지 않았습니다. '프로토콜 추가'를 클릭하여 새 프로토콜을 생성하세요."
+      "noCustomProtocols": "현재 프로토콜이 설정되지 않았습니다. '프로토콜 추가'를 클릭하여 새 프로토콜을 생성하세요.",
+      "createExampleNotes": "모든 기능을 체험할 수 있도록 예시 노트와 6주 분량의 예시 운동을 추가합니다. 이미 있는 노트는 덮어쓰지 않습니다."
     },
     "labels": {
       "csvPath": "CSV 로그 파일 경로",

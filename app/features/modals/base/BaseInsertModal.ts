@@ -44,7 +44,7 @@ export abstract class BaseInsertModal extends ModalBase {
     this.createConfigurationSections(mainContainer);
 
     // Create buttons section (common to all insert modals)
-    const buttonsSection = Button.createContainer(mainContainer);
+    const buttonsSection = Button.createModalActions(mainContainer);
     this.createButtons(buttonsSection);
   }
 

@@ -13,6 +13,7 @@ import { TableDataCheckers } from "@app/features/tables/business/TableDataChecke
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 import { TableRowProcessor } from "@app/features/tables/business/TableRowProcessor";
 import { t } from "@app/i18n";
+import { tableRowLimit } from "@app/features/tables/tableBlock";
 
 /**
  * Orchestrates the processing of workout log data for table display.
@@ -36,7 +37,7 @@ export class TableDataProcessor {
   ): Promise<TableData> {
     // Determine if we're showing all logs (no exercise filter)
     const isShowingAllLogs = !params.exercise;
-    const limit = params.limit || 50;
+    const limit = tableRowLimit(params);
 
     // Sort and limit already-filtered data, then check optional columns in visible rows only
     const sortedAndLimitedData = TableRowProcessor.sortAndLimitData(

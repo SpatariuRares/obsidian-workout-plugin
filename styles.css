@@ -2272,6 +2272,24 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
   padding-bottom: var(--workout-space-sm);
 }
 
+/* A modal's main buttons (Button.createModalActions) stay at the bottom of
+   the modal, always visible, while the form scrolls under them */
+.workout-modal-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  margin-top: var(--workout-space-lg);
+  padding-block: var(--workout-space-md);
+  background: var(--modal-background, var(--background-primary));
+  border-top: var(--workout-border-thin) solid var(--workout-border-subtle);
+  /* Covers the modal's bottom padding, where the form would show through */
+  box-shadow: 0 var(--workout-space-lg) 0 var(--modal-background, var(--background-primary));
+}
+
+body.is-mobile .workout-modal-actions {
+  padding-bottom: calc(var(--workout-space-md) + env(safe-area-inset-bottom, 0px));
+}
+
 /* ============================================================================
    WORKOUT CHARTS PLUGIN - STYLES
    Modern styles using Obsidian CSS Variables
@@ -2534,17 +2552,6 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
   cursor: grab;
   /* The pointer drags the row instead of scrolling the modal */
   touch-action: none;
-}
-
-.workout-dashboard-form > .workout-buttons-container {
-  position: sticky;
-  bottom: 0;
-  z-index: 1;
-  padding: var(--workout-space-md) 0;
-  background: var(--modal-background, var(--background-primary));
-  border-top: var(--workout-border-thin) solid var(--background-modifier-border);
-  /* Covers the modal's bottom padding, where the list would show through */
-  box-shadow: 0 var(--workout-space-lg) 0 var(--modal-background, var(--background-primary));
 }
 
 /* The list or the grid, whichever the layout isn't, is [hidden]: keep it out
@@ -2964,22 +2971,6 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
 
 .workout-modal input[aria-invalid=true] {
   border-color: var(--workout-text-error);
-}
-
-/* On phones the save button stays at the bottom of the modal while the
-   optional fields scroll under it */
-body.is-mobile .modal-content.workout-log-modal {
-  padding-bottom: 0;
-}
-
-body.is-mobile .workout-log-actions {
-  position: sticky;
-  bottom: 0;
-  z-index: 1;
-  margin-top: var(--workout-space-lg);
-  padding-block: var(--workout-space-md) calc(var(--workout-space-md) + env(safe-area-inset-bottom, 0px));
-  background: var(--modal-background, var(--background-primary));
-  border-top: var(--workout-border-thin) solid var(--workout-border-subtle);
 }
 
 /* Edit log: deleting is rare, so it is a small icon at the start of the
@@ -4445,6 +4436,9 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   gap: var(--workout-space-xs);
   overflow-x: auto;
   padding-bottom: var(--workout-space-xs);
+  /* Weeks come newest first: right to left keeps them in calendar order and
+     starts the scroll at the current week */
+  direction: rtl;
 }
 .workout-calendar-cell {
   width: var(--workout-calendar-cell, 11px);

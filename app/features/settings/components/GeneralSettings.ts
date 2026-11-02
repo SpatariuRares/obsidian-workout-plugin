@@ -1,4 +1,8 @@
-import { openGettingStartedGuide } from "@app/services/examples/GettingStartedGuide";
+import {
+  createExampleNotes,
+  openGettingStartedGuide,
+} from "@app/services/examples/GettingStartedGuide";
+import { startGuidedTour } from "@app/features/tour/startGuidedTour";
 import {
   App,
   Setting,
@@ -81,9 +85,19 @@ export class GeneralSettings {
         heading: t("settings.sections.gettingStarted"),
         items: [
           {
+            name: t("commands.createExampleNotes"),
+            desc: t("settings.descriptions.createExampleNotes"),
+            render: (setting) => this.renderCreateExamples(setting),
+          },
+          {
             name: t("commands.openGettingStartedGuide"),
             desc: t("examples.gettingStarted.openGuideDesc"),
             render: (setting) => this.renderGettingStarted(setting),
+          },
+          {
+            name: t("settings.labels.takeTour"),
+            desc: t("settings.descriptions.takeTour"),
+            render: (setting) => this.renderTakeTour(setting),
           },
         ],
       },
@@ -200,6 +214,27 @@ export class GeneralSettings {
               }),
             );
           }
+        }),
+    );
+  }
+
+  /** Adds the example notes that are missing; never overwrites one */
+  private renderCreateExamples(setting: Setting): void {
+    setting.addButton((button) =>
+      button
+        .setButtonText(t("settings.buttons.createExampleNotes"))
+        .onClick(async () => {
+          await createExampleNotes(this.plugin);
+        }),
+    );
+  }
+
+  private renderTakeTour(setting: Setting): void {
+    setting.addButton((button) =>
+      button
+        .setButtonText(t("settings.buttons.takeTour"))
+        .onClick(async () => {
+          await startGuidedTour(this.plugin, { source: "settings" });
         }),
     );
   }

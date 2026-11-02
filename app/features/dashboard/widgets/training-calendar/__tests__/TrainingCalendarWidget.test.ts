@@ -42,6 +42,21 @@ describe("TrainingCalendarWidget", () => {
     expect(grid?.querySelectorAll(".is-future")).toHaveLength(4);
   });
 
+  it("should put the current week first, so a narrow grid starts at it", () => {
+    const container = render([set("2024-01-15")], 1);
+
+    const cells = Array.from(
+      container.querySelector(".workout-calendar-grid")?.children ?? [],
+    );
+    // This week (Mon 15 .. Sun 21): Monday trained, Thursday to Sunday to come
+    const thisWeek = cells.slice(0, 7);
+    expect(thisWeek[0].classList).toContain("workout-calendar-level-4");
+    expect(thisWeek.filter((c) => c.classList.contains("is-future"))).toHaveLength(4);
+    expect(
+      cells.slice(-7).some((c) => c.classList.contains("is-future")),
+    ).toBe(false);
+  });
+
   it("should show the streaks against the weekly goal and this week's progress", () => {
     const container = render(
       [

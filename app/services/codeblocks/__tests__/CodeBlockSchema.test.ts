@@ -36,7 +36,6 @@ describe("CodeBlockSchema (workout-log schema)", () => {
         exercise: "Squat",
       });
       expect(tableBlock.defaults).toMatchObject({
-        limit: 50,
         sortBy: "date",
         sortOrder: "desc",
         showAddButton: true,

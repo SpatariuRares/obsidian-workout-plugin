@@ -14,6 +14,7 @@ import {
   generateWorkoutContent,
   generateFeatureShowcaseContent,
   generateHIITContent,
+  generateYogaContent,
   generateDashboardContent,
 } from "@app/services/examples/exampleContentGenerator";
 import { examplePaths } from "@app/services/examples/ExamplePaths";
@@ -177,6 +178,21 @@ export class ExampleGeneratorService {
           type: "strength",
           tags: ["legs", "calves"],
         },
+        {
+          name: t("examples.exercises.downwardDog.name"),
+          type: "timed",
+          tags: ["shoulders", "hamstrings", "calves"],
+        },
+        {
+          name: t("examples.exercises.warriorTwo.name"),
+          type: "timed",
+          tags: ["quads", "glutes", "shoulders"],
+        },
+        {
+          name: t("examples.exercises.treePose.name"),
+          type: "timed",
+          tags: ["calves", "core"],
+        },
       ];
 
       for (const ex of exercises) {
@@ -220,6 +236,13 @@ export class ExampleGeneratorService {
         workoutsPath,
         `${t("examples.fileNames.hiitCardioSession")}.md`,
         generateHIITContent(),
+      );
+
+      // Create Yoga Flow
+      await this.createFileIfMissing(
+        workoutsPath,
+        `${t("examples.workouts.yogaFlow.name")}.md`,
+        generateYogaContent(),
       );
 
       new Notice(

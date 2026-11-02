@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "Dřep v multipressu"
+      },
+      "downwardDog": {
+        "name": "Pes hlavou dolů"
+      },
+      "warriorTwo": {
+        "name": "Bojovník II"
+      },
+      "treePose": {
+        "name": "Strom"
       }
     },
     "featureShowcase": {
@@ -410,6 +419,9 @@
       },
       "upperBodyPower": {
         "name": "Síla horní části těla"
+      },
+      "yogaFlow": {
+        "name": "Ranní jóga flow"
       }
     },
     "notes": {
@@ -418,7 +430,12 @@
     },
     "createToOpenGuide": "Průvodce pro začátek je součástí poznámek s příklady, které ještě neexistují. Chcete je vytvořit nyní?",
     "pointedAtExamples": "Vaše nastavení nyní čte příkladový log a cvičení. Změňte to v nastaveních dat.",
-    "usesSeparateLog": "Máte již vytvořený záznam tréninků, takže byl ponechán bez úprav. Příklady používají vlastní soubor pro záznam."
+    "usesSeparateLog": "Máte již vytvořený záznam tréninků, takže byl ponechán bez úprav. Příklady používají vlastní soubor pro záznam.",
+    "yoga": {
+      "intro": "Krátký ranní flow sekvenci časově měřených výdrží. Spusťte vedenou relaci, udržte každou pozici a potom zapište, jak dlouho jste ji drželi: odpočinkový časovač se spustí sám.",
+      "holds": "{holds} výdrží × {seconds} s",
+      "progressTitle": "Pokrok"
+    }
   },
   "forms": {
     "enterCsvPath": "Složka pro soubory CSV",
@@ -595,7 +612,6 @@
     "layoutHorizontal": "Vodorovné uspořádání",
     "layoutType": "Typ rozvržení:",
     "layoutVertical": "Svislé uspořádání",
-    "maxLogCount": "Maximální počet záznamů:",
     "muscleGroup": "Skupina svalů",
     "newTag": "Nový štítek",
     "noTagsFound": "Vašemu hledání neodpovídají žádné štítky",
@@ -799,7 +815,8 @@
       "savePreset": "Uložit",
       "saveProtocol": "Uložit",
       "showWelcome": "Zobrazit uvítání",
-      "takeTour": "Projít prohlídku"
+      "takeTour": "Projít prohlídku",
+      "createExampleNotes": "Vytvořit ukázky"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Soubor CSV se štítky svalů už existuje. Chcete jej přepsat výchozími hodnotami? Tím odstraníte všechny vlastní štítky.",
@@ -830,7 +847,8 @@
       "keepScreenAwake": "Pokuste se, aby obrazovka zůstala aktivní, zatímco běží jakýkoli časovač na prvním plánu. Spotřebuje více baterie; dostupnost závisí na vašem zařízení a systémových nastaveních.",
       "vibrateOnCompletion": "Krátké vibrace po skončení časovače, bez ohledu na zvuk. Vyžaduje stisknutí na stránce a kompatibilní zařízení (např. Android). Není k dispozici pro iOS; bez upozornění na pozadí.",
       "presetRestDesc": "Sekundy odpočinku po každém kole (0 znamená žádný odpočinek).",
-      "noCustomProtocols": "Zatím nejsou žádné protokoly. Klikněte na „Přidat protokol“ a vytvořte první."
+      "noCustomProtocols": "Zatím nejsou žádné protokoly. Klikněte na „Přidat protokol“ a vytvořte první.",
+      "createExampleNotes": "Přidá ukázkové poznámky a šest týdnů ukázkových tréninků, abyste mohli vyzkoušet všechny funkce. Poznámky, které už máte, se nikdy nepřepíší."
     },
     "labels": {
       "csvPath": "Cesta k souboru záznamů CSV",

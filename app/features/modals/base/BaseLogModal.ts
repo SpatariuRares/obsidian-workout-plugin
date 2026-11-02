@@ -133,9 +133,9 @@ export abstract class BaseLogModal extends ModalBase {
     // Note: Auto-fill logic is now handled within LogFormRenderer's setup
 
     // Create buttons
-    const buttonsContainer = Button.createContainer(formContainer);
-    // Stays at the bottom of the modal on phones: saving the prefilled set
-    // shouldn't need a scroll past protocol, notes and workout
+    // Saving the prefilled set shouldn't need a scroll past protocol, notes
+    // and workout
+    const buttonsContainer = Button.createModalActions(formContainer);
     buttonsContainer.addClass("workout-log-actions");
     this.createButtons(buttonsContainer, this.formElements);
 

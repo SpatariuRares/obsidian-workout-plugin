@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "Latihan Squat Multi Power"
+      },
+      "downwardDog": {
+        "name": "Anjing Menghadap ke Bawah"
+      },
+      "warriorTwo": {
+        "name": "Prajurit II"
+      },
+      "treePose": {
+        "name": "Pohon"
       }
     },
     "featureShowcase": {
@@ -410,6 +419,9 @@
       },
       "upperBodyPower": {
         "name": "Kekuatan Tubuh Bagian Atas"
+      },
+      "yogaFlow": {
+        "name": "Flow Yoga Pagi"
       }
     },
     "notes": {
@@ -418,7 +430,12 @@
     },
     "createToOpenGuide": "Panduan memulai ini adalah bagian dari catatan contoh, yang belum ada. Apakah Anda ingin membuatnya sekarang?",
     "pointedAtExamples": "Tampilan Anda sekarang membaca contoh log dan latihan. Ubah ini di pengaturan data.",
-    "usesSeparateLog": "Anda sudah memiliki log latihan, jadi file tersebut tidak dimodifikasi. Contoh-contoh menggunakan file log mereka sendiri."
+    "usesSeparateLog": "Anda sudah memiliki log latihan, jadi file tersebut tidak dimodifikasi. Contoh-contoh menggunakan file log mereka sendiri.",
+    "yoga": {
+      "intro": "Flow pagi singkat berisi tahan posisi berwaktu. Mulai sesi terpandu, tahan setiap pose, lalu catat berapa lama Anda menahannya: timer istirahat mulai sendiri.",
+      "holds": "{holds} tahanan × {seconds} dtk",
+      "progressTitle": "Kemajuan"
+    }
   },
   "forms": {
     "enterCsvPath": "Folder untuk file CSV",
@@ -595,7 +612,6 @@
     "layoutHorizontal": "Aliran horizontal",
     "layoutType": "Jenis tata letak:",
     "layoutVertical": "Aliran vertikal",
-    "maxLogCount": "Jumlah log maksimum:",
     "muscleGroup": "Kelompok otot",
     "newTag": "Tag baru",
     "noTagsFound": "Tidak ada tag yang cocok dengan pencarian Anda",
@@ -799,7 +815,8 @@
       "savePreset": "Simpan",
       "saveProtocol": "Simpan",
       "showWelcome": "Tampilkan pesan selamat datang",
-      "takeTour": "Ikuti tur"
+      "takeTour": "Ikuti tur",
+      "createExampleNotes": "Buat contoh"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "File CSV untuk tag otot sudah ada. Apakah Anda ingin menimpanya dengan nilai default? Ini akan menghapus semua tag yang telah Anda buat.",
@@ -830,7 +847,8 @@
       "vibrateOnCompletion": "Bergetar sebentar saat timer selesai, terlepas dari suara. Membutuhkan sentuhan pada halaman dan perangkat yang didukung (seperti Android). Tidak tersedia di iOS; tidak ada notifikasi latar belakang.",
       "presetRestDesc": "Detik istirahat setelah menyelesaikan setiap putaran (0 untuk tidak ada istirahat).",
       "noCustomProtocols": "Belum ada protokol. Klik 'Tambahkan protokol' untuk membuatnya.",
-      "weeklyGoal": "Jumlah hari latihan per minggu agar streak Anda tetap berjalan, di ringkasan dasbor dan kalender latihan."
+      "weeklyGoal": "Jumlah hari latihan per minggu agar streak Anda tetap berjalan, di ringkasan dasbor dan kalender latihan.",
+      "createExampleNotes": "Menambahkan catatan contoh dan enam minggu latihan contoh untuk mencoba semua fitur. Catatan yang sudah Anda miliki tidak pernah ditimpa."
     },
     "labels": {
       "csvPath": "Jalur file log CSV",

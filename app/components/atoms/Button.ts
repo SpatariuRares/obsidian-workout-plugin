@@ -51,6 +51,16 @@ export class Button {
     });
   }
 
+  /**
+   * The row of a modal's main buttons (save, cancel, ...): it stays at the
+   * bottom of the modal while the form scrolls under it
+   */
+  static createModalActions(parent: HTMLElement): HTMLElement {
+    const actions = Button.createContainer(parent);
+    actions.addClass("workout-modal-actions");
+    return actions;
+  }
+
   static create(
     parent: HTMLElement,
     props: ButtonProps,

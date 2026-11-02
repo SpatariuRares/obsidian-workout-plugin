@@ -66,7 +66,8 @@ export class ChartColors {
     varName: string,
     fallback: string,
   ): string {
-    const style = getComputedStyle(document.documentElement);
+    // Obsidian defines its theme variables on body.theme-*, not on :root
+    const style = getComputedStyle(document.body);
     const value = style.getPropertyValue(`--${varName}`).trim();
     return value || fallback;
   }

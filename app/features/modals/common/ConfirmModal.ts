@@ -48,7 +48,7 @@ export class ConfirmModal extends ModalBase {
     contentEl.createEl("p", { text: this.message });
 
     // Button container
-    const buttonContainer = Button.createContainer(contentEl);
+    const buttonContainer = Button.createModalActions(contentEl);
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(buttonContainer, {

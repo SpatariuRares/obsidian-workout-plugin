@@ -130,7 +130,7 @@ export class ImportWorkoutsModal extends ModalBase {
     }
 
     el.createEl("p", { text: t("import.backupNote") });
-    const buttons = Button.createContainer(el);
+    const buttons = Button.createModalActions(el);
     const cancelBtn = Button.create(buttons, {
       text: t("modal.buttons.cancel"),
       ariaLabel: t("modal.buttons.cancel"),

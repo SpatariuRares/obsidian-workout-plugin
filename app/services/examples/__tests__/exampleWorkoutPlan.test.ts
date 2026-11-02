@@ -1,4 +1,7 @@
-import { generateWorkoutContent } from "@app/services/examples/exampleContentGenerator";
+import {
+  generateWorkoutContent,
+  generateYogaContent,
+} from "@app/services/examples/exampleContentGenerator";
 import { readSessionPlan } from "@app/features/session/business/sessionPlan";
 import { readWorkoutNote } from "@app/services/notes/WorkoutNote";
 import { t } from "@app/i18n";
@@ -23,6 +26,20 @@ describe("example workout note as a guided session", () => {
       [t("examples.exercises.legPress45.name"), 4, 120],
       [t("examples.exercises.legCurlSeated.name"), 3, 90],
       [t("examples.exercises.calfMachine.name"), 4, 60],
+    ]);
+  });
+});
+
+describe("example yoga flow as a guided session", () => {
+  it("plans each pose with three holds and the rest of its section", () => {
+    const steps = readSessionPlan(generateYogaContent());
+
+    expect(
+      steps.map((step) => [step.exercise, step.sets, step.rest.duration]),
+    ).toEqual([
+      [t("examples.exercises.downwardDog.name"), 3, 20],
+      [t("examples.exercises.warriorTwo.name"), 3, 20],
+      [t("examples.exercises.treePose.name"), 3, 20],
     ]);
   });
 });

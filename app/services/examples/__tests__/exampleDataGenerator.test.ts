@@ -27,10 +27,11 @@ describe("generateExampleCSVData", () => {
       }
     });
 
-    it("should generate 12 lower, 12 upper and 11 cardio sessions of rows", () => {
+    it("should generate 12 lower, 12 upper, 11 cardio and 11 yoga sessions of rows", () => {
       // lower: 12 * (4+4+4+3+4+3) = 264, plus a squat warm-up in sessions 2, 6
-      // and 10 = 3; upper: 12 * 8 = 96, cardio: 11 * 2 = 22
-      expect(lines.length - 1).toBe(264 + 3 + 96 + 22);
+      // and 10 = 3; upper: 12 * 8 = 96, cardio: 11 * 2 = 22,
+      // yoga: 11 * 3 poses * 3 holds = 99
+      expect(lines.length - 1).toBe(264 + 3 + 96 + 22 + 99);
     });
 
     it("should use ISO dates within the last 40 days", () => {
@@ -80,7 +81,7 @@ describe("generateExampleCSVData", () => {
       }
     });
 
-    it("should use the three localized workout names", () => {
+    it("should use the four localized workout names", () => {
       const workouts = new Set(parseLog(csv).entries.map((e) => e.workout));
 
       expect(workouts).toEqual(
@@ -88,6 +89,7 @@ describe("generateExampleCSVData", () => {
           t("examples.workouts.lowerBodyA.name"),
           t("examples.workouts.upperBodyPower.name"),
           t("examples.workouts.cardioDay.name"),
+          t("examples.workouts.yogaFlow.name"),
         ]),
       );
     });

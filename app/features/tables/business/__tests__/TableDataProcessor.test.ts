@@ -145,6 +145,29 @@ describe("TableDataProcessor", () => {
       expect(result.totalRows).toBe(50);
     });
 
+    it("shows the last two workouts' planned sets when only sets is given", async () => {
+      const logData = Array.from({ length: 20 }, (_, i) =>
+        createLog({ date: `2024-01-${String(i + 1).padStart(2, "0")}T10:00:00` }),
+      );
+
+      const result = await TableDataProcessor.processTableData(logData, { sets: 4 });
+
+      expect(result.totalRows).toBe(8);
+    });
+
+    it("keeps an explicit limit over the planned sets", async () => {
+      const logData = Array.from({ length: 20 }, (_, i) =>
+        createLog({ date: `2024-01-${String(i + 1).padStart(2, "0")}T10:00:00` }),
+      );
+
+      const result = await TableDataProcessor.processTableData(logData, {
+        sets: 4,
+        limit: 12,
+      });
+
+      expect(result.totalRows).toBe(12);
+    });
+
     it("shows Notes column when data has notes", async () => {
       const logData = [createLog({ notes: "Felt strong" })];
 

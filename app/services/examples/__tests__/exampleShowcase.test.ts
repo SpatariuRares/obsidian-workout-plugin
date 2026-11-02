@@ -3,6 +3,7 @@ import {
   generateFeatureShowcaseContent,
   generateHIITContent,
   generateWorkoutContent,
+  generateYogaContent,
 } from "@app/services/examples/exampleContentGenerator";
 import { readWorkoutNote } from "@app/services/notes/WorkoutNote";
 import { chartBlock } from "@app/features/charts/chartBlock";
@@ -44,6 +45,7 @@ describe("example notes", () => {
     showcase: generateFeatureShowcaseContent(),
     hiit: generateHIITContent(),
     workout: generateWorkoutContent(),
+    yoga: generateYogaContent(),
     strength: generateExerciseContent("Bench Press", "strength", []),
   };
 

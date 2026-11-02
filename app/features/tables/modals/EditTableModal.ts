@@ -78,11 +78,6 @@ export class EditTableModal extends InsertTableModal {
       }
     }
 
-    // Pre-fill limit
-    if (this.limitInput && params.limit !== undefined) {
-      this.limitInput.value = params.limit.toString();
-    }
-
     // Pre-fill date range
     if (this.dateRangeInput && params.dateRange !== undefined) {
       this.dateRangeInput.value = params.dateRange.toString();
@@ -132,6 +127,8 @@ export class EditTableModal extends InsertTableModal {
       path: this.sourcePath,
       match: id ? { id } : null,
       collectParams: () => this.collectParams(),
+      // The rows now follow the planned sets (tableRowLimit)
+      retiredParams: ["limit"],
       buttonText: this.getButtonText(),
       successMessage: this.getSuccessMessage(),
       failureMessage: t("modal.notices.tableUpdateFailed"),

@@ -146,7 +146,7 @@ export class CreateExercisePageModal extends ModalBase {
     );
 
     // Buttons container
-    const buttonsContainer = Button.createContainer(formContainer);
+    const buttonsContainer = Button.createModalActions(formContainer);
 
     // Create button using Button atom
     const createBtn = Button.create(buttonsContainer, {

@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "Sentadilla en multipower"
+      },
+      "downwardDog": {
+        "name": "Perro boca abajo"
+      },
+      "warriorTwo": {
+        "name": "Guerrero II"
+      },
+      "treePose": {
+        "name": "Árbol"
       }
     },
     "featureShowcase": {
@@ -410,6 +419,9 @@
       },
       "upperBodyPower": {
         "name": "Potencia tren superior"
+      },
+      "yogaFlow": {
+        "name": "Flujo matutino de yoga"
       }
     },
     "notes": {
@@ -418,7 +430,12 @@
     },
     "createToOpenGuide": "La guía de inicio forma parte de las notas de ejemplo, que todavía no existen. ¿Crearlas ahora?",
     "pointedAtExamples": "Tus vistas ahora leen el registro y los ejercicios de ejemplo. Cambia esto en la configuración de datos.",
-    "usesSeparateLog": "Ya tienes un registro de tus entrenamientos, por lo que se dejó sin modificar. Los ejemplos utilizan su propio archivo de registro."
+    "usesSeparateLog": "Ya tienes un registro de tus entrenamientos, por lo que se dejó sin modificar. Los ejemplos utilizan su propio archivo de registro.",
+    "yoga": {
+      "intro": "Un breve flujo matutino de posturas mantenidas por tiempo. Inicia la sesión guiada, mantén cada postura y luego registra cuánto tiempo la sostuviste: el temporizador de descanso se inicia solo.",
+      "holds": "{holds} posturas × {seconds} s",
+      "progressTitle": "Progreso"
+    }
   },
   "forms": {
     "enterCsvPath": "Carpeta de los archivos CSV",
@@ -595,7 +612,6 @@
     "layoutHorizontal": "Flujo horizontal",
     "layoutType": "Tipo de diseño:",
     "layoutVertical": "Flujo vertical",
-    "maxLogCount": "Número máximo de registros:",
     "muscleGroup": "Grupo muscular",
     "newTag": "Nueva etiqueta",
     "noTagsFound": "No se encontraron etiquetas que coincidan con tu búsqueda",
@@ -799,7 +815,8 @@
       "savePreset": "Guardar",
       "saveProtocol": "Guardar",
       "showWelcome": "Mostrar bienvenida",
-      "takeTour": "Empezar la visita guiada"
+      "takeTour": "Empezar la visita guiada",
+      "createExampleNotes": "Crear ejemplos"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Ya existe un archivo CSV de etiquetas musculares. ¿Desea sobrescribirlo con los valores predeterminados? Esto eliminará cualquier etiqueta personalizada.",
@@ -830,7 +847,8 @@
       "keepScreenAwake": "Intenta mantener la pantalla encendida mientras se ejecute cualquier temporizador en primer plano. Consume más batería; la disponibilidad depende de tu dispositivo y de la configuración del sistema.",
       "vibrateOnCompletion": "Vibrar brevemente cuando un temporizador finalice, independientemente del sonido. Requiere tocar la página y un dispositivo compatible (como Android). No disponible en iOS; sin notificaciones en segundo plano.",
       "presetRestDesc": "Segundos de descanso después del trabajo de cada ronda (0 para no hacer ninguna pausa).",
-      "noCustomProtocols": "Aún no hay protocolos. Haz clic en «Añadir protocolo» para crear uno."
+      "noCustomProtocols": "Aún no hay protocolos. Haz clic en «Añadir protocolo» para crear uno.",
+      "createExampleNotes": "Añade notas de ejemplo y seis semanas de entrenamientos de ejemplo para probar todas las funciones. Las notas que ya tengas nunca se sobrescriben."
     },
     "labels": {
       "csvPath": "Ruta del archivo de registro CSV",

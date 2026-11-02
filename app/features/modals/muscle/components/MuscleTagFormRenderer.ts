@@ -97,7 +97,7 @@ export class MuscleTagFormRenderer {
     }
 
     const buttonContainer = this.formContainer.createDiv({
-      cls: "workout-tag-form-buttons",
+      cls: "workout-tag-form-buttons workout-modal-actions",
     });
 
     const cancelButton = Button.create(buttonContainer, {

@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "Squat Multi Power"
+      },
+      "downwardDog": {
+        "name": "Chien tête en bas"
+      },
+      "warriorTwo": {
+        "name": "Guerrier II"
+      },
+      "treePose": {
+        "name": "Arbre"
       }
     },
     "featureShowcase": {
@@ -410,6 +419,9 @@
       },
       "upperBodyPower": {
         "name": "Puissance du haut du corps"
+      },
+      "yogaFlow": {
+        "name": "Flow yoga du matin"
       }
     },
     "notes": {
@@ -418,7 +430,12 @@
     },
     "createToOpenGuide": "Le guide de démarrage est inclus dans les notes d'exemple, qui n'existent pas encore. Voulez-vous les créer maintenant ?",
     "pointedAtExamples": "Vos vues afficheront désormais le journal d'exemple et les exercices. Modifiez ceci dans les paramètres de données.",
-    "usesSeparateLog": "Vous avez déjà un journal d'entraînement, donc il n'a pas été modifié. Les exemples utilisent leur propre fichier de journal."
+    "usesSeparateLog": "Vous avez déjà un journal d'entraînement, donc il n'a pas été modifié. Les exemples utilisent leur propre fichier de journal.",
+    "yoga": {
+      "intro": "Un court flow matinal de maintiens chronométrés. Lancez la séance guidée, tenez chaque posture, puis notez combien de temps vous l'avez tenue : le minuteur de repos démarre tout seul.",
+      "holds": "{holds} maintiens × {seconds} s",
+      "progressTitle": "Progression"
+    }
   },
   "forms": {
     "enterCsvPath": "Dossier des fichiers CSV",
@@ -595,7 +612,6 @@
     "layoutHorizontal": "Flux horizontal",
     "layoutType": "Type de mise en page :",
     "layoutVertical": "Flux vertical",
-    "maxLogCount": "Nombre maximal d'entrées de journal :",
     "muscleGroup": "Groupe musculaire",
     "newTag": "Nouveau tag",
     "noTagsFound": "Aucun tag ne correspond à votre recherche",
@@ -799,7 +815,8 @@
       "savePreset": "Enregistrer",
       "saveProtocol": "Enregistrer",
       "showWelcome": "Afficher le message de bienvenue",
-      "takeTour": "Commencer la visite"
+      "takeTour": "Commencer la visite",
+      "createExampleNotes": "Créer les exemples"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fichier CSV de tags musculaires existe déjà. Souhaitez-vous le remplacer par les valeurs par défaut ? Cela supprimera tous les tags personnalisés.",
@@ -830,7 +847,8 @@
       "vibrateOnCompletion": "Vibre brièvement lorsque le minuteur se termine, indépendamment du son. Nécessite un appui sur la page et un appareil compatible (par exemple, Android). Non disponible sur iOS ; pas d'alertes en arrière-plan.",
       "presetRestDesc": "Nombre de secondes de repos après le travail de chaque tour (0 pour aucun repos).",
       "noCustomProtocols": "Aucun protocole n'est défini pour le moment. Cliquez sur « Ajouter un protocole » pour en créer un.",
-      "weeklyGoal": "Jours d'entraînement par semaine qui maintiennent votre série, dans le résumé du tableau de bord et le calendrier d'entraînement."
+      "weeklyGoal": "Jours d'entraînement par semaine qui maintiennent votre série, dans le résumé du tableau de bord et le calendrier d'entraînement.",
+      "createExampleNotes": "Ajoute des notes d'exemple et six semaines d'entraînements d'exemple pour tester toutes les fonctions. Les notes que vous avez déjà ne sont jamais écrasées."
     },
     "labels": {
       "csvPath": "Chemin du fichier journal CSV",

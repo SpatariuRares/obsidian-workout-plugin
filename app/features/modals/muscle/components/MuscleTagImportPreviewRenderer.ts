@@ -105,7 +105,7 @@ export class MuscleTagImportPreviewRenderer {
 
   private renderButtons(options: RenderImportPreviewOptions): void {
     const buttonContainer = this.container.createDiv({
-      cls: "workout-tag-form-buttons",
+      cls: "workout-tag-form-buttons workout-modal-actions",
     });
 
     const cancelButton = Button.create(buttonContainer, {

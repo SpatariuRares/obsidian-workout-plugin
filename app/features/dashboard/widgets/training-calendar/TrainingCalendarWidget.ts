@@ -59,10 +59,12 @@ export class TrainingCalendarWidget {
       thisWeek.met,
     );
 
+    // Newest week first: the grid runs right to left (see _calendar.scss), so
+    // the latest weeks show without scrolling when the year does not fit
     const gridEl = widgetEl.createDiv({
       cls: "workout-calendar-grid",
     });
-    for (const day of calendar.weeks.flat()) this.cell(gridEl, day);
+    for (const day of [...calendar.weeks].reverse().flat()) this.cell(gridEl, day);
 
     const legendEl = widgetEl.createDiv({
       cls: "workout-calendar-legend",
@@ -77,11 +79,6 @@ export class TrainingCalendarWidget {
     }
     legendEl.createSpan({
       text: t("dashboard.trainingCalendar.more"),
-    });
-
-    // Show the latest weeks first when the year does not fit
-    window.requestAnimationFrame(() => {
-      gridEl.scrollLeft = gridEl.scrollWidth;
     });
   }
 

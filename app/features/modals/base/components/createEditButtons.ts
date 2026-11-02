@@ -18,6 +18,8 @@ export interface EditButtonsOptions<P> {
   /** How to find the block; null when it can't be found (update fails) */
   match: CodeBlockMatch | null;
   collectParams: () => P;
+  /** Parameters the form no longer offers: Update removes them from the block */
+  retiredParams?: (keyof P)[];
   buttonText: string;
   successMessage: string;
   failureMessage: string;
@@ -58,6 +60,7 @@ export function createEditButtons<P extends { id?: string }>(
     }
 
     const changes = changedParams(formAtOpen, options.collectParams());
+    for (const key of options.retiredParams ?? []) changes[key] = undefined as P[keyof P];
     // A block found by its body gets an id, so the next edit finds it by id
     if ("body" in match) changes.id = generateCodeBlockId();
 

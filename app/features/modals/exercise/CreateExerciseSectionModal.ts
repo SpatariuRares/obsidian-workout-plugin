@@ -10,7 +10,6 @@ import { TIMER_TYPE } from "@app/features/timer/types";
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { setupWorkoutToggle } from "@app/utils/form/FormUtils";
 import { t } from "@app/i18n";
-import { CONSTANTS } from "@app/constants";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 
 export class CreateExerciseSectionModal extends ModalBase {
@@ -122,7 +121,7 @@ export class CreateExerciseSectionModal extends ModalBase {
     );
 
     // Buttons Section
-    const buttonsSection = Button.createContainer(mainContainer);
+    const buttonsSection = Button.createModalActions(mainContainer);
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(buttonsSection, {
@@ -235,8 +234,8 @@ export class CreateExerciseSectionModal extends ModalBase {
         id: generateCodeBlockId(),
         exercise: params.exerciseName || undefined,
         workout: params.workoutName || undefined,
-        limit: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT,
         exactMatch: true,
+        sets: params.sets,
       });
       sectionCode += logCode;
     }

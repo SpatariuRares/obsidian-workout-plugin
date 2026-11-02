@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "史密斯机深蹲"
+      },
+      "downwardDog": {
+        "name": "下犬式"
+      },
+      "warriorTwo": {
+        "name": "战士二式"
+      },
+      "treePose": {
+        "name": "树式"
       }
     },
     "featureShowcase": {
@@ -410,6 +419,9 @@
       },
       "upperBodyPower": {
         "name": "上肢力量训练"
+      },
+      "yogaFlow": {
+        "name": "晨间瑜伽流"
       }
     },
     "notes": {
@@ -418,7 +430,12 @@
     },
     "createToOpenGuide": "“入门指南”是示例笔记的一部分，但目前还没有。现在创建它们怎么样？",
     "pointedAtExamples": "现在，视图会读取示例记录和训练动作。您可以在数据设置中更改此项。",
-    "usesSeparateLog": "您已有训练记录，因此未作更改。示例使用它们自己的记录文件。"
+    "usesSeparateLog": "您已有训练记录，因此未作更改。示例使用它们自己的记录文件。",
+    "yoga": {
+      "intro": "一段简短的晨间瑜伽流程，包含计时保持的姿势。开始引导训练，保持每个姿势，然后记录保持了多久：休息计时器会自动开始。",
+      "holds": "{holds} 次保持 × {seconds} 秒",
+      "progressTitle": "进度"
+    }
   },
   "forms": {
     "enterCsvPath": "CSV 文件所在文件夹",
@@ -595,7 +612,6 @@
     "layoutHorizontal": "水平布局",
     "layoutType": "布局类型：",
     "layoutVertical": "垂直布局",
-    "maxLogCount": "最大记录数量：",
     "muscleGroup": "肌肉群",
     "newTag": "新建标签",
     "noTagsFound": "未找到与搜索匹配的标签",
@@ -799,7 +815,8 @@
       "savePreset": "保存",
       "saveProtocol": "保存",
       "showWelcome": "显示欢迎窗口",
-      "takeTour": "开始导览"
+      "takeTour": "开始导览",
+      "createExampleNotes": "创建示例"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "肌肉标签 CSV 文件已存在。是否要用默认值覆盖？这将删除所有自定义标签。",
@@ -830,7 +847,8 @@
       "keepScreenAwake": "尝试在任何计时器于前台运行时保持屏幕唤醒。这会消耗更多电量；具体可用性取决于您的设备和系统设置。",
       "vibrateOnCompletion": "在计时器结束时，即使没有声音，也会短暂地震动。需要点击页面并使用支持的设备（例如 Android）。在 iOS 上不可用；不支持后台警报。",
       "presetRestDesc": "每轮工作后，休息的时间（0 表示不休息）。",
-      "noCustomProtocols": "还没有训练方案。点击“添加方案”即可创建一个。"
+      "noCustomProtocols": "还没有训练方案。点击“添加方案”即可创建一个。",
+      "createExampleNotes": "添加示例笔记和六周的示例训练，方便体验所有功能。已有的笔记不会被覆盖。"
     },
     "labels": {
       "csvPath": "CSV 记录文件路径",

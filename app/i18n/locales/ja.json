@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "スクワット マルチ パワー"
+      },
+      "downwardDog": {
+        "name": "ダウンドッグ"
+      },
+      "warriorTwo": {
+        "name": "戦士のポーズII"
+      },
+      "treePose": {
+        "name": "ツリーのポーズ"
       }
     },
     "featureShowcase": {
@@ -410,6 +419,9 @@
       },
       "upperBodyPower": {
         "name": "上半身パワー"
+      },
+      "yogaFlow": {
+        "name": "朝のヨガフロー"
       }
     },
     "notes": {
@@ -418,7 +430,12 @@
     },
     "createToOpenGuide": "「はじめに」ガイドは、まだ作成されていないサンプルのメモに含まれています。今すぐ作成しますか？",
     "pointedAtExamples": "ビューは現在、サンプルのログとエクササイズを読み込んでいます。データ設定で変更できます。",
-    "usesSeparateLog": "すでにワークアウトの記録があるため、変更は行われていません。この例では、それぞれの記録ファイルを使用しています。"
+    "usesSeparateLog": "すでにワークアウトの記録があるため、変更は行われていません。この例では、それぞれの記録ファイルを使用しています。",
+    "yoga": {
+      "intro": "時間を計ってキープする短い朝のフローです。ガイド付きセッションを開始し、各ポーズをキープしたら、キープした時間を記録してください。休憩タイマーは自動で始まります。",
+      "holds": "{holds} 回キープ × {seconds} 秒",
+      "progressTitle": "進捗"
+    }
   },
   "forms": {
     "enterCsvPath": "CSV ファイルのフォルダー",
@@ -595,7 +612,6 @@
     "layoutHorizontal": "水平方向のレイアウト",
     "layoutType": "レイアウトの種類:",
     "layoutVertical": "縦方向のレイアウト",
-    "maxLogCount": "最大ログ数:",
     "muscleGroup": "筋肉群",
     "newTag": "新しいタグ",
     "noTagsFound": "検索条件に一致するタグは見つかりませんでした",
@@ -799,7 +815,8 @@
       "savePreset": "保存",
       "saveProtocol": "保存",
       "showWelcome": "ウェルカムを表示する",
-      "takeTour": "ツアーを開始する"
+      "takeTour": "ツアーを開始する",
+      "createExampleNotes": "例を作成"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "既存の筋肉タグのCSVファイルが存在します。デフォルト値で上書きしますか？これにより、すべてのカスタムタグが削除されます。",
@@ -830,7 +847,8 @@
       "keepScreenAwake": "可能な場合は、タイマーの実行中に画面をオンのままにします。バッテリーの消費が増えます。対応状況は、お使いのデバイスとシステム設定によって異なります。",
       "vibrateOnCompletion": "タイマーが終了した際に、音とは別に短い振動が発生します。ページへのタップと、Androidなどの対応デバイスが必要です。iOSでは利用できません。バックグラウンドアラートは表示されません。",
       "presetRestDesc": "各ラウンドの作業後の休憩時間（0は休憩なし）。",
-      "noCustomProtocols": "まだプロトコルは設定されていません。「プロトコルを追加」をクリックして、新しいプロトコルを作成してください。"
+      "noCustomProtocols": "まだプロトコルは設定されていません。「プロトコルを追加」をクリックして、新しいプロトコルを作成してください。",
+      "createExampleNotes": "例のノートと6週間分の例のワークアウトを追加し、すべての機能を試せるようにします。既にあるノートが上書きされることはありません。"
     },
     "labels": {
       "csvPath": "CSV形式のログファイルのパス",

@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "Squat Multi Power"
+      },
+      "downwardDog": {
+        "name": "Downward Dog"
+      },
+      "warriorTwo": {
+        "name": "Warrior II"
+      },
+      "treePose": {
+        "name": "Tree Pose"
       }
     },
     "featureShowcase": {
@@ -413,11 +422,19 @@
       },
       "upperBodyPower": {
         "name": "Upper Body Power"
+      },
+      "yogaFlow": {
+        "name": "Morning Yoga Flow"
       }
     },
     "notes": {
       "supersetCalves": "Superset with bodyweight calf raises",
       "supersetLunges": "Superset with lunges"
+    },
+    "yoga": {
+      "intro": "A short morning flow of timed holds. Start the guided session, hold each pose, then log how long you held it: the rest timer starts on its own.",
+      "holds": "{holds} holds × {seconds} s",
+      "progressTitle": "Progress"
     }
   },
   "forms": {
@@ -605,7 +622,6 @@
     "layoutHorizontal": "Horizontal flow",
     "layoutType": "Layout type:",
     "layoutVertical": "Vertical flow",
-    "maxLogCount": "Maximum log count:",
     "muscleGroup": "Muscle group",
     "newTag": "New tag",
     "noTagsFound": "No tags match your search",
@@ -799,7 +815,8 @@
       "savePreset": "Save",
       "saveProtocol": "Save",
       "showWelcome": "Show welcome",
-      "takeTour": "Take the tour"
+      "takeTour": "Take the tour",
+      "createExampleNotes": "Create examples"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "A muscle tags CSV file already exists. Do you want to overwrite it with default values? This will remove any custom tags.",
@@ -830,7 +847,8 @@
       "weightIncrement": "Default weight increment for progressive overload (e.g., 2.5 for 2.5 unit increments)",
       "weightUnit": "Unit for charts, totals and new logs. Each log keeps the unit it was entered in.",
       "welcomeWindow": "Show the welcome window again to start with example data or from scratch.",
-      "weeklyGoal": "Training days a week that keep your streak going, in the dashboard summary and training calendar."
+      "weeklyGoal": "Training days a week that keep your streak going, in the dashboard summary and training calendar.",
+      "createExampleNotes": "Add example notes and six weeks of example workouts to try every feature. Notes you already have are never overwritten."
     },
     "labels": {
       "csvPath": "CSV log file path",

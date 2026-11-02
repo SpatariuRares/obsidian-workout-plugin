@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "Squat Multi Power"
+      },
+      "downwardDog": {
+        "name": "Aşağı Bakan Köpek"
+      },
+      "warriorTwo": {
+        "name": "Savaşçı II"
+      },
+      "treePose": {
+        "name": "Ağaç Duruşu"
       }
     },
     "featureShowcase": {
@@ -410,6 +419,9 @@
       },
       "upperBodyPower": {
         "name": "Üst Vücut Gücü"
+      },
+      "yogaFlow": {
+        "name": "Sabah Yoga Akışı"
       }
     },
     "notes": {
@@ -418,7 +430,12 @@
     },
     "createToOpenGuide": "Başlangıç kılavuzu, henüz mevcut olmayan örnek notaların bir parçasıdır. Şimdi oluşturun mu?",
     "pointedAtExamples": "Görünümleriniz şu anda örnek kayıt ve egzersizleri okuyor. Bu ayarı veri ayarlarından değiştirin.",
-    "usesSeparateLog": "Zaten bir antrenman kaydınız var, bu nedenle dokunulmadan bırakıldı. Örnekler kendi kayıt dosyalarını kullanır."
+    "usesSeparateLog": "Zaten bir antrenman kaydınız var, bu nedenle dokunulmadan bırakıldı. Örnekler kendi kayıt dosyalarını kullanır.",
+    "yoga": {
+      "intro": "Zamanlanmış duruşlardan oluşan kısa bir sabah akışı. Rehberli antrenmanı başlat, her duruşu tut, sonra ne kadar süre tuttuğunu kaydet: dinlenme zamanlayıcısı kendiliğinden başlar.",
+      "holds": "{holds} tutuş × {seconds} sn",
+      "progressTitle": "İlerleme"
+    }
   },
   "forms": {
     "enterCsvPath": "CSV dosyaları için klasör",
@@ -595,7 +612,6 @@
     "layoutHorizontal": "Yatay düzen",
     "layoutType": "Düzen türü:",
     "layoutVertical": "Dikey düzen",
-    "maxLogCount": "Maksimum kayıt sayısı:",
     "muscleGroup": "Kas grubu",
     "newTag": "Yeni etiket",
     "noTagsFound": "Aramanızla eşleşen etiket yok",
@@ -799,7 +815,8 @@
       "savePreset": "Kaydet",
       "saveProtocol": "Kaydet",
       "showWelcome": "Hoş geldiniz ekranını göster",
-      "takeTour": "Turu başlat"
+      "takeTour": "Turu başlat",
+      "createExampleNotes": "Örnekleri oluştur"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Kas etiketleri CSV dosyası zaten mevcut. Varsayılan değerlerle üzerine yazmak ister misiniz? Bu, tüm özel etiketleri kaldıracaktır.",
@@ -830,7 +847,8 @@
       "keepScreenAwake": "Zamanlayıcı ön planda çalışırken ekranın açık kalmasını sağlamaya çalışır. Daha fazla pil tüketir; kullanılabilirlik cihazınıza ve sistem ayarlarınıza bağlıdır.",
       "vibrateOnCompletion": "Zamanlayıcı bittiğinde, sesten bağımsız olarak kısa bir süre titreşim sağlar. Sayfaya dokunma ve uyumlu bir cihaz (örneğin Android) gerektirir. iOS'ta mevcut değildir; arka planda bildirimler gönderilmez.",
       "presetRestDesc": "Her turun sonunda yapılan dinlenme süresi (0, dinlenme yok anlamına gelir).",
-      "noCustomProtocols": "Henüz herhangi bir protokol tanımlanmamış. \"Protokol ekle\" düğmesine tıklayarak bir tane oluşturabilirsiniz."
+      "noCustomProtocols": "Henüz herhangi bir protokol tanımlanmamış. \"Protokol ekle\" düğmesine tıklayarak bir tane oluşturabilirsiniz.",
+      "createExampleNotes": "Her özelliği denemek için örnek notlar ve altı haftalık örnek antrenman ekler. Zaten sahip olduğun notlar asla üzerine yazılmaz."
     },
     "labels": {
       "csvPath": "CSV kayıt dosyası yolu",

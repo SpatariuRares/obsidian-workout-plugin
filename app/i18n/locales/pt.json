@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "Agachamento no multipower"
+      },
+      "downwardDog": {
+        "name": "Cão olhando para baixo"
+      },
+      "warriorTwo": {
+        "name": "Guerreiro II"
+      },
+      "treePose": {
+        "name": "Árvore"
       }
     },
     "featureShowcase": {
@@ -410,6 +419,9 @@
       },
       "upperBodyPower": {
         "name": "Potência membros superiores"
+      },
+      "yogaFlow": {
+        "name": "Flow de yoga matinal"
       }
     },
     "notes": {
@@ -418,7 +430,12 @@
     },
     "createToOpenGuide": "O guia de início é parte das notas de exemplo, que ainda não existem. Criá-las agora?",
     "pointedAtExamples": "As suas vistas vão ler o registo e os exercícios de exemplo. Altere isto nas definições de dados.",
-    "usesSeparateLog": "Já tem um registo de treino, por isso não foi alterado. Os exemplos utilizam o seu próprio ficheiro de registo."
+    "usesSeparateLog": "Já tem um registo de treino, por isso não foi alterado. Os exemplos utilizam o seu próprio ficheiro de registo.",
+    "yoga": {
+      "intro": "Um flow matinal curto de posturas mantidas cronometradas. Inicie a sessão guiada, mantenha cada postura e depois registe durante quanto tempo a mantiveste: o temporizador de descanso começa sozinho.",
+      "holds": "{holds} posturas × {seconds} s",
+      "progressTitle": "Progresso"
+    }
   },
   "forms": {
     "enterCsvPath": "Pasta dos ficheiros CSV",
@@ -595,7 +612,6 @@
     "layoutHorizontal": "Fluxo horizontal",
     "layoutType": "Tipo de layout:",
     "layoutVertical": "Fluxo vertical",
-    "maxLogCount": "Número máximo de registos:",
     "muscleGroup": "Grupo muscular",
     "newTag": "Nova tag",
     "noTagsFound": "Não foram encontradas tags que correspondam à sua pesquisa.",
@@ -799,7 +815,8 @@
       "savePreset": "Guardar",
       "saveProtocol": "Guardar",
       "showWelcome": "Mostrar mensagem de boas-vindas",
-      "takeTour": "Iniciar a visita guiada"
+      "takeTour": "Iniciar a visita guiada",
+      "createExampleNotes": "Criar exemplos"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Já existe um ficheiro CSV de tags musculares. Pretende substituí-lo pelos valores predefinidos? Isto removerá todas as tags personalizadas.",
@@ -830,7 +847,8 @@
       "keepScreenAwake": "Tente manter o ecrã ativo enquanto algum temporizador estiver em execução em primeiro plano. Consome mais bateria; a disponibilidade depende do seu dispositivo e das definições do sistema.",
       "vibrateOnCompletion": "Vibre brevemente quando um temporizador terminar, independentemente do som. Requer um toque na página e um dispositivo compatível (como o Android). Não disponível no iOS; sem notificações em segundo plano.",
       "presetRestDesc": "Segundos de descanso após o trabalho de cada ronda (0 para não haver descanso).",
-      "noCustomProtocols": "Ainda não existem protocolos definidos. Clique em \"Adicionar protocolo\" para criar um."
+      "noCustomProtocols": "Ainda não existem protocolos definidos. Clique em \"Adicionar protocolo\" para criar um.",
+      "createExampleNotes": "Adiciona notas de exemplo e seis semanas de treinos de exemplo para experimentar todas as funcionalidades. As notas que já tens nunca são substituídas."
     },
     "labels": {
       "csvPath": "Caminho do ficheiro de registo CSV",

@@ -42,6 +42,16 @@ describe("ChartColors", () => {
     expect(colors.text).toBe("#111111");
   });
 
+  it("reads the theme from body, where Obsidian defines its variables", () => {
+    jest.restoreAllMocks();
+    document.body.style.setProperty("--text-normal", "#dadada");
+    try {
+      expect(ChartColors.getChartColors().text).toBe("#dadada");
+    } finally {
+      document.body.style.removeProperty("--text-normal");
+    }
+  });
+
   it("selects the correct color scheme for chart types", () => {
     const colors = ChartColors.getChartColors();
 

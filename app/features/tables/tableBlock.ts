@@ -10,11 +10,11 @@ export const tableBlock = defineCodeBlock("workout-log", {
   workout: { kind: "string" },
   /** Days to look back, including the boundary day; 0 = no limit */
   dateRange: { kind: "number", min: 0 },
+  /** Rows shown; unset = `tableRowLimit` (two workouts when `sets` is set) */
   limit: {
     kind: "number",
     min: DEFAULT_TABLE_CONFIG.LIMIT_MIN,
     max: DEFAULT_TABLE_CONFIG.LIMIT_MAX,
-    default: DEFAULT_TABLE_CONFIG.LIMIT,
   },
   sortBy: { kind: "enum", values: TABLE_SORT_FIELDS, default: "date" },
   sortOrder: { kind: "enum", values: ["asc", "desc"], default: "desc" },
@@ -28,3 +28,18 @@ export const tableBlock = defineCodeBlock("workout-log", {
   targetReps: { kind: "number", min: 0 },
   showProtocol: { kind: "boolean", default: true },
 });
+
+/** Workouts a table with planned `sets` shows when it has no `limit` */
+const WORKOUTS_SHOWN = 2;
+
+/**
+ * The rows a `workout-log` table shows: its `limit`, else the planned sets
+ * of the last two workouts, else the default.
+ */
+export function tableRowLimit(params: { limit?: number; sets?: number }): number {
+  if (params.limit !== undefined) return params.limit;
+  if (params.sets !== undefined) {
+    return Math.min(params.sets * WORKOUTS_SHOWN, DEFAULT_TABLE_CONFIG.LIMIT_MAX);
+  }
+  return DEFAULT_TABLE_CONFIG.LIMIT;
+}

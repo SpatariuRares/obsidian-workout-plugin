@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "Squat Multi Power"
+      },
+      "downwardDog": {
+        "name": "Nedadvendt hund"
+      },
+      "warriorTwo": {
+        "name": "Kriger II"
+      },
+      "treePose": {
+        "name": "Træet"
       }
     },
     "featureShowcase": {
@@ -410,6 +419,9 @@
       },
       "upperBodyPower": {
         "name": "Overkropskraft"
+      },
+      "yogaFlow": {
+        "name": "Morgen-yogaflow"
       }
     },
     "notes": {
@@ -418,7 +430,12 @@
     },
     "createToOpenGuide": "Startvejledningen er en del af eksempelnoterne, som endnu ikke findes. Skal de oprettes nu?",
     "pointedAtExamples": "Dine indstillinger læser nu eksemplerne og øvelserne. Ændr dette i indstillingerne for data.",
-    "usesSeparateLog": "Du har allerede en træningslog, så den blev ikke ændret. Eksemplerne bruger deres egen logfil."
+    "usesSeparateLog": "Du har allerede en træningslog, så den blev ikke ændret. Eksemplerne bruger deres egen logfil.",
+    "yoga": {
+      "intro": "Et kort morgenflow med tidsstyrede holdepositioner. Start den guidede session, hold hver position, og log derefter hvor længe du holdt den: hviletimeren starter af sig selv.",
+      "holds": "{holds} holdepositioner × {seconds} s",
+      "progressTitle": "Fremskridt"
+    }
   },
   "forms": {
     "enterCsvPath": "Mappe til CSV-filerne",
@@ -595,7 +612,6 @@
     "layoutHorizontal": "Vandret forløb",
     "layoutType": "Layouttype:",
     "layoutVertical": "Lodret forløb",
-    "maxLogCount": "Maksimalt antal logs:",
     "muscleGroup": "Muskelgruppe",
     "newTag": "Nyt tag",
     "noTagsFound": "Ingen tags matcher din søgning",
@@ -799,7 +815,8 @@
       "savePreset": "Gem",
       "saveProtocol": "Gem",
       "showWelcome": "Vis velkomst",
-      "takeTour": "Tag turen"
+      "takeTour": "Tag turen",
+      "createExampleNotes": "Opret eksempler"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Der findes allerede en CSV-fil med muskeltags. Vil du overskrive den med standardværdier? Det fjerner alle brugerdefinerede tags.",
@@ -830,7 +847,8 @@
       "keepScreenAwake": "Forsøg at holde skærmen aktiv, mens en timer kører i forgrunden. Bruger mere batteri; tilgængelighed afhænger af din enhed og systemindstillinger.",
       "vibrateOnCompletion": "Vibrer kortvarigt, når en timer er færdig, uafhængigt af lyd. Kræver et tryk på siden og en kompatibel enhed (f.eks. Android). Ikke tilgængeligt på iOS; ingen notifikationer i baggrunden.",
       "presetRestDesc": "Sekunder med hvile efter arbejdet i hver runde (0 for ingen hvile).",
-      "noCustomProtocols": "Ingen protokoller er defineret endnu. Klik på 'Tilføj protokol' for at oprette en."
+      "noCustomProtocols": "Ingen protokoller er defineret endnu. Klik på 'Tilføj protokol' for at oprette en.",
+      "createExampleNotes": "Tilføjer eksempelnoter og seks uger med eksempeltræninger, så du kan prøve alle funktioner. Noter, du allerede har, bliver aldrig overskrevet."
     },
     "labels": {
       "csvPath": "Sti til CSV-logfil",

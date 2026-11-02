@@ -10,7 +10,8 @@ export function generateExerciseLogBlock(
     id: generateCodeBlockId(),
     exercise,
     workout,
-    limit: opts?.limit ?? 12,
+    // With sets, the table shows the last two workouts by itself
+    limit: opts?.limit ?? (opts?.sets ? undefined : 12),
     exactMatch: (opts?.exactMatch ?? true) || undefined,
     sets: opts?.sets,
   });

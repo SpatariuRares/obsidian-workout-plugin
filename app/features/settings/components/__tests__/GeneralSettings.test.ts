@@ -15,9 +15,11 @@ jest.mock("@app/features/tour/startGuidedTour", () => ({
 }));
 
 const mockOpenGuide = jest.fn();
+const mockCreateExamples = jest.fn();
 jest.mock("@app/services/examples/GettingStartedGuide", () => ({
   openGettingStartedGuide: (...args: unknown[]) =>
     mockOpenGuide(...args),
+  createExampleNotes: (...args: unknown[]) => mockCreateExamples(...args),
 }));
 
 jest.mock("@app/features/common/suggest/FolderSuggest", () => ({
@@ -100,7 +102,7 @@ describe("GeneralSettings data paths", () => {
 });
 
 describe("GeneralSettings getting started", () => {
-  it("opens the getting-started guide without changing welcomeShown", async () => {
+  const draw = () => {
     const plugin = {
       settings: {
         welcomeShown: true,
@@ -115,11 +117,33 @@ describe("GeneralSettings getting started", () => {
       container,
       new GeneralSettings({} as App, plugin).definitions(),
     );
+    const click = async (name: string) => {
+      mockSettingNamed(container, name).component("button", 0).buttonEl.click();
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    };
+    return { plugin, click };
+  };
 
-    mockSettingNamed(container, t("commands.openGettingStartedGuide"))
-      .component("button", 0)
-      .buttonEl.click();
-    await new Promise((resolve) => setTimeout(resolve, 0));
+  it("creates the example notes", async () => {
+    const { plugin, click } = draw();
+
+    await click(t("commands.createExampleNotes"));
+
+    expect(mockCreateExamples).toHaveBeenCalledWith(plugin);
+  });
+
+  it("starts the guided tour", async () => {
+    const { plugin, click } = draw();
+
+    await click(t("settings.labels.takeTour"));
+
+    expect(mockStartTour).toHaveBeenCalledWith(plugin, { source: "settings" });
+  });
+
+  it("opens the getting-started guide without changing welcomeShown", async () => {
+    const { plugin, click } = draw();
+
+    await click(t("commands.openGettingStartedGuide"));
 
     expect(mockOpenGuide).toHaveBeenCalledWith(plugin);
     expect(plugin.settings.welcomeShown).toBe(true);

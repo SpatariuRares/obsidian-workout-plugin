@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "Przysiad Multi Power"
+      },
+      "downwardDog": {
+        "name": "Pies z głową w dół"
+      },
+      "warriorTwo": {
+        "name": "Wojownik II"
+      },
+      "treePose": {
+        "name": "Drzewo"
       }
     },
     "featureShowcase": {
@@ -410,6 +419,9 @@
       },
       "upperBodyPower": {
         "name": "Siła górnych partii ciała"
+      },
+      "yogaFlow": {
+        "name": "Poranny flow jogi"
       }
     },
     "notes": {
@@ -418,7 +430,12 @@
     },
     "createToOpenGuide": "Przewodnik „Jak zacząć” jest częścią notatek przykładowych, które jeszcze nie istnieją. Czy chcesz je utworzyć teraz?",
     "pointedAtExamples": "Teraz, gdy wyświetlasz przykładowe logi i ćwiczenia, możesz to zmienić w ustawieniach danych.",
-    "usesSeparateLog": "Masz już dziennik treningów, więc pozostał bez zmian. Przykłady korzystają z własnego pliku dziennika."
+    "usesSeparateLog": "Masz już dziennik treningów, więc pozostał bez zmian. Przykłady korzystają z własnego pliku dziennika.",
+    "yoga": {
+      "intro": "Krótki poranny flow z odliczanymi wstrzymaniami pozycji. Uruchom sesję z przewodnikiem, utrzymuj każdą pozycję, a potem zapisz, jak długo ją trzymałeś: minutnik odpoczynku włącza się sam.",
+      "holds": "{holds} wstrzymań × {seconds} sek",
+      "progressTitle": "Postęp"
+    }
   },
   "forms": {
     "enterCsvPath": "Folder na pliki CSV",
@@ -595,7 +612,6 @@
     "layoutHorizontal": "Układ poziomy",
     "layoutType": "Typ układu:",
     "layoutVertical": "Układ pionowy",
-    "maxLogCount": "Maksymalna liczba wpisów:",
     "muscleGroup": "Grupa mięśni",
     "newTag": "Nowy tag",
     "noTagsFound": "Brak pasujących tagów do Twojego wyszukiwania",
@@ -799,7 +815,8 @@
       "savePreset": "Zapisz",
       "saveProtocol": "Zapisz",
       "showWelcome": "Pokaż powitanie",
-      "takeTour": "Rozpocznij wycieczkę"
+      "takeTour": "Rozpocznij wycieczkę",
+      "createExampleNotes": "Utwórz przykłady"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Plik CSV z tagami mięśni już istnieje. Czy chcesz go zastąpić wartościami domyślnymi? To spowoduje usunięcie wszystkich niestandardowych tagów.",
@@ -830,7 +847,8 @@
       "keepScreenAwake": "Spróbuj utrzymać ekran włączony, gdy działa jakiś timer w pierwszym planie. Zużywa więcej energii; dostępność zależy od Twojego urządzenia i ustawień systemu.",
       "vibrateOnCompletion": "Wibracja na krótko, gdy timer się skończy, niezależnie od dźwięku. Wymaga naciśnięcia na stronie i obsługującego urządzenia (np. Android). Nie jest dostępne na iOS; brak powiadomień w tle.",
       "presetRestDesc": "Sekundy odpoczynku po pracy w każdej rundzie (0 oznacza brak odpoczynku).",
-      "noCustomProtocols": "Obecnie nie zdefiniowano żadnych protokołów. Kliknij przycisk „Dodaj protokół”, aby go utworzyć."
+      "noCustomProtocols": "Obecnie nie zdefiniowano żadnych protokołów. Kliknij przycisk „Dodaj protokół”, aby go utworzyć.",
+      "createExampleNotes": "Dodaje przykładowe notatki i sześć tygodni przykładowych treningów, by wypróbować wszystkie funkcje. Istniejące notatki nigdy nie są nadpisywane."
     },
     "labels": {
       "csvPath": "Ścieżka do pliku dziennika CSV",

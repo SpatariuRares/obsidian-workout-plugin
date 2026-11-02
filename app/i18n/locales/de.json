@@ -278,6 +278,15 @@
       },
       "squatMultiPower": {
         "name": "Kniebeuge Multi Power"
+      },
+      "downwardDog": {
+        "name": "Herabschauender Hund"
+      },
+      "warriorTwo": {
+        "name": "Krieger II"
+      },
+      "treePose": {
+        "name": "Baum"
       }
     },
     "featureShowcase": {
@@ -410,6 +419,9 @@
       },
       "upperBodyPower": {
         "name": "Oberkörper Kraftleistung"
+      },
+      "yogaFlow": {
+        "name": "Morgendliches Yoga-Flow"
       }
     },
     "notes": {
@@ -418,7 +430,12 @@
     },
     "createToOpenGuide": "Die Anleitung für den Einstieg ist Teil der Beispielnotizen, die noch nicht existieren. Sollten wir sie jetzt erstellen?",
     "pointedAtExamples": "Deine Ansichten lesen jetzt das Beispielprotokoll und die Beispiel-Übungen. Ändere das in den Daten-Einstellungen.",
-    "usesSeparateLog": "Du hast bereits ein Trainingsprotokoll, daher wurde es nicht verändert. Die Beispiele verwenden eine eigene Protokolldatei."
+    "usesSeparateLog": "Du hast bereits ein Trainingsprotokoll, daher wurde es nicht verändert. Die Beispiele verwenden eine eigene Protokolldatei.",
+    "yoga": {
+      "intro": "Ein kurzer Morgen-Flow aus zeitgesteuerten Haltungen. Starte die geführte Einheit, halte jede Pose und erfasse dann, wie lange du sie gehalten hast: Der Pausentimer startet automatisch.",
+      "holds": "{holds} Haltungen × {seconds} s",
+      "progressTitle": "Fortschritt"
+    }
   },
   "forms": {
     "enterCsvPath": "Ordner für die CSV-Dateien",
@@ -595,7 +612,6 @@
     "layoutHorizontal": "Horizontaler Ablauf",
     "layoutType": "Anordnungsart:",
     "layoutVertical": "Vertikaler Ablauf",
-    "maxLogCount": "Maximale Protokollanzahl:",
     "muscleGroup": "Muskelgruppe",
     "newTag": "Neuer Tag",
     "noTagsFound": "Keine Tags passen zu deiner Suche",
@@ -799,7 +815,8 @@
       "savePreset": "Speichern",
       "saveProtocol": "Speichern",
       "showWelcome": "Willkommensfenster anzeigen",
-      "takeTour": "Tour starten"
+      "takeTour": "Tour starten",
+      "createExampleNotes": "Beispiele erstellen"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Eine CSV-Datei für Muskel-Tags existiert bereits. Möchtest du sie mit Standardwerten überschreiben? Dadurch werden alle benutzerdefinierten Tags entfernt.",
@@ -830,7 +847,8 @@
       "keepScreenAwake": "Versuche, den Bildschirm aktiv zu halten, während ein Timer im Vordergrund läuft. Verbraucht mehr Akku; die Verfügbarkeit hängt von deinem Gerät und deinen Systemeinstellungen ab.",
       "vibrateOnCompletion": "Kurz vibrieren, wenn ein Timer abläuft, unabhängig von Ton. Benötigt einen Klick auf der Seite und ein kompatibles Gerät (z. B. Android). Nicht verfügbar auf iOS; keine Benachrichtigungen im Hintergrund.",
       "presetRestDesc": "Sekunden Pause nach der Arbeit jeder Runde (0 für keine Pause).",
-      "noCustomProtocols": "Noch keine Protokolle vorhanden. Klicke auf „Protokoll hinzufügen“, um eines zu erstellen."
+      "noCustomProtocols": "Noch keine Protokolle vorhanden. Klicke auf „Protokoll hinzufügen“, um eines zu erstellen.",
+      "createExampleNotes": "Fügt Beispielnotizen und sechs Wochen Beispieltrainings hinzu, um alle Funktionen auszuprobieren. Bereits vorhandene Notizen werden nie überschrieben."
     },
     "labels": {
       "csvPath": "Pfad der CSV-Protokolldatei",

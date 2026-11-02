@@ -17,7 +17,7 @@ npm run build        # Production build (tsc check + CSS + minified bundle)
 npm test             # Run Jest test suite
 npm run test:watch   # Jest in watch mode
 npm run test:coverage # Jest with coverage report
-npm run lint         # ESLint + scripts/check-readme.mjs (README images, unused assets, #anchors)
+npm run lint         # ESLint + scripts/check-readme.mjs (README.md and README.<lang>.md in the root: images, unused assets, #anchors; a translation must keep the same headings, code blocks and images as README.md)
 npm run lint:fix     # ESLint with auto-fix
 npm run typecheck    # tsc only, no emit
 npm run doe:validate # Import-convention check (@app aliases, barrels, circular deps)
@@ -441,7 +441,7 @@ exercise: Bench Press
 workout: Push Day
 exactMatch: false
 dateRange: 14
-limit: 50
+limit: 50 # unset: sets × 2 (the last two workouts) when sets is given, else 50
 sortBy: date # date, exercise, weight, reps, volume
 sortOrder: desc # asc, desc
 columns: ["date", "reps", "weight", "volume"]
@@ -449,7 +449,7 @@ showAddButton: true
 showProtocol: true
 targetWeight: 100 # with targetReps: progressive overload header
 targetReps: 8
-sets: 4 # planned sets, counted by workout-session
+sets: 4 # planned sets, counted by workout-session; without limit the table shows sets × 2 rows
 ```
 
 #### workout-session
@@ -514,6 +514,7 @@ Code blocks written by the insert modals also carry an `id`, used to find the bl
 3. For insert modals: implement `generateCode()` to return code block string
 4. Register command in `CommandHandlerService.registerCommands()`
 5. Add modal UI strings as keys in `app/i18n/locales/en.json` and read them with `t()` (see "Internationalization")
+6. Put the main buttons (save/update, cancel) in `Button.createModalActions(parent)` (a `Setting` row: `.setClass("workout-modal-actions")`): the row stays at the bottom of the modal, always visible, while the form scrolls
 
 ### Adding New Components
 

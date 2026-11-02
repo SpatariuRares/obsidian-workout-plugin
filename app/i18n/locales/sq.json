@@ -20,11 +20,11 @@
       "reps": "Përsëritjet",
       "volume": "Volum",
       "weight": "Pesha",
-      "e1rm": "Shpresësisht, 1RM"
+      "e1rm": "1RM i vlerësuar"
     },
     "defaultTitle": "Tendenca {type}",
     "noTypesAvailable": "Nuk ka lloje grafikësh të disponueshme",
-    "noEligibleE1rm": "Nuk janë të përgatitura serit për estimimin e 1RM. Registro një peshë pozitive me 1–12 repetime, duke shkuar në lartësi, pa përfshirë seritët e nxejues dhe seritët e ulëse."
+    "noEligibleE1rm": "Nuk ka seri të përshtatshme për 1RM të vlerësuar. Regjistroni një peshë pozitive me 1–12 përsëritje, duke përjashtuar seritë e ngrohjes dhe ato me ulje peshe."
   },
   "commands": {
     "addExerciseBlock": "Shto bllok ushtrimi",
@@ -38,9 +38,9 @@
     "manageMuscleTags": "Menaxho etiketat e muskujve",
     "migrateExerciseTypes": "Migro llojet e ushtrimeve",
     "createExampleNotes": "Krijo nota të shembullore",
-    "openGettingStartedGuide": "Hap udhezimin për fillimin",
-    "startTour": "Filloni turën",
-    "importWorkouts": "Importim nga Strong"
+    "openGettingStartedGuide": "Hap udhëzuesin e fillimit",
+    "startTour": "Fillo turin",
+    "importWorkouts": "Importo nga Strong ose Hevy"
   },
   "common": {
     "bpm": "bpm",
@@ -103,13 +103,13 @@
       "noTags": "Nuk ka etiketa muskujsh në frontmatter",
       "title": "Gabime në skedarë",
       "tooManyTags": "Shumë etiketa muskujsh ({count})",
-      "sharedName": "Nëse emri i التمرين është i njëjti si {pages}: regjistrat shkonin vetëm në njëri nga ata."
+      "sharedName": "Emri i ushtrimit është i njëjtë me {pages}: regjistrimet shkojnë vetëm në një prej tyre."
     },
     "muscleTags": {
       "description": "Përshkrim",
       "title": "Etiketat për muskuj",
       "tooltip": "Klikoni për të kopjuar: {tag}",
-      "totalCount": "Total: {count} etiketa të disponueshme"
+      "totalCount": "Gjithsej: {count} etiketa të disponueshme"
     },
     "protocol": {
       "clickToFilter": "Kliko për të filtruar",
@@ -130,7 +130,7 @@
       "disclaimer": "Mohim përgjegjësie",
       "noData": "Ende nuk ka mjaftueshëm të dhëna: çdo protokoll ka nevojë për të paktën 5 seri të regjistruara.",
       "title": "Efektiviteti i protokollit",
-      "subtitle": "Si është funksionuar çdo protokol në të gjitha setet e regjistruara"
+      "subtitle": "Si ka funksionuar çdo protokoll në të gjitha seritë e regjistruara"
     },
     "quickActions": {
       "addWorkoutLog": "Shto regjistrim stërvitjeje",
@@ -179,8 +179,8 @@
     },
     "editDashboard": "Redakto panelin",
     "modal": {
-      "widgets": "Widgets",
-      "widgetsHint": "Shëno widgets-et që do të shfaqen. Tërhiqi me dorezën, ose përdor shigjetat, për të ndryshuar radhitjen.",
+      "widgets": "Elementet",
+      "widgetsHint": "Shëno elementët që do të shfaqen. Tërhiqi me dorezën ose përdor shigjetat për të ndryshuar radhitjen.",
       "moveUp": "Lëviz {widget} lart",
       "moveDown": "Lëviz {widget} poshtë",
       "allHistory": "Bosh: e gjithë historia",
@@ -191,16 +191,20 @@
       "layoutGrid": "Rrjetë",
       "layoutList": "Listë",
       "stash": "Jo në panel",
-      "stashEmpty": "Çdo widget është në panel",
+      "stashEmpty": "Çdo element është në panel",
       "tile": "{widget}: kolona {column}, rreshti {row}, gjerësia {width}, lartësia {height}",
       "minOneColumn": "Min. 1 kolonë",
       "minColumns": "Min. {columns} kolona",
-      "size": "{width} × {height}"
+      "size": "{width} × {height}",
+      "gridHint": "Tërhiq një widget për ta lëvizur dhe cepin e tij për ta ndryshuar madhësinë; zona më poshtë tregon madhësinë më të vogël që mund të ketë çdo widget. Hiqe një widget me × ose duke e tërhequr në zonë. Me tastierë: shigjetat lëvizin, Shift dhe shigjetat ndryshojnë madhësinë, Delete e heq.",
+      "gridColumnsMeasured": "{columns} kolona përshtaten në gjerësinë e shënimit.",
+      "remove": "Hiq {widget} nga paneli"
     },
     "grid": {
       "outside": "{widget} del jashtë {columns} kolonave të rrjetit",
       "narrow": "{widget} ka nevojë për të paktën {min} kolona",
-      "overlap": "{widget} mbivendoset me {other}"
+      "overlap": "{widget} mbivendoset me {other}",
+      "empty": "Ende nuk ka asnjë widget në rrjetë. Hap \"Redakto panelin\" në menynë ⋮ për të vendosur disa."
     }
   },
   "duration": {
@@ -244,7 +248,7 @@
         "name": "Përkulje e këmbëve ulur"
       },
       "legPress45": {
-        "name": "Leg Press 45"
+        "name": "Shtypja e këmbëve 45"
       },
       "plank": {
         "name": "Plank"
@@ -259,7 +263,7 @@
         "name": "Squat"
       },
       "squatMultiPower": {
-        "name": "Squat Multi Power"
+        "name": "Squat në makinën Smith"
       }
     },
     "featureShowcase": {
@@ -300,7 +304,7 @@
       "workoutChartTitle": "Grafiku i stërvitjes (të gjitha ushtrimet të kombinuara)"
     },
     "fileNames": {
-      "dashboard": "Panel i kontrollit",
+      "dashboard": "Paneli",
       "featureShowcase": "Prezantimi i veçorive",
       "gettingStarted": "Fillimi",
       "hiitCardioSession": "Seancë kardio HIIT"
@@ -342,13 +346,13 @@
       "welcome": "Mirë se vini! Kjo dosje përmban skedarë shembull që t'ju ndihmojnë të mësoni të gjitha veçoritë.",
       "workoutsDesc": "Shabllone stërvitjesh shembull",
       "workoutsFolder": "**{folder}/**",
-      "pagesIntro": "Eksploroni një funksion në çdo faqe. U ndjekni lidhjet në rend, ose zgjidhni një funksion më poshtë. Për të vazhduar, përdojini butonët \"Para\" dhe \"Pas\" për të vazhduar; scrolloni normalisht për të eksploruar çdo shembull.",
-      "liveIntro": "Eksploroni çdo funksion më poshtë me seanca stërdhuese prej gjashtë javësh. Këto janë të dhëna demonstrative; provoni kontrollët dhe shihini si funksionojnë notat tuaja.",
-      "tryLog": "Për të shtuar një set, përdojni butonin \"+\". Tablot, diagramet dhe paneli lexojnë të njëjajnë failin CSV.",
-      "continueWithWorkout": "Hapeni [[{workout}]] për të provuar një stërvitje të plotë me tabela me ushtrime dhe timer-a për paqe.",
-      "moreExamples": "Për më shumë lloje të grafikëve, filtra dhe protokole stërditëse, shihjeni [[{showcase}]].",
-      "ownData": "Nëse jeni gati, zgjidhni folderin dhe folderin e shembullit tuaj CSV nën Settings → Konfigurim dhe të dhëna. Ruani folderin e shembullit si referencë.",
-      "openGuideDesc": "Hapni faqen \"Fillimi\" me shembuj të veçantë të tabeleve, grafikëve, orëve dhe dasbordit."
+      "pagesIntro": "Eksploroni një funksion në çdo faqe. Ndiqni lidhjet me radhë, ose zgjidhni një funksion më poshtë. Përdorni butonat \"Prapa\" dhe \"Tjetra\" për të lëvizur mes shënimeve; lëvizni normalisht për të eksploruar çdo shembull.",
+      "liveIntro": "Eksploroni çdo funksion më poshtë me stërvitje shembull për gjashtë javë. Këto janë të dhëna demonstrative; provoni kontrollet dhe shihni si funksionojnë shënimet tuaja.",
+      "tryLog": "Përdorni butonin + për të shtuar një seri. Tabela, grafikët dhe paneli lexojnë të njëjtin skedar CSV.",
+      "continueWithWorkout": "Hapni [[{workout}]] për të provuar një stërvitje të plotë me tabela ushtrimesh dhe timer pushimi.",
+      "moreExamples": "Për më shumë lloje grafikësh, filtra dhe protokolle stërvitjeje, shihni [[{showcase}]].",
+      "ownData": "Kur të jeni gati, zgjidhni dosjen tuaj CSV dhe dosjen e ushtrimeve te Cilësimet → Konfigurim dhe të dhëna. Mbajeni dosjen e shembujve si referencë.",
+      "openGuideDesc": "Hapni faqen e fillimit me shembuj funksionues të tabelave, grafikëve, timerëve dhe panelit."
     },
     "hiit": {
       "cyclingCooldownTitle": "Qetësimi me biçikletë",
@@ -381,8 +385,8 @@
       "supersetLunges": "Superset me hapa sulmi (lunges)"
     },
     "createToOpenGuide": "Guida për fillimin është pjesë e notave të shembullit, të cilat ende nuk janë krijuar. A duhet t'i krijojmë tani?",
-    "pointedAtExamples": "Opinioni tuaj tani lexon lojën dhe veprimtoret e shembullit. Ndryshoni këtë në opsionet e datës.",
-    "usesSeparateLog": "Ju tashmë keni një regjistër stërdhor, kështu që ky u lënë pa ndërthur. Shembujt përdorën vetë regjistrin e tyre."
+    "pointedAtExamples": "Pamjet tuaja tani lexojnë regjistrin dhe ushtrimet e shembullit. Ndryshojeni këtë te cilësimet e të dhënave.",
+    "usesSeparateLog": "Keni tashmë një regjistër stërvitjesh, ndaj nuk u prek. Shembujt përdorin skedarin e tyre të regjistrit."
   },
   "forms": {
     "enterCsvPath": "Dosja për skedarët CSV",
@@ -428,7 +432,7 @@
     "createLogButtonText": "Krijo regjistër për: {exerciseName}",
     "noDataTitle": "Nuk u gjetën regjistrime për {exerciseName}",
     "exploreExampleData": "Nëse dëshiron, mund të eksplorosh me të dhëna të shembullore",
-    "lastSet": "Fundi: {set}",
+    "lastSet": "Herën e fundit: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Rekordi personal: {weight} {unit} × {reps}"
   },
@@ -455,7 +459,7 @@
       "blockIdsAdded": "U shtuan {count} ID që mungonin në {files} skedar(ë)",
       "csvCreated": "Skedari CSV u krijua me sukses!",
       "noBlockIdsNeeded": "Të gjitha blloqet e kodit kanë tashmë ID",
-      "weightUnitsStamped": "Ruajtën unitari i pesheve në {count} regjistra të vjetra."
+      "weightUnitsStamped": "U ruajt njësia e peshës në {count} regjistra të vjetra."
     },
     "tagReferenceGenerated": "Referenca e etiketave u gjenerua me sukses!",
     "timerCompleted": "Timeri përfundoi!",
@@ -504,7 +508,7 @@
       "updateTimer": "Përditëso timerin",
       "decreaseBy": "Ul {label} me {increment}",
       "increaseBy": "Rrit {label} me {increment}",
-      "deleteSet": "Fshiri",
+      "deleteSet": "Fshi serinë",
       "updateDashboard": "Përditëso panelin"
     },
     "canvasLayout": "Paraqitja",
@@ -519,7 +523,7 @@
       "showAddButton": "Shfaq butonin e shtimit",
       "showControls": "Shfaq kontrollet",
       "showStatistics": "Shfaq statistikat",
-      "showTrendHeader": "Shfaq kokën e tendencës",
+      "showTrendHeader": "Shfaq titullin e tendencës",
       "showTrendLine": "Shfaq vijën e tendencës",
       "sound": "Tingulli",
       "timerSound": "Tingulli i timerit",
@@ -620,18 +624,18 @@
       "validMaxValue": "{field} duhet të jetë më së shumti {max}",
       "validFieldRequired": "{field} është e detyrueshme",
       "migrationNoUpdates": "Të gjitha faqet e ushtrimeve janë tashmë të përditësuara",
-      "validMustBeWholeNumber": "{field} duhet të jetë një numër i plote",
+      "validMustBeWholeNumber": "{field} duhet të jetë një numër i plotë",
       "newRecord": "Rekord i ri: {weight} {unit} (+{increase} {unit})",
-      "chartInserted": "Grafiku u krijua me sukses!",
-      "dashboardInserted": "Dasbordi u krijua me sukses!",
-      "exerciseNameRequired": "Ju lutem, vendosni një emër për veprimin",
-      "exerciseSectionCreated": "Sekretja e ushtrimeve u krijua me sukses!",
-      "tableInserted": "Tabloja u krijua me sukses!",
-      "tableUpdated": "Tabloja u përdithes suksesfully!",
-      "timerInserted": "Timeri u vendos suksesfully!",
-      "timerUpdated": "Zëri i timer-it u përditësoi me sukses!",
-      "validChooseExercise": "Pëzgjidh një veprim",
-      "validationCombinedMode": "Për tipin 'eksercizim + stërvitje', duhet të mbushni të dy fushat!",
+      "chartInserted": "Grafiku u shtua me sukses!",
+      "dashboardInserted": "Paneli u shtua me sukses!",
+      "exerciseNameRequired": "Ju lutemi, vendosni emrin e ushtrimit",
+      "exerciseSectionCreated": "Seksioni i ushtrimeve u krijua me sukses!",
+      "tableInserted": "Tabela u shtua me sukses!",
+      "tableUpdated": "Tabela u përditësua me sukses!",
+      "timerInserted": "Timeri u shtua me sukses!",
+      "timerUpdated": "Timeri u përditësua me sukses!",
+      "validChooseExercise": "Zgjidhni një ushtrim",
+      "validationCombinedMode": "Për tipin 'ushtrim + stërvitje' duhet të plotësoni të dyja fushat!",
       "dashboardUpdated": "Paneli u përditësua me sukses!",
       "dashboardUpdateFailed": "Përditësimi i panelit dështoi. Sigurohu që skedari të jetë hapur në redaktor."
     },
@@ -676,7 +680,7 @@
       "tableType": "Lloji i tabelës",
       "target": "Objektivi",
       "workout": "Stërvitja",
-      "mobileOptions": "Trajnimet dhe programet e ushtrimeve të fundit"
+      "mobileOptions": "Ushtrimet e fundit dhe stërvitja"
     },
     "selectOptions": {
       "allLogs": "Të gjitha regjistrimet",
@@ -697,12 +701,12 @@
       "timed": "Me kohë",
       "twentyones": "21s",
       "yesNo": "Po/Jo",
-      "warmup": "Përparim"
+      "warmup": "Ngrohja"
     },
     "sets": "Seri:",
     "similarTags": "Etiketa të ngjashme:",
     "similarity": "Ngjashmëria",
-    "status": "Status",
+    "status": "Statusi",
     "tag": "Etiketë",
     "tagsSelector": "Etiketat për muskujt:",
     "timerDuration": "Kohëzgjatja e timerit (sekonda):",
@@ -735,13 +739,13 @@
     "deleteItem": "Fshi {item}",
     "errors": {
       "missingElements": "Mungojnë elemente",
-      "validationCombinedMode": "Për llojin ushtrim + stërvitje, plotësoni të dyja fushat"
+      "validationCombinedMode": "Për tipin ushtrim + stërvitje, plotësoni të dyja fushat"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Seri: {sets}\n- Përsëritje: {reps}\n- Pushim: {restTime}s\n\n",
     "noteTemplate": "**Shënim: {note}**\n",
     "date": "Data",
-    "weightUnitToggle": "Jedunitë për këtë element",
-    "rest": "Riproje",
+    "weightUnitToggle": "Njësia për këtë regjistrim",
+    "rest": "Pushim",
     "work": "Punë"
   },
   "settings": {
@@ -760,8 +764,8 @@
       "runAllMaintenance": "Ekzekuto të gjitha",
       "savePreset": "Ruaj",
       "saveProtocol": "Ruaj",
-      "showWelcome": "Shfaq",
-      "takeTour": "Filloni udhëtimin"
+      "showWelcome": "Shfaq mirëseardhjen",
+      "takeTour": "Fillo turin"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Një skedar CSV me etiketat e muskujve ekziston tashmë. Doni ta mbishkruani me vlerat e paracaktuara? Kjo do të fshijë të gjitha etiketat e personalizuara.",
@@ -785,11 +789,11 @@
       "setupCSV": "Krijo si workout_logs.csv ashtu edhe muscle-tags.csv në dosjen e konfiguruar.",
       "weightIncrement": "Rritja e parazgjedhur e peshës për mbingarkesën progresive (p.sh., 2.5 për rritje me 2.5 njësi)",
       "showRibbonIcon": "Shfaq ikonën e shtangës në shiritin anësor që hap formularin e regjistrimit të stërvitjes",
-      "weightUnit": "Njësia për grafikë, numra të përgjithshëm dhe regjistra të reja. Secili regjist mban njësinë në të cilën u krijua.",
-      "takeTour": "Paraqisni një përmbledhje të shkurtuar për regjistrim, grafikë, tabele dhe orë.",
-      "welcomeWindow": "Para se të filloni, shfaqeni përsëri ekranin e mirëse vijues për të filluar me të dhëna shembullore ose nga e para.",
-      "keepScreenAwake": "Në përpjekje për të mbajtur ekranin aktiv ndërsa ndonjë timer funksionon në plan. Konsumon më shumë energji; disponibiliteti varet nga dispozitja dhe konfigurimi i sistemit tuaj.",
-      "vibrateOnCompletion": "Vibrimi shkurtër kur skedoni, duke u ndarë nga çelëza. Kërkohet një hap në faqe dhe një dispozitiv i mbështetur (si Android). Nuk është i disponueshëm në iOS; nuk ka alarme në ffon.",
+      "weightUnit": "Njësia për grafikët, totalet dhe regjistrimet e reja. Çdo regjistrim mban njësinë me të cilën u fut.",
+      "takeTour": "Kaloni përmes regjistrimit, grafikëve, tabelave dhe timerëve në një shënim të shkurtër.",
+      "welcomeWindow": "Shfaq përsëri dritaren e mirëseardhjes për të filluar me të dhëna shembull ose nga e para.",
+      "keepScreenAwake": "Provo ta mbash ekranin të ndezur ndërsa ndonjë timer punon në plan. Konsumon më shumë bateri; disponueshmëria varet nga pajisja dhe cilësimet e sistemit.",
+      "vibrateOnCompletion": "Vibron shkurtimisht kur mbaron një timer, pavarësisht nga zëri. Kërkon një prekje në faqe dhe një pajisje të mbështetur (si Android). Nuk është i disponueshëm në iOS dhe nuk ka njoftime kur aplikacioni është në sfond.",
       "presetRestDesc": "Sekondat e pushimit pas punës së çdo raunde (0 për pa pushim).",
       "noCustomProtocols": "Aktualisht nuk ka protokole. Klikoni 'Shto protokol' për të krijuar një."
     },
@@ -816,11 +820,11 @@
       "setupCSV": "Konfiguro skedarët CSV",
       "weightUnit": "Njësia e peshës",
       "showRibbonIcon": "Shfaq ikonën e regjistrimit të shpejtë",
-      "welcomeWindow": "Vendi të mirësekomstës",
-      "takeTour": "Turor me udhësim",
-      "keepScreenAwake": "Mos shkrijë ekranin ndërsa kalon një kohë.",
+      "welcomeWindow": "Dritarja e mirëseardhjes",
+      "takeTour": "Tur udhëzues",
+      "keepScreenAwake": "Mbaje ekranin aktiv ndërsa punon një timer",
       "vibrateOnCompletion": "Vibrim kur një timer përfundojë",
-      "presetRest": "Rest"
+      "presetRest": "Pushim"
     },
     "messages": {
       "confirmDeletePreset": "Jeni të sigurt që doni ta fshini këtë paracaktim?",
@@ -836,7 +840,7 @@
       "protocolNameExists": "Një protokol me këtë emër tashmë ekziston",
       "protocolNameRequired": "Emri i protokollit është i detyrueshëm",
       "protocolSaved": "Protokoli është ruajtur",
-      "weightUnitChangeFailed": "Nuk ishte e mundur të ndryshonte unitetin e peshe: {error}"
+      "weightUnitChangeFailed": "Nuk u arrit të ndryshohej njësia e peshës: {error}"
     },
     "options": {
       "none": "Asnjë",
@@ -860,8 +864,8 @@
       "timerPresets": "Paracaktimet e timerit",
       "trainingParameters": "Parametrat e stërvitjes",
       "gettingStarted": "Fillimi",
-      "timerDeviceCues": "Simboli/indikatorët për pajisjet që kanë funksion kohor",
-      "customProtocols": "Протоколи"
+      "timerDeviceCues": "Sinjalet e timerit në pajisje",
+      "customProtocols": "Protokollet"
     },
     "tooltips": {
       "deletePreset": "Fshi paracaktimin",
@@ -876,16 +880,16 @@
       "mustBePositive": "Duhet të jetë më i madh se 0"
     },
     "protocolHelp": {
-      "warmup": "Trajnimi lehtë para se të bëhen trajnimet e rëndësishme. Ata nuk janë të numëruara në rekordet personale.",
-      "dropSet": "Reduktoni peshat menjëherë pas humburjes dhe vazhdoni. Seritë e ulëse nuk llogatohen në rekordet personale.",
-      "myoReps": "Një serije aktivizimi, pastaj serije të shkurtra mini me pauza të shkurtra.",
-      "restPause": "Pa një sekondë pas dështimit, pastaj kryeni disa repetime të tjera.",
+      "warmup": "Seri të lehta para serive punuese. Ato nuk numërohen në rekordet personale.",
+      "dropSet": "Ulni peshën menjëherë pas dështimit dhe vazhdoni. Seritë me ulje peshe nuk numërohen në rekordet personale.",
+      "myoReps": "Një seri aktivizimi, pastaj mini-seri të shkurtra me pushime të shkurtra.",
+      "restPause": "Pushoni disa sekonda pas dështimit, pastaj bëni edhe disa përsëritje.",
       "superset": "Dy ushtrime një pas tjetrës, pa ndonjë pauzë mes tyre.",
-      "twentyone": "7 ser në pjesën e poshtme, 7 në pjesën e sipërme, pastaj 7 ser të plota."
+      "twentyone": "7 përsëritje në gjysmën e poshtme, 7 në gjysmën e sipërme, pastaj 7 përsëritje të plota."
     },
     "presetHelp": {
-      "tabata": "20 sekonda pune me maksimalisht, 10 sekonda pushim, 8 runda: 4 minuta në total.",
-      "emom": "Për çdo minutë, në minutë të plota: filloni seritë në fillimin e çdo minute dhe paqësojeni për pjesën e mbetur, 10 seritë."
+      "tabata": "20 sekonda punë maksimale, 10 sekonda pushim, 8 raunde: gjithsej 4 minuta.",
+      "emom": "Çdo minutë, në fillim të minutës: filloni serinë në fillim të çdo minute dhe pushoni për pjesën që mbetet, 10 raunde."
     }
   },
   "stats": {
@@ -895,7 +899,7 @@
     "recentTrend": "Tendenca e fundit",
     "recentVsPrev": " (vs para.)",
     "sessions": "Sesionet",
-    "average": "Mesatarja:",
+    "average": "Mesatarja: ",
     "title": "{dataTypeLabel} statistikat ({contextLabel}):"
   },
   "table": {
@@ -922,7 +926,7 @@
       "volumeUnit": "Volum ({weightUnit})",
       "weightUnit": "Pesha ({weightUnit})"
     },
-    "deleteError": "Gabim në fshirje: {error}",
+    "deleteError": "Gabim gjatë fshirjes: {error}",
     "deleteSuccess": "Regjistrimi u fshi",
     "deleteTitle": "Fshi",
     "editTable": "Redakto tabelën",
@@ -942,9 +946,9 @@
     },
     "trendLine": "Vija e tendencës",
     "refreshingTable": "Po rifreskohet tabela...",
-    "setCount": "{count} ndërton",
-    "deleteSetMessage": "{set} do të fshijet nga regjistri tuaj. Kjo nuk mund të shkëmbosë.",
-    "deleteSetTitle": "Fshini këtë set?"
+    "setCount": "{count} seri",
+    "deleteSetMessage": "{set} do të hiqet nga regjistri juaj. Kjo nuk mund të zhbëhet.",
+    "deleteSetTitle": "Fshini këtë seri?"
   },
   "timeperiods": {
     "month": "Muaj",
@@ -964,15 +968,15 @@
       "detailsControls": "Kontrollet",
       "detailsSound": "Tingulli"
     },
-    "stopwatch": "Stoper",
+    "stopwatch": "Kronometër",
     "phase": {
-      "rest": "Paqe",
+      "rest": "Pushim",
       "work": "Punë"
     },
-    "round": "Runda {current} e {total}",
+    "round": "Runda {current} nga {total}",
     "status": {
       "done": "Mbaruar",
-      "paused": "Ndryshuar"
+      "paused": "Në pauzë"
     }
   },
   "trends": {
@@ -983,7 +987,7 @@
     "increasing": "Në rritje",
     "invariant": "Konstant",
     "neutral": "Neutral",
-    "stable": "I qëndrueshëm",
+    "stable": "Stabil",
     "stableLower": "E qëndrueshme",
     "up": "Lart"
   },
@@ -1000,100 +1004,100 @@
   },
   "codeBlocks": {
     "validation": {
-      "title": "Parametrat e vullnetshme:",
+      "title": "Parametra të pavlefshëm:",
       "notANumber": "{key} duhet të jetë një numër, por është \"{value}\"",
       "tooSmall": "{key} duhet të jetë {min} ose më shumë, por është {value}",
-      "outOfRange": "{key} duhet të jetë mes {min} dhe {max}, por është {value}.",
+      "outOfRange": "{key} duhet të jetë mes {min} dhe {max}, por është {value}",
       "notABoolean": "{key} duhet të jetë \"true\" ose \"false\", por është \"{value}\"",
-      "notOneOf": "{key} duhet të jetë ndër {allowed}, por është \"{value}\"",
-      "notACell": "{key} duhet të jetë katër numra të plotë nga 1 (kolona, rreshti, gjerësia, lartësia), por është \"{value}\""
+      "notOneOf": "{key} duhet të jetë një nga {allowed}, por është \"{value}\"",
+      "notACell": "{key} duhet të jetë katër numra të plotë nga 1 lart (kolona, rreshti, gjerësia, lartësia), por është \"{value}\""
     }
   },
   "welcome": {
-    "title": "Mirë datang në pluginin e stilit",
-    "intro": "Παρακολлоvojini seritë tuaj, dhe më pas shohini ata në formë të grafikëve, tabeleve dhe një paneli. Si donit të filloni?",
+    "title": "Mirë se vini në pluginin e stërvitjes",
+    "intro": "Regjistroni seritë tuaja, pastaj shikojini si grafikë, tabela dhe panel. Si dëshironi të filloni?",
     "tryExamples": "Provoni me të dhëna shembullore",
     "startScratch": "Filloni nga zero",
-    "later": "Më pas",
-    "tryExamplesDesc": "Shtron protokollime të shembullore, pastaj ju ndihmon të shijoni funksionin përmes tyre.",
-    "startScratchDesc": "Ju ndihmon të shijoni funksionalitetin e pluginit me të dhënat tuaja, duke filluar me setin e parë.",
-    "tourOnYourData": "Ju tashmë keni një regjistër stërdhor, kështu që turen ajo kryen me të dhënat tuaja."
+    "later": "Më vonë",
+    "tryExamplesDesc": "Shton stërvitje shembull, pastaj ju udhëzon nëpër plugin me to.",
+    "startScratchDesc": "Ju udhëzon nëpër plugin me të dhënat tuaja, duke filluar nga seria juaj e parë.",
+    "tourOnYourData": "Keni tashmë një regjistër stërvitjesh, ndaj tura do të përdorë të dhënat tuaja."
   },
   "tour": {
-    "back": "Para",
+    "back": "Prapa",
     "next": "Tjetër",
-    "skip": "Hidhe",
+    "skip": "Kalo",
     "done": "Mbaruar",
     "progress": "{current} nga {total}",
-    "noteName": "Tours me udhësim",
-    "noteIntro": "Rruga e udhëtorit ndërton në çdo pjesë të pluginit në këtë faqe. Redaktojeni ose fshini këtë notë kur të doni.",
-    "noteTable": "Trivet e tua",
-    "noteChart": "Progres",
-    "noteDashboard": "Dasbord",
-    "noteTimer": "Koha e pritjes",
+    "noteName": "Tur udhëzues",
+    "noteIntro": "Turi udhëzues tregon çdo pjesë të pluginit në këtë faqe. Redaktojeni ose fshijeni këtë shënim kur të dëshironi.",
+    "noteTable": "Seritë e tua",
+    "noteChart": "Progresi",
+    "noteDashboard": "Paneli",
+    "noteTimer": "Timer pushimi",
     "steps": {
       "logSet": {
-        "title": "Registron paraqitjen e parë",
-        "text": "Depresoni butonën \"+\" për të hapur formën, pastaj ruani një set. Ajo shfaqet menjëherë në tabelë."
+        "title": "Regjistro serinë e parë",
+        "text": "Shtypni butonin + për të hapur formularin, pastaj ruani një seri. Ajo shfaqet menjëherë në tabelë."
       },
       "rowActions": {
-        "title": "Redaktojuni ose fshini një grupmullim",
-        "mobileText": "Ndi qumë për të korrigjuar. Për të fshirë, përdohni \"Fshirje qumës\" në formuarin që hapet.",
-        "text": "Për të përdorur një seri, përdysh minat në një radhë. Për të fshirë, përdosh \"Fshirje seris\" në formuarin që çmendet."
+        "title": "Redakto ose fshi një seri",
+        "mobileText": "Prekni një seri për ta korrigjuar. Për ta fshirë, përdorni Fshi serinë në formularin që hapet.",
+        "text": "Përdorni lapsin në një rresht për të korrigjuar një seri. Për ta fshirë, përdorni Fshi serinë në formularin që hapet."
       },
       "chart": {
-        "title": "J Shiti",
-        "text": "Shkëmbimi tregon se si një veprim zhvillohet në kohë, me një vlerësim dhe statistika.",
-        "textMine": "Karta tregon se si një veprim zhvillohet në kohë. Ajo është praktikesisht bosh derë që nuk regjistrohet një numër i caktuar.",
-        "mobileText": "Në një telefon, sharta shfaqet si një tabelë me numra të njëjtë.",
-        "mobileTextMine": "Në një telefon, sharta shfaqet si një tabelë. Ajo është pothuajse e bosh derisa të regjistrohen disa seritë."
+        "title": "Progresi juaj",
+        "text": "Grafiku tregon si evoluon një ushtrim me kalimin e kohës, me vijën e tendencës dhe statistikat.",
+        "textMine": "Grafiku tregon si evoluon një ushtrim me kalimin e kohës. Është pothuajse bosh derisa të regjistroni disa seri.",
+        "mobileText": "Në telefon, grafiku shfaqet si tabelë me të njëjtat numra.",
+        "mobileTextMine": "Në telefon, grafiku shfaqet si tabelë. Është pothuajse bosh derisa të regjistroni disa seri."
       },
       "dashboard": {
-        "title": "Taqimi tual",
+        "title": "Paneli juaj",
         "text": "Numra, tendenca e volumit dhe antrenimet e fundit, të gjitha në një seksion.",
-        "textMine": "Numra, tendenca e volumit dhe stila e stilit. A kompletohet ndërsa regjistrohet numri i serive."
+        "textMine": "Totalet, tendencat e volumit dhe stërvitjet e fundit. Mbushet me çdo seri që regjistroni."
       },
       "timer": {
-        "title": "Përpashimi i kohës",
-        "text": "Depron \"Fill\" për të kryer një numërim ndër serit."
+        "title": "Timer pushimi",
+        "text": "Shtypni \"Nis\" për të nisur një numërim mbrapsht mes serive."
       },
       "ribbon": {
-        "title": "Shkarkoni nga çdo not",
-        "text": "Simboli pesheve në \"ribbon\" çkon formën e regjistrimit nga çdo vend.",
-        "mobileText": "Në një telefon, nuk ka ikonën \"ribbon\" në vendin e këtij. Për të hapur formën e logut nga çdo notë, përdohuni nga paleta komandëve."
+        "title": "Regjistro nga çdo shënim",
+        "text": "Ikona e shtangës në shiritin anësor hap formularin e regjistrimit nga kudo.",
+        "mobileText": "Në telefon nuk ka ikonë në shiritin anësor. Përdorni paletën e komandave për të hapur formularin e regjistrimit nga çdo shënim."
       },
       "commands": {
-        "title": "Shtypni komandat",
-        "text": "Hapni paletin e komandave dhe ekz ekon një komandë për të shtuar një tabellë, grafik, timer ose dasbord në një notë."
+        "title": "Komandat për shtim",
+        "text": "Hapni paletën e komandave dhe ekzekutoni një komandë \"Shto\" stërvitjeje për të shtuar një tabelë, grafik, timer ose panel në një shënim."
       },
       "end": {
         "title": "Jeni gati",
-        "text": "Ju mund të vazhdoni këtë udhëtim përsëri nga Settings → Fillimi."
+        "text": "Mund ta ndiqni këtë tur përsëri nga Cilësimet → Fillimi."
       },
       "muscles": {
-        "title": "Karte e ngroheve të muskujve",
-        "text": "Harta e ngrohtë dëshmon se cilat muskuj i keni trajnuar më fundit."
+        "title": "Harta termike e muskujve",
+        "text": "Harta termike tregon cilët muskuj i keni trajnuar më së fundmi."
       }
     },
     "showMe": "Shfaq"
   },
   "import": {
-    "chooseFile": "Përpiëren failin CSV",
-    "notAnExport": "Ky dosja nuk është një eksport i fortë ose i zëritur.",
-    "noSets": "Nuk ishte e mundur të lexohesh ndonjë set nga ky dosi. Kontrollo se është CSV-ja që aplikacioni e ekor, pa ndryshuar.",
-    "readError": "Nuk ishte e mundur të lexohej faili: {error}",
-    "source": "Ekspor nga {source}",
-    "setsFound": "Grupet në dosjen: {count}",
-    "setsToAdd": "Serit për të shtuar: {count}",
-    "duplicates": "Juaj, tashmë regjistruar, shkëmbuar: {count}",
-    "dateRange": "Ditët e stilit: {first} deri në {last}",
-    "newExercises": "Koreksionet pa faqe: {exercises}",
-    "nothingToAdd": "Këdo element në këtë dosje është tashmë në lozin tuaj.",
-    "backupNote": "Loja tuaj ruhet para se të shtatët të shtrykasin.",
-    "importButton": "Importo grupet",
+    "chooseFile": "Zgjidhni skedarin CSV",
+    "notAnExport": "Ky skedar nuk është eksport nga Strong ose Hevy.",
+    "noSets": "Nga ky skedar nuk u lexua asnjë seri. Kontrolloni që të jetë CSV-ja e eksportuar nga aplikacioni, pa ndryshime.",
+    "readError": "Nuk u lexua dot skedari: {error}",
+    "source": "Eksport nga {source}",
+    "setsFound": "Seritë në skedar: {count}",
+    "setsToAdd": "Seri për t'u shtuar: {count}",
+    "duplicates": "Tashmë në regjistrin tuaj, u anashkaluan: {count}",
+    "dateRange": "Ditët e stërvitjes: nga {first} deri më {last}",
+    "newExercises": "Ushtrime pa faqe: {exercises}",
+    "nothingToAdd": "Çdo seri në këtë skedar është tashmë në regjistrin tuaj.",
+    "backupNote": "Regjistri juaj ruhet para se të shtohen seritë.",
+    "importButton": "Importo seritë",
     "imported": "Importuar me sukses. U shtuan: {count}",
     "error": "Importimi dështoi: {error}",
-    "title": "Importim nga Strong ose Hevy",
-    "intro": "Pëzgjidhni CSV-n nga eksportimi i të dhënave të stilit në aplikacion. Nuk do të shkruhet asgjë derë që të konfirmoni."
+    "title": "Importo nga Strong ose Hevy",
+    "intro": "Zgjidhni CSV-në nga eksportimi i të dhënave të stërvitjes së aplikacionit. Asgjë nuk shkruhet derisa të konfirmoni."
   }
 }

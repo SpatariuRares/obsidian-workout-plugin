@@ -24,7 +24,7 @@
     },
     "defaultTitle": "Trend {type}",
     "noTypesAvailable": "Geen beschikbare grafiektypen",
-    "noEligibleE1rm": "Geen geschikte sets voor de geschatte 1RM. Noteer een positief gewicht met 1-12 herhalingen, exclusief warming-up en drop sets."
+    "noEligibleE1rm": "Geen geschikte series voor de geschatte 1RM. Noteer een positief gewicht met 1–12 herhalingen, exclusief warming-up en drop sets."
   },
   "commands": {
     "addExerciseBlock": "Oefeningsblok toevoegen",
@@ -37,7 +37,7 @@
     "insertTable": "Trainingstabel invoegen",
     "manageMuscleTags": "Spierlabels beheren",
     "migrateExerciseTypes": "Oefeningstypen migreren",
-    "createExampleNotes": "Maak voorbeeldnotities",
+    "createExampleNotes": "Voorbeeldnotities maken",
     "openGettingStartedGuide": "Open handleiding",
     "startTour": "Begin de tour",
     "importWorkouts": "Importeren vanuit Strong of Hevy"
@@ -103,7 +103,7 @@
       "noTags": "Geen spierlabels in de frontmatter",
       "title": "Foutmeldingen bij bestanden",
       "tooManyTags": "Te veel spierlabels ({count})",
-      "sharedName": "Exacte naam van de oefening als {pages}: de logs gaan naar slechts één van hen"
+      "sharedName": "Dezelfde oefeningsnaam als {pages}: logs gaan naar maar één van hen"
     },
     "muscleTags": {
       "description": "Beschrijving",
@@ -113,12 +113,12 @@
     },
     "protocol": {
       "clickToFilter": "Klik om te filteren",
-      "tooltip": "{label}: {count} sets ({percentage}%)"
+      "tooltip": "{label}: {count} series ({percentage}%)"
     },
     "protocolDistribution": {
       "clearFilter": "Filter wissen",
       "filterActive": "Gefilterd op",
-      "noData": "Geen sets gelogd in de afgelopen 30 dagen",
+      "noData": "Geen series gelogd in de afgelopen 30 dagen",
       "subtitle": "Overzicht van de trainingsprotocollen (laatste 30 dagen)",
       "title": "Verdeling van protocollen"
     },
@@ -128,9 +128,9 @@
       "columnProtocol": "Protocol",
       "columnVolumeChange": "Volumeverandering",
       "disclaimer": "Disclaimer",
-      "noData": "Nog niet genoeg gegevens: elk protocol heeft minstens 5 gelogde sets nodig.",
-      "title": "Effectiviteit van het protocol",
-      "subtitle": "Hoe elk protocol heeft gewerkt over alle geregistreerde sets."
+      "noData": "Nog niet genoeg gegevens: elk protocol heeft minstens 5 gelogde series nodig.",
+      "title": "Effectiviteit van protocollen",
+      "subtitle": "Hoe elk protocol heeft gewerkt over alle gelogde series"
     },
     "quickActions": {
       "addWorkoutLog": "Training loggen",
@@ -164,17 +164,17 @@
     "muscleHeatMap": {
       "metrics": {
         "volume": "Volume",
-        "sets": "Sets",
+        "sets": "Series",
         "reps": "Herhalingen"
       },
       "average": {
-        "volume": "Gemiddelde volume: {value} {unit}",
-        "sets": "Gemiddelde aantal sets: {value}",
+        "volume": "Gemiddeld volume: {value} {unit}",
+        "sets": "Gemiddeld aantal series: {value}",
         "reps": "Gemiddeld aantal herhalingen: {value}"
       },
       "imbalance": {
-        "backDominant": "Asymmetrie voor-achter: uw achterspieren werken veel meer dan uw voorspieren.",
-        "frontDominant": "Onevenwichtigheid: uw voorste spieren werken veel meer dan uw achterste spieren."
+        "backDominant": "Asymmetrie voor-achter: je achterspieren werken veel meer dan je voorspieren.",
+        "frontDominant": "Asymmetrie voor-achter: je voorspieren werken veel meer dan je achterspieren."
       }
     },
     "editDashboard": "Dashboard bewerken",
@@ -195,19 +195,23 @@
       "tile": "{widget}: kolom {column}, rij {row}, {width} breed, {height} hoog",
       "minOneColumn": "Min. 1 kolom",
       "minColumns": "Min. {columns} kolommen",
-      "size": "{width} × {height}"
+      "size": "{width} × {height}",
+      "gridHint": "Sleep een widget om hem te verplaatsen en de hoek om hem te vergroten of verkleinen; de stash hieronder toont de kleinste maat die elke widget kan hebben. Haal een widget weg met de × of door hem op de stash te laten vallen. Met het toetsenbord: pijltjes verplaatsen, Shift en pijltjes wijzigen het formaat, Delete verwijdert hem.",
+      "gridColumnsMeasured": "{columns} kolommen passen in de breedte van de notitie.",
+      "remove": "{widget} van het dashboard halen"
     },
     "grid": {
-      "outside": "{widget} gaat voorbij de {columns} kolommen van het raster",
+      "outside": "{widget} valt buiten de {columns} kolommen van het raster",
       "narrow": "{widget} heeft minimaal {min} kolommen nodig",
-      "overlap": "{widget} overlapt {other}"
+      "overlap": "{widget} overlapt {other}",
+      "empty": "Er staat nog geen widget op het raster. Open 'Dashboard bewerken' in het ⋮-menu om er een te plaatsen."
     }
   },
   "duration": {
     "estimatedDuration": "Geschatte duur",
     "lastSession": "Laatste sessie",
     "restTime": "Rusttijd",
-    "setTime": "Tijd per set",
+    "setTime": "Tijd per serie",
     "unableToAnalyze": "Kan trainingsbestand niet analyseren"
   },
   "examples": {
@@ -219,7 +223,7 @@
       "chartTitle": "Grafiek",
       "descriptionTemplate": "Voorbeeldbeschrijving voor {name}.",
       "descriptionTitle": "Beschrijving",
-      "distanceChartTitle": "Afstandsdiagram",
+      "distanceChartTitle": "Afstandsgrafiek",
       "durationChartTitle": "Grafiek van de duur",
       "durationTitle": "Duur",
       "heartRateTitle": "Hartslag",
@@ -270,7 +274,7 @@
       "chartsIntro": "Grafieken tonen je voortgang in de loop van de tijd. Beschikbare types: `volume`, `weight`, `reps`, `duration`, `distance`, `heartRate`, `pace`.",
       "chartsTitle": "1. Grafieken",
       "codeBlockWorkoutChart": "Bekijk de voortgang over de tijd",
-      "codeBlockWorkoutDashboard": "Volledige overzicht van statistieken",
+      "codeBlockWorkoutDashboard": "Volledig overzicht van statistieken",
       "codeBlockWorkoutDuration": "Trainingsduur schatten",
       "codeBlockWorkoutLog": "Toon de tabel met trainingsgegevens",
       "codeBlockWorkoutTimer": "Afteltimer of intervaltimer",
@@ -283,9 +287,9 @@
       "intro": "Volledige referentie van alle soorten codeblokken die beschikbaar zijn in de Workout Plugin.",
       "protocol21s": "7+7+7 gedeeltelijke herhalingen",
       "protocolDropset": "Verminder het gewicht, ga door met de herhalingen",
-      "protocolMyoReps": "Activatieset + mini-sets",
+      "protocolMyoReps": "Activatieserie + mini-series",
       "protocolRestPause": "Korte pauze, doorgaan tot falen",
-      "protocolStandard": "Standaard sets",
+      "protocolStandard": "Normale series",
       "protocolSuperset": "Gekoppelde oefeningen",
       "quickReferenceTitle": "Snelle handleiding",
       "strengthExerciseTitle": "Krachtoefening (volume + gewicht)",
@@ -321,8 +325,8 @@
       "commandInsertChart": "Trainingsgrafiek invoegen",
       "commandInsertChartDesc": "Voeg een grafiek toe aan elke notitie",
       "commandInsertTimer": "Trainingstimer invoegen",
-      "commandInsertTimerDesc": "Voeg een pauze-timer toe",
-      "dashboardDesc": "Uw trainingsgegevens op een rijtje",
+      "commandInsertTimerDesc": "Voeg een rusttimer toe",
+      "dashboardDesc": "Je trainingsgegevens in één oogopslag",
       "exercisesDesc": "Voorbeeld oefenpagina's met logs en grafieken",
       "exercisesFolder": "**{folder}/**",
       "featureShowcaseDesc": "Volledige referentie van alle codeblokken",
@@ -339,15 +343,15 @@
       "tableHeaderDescription": "Beschrijving",
       "tableHeaderFileFolder": "Bestand/Map",
       "title": "Aan de slag met de plugin The Gym",
-      "welcome": "Welkom! Deze map bevat voorbeeldbestanden om u te helpen alle functies te leren.",
-      "workoutsDesc": "Voorbeeld trainingsschema's",
+      "welcome": "Welkom! Deze map bevat voorbeeldbestanden die je helpen alle functies te leren.",
+      "workoutsDesc": "Voorbeeldsjablonen voor trainingen",
       "workoutsFolder": "**{folder}/**",
       "pagesIntro": "Verken één functie per pagina. Volg de links in de juiste volgorde, of kies een functie hieronder. Gebruik \"Terug\" en \"Volgende\" om tussen de voorbeelden te navigeren; scroll normaal om elk voorbeeld te bekijken.",
-      "liveIntro": "Verken alle functies hieronder met behulp van voorbeeldtrainingsschema's gedurende zes weken. Dit zijn voorbeeldgegevens; probeer de bedieningselementen en kijk hoe uw notities werken.",
-      "tryLog": "Gebruik de \"+\" knop om een set toe te voegen. De tabel, grafieken en dashboard lezen allemaal hetzelfde CSV-bestand.",
-      "continueWithWorkout": "Open [[{workout}]] om een complete workout uit te proberen met oefentabellen en rusttimers.",
+      "liveIntro": "Verken alle functies hieronder met zes weken aan voorbeeldtrainingen. Dit zijn voorbeeldgegevens; probeer de bedieningselementen uit en kijk hoe je notities werken.",
+      "tryLog": "Gebruik de \"+\" knop om een serie toe te voegen. De tabel, grafieken en het dashboard lezen allemaal hetzelfde CSV-bestand.",
+      "continueWithWorkout": "Open [[{workout}]] om een complete training uit te proberen met oefentabellen en rusttimers.",
       "moreExamples": "Raadpleeg [[{showcase}]] voor meer grafiektypen, filters en trainingsprotocollen.",
-      "ownData": "Wanneer u klaar bent, selecteer dan uw eigen CSV-map en oefenmap in Instellingen → Setup & data. Bewaar de voorbeeldmap als referentie.",
+      "ownData": "Wanneer je klaar bent, kies je je eigen CSV-map en oefenmap onder Instellingen → Instellingen en gegevens. Bewaar de voorbeeldmap als referentie.",
       "openGuideDesc": "Open de pagina met voorbeelden om aan de slag te gaan, met voorbeelden van tabellen, grafieken, timers en het dashboard."
     },
     "hiit": {
@@ -355,7 +359,7 @@
       "intro": "Hoge-intensiteit intervaltraining met intervaltimers en cardiotracking.",
       "runningProgressTitle": "Vooruitgang tijdens het hardlopen",
       "sprintIntervalsTitle": "Sprintintervallen (30 s × 8 rondes)",
-      "title": "HIIT Cardio Training",
+      "title": "HIIT-cardiosessie",
       "warmupTitle": "Warming-up (5 minuten)"
     },
     "workout": {
@@ -363,7 +367,7 @@
       "duration": "Duur",
       "note": "Opmerking: zet er vol gas op",
       "recoverySuffix": "(Herstel: {seconds}s)",
-      "setsReps": "{sets} sets x {reps} herhalingen"
+      "setsReps": "{sets} series x {reps} herhalingen"
     },
     "workouts": {
       "cardioDay": {
@@ -377,12 +381,12 @@
       }
     },
     "notes": {
-      "supersetCalves": "Superset met calf raises met eigen lichaamsgewicht",
+      "supersetCalves": "Superset met kuitheffen met lichaamsgewicht",
       "supersetLunges": "Superset met lunges"
     },
     "createToOpenGuide": "De handleiding voor het opstarten is onderdeel van de voorbeeldnotities, maar die bestaan nog niet. Maak ze nu?",
-    "pointedAtExamples": "Uw instellingen lezen nu het voorbeeldlogboek en de oefeningen. Wijzig dit in de instellingen.",
-    "usesSeparateLog": "U heeft al een trainingslog, dus deze is ongewijzigd gebleven. De voorbeelden gebruiken hun eigen logbestand."
+    "pointedAtExamples": "Je weergaven lezen nu het voorbeeldlogboek en de oefeningen. Wijzig dit in de gegevensinstellingen.",
+    "usesSeparateLog": "Je hebt al een trainingslog, dus die is ongewijzigd gebleven. De voorbeelden gebruiken hun eigen logbestand."
   },
   "forms": {
     "enterCsvPath": "Map voor de CSV-bestanden",
@@ -459,13 +463,13 @@
     },
     "tagReferenceGenerated": "Labeloverzicht succesvol gegenereerd!",
     "timerCompleted": "Timer voltooid!",
-    "templatesGenerated": "Templates zijn gegenereerd in '{folder}'. U kunt ze nu aanpassen.",
+    "templatesGenerated": "Sjablonen zijn gegenereerd in '{folder}'. Je kunt ze nu aanpassen.",
     "exerciseFolderNotSet": "Stel eerst de oefeningenmap in bij de instellingen."
   },
   "modal": {
     "actions": "Acties",
     "addTag": "Label toevoegen",
-    "auditStatusCloseMatch": "Bijna overeenkomst",
+    "auditStatusCloseMatch": "Bijna een overeenkomst",
     "auditStatusExactMatch": "Exacte overeenkomst",
     "auditStatusNoMatch": "Geen overeenkomst",
     "auditStatusPartialMatch": "Gedeeltelijke overeenkomst",
@@ -504,7 +508,7 @@
       "updateTimer": "Timer bijwerken",
       "decreaseBy": "{label} met {increment} verlagen",
       "increaseBy": "{label} met {increment} verhogen",
-      "deleteSet": "Verwijder set",
+      "deleteSet": "Verwijder serie",
       "updateDashboard": "Dashboard bijwerken"
     },
     "canvasLayout": "Lay-out",
@@ -591,7 +595,7 @@
       "migrationComplete": "Migratie voltooid. {count} oefeningsbestanden bijgewerkt.",
       "migrationError": "Fout bij migratie: {error}",
       "muscleTagCount": "{count} label(s) gevonden",
-      "muscleTagDeleteConfirm": "Bent u er zeker van dat u het label \"{tag}\" wilt verwijderen?",
+      "muscleTagDeleteConfirm": "Weet je zeker dat je het label \"{tag}\" wilt verwijderen?",
       "muscleTagDeleted": "Label verwijderd",
       "muscleTagExists": "Het label \"{tag}\" bestaat al",
       "muscleTagExportError": "Fout bij het exporteren van spierlabels: {error}",
@@ -622,16 +626,16 @@
       "migrationNoUpdates": "Alle oefenpagina's zijn al bijgewerkt",
       "validMustBeWholeNumber": "{field} moet een geheel getal zijn",
       "newRecord": "Nieuw record: {weight} {unit} (+{increase} {unit})",
-      "chartInserted": "Grafiek succesvol ingevoerd!",
-      "dashboardInserted": "Dashboard succesvol geïnstalleerd!",
+      "chartInserted": "Grafiek succesvol ingevoegd!",
+      "dashboardInserted": "Dashboard succesvol ingevoegd!",
       "exerciseNameRequired": "Geef een naam voor de oefening op",
-      "exerciseSectionCreated": "Oefenmodule succesvol aangemaakt!",
+      "exerciseSectionCreated": "Oefeningssectie succesvol aangemaakt!",
       "tableInserted": "Tabel succesvol toegevoegd!",
       "tableUpdated": "Tabel is succesvol bijgewerkt!",
-      "timerInserted": "Timer is succesvol geïnstalleerd!",
+      "timerInserted": "Timer succesvol ingevoegd!",
       "timerUpdated": "Timer is succesvol bijgewerkt!",
       "validChooseExercise": "Kies een oefening",
-      "validationCombinedMode": "Voor het type 'oefening + training' moet u beide velden invullen!",
+      "validationCombinedMode": "Voor het type 'oefening + training' moet je beide velden invullen!",
       "dashboardUpdated": "Dashboard succesvol bijgewerkt!",
       "dashboardUpdateFailed": "Dashboard bijwerken mislukt. Zorg dat het bestand in de editor geopend is."
     },
@@ -644,7 +648,7 @@
       "customTitle": "Laat leeg voor een automatische titel",
       "enterTagName": "Voer de labelnaam in (bijvoorbeeld borst, petto)",
       "exerciseAutocomplete": "Begin met het typen om beschikbare oefeningen te zien...",
-      "folderPath": "bijvoorbeeld: Oefeningen of leeg laten voor de root",
+      "folderPath": "bijvoorbeeld: Oefeningen of leeg laten voor de hoofdmap",
       "note": "Geef hier alles. Dit is je basisoefening.",
       "notes": "bijvoorbeeld, goede vorm, voelde me sterk",
       "parameterKey": "bijvoorbeeld, snelheid",
@@ -657,7 +661,7 @@
       "selectMuscleGroup": "Selecteer spiergroep...",
       "selectWorkoutFile": "Selecteer een trainingsbestand om te exporteren...",
       "sets": "4",
-      "workout": "Bijvoorbeeld: Workout A, Training B, of gebruik de checkbox hieronder"
+      "workout": "Bijvoorbeeld: Training A, Training B, of gebruik het vinkje hieronder"
     },
     "protocol": "Protocol:",
     "recentExercises": "Recent:",
@@ -676,7 +680,7 @@
       "tableType": "Tabeltype",
       "target": "Doel",
       "workout": "Training",
-      "mobileOptions": "Recente oefeningen en trainingsschema's"
+      "mobileOptions": "Recente oefeningen en trainingen"
     },
     "selectOptions": {
       "allLogs": "Alle logs",
@@ -697,9 +701,9 @@
       "timed": "Getimed",
       "twentyones": "21s",
       "yesNo": "Ja/Nee",
-      "warmup": "Voorbereiding"
+      "warmup": "Warming-up"
     },
-    "sets": "Sets:",
+    "sets": "Series:",
     "similarTags": "Vergelijkbare labels:",
     "similarity": "Vergelijkbaarheid",
     "status": "Status",
@@ -737,11 +741,11 @@
       "missingElements": "Ontbrekende elementen",
       "validationCombinedMode": "Vul voor het type oefening + training beide velden in"
     },
-    "exerciseSectionTemplate": "## {exerciseName}:\n### - Sets: {sets}\n- Herhalingen: {reps}\n- Rust: {restTime}s\n\n",
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Series: {sets}\n- Herhalingen: {reps}\n- Rust: {restTime}s\n\n",
     "noteTemplate": "**Opmerking: {note}**\n",
     "date": "Datum",
     "weightUnitToggle": "Eenheid voor deze vermelding",
-    "rest": "Rest",
+    "rest": "Rust",
     "work": "Werk"
   },
   "settings": {
@@ -761,13 +765,13 @@
       "savePreset": "Opslaan",
       "saveProtocol": "Opslaan",
       "showWelcome": "Toon welkomstbericht",
-      "takeTour": "Volg de tour"
+      "takeTour": "Begin de tour"
     },
     "descriptions": {
-      "confirmOverwriteMuscleTags": "Er bestaat al een CSV-bestand met spierlabels. Wilt u dit overschrijven met standaardwaarden? Dit verwijdert alle aangepaste labels.",
+      "confirmOverwriteMuscleTags": "Er bestaat al een CSV-bestand met spierlabels. Wil je dit overschrijven met standaardwaarden? Dit verwijdert alle aangepaste labels.",
       "csvFolder": "Map waar de bestanden met trainingsgegevens en spierlabels (CSV) worden opgeslagen.",
-      "defaultExactMatch": "Wanneer ingeschakeld, gebruikt de filterfunctie standaard exacte overeenkomsten. Schakel uit voor onnauwkeurige overeenkomsten.",
-      "defaultRepsPerSet": "Aangenomen aantal herhalingen indien niet opgegeven. Bij 0 wordt de 'Terugvalduur per set' gebruikt.",
+      "defaultExactMatch": "Wanneer ingeschakeld, gebruikt de filterfunctie standaard exacte overeenkomsten. Schakel uit voor vage overeenkomsten.",
+      "defaultRepsPerSet": "Aangenomen aantal herhalingen indien niet opgegeven. Bij 0 wordt de 'Terugvalduur per serie' gebruikt.",
       "defaultTimerPreset": "Selecteer een standaardinstelling voor nieuwe timers",
       "exerciseBlockTemplate": "Template voor oefenblokken. Beschikbare placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Pad naar de map met de oefenpagina's",
@@ -785,18 +789,18 @@
       "setupCSV": "Maak zowel workout_logs.csv als muscle-tags.csv aan in de ingestelde map.",
       "weightIncrement": "Standaard gewichtstoename voor progressieve overbelasting (bijvoorbeeld 2,5 voor stappen van 2,5 eenheden)",
       "showRibbonIcon": "Toon het halterpictogram in het lint dat het formulier voor het trainingslogboek opent",
-      "weightUnit": "Eenheid voor grafieken, totals en nieuwe logs. Elke log houdt de eenheid bij waarin deze is ingevoerd.",
-      "takeTour": "Geef een korte uitleg over het gebruik van logging, grafieken, tabellen en timers.",
-      "welcomeWindow": "Toon het startvenster opnieuw om te beginnen met voorbeeldgegevens of vanaf nul.",
-      "keepScreenAwake": "Probeer het scherm actief te houden terwijl een timer op de voorgrond draait. Dit verbruikt meer batterij; de beschikbaarheid hangt af van uw apparaat en systeeminstellingen.",
-      "vibrateOnCompletion": "Tril dan kort wanneer een timer afloopt, onafhankelijk van geluid. Vereist een aanraking op de pagina en een compatibel apparaat (zoals Android). Niet beschikbaar op iOS; geen meldingen in de achtergrond.",
+      "weightUnit": "Eenheid voor grafieken, totalen en nieuwe logs. Elke log houdt de eenheid bij waarin deze is ingevoerd.",
+      "takeTour": "Loop in een korte notitie stap voor stap door loggen, grafieken, tabellen en timers.",
+      "welcomeWindow": "Toon het welkomstscherm opnieuw om te beginnen met voorbeeldgegevens of vanaf nul.",
+      "keepScreenAwake": "Probeer het scherm actief te houden terwijl een timer op de voorgrond draait. Dit verbruikt meer batterij; de beschikbaarheid hangt af van je apparaat en systeeminstellingen.",
+      "vibrateOnCompletion": "Tril kort wanneer een timer afloopt, los van geluid. Vereist een aanraking op de pagina en een ondersteund apparaat (zoals Android). Niet beschikbaar op iOS; geen meldingen op de achtergrond.",
       "presetRestDesc": "Aantal seconden rust na het uitvoeren van elke ronde (0 voor geen rust).",
       "noCustomProtocols": "Er zijn nog geen protocollen. Klik op 'Protocol toevoegen' om er een aan te maken."
     },
     "labels": {
       "csvPath": "Pad naar het CSV-logbestand",
       "defaultExactMatch": "Standaard exacte overeenkomst",
-      "defaultRepsPerSet": "Standaard aantal herhalingen per set",
+      "defaultRepsPerSet": "Standaard aantal herhalingen per serie",
       "defaultTimerPreset": "Standaard timerinstelling",
       "exerciseBlockTemplate": "Template voor een oefenblok",
       "exerciseFolder": "Pad naar de map met de oefeningen",
@@ -812,19 +816,19 @@
       "protocolName": "Naam protocol",
       "repDuration": "Duur per herhaling (seconden)",
       "runAllMaintenance": "Alle onderhoudstaken uitvoeren",
-      "setDuration": "Terugvalduur per set (seconden)",
+      "setDuration": "Terugvalduur per serie (seconden)",
       "setupCSV": "CSV-bestanden instellen",
       "weightUnit": "Eenheid voor gewicht",
       "showRibbonIcon": "Pictogram voor snel loggen tonen",
       "welcomeWindow": "Welkomstscherm",
-      "takeTour": "Gidsen rondleiding",
+      "takeTour": "Begeleide rondleiding",
       "keepScreenAwake": "Houd het scherm actief terwijl een timer loopt",
       "vibrateOnCompletion": "Tril als een timer is voltooid",
-      "presetRest": "Rest"
+      "presetRest": "Rust"
     },
     "messages": {
-      "confirmDeletePreset": "Weet u zeker dat u deze voorinstelling wilt verwijderen?",
-      "confirmDeleteProtocol": "Bent u er zeker van dat u dit protocol wilt verwijderen?",
+      "confirmDeletePreset": "Weet je zeker dat je deze voorinstelling wilt verwijderen?",
+      "confirmDeleteProtocol": "Weet je zeker dat je dit protocol wilt verwijderen?",
       "csvFilesCreated": "CSV-bestanden succesvol aangemaakt!",
       "presetDeleted": "Voorinstelling verwijderd",
       "presetNameExists": "Er bestaat al een voorinstelling met deze naam",
@@ -833,10 +837,10 @@
       "protocolAbbreviationRequired": "Afkorting is verplicht (maximaal 3 tekens)",
       "protocolColorRequired": "Voer een geldige hex-kleur in (bijvoorbeeld #FF5733)",
       "protocolDeleted": "Protocol verwijderd",
-      "protocolNameExists": "Een protocol met deze naam bestaat al.",
+      "protocolNameExists": "Een protocol met deze naam bestaat al",
       "protocolNameRequired": "Naam van het protocol is verplicht",
       "protocolSaved": "Protocol is opgeslagen",
-      "weightUnitChangeFailed": "Kon de geweeindeheid niet veranderen: {error}"
+      "weightUnitChangeFailed": "Kon de gewichtseenheid niet wijzigen: {error}"
     },
     "options": {
       "none": "Geen",
@@ -860,7 +864,7 @@
       "timerPresets": "Timervoorinstellingen",
       "trainingParameters": "Parameters voor training",
       "gettingStarted": "Beginnen",
-      "timerDeviceCues": "Instructies voor timer-apparaten",
+      "timerDeviceCues": "Timersignalen op het apparaat",
       "customProtocols": "Protocollen"
     },
     "tooltips": {
@@ -876,16 +880,16 @@
       "mustBePositive": "Moet groter zijn dan 0"
     },
     "protocolHelp": {
-      "warmup": "De 'licht'-sets worden uitgevoerd vóór de 'werk'-sets. Ze tellen niet mee voor persoonlijke records.",
+      "warmup": "Lichte series voor de werkseries. Ze tellen niet mee voor persoonlijke records.",
       "dropSet": "Verlaag het gewicht direct na een mislukte herhaling en ga verder. Drop sets tellen niet mee voor persoonlijke records.",
-      "myoReps": "Eén reeks van activaties, gevolgd door korte mini-reeksen met een paar seconden rust.",
+      "myoReps": "Eén activatieserie, gevolgd door korte mini-series met een paar seconden rust.",
       "restPause": "Neem een paar seconden rust na een mislukte poging, en voer dan een paar extra herhalingen uit.",
       "superset": "Twee oefeningen achter elkaar, zonder pauze ertussen.",
       "twentyone": "7 herhalingen in de onderste helft, 7 in de bovenste helft, en daarna 7 volledige herhalingen."
     },
     "presetHelp": {
       "tabata": "20 seconden intensieve inspanning, 10 seconden rust, 8 ronden: in totaal 4 minuten.",
-      "emom": "Elke minuut op de minuut: begin met elke set aan het begin van de minuut en rust voor de resterende tijd, 10 rondes."
+      "emom": "Elke minuut, precies op de minuut: begin elke serie aan het begin van de minuut en rust voor de tijd die overblijft, 10 rondes."
     }
   },
   "stats": {
@@ -895,7 +899,7 @@
     "recentTrend": "Recente trend",
     "recentVsPrev": " (vs vorig)",
     "sessions": "Sessies",
-    "average": "Gemiddelde:",
+    "average": "Gemiddelde: ",
     "title": "{dataTypeLabel} statistieken ({contextLabel}):"
   },
   "table": {
@@ -942,9 +946,9 @@
     },
     "trendLine": "Trendlijn",
     "refreshingTable": "Tabel vernieuwen...",
-    "setCount": "{count} instellen",
-    "deleteSetMessage": "{set} wordt verwijderd uit uw logbestand. Dit kan niet worden teruggedraaid.",
-    "deleteSetTitle": "Deze set verwijderen?"
+    "setCount": "{count} series",
+    "deleteSetMessage": "{set} wordt verwijderd uit je logbestand. Dit kan niet ongedaan worden gemaakt.",
+    "deleteSetTitle": "Deze serie verwijderen?"
   },
   "timeperiods": {
     "month": "Maand",
@@ -972,7 +976,7 @@
     "round": "Ronde {current} van {total}",
     "status": {
       "done": "Voltooid",
-      "paused": "Gestopt"
+      "paused": "Gepauzeerd"
     }
   },
   "trends": {
@@ -1003,97 +1007,97 @@
       "title": "Ongeldige parameters:",
       "notANumber": "{key} moet een getal zijn, maar het is \"{value}\"",
       "tooSmall": "{key} moet {min} of meer zijn, maar het is {value}",
-      "outOfRange": "{key} moet tussen {min} en {max} liggen, maar het is {value}.",
-      "notABoolean": "{key} moet waar of onwaar zijn, maar het is \"{value}\".",
+      "outOfRange": "{key} moet tussen {min} en {max} liggen, maar het is {value}",
+      "notABoolean": "{key} moet waar of onwaar zijn, maar het is \"{value}\"",
       "notOneOf": "{key} moet één van {allowed} zijn, maar het is \"{value}\"",
-      "notACell": "{key} moet vier gehele getallen vanaf 1 zijn (kolom, rij, breedte, hoogte), maar is \"{value}\""
+      "notACell": "{key} moet vier gehele getallen vanaf 1 zijn (kolom, rij, breedte, hoogte), maar het is \"{value}\""
     }
   },
   "welcome": {
-    "title": "Welkom bij het workout-plugin",
-    "intro": "Volg je sessies, en bekijk ze vervolgens in grafieken, tabellen en een overzichtspagina. Hoe wil je beginnen?",
+    "title": "Welkom bij de workout-plugin",
+    "intro": "Houd je series bij en bekijk ze daarna in grafieken, tabellen en een dashboard. Hoe wil je beginnen?",
     "tryExamples": "Probeer met voorbeeldgegevens",
-    "startScratch": "Begin opnieuw",
+    "startScratch": "Vanaf nul beginnen",
     "later": "Later",
-    "tryExamplesDesc": "Voegt voorbeeldtrainingsschema's toe, waarna het je stap voor stap begeleidt bij het gebruik van de plugin.",
-    "startScratchDesc": "Leidt u stap voor stap door het gebruik van de plugin met uw eigen gegevens, beginnend met uw eerste set.",
-    "tourOnYourData": "U heeft al een trainingslog, dus de tour gebruikt uw eigen gegevens."
+    "tryExamplesDesc": "Voegt voorbeeldtrainingen toe en begeleidt je daarna stap voor stap door de plugin met die gegevens.",
+    "startScratchDesc": "Leidt je stap voor stap door de plugin met je eigen gegevens, beginnend met je eerste serie.",
+    "tourOnYourData": "Je hebt al een trainingslog, dus de tour gebruikt je eigen gegevens."
   },
   "tour": {
     "back": "Terug",
     "next": "Volgende",
     "skip": "Overslaan",
-    "done": "Afgevolgd",
+    "done": "Klaar",
     "progress": "{current} van {total}",
-    "noteName": "Gidsenrondleiding",
-    "noteIntro": "De rondleiding wijst naar elk onderdeel van het plugin op deze pagina. Bewerk of verwijder deze notitie wanneer u wilt.",
-    "noteTable": "Uw verzamelingen",
+    "noteName": "Begeleide rondleiding",
+    "noteIntro": "De rondleiding wijst naar elk onderdeel van de plugin op deze pagina. Bewerk of verwijder deze notitie wanneer je wilt.",
+    "noteTable": "Je series",
     "noteChart": "Vooruitgang",
     "noteDashboard": "Dashboard",
-    "noteTimer": "Timer voor pauzes",
+    "noteTimer": "Rusttimer",
     "steps": {
       "logSet": {
-        "title": "Registreer uw eerste set",
-        "text": "Druk op de + knop om het formulier te openen, en sla vervolgens een set op. Het wordt direct in de tabel weergegeven."
+        "title": "Registreer je eerste serie",
+        "text": "Druk op de + knop om het formulier te openen en sla vervolgens een serie op. Die verschijnt meteen in de tabel."
       },
       "rowActions": {
-        "title": "Bewerk of verwijder een set",
-        "mobileText": "Tik op een set om deze te corrigeren. Om deze te verwijderen, gebruik je de optie \"Set verwijderen\" in het formulier dat wordt geopend.",
-        "text": "Gebruik de potlood om een set te selecteren. Om deze te verwijderen, gebruik je de optie \"Set verwijderen\" in het formulier dat wordt geopend."
+        "title": "Bewerk of verwijder een serie",
+        "mobileText": "Tik op een serie om deze te corrigeren. Om deze te verwijderen, gebruik je de optie \"Verwijder serie\" in het formulier dat wordt geopend.",
+        "text": "Gebruik het potlood in een rij om een serie te corrigeren. Om deze te verwijderen, gebruik je de optie \"Verwijder serie\" in het formulier dat wordt geopend."
       },
       "chart": {
-        "title": "Uw voortgang",
+        "title": "Je voortgang",
         "text": "De grafiek toont hoe een oefening zich in de loop van de tijd ontwikkelt, met een trendlijn en statistieken.",
-        "textMine": "De grafiek laat zien hoe een oefening zich in de loop van de tijd ontwikkelt. Totdat je een paar sets hebt geregistreerd, is de grafiek bijna leeg.",
+        "textMine": "De grafiek laat zien hoe een oefening zich in de loop van de tijd ontwikkelt. Hij is bijna leeg totdat je een paar series hebt gelogd.",
         "mobileText": "Op een telefoon wordt de grafiek weergegeven als een tabel met dezelfde getallen.",
-        "mobileTextMine": "Op een telefoon wordt de grafiek weergegeven als een tabel. Deze is aanvankelijk vrij leeg, totdat u een paar sets hebt ingevoerd."
+        "mobileTextMine": "Op een telefoon wordt de grafiek weergegeven als tabel. Die is bijna leeg totdat je een paar series hebt gelogd."
       },
       "dashboard": {
-        "title": "Uw dashboard",
+        "title": "Je dashboard",
         "text": "Overzichten, trends in het volume en recente trainingen, allemaal op één plek.",
-        "textMine": "Totaal, volume trends en recente trainingen. Het vult zich naarmate je meer sets registreert."
+        "textMine": "Totalen, volumetrends en recente trainingen. Het vult zich naarmate je meer series registreert."
       },
       "timer": {
-        "title": "Timer opnieuw starten",
-        "text": "Druk op 'Start' om een timer te starten tussen de sets."
+        "title": "Rusttimer",
+        "text": "Druk op 'Start' om een aftelling tussen de series te starten."
       },
       "ribbon": {
         "title": "Loggen vanuit elke notitie",
-        "text": "Het dumbbell-icoon in de balk opent het logboekformulier vanaf elke locatie.",
-        "mobileText": "Op een telefoon is er hier geen 'ribbon'-icoon. Gebruik het commando-menu om het logboek te openen vanuit elke notitie."
+        "text": "Het halterpictogram in het lint opent het logformulier vanaf elke locatie.",
+        "mobileText": "Op een telefoon is er hier geen lintpictogram. Gebruik het commando-menu om het logformulier vanuit elke notitie te openen."
       },
       "commands": {
-        "title": "Voer commando's in",
-        "text": "Open het commando-menu en voer een \"Toevoegen workout\" commando uit om een tabel, grafiek, timer of dashboard aan een notitie toe te voegen."
+        "title": "Commando's invoegen",
+        "text": "Open het commando-menu en voer een commando uit zoals \"Trainingstabel invoegen\", \"Trainingsgrafiek invoegen\" of \"Trainingstimer invoegen\" om een tabel, grafiek of timer aan een notitie toe te voegen."
       },
       "end": {
         "title": "Je bent klaar",
-        "text": "U kunt deze tour opnieuw starten vanuit Instellingen → Beginnen."
+        "text": "Je kunt deze tour opnieuw starten via Instellingen → Beginnen."
       },
       "muscles": {
-        "title": "Kaart van de warmte in de spieren",
-        "text": "De heatmap toont welke spieren u het meest recent hebt getraind."
+        "title": "Spierheatmap",
+        "text": "De heatmap toont welke spieren je het meest recent hebt getraind."
       }
     },
     "showMe": "Laat me zien"
   },
   "import": {
     "chooseFile": "Kies een CSV-bestand",
-    "notAnExport": "Dit bestand is geen export van het type \"Sterk\" of \"Zwaar\".",
+    "notAnExport": "Dit bestand is geen export van Strong of Hevy.",
     "noSets": "Geen gegevens konden worden gelezen uit dit bestand. Controleer of dit het CSV-bestand is dat de app heeft geëxporteerd, zonder wijzigingen.",
     "readError": "Kon het bestand niet openen: {error}",
     "source": "Exporteer vanuit {source}",
-    "setsFound": "Sets in het bestand: {count}",
-    "setsToAdd": "Sets toe te voegen: {count}",
-    "duplicates": "Al in uw logbestand, overgeslagen: {count}",
+    "setsFound": "Series in het bestand: {count}",
+    "setsToAdd": "Series toe te voegen: {count}",
+    "duplicates": "Al in je logbestand, overgeslagen: {count}",
     "dateRange": "Trainingsdagen: van {first} tot {last}",
     "newExercises": "Oefeningen zonder pagina: {exercises}",
-    "nothingToAdd": "Elke set in dit bestand staat al in uw logbestand.",
-    "backupNote": "Uw log wordt gebackupt voordat de sets worden toegevoegd.",
-    "importButton": "Importeren",
-    "imported": "Import voltooid. Sets toegevoegd: {count}",
+    "nothingToAdd": "Elke serie in dit bestand staat al in je logbestand.",
+    "backupNote": "Je log wordt eerst gekopieerd als back-up voordat de series worden toegevoegd.",
+    "importButton": "Series importeren",
+    "imported": "Import voltooid. Series toegevoegd: {count}",
     "error": "Import mislukt: {error}",
     "title": "Importeren vanuit Strong of Hevy",
-    "intro": "Selecteer het CSV-bestand uit de exportfunctie voor trainingsgegevens van de app. Er wordt niets opgeslagen totdat u dit bevestigt."
+    "intro": "Kies het CSV-bestand uit de export van trainingsgegevens van de app. Er wordt niets opgeslagen voordat je bevestigt."
   }
 }

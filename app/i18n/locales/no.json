@@ -195,12 +195,16 @@
       "tile": "{widget}: kolonne {column}, rad {row}, {width} bred, {height} høy",
       "minOneColumn": "Min. 1 kolonne",
       "minColumns": "Min. {columns} kolonner",
-      "size": "{width} × {height}"
+      "size": "{width} × {height}",
+      "gridHint": "Dra en widget for å flytte den, og hjørnet for å endre størrelsen. Under er en stash som viser minste størrelse for hver widget. Fjern en widget med × eller ved å slippe den på stashen. Med tastaturet: piltastene flytter, Shift og piltastene endrer størrelse, Delete fjerner den.",
+      "gridColumnsMeasured": "{columns} kolonner passer i notatets bredde.",
+      "remove": "Fjern {widget} fra dashbordet"
     },
     "grid": {
       "outside": "{widget} går utenfor de {columns} kolonnene i rutenettet",
       "narrow": "{widget} trenger minst {min} kolonner",
-      "overlap": "{widget} overlapper {other}"
+      "overlap": "{widget} overlapper {other}",
+      "empty": "Ingen widget er på rutenettet ennå. Åpne «Rediger dashbord» i ⋮-menyen for å plassere noen."
     }
   },
   "duration": {

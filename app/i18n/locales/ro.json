@@ -24,7 +24,7 @@
     },
     "defaultTitle": "Tendință {type}",
     "noTypesAvailable": "Nu sunt disponibile tipuri de grafice.",
-    "noEligibleE1rm": "Nu există serii eligibile pentru estimarea greutății de 1RM. Înregistrați o greutate pozitivă cu 1–12 repetări, excluzând încălzirea și seriile de scădere a greutății."
+    "noEligibleE1rm": "Nu există serii eligibile pentru estimarea 1RM. Înregistrează o greutate pozitivă cu 1–12 repetări, excluzând seriile de încălzire și de scădere."
   },
   "commands": {
     "addExerciseBlock": "Adaugă bloc de exercițiu",
@@ -37,10 +37,10 @@
     "insertTable": "Adaugă tabel de antrenament",
     "manageMuscleTags": "Gestionează etichetele pentru mușchi",
     "migrateExerciseTypes": "Migrează tipurile de exerciții",
-    "createExampleNotes": "Creați note de exemplu",
+    "createExampleNotes": "Creează note de exemplu",
     "openGettingStartedGuide": "Deschide ghidul de pornire",
-    "startTour": "Începeți turul",
-    "importWorkouts": "Import din Strong sau Hevy"
+    "startTour": "Începe turul",
+    "importWorkouts": "Importă din Strong sau Hevy"
   },
   "common": {
     "bpm": "bpm",
@@ -74,11 +74,11 @@
       "willConvertOne": "1 înregistrare va fi convertită"
     },
     "sectionExercise": "Exercițiu",
-    "success": "{count} înregistrări din jurnal au fost convertite cu succes",
+    "success": "Au fost convertite cu succes {count} înregistrări din jurnal",
     "title": "Convertește datele exercițiului",
     "typeSelect": {
       "convertTo": "Convertește în:",
-      "updateFileType": "Actualizare tip fișier exercițiu"
+      "updateFileType": "Actualizează tipul fișierului de exercițiu"
     }
   },
   "dashboard": {
@@ -108,7 +108,7 @@
     "muscleTags": {
       "description": "Descriere",
       "title": "Etichete pentru mușchi",
-      "tooltip": "Dați clic pentru a copia: {tag}",
+      "tooltip": "Fă clic pentru a copia: {tag}",
       "totalCount": "Total: {count} etichete disponibile"
     },
     "protocol": {
@@ -129,8 +129,8 @@
       "columnVolumeChange": "Variația volumului",
       "disclaimer": "Notă",
       "noData": "Nu sunt încă destule date: fiecare protocol are nevoie de cel puțin 5 serii înregistrate.",
-      "title": "Eficiența protocolului",
-      "subtitle": "Cum a funcționat fiecare protocol în toate seturile înregistrate"
+      "title": "Eficiența protocoalelor",
+      "subtitle": "Cum a funcționat fiecare protocol în toate seriile înregistrate"
     },
     "quickActions": {
       "addWorkoutLog": "Adaugă înregistrare de antrenament",
@@ -173,8 +173,8 @@
         "reps": "Număr mediu de repetări: {value}"
       },
       "imbalance": {
-        "backDominant": "Diferență între partea anterioară și cea posterioară: mușchii din partea posterioară lucrează mult mai intens decât cei din partea anterioară.",
-        "frontDominant": "Dezechilibru față/spate: mușchii din partea din față lucrează mult mai intens decât cei din partea din spate."
+        "backDominant": "Dezechilibru față-spate: mușchii din spate lucrează mult mai mult decât cei din față.",
+        "frontDominant": "Dezechilibru față-spate: mușchii din față lucrează mult mai mult decât cei din spate."
       }
     },
     "editDashboard": "Editează tabloul de bord",
@@ -195,25 +195,29 @@
       "tile": "{widget}: coloana {column}, rândul {row}, lățime {width}, înălțime {height}",
       "minOneColumn": "Min. 1 coloană",
       "minColumns": "Min. {columns} coloane",
-      "size": "{width} × {height}"
+      "size": "{width} × {height}",
+      "gridHint": "Trage un widget ca să-l muți și colțul lui ca să-i schimbi dimensiunea; zona de jos arată dimensiunea minimă a fiecărui widget. Scoate un widget cu × sau trăgându-l în zona de jos. Cu tastatura: săgețile mută, Shift și săgețile schimbă dimensiunea, Delete îl scoate.",
+      "gridColumnsMeasured": "{columns} coloane încap în lățimea notei.",
+      "remove": "Scoate {widget} de pe tabloul de bord"
     },
     "grid": {
       "outside": "{widget} depășește cele {columns} coloane ale grilei",
       "narrow": "{widget} are nevoie de cel puțin {min} coloane",
-      "overlap": "{widget} se suprapune cu {other}"
+      "overlap": "{widget} se suprapune cu {other}",
+      "empty": "Niciun widget nu este încă pe grilă. Deschide „Editează tabloul de bord” din meniul ⋮ ca să adaugi unele."
     }
   },
   "duration": {
     "estimatedDuration": "Durata estimată",
     "lastSession": "Ultima sesiune",
-    "restTime": "Timp de odihnă",
-    "setTime": "Timp per set",
+    "restTime": "Timp de pauză",
+    "setTime": "Timp per serie",
     "unableToAnalyze": "Nu se poate analiza fișierul de antrenament"
   },
   "examples": {
     "dashboard": {
       "description": "Statisticile tale de antrenament dintr-o privire. Vezi [[{featureShowcase}]] pentru toate componentele disponibile.",
-      "title": "Panou de control"
+      "title": "Tablou de bord"
     },
     "exercise": {
       "chartTitle": "Grafic",
@@ -224,7 +228,7 @@
       "durationTitle": "Durată",
       "heartRateTitle": "Frecvența cardiacă",
       "logTitle": "Jurnal",
-      "paceTrackingNote": "Urmăriți progresul în îmbunătățirea ritmului (valori mai mici = ritm mai rapid):",
+      "paceTrackingNote": "Urmărește progresul în îmbunătățirea ritmului (valori mai mici = ritm mai rapid):",
       "paceTrackingTitle": "Urmărirea ritmului",
       "repTrackingTitle": "Urmărirea numărului de repetări",
       "volumeChartTitle": "Grafic de volum",
@@ -269,7 +273,7 @@
       "cardioExerciseTitle": "Exerciții cardio (distanță + ritm)",
       "chartsIntro": "Graficele îți arată progresul în timp. Tipuri disponibile: `volume`, `weight`, `reps`, `duration`, `distance`, `heartRate`, `pace`.",
       "chartsTitle": "1. Grafice",
-      "codeBlockWorkoutChart": "Vizualizați progresul în timp",
+      "codeBlockWorkoutChart": "Vizualizează progresul în timp",
       "codeBlockWorkoutDashboard": "Vizualizare completă a statisticilor",
       "codeBlockWorkoutDuration": "Estimează durata antrenamentului",
       "codeBlockWorkoutLog": "Afișează tabelul cu datele antrenamentului",
@@ -283,24 +287,24 @@
       "intro": "Lista completă a tuturor tipurilor de blocuri de cod disponibile în plugin-ul Workout.",
       "protocol21s": "7+7+7 repetiții parțiale",
       "protocolDropset": "Reduci greutatea, continui repetările",
-      "protocolMyoReps": "Set de activare + seturi mini",
+      "protocolMyoReps": "Serie de activare + mini-serii",
       "protocolRestPause": "Pauză scurtă, apoi continuare până la epuizare",
-      "protocolStandard": "Seturi standard",
+      "protocolStandard": "Serii standard",
       "protocolSuperset": "Exerciții în pereche",
       "quickReferenceTitle": "Referință rapidă",
       "strengthExerciseTitle": "Exercițiu de forță (volum + greutate)",
       "tablesIntro": "Tabelele afișează istoricul antrenamentelor, cu posibilități de sortare și editare.",
       "tablesTitle": "2. Tabele",
-      "timedExerciseTitle": "Exercițiu cu timp limitat (durată)",
+      "timedExerciseTitle": "Exercițiu cronometrat (durată)",
       "timersTitle": "3. Temporizatoare",
-      "tip": "**Sfat**: pentru panoul tău personal, vezi [[{dashboard}]]",
+      "tip": "**Sfat**: pentru tabloul tău de bord, vezi [[{dashboard}]]",
       "title": "Prezentare de funcționalități",
-      "trainingProtocolsIntro": "Acest plugin suportă aceste badge-uri pentru protocoale în jurnalele dumneavoastră:",
+      "trainingProtocolsIntro": "Acest plugin afișează aceste badge-uri pentru protocoale în jurnalele tale:",
       "trainingProtocolsTitle": "5. Protocoale de antrenament",
       "workoutChartTitle": "Grafic de antrenament (Toate exercițiile combinate)"
     },
     "fileNames": {
-      "dashboard": "Panou de control",
+      "dashboard": "Tablou de bord",
       "featureShowcase": "Prezentarea caracteristicilor",
       "gettingStarted": "Cum să începi",
       "hiitCardioSession": "Sesiune de cardio HIIT"
@@ -315,40 +319,40 @@
     },
     "gettingStarted": {
       "commandCreateExercise": "Creează pagină de exercițiu",
-      "commandCreateExerciseDesc": "Creați un nou fișier pentru exercițiu",
+      "commandCreateExerciseDesc": "Creează un fișier nou pentru exercițiu",
       "commandCreateLog": "Creează jurnal de antrenament",
-      "commandCreateLogDesc": "Adaugă o nouă intrare pentru antrenament",
+      "commandCreateLogDesc": "Adaugă o înregistrare nouă de antrenament",
       "commandInsertChart": "Adaugă graficul antrenamentului",
-      "commandInsertChartDesc": "Adăugați un grafic oricărei note",
+      "commandInsertChartDesc": "Adaugă un grafic în orice notă",
       "commandInsertTimer": "Adaugă temporizator pentru antrenament",
       "commandInsertTimerDesc": "Adaugă un temporizator pentru pauză",
-      "dashboardDesc": "Statistici despre antrenamentul dumneavoastră, într-un singur loc",
+      "dashboardDesc": "Statisticile tale de antrenament, într-un singur loc",
       "exercisesDesc": "Exemple de pagini cu exerciții, incluzând înregistrări și grafice",
       "exercisesFolder": "**{folder}/**",
       "featureShowcaseDesc": "Referință completă pentru toate blocurile de cod",
       "folderStructureTitle": "Structura folderului",
-      "logDesc": "Datele dumneavoastră despre antrenament, în format CSV",
+      "logDesc": "Datele tale de antrenament, în format CSV",
       "logFolder": "**{folder}/**",
       "nextStepsTitle": "Pași următori",
-      "quickActionsIntro": "Utilizați aceste comenzi (Ctrl/Cmd + P):",
+      "quickActionsIntro": "Folosește aceste comenzi (Ctrl/Cmd + P):",
       "quickActionsTitle": "Acțiuni rapide",
       "step1": "Deschide [[{dashboard}]] pentru a-ți vedea statisticile",
       "step2": "Consultă [[{featureShowcase}]] pentru a descoperi toate funcționalitățile disponibile",
       "step3": "Încearcă un antrenament din folderul **{workouts}**",
-      "step4": "Creați propriile exerciții în **{exercises}**",
+      "step4": "Creează-ți propriile exerciții în **{exercises}**",
       "tableHeaderDescription": "Descriere",
       "tableHeaderFileFolder": "Fișier/Folder",
-      "title": "Începeți să utilizați pluginul The Gym",
-      "welcome": "Bun venit! Acest folder conține fișiere de exemplu, care vă vor ajuta să învățați toate funcțiile.",
+      "title": "Începe cu pluginul The Gym",
+      "welcome": "Bun venit! Acest folder conține fișiere de exemplu care te ajută să înveți toate funcțiile.",
       "workoutsDesc": "Exemple de șabloane pentru antrenamente",
       "workoutsFolder": "**{folder}/**",
-      "pagesIntro": "Explorați o funcție pe pagină. Urmați link-urile în ordinea indicată, sau alegeți o funcție din lista de mai jos. Utilizați butoanele \"Înapoi\" și \"Următor\" pentru a naviga între note; derulați normal pentru a explora fiecare exemplu.",
-      "liveIntro": "Explorați fiecare funcție de mai jos cu un set de exerciții de antrenament pe șase săptămâni. Acestea sunt date de demonstrație; testați comenzile și vedeți cum funcționează notele.",
-      "tryLog": "Utilizați butonul \"+\" pentru a adăuga un set de date. Tabelul, graficele și panoul de control utilizează același fișier CSV.",
-      "continueWithWorkout": "Deschide [[{workout}]] pentru a încerca un antrenament complet, cu tabele de exerciții și cronometre de odihnă.",
-      "moreExamples": "Consultați [[{showcase}]] pentru mai multe tipuri de grafice, filtre și protocoale de instruire.",
-      "ownData": "Când sunteți pregătit, selectați folderul CSV și folderul de exemple în setările → Configurarea și date. Păstrați folderul de exemple ca referință.",
-      "openGuideDesc": "Deschide pagina \"Începe\", care include exemple funcționale de tabele, grafice, cronometre și panoul de control."
+      "pagesIntro": "Explorează o funcție pe pagină. Urmează linkurile în ordinea indicată sau alege o funcție din lista de mai jos. Folosește butoanele „Înapoi” și „Următor” ca să navighezi între note; derulează normal ca să explorezi fiecare exemplu.",
+      "liveIntro": "Explorează fiecare funcție de mai jos cu șase săptămâni de antrenamente de exemplu. Sunt date demonstrative: încearcă comenzile și vezi cum funcționează notele.",
+      "tryLog": "Folosește butonul „+” ca să adaugi o serie. Tabelul, graficele și tabloul de bord citesc același fișier CSV.",
+      "continueWithWorkout": "Deschide [[{workout}]] pentru a încerca un antrenament complet, cu tabele de exerciții și temporizatoare de pauză.",
+      "moreExamples": "Vezi [[{showcase}]] pentru mai multe tipuri de grafice, filtre și protocoale de antrenament.",
+      "ownData": "Când ești pregătit, alege folderul CSV și folderul de exerciții din Setări → Configurare și date. Păstrează folderul de exemple ca referință.",
+      "openGuideDesc": "Deschide pagina „Începe”, cu exemple funcționale de tabele, grafice, temporizatoare și tabloul de bord."
     },
     "hiit": {
       "cyclingCooldownTitle": "Răcire după ciclism",
@@ -363,17 +367,17 @@
       "duration": "Durată",
       "note": "Notă: efort maxim",
       "recoverySuffix": "(Recuperare: {seconds} s)",
-      "setsReps": "{sets} serii x {reps} repetări"
+      "setsReps": "{sets} serii × {reps} repetări"
     },
     "workouts": {
       "cardioDay": {
-        "name": "Zi de exerciții cardio"
+        "name": "Zi de cardio"
       },
       "lowerBodyA": {
         "name": "Ziua 1 PARTEA INFERIOARĂ A 2.0"
       },
       "upperBodyPower": {
-        "name": "Exerciții pentru forța corpului superior"
+        "name": "Forță pentru partea superioară a corpului"
       }
     },
     "notes": {
@@ -382,7 +386,7 @@
     },
     "createToOpenGuide": "Ghidul de pornire face parte din notele de exemplu, care nu există încă. Ar trebui să le creăm acum?",
     "pointedAtExamples": "Vizualizările tale citesc acum jurnalul și exercițiile de exemplu. Schimbă această opțiune în setările datelor.",
-    "usesSeparateLog": "Deoarece aveți deja un jurnal de antrenament, acesta a rămas nemodificat. Exemplele folosesc propriul lor fișier de jurnal."
+    "usesSeparateLog": "Deoarece ai deja un jurnal de antrenament, acesta a rămas neschimbat. Exemplele folosesc propriul lor fișier de jurnal."
   },
   "forms": {
     "enterCsvPath": "Folderul pentru fișierele CSV",
@@ -393,7 +397,7 @@
     "avgReps": "Repetări medii",
     "back": "Spate",
     "currentFile": "Fișierul curent",
-    "dashboard": "Panou de control",
+    "dashboard": "Tablou de bord",
     "delete": "Șterge",
     "edit": "Modifică",
     "front": "Față",
@@ -401,7 +405,7 @@
       "avgCustom": "Valoare medie {label}",
       "avgDistance": "Distanța medie (km)",
       "avgDuration": "Durata medie (secunde)",
-      "avgHeartRate": "Rata medie a pulsului (bătăi pe minut)",
+      "avgHeartRate": "Puls mediu (bpm)",
       "avgVolume": "Volum mediu ({unit})",
       "avgWeight": "Greutate medie ({unit})",
       "dailyVolume": "Volumul zilnic ({unit})",
@@ -422,12 +426,12 @@
   "logs": {
     "addLogButtonAria": "Adaugă jurnal pentru {exerciseName}",
     "addLogButtonText": "Adaugă jurnal pentru {exerciseName}",
-    "createFirstLogButton": "Creați primul jurnal pentru {exerciseName}",
-    "createFirstLogButtonAria": "Creați primul jurnal pentru {exerciseName}",
+    "createFirstLogButton": "Creează primul jurnal pentru {exerciseName}",
+    "createFirstLogButtonAria": "Creează primul jurnal pentru {exerciseName}",
     "createLogButtonAria": "Creează jurnal pentru: {exerciseName}",
     "createLogButtonText": "Creează jurnal pentru: {exerciseName}",
     "noDataTitle": "Nu au fost găsite înregistrări pentru {exerciseName}",
-    "exploreExampleData": "Sau explorați folosind date de exemplu",
+    "exploreExampleData": "Sau explorează cu date de exemplu",
     "lastSet": "Ultima dată: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Record personal: {weight} {unit} × {reps}"
@@ -444,7 +448,7 @@
       "muscleTagsCsvError": "Eroare la crearea CSV pentru etichetele musculare: {error}",
       "muscleTagsLoadError": "Eroare la încărcarea etichetelor musculare: {error}",
       "templateGenError": "Eșec la generarea șabloanelor: {error}",
-      "workoutLogCreateError": "Nu s-a putut crea fișierul CSV la calea: {path}. Verificați calea în setări.",
+      "workoutLogCreateError": "Nu s-a putut crea fișierul CSV la calea: {path}. Verifică calea în setări.",
       "tableRenderError": "Eroare la redarea tabelului"
     },
     "imbalanceAlerts": "Alerte de dezechilibru",
@@ -459,7 +463,7 @@
     },
     "tagReferenceGenerated": "Referința etichetelor a fost generată cu succes!",
     "timerCompleted": "Temporizatorul s-a încheiat!",
-    "templatesGenerated": "Șabloanele au fost generate în '{folder}'. Acum le puteți personaliza.",
+    "templatesGenerated": "Șabloanele au fost generate în '{folder}'. Acum le poți personaliza.",
     "exerciseFolderNotSet": "Setează mai întâi folderul de exerciții în setări."
   },
   "modal": {
@@ -491,7 +495,7 @@
       "createSection": "Creează secțiune",
       "export": "Exportă",
       "insertChart": "Adaugă grafic",
-      "insertDashboard": "Adaugă panoul de control",
+      "insertDashboard": "Adaugă tabloul de bord",
       "insertExerciseBlock": "Adaugă",
       "insertTable": "Adaugă tabel",
       "insertTimer": "Adaugă temporizator",
@@ -504,7 +508,7 @@
       "updateTimer": "Actualizează temporizatorul",
       "decreaseBy": "Scade {label} cu {increment}",
       "increaseBy": "Crește {label} cu {increment}",
-      "deleteSet": "Șterge setul",
+      "deleteSet": "Șterge seria",
       "updateDashboard": "Actualizează tabloul de bord"
     },
     "canvasLayout": "Aranjament",
@@ -527,7 +531,7 @@
       "useCurrentWorkoutFile": "Folosește fișierul antrenamentului curent"
     },
     "confirmAction": "Confirmă acțiunea",
-    "csvExercise": "Exercițiu cu fișier CSV",
+    "csvExercise": "Exercițiu din CSV",
     "customParameters": "Parametri personalizați:",
     "customTitle": "Titlu personalizat:",
     "dataLimit": "Limită de date:",
@@ -550,7 +554,7 @@
       "exercise": "Exercițiu:",
       "reps": "Repetări:",
       "targetReps": "Repetări țintă:",
-      "targetWeight": "Obiectiv: ({unit}):",
+      "targetWeight": "Țintă ({unit}):",
       "volume": "Volum ({unit}):",
       "weight": "Greutate ({unit}):"
     },
@@ -561,8 +565,8 @@
     "maxLogCount": "Număr maxim de înregistrări:",
     "muscleGroup": "Grup de mușchi",
     "newTag": "Etichetă nouă",
-    "noTagsFound": "Nu s-au găsit etichete care să corespundă cu căutarea dumneavoastră.",
-    "noTagsSelected": "Nu au fost selectate etichete. Dați clic pe etichetele de mai jos pentru a le adăuga.",
+    "noTagsFound": "Nicio etichetă nu corespunde căutării tale.",
+    "noTagsSelected": "Nu sunt etichete selectate. Fă clic pe etichetele de mai jos ca să le adaugi.",
     "note": "Notă:",
     "notes": "Note (opțional):",
     "notices": {
@@ -578,12 +582,12 @@
       "auditScanning": "Se scanează fișierele de exerciții...",
       "canvasExportError": "Eroare la exportarea pe canvas: {error}",
       "canvasExported": "Canvas exportat ({path})",
-      "confirmUpdateTarget": "Actualizezi obiectivul la {targetWeight}{weightUnit}?",
+      "confirmUpdateTarget": "Actualizezi ținta la {targetWeight}{weightUnit}?",
       "dismissAchievement": "Închide realizare",
       "exerciseBlockInserted": "Bloc de exercițiu inserat",
       "exercisePageCreated": "Pagina de exerciții a fost creată cu succes!",
       "exercisePageError": "Eroare la crearea paginii exercițiului: {error}",
-      "exercisePageNameRequired": "Vă rugăm să introduceți un nume pentru exercițiu",
+      "exercisePageNameRequired": "Introdu un nume pentru exercițiu",
       "genericError": "Eroare: {error}",
       "insertCodeNoFile": "Deschide un fișier Markdown pentru a introduce codul",
       "logCreated": "Jurnalul antrenamentului a fost creat cu succes!",
@@ -591,7 +595,7 @@
       "migrationComplete": "Migrare finalizată. Au fost actualizate {count} fișiere de exerciții.",
       "migrationError": "Eroare la migrare: {error}",
       "muscleTagCount": "{count} etichete găsite",
-      "muscleTagDeleteConfirm": "Sunteți sigur(ă) că doriți să ștergeți eticheta \"{tag}\"?",
+      "muscleTagDeleteConfirm": "Ești sigur(ă) că vrei să ștergi eticheta \"{tag}\"?",
       "muscleTagDeleted": "Etichetă ștearsă",
       "muscleTagExists": "Eticheta \"{tag}\" există deja",
       "muscleTagExportError": "Eroare la exportul etichetelor pentru mușchi: {error}",
@@ -609,11 +613,11 @@
       "muscleTagSimilarFound": "{count} etichete similare găsite",
       "muscleTagSimilarWarning": "Există deja o etichetă similară",
       "suggestedNextWeight": "Următoarea greutate sugerată: {suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "Nu s-a putut actualiza tabelul. Asigurați-vă că fișierul este deschis în editor.",
-      "targetAchieved": "Obiectiv atins!",
+      "tableUpdateFailed": "Nu s-a putut actualiza tabelul. Asigură-te că fișierul este deschis în editor.",
+      "targetAchieved": "Țintă atinsă!",
       "timerElementsNotInitialized": "Elementele temporizatorului nu au fost inițializate",
-      "timerUpdateFailed": "Nu s-a reușit actualizarea temporizatorului. Asigurați-vă că fișierul este deschis în editor.",
-      "validationFillAll": "Vă rugăm să completați toate câmpurile cu valori valide.",
+      "timerUpdateFailed": "Nu s-a putut actualiza temporizatorul. Asigură-te că fișierul este deschis în editor.",
+      "validationFillAll": "Completează toate câmpurile cu valori valide.",
       "validMissingField": "Câmp obligatoriu lipsă: {field}",
       "validMustBeNumber": "{field} trebuie să fie un număr valid",
       "validMinValue": "{field} trebuie să fie cel puțin {min}",
@@ -621,17 +625,17 @@
       "validFieldRequired": "{field} este obligatoriu",
       "migrationNoUpdates": "Toate paginile de exerciții sunt deja actualizate",
       "validMustBeWholeNumber": "{field} trebuie să fie un număr întreg",
-      "newRecord": "Înregistrare nouă: {weight} {unit} (+{increase} {unit})",
+      "newRecord": "Record nou: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Graficul a fost inserat cu succes!",
-      "dashboardInserted": "Panoul de control a fost inserat cu succes!",
-      "exerciseNameRequired": "Vă rugăm să introduceți numele exercițiului.",
+      "dashboardInserted": "Tabloul de bord a fost inserat cu succes!",
+      "exerciseNameRequired": "Introdu numele exercițiului",
       "exerciseSectionCreated": "Secțiunea de exerciții a fost creată cu succes!",
       "tableInserted": "Tabela a fost inserată cu succes!",
       "tableUpdated": "Tabelul a fost actualizat cu succes!",
-      "timerInserted": "Cronometrul a fost introdus cu succes!",
-      "timerUpdated": "Cronometrul a fost actualizat cu succes!",
+      "timerInserted": "Temporizatorul a fost adăugat cu succes!",
+      "timerUpdated": "Temporizatorul a fost actualizat cu succes!",
       "validChooseExercise": "Alege un exercițiu",
-      "validationCombinedMode": "Pentru tipul 'exerciții + antrenament', trebuie să completați ambele câmpuri!",
+      "validationCombinedMode": "Pentru tipul „exercițiu + antrenament”, completează ambele câmpuri!",
       "dashboardUpdated": "Tabloul de bord a fost actualizat cu succes!",
       "dashboardUpdateFailed": "Nu s-a putut actualiza tabloul de bord. Asigură-te că fișierul este deschis în editor."
     },
@@ -641,23 +645,23 @@
     "parameterType": "Tip:",
     "parameterUnit": "Unitate (opțional):",
     "placeholders": {
-      "customTitle": "Lăsați acest câmp gol pentru a utiliza un titlu generat automat.",
-      "enterTagName": "Introduceți numele etichetei (de exemplu, piept, petto)",
-      "exerciseAutocomplete": "Începeți să scrieți pentru a vedea exercițiile disponibile...",
-      "folderPath": "de exemplu, Exerciții sau lăsați gol pentru directorul rădăcină",
+      "customTitle": "Lasă gol pentru un titlu automat",
+      "enterTagName": "Scrie numele etichetei (de exemplu, piept, petto)",
+      "exerciseAutocomplete": "Începe să scrii pentru a vedea exercițiile disponibile...",
+      "folderPath": "de exemplu, Exerciții sau lasă gol pentru rădăcina vault-ului",
       "note": "Dă tot ce poți aici. Acesta este exercițiul tău de bază.",
       "notes": "de exemplu, formă bună, senzație de forță",
       "parameterKey": "de exemplu, viteză",
-      "parameterLabel": "ex., Viteza",
+      "parameterLabel": "de exemplu, Viteza",
       "parameterUnit": "de exemplu, km/h",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "Caută etichete pentru mușchi...",
       "searchTags": "Caută după etichetă sau grup muscular...",
-      "selectMuscleGroup": "Selectați grupa musculară...",
-      "selectWorkoutFile": "Selectați un fișier de antrenament pentru a exporta...",
+      "selectMuscleGroup": "Selectează grupa musculară...",
+      "selectWorkoutFile": "Selectează un fișier de antrenament pentru export...",
       "sets": "4",
-      "workout": "de exemplu, Antrenament A, Antrenament B, sau folosiți caseta de selectare de mai jos"
+      "workout": "de exemplu, Antrenament A, Antrenament B sau bifează caseta de mai jos"
     },
     "protocol": "Protocol:",
     "recentExercises": "Exerciții recente:",
@@ -671,10 +675,10 @@
       "displayOptions": "Opțiuni de afișare",
       "exerciseConfiguration": "Configurarea exercițiului",
       "options": "Opțiuni",
-      "preset": "Presetare",
+      "preset": "Preset",
       "progressiveOverload": "Supraîncărcare progresivă",
       "tableType": "Tip de tabel",
-      "target": "Obiectiv",
+      "target": "Țintă",
       "workout": "Antrenament",
       "mobileOptions": "Exercițiile și antrenamentele recente"
     },
@@ -684,7 +688,7 @@
       "completeWorkout": "Antrenament complet",
       "custom": "Personalizat",
       "distance": "Distanță",
-      "dropSet": "Drop set",
+      "dropSet": "Serii de scădere",
       "exerciseWorkout": "Exercițiu dintr-un antrenament",
       "myoReps": "Myo reps",
       "number": "Număr",
@@ -699,7 +703,7 @@
       "yesNo": "Da/Nu",
       "warmup": "Încălzire"
     },
-    "sets": "Seturi:",
+    "sets": "Serii:",
     "similarTags": "Etichete similare:",
     "similarity": "Similaritate",
     "status": "Stare",
@@ -709,7 +713,7 @@
     "timerPreset": "Presetare temporizator:",
     "timerType": "Tip de temporizator:",
     "titles": {
-      "addExerciseBlock": "Adaugă bloc exerciții",
+      "addExerciseBlock": "Adaugă bloc de exercițiu",
       "auditExerciseNames": "Verifică numele exercițiilor",
       "canvasExport": "Exportă antrenamentul în canvas",
       "createExercisePage": "Creează pagină de exercițiu",
@@ -719,7 +723,7 @@
       "editTable": "Modifică parametrii tabelului",
       "editTimer": "Modifică parametrii temporizatorului",
       "insertChart": "Adaugă graficul antrenamentului",
-      "insertDashboard": "Adaugă panoul de control pentru antrenamente",
+      "insertDashboard": "Adaugă tablou de bord pentru antrenamente",
       "insertDuration": "Adaugă durata antrenamentului",
       "insertTable": "Adaugă tabelul jurnalului de antrenament",
       "insertTimer": "Adaugă temporizator pentru antrenament",
@@ -727,7 +731,7 @@
       "editDashboard": "Editează tabloul de bord"
     },
     "workout": "Antrenament (opțional):",
-    "workoutFile": "Fișier antrenament:",
+    "workoutFile": "Fișierul antrenamentului:",
     "workoutNameOptional": "Numele antrenamentului (opțional):",
     "importMergeAriaLabel": "Îmbinare: adaugă doar etichete noi, păstrează existente",
     "importReplaceAriaLabel": "Înlocuire: suprascrie toate etichetele existente",
@@ -737,12 +741,12 @@
       "missingElements": "Elemente lipsă",
       "validationCombinedMode": "Pentru tipul exercițiu + antrenament, completează ambele câmpuri"
     },
-    "exerciseSectionTemplate": "## {exerciseName}:\n### - Seturi: {sets}\n- Repetări: {reps}\n- Pauză: {restTime}s\n\n",
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Serii: {sets}\n- Repetări: {reps}\n- Pauză: {restTime}s\n\n",
     "noteTemplate": "**Notă: {note}**\n",
     "date": "Data",
     "weightUnitToggle": "Unitate pentru această înregistrare",
-    "rest": "Repaus",
-    "work": "Activitate"
+    "rest": "Pauză",
+    "work": "Activ"
   },
   "settings": {
     "buttons": {
@@ -761,42 +765,42 @@
       "savePreset": "Salvează",
       "saveProtocol": "Salvează",
       "showWelcome": "Afișează mesajul de bun venit",
-      "takeTour": "Începeți turul"
+      "takeTour": "Începe turul"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fișier CSV cu etichete pentru mușchi există deja. Vrei să îl suprascrii cu valorile implicite? Acest lucru va elimina toate etichetele personalizate.",
       "csvFolder": "Directorul unde vor fi stocate fișierele CSV cu jurnalele de antrenament și etichetele pentru mușchi.",
       "defaultExactMatch": "Când este activat, filtrarea exercițiilor utilizează, în mod implicit, potrivirea exactă a numelor. Dezactivați pentru potrivire aproximativă.",
-      "defaultRepsPerSet": "Numărul presupus de repetări, dacă nu este specificat. Dacă este 0, se folosește „Durată implicită a setului”.",
-      "defaultTimerPreset": "Selectați o presetare implicită pentru temporizatoarele noi",
+      "defaultRepsPerSet": "Numărul presupus de repetări, dacă nu este specificat. Dacă este 0, se folosește „Durată implicită a seriei”.",
+      "defaultTimerPreset": "Selectează un preset implicit pentru temporizatoarele noi",
       "exerciseBlockTemplate": "Șablon pentru blocuri de exerciții. Locuri de înlocuire disponibile: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Calea către folderul care conține paginile cu exerciții",
-      "generateDefaultTemplates": "Generează șablonul implicit pentru pagina de exerciții și referința pentru etichete în folderul 'Workout Templates'. Puteți personaliza aceste fișiere pentru a modifica limba și structura.",
-      "noPresets": "Nu sunt configurate preset-uri pentru temporizator. Dați clic pe „Adaugă preset” pentru a crea unul.",
+      "generateDefaultTemplates": "Generează șablonul implicit pentru pagina de exercițiu și referința etichetelor în folderul „Workout Templates”. Poți personaliza aceste fișiere ca să schimbi limba și structura.",
+      "noPresets": "Nu sunt configurate preseturi pentru temporizator. Apasă pe „Adaugă preset” ca să creezi unul.",
       "presetDurationDesc": "Durata în secunde (de exemplu, 90 pentru un temporizator de 90 de secunde).",
-      "presetNameDesc": "Nume unic pentru acest preset de temporizator (de exemplu, 'Odihnă 90s', 'HIIT 30/10').",
+      "presetNameDesc": "Nume unic pentru acest preset de temporizator (de exemplu, 'Pauză 90s', 'HIIT 30/10').",
       "presetRoundsDesc": "Numărul de runde de intervale parcurse înainte de oprire.",
       "protocolAbbreviation": "Abrevierea scurtă afișată pe badge (max 3 caractere)",
       "protocolColor": "Culoarea de fundal a badge-ului (în format hex, de exemplu, #FF5733)",
       "quickWeightIncrement": "Creșterea greutății utilizată de butoanele +/- în modalele de creare/editare a jurnalului de antrenament (de exemplu, 2,5 pentru adăugarea a 2,5 unități / scăderea cu 2,5 unități)",
       "repDuration": "Timpul estimat pentru efectuarea unei repetiții. Utilizat atunci când numărul de repetiții este cunoscut (de exemplu, 'x 10 repetiții').",
       "runAllMaintenance": "Execută toate sarcinile de întreținere în mod secvențial. Este sigur să le execuți de mai multe ori.",
-      "setDuration": "Utilizat atunci când repetările nu sunt specificate (alternativă). Interval tipic: 30-60 secunde.",
-      "setupCSV": "Creați atât fișierul workout_logs.csv, cât și fișierul muscle-tags.csv în folderul configurat.",
+      "setDuration": "Folosită când repetările nu sunt specificate (rezervă). Interval tipic: 30–60 de secunde.",
+      "setupCSV": "Creează atât fișierul workout_logs.csv, cât și fișierul muscle-tags.csv în folderul configurat.",
       "weightIncrement": "Creșterea implicită a greutății pentru supraîncărcarea progresivă (de exemplu, 2,5 pentru creșteri de 2,5 unități)",
       "showRibbonIcon": "Afișează în bara laterală pictograma cu gantera care deschide formularul jurnalului de antrenament",
       "weightUnit": "Unitate pentru grafice, totaluri și înregistrări noi. Fiecare înregistrare păstrează unitatea în care a fost introdusă.",
-      "takeTour": "Oferă o scurtă prezentare a funcțiilor de înregistrare, grafice, tabele și cronometre.",
+      "takeTour": "Oferă o scurtă prezentare a funcțiilor de înregistrare, grafice, tabele și temporizatoare.",
       "welcomeWindow": "Afișați din nou fereastra de bun venit pentru a începe cu date de exemplu sau de la zero.",
-      "keepScreenAwake": "Încercați să mențineți ecranul activ în timp ce rulează oricare dintre temporizatoare în prim-plan. Consumă mai multă baterie; disponibilitatea depinde de dispozitivul și setările sistemului dumneavoastră.",
-      "vibrateOnCompletion": "Vibrație scurtă atunci când un cronometru se termină, indiferent de sunet. Necesită un clic pe pagină și un dispozitiv compatibil (cum ar fi Android). Nu este disponibil pe iOS; nu există notificări în fundal.",
-      "presetRestDesc": "Secunde de odihnă după fiecare rundă de lucru (0 pentru absența odihnei).",
-      "noCustomProtocols": "Nu există protocoale definite. Dați clic pe „Adaugă protocol” pentru a crea unul."
+      "keepScreenAwake": "Încearcă să menții ecranul activ cât timp rulează un temporizator în prim-plan. Consumă mai multă baterie; disponibilitatea depinde de dispozitivul și de setările sistemului tău.",
+      "vibrateOnCompletion": "Vibrație scurtă când un temporizator se termină, indiferent de sunet. Necesită un clic pe pagină și un dispozitiv compatibil (cum ar fi Android). Nu este disponibil pe iOS; nu există notificări în fundal.",
+      "presetRestDesc": "Secunde de pauză după fiecare rundă de lucru (0 pentru fără pauză).",
+      "noCustomProtocols": "Nu există protocoale definite. Apasă pe „Adaugă protocol” ca să creezi unul."
     },
     "labels": {
       "csvPath": "Cale către fișierul de jurnal CSV",
       "defaultExactMatch": "Potrivire exactă implicită",
-      "defaultRepsPerSet": "Numărul implicit de repetări per set",
+      "defaultRepsPerSet": "Numărul implicit de repetări pe serie",
       "defaultTimerPreset": "Preset implicit pentru temporizator",
       "exerciseBlockTemplate": "Șablon pentru blocul de exerciții",
       "exerciseFolder": "Cale către folderul cu exerciții",
@@ -812,26 +816,26 @@
       "protocolName": "Nume protocol",
       "repDuration": "Durata pentru fiecare repetiție (secunde)",
       "runAllMaintenance": "Execută toate sarcinile de întreținere",
-      "setDuration": "Durată implicită a setului (secunde)",
+      "setDuration": "Durată implicită a seriei (secunde)",
       "setupCSV": "Configurare fișiere CSV",
       "weightUnit": "Unitatea de măsură a greutății",
       "showRibbonIcon": "Afișează pictograma de înregistrare rapidă",
       "welcomeWindow": "Ferestruță de bun venit",
       "takeTour": "Tur ghidat",
-      "keepScreenAwake": "Păstrează ecranul activ în timp ce funcționează un cronometru",
-      "vibrateOnCompletion": "Vibrați la finalizarea unui cronometru",
-      "presetRest": "Repaus"
+      "keepScreenAwake": "Păstrează ecranul activ cât timp funcționează un temporizator",
+      "vibrateOnCompletion": "Vibrează la finalizarea unui temporizator",
+      "presetRest": "Pauză"
     },
     "messages": {
-      "confirmDeletePreset": "Sunteți sigur(ă) că doriți să ștergeți acest preset?",
-      "confirmDeleteProtocol": "Sunteți sigur(ă) că doriți să ștergeți acest protocol?",
+      "confirmDeletePreset": "Ești sigur(ă) că vrei să ștergi acest preset?",
+      "confirmDeleteProtocol": "Ești sigur(ă) că vrei să ștergi acest protocol?",
       "csvFilesCreated": "Fișierele CSV au fost create cu succes!",
       "presetDeleted": "Presetul a fost șters",
       "presetNameExists": "Există deja un preset cu acest nume.",
       "presetNameRequired": "Numele presetului este obligatoriu",
       "presetSaved": "Preset salvat",
       "protocolAbbreviationRequired": "Abrevierea este obligatorie (maximum 3 caractere)",
-      "protocolColorRequired": "Vă rugăm să introduceți o culoare hex validă (de exemplu, #FF5733)",
+      "protocolColorRequired": "Introdu o culoare hex validă (de exemplu, #FF5733)",
       "protocolDeleted": "Protocolul a fost șters",
       "protocolNameExists": "Un protocol cu acest nume există deja.",
       "protocolNameRequired": "Numele protocolului este obligatoriu",
@@ -846,9 +850,9 @@
       }
     },
     "placeholders": {
-      "presetName": "Introduceți numele presetului",
+      "presetName": "Scrie numele presetului",
       "protocolAbbreviation": "De exemplu, gs",
-      "protocolName": "Introduceți numele protocolului"
+      "protocolName": "Introdu numele protocolului"
     },
     "sections": {
       "advanced": "Avansat",
@@ -860,7 +864,7 @@
       "timerPresets": "Preseturi temporizator",
       "trainingParameters": "Parametri de antrenament",
       "gettingStarted": "Începe",
-      "timerDeviceCues": "Indicații pentru dispozitive de cronometrare",
+      "timerDeviceCues": "Semnale ale temporizatorului pe dispozitiv",
       "customProtocols": "Protocoale"
     },
     "tooltips": {
@@ -870,22 +874,22 @@
       "editProtocol": "Modifică protocolul"
     },
     "validation": {
-      "csvFolderNotFound": "Folderul nu a fost găsit în seif. Rulați „Configurare fișiere CSV” pentru a-l crea.",
+      "csvFolderNotFound": "Folderul nu a fost găsit în vault. Rulează „Configurare fișiere CSV” ca să-l creezi.",
       "csvPathEmpty": "Calea nu poate fi goală",
       "mustBeNonNegative": "Trebuie să fie 0 sau mai mare",
       "mustBePositive": "Trebuie să fie mai mare decât 0"
     },
     "protocolHelp": {
-      "warmup": "Seturile de încălzire dinaintea seturilor de lucru. Nu contează pentru recordurile personale.",
-      "dropSet": "Scade greutatea imediat după eșec și continuă. Seriile de scădere a greutății nu se iau în calcul pentru recordurile personale.",
-      "myoReps": "Un set de activare, urmat de seturi scurte, mini-seturi, cu pauze de câteva secunde.",
-      "restPause": "Odihnește-te câteva secunde după eșec, apoi efectuează câteva repetări suplimentare.",
+      "warmup": "Serii ușoare înainte de seriile de lucru. Nu contează pentru recordurile personale.",
+      "dropSet": "Scade greutatea imediat după eșec și continuă. Seriile de scădere nu se iau în calcul pentru recordurile personale.",
+      "myoReps": "O serie de activare, urmată de mini-serii scurte, cu câteva secunde de pauză între ele.",
+      "restPause": "Fă o pauză de câteva secunde după eșec, apoi mai fă câteva repetări.",
       "superset": "Două exerciții una după alta, fără pauză între ele.",
       "twentyone": "7 repetări în partea inferioară, 7 în partea superioară, apoi 7 repetări complete."
     },
     "presetHelp": {
-      "tabata": "20 de secunde de efort maxim, 10 secunde de odihnă, 8 runde: în total, 4 minute.",
-      "emom": "La fiecare minut, fix: începeți repetările la începutul fiecărui minut și odihniți-vă până la finalul lui, 10 runde."
+      "tabata": "20 de secunde de efort maxim, 10 secunde de pauză, 8 runde: în total, 4 minute.",
+      "emom": "La fiecare minut, fix: începe repetările la începutul fiecărui minut și fă pauză până la finalul lui, 10 runde."
     }
   },
   "stats": {
@@ -895,8 +899,8 @@
     "recentTrend": "Tendință recentă",
     "recentVsPrev": " (vs ant.)",
     "sessions": "Sesiuni",
-    "average": "Media:",
-    "title": "{dataTypeLabel} statistici ({contextLabel}):"
+    "average": "Media: ",
+    "title": "Statistici pentru {dataTypeLabel} ({contextLabel}):"
   },
   "table": {
     "actions": "Acțiuni",
@@ -917,7 +921,7 @@
       "distanceUnit": "Distanță ({distanceUnit})",
       "duration": "Dur",
       "heartRate": "Puls",
-      "pace": "Ritmul",
+      "pace": "Ritm",
       "reps": "Rep",
       "volumeUnit": "Volum ({weightUnit})",
       "weightUnit": "Greutate ({weightUnit})"
@@ -936,18 +940,18 @@
     "notAvailable": "N/A",
     "refreshSuccess": "Tabel reîmprospătat",
     "target": {
-      "progressTooltip": "Cel mai bun: {best} repetări / Obiectiv: {target} repetări",
+      "progressTooltip": "Cel mai bun: {best} repetări / Țintă: {target} repetări",
       "repsSuffix": "repetări",
       "separator": " × "
     },
     "trendLine": "Linie de tendință",
     "refreshingTable": "Se reîmprospătează tabelul...",
-    "setCount": "{count} seturi",
-    "deleteSetMessage": "{set} va fi eliminat din jurnalul dumneavoastră. Nu se poate anula această acțiune.",
-    "deleteSetTitle": "Șterge acest set?"
+    "setCount": "{count} serii",
+    "deleteSetMessage": "{set} va fi eliminat din jurnalul tău. Acțiunea nu poate fi anulată.",
+    "deleteSetTitle": "Ștergi această serie?"
   },
   "timeperiods": {
-    "month": "Luna",
+    "month": "Lună",
     "week": "Săptămână",
     "year": "An"
   },
@@ -977,7 +981,7 @@
   },
   "trends": {
     "declining": "În scădere",
-    "decreasing": "Scăderea",
+    "decreasing": "Scădere",
     "down": "În jos",
     "improving": "Îmbunătățire",
     "increasing": "Creștere",
@@ -1010,14 +1014,14 @@
     }
   },
   "welcome": {
-    "title": "Bun venit la plugin-ul de exerciții",
-    "intro": "Urmărește-ți antrenamentele, apoi vezi-le sub forma de grafice, tabele și un panou de control. Cum dorești să începi?",
+    "title": "Bun venit în pluginul pentru antrenamente",
+    "intro": "Urmărește-ți antrenamentele, apoi vezi-le sub formă de grafice, tabele și tablou de bord. Cum vrei să începi?",
     "tryExamples": "Încearcă cu date de exemplu",
     "startScratch": "Începe de la zero",
     "later": "Mai târziu",
     "tryExamplesDesc": "Adaugă antrenamente de exemplu, apoi te va ghida prin utilizarea plugin-ului pentru acestea.",
-    "startScratchDesc": "Vă ghidează prin utilizarea plugin-ului, folosind datele dumneavoastră, începând cu primul set.",
-    "tourOnYourData": "Deja aveți un jurnal de antrenament, așa că turul se bazează pe datele dumneavoastră."
+    "startScratchDesc": "Te ghidează prin plugin, cu datele tale, începând cu prima serie.",
+    "tourOnYourData": "Ai deja un jurnal de antrenament, așa că turul folosește datele tale."
   },
   "tour": {
     "back": "Înapoi",
@@ -1026,74 +1030,74 @@
     "done": "Finalizat",
     "progress": "{current} din {total}",
     "noteName": "Tur ghidat",
-    "noteIntro": "Turul ghidat indică fiecare componentă a plugin-ului de pe această pagină. Editați sau ștergeți această notă oricând doriți.",
-    "noteTable": "Seturile tale",
+    "noteIntro": "Turul ghidat arată fiecare componentă a pluginului de pe această pagină. Editează sau șterge această notă oricând vrei.",
+    "noteTable": "Seriile tale",
     "noteChart": "Progres",
-    "noteDashboard": "Panou de control",
-    "noteTimer": "Cronometru pentru pauză",
+    "noteDashboard": "Tablou de bord",
+    "noteTimer": "Temporizator de pauză",
     "steps": {
       "logSet": {
-        "title": "Înregistrează primul set",
-        "text": "Apasă butonul \"+\" pentru a deschide formularul, apoi salvează un set. Acesta va apărea imediat în tabel."
+        "title": "Înregistrează prima serie",
+        "text": "Apasă butonul „+” ca să deschizi formularul, apoi salvează o serie. Apare imediat în tabel."
       },
       "rowActions": {
-        "title": "Modifică sau șterge un set",
-        "mobileText": "Atinge un set pentru a-l corecta. Pentru a-l elimina, folosește opțiunea „Șterge set” din formularul care se deschide.",
-        "text": "Folosiți creionul de pe un rând pentru a corecta un set. Pentru a-l șterge, folosiți „Șterge setul” din formularul care se deschide."
+        "title": "Modifică sau șterge o serie",
+        "mobileText": "Atinge o serie ca s-o corectezi. Ca s-o elimini, folosește „Șterge seria” din formularul care se deschide.",
+        "text": "Folosește creionul de pe un rând ca să corectezi o serie. Ca s-o ștergi, folosește „Șterge seria” din formularul care se deschide."
       },
       "chart": {
         "title": "Progresul tău",
         "text": "Graficul prezintă evoluția unui exercițiu în timp, cu o linie de tendință și statistici.",
         "textMine": "Graficul arată cum evoluează un exercițiu în timp. Inițial, este aproape gol, până când înregistrezi câteva serii.",
         "mobileText": "Pe un telefon, graficul este afișat sub forma unui tabel cu aceleași numere.",
-        "mobileTextMine": "Pe un telefon, graficul este afișat sub forma unui tabel. Inițial, este aproape gol, dar devine complet după ce introduceți câteva serii."
+        "mobileTextMine": "Pe telefon, graficul apare ca un tabel. Inițial este aproape gol, dar se umple după ce înregistrezi câteva serii."
       },
       "dashboard": {
-        "title": "Panoul tău de control",
+        "title": "Tabloul tău de bord",
         "text": "Rezultate, tendințe ale volumului și antrenamente recente, totul într-un singur bloc.",
         "textMine": "Totaluri, tendințe ale volumului și antrenamente recente. Se umple pe măsură ce înregistrezi mai multe serii."
       },
       "timer": {
-        "title": "Cronometru de pauză",
-        "text": "Apasă butonul Start pentru a începe un cronometru între seturi."
+        "title": "Temporizator de pauză",
+        "text": "Apasă Start ca să pornești o numărătoare inversă între serii."
       },
       "ribbon": {
         "title": "Înregistrează de la orice notă",
-        "text": "Pictograma cu gantera din bara de instrumente deschide formularul de jurnalizare de oriunde.",
-        "mobileText": "Pe un telefon nu există pictograma din bara laterală aici. Folosiți paleta de comenzi pentru a deschide formularul de jurnal din orice notă."
+        "text": "Iconița cu ganteră din bara laterală deschide formularul de oriunde.",
+        "mobileText": "Pe telefon nu există iconița din bara laterală aici. Folosește paleta de comenzi ca să deschizi formularul din orice notă."
       },
       "commands": {
-        "title": "Introduceți comenzile",
-        "text": "Deschideți paleta de comenzi și executați comanda \"Adaugă antrenament\" pentru a adăuga o tabelă, un grafic, un cronometru sau un panou de control la o notă."
+        "title": "Introdu comenzile",
+        "text": "Deschide paleta de comenzi și rulează o comandă „Adaugă” ca să pui un tabel, un grafic, un temporizator sau un tablou de bord într-o notă."
       },
       "end": {
-        "title": "Sunteți pregătit",
-        "text": "Puteți relua acest tur din nou, accesând secțiunea „Setări → Începe”."
+        "title": "Ești pregătit",
+        "text": "Poți relua turul din Setări → Începe."
       },
       "muscles": {
-        "title": "Harta temperaturii musculare",
+        "title": "Harta de căldură a mușchilor",
         "text": "Harta de căldură indică care mușchi ai antrenat cel mai recent."
       }
     },
     "showMe": "Arată-mi"
   },
   "import": {
-    "chooseFile": "Selectați fișierul CSV",
+    "chooseFile": "Selectează fișierul CSV",
     "notAnExport": "Acest fișier nu este un export \"Strong\" sau \"Hevy\".",
-    "noSets": "Nu s-au putut citi seturi din acest fișier. Verificați dacă este fișierul CSV exportat de aplicație, fără modificări.",
-    "readError": "Nu a fost posibil să se citească fișierul: {error}",
+    "noSets": "Nu s-au putut citi serii din acest fișier. Verifică dacă este fișierul CSV exportat de aplicație, neschimbat.",
+    "readError": "Nu s-a putut citi fișierul: {error}",
     "source": "Export din {source}",
-    "setsFound": "Seturi din fișier: {count}",
-    "setsToAdd": "Seturi de adăugat: {count}",
+    "setsFound": "Serii în fișier: {count}",
+    "setsToAdd": "Serii de adăugat: {count}",
     "duplicates": "Deja în jurnalul tău, a fost omis: {count}",
     "dateRange": "Zile de instruire: de la {first} la {last}",
     "newExercises": "Exerciții fără pagină: {exercises}",
-    "nothingToAdd": "Fiecare set din acest fișier este deja în jurnalul dumneavoastră.",
-    "backupNote": "Jurnalul este salvat înainte de adăugarea seturilor.",
-    "importButton": "Importă seturi",
-    "imported": "Import finalizat. Seturi adăugate: {count}",
-    "error": "Eșecul importului: {error}",
+    "nothingToAdd": "Fiecare serie din acest fișier este deja în jurnalul tău.",
+    "backupNote": "Jurnalul este salvat înainte de adăugarea seriilor.",
+    "importButton": "Importă serii",
+    "imported": "Import finalizat. Serii adăugate: {count}",
+    "error": "Importul a eșuat: {error}",
     "title": "Import din Strong sau Hevy",
-    "intro": "Selectați fișierul CSV din lista de export a datelor de antrenament din aplicație. Nicio informație nu va fi salvată până nu confirmați."
+    "intro": "Alege fișierul CSV din exportul de date de antrenament al aplicației. Nu se scrie nimic până nu confirmi."
   }
 }

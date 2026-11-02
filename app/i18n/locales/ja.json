@@ -195,12 +195,16 @@
       "tile": "{widget}: 列 {column}、行 {row}、幅 {width}、高さ {height}",
       "minOneColumn": "最小 1 列",
       "minColumns": "最小 {columns} 列",
-      "size": "{width} × {height}"
+      "size": "{width} × {height}",
+      "gridHint": "ウィジェットをドラッグして移動し、角をドラッグしてサイズを変更できます。下のスタッシュには、各ウィジェットの最小サイズが表示されます。× で外すか、スタッシュにドロップして外せます。キーボードでは、矢印で移動、Shift と矢印でサイズ変更、Delete で外します。",
+      "gridColumnsMeasured": "ノートの幅に {columns} 列が収まります。",
+      "remove": "{widget} をダッシュボードから外す"
     },
     "grid": {
       "outside": "{widget} がグリッドの {columns} 列からはみ出しています",
       "narrow": "{widget} には少なくとも {min} 列が必要です",
-      "overlap": "{widget} が {other} と重なっています"
+      "overlap": "{widget} が {other} と重なっています",
+      "empty": "グリッドにまだウィジェットがありません。⋮ メニューの「ダッシュボードを編集」を開いて配置してください。"
     }
   },
   "duration": {

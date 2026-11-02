@@ -195,12 +195,16 @@
       "tile": "{widget}: sloupec {column}, řádek {row}, šířka {width}, výška {height}",
       "minOneColumn": "Min. 1 sloupec",
       "minColumns": "Min. {columns} sloupců",
-      "size": "{width} × {height}"
+      "size": "{width} × {height}",
+      "gridHint": "Přetažením widgetu jej přesunete a přetažením jeho rohu změníte velikost; zásobník níže ukazuje nejmenší velikost, na kterou se widget může zmenšit. Widget odeberete křížkem × nebo jeho přetažením do zásobníku. Klávesnicí: šipky přesouvají, Shift se šipkami mění velikost, Delete jej odebere.",
+      "gridColumnsMeasured": "{columns} sloupců se vejde do šířky poznámky.",
+      "remove": "Odebrat {widget} z dashboardu"
     },
     "grid": {
       "outside": "{widget} přesahuje {columns} sloupců mřížky",
       "narrow": "{widget} potřebuje alespoň {min} sloupců",
-      "overlap": "{widget} se překrývá s {other}"
+      "overlap": "{widget} se překrývá s {other}",
+      "empty": "Na mřížce zatím není žádný widget. Přidáte je v nabídce ⋮ přes „Upravit dashboard“."
     }
   },
   "duration": {

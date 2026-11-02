@@ -24,10 +24,10 @@
     },
     "defaultTitle": "Trend {type}",
     "noTypesAvailable": "Brak dostępnych typów wykresów",
-    "noEligibleE1rm": "Brak dostępnych zestawów dla szacowanego 1RM. Zarejestruj pozytywną wagę z 1–12 powtórzeniami, pomijając rozgrzewkę i zestawy \"drop set\"."
+    "noEligibleE1rm": "Brak dostępnych serii do szacowanego 1RM. Zarejestruj dodatnią wagę z 1–12 powtórzeniami, pomijając serie rozgrzewkowe i drop sety."
   },
   "commands": {
-    "addExerciseBlock": "Dodaj blok ćwiczenia",
+    "addExerciseBlock": "Dodaj blok ćwiczeń",
     "addMissingBlockIds": "Dodaj brakujące identyfikatory do bloków kodu",
     "auditExerciseNames": "Sprawdź nazwy ćwiczeń",
     "convertExercise": "Konwertuj ćwiczenie",
@@ -40,7 +40,7 @@
     "createExampleNotes": "Utwórz przykładowe notatki",
     "openGettingStartedGuide": "Otwórz przewodnik dla początkujących",
     "startTour": "Rozpocznij wycieczkę",
-    "importWorkouts": "Import z Strong lub Hevy"
+    "importWorkouts": "Importuj z Strong lub Hevy"
   },
   "common": {
     "bpm": "bpm",
@@ -69,12 +69,12 @@
     },
     "preview": {
       "noEntries": "Nie znaleziono żadnych wpisów w dzienniku dla tego ćwiczenia",
-      "title": "Przykładowy widok",
-      "willConvertMany": "{count} wpisy zostaną przekonwertowane",
+      "title": "Podgląd",
+      "willConvertMany": "{count} wpisów zostanie przekonwertowanych",
       "willConvertOne": "1 wpis zostanie przekonwertowany"
     },
     "sectionExercise": "Ćwiczenie",
-    "success": "Pomyślnie przekonwertowano wpisy dziennika: {count}",
+    "success": "Pomyślnie przekonwertowano wpisów dziennika: {count}",
     "title": "Przekonwertuj dane dotyczące ćwiczeń",
     "typeSelect": {
       "convertTo": "Konwertuj na:",
@@ -85,7 +85,7 @@
     "durationComparison": {
       "columnActual": "Rzeczywisty",
       "columnEstimated": "Szacowany",
-      "columnVariance": "Zmienność",
+      "columnVariance": "Wariancja",
       "columnWorkout": "Trening",
       "minutesSuffix": " min",
       "noData": "Za mało sesji, by je porównać.",
@@ -103,7 +103,7 @@
       "noTags": "Brak tagów mięśni we frontmatter",
       "title": "Błędy w plikach",
       "tooManyTags": "Zbyt wiele tagów mięśni ({count})",
-      "sharedName": "Ta sama nazwa ćwiczenia, jak w {pages}: logi są zapisywane tylko w jednym z nich."
+      "sharedName": "Ta sama nazwa ćwiczenia co w {pages}: logi trafiają tylko do jednej z tych stron."
     },
     "muscleTags": {
       "description": "Opis",
@@ -130,7 +130,7 @@
       "disclaimer": "Zastrzeżenie",
       "noData": "Za mało danych: każdy protokół wymaga co najmniej 5 zapisanych serii.",
       "title": "Skuteczność protokołu",
-      "subtitle": "Jak każdy protokół sprawdził się w różnych zestawach, które zostały zarejestrowane."
+      "subtitle": "Jak każdy protokół sprawdza się we wszystkich zapisanych seriach."
     },
     "quickActions": {
       "addWorkoutLog": "Dodaj wpis treningowy",
@@ -149,7 +149,7 @@
       "title": "Ostatnie treningi"
     },
     "summary": {
-      "currentStreak": "Obecna seria",
+      "currentStreak": "Obecna passa",
       "currentStreakSuffix": "{count} tyg.",
       "personalRecords": "Rekordy osobiste",
       "title": "Podsumowanie",
@@ -177,30 +177,34 @@
         "frontDominant": "Nierównowaga: Twoja przednia część mięśni jest znacznie bardziej obciążona niż tylna."
       }
     },
-    "editDashboard": "Edytuj pulpit",
+    "editDashboard": "Edytuj panel kontrolny",
     "modal": {
       "widgets": "Widżety",
       "widgetsHint": "Zaznacz widżety, które mają być wyświetlane. Przeciągnij je za uchwyt lub użyj strzałek, aby zmienić kolejność.",
       "moveUp": "Przesuń {widget} w górę",
       "moveDown": "Przesuń {widget} w dół",
       "allHistory": "Pusto: cała historia",
-      "recentWorkoutsLimit": "Liczba treningów na liście ostatnich:",
+      "recentWorkoutsLimit": "Liczba ostatnich treningów na liście:",
       "volumeTrendDays": "Liczba dni w trendzie objętości:",
       "gridColumns": "Kolumny:",
       "layout": "Układ",
       "layoutGrid": "Siatka",
       "layoutList": "Lista",
-      "stash": "Nie ma go na pulpicie",
-      "stashEmpty": "Wszystkie widżety są na pulpicie",
+      "stash": "Poza panelem kontrolnym",
+      "stashEmpty": "Wszystkie widżety są na panelu kontrolnym",
       "tile": "{widget}: kolumna {column}, wiersz {row}, szerokość {width}, wysokość {height}",
       "minOneColumn": "Min. 1 kolumna",
       "minColumns": "Min. {columns} kolumn",
-      "size": "{width} × {height}"
+      "size": "{width} × {height}",
+      "gridHint": "Przeciągnij widżet, aby go przesunąć, a jego róg, aby zmienić rozmiar; schowek poniżej pokazuje najmniejszy rozmiar, do jakiego może się zmniejszyć każdy widżet. Usuń widżet przyciskiem × albo przeciągając go do schowka. Klawiaturą: strzałki przesuwają, Shift i strzałki zmieniają rozmiar, Delete usuwa.",
+      "gridColumnsMeasured": "{columns} kolumn mieści się w szerokości notatki.",
+      "remove": "Usuń {widget} z pulpitu"
     },
     "grid": {
       "outside": "{widget} wychodzi poza {columns} kolumn siatki",
       "narrow": "{widget} wymaga co najmniej {min} kolumn",
-      "overlap": "{widget} nakłada się na {other}"
+      "overlap": "{widget} nakłada się na {other}",
+      "empty": "Na siatce nie ma jeszcze żadnego widżetu. Otwórz „Edytuj pulpit” w menu ⋮, aby dodać jakieś."
     }
   },
   "duration": {
@@ -241,10 +245,10 @@
         "name": "Jazda na rowerze"
       },
       "legCurlSeated": {
-        "name": "Uginanie nóg siedząc"
+        "name": "Uginanie nóg w siadzie"
       },
       "legPress45": {
-        "name": "Suwnica 45"
+        "name": "Prasa nożna 45"
       },
       "plank": {
         "name": "Deska"
@@ -321,7 +325,7 @@
       "commandInsertChart": "Dodaj wykres treningu",
       "commandInsertChartDesc": "Dodaj wykres do dowolnej notatki",
       "commandInsertTimer": "Dodaj timer treningowy",
-      "commandInsertTimerDesc": "Dodaj timer na odpoczynek",
+      "commandInsertTimerDesc": "Dodaj timer odpoczynku",
       "dashboardDesc": "Twoje statystyki treningowe w jednym miejscu",
       "exercisesDesc": "Przykładowe strony ćwiczeń z logami i wykresami",
       "exercisesFolder": "**{folder}/**",
@@ -343,12 +347,12 @@
       "workoutsDesc": "Przykładowe szablony treningowe",
       "workoutsFolder": "**{folder}/**",
       "pagesIntro": "Zapoznaj się z jedną funkcją na stronie. Śledź linki w odpowiedniej kolejności, lub wybierz funkcję poniżej. Użyj przycisków \"Wstecz\" i \"Dalej\", aby przechodzić między notatkami; przewijaj normalnie, aby zapoznać się z każdym przykładem.",
-      "liveIntro": "Odkryj wszystkie funkcje, korzystając z przykładowych ćwiczeń trwających sześć tygodni. Są to dane demonstracyjne; wypróbuj sterowanie i sprawdź, jak działają Twoje notatki.",
-      "tryLog": "Użyj przycisku \"+\" aby dodać zestaw. Tabela, wykresy i panel kontrolny odczytują ten sam plik CSV.",
-      "continueWithWorkout": "Otwórz [[{workout}], aby spróbować kompletnego treningu z tabelami ćwiczeń i timerami odpoczynku.",
+      "liveIntro": "Poznaj wszystkie funkcje na przykładowych treningach z sześciu tygodni. To dane demonstracyjne; wypróbuj sterowanie i sprawdź, jak działają Twoje notatki.",
+      "tryLog": "Użyj przycisku \"+\", aby dodać serię. Tabela, wykresy i panel kontrolny odczytują ten sam plik CSV.",
+      "continueWithWorkout": "Otwórz [[{workout}]], aby spróbować kompletnego treningu z tabelami ćwiczeń i timerami odpoczynku.",
       "moreExamples": "Zobacz [[{showcase}]] w celu uzyskania więcej informacji o typach wykresów, filtrowaniu oraz protokołach szkoleniowych.",
-      "ownData": "Kiedy będziecie gotowi, wybierzcie własny folder CSV oraz folder z przykładami w ustawieniach → Konfiguracja i dane. Zachowaj folder z przykładami jako punkt odniesienia.",
-      "openGuideDesc": "Otwórz stronę „początek pracy” zawierającą przykładowe tabele, wykresy, timery oraz panel kontrolny."
+      "ownData": "Gdy będziesz gotowy, wybierz własny folder CSV i folder ćwiczeń w ustawieniach → Konfiguracja i dane. Folder z przykładami zachowaj jako punkt odniesienia.",
+      "openGuideDesc": "Otwórz stronę „Jak zacząć” z działającymi przykładami tabel, wykresów, timerów i panelu kontrolnego."
     },
     "hiit": {
       "cyclingCooldownTitle": "Schłodzenie na rowerze",
@@ -362,8 +366,8 @@
       "chart": "wykres",
       "duration": "Czas trwania",
       "note": "Uwaga: daj z siebie wszystko",
-      "recoverySuffix": "(Odpoczynek: {seconds} sekund)",
-      "setsReps": "{sets} serii x {reps} powtórzeń"
+      "recoverySuffix": "(Odpoczynek: {seconds} sek)",
+      "setsReps": "Serie: {sets} × {reps} powtórzeń"
     },
     "workouts": {
       "cardioDay": {
@@ -380,7 +384,7 @@
       "supersetCalves": "Superseria ze wspięciami na palce z masą ciała",
       "supersetLunges": "Superseria z wykrokami"
     },
-    "createToOpenGuide": "Przewodnik \"Jak zacząć\" jest częścią notatek przykładowych, które jeszcze nie istnieją. Czy chcesz je stworzyć teraz?",
+    "createToOpenGuide": "Przewodnik „Jak zacząć” jest częścią notatek przykładowych, które jeszcze nie istnieją. Czy chcesz je utworzyć teraz?",
     "pointedAtExamples": "Teraz, gdy wyświetlasz przykładowe logi i ćwiczenia, możesz to zmienić w ustawieniach danych.",
     "usesSeparateLog": "Udostępniasz już dziennik treningów, więc pozostał on bez zmian. Przykłady korzystają z własnego pliku dziennika."
   },
@@ -424,13 +428,13 @@
     "addLogButtonText": "Dodaj wpis do dziennika dla {exerciseName}",
     "createFirstLogButton": "Utwórz pierwszy wpis w dzienniku dla {exerciseName}",
     "createFirstLogButtonAria": "Utwórz pierwszy wpis w dzienniku dla {exerciseName}",
-    "createLogButtonAria": "Utwórz log dla: {exerciseName}",
-    "createLogButtonText": "Utwórz log dla: {exerciseName}",
+    "createLogButtonAria": "Utwórz wpis dla: {exerciseName}",
+    "createLogButtonText": "Utwórz wpis dla: {exerciseName}",
     "noDataTitle": "Nie znaleziono żadnych wpisów dotyczących {exerciseName}",
     "exploreExampleData": "Albo zapoznaj się z przykładowymi danymi.",
     "lastSet": "Ostatnio: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
-    "personalRecord": "Osobista rekord: {weight} {unit} × {reps}"
+    "personalRecord": "Rekord osobisty: {weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "Wstawiono blok kodu",
@@ -439,7 +443,7 @@
       "tagReferenceFailed": "Błąd podczas generowania spisu tagów: {error}",
       "csvLoadError": "Błąd ładowania CSV: {error}",
       "csvCreateError": "Błąd tworzenia pliku CSV: {error}",
-      "blockIdsError": "Błąd dodawania ID bloków: {error}",
+      "blockIdsError": "Błąd dodawania identyfikatorów bloków: {error}",
       "csvFilesError": "Błąd tworzenia plików CSV: {error}",
       "muscleTagsCsvError": "Błąd tworzenia CSV tagów mięśni: {error}",
       "muscleTagsLoadError": "Błąd ładowania tagów mięśni: {error}",
@@ -455,7 +459,7 @@
       "blockIdsAdded": "Dodano brakujące identyfikatory: {count} (pliki: {files})",
       "csvCreated": "Plik CSV został pomyślnie utworzony!",
       "noBlockIdsNeeded": "Wszystkie bloki kodu już mają identyfikatory",
-      "weightUnitsStamped": "Zapisano jednostkę wagi w {count} starszych logach."
+      "weightUnitsStamped": "Zapisano jednostkę wagi w {count} starszych wpisach."
     },
     "tagReferenceGenerated": "Spis tagów został wygenerowany!",
     "timerCompleted": "Timer zakończony!",
@@ -500,12 +504,12 @@
       "renameInCsv": "Zmień nazwę w pliku CSV",
       "update": "Zaktualizuj wpis",
       "updateTable": "Zaktualizuj tabelę",
-      "updateTargetWeight": "Zaktualizuj docelową wartość",
+      "updateTargetWeight": "Zaktualizuj cel",
       "updateTimer": "Zaktualizuj timer",
       "decreaseBy": "Zmniejsz {label} o {increment}",
       "increaseBy": "Zwiększ {label} o {increment}",
-      "deleteSet": "Usuń zestaw",
-      "updateDashboard": "Zaktualizuj pulpit"
+      "deleteSet": "Usuń serię",
+      "updateDashboard": "Zaktualizuj panel kontrolny"
     },
     "canvasLayout": "Układ",
     "canvasOptions": "Opcje",
@@ -601,7 +605,7 @@
       "muscleTagImportInvalidGroup": "Nieprawidłowa grupa mięśni \"{group}\" dla tagu \"{tag}\". Musi to być prawidłowa, standardowa grupa mięśni.",
       "muscleTagImportNoValid": "Nie znaleziono w pliku prawidłowych tagów",
       "muscleTagImportPreview": "Tagi do zaimportowania: {count}",
-      "muscleTagImported": "Pomyślnie zaimportowano tagi mięśni: {count}!",
+      "muscleTagImported": "Pomyślnie zaimportowano tagów mięśni: {count}!",
       "muscleTagLoading": "Wczytywanie tagów...",
       "muscleTagNoResults": "Żaden tag nie pasuje do wyszukiwania",
       "muscleTagSaveError": "Błąd podczas zapisywania tagu dla mięśni: {error}",
@@ -621,7 +625,7 @@
       "validFieldRequired": "{field} jest wymagane",
       "migrationNoUpdates": "Wszystkie strony ćwiczeń są już aktualne",
       "validMustBeWholeNumber": "{field} musi być liczbą całkowitą",
-      "newRecord": "Nowa pozycja: {weight} {unit} (+{increase} {unit})",
+      "newRecord": "Nowy rekord: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Wykres został pomyślnie wstawiony!",
       "dashboardInserted": "Panel został pomyślnie wstawiony!",
       "exerciseNameRequired": "Proszę podać nazwę ćwiczenia.",
@@ -632,8 +636,8 @@
       "timerUpdated": "Timer został pomyślnie zaktualizowany!",
       "validChooseExercise": "Wybierz ćwiczenie",
       "validationCombinedMode": "Dla typu 'ćwiczenia + trening' musisz wypełnić oba pola!",
-      "dashboardUpdated": "Pulpit został pomyślnie zaktualizowany!",
-      "dashboardUpdateFailed": "Nie udało się zaktualizować pulpitu. Upewnij się, że plik jest otwarty w edytorze."
+      "dashboardUpdated": "Panel kontrolny został pomyślnie zaktualizowany!",
+      "dashboardUpdateFailed": "Nie udało się zaktualizować panelu kontrolnego. Upewnij się, że plik jest otwarty w edytorze."
     },
     "parameterKey": "Klucz:",
     "parameterLabel": "Etykieta:",
@@ -724,7 +728,7 @@
       "insertTable": "Dodaj tabelę z dziennikiem treningów",
       "insertTimer": "Dodaj timer treningowy",
       "muscleTagManager": "Zarządzaj tagami mięśni",
-      "editDashboard": "Edytuj pulpit"
+      "editDashboard": "Edytuj panel kontrolny"
     },
     "workout": "Trening (opcjonalnie):",
     "workoutFile": "Plik treningowy:",
@@ -741,7 +745,7 @@
     "noteTemplate": "**Uwaga: {note}**\n",
     "date": "Data",
     "weightUnitToggle": "Jednostka dla tego wpisu",
-    "rest": "Zresetuj",
+    "rest": "Odpoczynek",
     "work": "Praca"
   },
   "settings": {
@@ -761,7 +765,7 @@
       "savePreset": "Zapisz",
       "saveProtocol": "Zapisz",
       "showWelcome": "Pokaż powitanie",
-      "takeTour": "Przejdź trasę"
+      "takeTour": "Rozpocznij wycieczkę"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Plik CSV z tagami mięśni już istnieje. Czy chcesz go zastąpić wartościami domyślnymi? To spowoduje usunięcie wszystkich niestandardowych tagów.",
@@ -774,9 +778,9 @@
       "generateDefaultTemplates": "Utwórz domyślny szablon strony ćwiczenia i spis tagów w folderze 'Workout Templates'. Możesz dostosować te pliki, aby zmienić język i strukturę.",
       "noPresets": "Brak skonfigurowanych ustawień timera. Kliknij „Dodaj ustawienie”, aby je utworzyć.",
       "presetDurationDesc": "Czas w sekundach (np. 90 dla timera o czasie trwania 90 sekund).",
-      "presetNameDesc": "Unikalna nazwa dla tego ustawienia timera (np. 'Przerwa 90s', 'HIIT 30/10').",
+      "presetNameDesc": "Unikalna nazwa dla tego ustawienia timera (np. 'Odpoczynek 90s', 'HIIT 30/10').",
       "presetRoundsDesc": "Liczba rund interwałowych do wykonania przed zatrzymaniem.",
-      "protocolAbbreviation": "Skrót wyświetlany w odznakie (maksymalnie 3 znaki)",
+      "protocolAbbreviation": "Krótki skrót wyświetlany w odznace (maksymalnie 3 znaki)",
       "protocolColor": "Kolor tła odznaki (format szesnastkowy, np. #FF5733)",
       "quickWeightIncrement": "Wartość zwiększenia wagi używana przez przyciski +/- w oknach tworzenia/edycji wpisu treningowego (np. 2,5 dla +2,5 / -2,5 jednostki)",
       "repDuration": "Szacowany czas wykonania jednego powtórzenia. Używany, gdy liczba powtórzeń jest znana (np. 'x 10 reps').",
@@ -786,11 +790,11 @@
       "weightIncrement": "Domyślny krok zwiększania wagi dla progresywnego obciążania (np. 2,5 dla kroków o wartości 2,5 jednostki)",
       "showRibbonIcon": "Pokaż ikonę hantli na pasku bocznym, która otwiera formularz dziennika treningowego",
       "weightUnit": "Jednostka dla wykresów, sum i nowych wpisów. Każdy wpis zachowuje jednostkę, w której został wprowadzony.",
-      "takeTour": "Krótko omówienie: rejestrowanie danych, wykresy, tabele i timery.",
+      "takeTour": "Krótkie omówienie rejestrowania, wykresów, tabel i timerów na jednej notatce.",
       "welcomeWindow": "Wyświetl ponownie okno powitalne, aby rozpocząć pracę z przykładowymi danymi lub od zera.",
       "keepScreenAwake": "Spróbuj utrzymać ekran włączony, gdy działa jakiś timer w pierwszym planie. Zużywa więcej energii; dostępność zależy od Twojego urządzenia i ustawień systemu.",
       "vibrateOnCompletion": "Wibracja na krótko, gdy timer się skończy, niezależnie od dźwięku. Wymaga naciśnięcia na stronie i obsługującego urządzenia (np. Android). Nie jest dostępne na iOS; brak powiadomień w tle.",
-      "presetRestDesc": "Sekundy odpoczynku po zakończeniu każdej rundy (0 oznacza brak odpoczynku).",
+      "presetRestDesc": "Sekundy odpoczynku po pracy w każdej rundzie (0 oznacza brak odpoczynku).",
       "noCustomProtocols": "Obecnie nie zdefiniowano żadnych protokołów. Kliknij przycisk „Dodaj protokół”, aby go utworzyć."
     },
     "labels": {
@@ -804,7 +808,7 @@
       "presetDuration": "Czas trwania (sekundy)",
       "presetName": "Nazwa ustawienia",
       "presetRounds": "Rundy",
-      "presetShowControls": "Wyświetl przyciski",
+      "presetShowControls": "Pokaż przyciski sterujące",
       "presetSound": "Dźwięk",
       "presetType": "Typ timera",
       "protocolAbbreviation": "Skrót",
@@ -817,10 +821,10 @@
       "weightUnit": "Jednostka wagi",
       "showRibbonIcon": "Pokaż ikonę szybkiego zapisu",
       "welcomeWindow": "Okno powitalne",
-      "takeTour": "Przewodnik po aplikacji",
+      "takeTour": "Wycieczka z przewodnikiem",
       "keepScreenAwake": "Utrzymaj ekran włączony, gdy działa timer.",
       "vibrateOnCompletion": "Wibracja po zakończeniu timera",
-      "presetRest": "Rest"
+      "presetRest": "Odpoczynek"
     },
     "messages": {
       "confirmDeletePreset": "Czy na pewno chcesz usunąć to ustawienie?",
@@ -861,7 +865,7 @@
       "trainingParameters": "Parametry treningu",
       "gettingStarted": "Jak zacząć",
       "timerDeviceCues": "Przypomnienia dotyczące urządzenia timera",
-      "customProtocols": "Protokół"
+      "customProtocols": "Protokoły"
     },
     "tooltips": {
       "deletePreset": "Usuń ustawienie",
@@ -876,7 +880,7 @@
       "mustBePositive": "Musi być większe niż 0"
     },
     "protocolHelp": {
-      "warmup": "Seanse rozgrzewkowe odbywają się przed sesjami treningowymi. Nie są uwzględniane w osobistych rekordach.",
+      "warmup": "Lekkie serie wykonywane przed seriami roboczymi. Nie są uwzględniane w rekordach osobistych.",
       "dropSet": "Zmniejsz obciążenie od razu po nieudanym powtórzeniu i kontynuuj. Seria obniżania obciążenia nie jest uwzględniana w osobistych rekordach.",
       "myoReps": "Jedna seria aktywacji, a następnie krótkie, mini-serie z przerwą na kilka sekund.",
       "restPause": "Odpocznij przez kilka sekund po niepowodzeniu, a następnie wykonaj kilka kolejnych powtórzeń.",
@@ -885,7 +889,7 @@
     },
     "presetHelp": {
       "tabata": "20 sekund intensywnej pracy, 10 sekund odpoczynku, 8 rund: łącznie 4 minuty.",
-      "emom": "Każda minuta po upływie: rozpoczynaj serie od początku każdej minuty i odpoczywaj, aż minie pozostały czas, 10 serii."
+      "emom": "Co minutę: zacznij serię na początku każdej minuty i odpoczywaj do końca tej minuty, 10 rund."
     }
   },
   "stats": {
@@ -895,7 +899,7 @@
     "recentTrend": "Ostatni trend",
     "recentVsPrev": " (vs poprz.)",
     "sessions": "Sesje",
-    "average": "Średnia:",
+    "average": "Średnia: ",
     "title": "{dataTypeLabel} statystyki ({contextLabel}):"
   },
   "table": {
@@ -942,9 +946,9 @@
     },
     "trendLine": "Linia trendu",
     "refreshingTable": "Odświeżanie tabeli...",
-    "setCount": "{count} ustawia",
+    "setCount": "Serie: {count}",
     "deleteSetMessage": "{set} zostanie usunięte z Twojego dziennika. Nie da się tego cofnąć.",
-    "deleteSetTitle": "Czy chcesz usunąć tę grupę?"
+    "deleteSetTitle": "Czy chcesz usunąć tę serię?"
   },
   "timeperiods": {
     "month": "Miesiąc",
@@ -966,13 +970,13 @@
     },
     "stopwatch": "Stoper",
     "phase": {
-      "rest": "Przerwa",
+      "rest": "Odpoczynek",
       "work": "Praca"
     },
     "round": "Runda {current} z {total}",
     "status": {
       "done": "Zakończono",
-      "paused": "Ustawione w zawieszeniu"
+      "paused": "Wstrzymany"
     }
   },
   "trends": {
@@ -1002,10 +1006,10 @@
     "validation": {
       "title": "Nieprawidłowe parametry:",
       "notANumber": "{key} musi być liczbą, ale jest \"{value}\"",
-      "tooSmall": "{key} musi mieć co najmniej {min} znaków, ale jest {value}",
+      "tooSmall": "{key} musi wynosić co najmniej {min}, ale wynosi {value}",
       "outOfRange": "{key} musi mieścić się w przedziale od {min} do {max}, ale jest {value}.",
-      "notABoolean": "{key} musi być wartością prawdy lub fałszu, ale jest \"{value}\"",
-      "notOneOf": "{key} musi być jednym z {allowed}, ale jest \"{value}\"",
+      "notABoolean": "{key} musi mieć wartość true lub false, ale jest \"{value}\"",
+      "notOneOf": "{key} musi być jedną z wartości: {allowed}, ale jest \"{value}\"",
       "notACell": "{key} musi być czterema liczbami całkowitymi od 1 (kolumna, wiersz, szerokość, wysokość), ale wynosi \"{value}\""
     }
   },
@@ -1015,64 +1019,64 @@
     "tryExamples": "Wypróbuj z przykładowymi danymi",
     "startScratch": "Zacznij od zera",
     "later": "Później",
-    "tryExamplesDesc": "Dodaje przykładowe treningi, a następnie prowadzi Cię przez konfigurację w oparciu o nie.",
-    "startScratchDesc": "Przewodnik po wtyczce, wykorzystujący Twoje własne dane, zaczynając od pierwszego zestawu.",
-    "tourOnYourData": "Używasz już dziennika treningów, więc turę prowadzi się na podstawie Twoich własnych danych."
+    "tryExamplesDesc": "Dodaje przykładowe treningi, a następnie przeprowadza Cię przez wtyczkę na ich podstawie.",
+    "startScratchDesc": "Przewodnik po wtyczce na Twoich własnych danych, zaczynając od pierwszej serii.",
+    "tourOnYourData": "Masz już dziennik treningów, więc wycieczka przebiega na Twoich własnych danych."
   },
   "tour": {
     "back": "Wstecz",
-    "next": "Następny",
-    "skip": "Przejdź",
+    "next": "Dalej",
+    "skip": "Pomiń",
     "done": "Zakończono",
     "progress": "{current} z {total}",
     "noteName": "Wycieczka z przewodnikiem",
-    "noteIntro": "Wytyczne dotyczące wycieczki prowadzonej wskazują na każdy element wtyczki na tej stronie. Edytuj lub usuń tę notę, kiedy tylko chcesz.",
-    "noteTable": "Twoje zestawy",
+    "noteIntro": "Wycieczka z przewodnikiem wskazuje każdy element wtyczki na tej stronie. Edytuj lub usuń tę notę, kiedy tylko chcesz.",
+    "noteTable": "Twoje serie",
     "noteChart": "Postęp",
     "noteDashboard": "Panel kontrolny",
-    "noteTimer": "Timer pauzy",
+    "noteTimer": "Timer odpoczynku",
     "steps": {
       "logSet": {
-        "title": "Zapisz swój pierwszy zestaw",
-        "text": "Naciśnij przycisk \"+\" aby otworzyć formularz, a następnie zapisz zestaw. Zostanie on natychmiast wyświetlony w tabeli."
+        "title": "Zapisz pierwszą serię",
+        "text": "Naciśnij przycisk \"+\", aby otworzyć formularz, a następnie zapisz serię. Od razu pojawi się w tabeli."
       },
       "rowActions": {
-        "title": "Edytuj lub usuń zbiór",
-        "mobileText": "Naciśnij zestaw, aby go naprawić. Aby go usunąć, użyj opcji \"Usuń zestaw\" w formularzu, który się otworzy.",
-        "text": "Użyj ołówka, aby zaznaczyć wiersz i utworzyć zestaw. Aby go usunąć, użyj opcji \"Usuń zestaw\" w otwartym formularzu."
+        "title": "Edytuj lub usuń serię",
+        "mobileText": "Naciśnij serię, aby ją poprawić. Aby ją usunąć, użyj opcji \"Usuń serię\" w formularzu, który się otworzy.",
+        "text": "Użyj ołówka w wierszu, aby poprawić serię. Aby ją usunąć, użyj opcji \"Usuń serię\" w otwartym formularzu."
       },
       "chart": {
         "title": "Twój postęp",
-        "text": "Na wykresie przedstawiono, jak dany ćwiczenie zmienia się w czasie, wraz z linią trendu i danymi statystycznymi.",
+        "text": "Na wykresie przedstawiono, jak dane ćwiczenie zmienia się w czasie, wraz z linią trendu i statystykami.",
         "textMine": "Na wykresie przedstawiono, jak postępuje ćwiczenie w czasie. Początkowo wykres jest prawie pusty, aż do momentu, w którym zarejestrujesz kilka serii.",
         "mobileText": "Na telefonie wykres jest wyświetlany jako tabela z tymi samymi liczbami.",
-        "mobileTextMine": "Na telefonie wykres jest wyświetlany jako tabela. Początkowo jest prawie pusty, aż do momentu, gdy dodasz kilka zestawów danych."
+        "mobileTextMine": "Na telefonie wykres jest wyświetlany jako tabela. Początkowo jest prawie pusty, aż do momentu, gdy dodasz kilka serii."
       },
       "dashboard": {
         "title": "Twój panel kontrolny",
         "text": "Podsumowania, trendy dotyczące objętości i ostatnie treningi – wszystko w jednym miejscu.",
-        "textMine": "Podsumowania, trendy dotyczące objętości i ostatnie treningi. Zaznaczane dane są automatycznie dodawane, gdy rejestrujesz kolejne serie."
+        "textMine": "Podsumowania, trendy objętości i ostatnie treningi. Dane pojawiają się automatycznie, gdy rejestrujesz kolejne serie."
       },
       "timer": {
-        "title": "Timer pauzy",
+        "title": "Timer odpoczynku",
         "text": "Naciśnij przycisk \"Start\", aby uruchomić odliczanie między seriami."
       },
       "ribbon": {
         "title": "Zapisz notatkę z dowolnego miejsca",
-        "text": "Ikona hantla w pasku otwiera formularz logowania z dowolnego miejsca.",
-        "mobileText": "Na telefonie nie ma tutaj ikony wstążki. Użyj palety poleceń, aby otworzyć formularz dziennika z dowolnego notatnika."
+        "text": "Ikona hantla w pasku otwiera formularz dziennika z dowolnego miejsca.",
+        "mobileText": "Na telefonie nie ma tutaj ikony na pasku. Użyj palety poleceń, aby otworzyć formularz dziennika z dowolnej notatki."
       },
       "commands": {
         "title": "Dodaj polecenia",
-        "text": "Otwórz paletę poleceń i uruchom polecenie \"Dodaj ćwiczenie\", aby dodać tabelę, wykres, timer lub panel kontrolny do notatki."
+        "text": "Otwórz paletę poleceń i uruchom polecenie „Wstaw tabelę treningu”, „Dodaj wykres treningu” lub „Dodaj timer treningowy”, aby wstawić blok do notatki."
       },
       "end": {
         "title": "Gotowe",
-        "text": "Można powtórzyć tę wycieczkę ponownie, przechodząc do ustawień → Rozpoczęcie."
+        "text": "Tę wycieczkę możesz powtórzyć w ustawieniach, w sekcji Jak zacząć."
       },
       "muscles": {
-        "title": "Mapa temperatury mięśni",
-        "text": "Mapa ciepła pokazuje, które mięśnie były najczęściej trenowane."
+        "title": "Mapa cieplna mięśni",
+        "text": "Mapa cieplna pokazuje, które mięśnie trenowałeś ostatnio najczęściej."
       }
     },
     "showMe": "Pokaż mi"
@@ -1080,18 +1084,18 @@
   "import": {
     "chooseFile": "Wybierz plik CSV",
     "notAnExport": "Ten plik nie jest eksportem \"Strong\" ani \"Hevy\".",
-    "noSets": "Nie udało się odczytać żadnych zestawów z tego pliku. Sprawdź, czy jest to plik CSV, który aplikacja wyeksportowała, bez zmian.",
+    "noSets": "Nie udało się odczytać żadnych serii z tego pliku. Sprawdź, czy jest to plik CSV, który aplikacja wyeksportowała, bez zmian.",
     "readError": "Nie udało się odczytać pliku: {error}",
     "source": "Eksport z {source}",
-    "setsFound": "Zestawy w pliku: {count}",
-    "setsToAdd": "Zestawy do dodania: {count}",
-    "duplicates": "Już widoczne w dzienniku, pominięte: {count}",
-    "dateRange": "Dni szkolenia: od {first} do {last}",
+    "setsFound": "Serie w pliku: {count}",
+    "setsToAdd": "Serie do dodania: {count}",
+    "duplicates": "Już w dzienniku, pominięte: {count}",
+    "dateRange": "Dni treningowe: od {first} do {last}",
     "newExercises": "Ćwiczenia bez strony: {exercises}",
-    "nothingToAdd": "Każdy zestaw w tym pliku już znajduje się w Twoim dzienniku.",
-    "backupNote": "Twoje logi są tworzone z kopią przed dodaniem zestawów.",
-    "importButton": "Importuj zestawy",
-    "imported": "Import zakończony. Dodane zestawy: {count}",
+    "nothingToAdd": "Każda seria z tego pliku już znajduje się w Twoim dzienniku.",
+    "backupNote": "Przed dodaniem serii tworzona jest kopia zapasowa dziennika.",
+    "importButton": "Importuj serie",
+    "imported": "Import zakończony. Dodane serie: {count}",
     "error": "Błąd podczas importu: {error}",
     "title": "Import z Strong lub Hevy",
     "intro": "Wybierz plik CSV z eksportu danych treningowych z aplikacji. Nic nie zostanie zapisane, dopóki nie potwierdzisz."

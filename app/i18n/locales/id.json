@@ -195,12 +195,16 @@
       "tile": "{widget}: kolom {column}, baris {row}, lebar {width}, tinggi {height}",
       "minOneColumn": "Min. 1 kolom",
       "minColumns": "Min. {columns} kolom",
-      "size": "{width} × {height}"
+      "size": "{width} × {height}",
+      "gridHint": "Seret widget untuk memindahkannya dan sudutnya untuk mengubah ukuran; area di bawah menunjukkan ukuran terkecil tiap widget. Lepas widget dengan tanda × atau seret ke area itu. Dengan keyboard: panah memindahkan, Shift dan panah mengubah ukuran, Delete menghapusnya.",
+      "gridColumnsMeasured": "{columns} kolom muat di lebar catatan.",
+      "remove": "Hapus {widget} dari dasbor"
     },
     "grid": {
       "outside": "{widget} melewati {columns} kolom kisi",
       "narrow": "{widget} membutuhkan minimal {min} kolom",
-      "overlap": "{widget} tumpang tindih dengan {other}"
+      "overlap": "{widget} tumpang tindih dengan {other}",
+      "empty": "Belum ada widget di kisi. Buka «Edit dasbor» di menu ⋮ untuk menempatkan beberapa."
     }
   },
   "duration": {

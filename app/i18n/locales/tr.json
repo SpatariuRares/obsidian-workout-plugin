@@ -24,22 +24,22 @@
     },
     "defaultTitle": "{type} trendi",
     "noTypesAvailable": "kullanılabilir grafik türü yok",
-    "noEligibleE1rm": "Tahmini 1RM için uygun olmayan setler. Isınma ve düşüş setlerini hariç tutarak, 1-12 tekrar aralığında pozitif ağırlık kaydı oluşturun."
+    "noEligibleE1rm": "Tahmini 1RM için uygun set yok. Isınma setleri ve drop setler hariç, 1–12 tekrarlı ve pozitif ağırlıklı bir set kaydedin."
   },
   "commands": {
     "addExerciseBlock": "Egzersiz bloğu ekle",
     "addMissingBlockIds": "Kod bloklarına eksik ID'leri ekle",
     "auditExerciseNames": "Egzersiz adlarını denetle",
     "convertExercise": "Egzersizi dönüştür",
-    "createCsvLog": "CSV günlük dosyası oluştur",
+    "createCsvLog": "CSV kayıt dosyası oluştur",
     "exportWorkoutToCanvas": "Antrenmanı tuvale aktar",
     "generateTagReference": "Etiket başvurusu oluştur",
     "insertTable": "Antrenman tablosu ekle",
     "manageMuscleTags": "Kas etiketlerini yönet",
     "migrateExerciseTypes": "Egzersiz türlerini taşı",
     "createExampleNotes": "Örnek notlar oluştur",
-    "openGettingStartedGuide": "Başlangıç kılidını aç",
-    "startTour": "Turu başlatın",
+    "openGettingStartedGuide": "Başlangıç kılavuzunu aç",
+    "startTour": "Turu başlat",
     "importWorkouts": "Strong veya Hevy'den içe aktar"
   },
   "common": {
@@ -68,13 +68,13 @@
       "weight": "Ağırlık ({unit})"
     },
     "preview": {
-      "noEntries": "Bu egzersiz için günlük kaydı bulunamadı",
+      "noEntries": "Bu egzersiz için kayıt bulunamadı",
       "title": "Önizleme",
-      "willConvertMany": "{count} günlük kaydı dönüştürülecek",
-      "willConvertOne": "1 günlük kaydı dönüştürülecek"
+      "willConvertMany": "{count} kayıt dönüştürülecek",
+      "willConvertOne": "1 kayıt dönüştürülecek"
     },
     "sectionExercise": "Egzersiz",
-    "success": "{count} günlük kaydı başarıyla dönüştürüldü",
+    "success": "{count} kayıt başarıyla dönüştürüldü",
     "title": "Egzersiz verilerini dönüştür",
     "typeSelect": {
       "convertTo": "Şuna dönüştür:",
@@ -89,7 +89,7 @@
       "columnWorkout": "Antrenman",
       "minutesSuffix": " dk",
       "noData": "Karşılaştırmak için henüz yeterli antrenman yok.",
-      "subtitle": "Tahmini vs. gerçek antrenman süresi",
+      "subtitle": "Tahmini ve gerçek antrenman süresi",
       "title": "Süre karşılaştırması",
       "varianceTrendDeclining": "Tahminler gerçek antrenmanlarınızdan giderek uzaklaşıyor",
       "varianceTrendImproving": "Tahminler gerçek antrenmanlarınıza giderek yaklaşıyor",
@@ -103,7 +103,7 @@
       "noTags": "Frontmatter'da kas etiketi yok",
       "title": "Dosya hataları",
       "tooManyTags": "Çok fazla kas etiketi ({count})",
-      "sharedName": "Aynı egzersizin adı {pages} ile aynı: günlükler yalnızca bunlardan birine kaydedilir."
+      "sharedName": "{pages} ile aynı egzersiz adı: kayıtlar bunlardan yalnızca birine gider."
     },
     "muscleTags": {
       "description": "Açıklama",
@@ -117,7 +117,7 @@
     },
     "protocolDistribution": {
       "clearFilter": "Filtreyi temizle",
-      "filterActive": "Filtre:",
+      "filterActive": "Şuna göre filtrelendi:",
       "noData": "Son 30 günde kaydedilmiş set yok",
       "subtitle": "Antrenman protokolü dağılımı (son 30 gün)",
       "title": "Protokol dağılımı"
@@ -130,7 +130,7 @@
       "disclaimer": "Uyarı",
       "noData": "Henüz yeterli veri yok: her protokol için en az 5 kayıtlı set gerekir.",
       "title": "Protokol etkinliği",
-      "subtitle": "Her protokolün, kaydedilen tüm veri kümeleri üzerinde nasıl çalıştığı"
+      "subtitle": "Her protokolün, kaydedilen tüm setlerde nasıl işlediği"
     },
     "quickActions": {
       "addWorkoutLog": "Antrenman kaydı ekle",
@@ -174,10 +174,10 @@
       },
       "imbalance": {
         "backDominant": "Ön-arka dengesizlik: Sırt kaslarınız, ön kaslarınıza göre çok daha fazla çalışıyor.",
-        "frontDominant": "Ön-arka dengesizliği: Ön tarafınız, arka tarafınızdan çok daha fazla çalışıyor."
+        "frontDominant": "Ön-arka dengesizlik: Ön tarafınız, arka tarafınızdan çok daha fazla çalışıyor."
       }
     },
-    "editDashboard": "Panoyu düzenle",
+    "editDashboard": "Gösterge panelini düzenle",
     "modal": {
       "widgets": "Widget'lar",
       "widgetsHint": "Gösterilecek widget'ları işaretleyin. Sırasını değiştirmek için tutamaçtan sürükleyin veya okları kullanın.",
@@ -190,17 +190,21 @@
       "layout": "Düzen",
       "layoutGrid": "Izgara",
       "layoutList": "Liste",
-      "stash": "Panoda değil",
-      "stashEmpty": "Tüm widget'lar panoda",
+      "stash": "Gösterge panelinde değil",
+      "stashEmpty": "Tüm widget'lar gösterge panelinde",
       "tile": "{widget}: sütun {column}, satır {row}, genişlik {width}, yükseklik {height}",
       "minOneColumn": "En az 1 sütun",
       "minColumns": "En az {columns} sütun",
-      "size": "{width} × {height}"
+      "size": "{width} × {height}",
+      "gridHint": "Taşımak için bir widget'ı, boyutunu değiştirmek için köşesini sürükleyin; aşağıdaki alan her widget'ın alabileceği en küçük boyutu gösterir. Widget'ı × ile veya alana sürükleyerek kaldırın. Klavyeyle: oklar taşır, Shift ve oklar boyutlandırır, Delete kaldırır.",
+      "gridColumnsMeasured": "{columns} sütun notun genişliğine sığıyor.",
+      "remove": "{widget} öğesini panodan kaldır"
     },
     "grid": {
       "outside": "{widget} ızgaranın {columns} sütununun dışına taşıyor",
       "narrow": "{widget} en az {min} sütun gerektirir",
-      "overlap": "{widget}, {other} ile çakışıyor"
+      "overlap": "{widget}, {other} ile çakışıyor",
+      "empty": "Izgarada henüz widget yok. Birkaç tane yerleştirmek için ⋮ menüsünde «Panoyu düzenle» seçeneğini açın."
     }
   },
   "duration": {
@@ -223,12 +227,12 @@
       "durationChartTitle": "Süre grafiği",
       "durationTitle": "Süre",
       "heartRateTitle": "Nabız",
-      "logTitle": "Günlük",
+      "logTitle": "Kayıt",
       "paceTrackingNote": "Temponuzdaki gelişimi takip edin (daha düşük = daha hızlı):",
       "paceTrackingTitle": "Tempo takibi",
       "repTrackingTitle": "Tekrar takibi",
       "volumeChartTitle": "Hacim grafiği",
-      "weightProgressionTitle": "Ağırlık artışı"
+      "weightProgressionTitle": "Ağırlık ilerlemesi"
     },
     "exercises": {
       "benchPress": {
@@ -280,7 +284,7 @@
       "durationEstimatorIntro": "Mevcut nottaki egzersizlere göre toplam antrenman süresini tahmin eder.",
       "durationEstimatorTitle": "4. Süre Tahmini",
       "intervalTimerTitle": "Aralıklı zamanlayıcı",
-      "intro": "Workout eklentisindeki tüm kod bloğu türlerinin kapsamlı bir referansı.",
+      "intro": "Antrenman eklentisindeki tüm kod bloğu türlerinin kapsamlı bir referansı.",
       "protocol21s": "7+7+7 kısmi tekrar",
       "protocolDropset": "Ağırlığı azaltın, tekrarlara devam edin",
       "protocolMyoReps": "Etkinleştirme seti + mini setler",
@@ -293,14 +297,14 @@
       "tablesTitle": "2. Tablolar",
       "timedExerciseTitle": "Süreli Egzersiz (Süre)",
       "timersTitle": "3. Zamanlayıcılar",
-      "tip": "**İpucu**: Kişisel paneliniz için [[{dashboard}]] sayfasına bakın",
+      "tip": "**İpucu**: Kişisel gösterge paneliniz için [[{dashboard}]] sayfasına bakın",
       "title": "Özellikler",
-      "trainingProtocolsIntro": "Eklenti, günlüklerinizde şu protokol rozetlerini destekler:",
+      "trainingProtocolsIntro": "Eklenti, kayıtlarınızda şu protokol rozetlerini destekler:",
       "trainingProtocolsTitle": "5. Antrenman Protokolleri",
       "workoutChartTitle": "Antrenman Grafiği (Tüm Egzersizler Birlikte)"
     },
     "fileNames": {
-      "dashboard": "Kontrol paneli",
+      "dashboard": "Gösterge paneli",
       "featureShowcase": "Özelliklerin Tanıtımı",
       "gettingStarted": "Başlangıç",
       "hiitCardioSession": "HIIT Kardiyo Antrenmanı"
@@ -317,13 +321,13 @@
       "commandCreateExercise": "Egzersiz sayfası oluştur",
       "commandCreateExerciseDesc": "Yeni bir egzersiz dosyası oluşturun",
       "commandCreateLog": "Antrenman kaydı oluştur",
-      "commandCreateLogDesc": "Yeni bir antrenman girişi ekle",
+      "commandCreateLogDesc": "Yeni bir antrenman kaydı ekleyin",
       "commandInsertChart": "Antrenman grafiği ekle",
       "commandInsertChartDesc": "Herhangi bir nota grafik ekleyin",
       "commandInsertTimer": "Antrenman zamanlayıcısı ekle",
       "commandInsertTimerDesc": "Bir dinlenme zamanlayıcısı ekleyin",
       "dashboardDesc": "Antrenman istatistiklerinize hızlı bir bakış",
-      "exercisesDesc": "Günlük ve grafikler içeren örnek egzersiz sayfaları",
+      "exercisesDesc": "Kayıt ve grafikler içeren örnek egzersiz sayfaları",
       "exercisesFolder": "**{folder}/**",
       "featureShowcaseDesc": "Tüm kod bloklarının kapsamlı referansı",
       "folderStructureTitle": "Klasör Yapısı",
@@ -344,11 +348,11 @@
       "workoutsFolder": "**{folder}/**",
       "pagesIntro": "Her sayfada bir özelliği keşfedin. Bağlantıları sırayla takip edin veya aşağıdaki özelliklerden birini seçin. Notlar arasında geçiş yapmak için \"Geri\" ve \"Sonraki\" düğmelerini kullanın; her örneği keşfetmek için normal şekilde kaydırın.",
       "liveIntro": "Aşağıdaki tüm özellikleri, altı haftalık örnek antrenmanlarla keşfedin. Bunlar örnek verilerdir; kontrolleri deneyin ve notlarınızın nasıl çalıştığını görün.",
-      "tryLog": "\"+\" düğmesini kullanarak bir veri kümesi ekleyin. Tablo, grafikler ve kontrol paneli aynı CSV dosyasını okur.",
+      "tryLog": "\"+\" düğmesiyle bir set ekleyin. Tablo, grafikler ve gösterge paneli aynı CSV dosyasını okur.",
       "continueWithWorkout": "[[{workout}]]'ı açarak, egzersiz tabloları ve dinlenme zamanlayıcıları ile birlikte kapsamlı bir antrenman deneyin.",
-      "moreExamples": "Daha fazla grafik türü, filtre ve eğitim protokolleri için [[{showcase}]] bölümüne bakın.",
-      "ownData": "Hazır olduğunuzda, Ayarlar → Kurulum & Veri bölümünde kendi CSV klasörünüzü ve örnek klasörünüzü seçin. Örnek klasörü bir referans olarak saklayın.",
-      "openGuideDesc": "Tablolar, grafikler, zamanlayıcılar ve kontrol paneli gibi örneklerle birlikte \"başlangıç\" sayfasını açın."
+      "moreExamples": "Daha fazla grafik türü, filtre ve antrenman protokolleri için [[{showcase}]] bölümüne bakın.",
+      "ownData": "Hazır olduğunuzda, Ayarlar → Kurulum ve veri bölümünde kendi CSV klasörünüzü ve egzersiz klasörünüzü seçin. Örnek klasörü bir referans olarak saklayın.",
+      "openGuideDesc": "Tablolar, grafikler, zamanlayıcılar ve gösterge paneli gibi örneklerle birlikte \"başlangıç\" sayfasını açın."
     },
     "hiit": {
       "cyclingCooldownTitle": "Bisikletle Soğuma",
@@ -381,8 +385,8 @@
       "supersetLunges": "Lunge ile süperset"
     },
     "createToOpenGuide": "Başlangıç kılavuzu, henüz mevcut olmayan örnek notaların bir parçasıdır. Şimdi oluşturun mu?",
-    "pointedAtExamples": "Şu anda, görüşleriniz örnek günlük ve alıştırmaları okuyor. Bu ayarı veri ayarları bölümünde değiştirin.",
-    "usesSeparateLog": "Zaten bir antrenman kaydınız var, bu nedenle bu, değiştirilmeden bırakılmıştır. Örnekler, kendi log dosyalarını kullanır."
+    "pointedAtExamples": "Görünümleriniz şu anda örnek kayıt ve egzersizleri okuyor. Bu ayarı veri ayarlarından değiştirin.",
+    "usesSeparateLog": "Zaten bir antrenman kaydınız var, bu nedenle dokunulmadan bırakıldı. Örnekler kendi kayıt dosyalarını kullanır."
   },
   "forms": {
     "enterCsvPath": "CSV dosyaları için klasör",
@@ -417,7 +421,7 @@
     "search": "Arama",
     "totalReps": "Toplam tekrar",
     "workoutData": "Antrenman verileri",
-    "workoutLog": "Antrenman günlüğü"
+    "workoutLog": "Antrenman kaydı"
   },
   "logs": {
     "addLogButtonAria": "{exerciseName} için kayıt ekle",
@@ -428,13 +432,13 @@
     "createLogButtonText": "Kayıt oluştur: {exerciseName}",
     "noDataTitle": "{exerciseName} için kayıt bulunamadı",
     "exploreExampleData": "Veya örnek veriyle keşfet",
-    "lastSet": "Son kez: {set}",
+    "lastSet": "Son set: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Kişisel rekor: {weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "Kod bloğu eklendi",
-    "csvNotFound": "Antrenman günlüğü CSV'si bulunamadı. Ayarlardaki CSV klasörünü kontrol edin.",
+    "csvNotFound": "Antrenman kaydı CSV dosyası bulunamadı. Ayarlardaki CSV klasörünü kontrol edin.",
     "errors": {
       "tagReferenceFailed": "Etiket başvurusu oluşturulurken hata: {error}",
       "csvLoadError": "CSV verisi yüklenirken hata: {error}",
@@ -455,7 +459,7 @@
       "blockIdsAdded": "{files} dosyada {count} eksik ID eklendi",
       "csvCreated": "CSV dosyası başarıyla oluşturuldu!",
       "noBlockIdsNeeded": "Tüm kod bloklarında zaten ID var",
-      "weightUnitsStamped": "{count} önceki loglara ağırlık birimini kaydetti."
+      "weightUnitsStamped": "{count} eski kayda ağırlık birimi kaydedildi."
     },
     "tagReferenceGenerated": "Etiket başvurusu başarıyla oluşturuldu!",
     "timerCompleted": "Zamanlayıcı tamamlandı!",
@@ -495,7 +499,7 @@
       "insertExerciseBlock": "Ekle",
       "insertTable": "Tablo ekle",
       "insertTimer": "Zamanlayıcı ekle",
-      "removeParameter": "Sil",
+      "removeParameter": "Kaldır",
       "renameFile": "Dosya adını değiştir",
       "renameInCsv": "CSV dosyasında yeniden adlandır",
       "update": "Kaydı güncelle",
@@ -505,7 +509,7 @@
       "decreaseBy": "{label} değerini {increment} azalt",
       "increaseBy": "{label} değerini {increment} artır",
       "deleteSet": "Set'i sil",
-      "updateDashboard": "Panoyu güncelle"
+      "updateDashboard": "Gösterge panelini güncelle"
     },
     "canvasLayout": "Düzen",
     "canvasOptions": "Seçenekler",
@@ -554,7 +558,7 @@
       "volume": "Hacim ({unit}):",
       "weight": "Ağırlık ({unit}):"
     },
-    "layoutGrouped": "Kasa göre gruplanmış",
+    "layoutGrouped": "Kas grubuna göre gruplanmış",
     "layoutHorizontal": "Yatay düzen",
     "layoutType": "Düzen türü:",
     "layoutVertical": "Dikey düzen",
@@ -569,7 +573,7 @@
       "auditConfirmRenameFile": "Bu dosya yeniden adlandırılsın mı?\n\n{oldName} → {newName}",
       "auditMismatchCount": "{count} olası uyuşmazlık bulundu:",
       "auditNoMatchFound": "Eşleşme bulunamadı",
-      "auditNoMismatches": "Her egzersiz dosyası günlükteki adıyla eşleşiyor.",
+      "auditNoMismatches": "Her egzersiz dosyası kayıttaki adıyla eşleşiyor.",
       "auditRenameError": "Yeniden adlandırılamadı: {error}",
       "auditRenameFileError": "Dosya yeniden adlandırılamadı: {error}",
       "auditRenameFileSuccess": "Dosya yeniden adlandırıldı",
@@ -621,7 +625,7 @@
       "validFieldRequired": "{field} zorunludur",
       "migrationNoUpdates": "Tüm egzersiz sayfaları zaten güncel",
       "validMustBeWholeNumber": "{field} tamsayı olmalıdır",
-      "newRecord": "Yeni kayıt: {weight} {unit} (+{increase} {unit})",
+      "newRecord": "Yeni kişisel rekor: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Grafik başarıyla eklendi!",
       "dashboardInserted": "Gösterge paneli başarıyla eklendi!",
       "exerciseNameRequired": "Lütfen bir egzersiz adı girin",
@@ -631,9 +635,9 @@
       "timerInserted": "Zamanlayıcı başarıyla eklendi!",
       "timerUpdated": "Zamanlayıcı başarıyla güncellendi!",
       "validChooseExercise": "Bir egzersiz seçin",
-      "validationCombinedMode": "'Egzersiz + antrenman' türü için, her iki alanı da doldurmanız gerekmektedir!",
-      "dashboardUpdated": "Pano başarıyla güncellendi!",
-      "dashboardUpdateFailed": "Pano güncellenemedi. Dosyanın editörde açık olduğundan emin olun."
+      "validationCombinedMode": "'Egzersiz + antrenman' türü için her iki alanı da doldurun!",
+      "dashboardUpdated": "Gösterge paneli başarıyla güncellendi!",
+      "dashboardUpdateFailed": "Gösterge paneli güncellenemedi. Dosyanın editörde açık olduğundan emin olun."
     },
     "parameterKey": "Anahtar:",
     "parameterLabel": "Etiket:",
@@ -724,7 +728,7 @@
       "insertTable": "Antrenman günlüğü tablosu ekle",
       "insertTimer": "Antrenman zamanlayıcısı ekle",
       "muscleTagManager": "Kas etiketlerini yönet",
-      "editDashboard": "Panoyu düzenle"
+      "editDashboard": "Gösterge panelini düzenle"
     },
     "workout": "Antrenman (isteğe bağlı):",
     "workoutFile": "Antrenman dosyası:",
@@ -735,13 +739,13 @@
     "deleteItem": "{item} sil",
     "errors": {
       "missingElements": "Eksik öğeler",
-      "validationCombinedMode": "Egzersiz + antrenman türü için her iki alanı da doldurun"
+      "validationCombinedMode": "'Egzersiz + antrenman' türü için her iki alanı da doldurun"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Setler: {sets}\n- Tekrarlar: {reps}\n- Dinlenme: {restTime} sn\n\n",
     "noteTemplate": "**Not: {note}**\n",
     "date": "Tarih",
-    "weightUnitToggle": "Bu girdinin birim değeri",
-    "work": "Çalış",
+    "weightUnitToggle": "Bu kaydın birimi",
+    "work": "Çalışma",
     "rest": "Dinlenme"
   },
   "settings": {
@@ -760,12 +764,12 @@
       "runAllMaintenance": "Tümünü çalıştır",
       "savePreset": "Kaydet",
       "saveProtocol": "Kaydet",
-      "showWelcome": "Hoş geldiniz göster",
-      "takeTour": "Turlara katılın"
+      "showWelcome": "Hoş geldiniz ekranını göster",
+      "takeTour": "Turu başlat"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Kas etiketleri CSV dosyası zaten mevcut. Varsayılan değerlerle üzerine yazmak ister misiniz? Bu, tüm özel etiketleri kaldıracaktır.",
-      "csvFolder": "Antrenman günlükleri ve kas etiketleri CSV dosyalarının saklanacağı klasör.",
+      "csvFolder": "Antrenman kayıtları ve kas etiketleri CSV dosyalarının saklanacağı klasör.",
       "defaultExactMatch": "Etkinleştirildiğinde, egzersiz filtreleme varsayılan olarak tam isim eşleşmesini kullanır. Bulanık eşleşme için devre dışı bırakın.",
       "defaultRepsPerSet": "Belirtilmediğinde varsayılan tekrar sayısı. 0 ise 'Yedek set süresi' kullanılır.",
       "defaultTimerPreset": "Yeni zamanlayıcılar için varsayılan bir ön ayar seçin",
@@ -777,24 +781,24 @@
       "presetNameDesc": "Bu zamanlayıcı ön ayarı için benzersiz bir isim (örneğin, '90 saniye dinlenme', 'HIIT 30/10').",
       "presetRoundsDesc": "Durmadan önce tamamlanacak aralık turu sayısı.",
       "protocolAbbreviation": "Rozette gösterilen kısa kısaltma (en fazla 3 karakter)",
-      "protocolColor": "Rozet arka plan rengi (heks formatında, örneğin #FF5733)",
+      "protocolColor": "Rozet arka plan rengi (onaltılık biçimde, örneğin #FF5733)",
       "quickWeightIncrement": "Antrenman kaydı oluşturma/düzenleme pencerelerindeki +/- düğmelerinin kullandığı ağırlık artışı (örneğin, +2.5 / -2.5 birim için 2.5)",
       "repDuration": "Tek bir tekrarın tahmini süresi. Tekrar sayısı bilindiğinde kullanılır (örneğin, 'x 10 tekrar').",
       "runAllMaintenance": "Tüm bakım görevlerini ardışık olarak çalıştırın. Tekrar tekrar çalıştırılması güvenlidir.",
       "setDuration": "Tekrar sayısı belirtilmediğinde kullanılır (yedek değer). Tipik aralık: 30-60 saniye.",
       "setupCSV": "Ayarlanan klasörde hem workout_logs.csv hem de muscle-tags.csv dosyalarını oluşturun.",
       "weightIncrement": "Progresif yüklenme için varsayılan ağırlık artışı (örneğin, 2.5 birimlik artışlar için 2.5)",
-      "showRibbonIcon": "Şerit menüde antrenman kaydı formunu açan dambıl simgesini göster",
-      "weightUnit": "Grafikler, toplamlar ve yeni günlükler için birim. Her günlük, girildiği birimi korur.",
-      "takeTour": "Günlük kaydı, grafikler, tablolar ve zamanlayıcıları kısaca açıklayın.",
+      "showRibbonIcon": "Şeritte, antrenman kaydı formunu açan dambıl simgesini göster",
+      "weightUnit": "Grafikler, toplamlar ve yeni kayıtlar için birim. Her kayıt, girildiği birimi korur.",
+      "takeTour": "Kısa bir notta kayıt, grafikler, tablolar ve zamanlayıcıları adım adım gösterin.",
       "welcomeWindow": "Örnek verilerle veya sıfırdan başlamak için, tekrar \"Hoş geldiniz\" penceresini gösterin.",
-      "keepScreenAwake": "Zamanlayıcı çalışırken ekranın açık kalmasına çalışın. Daha fazla pil tüketir; kullanılabilirlik, cihazınızın ve sistem ayarlarınızın özelliklerine bağlıdır.",
+      "keepScreenAwake": "Zamanlayıcı ön planda çalışırken ekranın açık kalmasını sağlamaya çalışır. Daha fazla pil tüketir; kullanılabilirlik cihazınıza ve sistem ayarlarınıza bağlıdır.",
       "vibrateOnCompletion": "Zamanlayıcı bittiğinde, sesten bağımsız olarak kısa bir süre titreşim sağlar. Sayfaya dokunma ve uyumlu bir cihaz (örneğin Android) gerektirir. iOS'ta mevcut değildir; arka planda bildirimler gönderilmez.",
       "presetRestDesc": "Her turun sonunda yapılan dinlenme süresi (0, dinlenme yok anlamına gelir).",
-      "noCustomProtocols": "Henüz herhangi bir protokol tanımlanmamış. \"Protokol Ekle\" düğmesine tıklayarak bir tane oluşturabilirsiniz."
+      "noCustomProtocols": "Henüz herhangi bir protokol tanımlanmamış. \"Protokol ekle\" düğmesine tıklayarak bir tane oluşturabilirsiniz."
     },
     "labels": {
-      "csvPath": "CSV günlük dosyası yolu",
+      "csvPath": "CSV kayıt dosyası yolu",
       "defaultExactMatch": "Varsayılan tam eşleşme",
       "defaultRepsPerSet": "Set başına varsayılan tekrar sayısı",
       "defaultTimerPreset": "Varsayılan zamanlayıcı ön ayarı",
@@ -820,7 +824,7 @@
       "takeTour": "Rehberli tur",
       "keepScreenAwake": "Zamanlayıcı çalışırken ekranı açık tut",
       "vibrateOnCompletion": "Zamanlayıcı bittiğinde titreşim",
-      "presetRest": "Rest"
+      "presetRest": "Dinlenme"
     },
     "messages": {
       "confirmDeletePreset": "Bu ön ayarı gerçekten silmek istiyor musunuz?",
@@ -842,7 +846,7 @@
       "none": "Yok",
       "weightUnit": {
         "kg": "Kilogram (kg)",
-        "lb": "Pound (lb)"
+        "lb": "Libre (lb)"
       }
     },
     "placeholders": {
@@ -854,7 +858,7 @@
       "advanced": "Gelişmiş",
       "csvManagement": "CSV dosya yönetimi",
       "maintenance": "Bakım",
-      "quickLog": "Mobil günlük kaydı",
+      "quickLog": "Mobil kayıt",
       "setupAndData": "Kurulum ve veri",
       "templates": "Şablonlar",
       "timerPresets": "Zamanlayıcı ön ayarları",
@@ -876,7 +880,7 @@
       "mustBePositive": "0'dan büyük olmalıdır"
     },
     "protocolHelp": {
-      "warmup": "Çalışma setlerinden önce tamamlanan setler için puan verilir. Bu puanlar kişisel rekorlara dahil edilmez.",
+      "warmup": "Çalışma setlerinden önce yapılan hafif setler. Kişisel rekorlara dahil edilmez.",
       "dropSet": "Başarısızlık anında ağırlığı düşürün ve tekrar deneyin. \"Drop set\"ler, kişisel rekorlarınıza dahil edilmez.",
       "myoReps": "Bir aktivasyon seti, ardından birkaç saniyelik dinlenme ile kısa mini setler.",
       "restPause": "Başarısızlık durumunda birkaç saniye dinlenin, ardından birkaç tekrar daha yapın.",
@@ -884,8 +888,8 @@
       "twentyone": "Alt yarım vücudu için 7 tekrar, üst yarım vücudu için 7 tekrar, ardından 7 tam tekrar."
     },
     "presetHelp": {
-      "tabata": "20 saniye boyunca maksimum yoğunlukta çalışma, 10 saniye dinlenme, 8 tur: Toplamda 4 dakika.",
-      "emom": "Dakikada bir: Her dakikanın başında tekrarınızı başlatın ve kalan sürede dinlenin, 10 tekrar."
+      "tabata": "20 saniye boyunca maksimum yoğunlukta çalışma, 10 saniye dinlenme, 8 tur: toplamda 4 dakika.",
+      "emom": "Dakikada bir: Her dakikanın başında tekrarınızı başlatın ve kalan sürede dinlenin, 10 tur."
     }
   },
   "stats": {
@@ -895,7 +899,7 @@
     "recentTrend": "Son trend",
     "recentVsPrev": " (öncekiyle)",
     "sessions": "Oturumlar",
-    "average": "Ortalama:",
+    "average": "Ortalama: ",
     "title": "{dataTypeLabel} istatistikler ({contextLabel}):"
   },
   "table": {
@@ -942,8 +946,8 @@
     },
     "trendLine": "Trend çizgisi",
     "refreshingTable": "Tablo yenileniyor...",
-    "setCount": "{count} değerini ayarlar",
-    "deleteSetMessage": "{set}, günlük kaydınızdan silinecektir. Bu işlemi geri alınamaz.",
+    "setCount": "{count} set",
+    "deleteSetMessage": "{set}, kayıtlarınızdan silinecek. Bu işlem geri alınamaz.",
     "deleteSetTitle": "Bu seti silmek mi?"
   },
   "timeperiods": {
@@ -969,10 +973,10 @@
       "rest": "Dinlenme",
       "work": "Çalışma"
     },
-    "round": "Tur {current} of {total}",
+    "round": "Tur {current} / {total}",
     "status": {
       "done": "Tamamlandı",
-      "paused": "Durdurulmuş"
+      "paused": "Duraklatıldı"
     }
   },
   "trends": {
@@ -1010,69 +1014,69 @@
     }
   },
   "welcome": {
-    "title": "Egzersiz eklentisine hoş geldiniz",
-    "intro": "Setlerinizi takip edin, ardından bunları grafik, tablo ve bir kontrol paneli olarak görün. Nasıl başlamak istersiniz?",
+    "title": "Antrenman eklentisine hoş geldiniz",
+    "intro": "Setlerinizi takip edin, ardından bunları grafik, tablo ve gösterge paneli olarak görün. Nasıl başlamak istersiniz?",
     "tryExamples": "Örnek verilerle deneyin",
-    "startScratch": "Yeni bir başlangıç yap",
+    "startScratch": "Sıfırdan başla",
     "later": "Daha sonra",
-    "tryExamplesDesc": "Örnek egzersizleri ekler, ardından bu egzersizler için eklentiyi nasıl kullanacağınızı adım adım anlatır.",
-    "startScratchDesc": "Verdiğiniz veriler üzerinde, ilk veri kümenizden başlayarak, eklentiyi nasıl kullanacağınızı adım adım gösterir.",
+    "tryExamplesDesc": "Örnek antrenmanları ekler, ardından bunlar üzerinde eklentiyi adım adım gösterir.",
+    "startScratchDesc": "Eklentiyi kendi verilerinizle, ilk setinizi kaydetmekle başlayarak adım adım gösterir.",
     "tourOnYourData": "Zaten bir antrenman kaydınız var, bu nedenle tur, kendi verileriniz üzerinde çalışacak."
   },
   "tour": {
     "back": "Geri",
-    "next": "Sonra",
+    "next": "İleri",
     "skip": "Atla",
     "done": "Tamamlandı",
-    "progress": "{current} numaralı {total}",
+    "progress": "{current} / {total}",
     "noteName": "Rehberli tur",
-    "noteIntro": "Bu sayfadaki kılavuz tur, eklendeki her bir parçaya işaret ediyor. İstediğiniz zaman bu notu düzenleyin veya silin.",
-    "noteTable": "Koleksiyonlarınız",
+    "noteIntro": "Bu sayfadaki rehberli tur, eklentinin her bölümünü gösterir. İstediğiniz zaman bu notu düzenleyebilir veya silebilirsiniz.",
+    "noteTable": "Setleriniz",
     "noteChart": "İlerleme",
-    "noteDashboard": "Kontrol Paneli",
+    "noteDashboard": "Gösterge paneli",
     "noteTimer": "Dinlenme zamanlayıcısı",
     "steps": {
       "logSet": {
-        "title": "İlk ayarınızı kaydedin",
-        "text": "'+' düğmesine basarak formu açın, ardından bir set kaydedin. Form, hemen tabloya eklenecektir."
+        "title": "İlk setinizi kaydedin",
+        "text": "'+' düğmesine basarak formu açın, ardından bir set kaydedin. Set hemen tabloya eklenir."
       },
       "rowActions": {
-        "title": "Bir küme'yi düzenle veya sil",
-        "mobileText": "Bir küme seçerek düzeltin. Silmek için, açılan formda \"Küme Sil\" seçeneğini kullanın.",
-        "text": "Bir satırdaki kalem kullanarak bir kümeyi sabitleyin. Kümeyi kaldırmak için, açılan formda \"Küme Sil\" seçeneğini kullanın."
+        "title": "Bir seti düzenleyin veya silin",
+        "mobileText": "Bir seti seçerek düzeltin. Silmek için, açılan formda \"Set'i sil\" seçeneğini kullanın.",
+        "text": "Bir satırdaki kalem simgesiyle seti düzeltin. Silmek için, açılan formda \"Set'i sil\" seçeneğini kullanın."
       },
       "chart": {
         "title": "İlerlemeniz",
         "text": "Grafik, egzersizin zaman içindeki değişimini, eğilim çizgisini ve istatistikleri gösterir.",
-        "textMine": "Grafik, bir egzersizin zaman içindeki gelişimini gösterir. Birkaç tekrar kaydettikten sonra neredeyse boş görünür.",
+        "textMine": "Grafik, bir egzersizin zaman içindeki gelişimini gösterir. Birkaç set kaydedene kadar neredeyse boş görünür.",
         "mobileText": "Telefon üzerinde, grafik aynı sayılarla bir tablo olarak görüntülenir.",
-        "mobileTextMine": "Telefon üzerinde grafik, bir tablo olarak görüntülenir. Birkaç veri girişi yapana kadar neredeyse boş görünür."
+        "mobileTextMine": "Telefonda grafik bir tablo olarak görüntülenir. Birkaç set kaydedene kadar neredeyse boş görünür."
       },
       "dashboard": {
-        "title": "Kontrol paneliniz",
+        "title": "Gösterge paneliniz",
         "text": "Toplamlar, hacim eğilimleri ve son antrenmanlar, tek bir blokta.",
         "textMine": "Toplamlar, hacim trendleri ve son antrenmanlar. Daha fazla set kaydettikçe otomatik olarak güncellenir."
       },
       "timer": {
-        "title": "Tur süresi sayacı",
-        "text": "Setler arasında sayma sayım başlatmak için \"başlat\" düğmesine basın."
+        "title": "Dinlenme zamanlayıcısı",
+        "text": "Setler arasında geri sayımı başlatmak için başlat düğmesine basın."
       },
       "ribbon": {
-        "title": "Notlardan herhangi birine kaydet",
-        "text": "Ribbon içindeki dambıl simgesi, herhangi bir konumdan log formunu açar.",
-        "mobileText": "Telefonlarda, buradaki \"ribbon\" simgesi bulunmamaktadır. Her nottan log formunu açmak için komut paletini kullanın."
+        "title": "Herhangi bir nottan kayıt ekleyin",
+        "text": "Şeritteki dambıl simgesi, her yerden kayıt formunu açar.",
+        "mobileText": "Telefonda şerit simgesi yoktur. Herhangi bir nottan kayıt formunu açmak için komut paletini kullanın."
       },
       "commands": {
         "title": "Komutları ekle",
-        "text": "Komut paletini açın ve bir notta tablo, grafik, zamanlayıcı veya kontrol paneli eklemek için \"Ekle Egzersiz\" komutunu çalıştırın."
+        "text": "Komut paletini açın ve bir nota tablo, grafik, zamanlayıcı veya gösterge paneli eklemek için \"Antrenman tablosu ekle\", \"Antrenman grafiği ekle\", \"Antrenman zamanlayıcısı ekle\" veya \"Antrenman gösterge paneli ekle\" komutlarından birini çalıştırın."
       },
       "end": {
-        "title": "Hazır",
+        "title": "Hazırsınız",
         "text": "Bu turu, Ayarlar → Başlangıç bölümünden tekrar başlatabilirsiniz."
       },
       "muscles": {
         "title": "Kas ısı haritası",
-        "text": "Isınma haritası, hangi kasları en son çalıştırdığınızı gösterir."
+        "text": "Isı haritası, hangi kasları en son çalıştırdığınızı gösterir."
       }
     },
     "showMe": "Beni göster"
@@ -1080,20 +1084,20 @@
   "import": {
     "chooseFile": "CSV dosyasını seçin",
     "notAnExport": "Bu dosya, \"Strong\" veya \"Hevy\" bir dışa aktarma değildir.",
-    "noSets": "Bu dosyadan herhangi bir veri okunamadı. Uygulama tarafından dışa aktarılan ve herhangi bir değişiklik yapılmamış CSV dosyasının doğru olduğundan emin olun.",
+    "noSets": "Bu dosyadan set okunamadı. Uygulamanın dışa aktardığı, değiştirilmemiş CSV dosyası olduğundan emin olun.",
     "readError": "Dosya okunamadı: {error}",
     "source": "{source}'dan dışa aktar",
-    "setsFound": "Dosyadaki küpler: {count}",
+    "setsFound": "Dosyadaki setler: {count}",
     "setsToAdd": "Eklenecek setler: {count}",
-    "duplicates": "Zaten günlük kaydınızda, atlandı: {count}",
+    "duplicates": "Zaten kayıtlı, atlanan: {count}",
     "dateRange": "Eğitim günleri: {first} ile {last}",
     "newExercises": "Sayfa olmayan egzersizler: {exercises}",
-    "nothingToAdd": "Bu dosyadaki her bir küme, zaten günlük kaydınızda yer almaktadır.",
-    "backupNote": "Günlükleriniz, ayarların eklenmeden önce yedeklenir.",
-    "importButton": "İçe aktar",
-    "imported": "İçe aktarma tamamlandı. Eklenecek öğeler: {count}",
-    "error": "İmport işlemi başarısız oldu: {error}",
+    "nothingToAdd": "Bu dosyadaki her set zaten kayıtlarınızda var.",
+    "backupNote": "Setler eklenmeden önce kayıtlarınız yedeklenir.",
+    "importButton": "Setleri içe aktar",
+    "imported": "İçe aktarma tamamlandı. Eklenen setler: {count}",
+    "error": "İçe aktarma başarısız oldu: {error}",
     "title": "\"Strong\" veya \"Hevy\"'den içe aktar",
-    "intro": "Uygulamanın egzersiz verilerini dışa aktarma seçeneğinden CSV dosyasını seçin. Kaydetmek için onaylamadan herhangi bir şey kaydedilmez."
+    "intro": "Uygulamanın antrenman verisi dışa aktarımından alınan CSV dosyasını seçin. Onaylayana kadar hiçbir şey yazılmaz."
   }
 }

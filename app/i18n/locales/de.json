@@ -20,11 +20,11 @@
       "reps": "Wiederholungen",
       "volume": "Volumen",
       "weight": "Gewicht",
-      "e1rm": "Geschätzter Wert für 1RM"
+      "e1rm": "Geschätztes 1RM"
     },
     "defaultTitle": "Trend {type}",
     "noTypesAvailable": "Keine verfügbaren Diagrammtypen",
-    "noEligibleE1rm": "Keine geeigneten Sätze für die Schätzung des 1RM. Einen positiven Wert mit 1–12 Wiederholungen protokollieren, wobei Aufwärmen und Drop-Sets ausgeschlossen sind."
+    "noEligibleE1rm": "Keine geeigneten Sätze für das geschätzte 1RM. Protokolliere ein positives Gewicht mit 1–12 Wiederholungen. Aufwärmsätze und Drop-Sets sind ausgeschlossen."
   },
   "commands": {
     "addExerciseBlock": "Übungsblock hinzufügen",
@@ -38,8 +38,8 @@
     "manageMuscleTags": "Muskel-Tags verwalten",
     "migrateExerciseTypes": "Übungstypen migrieren",
     "createExampleNotes": "Beispielnotizen erstellen",
-    "openGettingStartedGuide": "Öffne die Einführung",
-    "startTour": "Beginnen Sie die Tour",
+    "openGettingStartedGuide": "Anleitung für den Einstieg öffnen",
+    "startTour": "Tour starten",
     "importWorkouts": "Import von Strong oder Hevy"
   },
   "common": {
@@ -103,7 +103,7 @@
       "noTags": "Keine Muskel-Tags im Frontmatter",
       "title": "Dateifehler",
       "tooManyTags": "Zu viele Muskel-Tags ({count})",
-      "sharedName": "Gleicher Übungstyp wie {pages}: Protokolle werden nur für einen von ihnen gespeichert."
+      "sharedName": "Gleicher Übungsname wie {pages}: Protokolle landen nur bei einer von ihnen."
     },
     "muscleTags": {
       "description": "Beschreibung",
@@ -129,8 +129,8 @@
       "columnVolumeChange": "Volumenänderung",
       "disclaimer": "Haftungsausschluss",
       "noData": "Noch nicht genug Daten: Jedes Protokoll braucht mindestens 5 erfasste Sätze.",
-      "title": "Wirksamkeit des Protokolls",
-      "subtitle": "Wie jeder Protokoll-Ansatz in allen erfassten Datensätzen funktioniert hat"
+      "title": "Wirksamkeit der Protokolle",
+      "subtitle": "Wie jedes Protokoll in allen erfassten Sätzen gewirkt hat"
     },
     "quickActions": {
       "addWorkoutLog": "Trainingseintrag hinzufügen",
@@ -173,8 +173,8 @@
         "reps": "Durchschnittliche Wiederholungen: {value}"
       },
       "imbalance": {
-        "backDominant": "Ungleichgewicht: Ihre hintere Muskelgruppe arbeitet deutlich stärker als Ihre vordere.",
-        "frontDominant": "Ungleichgewicht: Ihre Vorderseite arbeitet deutlich mehr als Ihre Rückseite."
+        "backDominant": "Ungleichgewicht vorne–hinten: Deine Rückseite arbeitet deutlich mehr als deine Vorderseite.",
+        "frontDominant": "Ungleichgewicht vorne–hinten: Deine Vorderseite arbeitet deutlich mehr als deine Rückseite."
       }
     },
     "editDashboard": "Dashboard bearbeiten",
@@ -184,7 +184,7 @@
       "moveUp": "{widget} nach oben verschieben",
       "moveDown": "{widget} nach unten verschieben",
       "allHistory": "Leer: gesamter Verlauf",
-      "recentWorkoutsLimit": "Anzahl Trainings in der Liste der letzten:",
+      "recentWorkoutsLimit": "Trainings in der Liste „Letzte Trainings“:",
       "volumeTrendDays": "Tage im Volumentrend:",
       "gridColumns": "Spalten:",
       "layout": "Layout",
@@ -195,12 +195,16 @@
       "tile": "{widget}: Spalte {column}, Zeile {row}, {width} breit, {height} hoch",
       "minOneColumn": "Min. 1 Spalte",
       "minColumns": "Min. {columns} Spalten",
-      "size": "{width} × {height}"
+      "size": "{width} × {height}",
+      "gridHint": "Ziehe ein Widget, um es zu verschieben, und seine Ecke, um es in der Größe zu ändern. Die Ablage unten zeigt die kleinste Größe, die jedes Widget haben kann. Entferne ein Widget mit seinem ×, oder indem du es auf die Ablage ziehst. Mit der Tastatur: Pfeile bewegen, Umschalt und Pfeile ändern die Größe, Entf entfernt es.",
+      "gridColumnsMeasured": "{columns} Spalten passen in die Breite der Notiz.",
+      "remove": "{widget} vom Dashboard entfernen"
     },
     "grid": {
       "outside": "{widget} ragt über die {columns} Spalten des Rasters hinaus",
       "narrow": "{widget} benötigt mindestens {min} Spalten",
-      "overlap": "{widget} überlappt {other}"
+      "overlap": "{widget} überlappt {other}",
+      "empty": "Noch kein Widget im Raster. Öffne „Dashboard bearbeiten“ im ⋮-Menü, um welche zu platzieren."
     }
   },
   "duration": {
@@ -342,13 +346,13 @@
       "welcome": "Willkommen! Dieser Ordner enthält Beispieldateien, die dir helfen, alle Funktionen kennenzulernen.",
       "workoutsDesc": "Beispielvorlagen für Trainings",
       "workoutsFolder": "**{folder}/**",
-      "pagesIntro": "Erkunden Sie jeweils eine Funktion pro Seite. Folgen Sie den Links in der angegebenen Reihenfolge oder wählen Sie eine Funktion unten aus. Verwenden Sie die Schaltflächen \"Zurück\" und \"Weiter\", um zwischen den Abschnitten zu wechseln; scrollen Sie normal, um jedes Beispiel zu erkunden.",
-      "liveIntro": "Entdecken Sie alle Funktionen unten mit einem Beispiel-Workout-Plan über sechs Wochen. Dies sind Demo-Daten; probieren Sie die Steuerelemente aus und sehen Sie, wie Ihre Notizen funktionieren.",
-      "tryLog": "Verwenden Sie die Schaltfläche \"+\", um einen Datensatz hinzuzufügen. Tabelle, Diagramme und Dashboard lesen denselben CSV-Datei.",
-      "continueWithWorkout": "Öffnen Sie [[{workout}], um ein komplettes Workout mit Übungsanleitungen und Pausenzeitern auszuprobieren.",
-      "moreExamples": "Weitere Diagrammtypen, Filter und Schulungsprotokolle finden Sie unter [[{showcase}].",
-      "ownData": "Wenn Sie bereit sind, wählen Sie Ihren eigenen CSV-Ordner und Ihren Übungordner in den Einstellungen → Einrichtung & Daten aus. Behalten Sie den Beispielordner als Referenz.",
-      "openGuideDesc": "Öffnen Sie die Seite \"So geht's\", die Beispiele für Tabellen, Diagramme, Timer und das Dashboard enthält."
+      "pagesIntro": "Erkunde jeweils eine Funktion pro Seite. Folge den Links in der angegebenen Reihenfolge oder wähle unten eine Funktion aus. Verwende die Schaltflächen „Zurück“ und „Weiter“, um zwischen den Notizen zu wechseln. Scrolle normal, um jedes Beispiel zu erkunden.",
+      "liveIntro": "Entdecke alle Funktionen unten mit sechs Wochen Beispieltrainings. Das sind Demodaten: Probiere die Steuerelemente aus und sieh, wie deine Notizen funktionieren.",
+      "tryLog": "Verwende die Schaltfläche „+“, um einen Satz hinzuzufügen. Tabelle, Diagramme und Dashboard lesen dieselbe CSV-Datei.",
+      "continueWithWorkout": "Öffne [[{workout}]], um ein komplettes Training mit Übungstabellen und Pausen-Timern auszuprobieren.",
+      "moreExamples": "Weitere Diagrammtypen, Filter und Trainingsprotokolle findest du unter [[{showcase}]].",
+      "ownData": "Wenn du bereit bist, wähle deinen eigenen CSV-Ordner und Übungsordner unter „Einstellungen → Einrichtung und Daten“ aus. Behalte den Beispielordner als Referenz.",
+      "openGuideDesc": "Öffne die Seite „Erste Schritte“ mit funktionierenden Beispielen für Tabellen, Diagramme, Timer und das Dashboard."
     },
     "hiit": {
       "cyclingCooldownTitle": "Cool-down auf dem Rad",
@@ -381,8 +385,8 @@
       "supersetLunges": "Superset mit Ausfallschritten"
     },
     "createToOpenGuide": "Die Anleitung für den Einstieg ist Teil der Beispielnotizen, die noch nicht existieren. Sollten wir sie jetzt erstellen?",
-    "pointedAtExamples": "Ihre Ansichten lesen jetzt die Beispielprotokolle und Übungen. Ändern Sie dies in den Daten-Einstellungen.",
-    "usesSeparateLog": "Sie haben bereits ein Trainingsprotokoll, daher wurde es nicht verändert. Die Beispiele verwenden ihre eigene Protokolldatei."
+    "pointedAtExamples": "Deine Ansichten lesen jetzt das Beispielprotokoll und die Beispiel-Übungen. Ändere das in den Daten-Einstellungen.",
+    "usesSeparateLog": "Du hast bereits ein Trainingsprotokoll, daher wurde es nicht verändert. Die Beispiele verwenden eine eigene Protokolldatei."
   },
   "forms": {
     "enterCsvPath": "Ordner für die CSV-Dateien",
@@ -427,8 +431,8 @@
     "createLogButtonAria": "Protokoll erstellen für: {exerciseName}",
     "createLogButtonText": "Protokoll erstellen für: {exerciseName}",
     "noDataTitle": "Keine Protokolle für {exerciseName} gefunden",
-    "exploreExampleData": "Oder erkunden Sie mit Beispieldaten",
-    "lastSet": "Letzte Einstellung: {set}",
+    "exploreExampleData": "Oder erkunde es mit Beispieldaten",
+    "lastSet": "Letzter Satz: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Persönliche Bestleistung: {weight} {unit} × {reps}"
   },
@@ -455,7 +459,7 @@
       "blockIdsAdded": "{count} fehlende ID(s) in {files} Datei(en) hinzugefügt",
       "csvCreated": "CSV-Datei erfolgreich erstellt!",
       "noBlockIdsNeeded": "Alle Codeblöcke haben bereits IDs",
-      "weightUnitsStamped": "Das Gewichtseinheit wurde in den älteren Protokollen unter {count} gespeichert."
+      "weightUnitsStamped": "Die Gewichtseinheit wurde bei {count} älteren Protokollen gespeichert."
     },
     "tagReferenceGenerated": "Tag-Referenz erfolgreich erstellt!",
     "timerCompleted": "Timer abgelaufen!",
@@ -504,7 +508,7 @@
       "updateTimer": "Timer aktualisieren",
       "decreaseBy": "{label} um {increment} verringern",
       "increaseBy": "{label} um {increment} erhöhen",
-      "deleteSet": "Set löschen",
+      "deleteSet": "Satz löschen",
       "updateDashboard": "Dashboard aktualisieren"
     },
     "canvasLayout": "Anordnung",
@@ -513,7 +517,7 @@
       "connectSupersets": "Supersätze verbinden",
       "exactMatch": "Exakte Übereinstimmung",
       "includeDurations": "Dauer einbeziehen",
-      "includeLog": "Log einbeziehen",
+      "includeLog": "Protokoll einbeziehen",
       "includeStats": "Statistiken einbeziehen",
       "includeTimer": "Timer einbeziehen",
       "showAddButton": "Hinzufügen-Schaltfläche anzeigen",
@@ -621,17 +625,17 @@
       "validFieldRequired": "{field} ist erforderlich",
       "migrationNoUpdates": "Alle Übungsseiten sind bereits aktuell",
       "validMustBeWholeNumber": "{field} muss eine ganze Zahl sein",
-      "newRecord": "Neuer Eintrag: {weight} {unit} (+{increase} {unit})",
+      "newRecord": "Neuer Rekord: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Diagramm erfolgreich eingefügt!",
       "dashboardInserted": "Dashboard erfolgreich eingefügt!",
-      "exerciseNameRequired": "Bitte geben Sie einen Namen für die Übung ein",
-      "exerciseSectionCreated": "Übungsteil erfolgreich erstellt!",
+      "exerciseNameRequired": "Bitte gib einen Namen für die Übung ein",
+      "exerciseSectionCreated": "Übungsabschnitt erfolgreich erstellt!",
       "tableInserted": "Tabelle erfolgreich eingefügt!",
       "tableUpdated": "Tabelle erfolgreich aktualisiert!",
       "timerInserted": "Timer erfolgreich eingefügt!",
       "timerUpdated": "Timer erfolgreich aktualisiert!",
-      "validChooseExercise": "Wählen Sie eine Übung",
-      "validationCombinedMode": "Für den Typ \"Übung + Training\" müssen Sie beide Felder ausfüllen!",
+      "validChooseExercise": "Wähle eine Übung",
+      "validationCombinedMode": "Für den Typ \"Übung + Training\" musst du beide Felder ausfüllen!",
       "dashboardUpdated": "Dashboard erfolgreich aktualisiert!",
       "dashboardUpdateFailed": "Dashboard konnte nicht aktualisiert werden. Stelle sicher, dass die Datei im Editor geöffnet ist."
     },
@@ -648,8 +652,8 @@
       "note": "Gib hier alles. Das ist deine Grundübung.",
       "notes": "z. B. Gute Technik, fühlte mich stark",
       "parameterKey": "z. B. speed",
-      "parameterLabel": "z.B., Geschwindigkeit",
-      "parameterUnit": "z.B., km/h",
+      "parameterLabel": "z. B. Geschwindigkeit",
+      "parameterUnit": "z. B. km/h",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "Muskel-Tags suchen...",
@@ -657,7 +661,7 @@
       "selectMuscleGroup": "Muskelgruppe auswählen...",
       "selectWorkoutFile": "Trainingsdatei zum Exportieren auswählen...",
       "sets": "4",
-      "workout": "z. B. Workout A, Training B, oder nutze das Kontrollkästchen unten"
+      "workout": "z. B. Training A, Training B oder nutze das Kontrollkästchen unten"
     },
     "protocol": "Protokoll:",
     "recentExercises": "Zuletzt:",
@@ -741,8 +745,8 @@
     "noteTemplate": "**Hinweis: {note}**\n",
     "date": "Datum",
     "weightUnitToggle": "Einheit für diesen Eintrag",
-    "work": "Arbeiten",
-    "rest": "Rest"
+    "work": "Arbeit",
+    "rest": "Pause"
   },
   "settings": {
     "buttons": {
@@ -760,7 +764,7 @@
       "runAllMaintenance": "Alle durchführen",
       "savePreset": "Speichern",
       "saveProtocol": "Speichern",
-      "showWelcome": "Zeige Willkommensnachricht",
+      "showWelcome": "Willkommensfenster anzeigen",
       "takeTour": "Starte die Tour"
     },
     "descriptions": {
@@ -774,10 +778,10 @@
       "generateDefaultTemplates": "Erstellt die Standardvorlage für Übungsseiten und die Tag-Referenz im Ordner 'Workout Templates'. Du kannst diese Dateien anpassen, um Sprache und Struktur zu ändern.",
       "noPresets": "Keine Timer-Voreinstellungen konfiguriert. Klicke auf 'Voreinstellung hinzufügen', um eine zu erstellen.",
       "presetDurationDesc": "Dauer in Sekunden (z. B. 90 für einen Timer von 90 Sekunden).",
-      "presetNameDesc": "Eindeutiger Name für diese Timer-Voreinstellung (z. B. 'Rest 90s', 'HIIT 30/10').",
+      "presetNameDesc": "Eindeutiger Name für diese Timer-Voreinstellung (z. B. 'Pause 90s', 'HIIT 30/10').",
       "presetRoundsDesc": "Anzahl der Intervalldurchläufe, die durchlaufen werden sollen, bevor gestoppt wird.",
       "protocolAbbreviation": "Kurze Abkürzung im Badge (max. 3 Zeichen)",
-      "protocolColor": "Badge Hintergrundfarbe (hex-Format, z.B., #FF5733)",
+      "protocolColor": "Hintergrundfarbe des Badge (Hex-Format, z. B. #FF5733)",
       "quickWeightIncrement": "Gewichtsschritt der +/- Tasten in den Modals zum Erstellen/Bearbeiten von Trainingsprotokollen (z. B. 2,5 für +2,5 / -2,5 Einheiten)",
       "repDuration": "Geschätzte Zeit für eine Wiederholung. Wird verwendet, wenn die Wiederholungszahl bekannt ist (z. B. 'x 10 reps').",
       "runAllMaintenance": "Führe alle Wartungsaufgaben nacheinander aus. Kann bedenkenlos mehrfach ausgeführt werden.",
@@ -786,15 +790,15 @@
       "weightIncrement": "Standard-Gewichtsschritt für progressive Überlastung (z. B. 2,5 für Schritte von 2,5 Einheiten)",
       "showRibbonIcon": "Hantelsymbol in der Seitenleiste anzeigen, das das Formular für das Trainingsprotokoll öffnet",
       "weightUnit": "Einheit für Diagramme, Gesamtsummen und neue Protokolle. Jedes Protokoll behält die Einheit bei, in der es erstellt wurde.",
-      "takeTour": "Geben Sie einen kurzen Überblick über das Protokollieren, Diagramme, Tabellen und Timer.",
-      "welcomeWindow": "Zeigen Sie das Willkommensfenster erneut, um mit Beispieldaten oder von Grund auf neu zu beginnen.",
-      "keepScreenAwake": "Versuchen Sie, den Bildschirm aktiv zu halten, während eine Hintergrund- oder Vordergrund-Uhr läuft. Verbraucht mehr Akku; die Verfügbarkeit hängt von Ihrem Gerät und Ihren Systemeinstellungen ab.",
+      "takeTour": "Gehe auf einer kurzen Notiz durch Protokollieren, Diagramme, Tabellen und Timer.",
+      "welcomeWindow": "Zeige das Willkommensfenster erneut, um mit Beispieldaten oder von Grund auf zu beginnen.",
+      "keepScreenAwake": "Versuche, den Bildschirm aktiv zu halten, während ein Timer im Vordergrund läuft. Verbraucht mehr Akku; die Verfügbarkeit hängt von deinem Gerät und deinen Systemeinstellungen ab.",
       "vibrateOnCompletion": "Kurz vibrieren, wenn ein Timer abläuft, unabhängig von Ton. Benötigt einen Klick auf der Seite und ein kompatibles Gerät (z. B. Android). Nicht verfügbar auf iOS; keine Benachrichtigungen im Hintergrund.",
-      "presetRestDesc": "Sekunden der Ruhe nach der Arbeit jeder Runde (0 für keine Ruhe).",
-      "noCustomProtocols": "Noch keine Protokolle vorhanden. Klicken Sie auf „Protokoll hinzufügen“, um eines zu erstellen."
+      "presetRestDesc": "Sekunden Pause nach der Arbeit jeder Runde (0 für keine Pause).",
+      "noCustomProtocols": "Noch keine Protokolle vorhanden. Klicke auf „Protokoll hinzufügen“, um eines zu erstellen."
     },
     "labels": {
-      "csvPath": "CSV-Logdateipfad",
+      "csvPath": "Pfad der CSV-Protokolldatei",
       "defaultExactMatch": "Standardmäßig exakte Übereinstimmung",
       "defaultRepsPerSet": "Standard-Wiederholungen pro Satz",
       "defaultTimerPreset": "Standard-Voreinstellung für Timer",
@@ -817,10 +821,10 @@
       "weightUnit": "Gewichtseinheit",
       "showRibbonIcon": "Symbol für Schnellprotokoll anzeigen",
       "welcomeWindow": "Willkommensfenster",
-      "takeTour": "Führte Tour",
-      "keepScreenAwake": "Halte den Bildschirm aktiv, während eine Zeitmessung läuft",
+      "takeTour": "Geführte Tour",
+      "keepScreenAwake": "Bildschirm aktiv halten, während ein Timer läuft",
       "vibrateOnCompletion": "Vibration, wenn ein Timer abgelaufen ist",
-      "presetRest": "Rest"
+      "presetRest": "Pause"
     },
     "messages": {
       "confirmDeletePreset": "Möchtest du diese Voreinstellung wirklich löschen?",
@@ -836,7 +840,7 @@
       "protocolNameExists": "Ein Protokoll mit diesem Namen existiert bereits",
       "protocolNameRequired": "Der Protokollname ist erforderlich",
       "protocolSaved": "Protokoll gespeichert",
-      "weightUnitChangeFailed": "Es konnte die Gewichtseinheit nicht geändert werden: {error}"
+      "weightUnitChangeFailed": "Die Gewichtseinheit konnte nicht geändert werden: {error}"
     },
     "options": {
       "none": "Keine",
@@ -847,7 +851,7 @@
     },
     "placeholders": {
       "presetName": "Name der Voreinstellung eingeben",
-      "protocolAbbreviation": "z.B. gs",
+      "protocolAbbreviation": "z. B. gs",
       "protocolName": "Protokollname eingeben"
     },
     "sections": {
@@ -859,7 +863,7 @@
       "templates": "Vorlagen",
       "timerPresets": "Timer-Voreinstellungen",
       "trainingParameters": "Parameter für das Training",
-      "gettingStarted": "Wie man anfängt",
+      "gettingStarted": "Erste Schritte",
       "timerDeviceCues": "Hinweise für Timer-Geräte",
       "customProtocols": "Protokolle"
     },
@@ -876,16 +880,16 @@
       "mustBePositive": "Muss größer als 0 sein"
     },
     "protocolHelp": {
-      "warmup": "Die Lichtintervalle werden vor den Arbeitsintervallen festgelegt. Sie zählen nicht zu persönlichen Bestleistungen.",
-      "dropSet": "Reduzieren Sie das Gewicht direkt nach dem Ausfall und setzen Sie die Übung fort. Drop-Sets zählen nicht zu Ihren persönlichen Bestleistungen.",
-      "myoReps": "Ein Satz zur Aktivierung, gefolgt von kurzen Mini-Sätzen mit einer kurzen Pause von wenigen Sekunden.",
-      "restPause": "Ruhen Sie ein paar Sekunden nach dem Ausfall, und führen Sie dann ein paar weitere Wiederholungen aus.",
-      "superset": "Zwei Übungen direkt hintereinander, ohne Pausen dazwischen.",
-      "twentyone": "7 Wiederholungen im unteren Bereich, 7 Wiederholungen im oberen Bereich, dann 7 vollständige Wiederholungen."
+      "warmup": "Leichte Sätze vor den Arbeitssätzen. Sie zählen nicht zu persönlichen Bestleistungen.",
+      "dropSet": "Reduziere das Gewicht direkt nach dem Muskelversagen und mach weiter. Drop-Sets zählen nicht zu deinen persönlichen Bestleistungen.",
+      "myoReps": "Ein Aktivierungssatz, dann kurze Mini-Sätze mit wenigen Sekunden Pause.",
+      "restPause": "Mach nach dem Muskelversagen ein paar Sekunden Pause und dann noch ein paar Wiederholungen.",
+      "superset": "Zwei Übungen direkt hintereinander, ohne Pause dazwischen.",
+      "twentyone": "7 Wiederholungen in der unteren Hälfte, 7 in der oberen Hälfte, dann 7 volle Wiederholungen."
     },
     "presetHelp": {
-      "tabata": "20 Sekunden intensives Training, 10 Sekunden Pause, 8 Runden: insgesamt 4 Minuten.",
-      "emom": "Jede Minute genau: Beginnen Sie mit den Wiederholungen am Anfang jeder Minute und machen Sie eine Pause für den Rest der Minute, 10 Runden."
+      "tabata": "20 Sekunden volle Belastung, 10 Sekunden Pause, 8 Runden: insgesamt 4 Minuten.",
+      "emom": "Jede Minute zur vollen Minute: Beginne die Wiederholungen am Anfang jeder Minute und pausiere für den Rest der Minute, 10 Runden."
     }
   },
   "stats": {
@@ -895,7 +899,7 @@
     "recentTrend": "Aktueller Trend",
     "recentVsPrev": " (vs. vorh.)",
     "sessions": "Sitzungen",
-    "average": "Durchschnitt:",
+    "average": "Durchschnitt: ",
     "title": "{dataTypeLabel} Statistiken ({contextLabel}):"
   },
   "table": {
@@ -942,9 +946,9 @@
     },
     "trendLine": "Trendlinie",
     "refreshingTable": "Tabelle wird aktualisiert...",
-    "setCount": "{count} legt fest",
-    "deleteSetMessage": "{set} wird aus Ihrem Protokoll entfernt. Dies kann nicht rückgängig gemacht werden.",
-    "deleteSetTitle": "Diesen Datensatz löschen?"
+    "setCount": "{count} Sätze",
+    "deleteSetMessage": "{set} wird aus deinem Protokoll entfernt. Das kann nicht rückgängig gemacht werden.",
+    "deleteSetTitle": "Diesen Satz löschen?"
   },
   "timeperiods": {
     "month": "Monat",
@@ -1003,97 +1007,97 @@
       "title": "Ungültige Parameter:",
       "notANumber": "{key} muss eine Zahl sein, aber es ist \"{value}\"",
       "tooSmall": "{key} muss mindestens {min} sein, aber es ist {value}",
-      "outOfRange": "{key} muss zwischen {min} und {max} liegen, aber es ist {value}.",
+      "outOfRange": "{key} muss zwischen {min} und {max} liegen, aber es ist {value}",
       "notABoolean": "{key} muss entweder wahr oder falsch sein, aber es ist \"{value}\"",
       "notOneOf": "{key} muss einer von {allowed} sein, aber es ist \"{value}\"",
       "notACell": "{key} muss vier ganze Zahlen ab 1 sein (Spalte, Zeile, Breite, Höhe), ist aber \"{value}\""
     }
   },
   "welcome": {
-    "title": "Willkommen zum Workout-Plugin",
-    "intro": "Verfolgen Sie Ihre Sätze, und sehen Sie sie anschließend als Diagramme, Tabellen und eine Übersicht. Wie möchten Sie beginnen?",
-    "tryExamples": "Versuchen Sie es mit Beispieldaten",
-    "startScratch": "Beginne von Grund auf",
+    "title": "Willkommen beim Trainings-Plugin",
+    "intro": "Verfolge deine Sätze und sieh sie dir dann als Diagramme, Tabellen und Dashboard an. Wie möchtest du beginnen?",
+    "tryExamples": "Mit Beispieldaten ausprobieren",
+    "startScratch": "Von Grund auf starten",
     "later": "Später",
-    "tryExamplesDesc": "Fügt Beispiel-Workouts hinzu und führt Sie anschließend durch die Verwendung des Plugins anhand dieser Workouts.",
-    "startScratchDesc": "Führt Sie Schritt für Schritt durch die Verwendung des Plugins mit Ihren eigenen Daten, beginnend mit Ihrem ersten Datensatz.",
-    "tourOnYourData": "Sie haben bereits ein Trainingsprotokoll, daher läuft die Tour auf Ihren eigenen Daten."
+    "tryExamplesDesc": "Fügt Beispieltrainings hinzu und führt dich danach anhand dieser Trainings durch das Plugin.",
+    "startScratchDesc": "Führt dich Schritt für Schritt mit deinen eigenen Daten durch das Plugin, beginnend mit deinem ersten Satz.",
+    "tourOnYourData": "Du hast bereits ein Trainingsprotokoll, daher läuft die Tour mit deinen eigenen Daten."
   },
   "tour": {
     "back": "Zurück",
-    "next": "Nächster",
+    "next": "Weiter",
     "skip": "Überspringen",
     "done": "Abgeschlossen",
     "progress": "{current} von {total}",
-    "noteName": "Führte Tour",
-    "noteIntro": "Die Führung zeigt jeden Teil des Plugins auf dieser Seite. Bearbeiten oder löschen Sie diese Notiz, wann immer Sie möchten.",
-    "noteTable": "Ihre Sätze",
+    "noteName": "Geführte Tour",
+    "noteIntro": "Die geführte Tour zeigt auf jeden Teil des Plugins auf dieser Seite. Bearbeite oder lösche diese Notiz, wann immer du willst.",
+    "noteTable": "Deine Sätze",
     "noteChart": "Fortschritt",
     "noteDashboard": "Dashboard",
-    "noteTimer": "Timer für die Pausenzeit",
+    "noteTimer": "Pausen-Timer",
     "steps": {
       "logSet": {
-        "title": "Protokollieren Sie Ihren ersten Satz.",
-        "text": "Drücken Sie die Schaltfläche \"+\", um das Formular zu öffnen, und speichern Sie dann eine Einstellung. Sie wird sofort in der Tabelle angezeigt."
+        "title": "Protokolliere deinen ersten Satz",
+        "text": "Drücke die Schaltfläche „+“, um das Formular zu öffnen, und speichere dann einen Satz. Er erscheint sofort in der Tabelle."
       },
       "rowActions": {
-        "title": "Bearbeiten oder löschen Sie eine Gruppe",
-        "mobileText": "Tippen Sie auf eine Gruppe, um sie zu korrigieren. Um sie zu entfernen, verwenden Sie die Option \"Gruppe löschen\" im Formular, das geöffnet wird.",
-        "text": "Verwenden Sie das Bleistift-Symbol in einer Zeile, um eine Auswahl zu speichern. Um diese zu löschen, verwenden Sie die Option \"Auswahl löschen\" im geöffneten Formular."
+        "title": "Satz bearbeiten oder löschen",
+        "mobileText": "Tippe auf einen Satz, um ihn zu korrigieren. Zum Entfernen nutze „Satz löschen“ im Formular, das sich öffnet.",
+        "text": "Nutze den Stift in einer Zeile, um einen Satz zu korrigieren. Zum Entfernen nutze „Satz löschen“ im geöffneten Formular."
       },
       "chart": {
-        "title": "Ihr Fortschritt",
-        "text": "Die Grafik zeigt, wie sich eine Übung im Laufe der Zeit entwickelt, mit einer Trendlinie und Statistiken.",
-        "textMine": "Die Grafik zeigt, wie sich eine Übung im Laufe der Zeit entwickelt. Sie ist zunächst leer, bis Sie ein paar Sätze aufgezeichnet haben.",
-        "mobileText": "Auf einem Mobiltelefon wird die Grafik als Tabelle mit den gleichen Zahlen angezeigt.",
-        "mobileTextMine": "Auf einem Smartphone wird die Grafik als Tabelle angezeigt. Sie ist zunächst fast leer, bis Sie einige Datensätze hinzugefügt haben."
+        "title": "Dein Fortschritt",
+        "text": "Das Diagramm zeigt, wie sich eine Übung im Lauf der Zeit entwickelt, mit einer Trendlinie und Statistiken.",
+        "textMine": "Das Diagramm zeigt, wie sich eine Übung im Lauf der Zeit entwickelt. Es ist fast leer, bis du ein paar Sätze protokolliert hast.",
+        "mobileText": "Auf dem Handy wird das Diagramm als Tabelle mit denselben Zahlen angezeigt.",
+        "mobileTextMine": "Auf dem Handy wird das Diagramm als Tabelle angezeigt. Es ist fast leer, bis du einige Sätze protokolliert hast."
       },
       "dashboard": {
-        "title": "Ihr Dashboard",
+        "title": "Dein Dashboard",
         "text": "Gesamtsummen, Trends bei der Trainingsmenge und kürzliche Trainingseinheiten – alles auf einen Blick.",
-        "textMine": "Gesamtsummen, Trends bei der Trainingsmenge und kürzliche Trainingseinheiten. Es füllt sich, wenn Sie weitere Sätze hinzufügen."
+        "textMine": "Gesamtsummen, Volumentrends und letzte Trainings. Es füllt sich, wenn du weitere Sätze protokollierst."
       },
       "timer": {
-        "title": "Timer für die Pausenzeit",
-        "text": "Drücken Sie die Start-Taste, um einen Timer zwischen den Sätzen zu starten."
+        "title": "Pausen-Timer",
+        "text": "Drücke Start, um zwischen den Sätzen einen Countdown laufen zu lassen."
       },
       "ribbon": {
         "title": "Protokoll erstellen aus jeder Notiz",
-        "text": "Das Dumbbell-Symbol in der Leiste öffnet das Protokollformular von überall.",
-        "mobileText": "Auf einem Telefon gibt es hier kein Ribbon-Symbol. Verwenden Sie die Befehlsleiste, um das Protokollformular von jeder Notiz aus zu öffnen."
+        "text": "Das Hantel-Symbol in der Leiste öffnet das Protokollformular von überall.",
+        "mobileText": "Auf dem Handy gibt es hier kein Symbol in der Leiste. Nutze die Befehlspalette, um das Protokollformular aus jeder Notiz zu öffnen."
       },
       "commands": {
-        "title": "Eingabe der Befehle",
-        "text": "Öffnen Sie das Befehlsfenster und führen Sie den Befehl „Eintrag erstellen“ aus, um eine Tabelle, ein Diagramm, einen Timer oder ein Dashboard zu einer Notiz hinzuzufügen."
+        "title": "Befehle zum Einfügen",
+        "text": "Öffne die Befehlspalette und führe einen Befehl wie „Trainingstabelle einfügen“ aus, um eine Tabelle, ein Diagramm, einen Timer oder ein Dashboard in eine Notiz einzufügen."
       },
       "end": {
         "title": "Alles ist vorbereitet",
-        "text": "Sie können diese Tour erneut von \"Einstellungen → Starten\" aus beginnen."
+        "text": "Du kannst diese Tour jederzeit unter „Einstellungen → Erste Schritte“ erneut starten."
       },
       "muscles": {
-        "title": "Karte der Muskelwärme",
-        "text": "Die Heatmap zeigt, welche Muskeln Sie zuletzt trainiert haben."
+        "title": "Muskel-Heatmap",
+        "text": "Die Heatmap zeigt, welche Muskeln du zuletzt trainiert hast."
       }
     },
     "showMe": "Zeige mir"
   },
   "import": {
-    "chooseFile": "Wählen Sie die CSV-Datei aus",
-    "notAnExport": "Diese Datei ist weder ein \"Stark\"- noch ein \"Schwer\"-Export.",
-    "noSets": "Es konnten keine Datensätze aus dieser Datei gelesen werden. Bitte überprüfen Sie, ob es sich um die CSV-Datei handelt, die die App exportiert hat, und ob sie unverändert ist.",
+    "chooseFile": "CSV-Datei auswählen",
+    "notAnExport": "Diese Datei ist kein Strong- oder Hevy-Export.",
+    "noSets": "Aus dieser Datei konnten keine Sätze gelesen werden. Prüfe, ob es die unveränderte CSV-Datei der App ist.",
     "readError": "Datei konnte nicht gelesen werden: {error}",
-    "source": "Exportieren von {source}",
-    "setsFound": "Sets in the file: {count}",
-    "setsToAdd": "Sets zum Hinzufügen: {count}",
-    "duplicates": "Bereits in Ihrem Protokoll, übersprungen: {count}",
-    "dateRange": "Trainingsdaten: von {first} bis {last}",
-    "newExercises": "Übungen ohne Seitenzahl: {exercises}",
-    "nothingToAdd": "Jedes Element in dieser Datei ist bereits in Ihrem Protokoll vorhanden.",
-    "backupNote": "Ihre Protokolle werden gesichert, bevor die Sätze hinzugefügt werden.",
-    "importButton": "Importe erstellen",
-    "imported": "Import abgeschlossen. Ergänzte Datensätze: {count}",
+    "source": "Export von {source}",
+    "setsFound": "Sätze in der Datei: {count}",
+    "setsToAdd": "Sätze zum Hinzufügen: {count}",
+    "duplicates": "Bereits im Protokoll, übersprungen: {count}",
+    "dateRange": "Trainingstage: {first} bis {last}",
+    "newExercises": "Übungen ohne Seite: {exercises}",
+    "nothingToAdd": "Jeder Satz in dieser Datei ist bereits in deinem Protokoll.",
+    "backupNote": "Dein Protokoll wird gesichert, bevor die Sätze hinzugefügt werden.",
+    "importButton": "Sätze importieren",
+    "imported": "Import abgeschlossen. Hinzugefügte Sätze: {count}",
     "error": "Import fehlgeschlagen: {error}",
     "title": "Import von Strong oder Hevy",
-    "intro": "Wählen Sie die CSV-Datei aus den Exportoptionen für Trainingsdaten der App. Die Datei wird erst erstellt, wenn Sie bestätigen."
+    "intro": "Wähle die CSV-Datei aus dem Export der Trainingsdaten der App. Es wird erst etwas geschrieben, wenn du bestätigst."
   }
 }

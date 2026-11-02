@@ -195,12 +195,16 @@
       "tile": "{widget}: kolonne {column}, række {row}, {width} bred, {height} høj",
       "minOneColumn": "Min. 1 kolonne",
       "minColumns": "Min. {columns} kolonner",
-      "size": "{width} × {height}"
+      "size": "{width} × {height}",
+      "gridHint": "Træk en widget for at flytte den og dens hjørne for at ændre størrelsen; beholderen nedenfor viser den mindste størrelse, hver widget kan have. Fjern en widget med × eller ved at trække den over i beholderen. Med tastaturet: piletaster flytter, Shift og piletaster ændrer størrelse, Delete fjerner den.",
+      "gridColumnsMeasured": "{columns} kolonner passer til notens bredde.",
+      "remove": "Fjern {widget} fra dashboardet"
     },
     "grid": {
       "outside": "{widget} går ud over gitterets {columns} kolonner",
       "narrow": "{widget} kræver mindst {min} kolonner",
-      "overlap": "{widget} overlapper {other}"
+      "overlap": "{widget} overlapper {other}",
+      "empty": "Ingen widget er på gitteret endnu. Åbn „Rediger dashboard“ i ⋮-menuen for at placere nogle."
     }
   },
   "duration": {

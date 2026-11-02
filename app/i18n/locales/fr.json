@@ -195,12 +195,16 @@
       "tile": "{widget} : colonne {column}, ligne {row}, largeur {width}, hauteur {height}",
       "minOneColumn": "Min. 1 colonne",
       "minColumns": "Min. {columns} colonnes",
-      "size": "{width} × {height}"
+      "size": "{width} × {height}",
+      "gridHint": "Faites glisser un widget pour le déplacer, et son coin pour le redimensionner ; la zone ci-dessous montre la plus petite taille possible pour chaque widget. Retirez un widget avec sa × ou en le déposant dans la zone. Au clavier : les flèches déplacent, Maj et les flèches redimensionnent, Suppr le retire.",
+      "gridColumnsMeasured": "{columns} colonnes tiennent dans la largeur de la note.",
+      "remove": "Retirer {widget} du tableau de bord"
     },
     "grid": {
       "outside": "{widget} dépasse les {columns} colonnes de la grille",
       "narrow": "{widget} nécessite au moins {min} colonnes",
-      "overlap": "{widget} chevauche {other}"
+      "overlap": "{widget} chevauche {other}",
+      "empty": "Aucun widget n'est encore sur la grille. Ouvrez « Modifier le tableau de bord » dans le menu ⋮ pour en placer."
     }
   },
   "duration": {
@@ -697,7 +701,7 @@
       "timed": "Chronométré",
       "twentyones": "21s",
       "yesNo": "Oui/Non",
-      "warmup": "Préparation"
+      "warmup": "Échauffement"
     },
     "sets": "Séries :",
     "similarTags": "Tags similaires :",

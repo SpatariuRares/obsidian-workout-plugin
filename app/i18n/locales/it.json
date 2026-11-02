@@ -195,12 +195,16 @@
       "tile": "{widget}: colonna {column}, riga {row}, larghezza {width}, altezza {height}",
       "minOneColumn": "Min. 1 colonna",
       "minColumns": "Min. {columns} colonne",
-      "size": "{width} × {height}"
+      "size": "{width} × {height}",
+      "gridHint": "Trascina un widget per spostarlo e il suo angolo per ridimensionarlo; il vassoio qui sotto mostra la dimensione minima di ogni widget. Rimuovi un widget con la × o trascinandolo nel vassoio. Con la tastiera: le frecce spostano, Maiusc e le frecce ridimensionano, Canc lo rimuove.",
+      "gridColumnsMeasured": "{columns} colonne entrano nella larghezza della nota.",
+      "remove": "Rimuovi {widget} dalla dashboard"
     },
     "grid": {
       "outside": "{widget} supera le {columns} colonne della griglia",
       "narrow": "{widget} richiede almeno {min} colonne",
-      "overlap": "{widget} si sovrappone a {other}"
+      "overlap": "{widget} si sovrappone a {other}",
+      "empty": "Nessun widget è ancora nella griglia. Apri «Modifica dashboard» nel menu ⋮ per aggiungerne."
     }
   },
   "duration": {

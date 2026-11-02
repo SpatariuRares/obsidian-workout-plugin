@@ -316,6 +316,22 @@ describe("dashboard modal, grid layout", () => {
     });
   });
 
+  it("asks for the columns when only one fits, as on a phone", () => {
+    const { app } = fakeApp();
+    const f = gridForm(
+      new InsertDashboardModal(app, {}, 300),
+      t("modal.buttons.insertDashboard"),
+    );
+
+    f.setLayout("grid");
+
+    expect(
+      f.contentEl.querySelector<HTMLInputElement>(
+        "input.workout-dashboard-grid-columns",
+      )?.value,
+    ).toBe("2");
+  });
+
   it("asks for the columns when it can't measure the note", () => {
     const { app } = fakeApp();
     const f = gridForm(
@@ -413,25 +429,63 @@ describe("dashboard modal, grid layout", () => {
       const f = openGrid();
 
       f.tile("summary")!
-        .querySelector<HTMLButtonElement>(".workout-grid-tile-remove")!
+        .querySelector<HTMLButtonElement>(
+          ".workout-grid-tile-remove",
+        )!
         .click();
 
       expect(f.tile("summary")).toBeNull();
-      expect(document.activeElement?.getAttribute("data-widget")).toBe("summary");
+      expect(
+        document.activeElement?.getAttribute("data-widget"),
+      ).toBe("summary");
       f.submit();
       await flush();
-      expect(f.state.content).toBe(GRID.replace("grid.summary: 1 1 1 1\n", ""));
+      expect(f.state.content).toBe(
+        GRID.replace("grid.summary: 1 1 1 1\n", ""),
+      );
+    });
+
+    it("keeps the saved columns in a note too narrow for them, so a move doesn't repack the grid", async () => {
+      const { app, state } = fakeApp(GRID);
+      const params = dashboardBlock.parse(
+        GRID.split("\n").slice(1, -1).join("\n"),
+      ).params;
+      // 300px fit one column (a phone): the grid was made for two
+      const f = gridForm(
+        new EditDashboardModal(app, params, { noteWidth: 300 }),
+        t("modal.buttons.updateDashboard"),
+      );
+
+      expect(
+        f.contentEl.querySelector<HTMLInputElement>(
+          "input.workout-dashboard-grid-columns",
+        )?.value,
+      ).toBe("2");
+      f.key("summary", "ArrowDown");
+      f.submit();
+      await flush();
+
+      expect(state.content).toBe(
+        GRID.replace(
+          "grid.summary: 1 1 1 1",
+          "grid.summary: 1 2 1 1",
+        ),
+      );
     });
 
     it("leaves the grid lines alone when only the title changes in a wider note", async () => {
       const { app, state } = fakeApp(GRID);
-      const params = dashboardBlock.parse(GRID.split("\n").slice(1, -1).join("\n")).params;
+      const params = dashboardBlock.parse(
+        GRID.split("\n").slice(1, -1).join("\n"),
+      ).params;
       // 1300px fit four columns, the grid was saved for two
       const f = gridForm(
         new EditDashboardModal(app, params, { noteWidth: 1300 }),
         t("modal.buttons.updateDashboard"),
       );
-      const title = f.contentEl.querySelector<HTMLInputElement>("input[type=text]")!;
+      const title = f.contentEl.querySelector<HTMLInputElement>(
+        "input[type=text]",
+      )!;
 
       title.value = "Legs";
       f.submit();

@@ -173,7 +173,7 @@ widgets: [summary, heatMap, volume, recentWorkouts]
 
 To choose the widgets and their order without writing YAML, insert the dashboard with the **Insert workout dashboard** command, or open the ⋮ menu at the top right of an inserted dashboard and pick **Edit dashboard**.
 
-Set **Layout** to **Grid** in that window to place each widget yourself, like items in an inventory: drag a widget to move it, drag its corner to make it wider or taller, and drop it under the grid to take it off. The keyboard works too: arrows move, Shift and arrows resize, Delete takes a widget off. The grid has as many columns as fit the width of your note; in a narrower pane the widgets are packed again in reading order, and on a phone they are stacked. The block keeps one line per widget (column, row, width, height):
+Set **Layout** to **Grid** in that window to place each widget yourself, like items in an inventory: drag a widget to move it, drag its corner to make it wider or taller, and drop it under the grid to take it off. The keyboard works too: arrows move, Shift and arrows resize, Delete takes a widget off. The grid has as many columns as fit the width of your note; in a narrower pane the widgets are packed again in reading order, and on a phone they are stacked. Your layout is kept: when the note fits only one column (a phone), the window asks how many columns to edit, starting from the saved ones. The block keeps one line per widget (column, row, width, height):
 
 ```workout-dashboard
 layout: grid

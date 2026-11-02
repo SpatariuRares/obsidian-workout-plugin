@@ -242,17 +242,26 @@ export class InsertDashboardModal extends BaseInsertModal {
 
   /**
    * The grid's columns (from the note's width, or typed in when it can't be
-   * measured) and, for a grid block, its widgets fitted into them
+   * measured or fits only one) and, for a grid block, its widgets in them
    */
   private setUpGrid(params: EmbeddedDashboardParams): void {
     const width = this.noteWidth ?? measureNoteWidth(this.app);
-    this.columnsMeasured = width !== undefined;
+    const measured =
+      width !== undefined
+        ? columnsForWidth(width, this.contentEl)
+        : 0;
     const saved = gridPlacements(params);
-    if (width !== undefined) {
-      this.gridColumns = columnsForWidth(width, this.contentEl);
-    } else if (params.layout === "grid") {
-      this.gridColumns = gridColumns(params, saved);
-    }
+    const savedColumns =
+      params.layout === "grid" ? gridColumns(params, saved) : 0;
+    // One column (a phone, a narrow pane) is no grid to edit, and a grid is
+    // never narrowed to the note: those cases use the saved columns (or 2)
+    // and the user can change them
+    this.gridColumns =
+      measured > 1
+        ? Math.max(measured, savedColumns)
+        : savedColumns || 2;
+    this.columnsMeasured =
+      measured > 1 && this.gridColumns === measured;
     this.placements = fitColumns(saved, this.gridColumns);
   }
 

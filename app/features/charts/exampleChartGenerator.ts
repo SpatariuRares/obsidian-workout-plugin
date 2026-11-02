@@ -19,6 +19,10 @@ ${generateExerciseChartBlock(name, CHART_DATA_TYPE.VOLUME, { showStats: true })}
 
 ${generateExerciseChartBlock(name, CHART_DATA_TYPE.WEIGHT)}
 
+## ${t("examples.exercise.e1rmTitle")}
+
+${generateExerciseChartBlock(name, CHART_DATA_TYPE.E1RM, { dateRange: 60 })}
+
 ## ${t("examples.exercise.repTrackingTitle")}
 
 ${generateExerciseChartBlock(name, CHART_DATA_TYPE.REPS, { showTrendLine: false })}`;

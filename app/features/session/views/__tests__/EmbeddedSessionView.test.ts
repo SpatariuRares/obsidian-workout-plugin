@@ -8,6 +8,7 @@ import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMo
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { t } from "@app/i18n";
+import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 
 const openedModals: unknown[][] = [];
 jest.mock("@app/features/modals/log/CreateLogModal", () => ({
@@ -19,12 +20,22 @@ jest.mock("@app/features/modals/log/CreateLogModal", () => ({
   },
 }));
 
-const timers: { params: unknown; started: number; destroyed: boolean }[] = [];
+interface TimerState {
+  id?: string;
+  params: unknown;
+  started: number;
+  destroyed: boolean;
+}
+const timers: TimerState[] = [];
 jest.mock("@app/features/timer/views/EmbeddedTimerView", () => ({
   EmbeddedTimerView: class {
-    state = { params: undefined as unknown, started: 0, destroyed: false };
-    constructor() {
+    state: TimerState = { params: undefined, started: 0, destroyed: false };
+    constructor(_plugin: unknown, id?: string) {
+      this.state.id = id;
       timers.push(this.state);
+    }
+    getId() {
+      return this.state.id;
     }
     createTimer(_el: HTMLElement, params: unknown) {
       this.state.params = params;
@@ -77,7 +88,11 @@ const set = (
   workout: "Lower Body A",
 });
 
-function setup(rows: WorkoutLogData[], content = NOTE) {
+function setup(
+  rows: WorkoutLogData[],
+  content = NOTE,
+  activeTimers = new Map<string, EmbeddedTimerView>(),
+) {
   const file = Object.assign(new TFile(), { path: NOTE_PATH });
   let onModify: ((f: unknown) => void) | undefined;
   const note = { content };
@@ -103,7 +118,7 @@ function setup(rows: WorkoutLogData[], content = NOTE) {
   } as unknown as WorkoutPluginContext;
 
   const el = createObsidianContainer();
-  const view = new EmbeddedSessionView(plugin);
+  const view = new EmbeddedSessionView(plugin, activeTimers);
   const child = view.createSession(el, NOTE_PATH);
   child.load();
   return { el, view, child, eventBus, file, note, modify: () => onModify?.(file) };
@@ -308,5 +323,65 @@ describe("EmbeddedSessionView", () => {
     child.unload();
 
     expect(timers.every((timer) => timer.destroyed)).toBe(true);
+  });
+
+  it("cleans up once when the plugin and the note both unload it", async () => {
+    const { view, child } = setup([]);
+    await flush();
+    const unload = jest.spyOn(child, "onunload");
+
+    view.cleanup();
+    child.unload();
+
+    expect(unload).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("EmbeddedSessionView with a section timer that has an id", () => {
+  const withTimerId = NOTE.replace("duration: 120", "id: squat-rest\nduration: 120");
+  const logSquat = (eventBus: WorkoutEventBus, rows: WorkoutLogData[]) => {
+    const logged = set("Squat", 100);
+    rows.push(logged);
+    eventBus.emit({
+      type: "log:added",
+      payload: {
+        entry: logged,
+        context: { exercise: "Squat", workout: "Lower Body A" },
+      },
+    });
+  };
+
+  it("runs the rest on the timer the note's block already runs", async () => {
+    const activeTimers = new Map<string, EmbeddedTimerView>();
+    const blockTimer = new EmbeddedTimerView({} as WorkoutPluginContext, "squat-rest");
+    activeTimers.set("squat-rest", blockTimer);
+    const rows: WorkoutLogData[] = [];
+    const { eventBus } = setup(rows, withTimerId, activeTimers);
+    await flush();
+
+    logSquat(eventBus, rows);
+    await flush();
+
+    const started = timers.filter((timer) => timer.started > 0);
+    expect(started.map((timer) => timer.id)).toEqual(["squat-rest"]);
+  });
+
+  it("shares its timer with the block when the block renders later", async () => {
+    const activeTimers = new Map<string, EmbeddedTimerView>();
+    setup([], withTimerId, activeTimers);
+    await flush();
+
+    expect(activeTimers.get("squat-rest")?.getId()).toBe("squat-rest");
+  });
+
+  it("leaves a shared timer running when the session unloads", async () => {
+    const activeTimers = new Map<string, EmbeddedTimerView>();
+    const { child } = setup([], withTimerId, activeTimers);
+    await flush();
+
+    child.unload();
+
+    const shared = timers.find((timer) => timer.id === "squat-rest");
+    expect(shared?.destroyed).toBe(false);
   });
 });

@@ -481,3 +481,38 @@ describe("sameWorkout", () => {
     expect(sameWorkout("Leg Day", "Push Day")).toBe(false);
   });
 });
+
+describe("set order", () => {
+  // A set whose day was changed in the CSV keeps its old timestamp
+  const moved = set("2026-10-30T13:00:00Z", undefined, {
+    weight: 105,
+    timestamp: Date.parse("2026-10-20T13:00:00Z"),
+  });
+  const earlier = set("2026-10-29T13:00:00Z", undefined, { weight: 82.5 });
+
+  it("follows the training day before the timestamp", () => {
+    const history = new TrainingHistory([earlier, moved]);
+
+    expect(history.lastSet("Squat")?.weight).toBe(105);
+  });
+
+  it("orders sets of the same day by timestamp", () => {
+    const first = set("2026-10-30T09:00:00Z", undefined, { weight: 90 });
+    const second = set("2026-10-30T10:00:00Z", undefined, { weight: 95 });
+
+    expect(new TrainingHistory([second, first]).lastSet("Squat")?.weight).toBe(95);
+  });
+
+  it("measures a record against the days before it", () => {
+    // Done on a later day, but with an older timestamp than the new set
+    const later = set("2026-11-01T13:00:00Z", undefined, {
+      weight: 110,
+      timestamp: Date.parse("2026-10-15T13:00:00Z"),
+    });
+    const history = new TrainingHistory([earlier, later]);
+
+    expect(
+      history.recordIncrease(set("2026-10-30T13:00:00Z", undefined, { weight: 105 })),
+    ).toBe(22.5);
+  });
+});

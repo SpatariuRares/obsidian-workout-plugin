@@ -197,6 +197,9 @@ _Avoid_: entry, log (for a single row)
 The calendar day, in the device's local time, on which a set was logged.
 _Avoid_: date (ambiguous with the stored UTC timestamp)
 
+**Set order**:
+Which set came first: the earlier training day, then, within a day, the earlier timestamp. The day wins because a set whose date was changed in the CSV may keep its old timestamp. "Earlier", "latest" and "last time" always mean this order.
+
 **Session**:
 All sets with the same training day and the same workout name (case, spaces and stray quotes ignored). Sets with no workout name on a training day form one unnamed session of their own, distinct from any named workout.
 _Avoid_: workout (that is the name/note), day

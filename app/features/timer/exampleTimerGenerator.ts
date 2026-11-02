@@ -16,19 +16,27 @@ export function generateCountdownTimerBlock(
   });
 }
 
+/** Work and rest phases, `rounds` times */
 export function generateIntervalTimerBlock(
   id: string,
-  duration: number,
-  rounds: number,
+  interval: { work: number; rest: number; rounds: number },
   exercise: string,
 ): string {
   return timerBlock.serialize({
     id,
     type: TIMER_TYPE.INTERVAL,
-    duration,
-    rounds,
+    ...interval,
     exercise,
     showControls: true,
     sound: true,
   });
+}
+
+/** A timer that runs a saved preset (Tabata and EMOM are built in) */
+export function generatePresetTimerBlock(
+  id: string,
+  preset: string,
+  exercise?: string,
+): string {
+  return timerBlock.serialize({ id, preset, exercise });
 }

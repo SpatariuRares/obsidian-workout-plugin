@@ -1,5 +1,6 @@
 import { TIMER_TYPE, type TimerPresetConfig } from "@app/features/timer/types";
 import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
+import { t } from "@app/i18n";
 
 // Preset names are written into blocks (`preset: Tabata`), so they are not translated
 const BUILT_IN_TIMER_PRESETS: Record<string, TimerPresetConfig> = {
@@ -24,6 +25,19 @@ const BUILT_IN_TIMER_PRESETS: Record<string, TimerPresetConfig> = {
     sound: true,
   },
 };
+
+/** What each built-in preset is for */
+const BUILT_IN_PRESET_HELP: Record<string, string> = {
+  Tabata: "settings.presetHelp.tabata",
+  EMOM: "settings.presetHelp.emom",
+};
+
+/** What a built-in preset is for, in the current language; undefined for others */
+export function timerPresetHelp(name: string): string | undefined {
+  return Object.prototype.hasOwnProperty.call(BUILT_IN_PRESET_HELP, name)
+    ? t(BUILT_IN_PRESET_HELP[name])
+    : undefined;
+}
 
 /**
  * The settings list with the built-in presets it lacks added after the user's

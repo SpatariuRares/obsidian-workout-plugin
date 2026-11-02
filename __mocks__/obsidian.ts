@@ -477,16 +477,24 @@ export class FuzzySuggestModal<T> {
   close() {}
 }
 export class MarkdownView {}
-/** Obsidian's Component lifecycle: load() runs onload, unload() the cleanups */
+/**
+ * Obsidian's Component lifecycle: load() runs onload, unload() the cleanups.
+ * Both run once, as in Obsidian (a second load or unload does nothing).
+ */
 export class MarkdownRenderChild {
   private cleanups: Array<() => void> = [];
+  private loaded = false;
   constructor(public containerEl: HTMLElement) {}
   onload(): void {}
   onunload(): void {}
   load(): void {
+    if (this.loaded) return;
+    this.loaded = true;
     this.onload();
   }
   unload(): void {
+    if (!this.loaded) return;
+    this.loaded = false;
     this.cleanups.forEach((fn) => fn());
     this.cleanups = [];
     this.onunload();

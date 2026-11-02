@@ -143,7 +143,10 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.embeddedChartView = new EmbeddedChartView(this);
     this.embeddedTableView = new EmbeddedTableView(this);
     this.embeddedDashboardView = new EmbeddedDashboardView(this);
-    this.embeddedSessionView = new EmbeddedSessionView(this);
+    this.embeddedSessionView = new EmbeddedSessionView(
+      this,
+      this.activeTimers,
+    );
 
     // Initialize services
     this.workoutLogFile = new WorkoutLogFile(

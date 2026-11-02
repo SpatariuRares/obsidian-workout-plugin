@@ -282,7 +282,7 @@ export class TrainingHistory {
   recordIncrease(set: WorkoutLogData): number | undefined {
     if (!countsForRecord(set)) return undefined;
     const previous = new TrainingHistory(
-      this.logs.filter((log) => setTime(log) <= setTime(set)),
+      this.logs.filter((log) => setOrder(log, set) <= 0),
     ).personalRecord(set.exercise);
     return previous && set.weight > previous.weight
       ? set.weight - previous.weight
@@ -413,7 +413,7 @@ export class TrainingHistory {
   }
 
   private chronological(): WorkoutLogData[] {
-    return [...this.logs].sort((a, b) => setTime(a) - setTime(b));
+    return [...this.logs].sort(setOrder);
   }
 }
 
@@ -464,6 +464,18 @@ function toSession(sets: WorkoutLogData[]): Session {
     end,
     duration: plausible ? seconds : undefined,
   };
+}
+
+/**
+ * The order sets were done in: by training day, then by timestamp within the
+ * day. The day wins because a set moved to another day in the CSV may keep
+ * its old timestamp.
+ */
+function setOrder(a: WorkoutLogData, b: WorkoutLogData): number {
+  const dayA = trainingDay(a.date);
+  const dayB = trainingDay(b.date);
+  if (dayA !== dayB) return dayA < dayB ? -1 : 1;
+  return setTime(a) - setTime(b);
 }
 
 function setTime(log: WorkoutLogData): number {

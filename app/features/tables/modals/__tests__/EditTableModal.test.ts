@@ -32,8 +32,8 @@ const NOTE = [
   "```",
 ].join("\n");
 
-function openModal() {
-  const state = { content: NOTE };
+function openModal(note = NOTE) {
+  const state = { content: note };
   const app = {
     workspace: {
       getActiveViewOfType: () => ({ file: { path: "Leg day.md", basename: "Leg day" } }),
@@ -60,7 +60,7 @@ function openModal() {
     }),
   } as unknown as WorkoutPluginContext;
 
-  const blockBody = NOTE.split("\n").slice(2, -1).join("\n");
+  const blockBody = note.split("\n").slice(2, -1).join("\n");
   const params = {
     ...tableBlock.defaults,
     ...tableBlock.parse(blockBody).params,
@@ -95,6 +95,30 @@ describe("EditTableModal", () => {
     await flush();
 
     expect(state.content).toBe(NOTE.replace("limit: 12", "limit: 20"));
+  });
+
+  it("writes the planned sets typed in the form", async () => {
+    const { state, contentEl, update } = openModal();
+    const field = [...contentEl.querySelectorAll(".workout-field-with-adjust")].find(
+      (el) => el.textContent?.includes(t("modal.labels.plannedSets")),
+    )!;
+
+    field.querySelector("input")!.value = "4";
+    update();
+    await flush();
+
+    expect(state.content).toContain("sets: 4");
+    expect(state.content).toContain("# heavy week");
+  });
+
+  it("keeps planned sets already in the block", async () => {
+    const note = NOTE.replace("limit: 12", "limit: 12\nsets: 3");
+    const { state, update } = openModal(note);
+
+    update();
+    await flush();
+
+    expect(state.content).toBe(note);
   });
 
   it("leaves the block untouched when nothing changed", async () => {

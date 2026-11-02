@@ -95,6 +95,9 @@ export class EditTableModal extends InsertTableModal {
     if (this.targetRepsInput && params.targetReps !== undefined) {
       this.targetRepsInput.value = params.targetReps.toString();
     }
+    if (this.setsInput && params.sets !== undefined) {
+      this.setsInput.value = params.sets.toString();
+    }
 
     // Pre-fill advanced options
     if (this.advancedElements) {

@@ -43,6 +43,7 @@ export class InsertTableModal extends BaseInsertModal {
   protected advancedElements?: AdvancedOptionsElements;
   protected targetWeightInput?: HTMLInputElement;
   protected targetRepsInput?: HTMLInputElement;
+  protected setsInput?: HTMLInputElement;
   protected progressiveSection?: HTMLElement;
   protected currentFileName: string;
 
@@ -195,6 +196,16 @@ export class InsertTableModal extends BaseInsertModal {
       0,
       100,
       TARGET_REPS_INCREMENT,
+    );
+
+    // Planned sets, counted by a workout-session block in the note
+    this.setsInput = this.createAdjustField(
+      targetParametersContainer,
+      t("modal.labels.plannedSets"),
+      0,
+      0,
+      20,
+      1,
     );
 
     // Advanced Options Section using reusable component
@@ -355,6 +366,7 @@ export class InsertTableModal extends BaseInsertModal {
     const targetReps = this.targetRepsInput
       ? parseInt(this.targetRepsInput.value) || 0
       : 0;
+    const sets = this.setsInput ? parseInt(this.setsInput.value) || 0 : 0;
 
     if (
       tableType === TABLE_TYPE.COMBINED &&
@@ -375,6 +387,7 @@ export class InsertTableModal extends BaseInsertModal {
       exactMatch: advancedValues.exactMatch ? true : undefined,
       targetWeight: targetWeight > 0 ? targetWeight : undefined,
       targetReps: targetReps > 0 ? targetReps : undefined,
+      sets: sets > 0 ? sets : undefined,
     };
   }
 

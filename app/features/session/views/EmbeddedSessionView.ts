@@ -33,7 +33,14 @@ import { t } from "@app/i18n";
 export class EmbeddedSessionView extends BaseView {
   private sessions = new Set<SessionRenderChild>();
 
-  constructor(plugin: WorkoutPluginContext) {
+  /**
+   * @param activeTimers - The plugin's timers by block id, shared with the
+   * `workout-timer` blocks so a section's rest runs on one timer
+   */
+  constructor(
+    plugin: WorkoutPluginContext,
+    private activeTimers: Map<string, EmbeddedTimerView>,
+  ) {
     super(plugin);
   }
 
@@ -42,6 +49,7 @@ export class EmbeddedSessionView extends BaseView {
     const session = new SessionRenderChild(
       container,
       this.plugin,
+      this.activeTimers,
       sourcePath,
       (error) => this.handleError(container, error),
       () => this.sessions.delete(session),
@@ -58,11 +66,12 @@ export class EmbeddedSessionView extends BaseView {
 
 class SessionRenderChild extends MarkdownRenderChild {
   private readonly workout: string;
-  private readonly restTimer: EmbeddedTimerView;
+  /** The rest timer of steps whose section timer has no id */
+  private readonly ownTimer: EmbeddedTimerView;
   /** The step picked with previous/next; undefined follows the progress */
   private position?: number;
-  /** Rest of the exercise just logged, shown while it runs */
-  private rest?: EmbeddedTimerParams;
+  /** The step just logged, whose rest is shown while it runs */
+  private restingStep?: SessionStep;
   private renders = 0;
   /** The plan last drawn, to skip redraws when the note changes elsewhere */
   private drawnPlan?: string;
@@ -70,13 +79,14 @@ class SessionRenderChild extends MarkdownRenderChild {
   constructor(
     containerEl: HTMLElement,
     private plugin: WorkoutPluginContext,
+    private activeTimers: Map<string, EmbeddedTimerView>,
     private sourcePath: string,
     private onError: (error: Error) => void,
     private onUnload: () => void,
   ) {
     super(containerEl);
     this.workout = PathUtils.noteName(sourcePath);
-    this.restTimer = new EmbeddedTimerView(plugin);
+    this.ownTimer = new EmbeddedTimerView(plugin);
   }
 
   onload(): void {
@@ -98,7 +108,8 @@ class SessionRenderChild extends MarkdownRenderChild {
   }
 
   onunload(): void {
-    this.restTimer.destroy();
+    // Shared timers belong to activeTimers, destroyed with the plugin
+    this.ownTimer.destroy();
     this.onUnload();
   }
 
@@ -119,11 +130,12 @@ class SessionRenderChild extends MarkdownRenderChild {
     const step = (await this.readPlan())?.find(
       (s) => StringUtils.normalize(s.exercise) === exercise,
     );
-    if (step) this.rest = restOf(step);
+    if (step) this.restingStep = step;
     const restShown = await this.render(step !== undefined);
     if (step && restShown) {
-      this.restTimer.reset();
-      this.restTimer.start();
+      const timer = this.timerFor(step);
+      timer.reset();
+      timer.start();
     }
   }
 
@@ -217,11 +229,16 @@ class SessionRenderChild extends MarkdownRenderChild {
 
       const restEl = card.createDiv({ cls: "workout-session-rest" });
       restEl.createDiv({ cls: "workout-session-meta", text: t("session.rest") });
-      const rest =
-        this.rest && (resting || this.restTimer.isTimerRunning())
-          ? this.rest
-          : restOf(step);
-      this.restTimer.createTimer(restEl.createDiv(), rest, this.sourcePath);
+      const restStep =
+        this.restingStep &&
+        (resting || this.timerFor(this.restingStep).isTimerRunning())
+          ? this.restingStep
+          : step;
+      this.timerFor(restStep).createTimer(
+        restEl.createDiv(),
+        restOf(restStep),
+        this.sourcePath,
+      );
       return true;
     } catch (error) {
       this.onError(error instanceof Error ? error : new Error(String(error)));
@@ -272,6 +289,22 @@ class SessionRenderChild extends MarkdownRenderChild {
       disabled: index === total - 1,
     });
     Button.onClick(next, () => this.moveTo(index + 1));
+  }
+
+  /**
+   * The timer a step rests on: the one of its section's `workout-timer` block
+   * when that has an id (created here if the block hasn't rendered yet, and
+   * picked up by the block later), so one countdown shows in both places
+   */
+  private timerFor(step: SessionStep): EmbeddedTimerView {
+    const id = step.rest.id;
+    if (!id) return this.ownTimer;
+    let timer = this.activeTimers.get(id);
+    if (!timer) {
+      timer = new EmbeddedTimerView(this.plugin, id);
+      this.activeTimers.set(id, timer);
+    }
+    return timer;
   }
 
   private moveTo(index: number): void {

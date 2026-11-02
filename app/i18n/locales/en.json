@@ -578,6 +578,7 @@
       "exercise": "Exercise:",
       "reps": "Reps:",
       "targetReps": "Target reps:",
+      "plannedSets": "Planned sets:",
       "targetWeight": "Target: ({unit}):",
       "volume": "Volume ({unit}):",
       "weight": "Weight ({unit}):"

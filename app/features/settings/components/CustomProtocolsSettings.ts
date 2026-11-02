@@ -8,18 +8,8 @@ import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import {
   isUnchangedDefaultProtocol,
-  protocolId,
+  protocolHelp,
 } from "@app/services/protocols/ProtocolCatalog";
-
-/** Explanation shown under each built-in protocol in the list */
-const PROTOCOL_HELP: Record<string, string> = {
-  warmup: "settings.protocolHelp.warmup",
-  drop_set: "settings.protocolHelp.dropSet",
-  myo_reps: "settings.protocolHelp.myoReps",
-  rest_pause: "settings.protocolHelp.restPause",
-  superset: "settings.protocolHelp.superset",
-  twentyone: "settings.protocolHelp.twentyone",
-};
 
 export class CustomProtocolsSettings {
   constructor(
@@ -87,9 +77,9 @@ export class CustomProtocolsSettings {
 
     // What a built-in protocol is for, so the default entries explain themselves
     // (only while it is as added: a renamed entry may mean something else)
-    const help = PROTOCOL_HELP[protocolId(protocol.id)];
+    const help = protocolHelp(protocol.id);
     if (help && isUnchangedDefaultProtocol(protocol)) {
-      fragment.createDiv({ text: t(help) });
+      fragment.createDiv({ text: help });
     }
 
     return fragment;

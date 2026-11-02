@@ -33,6 +33,8 @@ const BUILT_IN: ReadonlyArray<{
   badgeClass: string;
   /** Entry added to the settings list ("Saved protocols"); none for standard */
   defaults?: { abbreviation: string; color: string };
+  /** What the protocol is for, in a sentence */
+  helpKey?: string;
 }> = [
   {
     id: WorkoutProtocol.STANDARD,
@@ -48,6 +50,7 @@ const BUILT_IN: ReadonlyArray<{
     color: NEUTRAL_CHART_COLOR,
     badgeClass: "workout-protocol-badge-warmup",
     defaults: { abbreviation: "WU", color: "#9ca3af" },
+    helpKey: "settings.protocolHelp.warmup",
   },
   {
     id: WorkoutProtocol.DROP_SET,
@@ -56,6 +59,7 @@ const BUILT_IN: ReadonlyArray<{
     color: "rgba(239, 68, 68, 0.7)",
     badgeClass: "workout-protocol-badge-drop",
     defaults: { abbreviation: "DS", color: "#ef4444" },
+    helpKey: "settings.protocolHelp.dropSet",
   },
   {
     id: WorkoutProtocol.MYO_REPS,
@@ -64,6 +68,7 @@ const BUILT_IN: ReadonlyArray<{
     color: "rgba(168, 85, 247, 0.7)",
     badgeClass: "workout-protocol-badge-myo",
     defaults: { abbreviation: "MYO", color: "#a855f7" },
+    helpKey: "settings.protocolHelp.myoReps",
   },
   {
     id: WorkoutProtocol.REST_PAUSE,
@@ -72,6 +77,7 @@ const BUILT_IN: ReadonlyArray<{
     color: "rgba(249, 115, 22, 0.7)",
     badgeClass: "workout-protocol-badge-rp",
     defaults: { abbreviation: "RP", color: "#f97316" },
+    helpKey: "settings.protocolHelp.restPause",
   },
   {
     id: WorkoutProtocol.SUPERSET,
@@ -80,6 +86,7 @@ const BUILT_IN: ReadonlyArray<{
     color: "rgba(59, 130, 246, 0.7)",
     badgeClass: "workout-protocol-badge-superset",
     defaults: { abbreviation: "SS", color: "#3b82f6" },
+    helpKey: "settings.protocolHelp.superset",
   },
   {
     id: WorkoutProtocol.TWENTYONE,
@@ -88,6 +95,7 @@ const BUILT_IN: ReadonlyArray<{
     color: "rgba(34, 197, 94, 0.7)",
     badgeClass: "workout-protocol-badge-21",
     defaults: { abbreviation: "21", color: "#22c55e" },
+    helpKey: "settings.protocolHelp.twentyone",
   },
 ];
 
@@ -97,6 +105,12 @@ const BUILT_IN: ReadonlyArray<{
  */
 export function protocolId(raw: string | undefined | null): string {
   return StringUtils.normalize(raw) || WorkoutProtocol.STANDARD;
+}
+
+/** What a built-in protocol is for, in the current language; undefined for others */
+export function protocolHelp(raw: string | undefined | null): string | undefined {
+  const helpKey = BUILT_IN.find((p) => (p.id as string) === protocolId(raw))?.helpKey;
+  return helpKey && t(helpKey);
 }
 
 /**

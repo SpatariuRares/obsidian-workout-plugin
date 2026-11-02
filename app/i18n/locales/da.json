@@ -24,7 +24,7 @@
     },
     "defaultTitle": "Tendens {type}",
     "noTypesAvailable": "Ingen diagramtyper er tilgængelige",
-    "noEligibleE1rm": "Ingen egnet sæt for estimeret 1RM. Registrer en positiv vægt med 1–12 gentagelser, undtagen opvarmning og drop sets."
+    "noEligibleE1rm": "Ingen egnede sæt for estimeret 1RM. Registrer en positiv vægt med 1–12 gentagelser, undtagen opvarmnings- og dropsæt."
   },
   "commands": {
     "addExerciseBlock": "Tilføj øvelsesblok",
@@ -39,7 +39,7 @@
     "migrateExerciseTypes": "Migrér øvelsestyper",
     "createExampleNotes": "Opret eksempelnoter",
     "openGettingStartedGuide": "Åbn vejledningen",
-    "startTour": "Start guiden",
+    "startTour": "Start turen",
     "importWorkouts": "Importer fra Strong eller Hevy"
   },
   "common": {
@@ -183,7 +183,7 @@
       "widgetsHint": "Markér de widgets, der skal vises. Træk dem i håndtaget, eller brug pilene, for at ændre rækkefølgen.",
       "moveUp": "Flyt {widget} op",
       "moveDown": "Flyt {widget} ned",
-      "allHistory": "Tom: al historik",
+      "allHistory": "Tom: hele historikken",
       "recentWorkoutsLimit": "Antal træninger i listen over seneste træninger:",
       "volumeTrendDays": "Antal dage i volumentrenden:",
       "gridColumns": "Kolonner:",
@@ -205,6 +205,19 @@
       "narrow": "{widget} kræver mindst {min} kolonner",
       "overlap": "{widget} overlapper {other}",
       "empty": "Ingen widget er på gitteret endnu. Åbn „Rediger dashboard“ i ⋮-menuen for at placere nogle."
+    },
+    "trainingCalendar": {
+      "title": "Træningskalender",
+      "currentStreak": "Nuværende serie",
+      "bestStreak": "Bedste serie",
+      "thisWeek": "Denne uge",
+      "daysOfGoal": "{days}/{goal} dage",
+      "trainedDay": "{day}: {volume} {unit}",
+      "restDay": "{day}: hviledag",
+      "less": "Mindre",
+      "more": "Mere",
+      "trainedDayNoVolume": "{day}: trænet",
+      "weeks": "{count} uger"
     }
   },
   "duration": {
@@ -212,7 +225,7 @@
     "lastSession": "Sidste session",
     "restTime": "Pausetid",
     "setTime": "Sættid",
-    "unableToAnalyze": "Kan ikke analysere træningsfil"
+    "unableToAnalyze": "Kan ikke analysere træningsfilen"
   },
   "examples": {
     "dashboard": {
@@ -286,7 +299,7 @@
       "intervalTimerTitle": "Intervaltimer",
       "intro": "Fuldstændig reference over alle kodebloktyper, der er tilgængelige i Workout Plugin.",
       "protocol21s": "7+7+7 delvise gentagelser",
-      "protocolDropset": "Reducer vægten, fortsæt gentagelserne",
+      "protocolDropset": "Sænk vægten, og fortsæt med gentagelserne",
       "protocolMyoReps": "Aktiveringssæt + minisæt",
       "protocolRestPause": "Kort pause, fortsæt til udmattelse",
       "protocolStandard": "Normale sæt",
@@ -348,10 +361,10 @@
       "workoutsFolder": "**{folder}/**",
       "pagesIntro": "Udforsk én funktion pr. side. Følg linkene i rækkefølge, eller vælg en funktion nedenfor. Brug \"Tilbage\" og \"Næste\" for at navigere mellem notaterne; scroll normalt for at udforske hvert eksempel.",
       "liveIntro": "Udforsk alle funktioner nedenfor med seks ugers eksempstræning. Dette er demo-data; prøv kontrollerne og se, hvordan dine noter fungerer.",
-      "tryLog": "Brug \"+\" knappen til at tilføje et sæt. Tabellen, diagrammerne og dashboardet læser alle det samme CSV-format.",
+      "tryLog": "Brug \"+\"-knappen til at tilføje et sæt. Tabellen, diagrammerne og dashboardet læser alle den samme CSV-fil.",
       "continueWithWorkout": "Åbn [[{workout}]] for at prøve en komplet træning med øvelsestabeller og pausetimere.",
       "moreExamples": "Se [[{showcase}]] for flere diagramtyper, filtre og træningsprotokoller.",
-      "ownData": "Når du er klar, vælg din egen CSV-mappe og eksempelfolder i Indstillinger → Opsætning & data. Behold eksempelfolderen som en reference.",
+      "ownData": "Når du er klar, vælg din egen CSV-mappe og eksempelmappe i Indstillinger → Opsætning og data. Behold eksempelmappen som en reference.",
       "openGuideDesc": "Åbn siden med eksempler, der viser, hvordan man bruger tabeller, diagrammer, tidsmålere og dashboardet."
     },
     "hiit": {
@@ -434,7 +447,7 @@
     "exploreExampleData": "Eller udforsk med eksempeldata",
     "lastSet": "Sidste gang: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
-    "personalRecord": "Personligt rekord: {weight} {unit} × {reps}"
+    "personalRecord": "Personlig rekord: {weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "Kodeblok indsat",
@@ -488,7 +501,7 @@
       "addParameter": "Tilføj parameter",
       "adjustMinus": "-",
       "adjustPlus": "+",
-      "cancel": "Afbryd",
+      "cancel": "Annuller",
       "confirm": "Bekræft",
       "create": "Opret log",
       "createExercise": "Opret øvelsesside",
@@ -616,11 +629,11 @@
       "targetAchieved": "Mål nået!",
       "timerElementsNotInitialized": "Timerelementer er ikke initialiseret",
       "validationFillAll": "Udfyld alle felter med gyldige værdier",
-      "validMissingField": "Obligatorisk felt mangler: {field}",
+      "validMissingField": "Påkrævet felt mangler: {field}",
       "validMustBeNumber": "{field} skal være et gyldigt tal",
       "validMinValue": "{field} skal være mindst {min}",
       "validMaxValue": "{field} må højst være {max}",
-      "validFieldRequired": "{field} er obligatorisk",
+      "validFieldRequired": "{field} er påkrævet",
       "migrationNoUpdates": "Alle øvelsessider er allerede opdaterede",
       "validMustBeWholeNumber": "{field} skal være et heltal",
       "newRecord": "Ny rekord: {weight} {unit} (+{increase} {unit})",
@@ -630,11 +643,14 @@
       "exerciseSectionCreated": "Øvelsessektionen er oprettet med succes!",
       "tableInserted": "Tabellen er blevet indsat med succes!",
       "tableUpdated": "Tabellen er blevet opdateret med succes!",
+      "tableUpdateFailed": "Tabellen kunne ikke opdateres: den blev ikke fundet i sin note. Åbn noten igen, og prøv igen.",
       "timerInserted": "Timer er blevet indsat med succes!",
       "timerUpdated": "Timer er opdateret med succes!",
+      "timerUpdateFailed": "Timeren kunne ikke opdateres: den blev ikke fundet i sin note. Åbn noten igen, og prøv igen.",
       "validChooseExercise": "Vælg en øvelse",
       "validationCombinedMode": "For \"øvelse + træning\"-typen skal du udfylde begge felter!",
-      "dashboardUpdated": "Dashboardet er opdateret!"
+      "dashboardUpdated": "Dashboardet er opdateret!",
+      "dashboardUpdateFailed": "Dashboardet kunne ikke opdateres: det blev ikke fundet i sin note, eller et andet dashboard uden ID har de samme indstillinger. Åbn noten igen, og prøv igen."
     },
     "parameterKey": "Nøgle:",
     "parameterLabel": "Etiket:",
@@ -762,7 +778,7 @@
       "savePreset": "Gem",
       "saveProtocol": "Gem",
       "showWelcome": "Vis velkomst",
-      "takeTour": "Tag på turen"
+      "takeTour": "Tag turen"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Der findes allerede en CSV-fil med muskeltags. Vil du overskrive den med standardværdier? Det fjerner alle brugerdefinerede tags.",
@@ -782,13 +798,14 @@
       "quickWeightIncrement": "Vægtstigning brugt af +/- knapperne i vinduerne til at oprette/redigere træningslogs (f.eks. 2,5 for +2,5 / -2,5 enheder)",
       "repDuration": "Anslået tid til at udføre én gentagelse. Bruges, når antallet af gentagelser er kendt (f.eks. 'x 10 reps').",
       "runAllMaintenance": "Udfør alle vedligeholdelsesopgaver i rækkefølge. Sikkert at køre flere gange.",
-      "setDuration": "Bruges, når gentagelser ikke er angivet (reserve). Typisk interval: 30-60 sekunder.",
+      "setDuration": "Bruges, når gentagelser ikke er angivet (reserve). Typisk spænd: 30-60 sekunder.",
       "setupCSV": "Opret både workout_logs.csv og muscle-tags.csv i den konfigurerede mappe.",
       "weightIncrement": "Standard vægtstigning for progressiv belastning (f.eks., 2,5 for 2,5 enheds-stigninger)",
       "showRibbonIcon": "Vis håndvægtikonet i båndet, som åbner formularen til træningsloggen",
-      "weightUnit": "Enhed til diagrammer, summer og nye logfiler. Hver logfil bevarer den enhed, den blev oprettet i.",
+      "weightUnit": "Enhed til diagrammer, summer og nye logfiler. Hver logpost beholder den enhed, den blev indtastet i.",
       "takeTour": "Gennemgå kortfattet logning, diagrammer, tabeller og tidsmålere.",
       "welcomeWindow": "Vis vinduet med velkomstbeskeden igen for at starte med eksempeldata eller fra bunden.",
+      "weeklyGoal": "Antal træningsdage om ugen, der holder din serie i gang. Vises i dashboardets oversigt og træningskalenderen.",
       "keepScreenAwake": "Forsøg at holde skærmen aktiv, mens en timer kører i forgrunden. Bruger mere batteri; tilgængelighed afhænger af din enhed og systemindstillinger.",
       "vibrateOnCompletion": "Vibrer kortvarigt, når en timer er færdig, uafhængigt af lyd. Kræver et tryk på siden og en kompatibel enhed (f.eks. Android). Ikke tilgængeligt på iOS; ingen notifikationer i baggrunden.",
       "presetRestDesc": "Sekunder med hvile efter arbejdet i hver runde (0 for ingen hvile).",
@@ -818,6 +835,7 @@
       "weightUnit": "Vægtenhed",
       "showRibbonIcon": "Vis ikon til hurtig logning",
       "welcomeWindow": "Velkomstvindue",
+      "weeklyGoal": "Ugentligt mål",
       "takeTour": "Guidet tur",
       "keepScreenAwake": "Hold skærmen tændt, mens en timer kører",
       "vibrateOnCompletion": "Vibrer når en timer er færdig",
@@ -880,7 +898,7 @@
       "warmup": "Lette sæt før arbejdssættene. De tæller ikke med i personlige rekorder.",
       "dropSet": "Reducer vægten lige efter et mislykket forsøg og fortsæt. Dropsæt tæller ikke med i personlige rekorder.",
       "myoReps": "Ét aktiveringssæt, efterfulgt af korte minisæt med et par sekunders pause.",
-      "restPause": "Tag en pause i et par sekunder efter mislykket forsøg, og udfør derefter et par flere gentagelser.",
+      "restPause": "Tag en pause i et par sekunder efter et mislykket forsøg, og udfør derefter et par flere gentagelser.",
       "superset": "To øvelser efter hinanden, uden pause imellem.",
       "twentyone": "7 gentagelser i den nedre del, 7 i den øvre del, og derefter 7 fulde gentagelser."
     },
@@ -1080,10 +1098,10 @@
   },
   "import": {
     "chooseFile": "Vælg CSV-fil",
-    "notAnExport": "Denne fil er ikke en \"Strong\" eller \"Hevy\" eksport.",
+    "notAnExport": "Denne fil er ikke en eksport fra Strong eller Hevy.",
     "noSets": "Ingen sæt kunne læses fra denne fil. Kontroller, at det er den CSV-fil, appen eksporterede, uden ændringer.",
     "readError": "Kunne ikke læse filen: {error}",
-    "source": "Eksporter fra {source}",
+    "source": "Eksport fra {source}",
     "setsFound": "Sæt i filen: {count}",
     "setsToAdd": "Sæt at tilføje: {count}",
     "duplicates": "Allerede i din log, sprunget over: {count}",

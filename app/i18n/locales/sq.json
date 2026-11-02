@@ -3,7 +3,7 @@
     "date": "Data",
     "fallbackTableMessage": "Grafiku nuk mund të vizatohej, prandaj të dhënat shfaqen në tabelë.",
     "labels": {
-      "quickWeightIncrementUnit": "Butonat e peshës rrisin me {weightIncrementUnit}",
+      "quickWeightIncrementUnit": "Butonat e peshës ndryshojnë me {weightIncrementUnit}",
       "trendType": "Tendenca {type}:",
       "variationFromTo": " nga {startValue} në {endValue}",
       "weightIncrementUnit": "Rritja e peshës {weightIncrementUnit}"
@@ -112,7 +112,7 @@
       "totalCount": "Gjithsej: {count} etiketa të disponueshme"
     },
     "protocol": {
-      "clickToFilter": "Kliko për të filtruar",
+      "clickToFilter": "Klikoni për të filtruar",
       "tooltip": "{label}: {count} seri ({percentage}%)"
     },
     "protocolDistribution": {
@@ -159,7 +159,7 @@
     "volumeAnalytics": {
       "muscleBreakdownTitle": "Ushtrimet kryesore sipas volumit",
       "title": "Analizë e volumit",
-      "chartTitleDays": "Tendenca e volumit ({days} ditët e fundit)"
+      "chartTitleDays": "Tendenca e volumit (gjatë {days} ditëve të fundit)"
     },
     "muscleHeatMap": {
       "metrics": {
@@ -205,6 +205,19 @@
       "narrow": "{widget} ka nevojë për të paktën {min} kolona",
       "overlap": "{widget} mbivendoset me {other}",
       "empty": "Ende nuk ka asnjë widget në rrjetë. Hap \"Redakto panelin\" në menynë ⋮ për të vendosur disa."
+    },
+    "trainingCalendar": {
+      "title": "Kalendari i stërvitjes",
+      "currentStreak": "Seria aktuale",
+      "bestStreak": "Seria më e mirë",
+      "thisWeek": "Këtë javë",
+      "daysOfGoal": "{days}/{goal} ditë",
+      "trainedDay": "{day}: {volume} {unit}",
+      "restDay": "{day}: pushim",
+      "less": "Më pak",
+      "more": "Më shumë",
+      "trainedDayNoVolume": "{day}: u stërvit",
+      "weeks": "{count} javë"
     }
   },
   "duration": {
@@ -411,7 +424,7 @@
       "dailyVolume": "Volumi ditor ({unit})",
       "pace": "Ritmi (min/km)",
       "totalCustom": "{label} gjithsej",
-      "totalDistance": "Distancë totale (km)",
+      "totalDistance": "Distanca totale (km)",
       "totalDuration": "Kohëzgjatja totale (sek)",
       "totalVolume": "Volumi total ({unit})",
       "totalWeight": "Pesha totale ({unit})"
@@ -428,10 +441,10 @@
     "addLogButtonText": "Shto regjistrim për {exerciseName}",
     "createFirstLogButton": "Krijo regjistrimin e parë për {exerciseName}",
     "createFirstLogButtonAria": "Krijo regjistrimin e parë për {exerciseName}",
-    "createLogButtonAria": "Krijo regjistër për: {exerciseName}",
-    "createLogButtonText": "Krijo regjistër për: {exerciseName}",
+    "createLogButtonAria": "Krijo regjistrim për: {exerciseName}",
+    "createLogButtonText": "Krijo regjistrim për: {exerciseName}",
     "noDataTitle": "Nuk u gjetën regjistrime për {exerciseName}",
-    "exploreExampleData": "Nëse dëshiron, mund të eksplorosh me të dhëna të shembullore",
+    "exploreExampleData": "Ose eksploroni me të dhëna shembull",
     "lastSet": "Herën e fundit: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Rekordi personal: {weight} {unit} × {reps}"
@@ -482,7 +495,7 @@
       "partialBadge": "•",
       "partialTooltip": "Përputhje e pjesshme - Pikë: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Përputhje fjale - Pikë: {score}"
+      "wordTooltip": "Përputhje e fjalës - Pikë: {score}"
     },
     "buttons": {
       "addParameter": "Shto parametër",
@@ -619,7 +632,7 @@
       "validMissingField": "Mungon fusha e detyrueshme: {field}",
       "validMustBeNumber": "{field} duhet të jetë numër i vlefshëm",
       "validMinValue": "{field} duhet të jetë të paktën {min}",
-      "validMaxValue": "{field} duhet të jetë më së shumti {max}",
+      "validMaxValue": "{field} duhet të jetë jo më shumë se {max}",
       "validFieldRequired": "{field} është e detyrueshme",
       "migrationNoUpdates": "Të gjitha faqet e ushtrimeve janë tashmë të përditësuara",
       "validMustBeWholeNumber": "{field} duhet të jetë një numër i plotë",
@@ -629,12 +642,15 @@
       "exerciseNameRequired": "Ju lutemi, vendosni emrin e ushtrimit",
       "exerciseSectionCreated": "Seksioni i ushtrimeve u krijua me sukses!",
       "tableInserted": "Tabela u shtua me sukses!",
+      "tableUpdateFailed": "Përditësimi i tabelës dështoi: ajo nuk u gjet në shënimin e saj. Hapeni përsëri shënimin dhe provoni përsëri.",
       "tableUpdated": "Tabela u përditësua me sukses!",
       "timerInserted": "Timeri u shtua me sukses!",
+      "timerUpdateFailed": "Përditësimi i timerit dështoi: ai nuk u gjet në shënimin e tij. Hapeni përsëri shënimin dhe provoni përsëri.",
       "timerUpdated": "Timeri u përditësua me sukses!",
       "validChooseExercise": "Zgjidhni një ushtrim",
       "validationCombinedMode": "Për tipin 'ushtrim + stërvitje' duhet të plotësoni të dyja fushat!",
-      "dashboardUpdated": "Paneli u përditësua me sukses!"
+      "dashboardUpdated": "Paneli u përditësua me sukses!",
+      "dashboardUpdateFailed": "Përditësimi i panelit dështoi: ai nuk u gjet në shënimin e tij, ose një tjetër panel pa ID ka të njëjtat cilësime. Hapeni përsëri shënimin dhe provoni përsëri."
     },
     "parameterKey": "Çelësi:",
     "parameterLabel": "Etiketa:",
@@ -732,7 +748,7 @@
     "workoutNameOptional": "Emri i stërvitjes (opsional):",
     "importMergeAriaLabel": "Bashko: shto vetëm etiketa të reja, ruaj ato ekzistuese",
     "importReplaceAriaLabel": "Zëvendëso: mbishkruaj të gjitha etiketat ekzistuese",
-    "editItem": "Ndrysho {item}",
+    "editItem": "Redakto {item}",
     "deleteItem": "Fshi {item}",
     "errors": {
       "missingElements": "Mungojnë elemente",
@@ -789,6 +805,7 @@
       "weightUnit": "Njësia për grafikët, totalet dhe regjistrimet e reja. Çdo regjistrim mban njësinë me të cilën u fut.",
       "takeTour": "Kaloni përmes regjistrimit, grafikëve, tabelave dhe timerëve në një shënim të shkurtër.",
       "welcomeWindow": "Shfaq përsëri dritaren e mirëseardhjes për të filluar me të dhëna shembull ose nga e para.",
+      "weeklyGoal": "Ditët e stërvitjes në javë që e mbajnë seritën aktive, në përmbledhjen e panelit dhe te kalendari i stërvitjes.",
       "keepScreenAwake": "Provo ta mbash ekranin të ndezur ndërsa ndonjë timer punon në plan. Konsumon më shumë bateri; disponueshmëria varet nga pajisja dhe cilësimet e sistemit.",
       "vibrateOnCompletion": "Vibron shkurtimisht kur mbaron një timer, pavarësisht nga zëri. Kërkon një prekje në faqe dhe një pajisje të mbështetur (si Android). Nuk është i disponueshëm në iOS dhe nuk ka njoftime kur aplikacioni është në sfond.",
       "presetRestDesc": "Sekondat e pushimit pas punës së çdo raunde (0 për pa pushim).",
@@ -818,6 +835,7 @@
       "weightUnit": "Njësia e peshës",
       "showRibbonIcon": "Shfaq ikonën e regjistrimit të shpejtë",
       "welcomeWindow": "Dritarja e mirëseardhjes",
+      "weeklyGoal": "Objektivi javor",
       "takeTour": "Tur udhëzues",
       "keepScreenAwake": "Mbaje ekranin aktiv ndërsa punon një timer",
       "vibrateOnCompletion": "Vibrim kur një timer përfundojë",
@@ -1007,7 +1025,7 @@
       "outOfRange": "{key} duhet të jetë mes {min} dhe {max}, por është {value}",
       "notABoolean": "{key} duhet të jetë \"true\" ose \"false\", por është \"{value}\"",
       "notOneOf": "{key} duhet të jetë një nga {allowed}, por është \"{value}\"",
-      "notACell": "{key} duhet të jetë katër numra të plotë nga 1 lart (kolona, rreshti, gjerësia, lartësia), por është \"{value}\""
+      "notACell": "{key} duhet të jetë katër numra të plotë, secili të paktën 1 (kolona, rreshti, gjerësia, lartësia), por është \"{value}\""
     }
   },
   "welcome": {
@@ -1022,13 +1040,13 @@
   },
   "tour": {
     "back": "Prapa",
-    "next": "Tjetër",
+    "next": "Tjetra",
     "skip": "Kalo",
     "done": "Mbaruar",
     "progress": "{current} nga {total}",
     "noteName": "Tur udhëzues",
     "noteIntro": "Turi udhëzues tregon çdo pjesë të pluginit në këtë faqe. Redaktojeni ose fshijeni këtë shënim kur të dëshironi.",
-    "noteTable": "Seritë e tua",
+    "noteTable": "Seritë tuaja",
     "noteChart": "Progresi",
     "noteDashboard": "Paneli",
     "noteTimer": "Timer pushimi",
@@ -1051,7 +1069,7 @@
       },
       "dashboard": {
         "title": "Paneli juaj",
-        "text": "Numra, tendenca e volumit dhe antrenimet e fundit, të gjitha në një seksion.",
+        "text": "Numra, tendenca e volumit dhe stërvitjet e fundit, të gjitha në një seksion.",
         "textMine": "Totalet, tendencat e volumit dhe stërvitjet e fundit. Mbushet me çdo seri që regjistroni."
       },
       "timer": {
@@ -1076,7 +1094,7 @@
         "text": "Harta termike tregon cilët muskuj i keni trajnuar më së fundmi."
       }
     },
-    "showMe": "Shfaq"
+    "showMe": "Më tregoni"
   },
   "import": {
     "chooseFile": "Zgjidhni skedarin CSV",
@@ -1087,7 +1105,7 @@
     "setsFound": "Seritë në skedar: {count}",
     "setsToAdd": "Seri për t'u shtuar: {count}",
     "duplicates": "Tashmë në regjistrin tuaj, u anashkaluan: {count}",
-    "dateRange": "Ditët e stërvitjes: nga {first} deri më {last}",
+    "dateRange": "Ditët e stërvitjes: nga {first} deri në {last}",
     "newExercises": "Ushtrime pa faqe: {exercises}",
     "nothingToAdd": "Çdo seri në këtë skedar është tashmë në regjistrin tuaj.",
     "backupNote": "Regjistri juaj ruhet para se të shtohen seritë.",

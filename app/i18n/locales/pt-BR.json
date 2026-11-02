@@ -9,14 +9,14 @@
       "weightIncrementUnit": "Incremento de peso {weightIncrementUnit}"
     },
     "overallVariationPrefix": "Variação geral: ",
-    "significantIncrease": "Subiu a partir de zero",
+    "significantIncrease": "Subiu de zero",
     "trendLine": "Linha de tendência",
     "typeNotAvailable": "O tipo de gráfico \"{chartDataType}\" não está disponível para exercícios do tipo {exerciseType}. Tipos disponíveis: {typeList}",
     "types": {
       "distance": "Distância",
       "duration": "Duração",
       "heartRate": "Frequência cardíaca",
-      "pace": "Velocidade",
+      "pace": "Ritmo",
       "reps": "Repetições",
       "volume": "Volume",
       "weight": "Peso",
@@ -68,7 +68,7 @@
       "weight": "Peso ({unit})"
     },
     "preview": {
-      "noEntries": "Não foram encontradas entradas de registro para este exercício.",
+      "noEntries": "Nenhuma entrada de registro encontrada para este exercício.",
       "title": "Visualização",
       "willConvertMany": "Serão convertidas {count} entradas de registro",
       "willConvertOne": "1 entrada de registro será convertida"
@@ -107,7 +107,7 @@
     },
     "muscleTags": {
       "description": "Descrição",
-      "title": "Tags para músculos",
+      "title": "Tags musculares",
       "tooltip": "Clique para copiar: {tag}",
       "totalCount": "Total: {count} tags disponíveis"
     },
@@ -129,7 +129,7 @@
       "columnVolumeChange": "Variação de volume",
       "disclaimer": "Isenção de responsabilidade",
       "noData": "Ainda não há dados suficientes: cada protocolo precisa de pelo menos 5 séries registradas.",
-      "title": "Eficácia do protocolo",
+      "title": "Eficácia dos protocolos",
       "subtitle": "Como cada protocolo funcionou em todas as séries registradas."
     },
     "quickActions": {
@@ -154,7 +154,7 @@
       "personalRecords": "Recordes pessoais",
       "title": "Resumo",
       "totalVolume": "Volume total",
-      "totalWorkouts": "Número total de treinos"
+      "totalWorkouts": "Total de treinos"
     },
     "volumeAnalytics": {
       "muscleBreakdownTitle": "Principais exercícios por volume",
@@ -174,7 +174,7 @@
       },
       "imbalance": {
         "backDominant": "Desequilíbrio entre a parte frontal e a traseira: seus músculos da parte traseira trabalham muito mais do que os da parte frontal.",
-        "frontDominant": "Desequilíbrio entre a parte frontal e a parte posterior: a sua parte frontal trabalha muito mais do que a sua parte posterior."
+        "frontDominant": "Desequilíbrio entre a parte frontal e a traseira: sua parte frontal trabalha muito mais do que a traseira."
       }
     },
     "editDashboard": "Editar painel",
@@ -205,6 +205,19 @@
       "narrow": "{widget} precisa de pelo menos {min} colunas",
       "overlap": "{widget} sobrepõe {other}",
       "empty": "Nenhum widget está na grade ainda. Abra \"Editar painel\" no menu ⋮ para colocar alguns."
+    },
+    "trainingCalendar": {
+      "title": "Calendário de treinos",
+      "currentStreak": "Sequência atual",
+      "bestStreak": "Melhor sequência",
+      "thisWeek": "Esta semana",
+      "daysOfGoal": "{days}/{goal} dias",
+      "trainedDay": "{day}: {volume} {unit}",
+      "restDay": "{day}: descanso",
+      "less": "Menos",
+      "more": "Mais",
+      "trainedDayNoVolume": "{day}: treinou",
+      "weeks": "{count} semanas"
     }
   },
   "duration": {
@@ -326,7 +339,7 @@
       "commandInsertChartDesc": "Adicione um gráfico a qualquer anotação",
       "commandInsertTimer": "Inserir temporizador de treino",
       "commandInsertTimerDesc": "Adicione um temporizador de descanso",
-      "dashboardDesc": "Seus dados de treino de forma resumida",
+      "dashboardDesc": "Seus dados de treino, resumidos",
       "exercisesDesc": "Exemplos de exercícios com registros e gráficos",
       "exercisesFolder": "**{folder}/**",
       "featureShowcaseDesc": "Referência completa de todos os blocos de código",
@@ -351,7 +364,7 @@
       "tryLog": "Use o botão \"+\" para adicionar uma série. A tabela, os gráficos e o painel de controle utilizam o mesmo arquivo CSV.",
       "continueWithWorkout": "Abra [[{workout}]] para experimentar um treino completo com tabelas de exercícios e temporizadores de descanso.",
       "moreExamples": "Consulte [[{showcase}]] para obter mais tipos de gráficos, filtros e protocolos de treinamento.",
-      "ownData": "Quando estiver pronto, escolha sua própria pasta CSV e sua pasta de exercícios nas configurações → Configuração e dados. Mantenha a pasta de exemplos como referência.",
+      "ownData": "Quando estiver pronto, escolha sua própria pasta CSV e a pasta de exercícios em Configurações → Configuração e dados. Mantenha a pasta de exemplos como referência.",
       "openGuideDesc": "Abra a página \"Como começar\" com exemplos práticos de tabelas, gráficos, temporizadores e painel de controle."
     },
     "hiit": {
@@ -371,7 +384,7 @@
     },
     "workouts": {
       "cardioDay": {
-        "name": "Dia de exercícios cardiovasculares"
+        "name": "Dia de cardio"
       },
       "lowerBodyA": {
         "name": "Dia 1 MEMBROS INFERIORES A 2.0"
@@ -409,7 +422,7 @@
       "avgVolume": "Volume médio ({unit})",
       "avgWeight": "Peso médio ({unit})",
       "dailyVolume": "Volume diário ({unit})",
-      "pace": "Velocidade (min/km)",
+      "pace": "Ritmo (min/km)",
       "totalCustom": "Total {label}",
       "totalDistance": "Distância total (km)",
       "totalDuration": "Duração total (seg)",
@@ -629,12 +642,15 @@
       "exerciseNameRequired": "Por favor, insira o nome do exercício",
       "exerciseSectionCreated": "Seção de exercícios criada com sucesso!",
       "tableInserted": "A tabela foi inserida com sucesso!",
+      "tableUpdateFailed": "Não foi possível atualizar a tabela: ela não foi encontrada na sua nota. Reabra a nota e tente novamente.",
       "tableUpdated": "A tabela foi atualizada com sucesso!",
       "timerInserted": "Temporizador inserido com sucesso!",
+      "timerUpdateFailed": "Não foi possível atualizar o temporizador: ele não foi encontrado na sua nota. Reabra a nota e tente novamente.",
       "timerUpdated": "Temporizador atualizado com sucesso!",
       "validChooseExercise": "Selecione um exercício",
       "validationCombinedMode": "Para o tipo 'exercício + treino', você deve preencher ambos os campos!",
-      "dashboardUpdated": "Painel atualizado com sucesso!"
+      "dashboardUpdated": "Painel atualizado com sucesso!",
+      "dashboardUpdateFailed": "Não foi possível atualizar o painel: ele não foi encontrado na sua nota, ou outro painel sem ID tem as mesmas configurações. Reabra a nota e tente novamente."
     },
     "parameterKey": "Chave:",
     "parameterLabel": "Rótulo:",
@@ -710,7 +726,7 @@
     "timerPreset": "Predefinição do temporizador:",
     "timerType": "Tipo de temporizador:",
     "titles": {
-      "addExerciseBlock": "Adicionar bloco de exercícios",
+      "addExerciseBlock": "Adicionar bloco de exercício",
       "auditExerciseNames": "Auditar nomes de exercícios",
       "canvasExport": "Exportar treino para o canvas",
       "createExercisePage": "Criar página de exercício",
@@ -761,7 +777,7 @@
       "runAllMaintenance": "Executar tudo",
       "savePreset": "Salvar",
       "saveProtocol": "Salvar",
-      "showWelcome": "Mostrar mensagem de boas-vindas",
+      "showWelcome": "Mostrar boas-vindas",
       "takeTour": "Iniciar o tour"
     },
     "descriptions": {
@@ -789,6 +805,7 @@
       "weightUnit": "Unidade para gráficos, totais e novos registros. Cada registro mantém a unidade em que foi inserido.",
       "takeTour": "Percorra o registro, os gráficos, as tabelas e os temporizadores em uma nota curta.",
       "welcomeWindow": "Exiba novamente a janela de boas-vindas para iniciar com dados de exemplo ou do zero.",
+      "weeklyGoal": "Dias de treino por semana que mantêm sua sequência, no resumo do painel e no calendário de treinos.",
       "keepScreenAwake": "Tente manter a tela ativa enquanto algum temporizador estiver em execução em primeiro plano. Consome mais bateria; a disponibilidade depende do seu dispositivo e das configurações do sistema.",
       "vibrateOnCompletion": "Vibre brevemente quando um temporizador terminar, independentemente do som. Requer um toque na página e um dispositivo compatível (como o Android). Não disponível no iOS; sem alertas de fundo.",
       "presetRestDesc": "Segundos de descanso após o trabalho de cada rodada (0 para nenhum descanso).",
@@ -818,6 +835,7 @@
       "weightUnit": "Unidade de peso",
       "showRibbonIcon": "Mostrar ícone de registro rápido",
       "welcomeWindow": "Janela de boas-vindas",
+      "weeklyGoal": "Meta semanal",
       "takeTour": "Tour guiado",
       "keepScreenAwake": "Mantenha a tela ativa enquanto o temporizador estiver em execução",
       "vibrateOnCompletion": "Vibre quando o temporizador terminar",
@@ -831,7 +849,7 @@
       "presetNameExists": "Já existe uma predefinição com este nome.",
       "presetNameRequired": "O nome da predefinição é obrigatório",
       "presetSaved": "Predefinição salva",
-      "protocolAbbreviationRequired": "Abreviatura é obrigatória (máximo 3 caracteres)",
+      "protocolAbbreviationRequired": "Abreviação é obrigatória (máximo 3 caracteres)",
       "protocolColorRequired": "Por favor, insira uma cor hexadecimal válida (por exemplo, #FF5733)",
       "protocolDeleted": "Protocolo excluído",
       "protocolNameExists": "Um protocolo com este nome já existe.",
@@ -878,7 +896,7 @@
     },
     "protocolHelp": {
       "warmup": "Séries leves antes das séries de trabalho. Elas não contam para os seus recordes pessoais.",
-      "dropSet": "Diminua o peso imediatamente após a falha e continue. As séries descendentes não contam para seus recordes pessoais.",
+      "dropSet": "Diminua o peso logo após a falha e continue. As séries de drop não contam para seus recordes pessoais.",
       "myoReps": "Uma série de ativação, seguida de minisséries curtas com alguns segundos de descanso.",
       "restPause": "Descanse alguns segundos após a falha, e depois faça mais algumas repetições.",
       "superset": "Dois exercícios um após o outro, sem descanso entre eles.",
@@ -918,7 +936,7 @@
       "distanceUnit": "Distância ({distanceUnit})",
       "duration": "Duração",
       "heartRate": "Frequência cardíaca",
-      "pace": "Velocidade",
+      "pace": "Ritmo",
       "reps": "Rep",
       "volumeUnit": "Volume ({weightUnit})",
       "weightUnit": "Peso ({weightUnit})"
@@ -1012,7 +1030,7 @@
   },
   "welcome": {
     "title": "Bem-vindo ao plugin de treino",
-    "intro": "Acompanhe seus treinos, e depois visualize-os em gráficos, tabelas e um painel de controle. Como você gostaria de começar?",
+    "intro": "Acompanhe seus treinos e depois visualize-os em gráficos, tabelas e um painel de controle. Como você gostaria de começar?",
     "tryExamples": "Experimentar com dados de exemplo",
     "startScratch": "Começar do zero",
     "later": "Mais tarde",
@@ -1076,14 +1094,14 @@
         "text": "O mapa de calor mostra quais músculos você treinou mais recentemente."
       }
     },
-    "showMe": "Mostre-me"
+    "showMe": "Me mostre"
   },
   "import": {
     "chooseFile": "Selecione o arquivo CSV",
     "notAnExport": "Este arquivo não é uma exportação do Strong nem do Hevy.",
     "noSets": "Não foi possível ler nenhuma série deste arquivo. Verifique se é o arquivo CSV exportado pelo aplicativo, sem alterações.",
     "readError": "Não foi possível ler o arquivo: {error}",
-    "source": "Exportar de {source}",
+    "source": "Exportação de {source}",
     "setsFound": "Séries no arquivo: {count}",
     "setsToAdd": "Séries para adicionar: {count}",
     "duplicates": "Já estão no seu registro e foram ignoradas: {count}",

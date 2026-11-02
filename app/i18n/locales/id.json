@@ -103,7 +103,7 @@
       "noTags": "Tidak ada tag otot di frontmatter",
       "title": "Kesalahan pada file",
       "tooManyTags": "Terlalu banyak tag otot ({count})",
-      "sharedName": "Nama latihan yang sama dengan {pages}: log hanya disimpan di salah satu dari mereka."
+      "sharedName": "Nama latihan sama dengan {pages}: log hanya masuk ke salah satunya."
     },
     "muscleTags": {
       "description": "Deskripsi",
@@ -204,7 +204,20 @@
       "outside": "{widget} melewati {columns} kolom kisi",
       "narrow": "{widget} membutuhkan minimal {min} kolom",
       "overlap": "{widget} tumpang tindih dengan {other}",
-      "empty": "Belum ada widget di kisi. Buka «Edit dasbor» di menu ⋮ untuk menempatkan beberapa."
+      "empty": "Belum ada widget di kisi. Buka \"Sunting dasbor\" di menu ⋮ untuk menempatkan beberapa."
+    },
+    "trainingCalendar": {
+      "title": "Kalender latihan",
+      "currentStreak": "Streak saat ini",
+      "bestStreak": "Streak terbaik",
+      "thisWeek": "Minggu ini",
+      "daysOfGoal": "{days}/{goal} hari",
+      "trainedDay": "{day}: {volume} {unit}",
+      "restDay": "{day}: istirahat",
+      "less": "Lebih sedikit",
+      "more": "Lebih banyak",
+      "trainedDayNoVolume": "{day}: berlatih",
+      "weeks": "{count} minggu"
     }
   },
   "duration": {
@@ -239,7 +252,7 @@
         "name": "Bench Press"
       },
       "calfMachine": {
-        "name": "Mesin Otot Betis"
+        "name": "Mesin Betis"
       },
       "cycling": {
         "name": "Bersepeda"
@@ -288,7 +301,7 @@
       "protocol21s": "7+7+7 repetisi parsial",
       "protocolDropset": "Kurangi berat, lanjutkan repetisi",
       "protocolMyoReps": "Set aktivasi + set mini",
-      "protocolRestPause": "Istirahat singkat, lanjutkan hingga mencapai batas",
+      "protocolRestPause": "Istirahat singkat, lanjutkan sampai gagal",
       "protocolStandard": "Set standar",
       "protocolSuperset": "Latihan berpasangan",
       "quickReferenceTitle": "Referensi Cepat",
@@ -334,15 +347,15 @@
       "logDesc": "Data latihan CSV Anda",
       "logFolder": "**{folder}/**",
       "nextStepsTitle": "Langkah Selanjutnya",
-      "quickActionsIntro": "Gunakan perintah-perintah ini (Ctrl/Cmd + P):",
+      "quickActionsIntro": "Gunakan perintah berikut (Ctrl/Cmd + P):",
       "quickActionsTitle": "Tindakan Cepat",
       "step1": "Buka [[{dashboard}]] untuk melihat statistik Anda",
       "step2": "Lihat [[{featureShowcase}]] untuk mempelajari semua fitur yang tersedia",
-      "step3": "Coba latihan dari folder **{workouts}**.",
+      "step3": "Coba latihan dari folder **{workouts}**",
       "step4": "Buat latihan Anda sendiri di **{exercises}**",
       "tableHeaderDescription": "Deskripsi",
       "tableHeaderFileFolder": "Berkas/Folder",
-      "title": "Memulai Penggunaan Plugin Gym",
+      "title": "Memulai dengan Plugin The Gym",
       "welcome": "Selamat datang! Folder ini berisi file contoh untuk membantu Anda mempelajari semua fitur.",
       "workoutsDesc": "Contoh templat latihan",
       "workoutsFolder": "**{folder}/**",
@@ -390,7 +403,7 @@
   },
   "forms": {
     "enterCsvPath": "Folder untuk file CSV",
-    "enterFolderPath": "Path folder",
+    "enterFolderPath": "Jalur folder",
     "workoutName": "Nama latihan"
   },
   "general": {
@@ -580,7 +593,7 @@
       "auditRenameSuccess": "Nama diganti ({count} file diperbarui)",
       "auditScanError": "Kesalahan saat memindai: {error}",
       "auditScanning": "Memindai file latihan...",
-      "canvasExportError": "Kesalahan Ekspor Kanvas: {error}",
+      "canvasExportError": "Kesalahan ekspor kanvas: {error}",
       "canvasExported": "Kanvas berhasil diekspor ({path})",
       "confirmUpdateTarget": "Perbarui target menjadi {targetWeight}{weightUnit}?",
       "dismissAchievement": "Tutup pencapaian",
@@ -593,7 +606,7 @@
       "logCreated": "Catatan latihan berhasil dibuat!",
       "logUpdated": "Catatan latihan berhasil diperbarui!",
       "migrationComplete": "Migrasi selesai. {count} file latihan telah diperbarui.",
-      "migrationError": "Kesalahan Migrasi: {error}",
+      "migrationError": "Kesalahan migrasi: {error}",
       "muscleTagCount": "{count} tag ditemukan",
       "muscleTagDeleteConfirm": "Apakah Anda yakin ingin menghapus tag \"{tag}\"?",
       "muscleTagDeleted": "Tag dihapus",
@@ -631,10 +644,13 @@
       "tableInserted": "Tabel berhasil ditambahkan!",
       "tableUpdated": "Tabel berhasil diperbarui!",
       "timerInserted": "Timer berhasil ditambahkan!",
-      "timerUpdated": "Timer telah diperbarui dengan sukses!",
+      "timerUpdated": "Timer berhasil diperbarui!",
       "validChooseExercise": "Pilih latihan",
       "validationCombinedMode": "Untuk jenis 'latihan + sesi latihan', Anda harus mengisi kedua kolom!",
-      "dashboardUpdated": "Dasbor berhasil diperbarui!"
+      "dashboardUpdated": "Dasbor berhasil diperbarui!",
+      "dashboardUpdateFailed": "Gagal memperbarui dasbor: dasbor tidak ditemukan di catatannya, atau dasbor lain tanpa ID memiliki pengaturan yang sama. Buka kembali catatan lalu coba lagi.",
+      "tableUpdateFailed": "Gagal memperbarui tabel: tabel tidak ditemukan di catatannya. Buka kembali catatan lalu coba lagi.",
+      "timerUpdateFailed": "Gagal memperbarui timer: timer tidak ditemukan di catatannya. Buka kembali catatan lalu coba lagi."
     },
     "parameterKey": "Kunci:",
     "parameterLabel": "Label:",
@@ -792,7 +808,8 @@
       "keepScreenAwake": "Usahakan untuk menjaga layar tetap menyala saat ada timer yang berjalan di latar depan. Menggunakan lebih banyak baterai; ketersediaan tergantung pada perangkat dan pengaturan sistem Anda.",
       "vibrateOnCompletion": "Bergetar sebentar saat timer selesai, terlepas dari suara. Membutuhkan sentuhan pada halaman dan perangkat yang didukung (seperti Android). Tidak tersedia di iOS; tidak ada notifikasi latar belakang.",
       "presetRestDesc": "Detik istirahat setelah menyelesaikan setiap putaran (0 untuk tidak ada istirahat).",
-      "noCustomProtocols": "Belum ada protokol. Klik 'Tambahkan protokol' untuk membuatnya."
+      "noCustomProtocols": "Belum ada protokol. Klik 'Tambahkan protokol' untuk membuatnya.",
+      "weeklyGoal": "Jumlah hari latihan per minggu agar streak Anda tetap berjalan, di ringkasan dasbor dan kalender latihan."
     },
     "labels": {
       "csvPath": "Jalur file log CSV",
@@ -821,7 +838,8 @@
       "takeTour": "Tur berpemandu",
       "keepScreenAwake": "Jaga layar tetap menyala saat timer berjalan",
       "vibrateOnCompletion": "Bergetar saat timer selesai",
-      "presetRest": "Istirahat"
+      "presetRest": "Istirahat",
+      "weeklyGoal": "Target mingguan"
     },
     "messages": {
       "confirmDeletePreset": "Apakah Anda yakin ingin menghapus preset ini?",
@@ -923,7 +941,7 @@
       "volumeUnit": "Volume ({weightUnit})",
       "weightUnit": "Berat ({weightUnit})"
     },
-    "deleteError": "Kesalahan Penghapusan: {error}",
+    "deleteError": "Kesalahan penghapusan: {error}",
     "deleteSuccess": "Entri catatan dihapus",
     "deleteTitle": "Hapus",
     "editTable": "Sunting tabel",
@@ -1047,7 +1065,7 @@
         "text": "Grafik ini menunjukkan bagaimana suatu latihan berubah seiring waktu, dengan garis tren dan statistik.",
         "textMine": "Grafik ini menunjukkan bagaimana suatu latihan berubah seiring waktu. Grafik ini hampir kosong hingga Anda mencatat beberapa set latihan.",
         "mobileText": "Di ponsel, grafik ditampilkan sebagai tabel dengan angka yang sama.",
-        "mobileTextMine": "Di ponsel, grafik ditampilkan sebagai tabel. Grafik ini hampir kosong sampai Anda mencatat beberapa set data."
+        "mobileTextMine": "Di ponsel, grafik ditampilkan sebagai tabel. Grafik ini hampir kosong sampai Anda mencatat beberapa set latihan."
       },
       "dashboard": {
         "title": "Dasbor Anda",
@@ -1060,7 +1078,7 @@
       },
       "ribbon": {
         "title": "Catat dari catatan apa pun",
-        "text": "Ikon dumbbell pada ribbon membuka formulir log dari mana saja.",
+        "text": "Ikon dumbel pada ribbon membuka formulir log dari mana saja.",
         "mobileText": "Di ponsel, tidak ada ikon ribbon di sini. Gunakan palet perintah untuk membuka formulir log dari catatan mana pun."
       },
       "commands": {
@@ -1076,7 +1094,7 @@
         "text": "Peta panas menunjukkan otot mana yang Anda latih paling baru."
       }
     },
-    "showMe": "Tampilkan"
+    "showMe": "Tunjukkan"
   },
   "import": {
     "chooseFile": "Pilih file CSV",

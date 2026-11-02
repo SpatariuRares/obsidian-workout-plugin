@@ -205,6 +205,19 @@
       "narrow": "{widget} nécessite au moins {min} colonnes",
       "overlap": "{widget} chevauche {other}",
       "empty": "Aucun widget n'est encore sur la grille. Ouvrez « Modifier le tableau de bord » dans le menu ⋮ pour en placer."
+    },
+    "trainingCalendar": {
+      "title": "Calendrier d'entraînement",
+      "currentStreak": "Série actuelle",
+      "bestStreak": "Meilleure série",
+      "thisWeek": "Cette semaine",
+      "daysOfGoal": "{days}/{goal} jours",
+      "trainedDay": "{day} : {volume} {unit}",
+      "restDay": "{day} : repos",
+      "less": "Moins",
+      "more": "Plus",
+      "trainedDayNoVolume": "{day} : entraînement effectué",
+      "weeks": "{count} semaines"
     }
   },
   "duration": {
@@ -350,7 +363,7 @@
       "liveIntro": "Explorez toutes les fonctionnalités ci-dessous avec des exemples d'entraînements sur six semaines. Il s'agit de données de démonstration ; essayez les commandes et voyez comment vos notes fonctionnent.",
       "tryLog": "Utilisez le bouton \"+\" pour ajouter une série. Le tableau, les graphiques et le tableau de bord utilisent le même fichier CSV.",
       "continueWithWorkout": "Ouvrez [[{workout}]] pour essayer un entraînement complet avec des tableaux d'exercices et des minuteries de repos.",
-      "moreExamples": "Consultez [[{showcase}]] pour plus d'informations sur les différents types de graphiques, les filtres et les protocoles de formation.",
+      "moreExamples": "Consultez [[{showcase}]] pour plus d'informations sur les différents types de graphiques, les filtres et les protocoles d'entraînement.",
       "ownData": "Lorsque vous êtes prêt, choisissez votre propre dossier CSV et votre dossier d'exemple dans les paramètres → Configuration et données. Conservez le dossier d'exemple comme référence.",
       "openGuideDesc": "Ouvrez la page « Comment débuter » avec des exemples fonctionnels de tableaux, de graphiques, de minuteurs et du tableau de bord."
     },
@@ -521,7 +534,7 @@
       "includeStats": "Inclure les statistiques",
       "includeTimer": "Inclure le minuteur",
       "showAddButton": "Afficher le bouton d'ajout",
-      "showControls": "Afficher les commandes",
+      "showControls": "Afficher les contrôles",
       "showStatistics": "Afficher les statistiques",
       "showTrendHeader": "Afficher l'en-tête de tendance",
       "showTrendLine": "Afficher la ligne de tendance",
@@ -634,7 +647,10 @@
       "timerUpdated": "Le minuteur a été mis à jour avec succès !",
       "validChooseExercise": "Sélectionner un exercice",
       "validationCombinedMode": "Pour le type « exercice + entraînement », vous devez remplir les deux champs.",
-      "dashboardUpdated": "Tableau de bord mis à jour avec succès !"
+      "dashboardUpdated": "Tableau de bord mis à jour avec succès !",
+      "tableUpdateFailed": "Échec de la mise à jour du tableau : il est introuvable dans sa note. Rouvrez la note et réessayez.",
+      "timerUpdateFailed": "Échec de la mise à jour du minuteur : il est introuvable dans sa note. Rouvrez la note et réessayez.",
+      "dashboardUpdateFailed": "Échec de la mise à jour du tableau de bord : il est introuvable dans sa note, ou un autre tableau de bord sans identifiant a les mêmes réglages. Rouvrez la note et réessayez."
     },
     "parameterKey": "Clé :",
     "parameterLabel": "Étiquette :",
@@ -702,7 +718,7 @@
     },
     "sets": "Séries :",
     "similarTags": "Tags similaires :",
-    "similarity": "Similitude",
+    "similarity": "Similarité",
     "status": "Statut",
     "tag": "Tag",
     "tagsSelector": "Tags musculaires :",
@@ -789,10 +805,11 @@
       "weightUnit": "Unité pour les graphiques, les totaux et les nouveaux enregistrements. Chaque enregistrement conserve l'unité dans laquelle il a été créé.",
       "takeTour": "Parcourez rapidement l'enregistrement, les graphiques, les tableaux et les minuteurs sur une note courte.",
       "welcomeWindow": "Réafficher la fenêtre d'accueil pour démarrer avec des données d'exemple ou à partir de zéro.",
-      "keepScreenAwake": "Essayez de maintenir l'écran allumé pendant que l'une des minuteries fonctionne en premier plan. Consomme plus de batterie ; la disponibilité dépend de votre appareil et de vos paramètres système.",
-      "vibrateOnCompletion": "Vibre brièvement lorsque le minuteur s'éteint, indépendamment du son. Nécessite un clic sur la page et un appareil compatible (par exemple, Android). Non disponible sur iOS ; pas d'alertes en arrière-plan.",
+      "keepScreenAwake": "Essayez de garder l'écran allumé pendant qu'un minuteur fonctionne au premier plan. Consomme plus de batterie ; la disponibilité dépend de votre appareil et de vos paramètres système.",
+      "vibrateOnCompletion": "Vibre brièvement lorsque le minuteur se termine, indépendamment du son. Nécessite un appui sur la page et un appareil compatible (par exemple, Android). Non disponible sur iOS ; pas d'alertes en arrière-plan.",
       "presetRestDesc": "Nombre de secondes de repos après le travail de chaque tour (0 pour aucun repos).",
-      "noCustomProtocols": "Aucun protocole n'est défini pour le moment. Cliquez sur « Ajouter un protocole » pour en créer un."
+      "noCustomProtocols": "Aucun protocole n'est défini pour le moment. Cliquez sur « Ajouter un protocole » pour en créer un.",
+      "weeklyGoal": "Jours d'entraînement par semaine qui maintiennent votre série, dans le résumé du tableau de bord et le calendrier d'entraînement."
     },
     "labels": {
       "csvPath": "Chemin du fichier journal CSV",
@@ -805,7 +822,7 @@
       "presetDuration": "Durée (secondes)",
       "presetName": "Nom du préréglage",
       "presetRounds": "Tours",
-      "presetShowControls": "Afficher les commandes",
+      "presetShowControls": "Afficher les contrôles",
       "presetSound": "Son",
       "presetType": "Type de minuteur",
       "protocolAbbreviation": "Abréviation",
@@ -821,7 +838,8 @@
       "takeTour": "Visite guidée",
       "keepScreenAwake": "Maintenir l'écran allumé pendant que le minuteur est en cours",
       "vibrateOnCompletion": "Vibrer à la fin d'un minuteur",
-      "presetRest": "Repos"
+      "presetRest": "Repos",
+      "weeklyGoal": "Objectif hebdomadaire"
     },
     "messages": {
       "confirmDeletePreset": "Êtes-vous sûr de vouloir supprimer ce préréglage ?",
@@ -885,8 +903,8 @@
       "twentyone": "7 répétitions dans la partie inférieure, 7 dans la partie supérieure, puis 7 répétitions complètes."
     },
     "presetHelp": {
-      "tabata": "20 secondes de travail à intensité maximale, 10 secondes de repos, 8 séries : un total de 4 minutes.",
-      "emom": "Chaque minute, au début de chaque minute : commencez vos répétitions au début de la minute et reposez-vous pendant le temps restant, 10 séries."
+      "tabata": "20 secondes de travail à intensité maximale, 10 secondes de repos, 8 tours : 4 minutes au total.",
+      "emom": "Chaque minute pile : commencez vos répétitions au début de chaque minute, puis reposez-vous jusqu'à la fin de celle-ci, 10 tours."
     }
   },
   "stats": {
@@ -896,7 +914,7 @@
     "recentTrend": "Tendance récente",
     "recentVsPrev": " (vs préc.)",
     "sessions": "Séances",
-    "average": "Moyenne :",
+    "average": "Moyenne : ",
     "title": "Statistiques {dataTypeLabel} ({contextLabel}) :"
   },
   "table": {
@@ -1013,10 +1031,10 @@
   "welcome": {
     "title": "Bienvenue dans le plugin d'entraînement",
     "intro": "Suivez vos séances, puis visualisez-les sous forme de graphiques, de tableaux et de tableau de bord. Comment souhaitez-vous commencer ?",
-    "tryExamples": "Essayez avec des données d'exemple",
+    "tryExamples": "Essayer avec des données d'exemple",
     "startScratch": "Commencer à zéro",
     "later": "Plus tard",
-    "tryExamplesDesc": "Ajoute des exemples d'entraînements, puis vous guide à travers l'utilisation du plugin avec ces exemples.",
+    "tryExamplesDesc": "Ajoute des entraînements d'exemple, puis vous guide dans le plugin à partir de ceux-ci.",
     "startScratchDesc": "Vous guide à travers l'utilisation du plugin sur vos propres données, en commençant par votre première série.",
     "tourOnYourData": "Vous avez déjà un journal d'entraînement, donc la visite se déroule sur vos propres données."
   },
@@ -1072,8 +1090,8 @@
         "text": "Vous pouvez refaire cette visite depuis Paramètres → Premiers pas."
       },
       "muscles": {
-        "title": "Carte de chaleur musculaire",
-        "text": "La carte de chaleur indique quels muscles vous avez le plus récemment sollicités."
+        "title": "Carte thermique musculaire",
+        "text": "La carte thermique indique quels muscles vous avez le plus récemment sollicités."
       }
     },
     "showMe": "Montrez-moi"
@@ -1083,7 +1101,7 @@
     "notAnExport": "Ce fichier n'est ni une exportation \"Strong\" ni une exportation \"Hevy\".",
     "noSets": "Aucune série n'a pu être lue à partir de ce fichier. Vérifiez que c'est le fichier CSV que l'application a exporté, sans modification.",
     "readError": "Impossible de lire le fichier : {error}",
-    "source": "Exporter depuis {source}",
+    "source": "Exportation depuis {source}",
     "setsFound": "Séries dans le fichier : {count}",
     "setsToAdd": "Séries à ajouter : {count}",
     "duplicates": "Déjà dans votre journal, ignorées : {count}",

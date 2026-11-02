@@ -20,18 +20,18 @@
       "reps": "Ripetizioni",
       "volume": "Volume",
       "weight": "Peso",
-      "e1rm": "Valore stimato per 1RM"
+      "e1rm": "1RM stimato"
     },
     "defaultTitle": "Andamento {type}",
     "noTypesAvailable": "nessun tipo di grafico disponibile",
-    "noEligibleE1rm": "Non sono disponibili serie valide per il calcolo del 1RM stimato. Registrare un peso positivo con 1-12 ripetizioni, escludendo il riscaldamento e le serie di drop set."
+    "noEligibleE1rm": "Non ci sono serie valide per calcolare il 1RM stimato. Registra un peso positivo con 1–12 ripetizioni, escludendo riscaldamento e drop set."
   },
   "commands": {
     "addExerciseBlock": "Aggiungi blocco esercizio",
     "addMissingBlockIds": "Aggiungi gli ID mancanti ai blocchi di codice",
     "auditExerciseNames": "Verifica nomi degli esercizi",
     "convertExercise": "Converti esercizio",
-    "createCsvLog": "Crea file di log CSV",
+    "createCsvLog": "Crea file CSV del registro",
     "exportWorkoutToCanvas": "Esporta allenamento su canvas",
     "generateTagReference": "Genera riferimento dei tag",
     "insertTable": "Inserisci tabella allenamento",
@@ -149,7 +149,7 @@
       "title": "Allenamenti recenti"
     },
     "summary": {
-      "currentStreak": "Settimane consecutive",
+      "currentStreak": "Striscia attuale",
       "currentStreakSuffix": "{count} settimane",
       "personalRecords": "Record personali",
       "title": "Riepilogo",
@@ -205,6 +205,19 @@
       "narrow": "{widget} richiede almeno {min} colonne",
       "overlap": "{widget} si sovrappone a {other}",
       "empty": "Nessun widget è ancora nella griglia. Apri «Modifica dashboard» nel menu ⋮ per aggiungerne."
+    },
+    "trainingCalendar": {
+      "title": "Calendario di allenamento",
+      "currentStreak": "Striscia attuale",
+      "bestStreak": "Striscia migliore",
+      "thisWeek": "Questa settimana",
+      "daysOfGoal": "{days}/{goal} giorni",
+      "trainedDay": "{day}: volume {volume} {unit}",
+      "restDay": "{day}: riposo",
+      "less": "Meno",
+      "more": "Più",
+      "trainedDayNoVolume": "{day}: allenato",
+      "weeks": "{count} settimane"
     }
   },
   "duration": {
@@ -293,7 +306,7 @@
       "protocolSuperset": "Esercizi accoppiati",
       "quickReferenceTitle": "Riferimento rapido",
       "strengthExerciseTitle": "Esercizio di forza (volume + peso)",
-      "tablesIntro": "Le tabelle mostrano i tuoi registri allenamento con capacità di ordinamento e modifica.",
+      "tablesIntro": "Le tabelle mostrano i tuoi registri di allenamento e permettono di ordinarli e modificarli.",
       "tablesTitle": "2. Tabelle",
       "timedExerciseTitle": "Esercizio a tempo (durata)",
       "timersTitle": "3. Timer",
@@ -381,7 +394,7 @@
       }
     },
     "notes": {
-      "supersetCalves": "Superset con calf raise a corpo libero",
+      "supersetCalves": "Superset con sollevamenti per polpacci a corpo libero",
       "supersetLunges": "Superset con affondi"
     },
     "createToOpenGuide": "La guida introduttiva fa parte delle note di esempio, che al momento non esistono. Vuoi crearle ora?",
@@ -442,9 +455,9 @@
     "errors": {
       "tagReferenceFailed": "Errore durante la generazione del riferimento al tag: {error}",
       "csvLoadError": "Errore nel caricamento dati CSV: {error}",
-      "csvCreateError": "Errore creazione file CSV: {error}",
+      "csvCreateError": "Errore durante la creazione del file CSV: {error}",
       "blockIdsError": "Errore durante l'aggiunta degli ID dei blocchi: {error}",
-      "csvFilesError": "Errore creazione file CSV: {error}",
+      "csvFilesError": "Errore durante la creazione dei file CSV: {error}",
       "muscleTagsCsvError": "Errore durante la creazione del CSV dei tag muscolari: {error}",
       "muscleTagsLoadError": "Errore durante il caricamento dei tag muscolari: {error}",
       "templateGenError": "Impossibile generare i template: {error}",
@@ -463,7 +476,7 @@
     },
     "tagReferenceGenerated": "Riferimento dei tag generato correttamente!",
     "timerCompleted": "Timer completato!",
-    "templatesGenerated": "Modelli generati in '{folder}'. Ora è possibile personalizzarli.",
+    "templatesGenerated": "Modelli generati in '{folder}'. Ora puoi personalizzarli.",
     "exerciseFolderNotSet": "Imposta prima la cartella degli esercizi nelle impostazioni."
   },
   "modal": {
@@ -626,15 +639,18 @@
       "newRecord": "Nuovo record: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Grafico inserito correttamente!",
       "dashboardInserted": "Dashboard inserita correttamente!",
-      "exerciseNameRequired": "Si prega di inserire il nome dell'esercizio.",
+      "exerciseNameRequired": "Inserisci il nome dell'esercizio",
       "exerciseSectionCreated": "Sezione esercizi creata con successo!",
       "tableInserted": "Tabella inserita correttamente!",
+      "tableUpdateFailed": "Impossibile aggiornare la tabella: non è stata trovata nella sua nota. Riapri la nota e riprova.",
       "tableUpdated": "Tabella aggiornata correttamente!",
       "timerInserted": "Timer inserito correttamente!",
+      "timerUpdateFailed": "Impossibile aggiornare il timer: non è stato trovato nella sua nota. Riapri la nota e riprova.",
       "timerUpdated": "Timer aggiornato correttamente!",
       "validChooseExercise": "Seleziona un esercizio",
       "validationCombinedMode": "Per il tipo \"esercizio + allenamento\", è necessario compilare entrambi i campi!",
-      "dashboardUpdated": "Dashboard aggiornata con successo!"
+      "dashboardUpdated": "Dashboard aggiornata con successo!",
+      "dashboardUpdateFailed": "Impossibile aggiornare la dashboard: non è stata trovata nella sua nota, oppure un'altra dashboard senza ID ha le stesse impostazioni. Riapri la nota e riprova."
     },
     "parameterKey": "Chiave:",
     "parameterLabel": "Etichetta:",
@@ -645,7 +661,7 @@
       "customTitle": "Lascia vuoto per titolo automatico",
       "enterTagName": "Inserisci nome tag (es. petto, chest)",
       "exerciseAutocomplete": "Inizia a digitare per vedere gli esercizi disponibili...",
-      "folderPath": "es. Esercizi o lascia vuoto per root",
+      "folderPath": "es. Esercizi oppure lascia vuoto per la radice",
       "note": "Spingi forte qui. Questo è il tuo esercizio fondamentale.",
       "notes": "es. Buona forma, mi sono sentito forte",
       "parameterKey": "es. velocità",
@@ -658,10 +674,10 @@
       "selectMuscleGroup": "Seleziona il gruppo muscolare...",
       "selectWorkoutFile": "Seleziona il file dell'allenamento da esportare...",
       "sets": "4",
-      "workout": "es. Allenamento A, Training B, o usa la casella qui sotto"
+      "workout": "es. Allenamento A, Training B, oppure usa la casella qui sotto"
     },
     "protocol": "Protocollo:",
-    "recentExercises": "Ultimi:",
+    "recentExercises": "Recenti:",
     "restTime": "Tempo di riposo (secondi):",
     "rounds": "Round:",
     "save": "Salva",
@@ -758,10 +774,10 @@
       "generating": "Generazione...",
       "overwriting": "Sovrascrittura...",
       "regenerateOverwrite": "Rigenera (sovrascrivi)",
-      "runAllMaintenance": "Esegui tutti",
+      "runAllMaintenance": "Esegui tutte",
       "savePreset": "Salva",
       "saveProtocol": "Salva",
-      "showWelcome": "Mostra benvenuto",
+      "showWelcome": "Mostra la finestra di benvenuto",
       "takeTour": "Inizia il tour"
     },
     "descriptions": {
@@ -773,7 +789,7 @@
       "exerciseBlockTemplate": "Template per blocchi esercizio. Placeholder disponibili: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Percorso alla cartella contenente le pagine degli esercizi",
       "generateDefaultTemplates": "Genera template predefinito pagina esercizio e riferimento tag nella cartella 'Workout Templates'. Puoi personalizzare questi file per cambiare lingua e struttura.",
-      "noPresets": "Nessun preset timer configurato. Clicca 'Aggiungi preset' per crearne uno.",
+      "noPresets": "Nessun preset timer configurato. Clicca «Aggiungi preset» per crearne uno.",
       "presetDurationDesc": "Durata in secondi (ad esempio, 90 per un timer di 90 secondi).",
       "presetNameDesc": "Nome univoco per questo preset del timer (ad esempio, 'Riposo 90s', 'HIIT 30/10').",
       "presetRoundsDesc": "Numero di round da ripetere prima di interrompere.",
@@ -782,13 +798,14 @@
       "quickWeightIncrement": "Incremento peso utilizzato dai pulsanti +/- nei modal crea/modifica registro allenamento (es. 2.5 per +2.5 / -2.5 unità)",
       "repDuration": "Tempo stimato per eseguire una ripetizione. Utilizzato quando il conteggio ripetizioni è noto (es. 'x 10 rip').",
       "runAllMaintenance": "Esegui tutte le attività di manutenzione in sequenza. È sicuro eseguirle più volte.",
-      "setDuration": "Utilizzato quando le ripetizioni non sono specificate (fallback). Intervallo tipico: 30-60 secondi.",
+      "setDuration": "Utilizzato quando le ripetizioni non sono specificate (valore di riserva). Intervallo tipico: 30-60 secondi.",
       "setupCSV": "Crea sia workout_logs.csv che muscle-tags.csv nella cartella configurata.",
       "weightIncrement": "Incremento peso predefinito per sovraccarico progressivo (es. 2.5 per incrementi di 2.5 unità)",
       "showRibbonIcon": "Mostra nella barra laterale l'icona del manubrio che apre il modulo del registro allenamento",
       "weightUnit": "Unità per grafici, totali e nuovi registri. Ogni registro mantiene l'unità in cui è stato inserito.",
       "takeTour": "Percorri registro, grafici, tabelle e timer in una breve nota.",
       "welcomeWindow": "Mostra nuovamente la finestra di benvenuto per iniziare con dati di esempio o da zero.",
+      "weeklyGoal": "Giorni di allenamento a settimana che mantengono attiva la tua striscia, nel riepilogo della dashboard e nel calendario di allenamento.",
       "keepScreenAwake": "Cerca di mantenere lo schermo attivo mentre è in esecuzione un timer in primo piano. Consuma più batteria; la disponibilità dipende dal tuo dispositivo e dalle impostazioni del sistema.",
       "vibrateOnCompletion": "Vibra brevemente quando un timer termina, indipendentemente dall'emissione di suoni. Richiede un tocco sulla pagina e un dispositivo compatibile (come Android). Non disponibile su iOS; nessuna notifica in background.",
       "presetRestDesc": "Secondi di riposo dopo il lavoro di ogni round (0 per nessun riposo).",
@@ -818,6 +835,7 @@
       "weightUnit": "Unità di misura peso",
       "showRibbonIcon": "Mostra icona di registrazione rapida",
       "welcomeWindow": "Finestra di benvenuto",
+      "weeklyGoal": "Obiettivo settimanale",
       "takeTour": "Tour guidato",
       "keepScreenAwake": "Mantieni lo schermo attivo durante l'esecuzione di un timer",
       "vibrateOnCompletion": "Vibra al completamento del timer",
@@ -832,7 +850,7 @@
       "presetNameRequired": "Il nome del preset è obbligatorio",
       "presetSaved": "Preset salvato",
       "protocolAbbreviationRequired": "È richiesta l'abbreviazione (massimo 3 caratteri)",
-      "protocolColorRequired": "Si prega di inserire un codice colore esadecimale valido (ad esempio, #FF5733)",
+      "protocolColorRequired": "Inserisci un codice colore esadecimale valido (ad esempio #FF5733)",
       "protocolDeleted": "Protocollo eliminato",
       "protocolNameExists": "Esiste già un protocollo con questo nome.",
       "protocolNameRequired": "Il nome del protocollo è obbligatorio",
@@ -897,7 +915,7 @@
     "recentVsPrev": " (vs prec.)",
     "sessions": "Sessioni",
     "average": "Valore medio: ",
-    "title": "{dataTypeLabel} statistiche ({contextLabel}):"
+    "title": "Statistiche: {dataTypeLabel} ({contextLabel}):"
   },
   "table": {
     "actions": "Azioni",
@@ -982,11 +1000,11 @@
     "down": "In discesa",
     "improving": "In miglioramento",
     "increasing": "In aumento",
-    "invariant": "Immutabile",
+    "invariant": "Invariato",
     "neutral": "Neutro",
     "stable": "Stabile",
     "stableLower": "Stabile",
-    "up": "Su"
+    "up": "In rialzo"
   },
   "canvas": {
     "duration": "**Durata:** {duration}",
@@ -1012,7 +1030,7 @@
   },
   "welcome": {
     "title": "Benvenuti nel plugin per l'allenamento",
-    "intro": "Monitora i tuoi allenamenti, quindi visualizzali sotto forma di grafici, tabelle e un pannello di controllo. Come preferisci iniziare?",
+    "intro": "Monitora i tuoi allenamenti, quindi visualizzali sotto forma di grafici, tabelle e dashboard. Come preferisci iniziare?",
     "tryExamples": "Prova con dati di esempio",
     "startScratch": "Inizia da zero",
     "later": "Più tardi",
@@ -1045,7 +1063,7 @@
       "chart": {
         "title": "Il tuo progresso",
         "text": "Il grafico mostra come un esercizio evolve nel tempo, con una linea di tendenza e i relativi dati statistici.",
-        "textMine": "Il grafico mostra come un esercizio evolve nel tempo. Inizialmente è quasi vuoto, ma si riempie quando si registrano alcuni set.",
+        "textMine": "Il grafico mostra come un esercizio evolve nel tempo. Inizialmente è quasi vuoto, ma si riempie man mano che registri alcune serie.",
         "mobileText": "Sul telefono, il grafico viene visualizzato come una tabella con gli stessi numeri.",
         "mobileTextMine": "Sul telefono il grafico è mostrato come tabella. È quasi vuoto finché non registri alcune serie."
       },
@@ -1083,7 +1101,7 @@
     "notAnExport": "Questo file non è un'esportazione di Strong o Hevy.",
     "noSets": "Non è stato possibile leggere alcuna serie da questo file. Controlla che sia il file CSV esportato dall'app, senza modifiche.",
     "readError": "Impossibile leggere il file: {error}",
-    "source": "Esporta da {source}",
+    "source": "Esportazione da {source}",
     "setsFound": "Serie nel file: {count}",
     "setsToAdd": "Serie da aggiungere: {count}",
     "duplicates": "Già nel registro, saltate: {count}",

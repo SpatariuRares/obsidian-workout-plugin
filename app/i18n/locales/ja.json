@@ -65,13 +65,13 @@
       "removeMapping": "マッピングを削除する",
       "reps": "レップ数",
       "title": "フィールドのマッピング",
-      "weight": "重量 ({unit})"
+      "weight": "重量（{unit}）"
     },
     "preview": {
       "noEntries": "このエクササイズに関するログエントリは見つかりませんでした。",
       "title": "プレビュー",
-      "willConvertMany": "{count} のログエントリが変換されます",
-      "willConvertOne": "1つのログエントリが変換されます"
+      "willConvertMany": "{count} 件のログエントリが変換されます",
+      "willConvertOne": "1件のログエントリが変換されます"
     },
     "sectionExercise": "エクササイズ",
     "success": "{count} 件のログエントリを正常に変換しました",
@@ -87,7 +87,7 @@
       "columnEstimated": "推定",
       "columnVariance": "変動",
       "columnWorkout": "ワークアウト",
-      "minutesSuffix": "分",
+      "minutesSuffix": " 分",
       "noData": "比較するためのセッションがまだ足りません。",
       "subtitle": "推定時間と実際のワークアウト時間",
       "title": "所要時間の比較",
@@ -205,6 +205,19 @@
       "narrow": "{widget} には少なくとも {min} 列が必要です",
       "overlap": "{widget} が {other} と重なっています",
       "empty": "グリッドにまだウィジェットがありません。⋮ メニューの「ダッシュボードを編集」を開いて配置してください。"
+    },
+    "trainingCalendar": {
+      "title": "トレーニングカレンダー",
+      "currentStreak": "現在の連続記録",
+      "bestStreak": "最長の連続記録",
+      "thisWeek": "今週",
+      "daysOfGoal": "{days}/{goal}日",
+      "trainedDay": "{day}: ボリューム {volume} {unit}",
+      "restDay": "{day}: 休養日",
+      "less": "少",
+      "more": "多",
+      "trainedDayNoVolume": "{day}: トレーニング済み",
+      "weeks": "{count}週"
     }
   },
   "duration": {
@@ -309,8 +322,8 @@
       "gettingStarted": "はじめに",
       "hiitCardioSession": "HIIT（高強度インターバルトレーニング）のカーディオセッション"
     },
-    "folderCreatedError": "サンプルフォルダの作成に失敗しました。",
-    "folderCreatedSuccess": "サンプルフォルダ「{folder}」を作成しました！",
+    "folderCreatedError": "サンプルフォルダーの作成に失敗しました。",
+    "folderCreatedSuccess": "サンプルフォルダー「{folder}」を作成しました！",
     "folderNames": {
       "base": "The Gym サンプル",
       "exercises": "エクササイズ",
@@ -330,7 +343,7 @@
       "exercisesDesc": "ログとグラフ付きのサンプルエクササイズページ",
       "exercisesFolder": "**{folder}/**",
       "featureShowcaseDesc": "すべてのコードブロックに関する完全なリファレンス",
-      "folderStructureTitle": "フォルダ構造",
+      "folderStructureTitle": "フォルダー構造",
       "logDesc": "あなたのCSV形式のワークアウトデータ",
       "logFolder": "**{folder}/**",
       "nextStepsTitle": "次のステップ",
@@ -338,12 +351,12 @@
       "quickActionsTitle": "クイックアクション",
       "step1": "[[{dashboard}]] を開いて統計を確認する",
       "step2": "[[{featureShowcase}]] で利用可能なすべての機能を確認する",
-      "step3": "**{workouts}** フォルダにあるワークアウトを試してみてください。",
+      "step3": "**{workouts}** フォルダーにあるワークアウトを試してみてください。",
       "step4": "**{exercises}** で独自のエクササイズを作成してください。",
       "tableHeaderDescription": "説明",
-      "tableHeaderFileFolder": "ファイル/フォルダ",
+      "tableHeaderFileFolder": "ファイル/フォルダー",
       "title": "The Gym プラグインの開始方法",
-      "welcome": "ようこそ！このフォルダには、すべての機能を学ぶのに役立つサンプルファイルが含まれています。",
+      "welcome": "ようこそ！このフォルダーには、すべての機能を学ぶのに役立つサンプルファイルが含まれています。",
       "workoutsDesc": "例となるワークアウトのテンプレート",
       "workoutsFolder": "**{folder}/**",
       "pagesIntro": "各ページで機能を1つずつ見ていきましょう。リンクを順にたどるか、下から機能を選んでください。「戻る」と「次へ」でメモ間を移動し、通常どおりスクロールして各例を確認できます。",
@@ -358,9 +371,9 @@
       "cyclingCooldownTitle": "サイクリングのクールダウン",
       "intro": "高強度インターバルトレーニング。インターバルタイマーと有酸素トラッキング機能付き。",
       "runningProgressTitle": "ランニングの進捗",
-      "sprintIntervalsTitle": "スプリントインターバル (30秒 × 8ラウンド)",
+      "sprintIntervalsTitle": "スプリントインターバル（30秒 × 8ラウンド）",
       "title": "HIIT（高強度インターバルトレーニング）カーディオセッション",
-      "warmupTitle": "ウォーミングアップ (5分)"
+      "warmupTitle": "ウォーミングアップ（5分）"
     },
     "workout": {
       "chart": "グラフ",
@@ -403,18 +416,18 @@
     "front": "正面",
     "labels": {
       "avgCustom": "平均 {label}",
-      "avgDistance": "平均距離 (km)",
-      "avgDuration": "平均時間 (秒)",
-      "avgHeartRate": "平均心拍数 (bpm)",
-      "avgVolume": "平均ボリューム ({unit})",
+      "avgDistance": "平均距離（km）",
+      "avgDuration": "平均時間（秒）",
+      "avgHeartRate": "平均心拍数（bpm）",
+      "avgVolume": "平均ボリューム（{unit}）",
       "avgWeight": "平均重量（{unit}）",
       "dailyVolume": "1日のボリューム（{unit}）",
-      "pace": "ペース (分/km)",
+      "pace": "ペース（分/km）",
       "totalCustom": "合計 {label}",
       "totalDistance": "総距離（km）",
-      "totalDuration": "合計時間 (秒)",
+      "totalDuration": "合計時間（秒）",
       "totalVolume": "総ボリューム（{unit}）",
-      "totalWeight": "総重量 ({unit})"
+      "totalWeight": "総重量（{unit}）"
     },
     "muscleHeatMap": "筋肉ヒートマップ",
     "noMatchMessage": "このフィルターに一致する記録はまだありません。",
@@ -434,7 +447,7 @@
     "exploreExampleData": "またはサンプルデータで試す",
     "lastSet": "前回: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
-    "personalRecord": "パーソナル記録: {weight} {unit} × {reps}"
+    "personalRecord": "自己ベスト: {weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "コードブロックを挿入しました",
@@ -544,7 +557,7 @@
     "exerciseType": "エクササイズの種類:",
     "exportTags": "タグをエクスポート",
     "fileName": "ファイル名",
-    "folderPath": "フォルダパス (任意):",
+    "folderPath": "フォルダーパス（任意）:",
     "importMerge": "マージ",
     "importReplace": "すべて置換",
     "importTags": "タグをインポート",
@@ -554,9 +567,9 @@
       "exercise": "エクササイズ:",
       "reps": "レップ数:",
       "targetReps": "目標レップ数：",
-      "targetWeight": "目標: ({unit}):",
-      "volume": "ボリューム ({unit}):",
-      "weight": "重量 ({unit}):"
+      "targetWeight": "目標（{unit}）:",
+      "volume": "ボリューム（{unit}）:",
+      "weight": "重量（{unit}）:"
     },
     "layoutGrouped": "筋肉ごとにグループ化",
     "layoutHorizontal": "水平方向のレイアウト",
@@ -581,7 +594,7 @@
       "auditScanError": "スキャン中にエラー：{error}",
       "auditScanning": "エクササイズファイルをスキャン中...",
       "canvasExportError": "キャンバスのエクスポートエラー: {error}",
-      "canvasExported": "キャンバスをエクスポートしました ({path})",
+      "canvasExported": "キャンバスをエクスポートしました（{path}）",
       "confirmUpdateTarget": "目標を {targetWeight}{weightUnit} に更新しますか？",
       "dismissAchievement": "実績を閉じる",
       "exerciseBlockInserted": "エクササイズブロックを挿入しました",
@@ -595,7 +608,7 @@
       "migrationComplete": "移行が完了しました。{count} 件のエクササイズファイルを更新しました。",
       "migrationError": "マイグレーションエラー: {error}",
       "muscleTagCount": "{count} 個のタグが見つかりました",
-      "muscleTagDeleteConfirm": "「{tag}」のタグを削除してもよろしいですか？",
+      "muscleTagDeleteConfirm": "タグ「{tag}」を削除してもよろしいですか？",
       "muscleTagDeleted": "タグを削除しました",
       "muscleTagExists": "タグ「{tag}」はすでに存在します",
       "muscleTagExportError": "筋肉タグのエクスポートに失敗しました: {error}",
@@ -622,19 +635,22 @@
       "validMaxValue": "{field}は{max}以下でなければなりません",
       "validFieldRequired": "{field}は必須です",
       "migrationNoUpdates": "すべてのエクササイズページはすでに最新です",
-      "validMustBeWholeNumber": "{field} は整数である必要があります。",
-      "newRecord": "新規記録: {weight} {unit} (+{increase} {unit})",
+      "validMustBeWholeNumber": "{field}は整数である必要があります",
+      "newRecord": "新規記録: {weight} {unit}（+{increase} {unit}）",
       "chartInserted": "グラフが正常に挿入されました！",
       "dashboardInserted": "ダッシュボードの挿入に成功しました！",
       "exerciseNameRequired": "エクササイズ名を入力してください",
       "exerciseSectionCreated": "エクササイズセクションの作成に成功しました！",
       "tableInserted": "テーブルが正常に挿入されました！",
+      "tableUpdateFailed": "テーブルを更新できませんでした。対象がメモ内に見つかりません。メモを開き直して、もう一度お試しください。",
       "tableUpdated": "テーブルが正常に更新されました！",
       "timerInserted": "タイマーが正常に挿入されました！",
+      "timerUpdateFailed": "タイマーを更新できませんでした。対象がメモ内に見つかりません。メモを開き直して、もう一度お試しください。",
       "timerUpdated": "タイマーが正常に更新されました！",
       "validChooseExercise": "エクササイズを選択してください",
       "validationCombinedMode": "「エクササイズ + ワークアウト」タイプの場合は、両方のフィールドを必ず入力してください！",
-      "dashboardUpdated": "ダッシュボードを更新しました！"
+      "dashboardUpdated": "ダッシュボードを更新しました！",
+      "dashboardUpdateFailed": "ダッシュボードを更新できませんでした。対象がメモ内に見つからないか、ID のない別のダッシュボードが同じ設定になっています。メモを開き直して、もう一度お試しください。"
     },
     "parameterKey": "キー:",
     "parameterLabel": "ラベル:",
@@ -643,7 +659,7 @@
     "parameterUnit": "単位（任意）：",
     "placeholders": {
       "customTitle": "自動でタイトルを設定する場合は、空欄にする。",
-      "enterTagName": "タグ名を入力してください (例: chest、petto)",
+      "enterTagName": "タグ名を入力してください（例: chest、petto）",
       "exerciseAutocomplete": "入力を開始して、利用可能なエクササイズを確認してください...",
       "folderPath": "例：Exercises（空欄の場合はルート）",
       "note": "ここは全力で。これが基本のエクササイズです。",
@@ -757,7 +773,7 @@
       "generated": "生成されました！",
       "generating": "生成中...",
       "overwriting": "上書き中...",
-      "regenerateOverwrite": "再生成 (上書き)",
+      "regenerateOverwrite": "再生成（上書き）",
       "runAllMaintenance": "すべて実行",
       "savePreset": "保存",
       "saveProtocol": "保存",
@@ -766,16 +782,16 @@
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "既存の筋肉タグのCSVファイルが存在します。デフォルト値で上書きしますか？これにより、すべてのカスタムタグが削除されます。",
-      "csvFolder": "ワークアウトの記録と筋肉タグのCSVファイルを保存するフォルダ。",
+      "csvFolder": "ワークアウトの記録と筋肉タグのCSVファイルを保存するフォルダー。",
       "defaultExactMatch": "有効にした場合、フィルタリングはデフォルトで完全一致による名前のマッチングを使用します。あいまいなマッチングを使用するには、無効にします。",
       "defaultRepsPerSet": "指定がない場合に想定するレップ数。0の場合は「代替のセット時間」を使用します。",
       "defaultTimerPreset": "新しいタイマーのデフォルトのプリセットを選択してください。",
       "exerciseBlockTemplate": "エクササイズブロックのテンプレート。利用可能なプレースホルダー: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
-      "exerciseFolder": "エクササイズページの保存されているフォルダへのパス",
-      "generateDefaultTemplates": "'ワークアウトテンプレート'フォルダに、デフォルトのエクササイズページのテンプレートとタグの参照を作成します。これらのファイルは、言語や構造を変更するためにカスタマイズできます。",
+      "exerciseFolder": "エクササイズページの保存されているフォルダーへのパス",
+      "generateDefaultTemplates": "'ワークアウトテンプレート'フォルダーに、デフォルトのエクササイズページのテンプレートとタグの参照を作成します。これらのファイルは、言語や構造を変更するためにカスタマイズできます。",
       "noPresets": "タイマーのプリセットは設定されていません。「プリセットを追加」をクリックして、新しいプリセットを作成してください。",
       "presetDurationDesc": "秒単位の時間（例：90秒タイマーなら 90）。",
-      "presetNameDesc": "このタイマープリセットの固有の名前 (例: 'レスト 90秒', 'HIIT 30/10')",
+      "presetNameDesc": "このタイマープリセットの固有の名前（例: 'レスト 90秒', 'HIIT 30/10'）",
       "presetRoundsDesc": "停止するまでに繰り返すインターバルのラウンド数。",
       "protocolAbbreviation": "バッジに表示される短い略称（最大3文字）",
       "protocolColor": "バッジの背景色（16進数形式、例：#FF5733）",
@@ -783,13 +799,14 @@
       "repDuration": "1回の反復にかかる推定時間。反復回数が分かっている場合に利用します（例：「10回 ×」）。",
       "runAllMaintenance": "すべてのメンテナンスタスクを順番に実行します。複数回実行しても安全です。",
       "setDuration": "レップ数が指定されていない場合に使用します（代替値）。一般的な範囲：30～60秒。",
-      "setupCSV": "設定したフォルダに workout_logs.csv と muscle-tags.csv の両方を作成します。",
+      "setupCSV": "設定したフォルダーに workout_logs.csv と muscle-tags.csv の両方を作成します。",
       "weightIncrement": "漸進性過負荷で使うデフォルトの重量増分（例：2.5 単位ずつ増やすなら 2.5）",
       "showRibbonIcon": "ワークアウト記録フォームを開くダンベルアイコンをリボンに表示します",
       "weightUnit": "グラフ、合計、および新規ログの単位。各ログは、入力された単位を保持します。",
       "takeTour": "短いメモで、ログ、グラフ、テーブル、タイマーの基本を順に説明します。",
       "welcomeWindow": "例となるデータを使用するか、最初から設定を開始するために、ウェルカムウィンドウを再度表示します。",
-      "keepScreenAwake": "タイマーが実行されている間、画面を常に表示するようにしてください。バッテリー消費が大きくなります。利用可能かどうかは、お使いのデバイスとシステム設定によって異なります。",
+      "weeklyGoal": "ストリークを継続するために必要な週あたりのトレーニング日数。ダッシュボードの概要とトレーニングカレンダーに反映されます。",
+      "keepScreenAwake": "可能な場合は、タイマーの実行中に画面をオンのままにします。バッテリーの消費が増えます。対応状況は、お使いのデバイスとシステム設定によって異なります。",
       "vibrateOnCompletion": "タイマーが終了した際に、音とは別に短い振動が発生します。ページへのタップと、Androidなどの対応デバイスが必要です。iOSでは利用できません。バックグラウンドアラートは表示されません。",
       "presetRestDesc": "各ラウンドの作業後の休憩時間（0は休憩なし）。",
       "noCustomProtocols": "まだプロトコルは設定されていません。「プロトコルを追加」をクリックして、新しいプロトコルを作成してください。"
@@ -800,7 +817,7 @@
       "defaultRepsPerSet": "デフォルトのセットごとの回数",
       "defaultTimerPreset": "デフォルトのタイマープリセット",
       "exerciseBlockTemplate": "エクササイズブロックテンプレート",
-      "exerciseFolder": "エクササイズフォルダのパス",
+      "exerciseFolder": "エクササイズフォルダーのパス",
       "generateDefaultTemplates": "デフォルトのテンプレートを生成する",
       "presetDuration": "時間（秒）",
       "presetName": "プリセット名",
@@ -818,8 +835,9 @@
       "weightUnit": "単位（重量）",
       "showRibbonIcon": "クイック記録アイコンを表示",
       "welcomeWindow": "ウェルカムウィンドウ",
+      "weeklyGoal": "週間目標",
       "takeTour": "ガイド付きツアー",
-      "keepScreenAwake": "タイマーが動作中に画面をオンにする",
+      "keepScreenAwake": "タイマーの動作中は画面をオンのままにする",
       "vibrateOnCompletion": "タイマーが終了したときに振動する",
       "presetRest": "休憩"
     },
@@ -842,8 +860,8 @@
     "options": {
       "none": "なし",
       "weightUnit": {
-        "kg": "キログラム (kg)",
-        "lb": "ポンド (lb)"
+        "kg": "キログラム（kg）",
+        "lb": "ポンド（lb）"
       }
     },
     "placeholders": {
@@ -861,7 +879,7 @@
       "timerPresets": "タイマープリセット",
       "trainingParameters": "トレーニングパラメータ",
       "gettingStarted": "開始",
-      "timerDeviceCues": "タイマーデバイスの操作ガイダンス",
+      "timerDeviceCues": "タイマーのデバイス通知",
       "customProtocols": "プロトコル"
     },
     "tooltips": {
@@ -871,33 +889,33 @@
       "editProtocol": "プロトコルを編集する"
     },
     "validation": {
-      "csvFolderNotFound": "保管庫内にフォルダが見つかりません。「CSVファイルのセットアップ」を実行して作成してください。",
+      "csvFolderNotFound": "保管庫内にフォルダーが見つかりません。「CSVファイルのセットアップ」を実行して作成してください。",
       "csvPathEmpty": "パスは空にできません",
       "mustBeNonNegative": "0以上でなければなりません",
       "mustBePositive": "0より大きい値にしてください"
     },
     "protocolHelp": {
-      "warmup": "本番のセットの前に、軽めのセットを行う。個人記録には含まれない。",
-      "dropSet": "失敗後すぐに重量を下げ、そのまま続ける。ドロップセットは個人記録にはカウントされない。",
+      "warmup": "本番のセットの前に行う軽めのセットです。自己ベストには含まれません。",
+      "dropSet": "失敗直後に重量を下げて、そのまま続けます。ドロップセットは自己ベストには含まれません。",
       "myoReps": "1つのアクティベーションセットを行い、その後、数秒の休憩を挟んで短いミニセットを行います。",
       "restPause": "失敗後、数秒休憩してから、さらに数回繰り返してください。",
-      "superset": "2つのエクササイズを連続して、休憩なしで行う。",
-      "twentyone": "下半身で7回、上半身で7回、その後、通常の7回。"
+      "superset": "2つのエクササイズを、間に休憩を挟まずに連続して行います。",
+      "twentyone": "下半分の可動域で7回、上半分で7回、その後、フルレンジで7回行います。"
     },
     "presetHelp": {
-      "tabata": "20秒間の全力集中、10秒間の休憩、8ラウンド：合計4分。",
-      "emom": "1分ごとに：各分の最初にレップを始め、残りの時間は休憩する。10ラウンド行う。"
+      "tabata": "20秒の全力運動と10秒の休憩を8ラウンド行います。合計4分です。",
+      "emom": "毎分の始めにレップを開始し、残りの時間は休憩します。10ラウンド行います。"
     }
   },
   "stats": {
     "max": "最大: ",
     "min": "最小: ",
-    "recentLast3": " (直近3回)",
+    "recentLast3": " （直近3回）",
     "recentTrend": "最近の傾向",
-    "recentVsPrev": " (前回比)",
+    "recentVsPrev": " （前回比）",
     "sessions": "セッション",
     "average": "平均: ",
-    "title": "{dataTypeLabel} 統計情報 ({contextLabel}):"
+    "title": "{dataTypeLabel} 統計情報（{contextLabel}）:"
   },
   "table": {
     "actions": "操作",
@@ -915,13 +933,13 @@
       "weight": "重量"
     },
     "columns": {
-      "distanceUnit": "距離 ({distanceUnit})",
+      "distanceUnit": "距離（{distanceUnit}）",
       "duration": "時間",
       "heartRate": "心拍数",
       "pace": "ペース",
       "reps": "レップ",
-      "volumeUnit": "ボリューム ({weightUnit})",
-      "weightUnit": "重量 ({weightUnit})"
+      "volumeUnit": "ボリューム（{weightUnit}）",
+      "weightUnit": "重量（{weightUnit}）"
     },
     "deleteError": "削除エラー: {error}",
     "deleteSuccess": "記録を削除しました",

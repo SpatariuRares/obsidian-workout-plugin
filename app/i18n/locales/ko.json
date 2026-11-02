@@ -87,7 +87,7 @@
       "columnEstimated": "예상",
       "columnVariance": "변동",
       "columnWorkout": "운동 루틴",
-      "minutesSuffix": "분",
+      "minutesSuffix": " 분",
       "noData": "아직 비교할 세션이 충분하지 않습니다.",
       "subtitle": "예상 시간 대비 실제 운동 시간",
       "title": "운동 시간 비교",
@@ -117,7 +117,7 @@
     },
     "protocolDistribution": {
       "clearFilter": "필터 지우기",
-      "filterActive": "필터:",
+      "filterActive": "필터 기준:",
       "noData": "최근 30일 동안 기록된 세트가 없습니다",
       "subtitle": "훈련 프로토콜 상세 내역 (최근 30일)",
       "title": "프로토콜 분포"
@@ -205,6 +205,19 @@
       "narrow": "{widget}에는 최소 {min}개 열이 필요합니다",
       "overlap": "{widget}이(가) {other}와(과) 겹칩니다",
       "empty": "그리드에 아직 위젯이 없습니다. ⋮ 메뉴에서 '대시보드 편집'을 열어 위젯을 배치하세요."
+    },
+    "trainingCalendar": {
+      "title": "훈련 달력",
+      "thisWeek": "이번 주",
+      "currentStreak": "현재 연속 기록",
+      "bestStreak": "최고 연속 기록",
+      "weeks": "{count}주",
+      "daysOfGoal": "{days}/{goal}일",
+      "trainedDay": "{day}: {volume} {unit}",
+      "trainedDayNoVolume": "{day}: 운동함",
+      "restDay": "{day}: 휴식",
+      "less": "적음",
+      "more": "많음"
     }
   },
   "duration": {
@@ -284,7 +297,7 @@
       "durationEstimatorIntro": "현재 노트의 운동 종목을 기준으로 전체 운동 시간을 추정합니다.",
       "durationEstimatorTitle": "4. 운동 시간 추정",
       "intervalTimerTitle": "인터벌 타이머",
-      "intro": "워크아웃 플러그인에서 사용할 수 있는 모든 코드 블록 유형의 전체 참조입니다.",
+      "intro": "운동 플러그인에서 사용할 수 있는 모든 코드 블록 유형의 전체 참조입니다.",
       "protocol21s": "7+7+7 부분 반복",
       "protocolDropset": "무게를 줄이고 반복 계속",
       "protocolMyoReps": "활성화 세트 + 미니 세트",
@@ -469,7 +482,7 @@
   "modal": {
     "actions": "액션",
     "addTag": "태그 추가",
-    "auditStatusCloseMatch": "유사 일치",
+    "auditStatusCloseMatch": "근접 일치",
     "auditStatusExactMatch": "정확히 일치",
     "auditStatusNoMatch": "일치 없음",
     "auditStatusPartialMatch": "부분 일치",
@@ -589,7 +602,7 @@
       "exercisePageError": "운동 페이지 생성 중 오류: {error}",
       "exercisePageNameRequired": "운동 종목 이름을 입력해 주세요.",
       "genericError": "오류: {error}",
-      "insertCodeNoFile": "코드를 삽입하려면 마크다운 파일을 엽니다.",
+      "insertCodeNoFile": "코드를 삽입하려면 마크다운 파일을 여세요.",
       "logCreated": "운동 기록이 성공적으로 생성되었습니다!",
       "logUpdated": "운동 기록이 성공적으로 업데이트되었습니다!",
       "migrationComplete": "마이그레이션 완료. 운동 파일 {count}개를 업데이트했습니다.",
@@ -622,19 +635,22 @@
       "validMaxValue": "{field}은(는) 최대 {max}이어야 합니다",
       "validFieldRequired": "{field}은(는) 필수입니다",
       "migrationNoUpdates": "모든 운동 페이지가 이미 최신 상태입니다",
-      "validMustBeWholeNumber": "{field}은(는) 정수여야 합니다.",
+      "validMustBeWholeNumber": "{field}은(는) 정수여야 합니다",
       "newRecord": "새로운 기록: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "차트가 성공적으로 삽입되었습니다!",
       "dashboardInserted": "대시보드가 성공적으로 삽입되었습니다!",
       "exerciseNameRequired": "운동 종목 이름을 입력해 주세요.",
       "exerciseSectionCreated": "운동 섹션이 성공적으로 생성되었습니다!",
       "tableInserted": "테이블이 성공적으로 삽입되었습니다!",
+      "tableUpdateFailed": "표를 업데이트하지 못했습니다. 노트에서 찾을 수 없습니다. 노트를 다시 열고 다시 시도하세요.",
       "tableUpdated": "테이블이 성공적으로 업데이트되었습니다!",
       "timerInserted": "타이머가 성공적으로 삽입되었습니다!",
+      "timerUpdateFailed": "타이머를 업데이트하지 못했습니다. 노트에서 찾을 수 없습니다. 노트를 다시 열고 다시 시도하세요.",
       "timerUpdated": "타이머가 성공적으로 업데이트되었습니다!",
       "validChooseExercise": "운동 종목을 선택하세요",
       "validationCombinedMode": "'운동 종목 + 운동 루틴' 유형에서는 두 필드를 모두 입력해야 합니다!",
-      "dashboardUpdated": "대시보드가 업데이트되었습니다!"
+      "dashboardUpdated": "대시보드가 업데이트되었습니다!",
+      "dashboardUpdateFailed": "대시보드를 업데이트하지 못했습니다. 노트에서 찾을 수 없거나, ID가 없는 다른 대시보드가 같은 설정을 가지고 있습니다. 노트를 다시 열고 다시 시도하세요."
     },
     "parameterKey": "키:",
     "parameterLabel": "레이블:",
@@ -761,13 +777,13 @@
       "runAllMaintenance": "모두 실행",
       "savePreset": "저장",
       "saveProtocol": "저장",
-      "showWelcome": "환영 메시지 표시",
+      "showWelcome": "환영 창 표시",
       "takeTour": "투어 시작"
     },
     "descriptions": {
-      "confirmOverwriteMuscleTags": "이미 근육 태그 CSV 파일이 존재합니다. 기본 값으로 덮어쓰기를 하시겠습니까? 이 경우 모든 사용자 지정 태그가 삭제됩니다.",
+      "confirmOverwriteMuscleTags": "이미 근육 태그 CSV 파일이 존재합니다. 기본값으로 덮어쓰시겠습니까? 이 작업으로 모든 사용자 지정 태그가 삭제됩니다.",
       "csvFolder": "운동 기록 및 근육 태그 CSV 파일을 저장할 폴더.",
-      "defaultExactMatch": "활성화하면, 운동 필터링은 기본적으로 정확한 이름 일치 방식을 사용합니다. 유사 일치 방식을 사용하려면 비활성화하십시오.",
+      "defaultExactMatch": "활성화하면 운동 필터링은 기본적으로 정확한 이름 일치 방식을 사용합니다. 유사 일치 방식을 쓰려면 비활성화하세요.",
       "defaultRepsPerSet": "지정되지 않은 경우에 사용되는 기본 반복 횟수입니다. 값이 0이면 '대체 세트 시간'을 사용합니다.",
       "defaultTimerPreset": "새 타이머의 기본 프리셋을 선택하세요",
       "exerciseBlockTemplate": "운동 블록 템플릿. 사용 가능한 자리 표시: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
@@ -789,8 +805,9 @@
       "weightUnit": "차트, 총계 및 새로운 로그에 대한 단위. 각 로그는 입력된 단위를 유지합니다.",
       "takeTour": "로그 기록, 차트, 표, 타이머 사용법에 대한 간략한 안내.",
       "welcomeWindow": "예제 데이터 또는 처음부터 시작하기 위해 환영 창을 다시 표시합니다.",
-      "keepScreenAwake": "타이머가 실행되는 동안 화면이 켜져 있도록 유지하는 것이 좋습니다. 배터리 소모가 더 많습니다. 사용 가능 여부는 기기와 시스템 설정에 따라 다릅니다.",
-      "vibrateOnCompletion": "타이머가 종료될 때, 소리와 관계없이 짧게 진동합니다. 페이지를 터치하고 지원되는 장치(예: 안드로이드)가 필요합니다. iOS에서는 사용할 수 없습니다. 백그라운드 알림 기능은 없습니다.",
+      "weeklyGoal": "대시보드 요약과 훈련 달력에서 연속 기록을 유지하는 주당 훈련 일수입니다.",
+      "keepScreenAwake": "타이머가 실행되는 동안 화면이 꺼지지 않도록 유지하려고 합니다. 배터리를 더 많이 사용합니다. 사용 가능 여부는 기기와 시스템 설정에 따라 다릅니다.",
+      "vibrateOnCompletion": "타이머가 끝나면 소리와 별개로 짧게 진동합니다. 페이지를 한 번 터치한 뒤 지원되는 기기(예: 안드로이드)에서만 작동합니다. iOS에서는 사용할 수 없으며, 백그라운드 알림도 없습니다.",
       "presetRestDesc": "각 라운드의 운동 후 휴식 시간 (0이면 휴식 없음).",
       "noCustomProtocols": "현재 프로토콜이 설정되지 않았습니다. '프로토콜 추가'를 클릭하여 새 프로토콜을 생성하세요."
     },
@@ -818,6 +835,7 @@
       "weightUnit": "무게 단위",
       "showRibbonIcon": "빠른 기록 아이콘 표시",
       "welcomeWindow": "환영 창",
+      "weeklyGoal": "주간 목표",
       "takeTour": "가이드 투어",
       "keepScreenAwake": "타이머가 실행되는 동안 화면을 켜두기",
       "vibrateOnCompletion": "타이머가 완료될 때 진동",
@@ -859,7 +877,7 @@
       "setupAndData": "설정 및 데이터",
       "templates": "템플릿",
       "timerPresets": "타이머 프리셋",
-      "trainingParameters": "훈련 매개변수",
+      "trainingParameters": "훈련 설정",
       "gettingStarted": "시작하기",
       "timerDeviceCues": "타이머 장치 관련 알림",
       "customProtocols": "프로토콜"
@@ -879,7 +897,7 @@
     "protocolHelp": {
       "warmup": "본 세트 전에 가볍게 하는 세트입니다. 개인 기록에는 포함되지 않습니다.",
       "dropSet": "실패 직후 무게를 줄이고 계속 진행하세요. 드롭 세트는 개인 기록에 포함되지 않습니다.",
-      "myoReps": "하나의 활성화 세트, 그 다음 짧은 미니 세트로, 몇 초의 휴식을 취합니다.",
+      "myoReps": "활성화 세트를 하나 한 뒤, 몇 초씩 쉬면서 짧은 미니 세트를 이어서 합니다.",
       "restPause": "실패 후 몇 초 동안 휴식을 취한 다음, 몇 번 더 반복합니다.",
       "superset": "두 가지 운동을 연속으로, 중간에 휴식을 취하지 않고 실시합니다.",
       "twentyone": "가동 범위 하반부 7회, 상반부 7회, 그다음 전체 가동 범위 7회."
@@ -896,7 +914,7 @@
     "recentTrend": "최근 추세",
     "recentVsPrev": " (이전 대비)",
     "sessions": "세션",
-    "average": "평균:",
+    "average": "평균: ",
     "title": "{dataTypeLabel} 통계 ({contextLabel}):"
   },
   "table": {
@@ -944,7 +962,7 @@
     "trendLine": "추세선",
     "refreshingTable": "테이블 새로 고치는 중...",
     "setCount": "{count} 세트",
-    "deleteSetMessage": "{set}는 로그에서 삭제됩니다. 이 작업을 취소할 수 없습니다.",
+    "deleteSetMessage": "{set}이(가) 로그에서 삭제됩니다. 이 작업은 되돌릴 수 없습니다.",
     "deleteSetTitle": "이 세트를 삭제하시겠습니까?"
   },
   "timeperiods": {
@@ -1035,7 +1053,7 @@
     "steps": {
       "logSet": {
         "title": "첫 번째 세트를 기록",
-        "text": "\"+\" 버튼을 눌러 양식을 열고, 그런 다음 세트를 저장합니다. 그러면 바로 테이블에 표시됩니다."
+        "text": "\"+\" 버튼을 눌러 양식을 열고 세트를 저장하세요. 저장하면 바로 테이블에 표시됩니다."
       },
       "rowActions": {
         "title": "세트 수정 또는 삭제",

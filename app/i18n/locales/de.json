@@ -31,7 +31,7 @@
     "addMissingBlockIds": "Fehlende IDs zu Codeblöcken hinzufügen",
     "auditExerciseNames": "Übungsnamen prüfen",
     "convertExercise": "Übung umwandeln",
-    "createCsvLog": "CSV-Log-Datei erstellen",
+    "createCsvLog": "CSV-Protokolldatei erstellen",
     "exportWorkoutToCanvas": "Training als Canvas exportieren",
     "generateTagReference": "Tag-Referenz erstellen",
     "insertTable": "Trainingstabelle einfügen",
@@ -45,7 +45,7 @@
   "common": {
     "bpm": "BPM",
     "cancel": "Abbrechen",
-    "clear": "Löschen",
+    "clear": "Leeren",
     "convert": "Konvertieren",
     "exercise": "Übung",
     "km": "km",
@@ -127,7 +127,7 @@
       "columnProgression": "Fortschritt",
       "columnProtocol": "Protokoll",
       "columnVolumeChange": "Volumenänderung",
-      "disclaimer": "Haftungsausschluss",
+      "disclaimer": "Hinweis",
       "noData": "Noch nicht genug Daten: Jedes Protokoll braucht mindestens 5 erfasste Sätze.",
       "title": "Wirksamkeit der Protokolle",
       "subtitle": "Wie jedes Protokoll in allen erfassten Sätzen gewirkt hat"
@@ -205,11 +205,24 @@
       "narrow": "{widget} benötigt mindestens {min} Spalten",
       "overlap": "{widget} überlappt {other}",
       "empty": "Noch kein Widget im Raster. Öffne „Dashboard bearbeiten“ im ⋮-Menü, um welche zu platzieren."
+    },
+    "trainingCalendar": {
+      "title": "Trainingskalender",
+      "currentStreak": "Aktuelle Serie",
+      "bestStreak": "Beste Serie",
+      "thisWeek": "Diese Woche",
+      "daysOfGoal": "{days}/{goal} Tage",
+      "trainedDay": "{day}: {volume} {unit}",
+      "restDay": "{day}: Pause",
+      "less": "Weniger",
+      "more": "Mehr",
+      "trainedDayNoVolume": "{day}: trainiert",
+      "weeks": "{count} Wochen"
     }
   },
   "duration": {
     "estimatedDuration": "Geschätzte Dauer",
-    "lastSession": "Letzte Sitzung",
+    "lastSession": "Letzte Einheit",
     "restTime": "Ruhezeit",
     "setTime": "Satzdauer",
     "unableToAnalyze": "Trainingsdatei konnte nicht analysiert werden"
@@ -230,7 +243,7 @@
       "logTitle": "Protokoll",
       "paceTrackingNote": "Verfolge, wie sich dein Tempo verbessert (niedriger = schneller):",
       "paceTrackingTitle": "Tempoverlauf",
-      "repTrackingTitle": "Wiederholungsverfolgung",
+      "repTrackingTitle": "Wiederholungsverlauf",
       "volumeChartTitle": "Volumendiagramm",
       "weightProgressionTitle": "Gewichtsfortschritt"
     },
@@ -381,7 +394,7 @@
       }
     },
     "notes": {
-      "supersetCalves": "Superset mit Wadenheben mit eigenem Körpergewicht",
+      "supersetCalves": "Superset mit Wadenheben ohne Zusatzgewicht",
       "supersetLunges": "Superset mit Ausfallschritten"
     },
     "createToOpenGuide": "Die Anleitung für den Einstieg ist Teil der Beispielnotizen, die noch nicht existieren. Sollten wir sie jetzt erstellen?",
@@ -405,7 +418,7 @@
       "avgCustom": "Durchschnitt {label}",
       "avgDistance": "Durchschnittliche Entfernung (km)",
       "avgDuration": "Durchschnittliche Dauer (Sekunden)",
-      "avgHeartRate": "Durchschnittlicher Herzfrequenzwert (Schläge pro Minute)",
+      "avgHeartRate": "Durchschnittliche Herzfrequenz (bpm)",
       "avgVolume": "Durchschnittliches Volumen ({unit})",
       "avgWeight": "Durchschnittliches Gewicht ({unit})",
       "dailyVolume": "Tagesvolumen ({unit})",
@@ -421,7 +434,7 @@
     "search": "Suche",
     "totalReps": "Wiederholungen gesamt",
     "workoutData": "Trainingsdaten",
-    "workoutLog": "Trainingslog"
+    "workoutLog": "Trainingsprotokoll"
   },
   "logs": {
     "addLogButtonAria": "Protokoll hinzufügen für {exerciseName}",
@@ -432,13 +445,13 @@
     "createLogButtonText": "Protokoll erstellen für: {exerciseName}",
     "noDataTitle": "Keine Protokolle für {exerciseName} gefunden",
     "exploreExampleData": "Oder erkunde es mit Beispieldaten",
-    "lastSet": "Letzter Satz: {set}",
+    "lastSet": "Letztes Mal: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Persönliche Bestleistung: {weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "Codeblock eingefügt",
-    "csvNotFound": "Trainingslog-CSV nicht gefunden. Prüfe den CSV-Ordner in den Einstellungen.",
+    "csvNotFound": "Trainingsprotokoll-CSV nicht gefunden. Prüfe den CSV-Ordner in den Einstellungen.",
     "errors": {
       "tagReferenceFailed": "Fehler beim Erstellen der Tag-Referenz: {error}",
       "csvLoadError": "Fehler beim Laden der CSV-Daten: {error}",
@@ -573,7 +586,7 @@
       "auditConfirmRenameFile": "Diese Datei umbenennen?\n\n{oldName} → {newName}",
       "auditMismatchCount": "{count} mögliche Unstimmigkeiten gefunden:",
       "auditNoMatchFound": "Keine Übereinstimmung gefunden",
-      "auditNoMismatches": "Jede Übungsdatei stimmt mit ihrem Namen im Log überein.",
+      "auditNoMismatches": "Jede Übungsdatei stimmt mit ihrem Namen im Protokoll überein.",
       "auditRenameError": "Umbenennen fehlgeschlagen: {error}",
       "auditRenameFileError": "Die Datei konnte nicht umbenannt werden: {error}",
       "auditRenameFileSuccess": "Datei umbenannt",
@@ -629,12 +642,15 @@
       "exerciseNameRequired": "Bitte gib einen Namen für die Übung ein",
       "exerciseSectionCreated": "Übungsabschnitt erfolgreich erstellt!",
       "tableInserted": "Tabelle erfolgreich eingefügt!",
+      "tableUpdateFailed": "Tabelle konnte nicht aktualisiert werden: Sie wurde in ihrer Notiz nicht gefunden. Öffne die Notiz neu und versuche es noch einmal.",
       "tableUpdated": "Tabelle erfolgreich aktualisiert!",
       "timerInserted": "Timer erfolgreich eingefügt!",
+      "timerUpdateFailed": "Timer konnte nicht aktualisiert werden: Er wurde in seiner Notiz nicht gefunden. Öffne die Notiz neu und versuche es noch einmal.",
       "timerUpdated": "Timer erfolgreich aktualisiert!",
       "validChooseExercise": "Wähle eine Übung",
       "validationCombinedMode": "Für den Typ \"Übung + Training\" musst du beide Felder ausfüllen!",
-      "dashboardUpdated": "Dashboard erfolgreich aktualisiert!"
+      "dashboardUpdated": "Dashboard erfolgreich aktualisiert!",
+      "dashboardUpdateFailed": "Dashboard konnte nicht aktualisiert werden: Es wurde in seiner Notiz nicht gefunden, oder ein anderes Dashboard ohne ID hat dieselben Einstellungen. Öffne die Notiz neu und versuche es noch einmal."
     },
     "parameterKey": "Schlüssel:",
     "parameterLabel": "Beschriftung:",
@@ -677,7 +693,7 @@
       "tableType": "Tabellentyp",
       "target": "Ziel",
       "workout": "Training",
-      "mobileOptions": "Aktuelle Übungen und Trainings"
+      "mobileOptions": "Zuletzt verwendete Übungen und Trainings"
     },
     "selectOptions": {
       "allLogs": "Alle Einträge",
@@ -698,7 +714,7 @@
       "timed": "Zeitbasiert",
       "twentyones": "21er",
       "yesNo": "Ja/Nein",
-      "warmup": "Aufwärmen"
+      "warmup": "Aufwärmsatz"
     },
     "sets": "Sätze:",
     "similarTags": "Ähnliche Tags:",
@@ -762,7 +778,7 @@
       "savePreset": "Speichern",
       "saveProtocol": "Speichern",
       "showWelcome": "Willkommensfenster anzeigen",
-      "takeTour": "Starte die Tour"
+      "takeTour": "Tour starten"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Eine CSV-Datei für Muskel-Tags existiert bereits. Möchtest du sie mit Standardwerten überschreiben? Dadurch werden alle benutzerdefinierten Tags entfernt.",
@@ -773,7 +789,7 @@
       "exerciseBlockTemplate": "Vorlage für Übungsblöcke. Verfügbare Platzhalter: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Pfad zum Ordner mit Übungsseiten",
       "generateDefaultTemplates": "Erstellt die Standardvorlage für Übungsseiten und die Tag-Referenz im Ordner 'Workout Templates'. Du kannst diese Dateien anpassen, um Sprache und Struktur zu ändern.",
-      "noPresets": "Keine Timer-Voreinstellungen konfiguriert. Klicke auf 'Voreinstellung hinzufügen', um eine zu erstellen.",
+      "noPresets": "Keine Timer-Voreinstellungen konfiguriert. Klicke auf „Voreinstellung hinzufügen“, um eine zu erstellen.",
       "presetDurationDesc": "Dauer in Sekunden (z. B. 90 für einen Timer von 90 Sekunden).",
       "presetNameDesc": "Eindeutiger Name für diese Timer-Voreinstellung (z. B. 'Pause 90s', 'HIIT 30/10').",
       "presetRoundsDesc": "Anzahl der Intervalldurchläufe, die durchlaufen werden sollen, bevor gestoppt wird.",
@@ -789,6 +805,7 @@
       "weightUnit": "Einheit für Diagramme, Gesamtsummen und neue Protokolle. Jedes Protokoll behält die Einheit bei, in der es erstellt wurde.",
       "takeTour": "Gehe auf einer kurzen Notiz durch Protokollieren, Diagramme, Tabellen und Timer.",
       "welcomeWindow": "Zeige das Willkommensfenster erneut, um mit Beispieldaten oder von Grund auf zu beginnen.",
+      "weeklyGoal": "Trainingstage pro Woche, die deine Serie am Laufen halten, in der Zusammenfassung des Dashboards und im Trainingskalender.",
       "keepScreenAwake": "Versuche, den Bildschirm aktiv zu halten, während ein Timer im Vordergrund läuft. Verbraucht mehr Akku; die Verfügbarkeit hängt von deinem Gerät und deinen Systemeinstellungen ab.",
       "vibrateOnCompletion": "Kurz vibrieren, wenn ein Timer abläuft, unabhängig von Ton. Benötigt einen Klick auf der Seite und ein kompatibles Gerät (z. B. Android). Nicht verfügbar auf iOS; keine Benachrichtigungen im Hintergrund.",
       "presetRestDesc": "Sekunden Pause nach der Arbeit jeder Runde (0 für keine Pause).",
@@ -818,6 +835,7 @@
       "weightUnit": "Gewichtseinheit",
       "showRibbonIcon": "Symbol für Schnellprotokoll anzeigen",
       "welcomeWindow": "Willkommensfenster",
+      "weeklyGoal": "Wochenziel",
       "takeTour": "Geführte Tour",
       "keepScreenAwake": "Bildschirm aktiv halten, während ein Timer läuft",
       "vibrateOnCompletion": "Vibration, wenn ein Timer abgelaufen ist",
@@ -895,7 +913,7 @@
     "recentLast3": " (letzte 3)",
     "recentTrend": "Aktueller Trend",
     "recentVsPrev": " (vs. vorh.)",
-    "sessions": "Sitzungen",
+    "sessions": "Einheiten",
     "average": "Durchschnitt: ",
     "title": "{dataTypeLabel} Statistiken ({contextLabel}):"
   },
@@ -962,7 +980,7 @@
     "editTimer": "Timer bearbeiten",
     "interval": "Intervall",
     "presets": {
-      "detailsControls": "Steuerung",
+      "detailsControls": "Steuerelemente",
       "detailsSound": "Ton"
     },
     "stopwatch": "Stoppuhr",
@@ -1024,7 +1042,7 @@
     "back": "Zurück",
     "next": "Weiter",
     "skip": "Überspringen",
-    "done": "Abgeschlossen",
+    "done": "Fertig",
     "progress": "{current} von {total}",
     "noteName": "Geführte Tour",
     "noteIntro": "Die geführte Tour zeigt auf jeden Teil des Plugins auf dieser Seite. Bearbeite oder lösche diese Notiz, wann immer du willst.",
@@ -1051,7 +1069,7 @@
       },
       "dashboard": {
         "title": "Dein Dashboard",
-        "text": "Gesamtsummen, Trends bei der Trainingsmenge und kürzliche Trainingseinheiten – alles auf einen Blick.",
+        "text": "Gesamtsummen, Trends bei der Trainingsmenge und letzte Trainings – alles auf einen Blick.",
         "textMine": "Gesamtsummen, Volumentrends und letzte Trainings. Es füllt sich, wenn du weitere Sätze protokollierst."
       },
       "timer": {

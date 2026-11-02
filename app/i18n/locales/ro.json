@@ -127,7 +127,7 @@
       "columnProgression": "Progres",
       "columnProtocol": "Protocol",
       "columnVolumeChange": "Variația volumului",
-      "disclaimer": "Notă",
+      "disclaimer": "Precizare",
       "noData": "Nu sunt încă destule date: fiecare protocol are nevoie de cel puțin 5 serii înregistrate.",
       "title": "Eficiența protocoalelor",
       "subtitle": "Cum a funcționat fiecare protocol în toate seriile înregistrate"
@@ -138,7 +138,7 @@
       "viewExercises": "Vezi exercițiile"
     },
     "quickStats": {
-      "month": "Luna",
+      "month": "Lună",
       "week": "Săptămână",
       "workouts": "Antrenamente",
       "year": "An",
@@ -187,7 +187,7 @@
       "recentWorkoutsLimit": "Numărul de antrenamente din lista recentă:",
       "volumeTrendDays": "Numărul de zile din tendința volumului:",
       "gridColumns": "Coloane:",
-      "layout": "Aspect",
+      "layout": "Aranjament",
       "layoutGrid": "Grilă",
       "layoutList": "Listă",
       "stash": "Nu este pe tabloul de bord",
@@ -205,13 +205,26 @@
       "narrow": "{widget} are nevoie de cel puțin {min} coloane",
       "overlap": "{widget} se suprapune cu {other}",
       "empty": "Niciun widget nu este încă pe grilă. Deschide „Editează tabloul de bord” din meniul ⋮ ca să adaugi unele."
+    },
+    "trainingCalendar": {
+      "bestStreak": "Cea mai lungă serie",
+      "currentStreak": "Serie curentă",
+      "daysOfGoal": "{days}/{goal} zile",
+      "less": "Mai puțin",
+      "more": "Mai mult",
+      "restDay": "{day}: repaus",
+      "thisWeek": "Săptămâna aceasta",
+      "title": "Calendarul antrenamentelor",
+      "trainedDay": "{day}: {volume} {unit}",
+      "trainedDayNoVolume": "{day}: antrenament",
+      "weeks": "{count} săptămâni"
     }
   },
   "duration": {
     "estimatedDuration": "Durata estimată",
     "lastSession": "Ultima sesiune",
     "restTime": "Timp de pauză",
-    "setTime": "Timp per serie",
+    "setTime": "Timp pe serie",
     "unableToAnalyze": "Nu se poate analiza fișierul de antrenament"
   },
   "examples": {
@@ -482,7 +495,7 @@
       "partialBadge": "•",
       "partialTooltip": "Potrivire parțială - Scor: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Potrivire cuvânt - Scor: {score}"
+      "wordTooltip": "Potrivire după cuvânt - Scor: {score}"
     },
     "buttons": {
       "addParameter": "Adaugă parametru",
@@ -560,7 +573,7 @@
     },
     "layoutGrouped": "Grupat după mușchi",
     "layoutHorizontal": "Flux orizontal",
-    "layoutType": "Tip de layout:",
+    "layoutType": "Tip de aranjament:",
     "layoutVertical": "Flux vertical",
     "maxLogCount": "Număr maxim de înregistrări:",
     "muscleGroup": "Grup de mușchi",
@@ -629,12 +642,15 @@
       "exerciseNameRequired": "Introdu numele exercițiului",
       "exerciseSectionCreated": "Secțiunea de exerciții a fost creată cu succes!",
       "tableInserted": "Tabela a fost inserată cu succes!",
+      "tableUpdateFailed": "Nu s-a putut actualiza tabelul: nu a fost găsit în nota lui. Redeschide nota și încearcă din nou.",
       "tableUpdated": "Tabelul a fost actualizat cu succes!",
       "timerInserted": "Temporizatorul a fost adăugat cu succes!",
+      "timerUpdateFailed": "Nu s-a putut actualiza temporizatorul: nu a fost găsit în nota lui. Redeschide nota și încearcă din nou.",
       "timerUpdated": "Temporizatorul a fost actualizat cu succes!",
       "validChooseExercise": "Alege un exercițiu",
       "validationCombinedMode": "Pentru tipul „exercițiu + antrenament”, completează ambele câmpuri!",
-      "dashboardUpdated": "Tabloul de bord a fost actualizat cu succes!"
+      "dashboardUpdated": "Tabloul de bord a fost actualizat cu succes!",
+      "dashboardUpdateFailed": "Nu s-a putut actualiza tabloul de bord: nu a fost găsit în nota lui sau un alt tablou de bord fără ID are aceleași setări. Redeschide nota și încearcă din nou."
     },
     "parameterKey": "Cheie:",
     "parameterLabel": "Etichetă:",
@@ -770,7 +786,7 @@
       "defaultExactMatch": "Când este activat, filtrarea exercițiilor utilizează, în mod implicit, potrivirea exactă a numelor. Dezactivați pentru potrivire aproximativă.",
       "defaultRepsPerSet": "Numărul presupus de repetări, dacă nu este specificat. Dacă este 0, se folosește „Durată implicită a seriei”.",
       "defaultTimerPreset": "Selectează un preset implicit pentru temporizatoarele noi",
-      "exerciseBlockTemplate": "Șablon pentru blocuri de exerciții. Locuri de înlocuire disponibile: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
+      "exerciseBlockTemplate": "Șablon pentru blocuri de exerciții. Variabile disponibile: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Calea către folderul care conține paginile cu exerciții",
       "generateDefaultTemplates": "Generează șablonul implicit pentru pagina de exercițiu și referința etichetelor în folderul „Workout Templates”. Poți personaliza aceste fișiere ca să schimbi limba și structura.",
       "noPresets": "Nu sunt configurate preseturi pentru temporizator. Apasă pe „Adaugă preset” ca să creezi unul.",
@@ -788,7 +804,8 @@
       "showRibbonIcon": "Afișează în bara laterală pictograma cu gantera care deschide formularul jurnalului de antrenament",
       "weightUnit": "Unitate pentru grafice, totaluri și înregistrări noi. Fiecare înregistrare păstrează unitatea în care a fost introdusă.",
       "takeTour": "Oferă o scurtă prezentare a funcțiilor de înregistrare, grafice, tabele și temporizatoare.",
-      "welcomeWindow": "Afișați din nou fereastra de bun venit pentru a începe cu date de exemplu sau de la zero.",
+      "welcomeWindow": "Afișează din nou fereastra de bun venit ca să începi cu date de exemplu sau de la zero.",
+      "weeklyGoal": "Zilele de antrenament pe săptămână care mențin seria, în rezumatul tabloului de bord și în calendarul antrenamentelor.",
       "keepScreenAwake": "Încearcă să menții ecranul activ cât timp rulează un temporizator în prim-plan. Consumă mai multă baterie; disponibilitatea depinde de dispozitivul și de setările sistemului tău.",
       "vibrateOnCompletion": "Vibrație scurtă când un temporizator se termină, indiferent de sunet. Necesită un clic pe pagină și un dispozitiv compatibil (cum ar fi Android). Nu este disponibil pe iOS; nu există notificări în fundal.",
       "presetRestDesc": "Secunde de pauză după fiecare rundă de lucru (0 pentru fără pauză).",
@@ -807,7 +824,7 @@
       "presetRounds": "Runde",
       "presetShowControls": "Afișează controale",
       "presetSound": "Sunet",
-      "presetType": "Tipul temporizatorului",
+      "presetType": "Tip de temporizator",
       "protocolAbbreviation": "Abreviere",
       "protocolColor": "Culoarea badge-ului",
       "protocolName": "Nume protocol",
@@ -817,7 +834,8 @@
       "setupCSV": "Configurare fișiere CSV",
       "weightUnit": "Unitatea de măsură a greutății",
       "showRibbonIcon": "Afișează pictograma de înregistrare rapidă",
-      "welcomeWindow": "Ferestruță de bun venit",
+      "welcomeWindow": "Fereastra de bun venit",
+      "weeklyGoal": "Obiectiv săptămânal",
       "takeTour": "Tur ghidat",
       "keepScreenAwake": "Păstrează ecranul activ cât timp funcționează un temporizator",
       "vibrateOnCompletion": "Vibrează la finalizarea unui temporizator",
@@ -843,7 +861,7 @@
       "none": "Niciunul",
       "weightUnit": {
         "kg": "Kilograme (kg)",
-        "lb": "Pounde (lb)"
+        "lb": "Livre (lb)"
       }
     },
     "placeholders": {
@@ -1001,7 +1019,7 @@
   },
   "codeBlocks": {
     "validation": {
-      "title": "Parametri incorecti:",
+      "title": "Parametri incorecți:",
       "notANumber": "{key} trebuie să fie un număr, dar este \"{value}\"",
       "tooSmall": "{key} trebuie să fie {min} sau mai mare, dar este {value}",
       "outOfRange": "{key} trebuie să se situeze între {min} și {max}, dar este {value}",
@@ -1016,7 +1034,7 @@
     "tryExamples": "Încearcă cu date de exemplu",
     "startScratch": "Începe de la zero",
     "later": "Mai târziu",
-    "tryExamplesDesc": "Adaugă antrenamente de exemplu, apoi te va ghida prin utilizarea plugin-ului pentru acestea.",
+    "tryExamplesDesc": "Adaugă antrenamente de exemplu, apoi te ghidează prin plugin folosindu-le.",
     "startScratchDesc": "Te ghidează prin plugin, cu datele tale, începând cu prima serie.",
     "tourOnYourData": "Ai deja un jurnal de antrenament, așa că turul folosește datele tale."
   },
@@ -1087,7 +1105,7 @@
     "setsFound": "Serii în fișier: {count}",
     "setsToAdd": "Serii de adăugat: {count}",
     "duplicates": "Deja în jurnalul tău, a fost omis: {count}",
-    "dateRange": "Zile de instruire: de la {first} la {last}",
+    "dateRange": "Zile de antrenament: de la {first} la {last}",
     "newExercises": "Exerciții fără pagină: {exercises}",
     "nothingToAdd": "Fiecare serie din acest fișier este deja în jurnalul tău.",
     "backupNote": "Jurnalul este salvat înainte de adăugarea seriilor.",

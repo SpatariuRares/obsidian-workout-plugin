@@ -194,17 +194,30 @@
       "stashEmpty": "Wszystkie widżety są na panelu kontrolnym",
       "tile": "{widget}: kolumna {column}, wiersz {row}, szerokość {width}, wysokość {height}",
       "minOneColumn": "Min. 1 kolumna",
-      "minColumns": "Min. {columns} kolumn",
+      "minColumns": "Min. {columns} kol.",
       "size": "{width} × {height}",
       "gridHint": "Przeciągnij widżet, aby go przesunąć, a jego róg, aby zmienić rozmiar; schowek poniżej pokazuje najmniejszy rozmiar, do jakiego może się zmniejszyć każdy widżet. Usuń widżet przyciskiem × albo przeciągając go do schowka. Klawiaturą: strzałki przesuwają, Shift i strzałki zmieniają rozmiar, Delete usuwa.",
-      "gridColumnsMeasured": "{columns} kolumn mieści się w szerokości notatki.",
+      "gridColumnsMeasured": "W szerokości notatki mieści się {columns} kol.",
       "remove": "Usuń {widget} z pulpitu"
     },
     "grid": {
-      "outside": "{widget} wychodzi poza {columns} kolumn siatki",
-      "narrow": "{widget} wymaga co najmniej {min} kolumn",
+      "outside": "{widget} wychodzi poza siatkę ({columns} kol.)",
+      "narrow": "{widget} wymaga minimum {min} kol.",
       "overlap": "{widget} nakłada się na {other}",
       "empty": "Na siatce nie ma jeszcze żadnego widżetu. Otwórz „Edytuj pulpit” w menu ⋮, aby dodać jakieś."
+    },
+    "trainingCalendar": {
+      "title": "Kalendarz treningów",
+      "currentStreak": "Obecna passa",
+      "bestStreak": "Najlepsza passa",
+      "thisWeek": "Ten tydzień",
+      "daysOfGoal": "{days}/{goal} dni",
+      "trainedDay": "{day}: objętość {volume} {unit}",
+      "restDay": "{day}: odpoczynek",
+      "less": "Mniej",
+      "more": "Więcej",
+      "trainedDayNoVolume": "{day}: trening",
+      "weeks": "{count} tyg."
     }
   },
   "duration": {
@@ -386,7 +399,7 @@
     },
     "createToOpenGuide": "Przewodnik „Jak zacząć” jest częścią notatek przykładowych, które jeszcze nie istnieją. Czy chcesz je utworzyć teraz?",
     "pointedAtExamples": "Teraz, gdy wyświetlasz przykładowe logi i ćwiczenia, możesz to zmienić w ustawieniach danych.",
-    "usesSeparateLog": "Udostępniasz już dziennik treningów, więc pozostał on bez zmian. Przykłady korzystają z własnego pliku dziennika."
+    "usesSeparateLog": "Masz już dziennik treningów, więc pozostał bez zmian. Przykłady korzystają z własnego pliku dziennika."
   },
   "forms": {
     "enterCsvPath": "Folder na pliki CSV",
@@ -554,7 +567,7 @@
       "exercise": "Ćwiczenie:",
       "reps": "Powtórzenia:",
       "targetReps": "Docelowe powtórzenia:",
-      "targetWeight": "Cel: ({unit}):",
+      "targetWeight": "Cel ({unit}):",
       "volume": "Objętość ({unit}):",
       "weight": "Waga ({unit}):"
     },
@@ -594,13 +607,13 @@
       "logUpdated": "Wpis treningowy został pomyślnie zaktualizowany!",
       "migrationComplete": "Migracja zakończona. Zaktualizowano pliki ćwiczeń: {count}.",
       "migrationError": "Błąd migracji: {error}",
-      "muscleTagCount": "Znaleziono tagi: {count}",
+      "muscleTagCount": "Liczba tagów: {count}",
       "muscleTagDeleteConfirm": "Czy na pewno chcesz usunąć tag \"{tag}\"?",
       "muscleTagDeleted": "Usunięto tag",
       "muscleTagExists": "Tag \"{tag}\" już istnieje",
       "muscleTagExportError": "Błąd podczas eksportowania tagów mięśni: {error}",
       "muscleTagExported": "Wyeksportowano tagi do muscle-tags-export.csv",
-      "muscleTagImportError": "Błąd podczas importowania tagów dotyczących mięśni: {error}",
+      "muscleTagImportError": "Błąd podczas importowania tagów mięśni: {error}",
       "muscleTagImportInvalidFormat": "Ten plik musi mieć kolumny 'tag' i 'muscleGroup'",
       "muscleTagImportInvalidGroup": "Nieprawidłowa grupa mięśni \"{group}\" dla tagu \"{tag}\". Musi to być prawidłowa, standardowa grupa mięśni.",
       "muscleTagImportNoValid": "Nie znaleziono w pliku prawidłowych tagów",
@@ -608,9 +621,9 @@
       "muscleTagImported": "Pomyślnie zaimportowano tagów mięśni: {count}!",
       "muscleTagLoading": "Wczytywanie tagów...",
       "muscleTagNoResults": "Żaden tag nie pasuje do wyszukiwania",
-      "muscleTagSaveError": "Błąd podczas zapisywania tagu dla mięśni: {error}",
+      "muscleTagSaveError": "Błąd podczas zapisywania tagu mięśni: {error}",
       "muscleTagSaved": "Zapisano tag",
-      "muscleTagSimilarFound": "Znaleziono podobne tagi: {count}",
+      "muscleTagSimilarFound": "Liczba podobnych tagów: {count}",
       "muscleTagSimilarWarning": "Podobny tag już istnieje",
       "suggestedNextWeight": "Sugerowany następny ciężar: {suggestedWeight}{weightUnit}",
       "targetAchieved": "Cel osiągnięty!",
@@ -630,11 +643,14 @@
       "exerciseSectionCreated": "Sekcja ćwiczeń została pomyślnie utworzona!",
       "tableInserted": "Tabela została pomyślnie dodana!",
       "tableUpdated": "Tabela została pomyślnie zaktualizowana!",
+      "tableUpdateFailed": "Nie udało się zaktualizować tabeli: nie znaleziono jej w notatce. Otwórz notatkę ponownie i spróbuj jeszcze raz.",
       "timerInserted": "Timer został pomyślnie wstawiony!",
       "timerUpdated": "Timer został pomyślnie zaktualizowany!",
+      "timerUpdateFailed": "Nie udało się zaktualizować timera: nie znaleziono go w notatce. Otwórz notatkę ponownie i spróbuj jeszcze raz.",
       "validChooseExercise": "Wybierz ćwiczenie",
       "validationCombinedMode": "Dla typu 'ćwiczenia + trening' musisz wypełnić oba pola!",
-      "dashboardUpdated": "Panel kontrolny został pomyślnie zaktualizowany!"
+      "dashboardUpdated": "Panel kontrolny został pomyślnie zaktualizowany!",
+      "dashboardUpdateFailed": "Nie udało się zaktualizować panelu kontrolnego: nie znaleziono go w notatce albo inny panel bez identyfikatora ma takie same ustawienia. Otwórz notatkę ponownie i spróbuj jeszcze raz."
     },
     "parameterKey": "Klucz:",
     "parameterLabel": "Etykieta:",
@@ -789,13 +805,14 @@
       "weightUnit": "Jednostka dla wykresów, sum i nowych wpisów. Każdy wpis zachowuje jednostkę, w której został wprowadzony.",
       "takeTour": "Krótkie omówienie rejestrowania, wykresów, tabel i timerów na jednej notatce.",
       "welcomeWindow": "Wyświetl ponownie okno powitalne, aby rozpocząć pracę z przykładowymi danymi lub od zera.",
+      "weeklyGoal": "Dni treningowe w tygodniu, które podtrzymują passę, w podsumowaniu panelu kontrolnego i kalendarzu treningów.",
       "keepScreenAwake": "Spróbuj utrzymać ekran włączony, gdy działa jakiś timer w pierwszym planie. Zużywa więcej energii; dostępność zależy od Twojego urządzenia i ustawień systemu.",
       "vibrateOnCompletion": "Wibracja na krótko, gdy timer się skończy, niezależnie od dźwięku. Wymaga naciśnięcia na stronie i obsługującego urządzenia (np. Android). Nie jest dostępne na iOS; brak powiadomień w tle.",
       "presetRestDesc": "Sekundy odpoczynku po pracy w każdej rundzie (0 oznacza brak odpoczynku).",
       "noCustomProtocols": "Obecnie nie zdefiniowano żadnych protokołów. Kliknij przycisk „Dodaj protokół”, aby go utworzyć."
     },
     "labels": {
-      "csvPath": "Ścieżka do pliku logu CSV",
+      "csvPath": "Ścieżka do pliku dziennika CSV",
       "defaultExactMatch": "Domyślnie dokładne dopasowanie",
       "defaultRepsPerSet": "Domyślna liczba powtórzeń na serię",
       "defaultTimerPreset": "Domyślne ustawienie timera",
@@ -818,8 +835,9 @@
       "weightUnit": "Jednostka wagi",
       "showRibbonIcon": "Pokaż ikonę szybkiego zapisu",
       "welcomeWindow": "Okno powitalne",
+      "weeklyGoal": "Cel tygodniowy",
       "takeTour": "Wycieczka z przewodnikiem",
-      "keepScreenAwake": "Utrzymaj ekran włączony, gdy działa timer.",
+      "keepScreenAwake": "Utrzymaj ekran włączony, gdy działa timer",
       "vibrateOnCompletion": "Wibracja po zakończeniu timera",
       "presetRest": "Odpoczynek"
     },
@@ -833,7 +851,7 @@
       "presetSaved": "Zapisano ustawienie",
       "protocolAbbreviationRequired": "Skrót jest wymagany (maksymalnie 3 znaki)",
       "protocolColorRequired": "Wprowadź poprawny kod koloru szesnastkowego (np. #FF5733)",
-      "protocolDeleted": "Protokół usunięto",
+      "protocolDeleted": "Usunięto protokół",
       "protocolNameExists": "Istnieje już protokół o tej nazwie",
       "protocolNameRequired": "Nazwa protokołu jest wymagana",
       "protocolSaved": "Protokół został zapisany",
@@ -871,7 +889,7 @@
       "editProtocol": "Edytuj protokół"
     },
     "validation": {
-      "csvFolderNotFound": "Nie znaleziono folderu w sejfie. Uruchom „Konfiguracja plików CSV”, aby go utworzyć.",
+      "csvFolderNotFound": "Nie znaleziono folderu w skarbcu. Uruchom „Konfiguracja plików CSV”, aby go utworzyć.",
       "csvPathEmpty": "Ścieżka nie może być pusta",
       "mustBeNonNegative": "Musi być równe 0 lub większe",
       "mustBePositive": "Musi być większe niż 0"
@@ -897,7 +915,7 @@
     "recentVsPrev": " (vs poprz.)",
     "sessions": "Sesje",
     "average": "Średnia: ",
-    "title": "{dataTypeLabel} statystyki ({contextLabel}):"
+    "title": "Statystyki {dataTypeLabel} ({contextLabel}):"
   },
   "table": {
     "actions": "Akcje",
@@ -1004,7 +1022,7 @@
       "title": "Nieprawidłowe parametry:",
       "notANumber": "{key} musi być liczbą, ale jest \"{value}\"",
       "tooSmall": "{key} musi wynosić co najmniej {min}, ale wynosi {value}",
-      "outOfRange": "{key} musi mieścić się w przedziale od {min} do {max}, ale jest {value}.",
+      "outOfRange": "{key} musi mieścić się w przedziale od {min} do {max}, ale jest {value}",
       "notABoolean": "{key} musi mieć wartość true lub false, ale jest \"{value}\"",
       "notOneOf": "{key} musi być jedną z wartości: {allowed}, ale jest \"{value}\"",
       "notACell": "{key} musi być czterema liczbami całkowitymi od 1 (kolumna, wiersz, szerokość, wysokość), ale wynosi \"{value}\""
@@ -1027,7 +1045,7 @@
     "done": "Zakończono",
     "progress": "{current} z {total}",
     "noteName": "Wycieczka z przewodnikiem",
-    "noteIntro": "Wycieczka z przewodnikiem wskazuje każdy element wtyczki na tej stronie. Edytuj lub usuń tę notę, kiedy tylko chcesz.",
+    "noteIntro": "Wycieczka z przewodnikiem wskazuje każdy element wtyczki na tej stronie. Edytuj lub usuń tę notatkę, kiedy tylko chcesz.",
     "noteTable": "Twoje serie",
     "noteChart": "Postęp",
     "noteDashboard": "Panel kontrolny",

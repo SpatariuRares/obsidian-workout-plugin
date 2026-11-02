@@ -85,7 +85,7 @@
     "durationComparison": {
       "columnActual": "Werkelijk",
       "columnEstimated": "Geschat",
-      "columnVariance": "Variatie",
+      "columnVariance": "Variantie",
       "columnWorkout": "Training",
       "minutesSuffix": " min",
       "noData": "Nog niet genoeg sessies om te vergelijken.",
@@ -123,7 +123,7 @@
       "title": "Verdeling van protocollen"
     },
     "protocolEffectiveness": {
-      "columnEntries": "Invoer",
+      "columnEntries": "Logregels",
       "columnProgression": "Vooruitgang",
       "columnProtocol": "Protocol",
       "columnVolumeChange": "Volumeverandering",
@@ -158,7 +158,7 @@
     },
     "volumeAnalytics": {
       "muscleBreakdownTitle": "Top oefeningen op volume",
-      "title": "Analyse van het volume",
+      "title": "Volume-analyse",
       "chartTitleDays": "Volumetrend (laatste {days} dagen)"
     },
     "muscleHeatMap": {
@@ -183,7 +183,7 @@
       "widgetsHint": "Vink de widgets aan die je wilt tonen. Sleep ze via het handvat of gebruik de pijlen om de volgorde te wijzigen.",
       "moveUp": "{widget} omhoog verplaatsen",
       "moveDown": "{widget} omlaag verplaatsen",
-      "allHistory": "Leeg: alle geschiedenis",
+      "allHistory": "Leeg: volledige geschiedenis",
       "recentWorkoutsLimit": "Aantal trainingen in de recente lijst:",
       "volumeTrendDays": "Aantal dagen in de volumetrend:",
       "gridColumns": "Kolommen:",
@@ -196,7 +196,7 @@
       "minOneColumn": "Min. 1 kolom",
       "minColumns": "Min. {columns} kolommen",
       "size": "{width} × {height}",
-      "gridHint": "Sleep een widget om hem te verplaatsen en de hoek om hem te vergroten of verkleinen; de stash hieronder toont de kleinste maat die elke widget kan hebben. Haal een widget weg met de × of door hem op de stash te laten vallen. Met het toetsenbord: pijltjes verplaatsen, Shift en pijltjes wijzigen het formaat, Delete verwijdert hem.",
+      "gridHint": "Sleep een widget om hem te verplaatsen en de hoek om hem te vergroten of verkleinen. De lijst hieronder toont de kleinste maat die elke widget kan hebben. Haal een widget weg met de × of door hem naar die lijst te slepen. Met het toetsenbord: pijltjes verplaatsen, Shift en pijltjes wijzigen het formaat, Delete verwijdert hem.",
       "gridColumnsMeasured": "{columns} kolommen passen in de breedte van de notitie.",
       "remove": "{widget} van het dashboard halen"
     },
@@ -205,6 +205,19 @@
       "narrow": "{widget} heeft minimaal {min} kolommen nodig",
       "overlap": "{widget} overlapt {other}",
       "empty": "Er staat nog geen widget op het raster. Open 'Dashboard bewerken' in het ⋮-menu om er een te plaatsen."
+    },
+    "trainingCalendar": {
+      "title": "Trainingskalender",
+      "currentStreak": "Huidige reeks",
+      "bestStreak": "Beste reeks",
+      "thisWeek": "Deze week",
+      "daysOfGoal": "{days}/{goal} dagen",
+      "trainedDay": "{day}: {volume} {unit}",
+      "restDay": "{day}: rust",
+      "less": "Minder",
+      "more": "Meer",
+      "trainedDayNoVolume": "{day}: getraind",
+      "weeks": "{count} weken"
     }
   },
   "duration": {
@@ -223,13 +236,13 @@
       "chartTitle": "Grafiek",
       "descriptionTemplate": "Voorbeeldbeschrijving voor {name}.",
       "descriptionTitle": "Beschrijving",
-      "distanceChartTitle": "Afstandsgrafiek",
+      "distanceChartTitle": "Grafiek van de afstand",
       "durationChartTitle": "Grafiek van de duur",
       "durationTitle": "Duur",
       "heartRateTitle": "Hartslag",
       "logTitle": "Log",
       "paceTrackingNote": "Volg je verbetering in snelheid (lagere waarde = sneller):",
-      "paceTrackingTitle": "Volg je tempo",
+      "paceTrackingTitle": "Tracking van tempo",
       "repTrackingTitle": "Tracking van herhalingen",
       "volumeChartTitle": "Grafiek van het volume",
       "weightProgressionTitle": "Gewichtsprogressie"
@@ -431,7 +444,7 @@
     "createLogButtonAria": "Log aanmaken voor: {exerciseName}",
     "createLogButtonText": "Log aanmaken voor: {exerciseName}",
     "noDataTitle": "Geen logs gevonden voor {exerciseName}",
-    "exploreExampleData": "Of bekijk voorbeelddatasets",
+    "exploreExampleData": "Of bekijk voorbeeldgegevens",
     "lastSet": "Laatste keer: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Persoonlijk record: {weight} {unit} × {reps}"
@@ -469,7 +482,7 @@
   "modal": {
     "actions": "Acties",
     "addTag": "Label toevoegen",
-    "auditStatusCloseMatch": "Bijna een overeenkomst",
+    "auditStatusCloseMatch": "Bijna overeenkomend",
     "auditStatusExactMatch": "Exacte overeenkomst",
     "auditStatusNoMatch": "Geen overeenkomst",
     "auditStatusPartialMatch": "Gedeeltelijke overeenkomst",
@@ -508,10 +521,10 @@
       "updateTimer": "Timer bijwerken",
       "decreaseBy": "{label} met {increment} verlagen",
       "increaseBy": "{label} met {increment} verhogen",
-      "deleteSet": "Verwijder serie",
+      "deleteSet": "Serie verwijderen",
       "updateDashboard": "Dashboard bijwerken"
     },
-    "canvasLayout": "Lay-out",
+    "canvasLayout": "Indeling",
     "canvasOptions": "Opties",
     "checkboxes": {
       "connectSupersets": "Supersets koppelen",
@@ -559,7 +572,7 @@
       "weight": "Gewicht ({unit}):"
     },
     "layoutGrouped": "Gegroepeerd per spier",
-    "layoutHorizontal": "Horizontale lay-out",
+    "layoutHorizontal": "Horizontale indeling",
     "layoutType": "Type indeling:",
     "layoutVertical": "Verticale indeling",
     "maxLogCount": "Maximum aantal logs:",
@@ -629,12 +642,15 @@
       "exerciseNameRequired": "Geef een naam voor de oefening op",
       "exerciseSectionCreated": "Oefeningssectie succesvol aangemaakt!",
       "tableInserted": "Tabel succesvol toegevoegd!",
+      "tableUpdateFailed": "Tabel bijwerken mislukt: hij stond niet meer in de notitie. Open de notitie opnieuw en probeer het nog eens.",
       "tableUpdated": "Tabel is succesvol bijgewerkt!",
       "timerInserted": "Timer succesvol ingevoegd!",
+      "timerUpdateFailed": "Timer bijwerken mislukt: hij stond niet meer in de notitie. Open de notitie opnieuw en probeer het nog eens.",
       "timerUpdated": "Timer is succesvol bijgewerkt!",
       "validChooseExercise": "Kies een oefening",
       "validationCombinedMode": "Voor het type 'oefening + training' moet je beide velden invullen!",
-      "dashboardUpdated": "Dashboard succesvol bijgewerkt!"
+      "dashboardUpdated": "Dashboard succesvol bijgewerkt!",
+      "dashboardUpdateFailed": "Dashboard bijwerken mislukt: het stond niet meer in de notitie, of een ander dashboard zonder ID heeft dezelfde instellingen. Open de notitie opnieuw en probeer het nog eens."
     },
     "parameterKey": "Sleutel:",
     "parameterLabel": "Label:",
@@ -643,14 +659,14 @@
     "parameterUnit": "Eenheid (optioneel):",
     "placeholders": {
       "customTitle": "Laat leeg voor een automatische titel",
-      "enterTagName": "Voer de labelnaam in (bijvoorbeeld borst, petto)",
+      "enterTagName": "Voer de labelnaam in (bijvoorbeeld: borst, petto)",
       "exerciseAutocomplete": "Begin met het typen om beschikbare oefeningen te zien...",
       "folderPath": "bijvoorbeeld: Oefeningen of leeg laten voor de hoofdmap",
       "note": "Geef hier alles. Dit is je basisoefening.",
-      "notes": "bijvoorbeeld, goede vorm, voelde me sterk",
-      "parameterKey": "bijvoorbeeld, snelheid",
-      "parameterLabel": "bijvoorbeeld, Snelheid",
-      "parameterUnit": "bijvoorbeeld, km/h",
+      "notes": "bijvoorbeeld: goede vorm, voelde me sterk",
+      "parameterKey": "bijvoorbeeld: snelheid",
+      "parameterLabel": "bijvoorbeeld: Snelheid",
+      "parameterUnit": "bijvoorbeeld: km/h",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "Zoek spierlabels...",
@@ -743,7 +759,7 @@
     "date": "Datum",
     "weightUnitToggle": "Eenheid voor deze vermelding",
     "rest": "Rust",
-    "work": "Werk"
+    "work": "Inspanning"
   },
   "settings": {
     "buttons": {
@@ -761,7 +777,7 @@
       "runAllMaintenance": "Alle onderhoud uitvoeren",
       "savePreset": "Opslaan",
       "saveProtocol": "Opslaan",
-      "showWelcome": "Toon welkomstbericht",
+      "showWelcome": "Welkomstscherm tonen",
       "takeTour": "Begin de tour"
     },
     "descriptions": {
@@ -769,7 +785,7 @@
       "csvFolder": "Map waar de bestanden met trainingsgegevens en spierlabels (CSV) worden opgeslagen.",
       "defaultExactMatch": "Wanneer ingeschakeld, gebruikt de filterfunctie standaard exacte overeenkomsten. Schakel uit voor vage overeenkomsten.",
       "defaultRepsPerSet": "Aangenomen aantal herhalingen indien niet opgegeven. Bij 0 wordt de 'Terugvalduur per serie' gebruikt.",
-      "defaultTimerPreset": "Selecteer een standaardinstelling voor nieuwe timers",
+      "defaultTimerPreset": "Selecteer een standaardvoorinstelling voor nieuwe timers",
       "exerciseBlockTemplate": "Template voor oefenblokken. Beschikbare placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Pad naar de map met de oefenpagina's",
       "generateDefaultTemplates": "Genereer een standaardsjabloon voor oefeningspagina's en een labeloverzicht in de map 'Workout Templates'. Je kunt deze bestanden aanpassen om de taal en structuur te wijzigen.",
@@ -789,6 +805,7 @@
       "weightUnit": "Eenheid voor grafieken, totalen en nieuwe logs. Elke log houdt de eenheid bij waarin deze is ingevoerd.",
       "takeTour": "Loop in een korte notitie stap voor stap door loggen, grafieken, tabellen en timers.",
       "welcomeWindow": "Toon het welkomstscherm opnieuw om te beginnen met voorbeeldgegevens of vanaf nul.",
+      "weeklyGoal": "Trainingsdagen per week die je reeks in stand houden, in de samenvatting van het dashboard en de trainingskalender.",
       "keepScreenAwake": "Probeer het scherm actief te houden terwijl een timer op de voorgrond draait. Dit verbruikt meer batterij; de beschikbaarheid hangt af van je apparaat en systeeminstellingen.",
       "vibrateOnCompletion": "Tril kort wanneer een timer afloopt, los van geluid. Vereist een aanraking op de pagina en een ondersteund apparaat (zoals Android). Niet beschikbaar op iOS; geen meldingen op de achtergrond.",
       "presetRestDesc": "Aantal seconden rust na het uitvoeren van elke ronde (0 voor geen rust).",
@@ -798,7 +815,7 @@
       "csvPath": "Pad naar het CSV-logbestand",
       "defaultExactMatch": "Standaard exacte overeenkomst",
       "defaultRepsPerSet": "Standaard aantal herhalingen per serie",
-      "defaultTimerPreset": "Standaard timerinstelling",
+      "defaultTimerPreset": "Standaard timervoorinstelling",
       "exerciseBlockTemplate": "Template voor een oefenblok",
       "exerciseFolder": "Pad naar de map met de oefeningen",
       "generateDefaultTemplates": "Standaard sjablonen genereren",
@@ -818,6 +835,7 @@
       "weightUnit": "Eenheid voor gewicht",
       "showRibbonIcon": "Pictogram voor snel loggen tonen",
       "welcomeWindow": "Welkomstscherm",
+      "weeklyGoal": "Wekelijks doel",
       "takeTour": "Begeleide rondleiding",
       "keepScreenAwake": "Houd het scherm actief terwijl een timer loopt",
       "vibrateOnCompletion": "Tril als een timer is voltooid",
@@ -848,7 +866,7 @@
     },
     "placeholders": {
       "presetName": "Voer de naam van de voorinstelling in",
-      "protocolAbbreviation": "Bijvoorbeeld, gs",
+      "protocolAbbreviation": "Bijvoorbeeld: gs",
       "protocolName": "Voer de naam van het protocol in"
     },
     "sections": {
@@ -859,7 +877,7 @@
       "setupAndData": "Instellingen en gegevens",
       "templates": "Templates",
       "timerPresets": "Timervoorinstellingen",
-      "trainingParameters": "Parameters voor training",
+      "trainingParameters": "Trainingsparameters",
       "gettingStarted": "Beginnen",
       "timerDeviceCues": "Timersignalen op het apparaat",
       "customProtocols": "Protocollen"
@@ -968,7 +986,7 @@
     "stopwatch": "Stopwatch",
     "phase": {
       "rest": "Rust",
-      "work": "Werk"
+      "work": "Inspanning"
     },
     "round": "Ronde {current} van {total}",
     "status": {
@@ -990,7 +1008,7 @@
   },
   "canvas": {
     "duration": "**Duur:** {duration}",
-    "best": "**Beste:** {weight}{unit} x {reps} herhalingen"
+    "best": "**Beste:** {weight}{unit} × {reps} herhalingen"
   },
   "templates": {
     "tagReference": {
@@ -1039,8 +1057,8 @@
       },
       "rowActions": {
         "title": "Bewerk of verwijder een serie",
-        "mobileText": "Tik op een serie om deze te corrigeren. Om deze te verwijderen, gebruik je de optie \"Verwijder serie\" in het formulier dat wordt geopend.",
-        "text": "Gebruik het potlood in een rij om een serie te corrigeren. Om deze te verwijderen, gebruik je de optie \"Verwijder serie\" in het formulier dat wordt geopend."
+        "mobileText": "Tik op een serie om deze te corrigeren. Om deze te verwijderen, gebruik je de knop \"Serie verwijderen\" in het formulier dat wordt geopend.",
+        "text": "Gebruik het potlood in een rij om een serie te corrigeren. Om deze te verwijderen, gebruik je de knop \"Serie verwijderen\" in het formulier dat wordt geopend."
       },
       "chart": {
         "title": "Je voortgang",

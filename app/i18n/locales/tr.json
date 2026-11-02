@@ -11,7 +11,7 @@
     "overallVariationPrefix": "Genel değişim: ",
     "significantIncrease": "Sıfırdan artış",
     "trendLine": "Trend çizgisi",
-    "typeNotAvailable": "\"{chartDataType}\" türündeki grafik, {exerciseType} türündeki egzersizler için kullanılabilir değildir. Kullanılabilir türler: {typeList}",
+    "typeNotAvailable": "\"{chartDataType}\" türündeki grafik, {exerciseType} türündeki egzersizler için kullanılamaz. Kullanılabilir türler: {typeList}",
     "types": {
       "distance": "Mesafe",
       "duration": "Süre",
@@ -205,6 +205,19 @@
       "narrow": "{widget} en az {min} sütun gerektirir",
       "overlap": "{widget}, {other} ile çakışıyor",
       "empty": "Izgarada henüz widget yok. Birkaç tane yerleştirmek için ⋮ menüsünde «Panoyu düzenle» seçeneğini açın."
+    },
+    "trainingCalendar": {
+      "title": "Antrenman takvimi",
+      "currentStreak": "Mevcut seri",
+      "bestStreak": "En iyi seri",
+      "thisWeek": "Bu hafta",
+      "daysOfGoal": "{days}/{goal} gün",
+      "trainedDay": "{day}: {volume} {unit}",
+      "restDay": "{day}: dinlenme",
+      "less": "Az",
+      "more": "Çok",
+      "trainedDayNoVolume": "{day}: antrenman yapıldı",
+      "weeks": "{count} hafta"
     }
   },
   "duration": {
@@ -346,7 +359,7 @@
       "welcome": "Hoş geldiniz! Bu klasör, tüm özellikleri öğrenmenize yardımcı olacak örnek dosyaları içerir.",
       "workoutsDesc": "Örnek antrenman şablonları",
       "workoutsFolder": "**{folder}/**",
-      "pagesIntro": "Her sayfada bir özelliği keşfedin. Bağlantıları sırayla takip edin veya aşağıdaki özelliklerden birini seçin. Notlar arasında geçiş yapmak için \"Geri\" ve \"Sonraki\" düğmelerini kullanın; her örneği keşfetmek için normal şekilde kaydırın.",
+      "pagesIntro": "Her sayfada bir özelliği keşfedin. Bağlantıları sırayla takip edin veya aşağıdaki özelliklerden birini seçin. Notlar arasında geçiş yapmak için \"Geri\" ve \"İleri\" düğmelerini kullanın; her örneği keşfetmek için normal şekilde kaydırın.",
       "liveIntro": "Aşağıdaki tüm özellikleri, altı haftalık örnek antrenmanlarla keşfedin. Bunlar örnek verilerdir; kontrolleri deneyin ve notlarınızın nasıl çalıştığını görün.",
       "tryLog": "\"+\" düğmesiyle bir set ekleyin. Tablo, grafikler ve gösterge paneli aynı CSV dosyasını okur.",
       "continueWithWorkout": "[[{workout}]]'ı açarak, egzersiz tabloları ve dinlenme zamanlayıcıları ile birlikte kapsamlı bir antrenman deneyin.",
@@ -578,7 +591,7 @@
       "auditRenameFileError": "Dosya yeniden adlandırılamadı: {error}",
       "auditRenameFileSuccess": "Dosya yeniden adlandırıldı",
       "auditRenameSuccess": "Yeniden adlandırıldı ({count} dosya güncellendi)",
-      "auditScanError": "Tarama hatası: {error}",
+      "auditScanError": "Egzersiz dosyaları taranırken hata: {error}",
       "auditScanning": "Egzersiz dosyaları taranıyor...",
       "canvasExportError": "Tuvale aktarma hatası: {error}",
       "canvasExported": "Tuval dışa aktarıldı ({path})",
@@ -629,17 +642,20 @@
       "exerciseNameRequired": "Lütfen bir egzersiz adı girin",
       "exerciseSectionCreated": "Egzersiz bölümü başarıyla oluşturuldu!",
       "tableInserted": "Tablo başarıyla eklendi!",
+      "tableUpdateFailed": "Tablo güncellenemedi: not içinde bulunamadı. Notu yeniden açıp tekrar deneyin.",
       "tableUpdated": "Tablo başarıyla güncellendi!",
       "timerInserted": "Zamanlayıcı başarıyla eklendi!",
+      "timerUpdateFailed": "Zamanlayıcı güncellenemedi: not içinde bulunamadı. Notu yeniden açıp tekrar deneyin.",
       "timerUpdated": "Zamanlayıcı başarıyla güncellendi!",
       "validChooseExercise": "Bir egzersiz seçin",
       "validationCombinedMode": "'Egzersiz + antrenman' türü için her iki alanı da doldurun!",
-      "dashboardUpdated": "Gösterge paneli başarıyla güncellendi!"
+      "dashboardUpdated": "Gösterge paneli başarıyla güncellendi!",
+      "dashboardUpdateFailed": "Gösterge paneli güncellenemedi: not içinde bulunamadı veya kimliği olmayan başka bir gösterge panelinde aynı ayarlar var. Notu yeniden açıp tekrar deneyin."
     },
     "parameterKey": "Anahtar:",
     "parameterLabel": "Etiket:",
     "parameterRequired": "Gerekli",
-    "parameterType": "Tip:",
+    "parameterType": "Tür:",
     "parameterUnit": "Birim (isteğe bağlı):",
     "placeholders": {
       "customTitle": "Otomatik başlık için boş bırakın",
@@ -722,7 +738,7 @@
       "insertChart": "Antrenman grafiği ekle",
       "insertDashboard": "Antrenman gösterge paneli ekle",
       "insertDuration": "Antrenman süresi ekle",
-      "insertTable": "Antrenman günlüğü tablosu ekle",
+      "insertTable": "Antrenman kaydı tablosu ekle",
       "insertTimer": "Antrenman zamanlayıcısı ekle",
       "muscleTagManager": "Kas etiketlerini yönet",
       "editDashboard": "Gösterge panelini düzenle"
@@ -789,6 +805,7 @@
       "weightUnit": "Grafikler, toplamlar ve yeni kayıtlar için birim. Her kayıt, girildiği birimi korur.",
       "takeTour": "Kısa bir notta kayıt, grafikler, tablolar ve zamanlayıcıları adım adım gösterin.",
       "welcomeWindow": "Örnek verilerle veya sıfırdan başlamak için, tekrar \"Hoş geldiniz\" penceresini gösterin.",
+      "weeklyGoal": "Serinizi sürdüren haftalık antrenman günü sayısı. Gösterge panelinin özetinde ve antrenman takviminde kullanılır.",
       "keepScreenAwake": "Zamanlayıcı ön planda çalışırken ekranın açık kalmasını sağlamaya çalışır. Daha fazla pil tüketir; kullanılabilirlik cihazınıza ve sistem ayarlarınıza bağlıdır.",
       "vibrateOnCompletion": "Zamanlayıcı bittiğinde, sesten bağımsız olarak kısa bir süre titreşim sağlar. Sayfaya dokunma ve uyumlu bir cihaz (örneğin Android) gerektirir. iOS'ta mevcut değildir; arka planda bildirimler gönderilmez.",
       "presetRestDesc": "Her turun sonunda yapılan dinlenme süresi (0, dinlenme yok anlamına gelir).",
@@ -818,6 +835,7 @@
       "weightUnit": "Ağırlık birimi",
       "showRibbonIcon": "Hızlı kayıt simgesini göster",
       "welcomeWindow": "Hoş geldiniz penceresi",
+      "weeklyGoal": "Haftalık hedef",
       "takeTour": "Rehberli tur",
       "keepScreenAwake": "Zamanlayıcı çalışırken ekranı açık tut",
       "vibrateOnCompletion": "Zamanlayıcı bittiğinde titreşim",
@@ -837,7 +855,7 @@
       "protocolNameExists": "Bu adda bir protokol zaten mevcut",
       "protocolNameRequired": "Protokol adı gereklidir",
       "protocolSaved": "Protokol kaydedildi",
-      "weightUnitChangeFailed": "Ağırlık birimini değiştiremedim: {error}"
+      "weightUnitChangeFailed": "Ağırlık birimi değiştirilemedi: {error}"
     },
     "options": {
       "none": "Yok",
@@ -882,7 +900,7 @@
       "myoReps": "Bir aktivasyon seti, ardından birkaç saniyelik dinlenme ile kısa mini setler.",
       "restPause": "Başarısızlık durumunda birkaç saniye dinlenin, ardından birkaç tekrar daha yapın.",
       "superset": "İki egzersizi ardışık olarak, aralarında dinlenmeden yapın.",
-      "twentyone": "Alt yarım vücudu için 7 tekrar, üst yarım vücudu için 7 tekrar, ardından 7 tam tekrar."
+      "twentyone": "Alt yarıda 7 tekrar, üst yarıda 7 tekrar, ardından 7 tam tekrar."
     },
     "presetHelp": {
       "tabata": "20 saniye boyunca maksimum yoğunlukta çalışma, 10 saniye dinlenme, 8 tur: toplamda 4 dakika.",
@@ -897,7 +915,7 @@
     "recentVsPrev": " (öncekiyle)",
     "sessions": "Oturumlar",
     "average": "Ortalama: ",
-    "title": "{dataTypeLabel} istatistikler ({contextLabel}):"
+    "title": "{dataTypeLabel} istatistikleri ({contextLabel}):"
   },
   "table": {
     "actions": "Eylemler",

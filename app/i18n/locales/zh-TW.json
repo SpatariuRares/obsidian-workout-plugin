@@ -205,6 +205,19 @@
       "narrow": "{widget} 至少需要 {min} 欄",
       "overlap": "{widget} 與 {other} 重疊",
       "empty": "網格上還沒有小工具。在 ⋮ 選單中開啟「編輯儀表板」即可放置。"
+    },
+    "trainingCalendar": {
+      "title": "訓練日曆",
+      "currentStreak": "目前連續紀錄",
+      "bestStreak": "最長連續紀錄",
+      "thisWeek": "本週",
+      "daysOfGoal": "{days}/{goal} 天",
+      "trainedDay": "{day}：{volume} {unit}",
+      "restDay": "{day}：休息",
+      "less": "少",
+      "more": "多",
+      "trainedDayNoVolume": "{day}：已訓練",
+      "weeks": "{count} 週"
     }
   },
   "duration": {
@@ -232,7 +245,8 @@
       "paceTrackingTitle": "配速追蹤",
       "repTrackingTitle": "重複次數追蹤",
       "volumeChartTitle": "訓練量圖",
-      "weightProgressionTitle": "重量增長"
+      "weightProgressionTitle": "重量增長",
+      "e1rmTitle": "預估的 1RM"
     },
     "exercises": {
       "benchPress": {
@@ -271,7 +285,7 @@
       "byExerciseTitle": "依動作",
       "byWorkoutTitle": "依運動",
       "cardioExerciseTitle": "心肺運動（距離 + 配速）",
-      "chartsIntro": "圖表以視覺化方式呈現您隨時間的進度。可用類型：`volume`、`weight`、`reps`、`duration`、`distance`、`heartRate`、`pace`。",
+      "chartsIntro": "圖表呈現你隨時間的進展。可用類型：`volume`、`weight`、`e1rm`、`reps`、`duration`、`distance`、`heartRate`、`pace`。",
       "chartsTitle": "1. 圖表",
       "codeBlockWorkoutChart": "以圖表呈現隨時間的進度",
       "codeBlockWorkoutDashboard": "完整統計概覽",
@@ -285,12 +299,7 @@
       "durationEstimatorTitle": "4. 預估時間",
       "intervalTimerTitle": "間隔計時器",
       "intro": "外掛中所有程式碼區塊類型的完整參考。",
-      "protocol21s": "7+7+7 部分次數",
-      "protocolDropset": "降低重量，繼續做",
-      "protocolMyoReps": "啟動組 + 迷你組",
-      "protocolRestPause": "短暫休息，然後繼續直到達到極限",
       "protocolStandard": "標準組",
-      "protocolSuperset": "搭配動作",
       "quickReferenceTitle": "快速參考",
       "strengthExerciseTitle": "力量動作（訓練量 + 重量）",
       "tablesIntro": "表格可顯示您的運動紀錄，並提供排序和編輯功能。",
@@ -299,9 +308,29 @@
       "timersTitle": "3. 計時器",
       "tip": "**提示**：個人儀表板請查看 [[{dashboard}]]",
       "title": "功能展示",
-      "trainingProtocolsIntro": "此外掛支援在您的紀錄中顯示以下訓練法標記：",
+      "trainingProtocolsIntro": "每組都可以設定一個訓練法，在表格中以徽章顯示。你可以編輯這些訓練法，或在 設定 → 訓練法 中新增自己的。",
       "trainingProtocolsTitle": "5. 訓練法",
-      "workoutChartTitle": "運動圖表（所有動作合併）"
+      "workoutChartTitle": "運動圖表（所有動作合併）",
+      "e1rmChartTitle": "預估的 1RM",
+      "e1rmIntro": "依 Epley 公式（重量 ×（1 + 次數 / 30））計算每天的最佳估算值，使用 1 到 12 次的組。熱身組與遞減組不計入。",
+      "presetTimersTitle": "Tabata 與 EMOM",
+      "presetTimersIntro": "計時器可以用 `preset` 依名稱執行已儲存的預設。Tabata 與 EMOM 已內建；你可以編輯它們，或在 設定 → 計時器預設 中新增自己的。",
+      "protocolColumn": "訓練法",
+      "badgeColumn": "徽章",
+      "descriptionColumn": "描述",
+      "codeBlockColumn": "程式碼區塊",
+      "purposeColumn": "用途",
+      "codeBlockWorkoutSession": "依組順序跟隨筆記中的計畫",
+      "sessionTitle": "6. 引導訓練",
+      "sessionIntro": "`workout-session` 區塊會依照筆記中的計畫逐步引導你：每個含有動作的 `workout-log` 區塊對應一步，包含其 `sets` 與目標，並使用同一章節的休息計時器。在 [[{workout}]] 中試試看。",
+      "dashboardsTitle": "7. 儀表板",
+      "dashboardsIntro": "儀表板會顯示所有小工具，或只顯示 `widgets` 中列出的小工具，並依該順序排列。在儀表板右上角的選單中選擇。",
+      "dashboardWidgetsTitle": "已選小工具",
+      "dashboardGridTitle": "格狀版面",
+      "dashboardGridIntro": "使用 `layout: grid` 時，每個小工具會佔用其所在列的儲存格：欄、列、寬度與高度。在較窄的筆記中，小工具會依閱讀順序重新排列。",
+      "trainingCalendarIntro": "訓練日曆顯示一整年的訓練日，以及連續達成每週目標的週數（設定 → 每週目標）。",
+      "importTitle": "8. 從 Strong 或 Hevy 匯入",
+      "importIntro": "從命令面板執行 **{command}**，然後選擇應用程式匯出的 CSV。紀錄中已有的組會被略過，紀錄會先備份。"
     },
     "fileNames": {
       "dashboard": "儀表板",
@@ -346,6 +375,7 @@
       "welcome": "歡迎！此資料夾包含範例檔案，有助您了解所有功能。",
       "workoutsDesc": "示範運動範本",
       "workoutsFolder": "**{folder}/**",
+      "sessionIntro": "此筆記包含一個簡單的計畫：一個動作及其組、目標與休息計時器。訓練會顯示要做的組；紀錄後休息計時器即開始。",
       "pagesIntro": "逐頁探索一個功能。請依連結的順序閱讀，或從下方選擇功能。使用「返回」和「下一頁」在筆記之間切換，並像一般頁面一樣捲動來探索每個範例。",
       "liveIntro": "以下範例運動涵蓋六週，可用來探索所有功能。這些是示範資料，您可以實際操作，看看筆記如何運作。",
       "tryLog": "點擊「+」新增一組。表格、圖表和儀表板讀取的都是同一個 CSV 檔案。",
@@ -358,13 +388,15 @@
       "cyclingCooldownTitle": "自行車緩和運動",
       "intro": "高強度間歇訓練，包含間歇計時器和有氧運動追蹤功能。",
       "runningProgressTitle": "跑步進度",
-      "sprintIntervalsTitle": "衝刺間歇（30 秒 × 8 輪）",
+      "sprintIntervalsTitle": "衝刺間歇（30 秒開，30 秒停，8 輪）",
       "title": "高強度間歇訓練（HIIT）有氧訓練",
-      "warmupTitle": "熱身（5 分鐘）"
+      "warmupTitle": "熱身（5 分鐘）",
+      "tabataTitle": "Tabata 收尾"
     },
     "workout": {
       "chart": "圖表",
       "duration": "時長",
+      "session": "引導訓練",
       "note": "備註：全力以赴",
       "recoverySuffix": "（恢復：{seconds} 秒）",
       "setsReps": "{sets} 組 x {reps} 次"
@@ -554,6 +586,7 @@
       "exercise": "動作：",
       "reps": "次數：",
       "targetReps": "目標次數：",
+      "plannedSets": "計畫組數：",
       "targetWeight": "目標（{unit}）：",
       "volume": "訓練量（{unit}）：",
       "weight": "重量（{unit}）："
@@ -629,12 +662,15 @@
       "exerciseNameRequired": "請輸入動作名稱",
       "exerciseSectionCreated": "動作區段已成功建立！",
       "tableInserted": "表格已成功插入！",
+      "tableUpdateFailed": "無法更新表格：在其所在筆記中找不到它。請重新開啟筆記後再試一次。",
       "tableUpdated": "表格已成功更新！",
       "timerInserted": "計時器已成功插入！",
+      "timerUpdateFailed": "無法更新計時器：在其所在筆記中找不到它。請重新開啟筆記後再試一次。",
       "timerUpdated": "計時器已成功更新！",
       "validChooseExercise": "請選擇一個動作",
       "validationCombinedMode": "對於「動作 + 運動」類型，您必須填寫兩個欄位！",
-      "dashboardUpdated": "儀表板已成功更新！"
+      "dashboardUpdated": "儀表板已成功更新！",
+      "dashboardUpdateFailed": "無法更新儀表板：在其所在筆記中找不到它，或另一個沒有 id 的儀表板有相同設定。請重新開啟筆記後再試一次。"
     },
     "parameterKey": "鍵：",
     "parameterLabel": "標籤：",
@@ -722,6 +758,7 @@
       "insertChart": "插入運動圖表",
       "insertDashboard": "插入運動儀表板",
       "insertDuration": "插入運動時長",
+      "insertSession": "插入引導訓練",
       "insertTable": "插入運動紀錄表格",
       "insertTimer": "插入運動計時器",
       "muscleTagManager": "管理肌肉標籤",
@@ -789,6 +826,7 @@
       "weightUnit": "用於圖表、總計和新紀錄的單位。每筆紀錄都會保留輸入時所用的單位。",
       "takeTour": "在一則簡短筆記中，逐步介紹紀錄、圖表、表格和計時器。",
       "welcomeWindow": "再次顯示歡迎畫面，以便從範例資料開始，或從頭開始。",
+      "weeklyGoal": "每週要維持連續紀錄的訓練天數，顯示在儀表板摘要與訓練日曆中。",
       "keepScreenAwake": "盡可能在任何計時器正在運作時保持螢幕開啟狀態。這會消耗更多電力；其可用性取決於您的裝置和系統設定。",
       "vibrateOnCompletion": "在計時器結束時，會短暫震動，與聲音無關。需要點擊頁面，並使用支援的設備（例如 Android）。在 iOS 系統上不可用；不會發送背景警示。",
       "presetRestDesc": "每輪運動後的休息秒數（0 表示不休息）。",
@@ -818,6 +856,7 @@
       "weightUnit": "重量單位",
       "showRibbonIcon": "顯示快速紀錄圖示",
       "welcomeWindow": "歡迎畫面",
+      "weeklyGoal": "每週目標",
       "takeTour": "導覽",
       "keepScreenAwake": "在計時器運作時，保持螢幕開啟",
       "vibrateOnCompletion": "當計時器結束時，產生震動",
@@ -1096,5 +1135,19 @@
     "error": "匯入失敗：{error}",
     "title": "從 Strong 或 Hevy 匯入",
     "intro": "從 App 匯出的運動資料中選擇 CSV 檔案。在您確認之前，不會寫入任何內容。"
+  },
+  "session": {
+    "exerciseOf": "第 {current} / {total} 個動作",
+    "setOf": "第 {set} / {sets} 組",
+    "setNumber": "第 {set} 組",
+    "target": "目標：{target}",
+    "targetReps": "{reps} 次",
+    "targetWeight": "{weight} {unit}",
+    "logSet": "紀錄組",
+    "previous": "上一步",
+    "next": "下一步",
+    "rest": "休息",
+    "done": "訓練完成：今天已紀錄 {sets} 組。",
+    "empty": "在此筆記中加入一個含動作的 `workout-log` 區塊，即可將它當作訓練來進行。"
   }
 }

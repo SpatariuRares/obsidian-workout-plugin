@@ -7,6 +7,7 @@ import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { TIMER_TYPE } from "@app/features/timer/types";
 import { timerBlock } from "@app/features/timer/timerBlock";
 import { durationBlock } from "@app/features/duration/durationBlock";
+import { sessionBlock } from "@app/features/session/sessionBlock";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 import {
   CHART_DATA_TYPE,
@@ -98,6 +99,34 @@ export function gettingStartedPages() {
       block: durationBlock.serialize({
         workout: `${examplePaths.workouts()}/${t("examples.workouts.lowerBodyA.name")}.md`,
       }),
+    },
+    {
+      name: "09 Estimated 1RM",
+      title: t("examples.featureShowcase.e1rmChartTitle"),
+      intro: t("examples.featureShowcase.e1rmIntro"),
+      block: chart(exercise, CHART_DATA_TYPE.E1RM),
+    },
+    {
+      // A session follows the plan of its own note, so this page carries one
+      name: "10 Guided session",
+      title: t("examples.workout.session"),
+      intro: t("examples.gettingStarted.sessionIntro"),
+      block: [
+        sessionBlock.serialize({}),
+        `## ${exercise}`,
+        timerBlock.serialize({
+          id: "gettingStartedSessionRest",
+          duration: 90,
+          exercise,
+        }),
+        tableBlock.serialize({
+          id: generateCodeBlockId(),
+          exercise,
+          limit: 8,
+          sets: 3,
+          targetReps: 8,
+        }),
+      ].join("\n\n"),
     },
   ];
   const index = examplePaths

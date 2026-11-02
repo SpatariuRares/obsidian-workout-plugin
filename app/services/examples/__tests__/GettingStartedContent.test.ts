@@ -41,7 +41,8 @@ it("creates linked feature pages with matching recent data and no long index", a
           pages[i - 1].path.replace(/\.md$/, ""),
         );
       const parsed = readWorkoutNote(content).blocks;
-      expect(parsed).toHaveLength(1);
+      // One feature per page; the session page also carries the plan it follows
+      expect(parsed.length).toBeGreaterThanOrEqual(1);
       return parsed;
     });
     expect(new Set(blocks.map((block) => block.type))).toEqual(
@@ -51,6 +52,7 @@ it("creates linked feature pages with matching recent data and no long index", a
         "workout-dashboard",
         "workout-timer",
         "workout-duration",
+        "workout-session",
       ]),
     );
     const entries = parseLog(

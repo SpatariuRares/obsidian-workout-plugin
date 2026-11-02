@@ -245,7 +245,8 @@
       "paceTrackingTitle": "Monitoraggio del ritmo",
       "repTrackingTitle": "Monitoraggio delle ripetizioni",
       "volumeChartTitle": "Grafico del volume",
-      "weightProgressionTitle": "Progressione del peso"
+      "weightProgressionTitle": "Progressione del peso",
+      "e1rmTitle": "1RM stimato"
     },
     "exercises": {
       "benchPress": {
@@ -284,7 +285,7 @@
       "byExerciseTitle": "Per esercizio",
       "byWorkoutTitle": "Per allenamento",
       "cardioExerciseTitle": "Esercizio cardio (distanza + ritmo)",
-      "chartsIntro": "I grafici visualizzano i tuoi progressi nel tempo. Tipi disponibili: `volume`, `weight`, `reps`, `duration`, `distance`, `heartRate`, `pace`.",
+      "chartsIntro": "I grafici mostrano i tuoi progressi nel tempo. Tipi disponibili: `volume`, `weight`, `e1rm`, `reps`, `duration`, `distance`, `heartRate`, `pace`.",
       "chartsTitle": "1. Grafici",
       "codeBlockWorkoutChart": "Visualizza progressi nel tempo",
       "codeBlockWorkoutDashboard": "Panoramica statistiche complete",
@@ -298,12 +299,7 @@
       "durationEstimatorTitle": "4. Stima della durata",
       "intervalTimerTitle": "Timer a intervalli",
       "intro": "Riferimento completo di tutti i tipi di blocchi di codice disponibili nel plugin Workout.",
-      "protocol21s": "7+7+7 ripetizioni parziali",
-      "protocolDropset": "Riduci peso, continua ripetizioni",
-      "protocolMyoReps": "Serie di attivazione + mini serie",
-      "protocolRestPause": "Breve riposo, continua al cedimento",
       "protocolStandard": "Serie normali",
-      "protocolSuperset": "Esercizi accoppiati",
       "quickReferenceTitle": "Riferimento rapido",
       "strengthExerciseTitle": "Esercizio di forza (volume + peso)",
       "tablesIntro": "Le tabelle mostrano i tuoi registri di allenamento e permettono di ordinarli e modificarli.",
@@ -312,9 +308,29 @@
       "timersTitle": "3. Timer",
       "tip": "**Suggerimento**: Per la tua dashboard personale, vedi [[{dashboard}]]",
       "title": "Panoramica delle funzionalità",
-      "trainingProtocolsIntro": "Il plugin supporta questi badge protocollo nei tuoi registri:",
+      "trainingProtocolsIntro": "Ogni serie può avere un protocollo, mostrato come badge nelle tabelle. Modificali o aggiungi i tuoi in Impostazioni → Protocolli.",
       "trainingProtocolsTitle": "5. Protocolli di allenamento",
-      "workoutChartTitle": "Grafico dell'allenamento (tutti gli esercizi combinati)"
+      "workoutChartTitle": "Grafico dell'allenamento (tutti gli esercizi combinati)",
+      "e1rmChartTitle": "1RM stimato",
+      "e1rmIntro": "La stima migliore di ogni giorno con la formula di Epley (peso × (1 + ripetizioni / 30)), dalle serie da 1 a 12 ripetizioni. Le serie di riscaldamento e i drop set non contano.",
+      "presetTimersTitle": "Tabata ed EMOM",
+      "presetTimersIntro": "Un timer può eseguire un preset salvato per nome con `preset`. Tabata ed EMOM sono integrati; modificali o aggiungi i tuoi in Impostazioni → Preset timer.",
+      "protocolColumn": "Protocollo",
+      "badgeColumn": "Badge",
+      "descriptionColumn": "Descrizione",
+      "codeBlockColumn": "Blocco di codice",
+      "purposeColumn": "Scopo",
+      "codeBlockWorkoutSession": "Segue il piano della nota serie per serie",
+      "sessionTitle": "6. Sessione guidata",
+      "sessionIntro": "Un blocco `workout-session` ti accompagna nel piano della sua nota: un passaggio per ogni blocco `workout-log` con un esercizio, con i suoi `sets` e obiettivi, e il timer di recupero della stessa sezione. Provalo in [[{workout}]].",
+      "dashboardsTitle": "7. Dashboard",
+      "dashboardsIntro": "Una dashboard mostra tutti i widget, o solo quelli elencati in `widgets`, nell'ordine indicato. Usa il menu in alto a destra di una dashboard per sceglierli.",
+      "dashboardWidgetsTitle": "Widget scelti",
+      "dashboardGridTitle": "Layout a griglia",
+      "dashboardGridIntro": "Con `layout: grid` ogni widget occupa le celle della sua riga: colonna, riga, larghezza e altezza. In una nota più stretta i widget vengono riordinati in ordine di lettura.",
+      "trainingCalendarIntro": "Il calendario di allenamento mostra un anno di giorni di allenamento e quante settimane di fila hai raggiunto il tuo obiettivo settimanale (Impostazioni → Obiettivo settimanale).",
+      "importTitle": "8. Importa da Strong o Hevy",
+      "importIntro": "Esegui **{command}** dalla palette dei comandi e scegli il CSV esportato dall'app. Le serie già presenti nel registro vengono saltate, e il registro viene prima salvato in backup."
     },
     "fileNames": {
       "dashboard": "Dashboard",
@@ -365,19 +381,22 @@
       "title": "Primi passi con il plugin The Gym",
       "welcome": "Benvenuto! Questa cartella contiene file di esempio per aiutarti a imparare tutte le funzionalità.",
       "workoutsDesc": "Template di allenamento di esempio",
-      "workoutsFolder": "**{folder}/**"
+      "workoutsFolder": "**{folder}/**",
+      "sessionIntro": "Questa nota contiene un piano semplice: un esercizio con le sue serie, obiettivo e timer di recupero. La sessione mostra la serie da fare; registrala e il timer di recupero parte."
     },
     "hiit": {
       "cyclingCooldownTitle": "Defaticamento in bici",
       "intro": "Allenamento a intervalli ad alta intensità con timer a intervalli e monitoraggio cardio.",
       "runningProgressTitle": "Progressi nella corsa",
-      "sprintIntervalsTitle": "Intervalli sprint (30s × 8 round)",
+      "sprintIntervalsTitle": "Intervalli sprint (30 s di lavoro, 30 s di pausa, 8 round)",
       "title": "Sessione cardio HIIT",
-      "warmupTitle": "Riscaldamento (5 min)"
+      "warmupTitle": "Riscaldamento (5 min)",
+      "tabataTitle": "Finale Tabata"
     },
     "workout": {
       "chart": "grafico",
       "duration": "Durata",
+      "session": "Sessione guidata",
       "note": "Nota: spingi forte",
       "recoverySuffix": "(Recupero: {seconds}s)",
       "setsReps": "{sets} serie x {reps} ripetizioni"
@@ -567,6 +586,7 @@
       "exercise": "Esercizio:",
       "reps": "Ripetizioni:",
       "targetReps": "Ripetizioni target:",
+      "plannedSets": "Serie pianificate:",
       "targetWeight": "Peso target ({unit}):",
       "volume": "Volume ({unit}):",
       "weight": "Peso ({unit}):"
@@ -738,6 +758,7 @@
       "insertChart": "Inserisci grafico allenamento",
       "insertDashboard": "Inserisci dashboard allenamento",
       "insertDuration": "Inserisci durata allenamento",
+      "insertSession": "Inserisci sessione guidata",
       "insertTable": "Inserisci tabella registro",
       "insertTimer": "Inserisci timer allenamento",
       "muscleTagManager": "Gestisci tag muscolari",

@@ -205,6 +205,19 @@
       "narrow": "{widget} 至少需要 {min} 列",
       "overlap": "{widget} 与 {other} 重叠",
       "empty": "网格上还没有小组件。在 ⋮ 菜单中打开“编辑仪表盘”即可放置。"
+    },
+    "trainingCalendar": {
+      "title": "训练日历",
+      "currentStreak": "当前连续训练",
+      "bestStreak": "最长连续训练",
+      "thisWeek": "本周",
+      "daysOfGoal": "{days}/{goal} 天",
+      "trainedDay": "{day}：{volume} {unit}",
+      "restDay": "{day}：休息",
+      "less": "少",
+      "more": "多",
+      "trainedDayNoVolume": "{day}：已训练",
+      "weeks": "{count} 周"
     }
   },
   "duration": {
@@ -232,7 +245,8 @@
       "paceTrackingTitle": "配速跟踪",
       "repTrackingTitle": "次数跟踪",
       "volumeChartTitle": "训练量图表",
-      "weightProgressionTitle": "重量进步"
+      "weightProgressionTitle": "重量进步",
+      "e1rmTitle": "预估的 1RM"
     },
     "exercises": {
       "benchPress": {
@@ -271,7 +285,7 @@
       "byExerciseTitle": "按训练动作",
       "byWorkoutTitle": "按训练计划",
       "cardioExerciseTitle": "有氧运动（距离 + 配速）",
-      "chartsIntro": "图表可以直观展示您的进度随时间的变化。可用类型：`volume`（训练量）、`weight`（重量）、`reps`（次数）、`duration`（时长）、`distance`（距离）、`heartRate`（心率）、`pace`（配速）。",
+      "chartsIntro": "图表展示你随时间变化的进展。可用类型：`volume`、`weight`、`e1rm`、`reps`、`duration`、`distance`、`heartRate`、`pace`。",
       "chartsTitle": "1. 图表",
       "codeBlockWorkoutChart": "可视化进度随时间的变化",
       "codeBlockWorkoutDashboard": "完整统计概览",
@@ -285,12 +299,7 @@
       "durationEstimatorTitle": "4. 时长估算",
       "intervalTimerTitle": "间歇计时器",
       "intro": "训练插件中所有代码块类型的完整参考。",
-      "protocol21s": "7+7+7 部分次数",
-      "protocolDropset": "减轻重量，继续完成次数",
-      "protocolMyoReps": "激活组 + 迷你组",
-      "protocolRestPause": "短暂休息，继续至力竭",
       "protocolStandard": "标准组",
-      "protocolSuperset": "成对的训练动作",
       "quickReferenceTitle": "快速参考",
       "strengthExerciseTitle": "力量训练（训练量 + 重量）",
       "tablesIntro": "表格显示您的训练记录，并提供排序和编辑功能。",
@@ -299,9 +308,29 @@
       "timersTitle": "3. 计时器",
       "tip": "**提示**：个人仪表盘请查看 [[{dashboard}]]",
       "title": "功能展示",
-      "trainingProtocolsIntro": "插件支持在记录中显示以下训练方案徽章：",
+      "trainingProtocolsIntro": "每组都可以设置一个训练方案，在表格中以徽章显示。你可以编辑这些方案，也可以在 设置 → 训练方案 中添加自己的。",
       "trainingProtocolsTitle": "5. 训练方案",
-      "workoutChartTitle": "训练图表（所有训练动作合并）"
+      "workoutChartTitle": "训练图表（所有训练动作合并）",
+      "e1rmChartTitle": "预估的 1RM",
+      "e1rmIntro": "按 Epley 公式（重量 ×（1 + 次数 / 30））计算每天的最佳估算，使用 1 到 12 次的组。热身组和递减组不计入。",
+      "presetTimersTitle": "Tabata 和 EMOM",
+      "presetTimersIntro": "计时器可以通过 `preset` 按名称运行已保存的预设。Tabata 和 EMOM 已内置；你可以编辑它们，或在 设置 → 计时器预设 中添加自己的。",
+      "protocolColumn": "训练方案",
+      "badgeColumn": "徽章",
+      "descriptionColumn": "描述",
+      "codeBlockColumn": "代码块",
+      "purposeColumn": "用途",
+      "codeBlockWorkoutSession": "按组跟随笔记中的计划",
+      "sessionTitle": "6. 引导训练",
+      "sessionIntro": "`workout-session` 代码块会按照笔记中的计划逐步引导你：每个包含练习的 `workout-log` 代码块对应一步，包含其 `sets` 与目标，并使用同一章节中的休息计时器。在 [[{workout}]] 中试试。",
+      "dashboardsTitle": "7. 仪表盘",
+      "dashboardsIntro": "仪表盘会显示全部小组件，或只显示 `widgets` 中列出的小组件，并按该顺序排列。在仪表盘右上角的菜单中选择。",
+      "dashboardWidgetsTitle": "已选小组件",
+      "dashboardGridTitle": "网格布局",
+      "dashboardGridIntro": "使用 `layout: grid` 时，每个小组件占据其所在行的单元格：列、行、宽度和高度。在较窄的笔记中，小组件会按阅读顺序重新排列。",
+      "trainingCalendarIntro": "训练日历显示一年的训练日，以及连续达成每周目标的周数（设置 → 每周目标）。",
+      "importTitle": "8. 从 Strong 或 Hevy 导入",
+      "importIntro": "从命令面板运行 **{command}**，然后选择应用导出的 CSV。日志中已有的组会被跳过，日志会先备份。"
     },
     "fileNames": {
       "dashboard": "仪表盘",
@@ -346,6 +375,7 @@
       "welcome": "欢迎！此文件夹包含示例文件，帮助您学习所有功能。",
       "workoutsDesc": "示例训练模板",
       "workoutsFolder": "**{folder}/**",
+      "sessionIntro": "此笔记包含一个简单计划：一个练习及其组、目标和休息计时器。训练会显示要做的组；记录后休息计时器开始。",
       "pagesIntro": "逐个页面探索一个功能。按照链接的顺序进行，或者选择以下功能。使用“返回”和“下一步”按钮在笔记之间切换；正常滚动以探索每个示例。",
       "liveIntro": "探索以下所有功能，通过六周的示例训练计划。这些是演示数据；请尝试控制，并查看您的笔记是如何工作的。",
       "tryLog": "使用“+”按钮添加一组。表格、图表和仪表盘读取的是同一个 CSV 文件。",
@@ -358,13 +388,15 @@
       "cyclingCooldownTitle": "骑行放松",
       "intro": "高强度间歇训练，包含间歇计时器和有氧训练追踪。",
       "runningProgressTitle": "跑步进度",
-      "sprintIntervalsTitle": "冲刺间歇（30秒 × 8轮）",
+      "sprintIntervalsTitle": "冲刺间歇（30 秒开，30 秒停，8 轮）",
       "title": "高强度间歇训练（HIIT）有氧训练",
-      "warmupTitle": "热身（5 分钟）"
+      "warmupTitle": "热身（5 分钟）",
+      "tabataTitle": "Tabata 收尾"
     },
     "workout": {
       "chart": "图表",
       "duration": "时长",
+      "session": "引导训练",
       "note": "备注：用力完成",
       "recoverySuffix": "（恢复：{seconds}秒）",
       "setsReps": "{sets} 组 × {reps} 次"
@@ -554,6 +586,7 @@
       "exercise": "训练动作：",
       "reps": "次数：",
       "targetReps": "目标次数：",
+      "plannedSets": "计划组数：",
       "targetWeight": "目标（{unit}）：",
       "volume": "训练量（{unit}）：",
       "weight": "重量（{unit}）："
@@ -629,12 +662,15 @@
       "exerciseNameRequired": "请输入训练动作名称",
       "exerciseSectionCreated": "训练板块已成功创建！",
       "tableInserted": "表格已成功插入！",
+      "tableUpdateFailed": "更新表格失败：在其所在笔记中找不到该表格。请重新打开笔记后再试。",
       "tableUpdated": "表格已成功更新！",
       "timerInserted": "计时器已成功插入！",
+      "timerUpdateFailed": "更新计时器失败：在其所在笔记中找不到该计时器。请重新打开笔记后再试。",
       "timerUpdated": "计时器已成功更新！",
       "validChooseExercise": "请选择一个训练动作",
       "validationCombinedMode": "对于“训练动作 + 训练计划”类型，您必须同时填写这两个字段！",
-      "dashboardUpdated": "仪表盘已成功更新！"
+      "dashboardUpdated": "仪表盘已成功更新！",
+      "dashboardUpdateFailed": "更新仪表盘失败：在其所在笔记中找不到该仪表盘，或另一个没有 id 的仪表盘具有相同设置。请重新打开笔记后再试。"
     },
     "parameterKey": "键：",
     "parameterLabel": "显示名称：",
@@ -722,6 +758,7 @@
       "insertChart": "插入训练图表",
       "insertDashboard": "插入训练仪表盘",
       "insertDuration": "插入训练时长",
+      "insertSession": "插入引导训练",
       "insertTable": "插入训练记录表格",
       "insertTimer": "插入训练计时器",
       "muscleTagManager": "管理肌肉标签",
@@ -789,6 +826,7 @@
       "weightUnit": "用于图表、总计和新记录的单位。每条记录都保留输入时使用的单位。",
       "takeTour": "简要介绍：记录、图表、表格和计时器的使用方法。",
       "welcomeWindow": "再次显示欢迎窗口，以便使用示例数据或从头开始。",
+      "weeklyGoal": "每周需要训练的天数，用于保持连续训练记录，显示在仪表盘摘要和训练日历中。",
       "keepScreenAwake": "尝试在任何计时器于前台运行时保持屏幕唤醒。这会消耗更多电量；具体可用性取决于您的设备和系统设置。",
       "vibrateOnCompletion": "在计时器结束时，即使没有声音，也会短暂地震动。需要点击页面并使用支持的设备（例如 Android）。在 iOS 上不可用；不支持后台警报。",
       "presetRestDesc": "每轮工作后，休息的时间（0 表示不休息）。",
@@ -818,6 +856,7 @@
       "weightUnit": "重量单位",
       "showRibbonIcon": "显示快速记录图标",
       "welcomeWindow": "欢迎窗口",
+      "weeklyGoal": "每周目标",
       "takeTour": "导览",
       "keepScreenAwake": "在计时器运行期间，保持屏幕开启",
       "vibrateOnCompletion": "当计时器完成时，振动",
@@ -1096,5 +1135,19 @@
     "error": "导入失败：{error}",
     "title": "从 Strong 或 Hevy 导入",
     "intro": "请选择应用导出的训练数据 CSV 文件。确认之前不会写入任何内容。"
+  },
+  "session": {
+    "exerciseOf": "第 {current} / {total} 个练习",
+    "setOf": "第 {set} / {sets} 组",
+    "setNumber": "第 {set} 组",
+    "target": "目标：{target}",
+    "targetReps": "{reps} 次",
+    "targetWeight": "{weight} {unit}",
+    "logSet": "记录组",
+    "previous": "上一步",
+    "next": "下一步",
+    "rest": "休息",
+    "done": "训练完成：今天已记录 {sets} 组。",
+    "empty": "在此笔记中添加一个带练习的 `workout-log` 代码块，即可将其作为训练来进行。"
   }
 }

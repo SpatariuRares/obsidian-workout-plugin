@@ -245,7 +245,8 @@
       "paceTrackingTitle": "Pace Tracking",
       "repTrackingTitle": "Rep Tracking",
       "volumeChartTitle": "Volume Chart",
-      "weightProgressionTitle": "Weight Progression"
+      "weightProgressionTitle": "Weight Progression",
+      "e1rmTitle": "Estimated 1RM"
     },
     "exercises": {
       "benchPress": {
@@ -284,7 +285,7 @@
       "byExerciseTitle": "By Exercise",
       "byWorkoutTitle": "By Workout",
       "cardioExerciseTitle": "Cardio Exercise (Distance + Pace)",
-      "chartsIntro": "Charts visualize your progress over time. Available types: `volume`, `weight`, `reps`, `duration`, `distance`, `heartRate`, `pace`.",
+      "chartsIntro": "Charts visualize your progress over time. Available types: `volume`, `weight`, `e1rm`, `reps`, `duration`, `distance`, `heartRate`, `pace`.",
       "chartsTitle": "1. Charts",
       "codeBlockWorkoutChart": "Visualize progress over time",
       "codeBlockWorkoutDashboard": "Full stats overview",
@@ -298,12 +299,7 @@
       "durationEstimatorTitle": "4. Duration Estimator",
       "intervalTimerTitle": "Interval Timer",
       "intro": "Complete reference of all code block types available in the Workout Plugin.",
-      "protocol21s": "7+7+7 partial reps",
-      "protocolDropset": "Reduce weight, continue reps",
-      "protocolMyoReps": "Activation set + mini sets",
-      "protocolRestPause": "Brief rest, continue to failure",
       "protocolStandard": "Normal sets",
-      "protocolSuperset": "Paired exercises",
       "quickReferenceTitle": "Quick Reference",
       "strengthExerciseTitle": "Strength Exercise (Volume + Weight)",
       "tablesIntro": "Tables display your workout logs with sorting and editing capabilities.",
@@ -312,9 +308,29 @@
       "timersTitle": "3. Timers",
       "tip": "**Tip**: For your personal dashboard, see [[{dashboard}]]",
       "title": "Feature Showcase",
-      "trainingProtocolsIntro": "The plugin supports these protocol badges in your logs:",
+      "trainingProtocolsIntro": "Each set can carry a protocol, shown as a badge in the tables. Edit these or add your own in Settings → Protocols.",
       "trainingProtocolsTitle": "5. Training Protocols",
-      "workoutChartTitle": "Workout Chart (All Exercises Combined)"
+      "workoutChartTitle": "Workout Chart (All Exercises Combined)",
+      "e1rmChartTitle": "Estimated 1RM",
+      "e1rmIntro": "The best estimate of each day with the Epley formula (weight × (1 + reps / 30)), from sets of 1 to 12 reps. Warm-up and drop sets don't count.",
+      "presetTimersTitle": "Tabata and EMOM",
+      "presetTimersIntro": "A timer can run a saved preset by name with `preset`. Tabata and EMOM are built in; edit them or add your own in Settings → Timer presets.",
+      "protocolColumn": "Protocol",
+      "badgeColumn": "Badge",
+      "descriptionColumn": "Description",
+      "codeBlockColumn": "Code block",
+      "purposeColumn": "Purpose",
+      "codeBlockWorkoutSession": "Follow the note's plan set by set",
+      "sessionTitle": "6. Guided session",
+      "sessionIntro": "A `workout-session` block walks you through the plan of its note: one step per `workout-log` block with an exercise, with its `sets` and targets, and the rest timer of the same section. Try it in [[{workout}]].",
+      "dashboardsTitle": "7. Dashboards",
+      "dashboardsIntro": "A dashboard shows every widget, or only the ones listed in `widgets`, in that order. Use the menu at the top right of a dashboard to choose them.",
+      "dashboardWidgetsTitle": "Chosen widgets",
+      "dashboardGridTitle": "Grid layout",
+      "dashboardGridIntro": "With `layout: grid` each widget takes the cells of its line: column, row, width and height. In a narrower note the widgets are packed again in reading order.",
+      "trainingCalendarIntro": "The training calendar shows a year of training days and how many weeks in a row reached your weekly goal (Settings → Weekly goal).",
+      "importTitle": "8. Import from Strong or Hevy",
+      "importIntro": "Run **{command}** from the command palette and choose the CSV the app exported. Sets already in your log are skipped, and the log is backed up first."
     },
     "fileNames": {
       "dashboard": "Dashboard",
@@ -368,15 +384,17 @@
       "title": "Getting Started with The Gym Plugin",
       "welcome": "Welcome! This folder contains example files to help you learn all the features.",
       "workoutsDesc": "Example workout templates",
-      "workoutsFolder": "**{folder}/**"
+      "workoutsFolder": "**{folder}/**",
+      "sessionIntro": "This note has a small plan: one exercise with its sets, target and rest timer. The session shows the set to do; log it and the rest timer starts."
     },
     "hiit": {
       "cyclingCooldownTitle": "Cycling Cool-down",
       "intro": "High-Intensity Interval Training workout with interval timers and cardio tracking.",
       "runningProgressTitle": "Running Progress",
-      "sprintIntervalsTitle": "Sprint Intervals (30s × 8 rounds)",
+      "sprintIntervalsTitle": "Sprint intervals (30 s on, 30 s off, 8 rounds)",
       "title": "HIIT Cardio Session",
-      "warmupTitle": "Warm-up (5 min)"
+      "warmupTitle": "Warm-up (5 min)",
+      "tabataTitle": "Tabata finisher"
     },
     "workout": {
       "chart": "chart",

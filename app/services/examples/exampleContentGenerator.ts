@@ -9,17 +9,27 @@ import {
 import {
   generateCountdownTimerBlock,
   generateIntervalTimerBlock,
+  generatePresetTimerBlock,
 } from "@app/features/timer/exampleTimerGenerator";
+import { timerPresetHelp } from "@app/features/timer/business/timerPresets";
 import {
   generateExerciseLogBlock,
   generateExerciseOnlyLogBlock,
   generateWorkoutLogBlock,
   generateCombinedLogBlock,
 } from "@app/features/tables/exampleTableGenerator";
-import { generateDashboardBlock } from "@app/features/dashboard/exampleDashboardGenerator";
+import {
+  generateDashboardBlock,
+  generateGridDashboardBlock,
+} from "@app/features/dashboard/exampleDashboardGenerator";
 import { generateDurationBlock } from "@app/features/duration/exampleDurationGenerator";
 import { generateSessionBlock } from "@app/features/session/exampleSessionGenerator";
 import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
+import {
+  ProtocolCatalog,
+  defaultProtocolEntries,
+  protocolHelp,
+} from "@app/services/protocols/ProtocolCatalog";
 
 export function generateGettingStartedContent(): string {
   return gettingStartedIndex();
@@ -59,64 +69,87 @@ ${chartSections}
 
 export function generateWorkoutContent(): string {
   const workoutName = t("examples.workouts.lowerBodyA.name");
+  const squatMultiPower = t("examples.exercises.squatMultiPower.name");
+  const rdl = t("examples.exercises.rdl.name");
+  const legPress = t("examples.exercises.legPress45.name");
+  const legCurl = t("examples.exercises.legCurlSeated.name");
+  const calfMachine = t("examples.exercises.calfMachine.name");
 
-  return `## ${t("examples.workout.session")}
+  return `## ${t("examples.workout.duration")}
 
-${generateSessionBlock()}
-
-## ${t("examples.workout.duration")}
 ${generateDurationBlock()}
-    ### ${t("examples.workout.chart")}
+
+### ${t("examples.workout.chart")}
 
 ${generateWorkoutChartBlock(workoutName, { dateRange: 89 })}
 
-## ${t("examples.exercises.squatMultiPower.name")}:
+## ${t("examples.workout.session")}
+
+${generateSessionBlock()}
+
+## ${squatMultiPower}:
 
 ### ${t("examples.workout.setsReps", { sets: "4", reps: "8-10" })} ${t("examples.workout.recoverySuffix", { seconds: "180" })}
 
 **${t("examples.workout.note")}**
 
-${generateCountdownTimerBlock("idHipThrust", 180, "Hip Thrust")}
+${generateCountdownTimerBlock("idSquatMultiPower", 180, squatMultiPower)}
 
-${generateExerciseLogBlock(t("examples.exercises.squatMultiPower.name"), workoutName, { sets: 4 })}
+${generateExerciseLogBlock(squatMultiPower, workoutName, { sets: 4 })}
 
-## ${t("examples.exercises.rdl.name")}:
+## ${rdl}:
 
 ### ${t("examples.workout.setsReps", { sets: "4", reps: "8-12" })} ${t("examples.workout.recoverySuffix", { seconds: "180" })}
 
-${generateCountdownTimerBlock("idRDL", 180, "RDL")}
+${generateCountdownTimerBlock("idRDL", 180, rdl)}
 
-${generateExerciseLogBlock(t("examples.exercises.rdl.name"), workoutName, { sets: 4 })}
+${generateExerciseLogBlock(rdl, workoutName, { sets: 4 })}
 
-## ${t("examples.exercises.legPress45.name")}:
+## ${legPress}:
 
 ### ${t("examples.workout.setsReps", { sets: "4", reps: "10-15" })} ${t("examples.workout.recoverySuffix", { seconds: "120" })}
 
-${generateCountdownTimerBlock("idHackSquat", 120, "Hack squat")}
+${generateCountdownTimerBlock("idLegPress45", 120, legPress)}
 
-${generateExerciseLogBlock(t("examples.exercises.legPress45.name"), workoutName, { sets: 4 })}
+${generateExerciseLogBlock(legPress, workoutName, { sets: 4 })}
 
-## ${t("examples.exercises.legCurlSeated.name")}:
+## ${legCurl}:
 
 ### ${t("examples.workout.setsReps", { sets: "3", reps: "10-15" })} ${t("examples.workout.recoverySuffix", { seconds: "90" })}
 
-${generateCountdownTimerBlock("idLegCurl", 90, "Leg Curl Sdraiato")}
+${generateCountdownTimerBlock("idLegCurl", 90, legCurl)}
 
-${generateExerciseLogBlock(t("examples.exercises.legCurlSeated.name"), workoutName, { sets: 3 })}
+${generateExerciseLogBlock(legCurl, workoutName, { sets: 3 })}
 
-## ${t("examples.exercises.calfMachine.name")}:
+## ${calfMachine}:
 
 ### ${t("examples.workout.setsReps", { sets: "4", reps: "15-20" })} ${t("examples.workout.recoverySuffix", { seconds: "60" })}
 
-${generateCountdownTimerBlock("idCalfMachine", 60, "Calf Machine")}
+${generateCountdownTimerBlock("idCalfMachine", 60, calfMachine)}
 
-${generateExerciseLogBlock(t("examples.exercises.calfMachine.name"), workoutName, { sets: 4 })}
+${generateExerciseLogBlock(calfMachine, workoutName, { sets: 4 })}
 `;
+}
+
+/** Standard plus the built-in protocols, as a markdown table */
+function protocolTable(): string {
+  const rows = new ProtocolCatalog(defaultProtocolEntries())
+    .all()
+    .map(
+      (p) =>
+        `| ${p.name} | ${p.abbreviation} | ${protocolHelp(p.id) ?? t("examples.featureShowcase.protocolStandard")} |`,
+    );
+  return [
+    `| ${t("examples.featureShowcase.protocolColumn")} | ${t("examples.featureShowcase.badgeColumn")} | ${t("examples.featureShowcase.descriptionColumn")} |`,
+    "|---|---|---|",
+    ...rows,
+  ].join("\n");
 }
 
 export function generateFeatureShowcaseContent(): string {
   const benchPress = t("examples.exercises.benchPress.name");
   const squat = t("examples.exercises.squat.name");
+  const squatMultiPower = t("examples.exercises.squatMultiPower.name");
   const running = t("examples.exercises.running.name");
   const plank = t("examples.exercises.plank.name");
   const lowerBody = t("examples.workouts.lowerBodyA.name");
@@ -138,6 +171,12 @@ ${t("examples.featureShowcase.chartsIntro")}
 ${generateExerciseChartBlock(benchPress, CHART_DATA_TYPE.VOLUME, { showStats: true })}
 
 ${generateExerciseChartBlock(squat, CHART_DATA_TYPE.WEIGHT)}
+
+### ${t("examples.featureShowcase.e1rmChartTitle")}
+
+${t("examples.featureShowcase.e1rmIntro")}
+
+${generateExerciseChartBlock(benchPress, CHART_DATA_TYPE.E1RM, { dateRange: 60, showStats: true })}
 
 ### ${t("examples.featureShowcase.cardioExerciseTitle")}
 
@@ -173,7 +212,7 @@ ${generateWorkoutLogBlock(lowerBody, 15)}
 
 ### ${t("examples.featureShowcase.combinedTitle")}
 
-${generateCombinedLogBlock(`${squat} multi power`, lowerBody, 10)}
+${generateCombinedLogBlock(squatMultiPower, lowerBody, 10)}
 
 ---
 
@@ -181,11 +220,23 @@ ${generateCombinedLogBlock(`${squat} multi power`, lowerBody, 10)}
 
 ### ${t("examples.featureShowcase.countdownTimerTitle")}
 
-${generateCountdownTimerBlock("idCountdown", 90, "Rest Timer")}
+${generateCountdownTimerBlock("idCountdown", 90, benchPress)}
 
 ### ${t("examples.featureShowcase.intervalTimerTitle")}
 
-${generateIntervalTimerBlock("idIntervals", 30, 5, "HIIT Intervals")}
+${generateIntervalTimerBlock("idIntervals", { work: 40, rest: 20, rounds: 5 }, running)}
+
+### ${t("examples.featureShowcase.presetTimersTitle")}
+
+${t("examples.featureShowcase.presetTimersIntro")}
+
+${timerPresetHelp("Tabata")}
+
+${generatePresetTimerBlock("idTabata", "Tabata")}
+
+${timerPresetHelp("EMOM")}
+
+${generatePresetTimerBlock("idEmom", "EMOM", squat)}
 
 ---
 
@@ -201,25 +252,55 @@ ${generateDurationBlock()}
 
 ${t("examples.featureShowcase.trainingProtocolsIntro")}
 
-| Protocol | Description |
-|----------|-------------|
-| standard | ${t("examples.featureShowcase.protocolStandard")} |
-| dropset | ${t("examples.featureShowcase.protocolDropset")} |
-| myo-reps | ${t("examples.featureShowcase.protocolMyoReps")} |
-| rest-pause | ${t("examples.featureShowcase.protocolRestPause")} |
-| superset | ${t("examples.featureShowcase.protocolSuperset")} |
-| 21s | ${t("examples.featureShowcase.protocol21s")} |
+${protocolTable()}
+
+---
+
+## ${t("examples.featureShowcase.sessionTitle")}
+
+${t("examples.featureShowcase.sessionIntro", { workout: lowerBody })}
+
+---
+
+## ${t("examples.featureShowcase.dashboardsTitle")}
+
+${t("examples.featureShowcase.dashboardsIntro")}
+
+### ${t("examples.featureShowcase.dashboardWidgetsTitle")}
+
+${t("examples.featureShowcase.trainingCalendarIntro")}
+
+${generateDashboardBlock({ widgets: ["summary", "trainingCalendar", "recentWorkouts"] })}
+
+### ${t("examples.featureShowcase.dashboardGridTitle")}
+
+${t("examples.featureShowcase.dashboardGridIntro")}
+
+${generateGridDashboardBlock(3, [
+  { id: "summary", width: 3, height: 1 },
+  { id: "trainingCalendar", width: 2, height: 2 },
+  { id: "quickStats", width: 1, height: 2 },
+  { id: "heatMap", width: 2, height: 2 },
+  { id: "recentWorkouts", width: 1, height: 2 },
+])}
+
+---
+
+## ${t("examples.featureShowcase.importTitle")}
+
+${t("examples.featureShowcase.importIntro", { command: t("commands.importWorkouts") })}
 
 ---
 
 ## ${t("examples.featureShowcase.quickReferenceTitle")}
 
-| Code Block | Purpose |
-|------------|---------|
+| ${t("examples.featureShowcase.codeBlockColumn")} | ${t("examples.featureShowcase.purposeColumn")} |
+|---|---|
 | \`workout-chart\` | ${t("examples.featureShowcase.codeBlockWorkoutChart")} |
 | \`workout-log\` | ${t("examples.featureShowcase.codeBlockWorkoutLog")} |
 | \`workout-timer\` | ${t("examples.featureShowcase.codeBlockWorkoutTimer")} |
 | \`workout-duration\` | ${t("examples.featureShowcase.codeBlockWorkoutDuration")} |
+| \`workout-session\` | ${t("examples.featureShowcase.codeBlockWorkoutSession")} |
 | \`workout-dashboard\` | ${t("examples.featureShowcase.codeBlockWorkoutDashboard")} |
 
 ${t("examples.featureShowcase.commandsNote")}
@@ -240,13 +321,13 @@ ${generateDurationBlock()}
 
 ## ${t("examples.hiit.warmupTitle")}
 
-${generateCountdownTimerBlock("idWarmup", 300, "Warm-up")}
+${generateCountdownTimerBlock("idWarmup", 300, running)}
 
 ---
 
 ## ${t("examples.hiit.sprintIntervalsTitle")}
 
-${generateIntervalTimerBlock("idIntervals", 30, 8, "Sprint Intervals")}
+${generateIntervalTimerBlock("idIntervals", { work: 30, rest: 30, rounds: 8 }, running)}
 
 ---
 
@@ -255,6 +336,14 @@ ${generateIntervalTimerBlock("idIntervals", 30, 8, "Sprint Intervals")}
 ${generateExerciseOnlyLogBlock(running, 8)}
 
 ${generateExerciseChartBlock(running, CHART_DATA_TYPE.DISTANCE, { showStats: true })}
+
+---
+
+## ${t("examples.hiit.tabataTitle")}
+
+${timerPresetHelp("Tabata")}
+
+${generatePresetTimerBlock("idTabata", "Tabata", cycling)}
 
 ---
 

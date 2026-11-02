@@ -1114,5 +1114,19 @@
     "error": "Gagal mengimpor: {error}",
     "title": "Impor dari Strong atau Hevy",
     "intro": "Pilih file CSV dari data latihan yang diekspor oleh aplikasi. Tidak ada yang akan ditulis sampai Anda mengonfirmasi."
+  },
+  "session": {
+    "exerciseOf": "Latihan {current} dari {total}",
+    "setOf": "Set {set} dari {sets}",
+    "setNumber": "Set {set}",
+    "target": "Target: {target}",
+    "targetReps": "{reps} repetisi",
+    "targetWeight": "{weight} {unit}",
+    "logSet": "Catat set",
+    "previous": "Sebelumnya",
+    "next": "Berikutnya",
+    "rest": "Istirahat",
+    "done": "Latihan selesai: {sets} set tercatat hari ini.",
+    "empty": "Tambahkan blok `workout-log` dengan latihan ke catatan ini untuk mengikutinya sebagai sesi latihan."
   }
 }

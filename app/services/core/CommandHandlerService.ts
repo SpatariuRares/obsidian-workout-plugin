@@ -31,6 +31,7 @@ import {
 import { startGuidedTour } from "@app/features/tour/startGuidedTour";
 import type { InsertCommandKind } from "@app/services/events/WorkoutEventTypes";
 import { durationBlock } from "@app/features/duration/durationBlock";
+import { sessionBlock } from "@app/features/session/sessionBlock";
 
 type CommandHandlerPlugin = WorkoutPluginContext & CommandRegistryPort & WorkoutAPIPort & TemplateGeneratorPort & TourPort;
 
@@ -151,6 +152,19 @@ export class CommandHandlerService {
         this.emitInsert("duration");
         editor.replaceRange(
           durationBlock.serialize({}) + "\n\n",
+          editor.getCursor(),
+        );
+        new Notice(t("messages.codeInserted"));
+      },
+    });
+
+    this.plugin.addCommand({
+      id: "insert-workout-session",
+      name: t("modal.titles.insertSession"),
+      editorCallback: (editor) => {
+        this.emitInsert("session");
+        editor.replaceRange(
+          sessionBlock.serialize({}) + "\n\n",
           editor.getCursor(),
         );
         new Notice(t("messages.codeInserted"));

@@ -1114,5 +1114,19 @@
     "error": "Błąd podczas importu: {error}",
     "title": "Import z Strong lub Hevy",
     "intro": "Wybierz plik CSV z eksportu danych treningowych z aplikacji. Nic nie zostanie zapisane, dopóki nie potwierdzisz."
+  },
+  "session": {
+    "exerciseOf": "Ćwiczenie {current} z {total}",
+    "setOf": "Seria {set} z {sets}",
+    "setNumber": "Seria {set}",
+    "target": "Cel: {target}",
+    "targetReps": "{reps} powt.",
+    "targetWeight": "{weight} {unit}",
+    "logSet": "Zapisz serię",
+    "previous": "Poprzednia",
+    "next": "Dalej",
+    "rest": "Odpoczynek",
+    "done": "Trening zakończony. Dziś zapisane serie: {sets}.",
+    "empty": "Dodaj do tej notatki blok `workout-log` z ćwiczeniem, aby śledzić ją jako trening."
   }
 }

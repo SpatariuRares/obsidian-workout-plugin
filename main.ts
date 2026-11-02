@@ -13,6 +13,7 @@ import { EmbeddedTableView } from "@app/features/tables/views/EmbeddedTableView"
 import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { TimerDeviceEffects } from "@app/features/timer/business/TimerDeviceEffects";
 import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
+import { EmbeddedSessionView } from "@app/features/session/views/EmbeddedSessionView";
 import { CommandHandlerService } from "@app/services/core/CommandHandlerService";
 import { TourEngine } from "@app/features/tour/TourEngine";
 import {
@@ -52,6 +53,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   public embeddedChartView!: EmbeddedChartView;
   public embeddedTableView!: EmbeddedTableView;
   public embeddedDashboardView!: EmbeddedDashboardView;
+  public embeddedSessionView!: EmbeddedSessionView;
   public timerDeviceEffects!: TimerDeviceEffects;
   private activeTimers: Map<string, EmbeddedTimerView> = new Map();
   private quickLogRibbonIcon: HTMLElement | null = null;
@@ -141,6 +143,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.embeddedChartView = new EmbeddedChartView(this);
     this.embeddedTableView = new EmbeddedTableView(this);
     this.embeddedDashboardView = new EmbeddedDashboardView(this);
+    this.embeddedSessionView = new EmbeddedSessionView(this);
 
     // Initialize services
     this.workoutLogFile = new WorkoutLogFile(
@@ -176,6 +179,7 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.embeddedDashboardView,
       this.activeTimers,
       this.eventBus,
+      this.embeddedSessionView,
     );
     // Initialize and expose WorkoutPlannerAPI for Dataview integration
     this.workoutPlannerAPI = new WorkoutPlannerAPI(
@@ -252,6 +256,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.embeddedChartView?.cleanup();
     this.embeddedTableView?.cleanup();
     this.embeddedDashboardView?.cleanup();
+    this.embeddedSessionView?.cleanup();
 
     // 3. Release the log file (de-registers cache event listeners, clears cache)
     this.workoutLogFile?.destroy();

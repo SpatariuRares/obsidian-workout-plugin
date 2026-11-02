@@ -1,0 +1,56 @@
+@use "variables";
+
+/* ============================================================================
+   WORKOUT SESSION STYLES
+   One exercise of the note's plan at a time: set, target, log, rest
+   ============================================================================ */
+
+.workout-session {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
+  border-radius: var(--workout-radius-xl);
+  padding: var(--workout-space-lg);
+}
+
+.workout-session-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--workout-space-sm);
+}
+
+.workout-session-exercise {
+  font-size: var(--workout-font-xl);
+  font-weight: var(--workout-font-weight-semibold);
+}
+
+.workout-session-set {
+  font-size: var(--workout-font-lg);
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--workout-text-accent);
+}
+
+.workout-session-meta {
+  color: var(--text-muted);
+}
+
+.workout-session-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--workout-space-sm);
+
+  // Sized by their label, so "Log set" stays on one line on a phone
+  > .workout-btn {
+    flex: 1 1 auto;
+    white-space: nowrap;
+  }
+}
+
+.workout-session-rest {
+  border-top: var(--workout-border-thin) solid var(--workout-border-color);
+  padding-top: var(--workout-space-sm);
+}

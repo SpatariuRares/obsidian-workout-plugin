@@ -1,5 +1,6 @@
 import {
   TrainingHistory,
+  sameWorkout,
   trainingDay,
   trendOf,
 } from "@app/services/history/TrainingHistory";
@@ -458,5 +459,25 @@ describe("TrainingHistory volume", () => {
       ["Squat", 900],
       ["Bench", 600],
     ]);
+  });
+});
+
+describe("lastSet before a day", () => {
+  it("skips the sets of that day and later", () => {
+    const history = new TrainingHistory([
+      set("2026-10-30T10:00:00Z", undefined, { weight: 90 }),
+      set("2026-11-02T10:00:00Z", undefined, { weight: 105 }),
+    ]);
+
+    expect(history.lastSet("Squat")?.weight).toBe(105);
+    expect(history.lastSet("Squat", { before: "2026-11-02" })?.weight).toBe(90);
+    expect(history.lastSet("Squat", { before: "2026-10-30" })).toBeUndefined();
+  });
+});
+
+describe("sameWorkout", () => {
+  it("ignores case, spacing and surrounding quotes", () => {
+    expect(sameWorkout('"Leg  Day"', "leg day")).toBe(true);
+    expect(sameWorkout("Leg Day", "Push Day")).toBe(false);
   });
 });

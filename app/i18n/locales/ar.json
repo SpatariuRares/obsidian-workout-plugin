@@ -1114,5 +1114,19 @@
     "error": "فشل الاستيراد: {error}",
     "title": "استيراد من Strong أو Hevy",
     "intro": "اختر ملف CSV المُصدَّر من بيانات التدريب في التطبيق. لن يُكتب أي شيء قبل أن تؤكد."
+  },
+  "session": {
+    "exerciseOf": "التمرين {current} من {total}",
+    "setOf": "المجموعة {set} من {sets}",
+    "setNumber": "المجموعة {set}",
+    "target": "الهدف: {target}",
+    "targetReps": "{reps} تكرار",
+    "targetWeight": "{weight} {unit}",
+    "logSet": "تسجيل المجموعة",
+    "previous": "السابق",
+    "next": "التالي",
+    "rest": "راحة",
+    "done": "اكتمل التدريب: تم تسجيل {sets} مجموعة اليوم.",
+    "empty": "أضف كتلة `workout-log` مع تمرين إلى هذه الملاحظة لمتابعتها كجلسة."
   }
 }

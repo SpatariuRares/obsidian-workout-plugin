@@ -1114,5 +1114,19 @@
     "error": "Import fehlgeschlagen: {error}",
     "title": "Import von Strong oder Hevy",
     "intro": "Wähle die CSV-Datei aus dem Export der Trainingsdaten der App. Es wird erst etwas geschrieben, wenn du bestätigst."
+  },
+  "session": {
+    "exerciseOf": "Übung {current} von {total}",
+    "setOf": "Satz {set} von {sets}",
+    "setNumber": "Satz {set}",
+    "target": "Ziel: {target}",
+    "targetReps": "{reps} Wiederholungen",
+    "targetWeight": "{weight} {unit}",
+    "logSet": "Satz erfassen",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "rest": "Pause",
+    "done": "Training abgeschlossen. Heute erfasste Sätze: {sets}.",
+    "empty": "Füge dieser Notiz einen `workout-log`-Block mit einer Übung hinzu, um sie als Training zu verfolgen."
   }
 }

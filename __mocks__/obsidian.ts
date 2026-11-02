@@ -477,7 +477,25 @@ export class FuzzySuggestModal<T> {
   close() {}
 }
 export class MarkdownView {}
-export class MarkdownRenderChild {}
+/** Obsidian's Component lifecycle: load() runs onload, unload() the cleanups */
+export class MarkdownRenderChild {
+  private cleanups: Array<() => void> = [];
+  constructor(public containerEl: HTMLElement) {}
+  onload(): void {}
+  onunload(): void {}
+  load(): void {
+    this.onload();
+  }
+  unload(): void {
+    this.cleanups.forEach((fn) => fn());
+    this.cleanups = [];
+    this.onunload();
+  }
+  register(fn: () => void): void {
+    this.cleanups.push(fn);
+  }
+  registerEvent(_ref: EventRef): void {}
+}
 export class TFolder {
   path: string = "";
   name: string = "";

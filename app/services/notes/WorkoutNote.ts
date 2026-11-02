@@ -5,6 +5,7 @@ const BLOCK_TYPES = new Set([
   "workout-chart",
   "workout-dashboard",
   "workout-duration",
+  "workout-session",
 ]);
 
 /** One of the plugin's code blocks in a note */

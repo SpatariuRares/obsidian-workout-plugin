@@ -1114,5 +1114,19 @@
     "error": "Import mislukt: {error}",
     "title": "Importeren vanuit Strong of Hevy",
     "intro": "Kies het CSV-bestand uit de export van trainingsgegevens van de app. Er wordt niets opgeslagen voordat je bevestigt."
+  },
+  "session": {
+    "exerciseOf": "Oefening {current} van {total}",
+    "setOf": "Serie {set} van {sets}",
+    "setNumber": "Serie {set}",
+    "target": "Doel: {target}",
+    "targetReps": "{reps} herhalingen",
+    "targetWeight": "{weight} {unit}",
+    "logSet": "Serie registreren",
+    "previous": "Vorige",
+    "next": "Volgende",
+    "rest": "Rust",
+    "done": "Training klaar. Vandaag geregistreerde series: {sets}.",
+    "empty": "Voeg een `workout-log`-blok met een oefening aan deze notitie toe om hem als training te volgen."
   }
 }

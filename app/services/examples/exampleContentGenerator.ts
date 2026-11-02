@@ -18,6 +18,7 @@ import {
 } from "@app/features/tables/exampleTableGenerator";
 import { generateDashboardBlock } from "@app/features/dashboard/exampleDashboardGenerator";
 import { generateDurationBlock } from "@app/features/duration/exampleDurationGenerator";
+import { generateSessionBlock } from "@app/features/session/exampleSessionGenerator";
 import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
 
 export function generateGettingStartedContent(): string {
@@ -59,7 +60,11 @@ ${chartSections}
 export function generateWorkoutContent(): string {
   const workoutName = t("examples.workouts.lowerBodyA.name");
 
-  return `## ${t("examples.workout.duration")}
+  return `## ${t("examples.workout.session")}
+
+${generateSessionBlock()}
+
+## ${t("examples.workout.duration")}
 ${generateDurationBlock()}
     ### ${t("examples.workout.chart")}
 
@@ -73,7 +78,7 @@ ${generateWorkoutChartBlock(workoutName, { dateRange: 89 })}
 
 ${generateCountdownTimerBlock("idHipThrust", 180, "Hip Thrust")}
 
-${generateExerciseLogBlock(t("examples.exercises.squatMultiPower.name"), workoutName)}
+${generateExerciseLogBlock(t("examples.exercises.squatMultiPower.name"), workoutName, { sets: 4 })}
 
 ## ${t("examples.exercises.rdl.name")}:
 
@@ -81,7 +86,7 @@ ${generateExerciseLogBlock(t("examples.exercises.squatMultiPower.name"), workout
 
 ${generateCountdownTimerBlock("idRDL", 180, "RDL")}
 
-${generateExerciseLogBlock(t("examples.exercises.rdl.name"), workoutName)}
+${generateExerciseLogBlock(t("examples.exercises.rdl.name"), workoutName, { sets: 4 })}
 
 ## ${t("examples.exercises.legPress45.name")}:
 
@@ -89,7 +94,7 @@ ${generateExerciseLogBlock(t("examples.exercises.rdl.name"), workoutName)}
 
 ${generateCountdownTimerBlock("idHackSquat", 120, "Hack squat")}
 
-${generateExerciseLogBlock(t("examples.exercises.legPress45.name"), workoutName)}
+${generateExerciseLogBlock(t("examples.exercises.legPress45.name"), workoutName, { sets: 4 })}
 
 ## ${t("examples.exercises.legCurlSeated.name")}:
 
@@ -97,7 +102,7 @@ ${generateExerciseLogBlock(t("examples.exercises.legPress45.name"), workoutName)
 
 ${generateCountdownTimerBlock("idLegCurl", 90, "Leg Curl Sdraiato")}
 
-${generateExerciseLogBlock(t("examples.exercises.legCurlSeated.name"), workoutName)}
+${generateExerciseLogBlock(t("examples.exercises.legCurlSeated.name"), workoutName, { sets: 3 })}
 
 ## ${t("examples.exercises.calfMachine.name")}:
 
@@ -105,7 +110,7 @@ ${generateExerciseLogBlock(t("examples.exercises.legCurlSeated.name"), workoutNa
 
 ${generateCountdownTimerBlock("idCalfMachine", 60, "Calf Machine")}
 
-${generateExerciseLogBlock(t("examples.exercises.calfMachine.name"), workoutName)}
+${generateExerciseLogBlock(t("examples.exercises.calfMachine.name"), workoutName, { sets: 4 })}
 `;
 }
 

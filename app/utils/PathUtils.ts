@@ -15,14 +15,21 @@ export class PathUtils {
   }
 
   /**
+   * A note's name from its vault path ("Workouts/Leg Day.md" → "Leg Day"),
+   * which is also the workout name of the sets logged from it.
+   */
+  static noteName(notePath: string): string {
+    return notePath.split("/").pop()?.replace(/\.md$/i, "") || "";
+  }
+
+  /**
    * Builds a wiki link to a note from its vault path.
    * @param notePath - Note path (e.g., "Workouts/Leg Day.md")
    * @returns Wiki link (e.g., "[[Leg Day]]") or empty string if no path
    */
   static toWikiLink(notePath: string): string {
-    const basename =
-      notePath.split("/").pop()?.replace(/\.md$/i, "") || "";
-    return basename ? `[[${basename}]]` : "";
+    const name = PathUtils.noteName(notePath);
+    return name ? `[[${name}]]` : "";
   }
 
   /**

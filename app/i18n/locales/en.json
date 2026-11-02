@@ -381,6 +381,7 @@
     "workout": {
       "chart": "chart",
       "duration": "Duration",
+      "session": "Guided session",
       "note": "Note: push hard",
       "recoverySuffix": "(Recovery: {seconds}s)",
       "setsReps": "{sets} sets x {reps} reps"
@@ -750,6 +751,7 @@
       "insertChart": "Insert workout chart",
       "insertDashboard": "Insert workout dashboard",
       "insertDuration": "Insert workout duration",
+      "insertSession": "Insert guided session",
       "insertTable": "Insert workout log table",
       "insertTimer": "Insert workout timer",
       "muscleTagManager": "Manage muscle tags",
@@ -1114,5 +1116,19 @@
     "importButton": "Import sets",
     "imported": "Import done. Sets added: {count}",
     "error": "Import failed: {error}"
+  },
+  "session": {
+    "exerciseOf": "Exercise {current} of {total}",
+    "setOf": "Set {set} of {sets}",
+    "setNumber": "Set {set}",
+    "target": "Target: {target}",
+    "targetReps": "{reps} reps",
+    "targetWeight": "{weight} {unit}",
+    "logSet": "Log set",
+    "previous": "Previous",
+    "next": "Next",
+    "rest": "Rest",
+    "done": "Workout done: {sets} sets logged today.",
+    "empty": "Add a `workout-log` block with an exercise to this note to follow it as a session."
   }
 }

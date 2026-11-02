@@ -1114,5 +1114,19 @@
     "error": "İçe aktarma başarısız oldu: {error}",
     "title": "\"Strong\" veya \"Hevy\"'den içe aktar",
     "intro": "Uygulamanın antrenman verisi dışa aktarımından alınan CSV dosyasını seçin. Onaylayana kadar hiçbir şey yazılmaz."
+  },
+  "session": {
+    "exerciseOf": "Egzersiz {current} / {total}",
+    "setOf": "Set {set} / {sets}",
+    "setNumber": "Set {set}",
+    "target": "Hedef: {target}",
+    "targetReps": "{reps} tekrar",
+    "targetWeight": "{weight} {unit}",
+    "logSet": "Seti kaydet",
+    "previous": "Önceki",
+    "next": "Sonraki",
+    "rest": "Dinlenme",
+    "done": "Antrenman tamamlandı. Bugün kaydedilen set: {sets}.",
+    "empty": "Bu nota bir egzersizli `workout-log` bloğu ekleyin; böylece antrenman olarak takip edilir."
   }
 }

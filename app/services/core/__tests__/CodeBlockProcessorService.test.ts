@@ -81,6 +81,7 @@ describe("CodeBlockProcessorService", () => {
   let mockChartView: any;
   let mockTableView: any;
   let mockDashboardView: any;
+  let mockSessionView: any;
   let activeTimers: Map<string, EmbeddedTimerView>;
   let mockMuscleTagService: any;
   let eventBus: WorkoutEventBus;
@@ -116,6 +117,9 @@ describe("CodeBlockProcessorService", () => {
       loadDashboardData: jest.fn().mockResolvedValue([]),
       refreshDashboard: jest.fn().mockResolvedValue(undefined),
     };
+    mockSessionView = {
+      createSession: jest.fn().mockReturnValue({}),
+    };
     activeTimers = new Map();
     mockMuscleTagService = {
       getTagMap: jest.fn().mockReturnValue(new Map()),
@@ -130,6 +134,7 @@ describe("CodeBlockProcessorService", () => {
       mockDashboardView,
       activeTimers,
       eventBus,
+      mockSessionView,
     );
 
     jest.clearAllMocks();
@@ -145,7 +150,7 @@ describe("CodeBlockProcessorService", () => {
 
       expect(
         mockPlugin.registerMarkdownCodeBlockProcessor,
-      ).toHaveBeenCalledTimes(5);
+      ).toHaveBeenCalledTimes(6);
       expect(
         mockPlugin.registerMarkdownCodeBlockProcessor,
       ).toHaveBeenCalledWith(
@@ -853,6 +858,31 @@ describe("CodeBlockProcessorService", () => {
 
       // Should not throw when timer is not in activeTimers
       expect(() => registeredChild.onunload()).not.toThrow();
+    });
+  });
+
+  describe("workout-session", () => {
+    it("adds the session of the block's note as a child of the note", () => {
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "Workouts/Leg Day.md",
+      } as unknown as MarkdownPostProcessorContext;
+      service.registerProcessors();
+      const [, handler] =
+        mockPlugin.registerMarkdownCodeBlockProcessor.mock.calls.find(
+          ([type]: [string]) => type === "workout-session",
+        );
+
+      handler("", el, ctx);
+
+      expect(mockSessionView.createSession).toHaveBeenCalledWith(
+        el,
+        "Workouts/Leg Day.md",
+      );
+      expect(ctx.addChild).toHaveBeenCalledWith(
+        mockSessionView.createSession.mock.results[0].value,
+      );
     });
   });
 

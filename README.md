@@ -18,6 +18,7 @@ Charts show your trend, the muscle heat map shows what you trained, and each set
 - A dashboard with weekly streak (with a weekly goal), a training calendar, personal records, total volume, recent workouts and protocol stats
 - A muscle heat map, front and back, by volume, sets or reps
 - Rest timers (countdown, interval, stopwatch) with presets, that restart when you log a set and beep on iOS and Android
+- A guided session that walks through the workout note one exercise at a time
 - An estimate of how long a planned workout takes
 - Strength, bodyweight, timed, distance and cardio exercises, or your own fields
 - Every set in one plain CSV file, readable from Dataview and Templater
@@ -105,6 +106,7 @@ With `targetWeight` and `targetReps`, a progressive-overload target appears abov
 | `showProtocol`               | `true`  | Show the protocol badge column                     |
 | `showAddButton`              | `true`  | Show the **+** button                              |
 | `targetWeight`, `targetReps` | —       | Show a progressive-overload target above the table |
+| `sets`                       | —       | Sets planned, counted by a `workout-session` block |
 
 Exercise names match loosely by default ("squat" finds "Squat (high bar)"); add `exactMatch: true` for only that exact name.
 
@@ -274,6 +276,30 @@ rounds: 8
 | `superset`            | `false`     | Canvas export only: draw this exercise and the next one as a superset |
 
 </details>
+
+## Guided session
+
+A `workout-session` block at the top of a workout note (command **Insert guided session**) walks you through it one exercise at a time: which set you're on, the target, what you did last time, a **Log set** button and the rest timer, which starts when you log a set.
+
+````markdown
+```workout-session
+```
+
+## Squat
+
+```workout-log
+exercise: Squat
+sets: 4
+targetReps: 8
+targetWeight: 100
+```
+
+```workout-timer
+preset: rest
+```
+````
+
+The plan is the note itself: each `workout-log` block with an `exercise` is a step, in the order they appear, with its `sets`, `targetReps` and `targetWeight`. The rest comes from the `workout-timer` in the same `##` section (the default preset without one). The session counts the sets you logged today in this workout, so it picks up where you left off when you reopen the note. An exercise without `sets` stays current until you log a set of a later one; **Previous** and **Next** move freely.
 
 ## Workout duration
 

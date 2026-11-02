@@ -1114,5 +1114,19 @@
     "error": "Fallo en la importación: {error}",
     "title": "Importar desde Strong o Hevy",
     "intro": "Elige el CSV de la exportación de datos de entrenamiento de la app. No se escribe nada hasta que lo confirmes."
+  },
+  "session": {
+    "exerciseOf": "Ejercicio {current} de {total}",
+    "setOf": "Serie {set} de {sets}",
+    "setNumber": "Serie {set}",
+    "target": "Objetivo: {target}",
+    "targetReps": "{reps} repeticiones",
+    "targetWeight": "{weight} {unit}",
+    "logSet": "Registrar serie",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "rest": "Descanso",
+    "done": "Entrenamiento terminado. Series registradas hoy: {sets}.",
+    "empty": "Añade a esta nota un bloque `workout-log` con un ejercicio para seguirla como entrenamiento."
   }
 }

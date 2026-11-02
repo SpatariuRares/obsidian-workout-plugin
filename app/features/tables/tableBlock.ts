@@ -22,6 +22,8 @@ export const tableBlock = defineCodeBlock("workout-log", {
   showAddButton: { kind: "boolean", default: true },
   /** Unset: columns follow the exercise type */
   columns: { kind: "list" },
+  /** Sets planned for this exercise; the workout-session block counts them */
+  sets: { kind: "number", min: 1 },
   targetWeight: { kind: "number", min: 0 },
   targetReps: { kind: "number", min: 0 },
   showProtocol: { kind: "boolean", default: true },

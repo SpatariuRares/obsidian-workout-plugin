@@ -1114,5 +1114,19 @@
     "error": "Importimi dështoi: {error}",
     "title": "Importo nga Strong ose Hevy",
     "intro": "Zgjidhni CSV-në nga eksportimi i të dhënave të stërvitjes së aplikacionit. Asgjë nuk shkruhet derisa të konfirmoni."
+  },
+  "session": {
+    "exerciseOf": "Ushtrimi {current} nga {total}",
+    "setOf": "Seria {set} nga {sets}",
+    "setNumber": "Seria {set}",
+    "target": "Objektivi: {target}",
+    "targetReps": "{reps} përsëritje",
+    "targetWeight": "{weight} {unit}",
+    "logSet": "Regjistro serinë",
+    "previous": "E mëparshme",
+    "next": "Tjetra",
+    "rest": "Pushim",
+    "done": "Stërvitja u përfundua. Seri të regjistruara sot: {sets}.",
+    "empty": "Shto në këtë shënim një bllok `workout-log` me një ushtrim për ta ndjekur si stërvitje."
   }
 }

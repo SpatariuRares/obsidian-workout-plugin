@@ -15,3 +15,10 @@ describe("PathUtils.toWikiLink", () => {
     expect(PathUtils.toWikiLink("")).toBe("");
   });
 });
+
+describe("PathUtils.noteName", () => {
+  it("is the file name without folder and .md", () => {
+    expect(PathUtils.noteName("Workouts/Leg Day.md")).toBe("Leg Day");
+    expect(PathUtils.noteName("")).toBe("");
+  });
+});

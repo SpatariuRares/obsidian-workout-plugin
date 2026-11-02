@@ -1114,5 +1114,19 @@
     "error": "Import selhal: {error}",
     "title": "Import z Strong nebo Hevy",
     "intro": "Vyberte soubor CSV z exportu dat tréninků v aplikaci. Žádná data se nezapisují, dokud to nepotvrdíte."
+  },
+  "session": {
+    "exerciseOf": "Cvik {current} z {total}",
+    "setOf": "Série {set} z {sets}",
+    "setNumber": "Série {set}",
+    "target": "Cíl: {target}",
+    "targetReps": "{reps} opakování",
+    "targetWeight": "{weight} {unit}",
+    "logSet": "Zapsat sérii",
+    "previous": "Předchozí",
+    "next": "Další",
+    "rest": "Odpočinek",
+    "done": "Trénink hotov. Dnes zapsané série: {sets}.",
+    "empty": "Přidejte do této poznámky blok `workout-log` s cvikem, abyste ji mohli sledovat jako trénink."
   }
 }

@@ -1114,5 +1114,19 @@
     "error": "Importul a eșuat: {error}",
     "title": "Import din Strong sau Hevy",
     "intro": "Alege fișierul CSV din exportul de date de antrenament al aplicației. Nu se scrie nimic până nu confirmi."
+  },
+  "session": {
+    "exerciseOf": "Exercițiul {current} din {total}",
+    "setOf": "Seria {set} din {sets}",
+    "setNumber": "Seria {set}",
+    "target": "Țintă: {target}",
+    "targetReps": "{reps} repetări",
+    "targetWeight": "{weight} {unit}",
+    "logSet": "Înregistrează seria",
+    "previous": "Anterior",
+    "next": "Următorul",
+    "rest": "Pauză",
+    "done": "Antrenament finalizat. Serii înregistrate azi: {sets}.",
+    "empty": "Adaugă în această notă un bloc `workout-log` cu un exercițiu ca să o urmărești ca antrenament."
   }
 }

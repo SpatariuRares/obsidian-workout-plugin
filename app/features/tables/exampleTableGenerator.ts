@@ -4,7 +4,7 @@ import { generateCodeBlockId } from "@app/utils/IdUtils";
 export function generateExerciseLogBlock(
   exercise: string,
   workout: string,
-  opts?: { limit?: number; exactMatch?: boolean },
+  opts?: { limit?: number; exactMatch?: boolean; sets?: number },
 ): string {
   return tableBlock.serialize({
     id: generateCodeBlockId(),
@@ -12,6 +12,7 @@ export function generateExerciseLogBlock(
     workout,
     limit: opts?.limit ?? 12,
     exactMatch: (opts?.exactMatch ?? true) || undefined,
+    sets: opts?.sets,
   });
 }
 

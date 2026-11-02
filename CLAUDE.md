@@ -50,7 +50,7 @@ The build process is sequential and must complete in order. Development mode (`n
 - **Facade Pattern**: Services expose clean APIs while delegating to internal components
 - **Atomic Design**: UI components organized by complexity (atoms → molecules → features)
 - **Domain-Driven Features**: Features organized by domain (charts, tables, dashboard, modals, etc.)
-- **Embedded Views**: Code blocks (`workout-chart`, `workout-log`, `workout-timer`, `workout-dashboard`) render inside notes
+- **Embedded Views**: Code blocks (`workout-chart`, `workout-log`, `workout-timer`, `workout-dashboard`, `workout-duration`, `workout-session`) render inside notes
 - **Type Safety**: Strict TypeScript with path aliases (`@app/*`)
 
 ### TypeScript Configuration
@@ -82,7 +82,8 @@ WorkoutChartsPlugin
 │   ├── EmbeddedChartView         # workout-chart (Chart.js visualizations)
 │   ├── EmbeddedTableView         # workout-log (sortable data tables)
 │   ├── EmbeddedTimerView         # workout-timer (countdown/interval)
-│   └── EmbeddedDashboardView     # workout-dashboard (stats, analytics, heat maps)
+│   ├── EmbeddedDashboardView     # workout-dashboard (stats, analytics, heat maps)
+│   └── EmbeddedSessionView       # workout-session (guided session through the note's plan)
 │
 └── Public API
     └── WorkoutPlannerAPI         # window.WorkoutPlannerAPI for Dataview integration
@@ -448,7 +449,12 @@ showAddButton: true
 showProtocol: true
 targetWeight: 100 # with targetReps: progressive overload header
 targetReps: 8
+sets: 4 # planned sets, counted by workout-session
 ```
+
+#### workout-session
+
+No parameters. `readSessionPlan` (`app/features/session/business/sessionPlan.ts`) reads the note's plan with `readWorkoutNote`: one step per `workout-log` block with an `exercise`, in note order, with its `sets`/`targetReps`/`targetWeight`, and the rest from the `workout-timer` in the same `##` section. `sessionProgress` hands today's sets of this workout (`TrainingHistory.sessions({ workout: note name })`) to the steps; nothing is stored, so progress comes back from the log. `EmbeddedSessionView` shows the current step, logs through `CreateLogModal` (prefill: today's last set, else the last set with the targets on top) and starts its own rest timer on `log:added`. There is no weekly schedule: the user opens the note they want to train. The `insert-workout-session` command writes the empty block at the cursor; the example "Lower Body A" note starts with one and its tables carry `sets`.
 
 #### workout-timer
 

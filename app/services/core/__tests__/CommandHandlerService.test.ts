@@ -229,6 +229,28 @@ describe("CommandHandlerService", () => {
     expect(seen).toEqual([{ kind: "duration" }]);
   });
 
+  it("insert-workout-session writes an empty session block at the cursor", () => {
+    const seen: unknown[] = [];
+    mockPlugin.eventBus.on("command:insert", (p: unknown) => seen.push(p));
+    service.registerCommands();
+    const cmd = mockPlugin.addCommand.mock.calls.find(
+      (c: any) => c[0].id === "insert-workout-session",
+    )[0];
+    const cursor = { line: 0, ch: 0 };
+    const editor = {
+      getCursor: jest.fn().mockReturnValue(cursor),
+      replaceRange: jest.fn(),
+    };
+
+    cmd.editorCallback(editor);
+
+    expect(editor.replaceRange).toHaveBeenCalledWith(
+      "```workout-session\n```\n\n",
+      cursor,
+    );
+    expect(seen).toEqual([{ kind: "session" }]);
+  });
+
   it("should handle error in create-csv-log", async () => {
     mockPlugin.createCSVLogFile.mockRejectedValue(
       new Error("Failed CSV"),

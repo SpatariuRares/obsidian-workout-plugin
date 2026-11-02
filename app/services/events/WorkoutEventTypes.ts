@@ -67,7 +67,8 @@ export type InsertCommandKind =
   | "table"
   | "timer"
   | "dashboard"
-  | "duration";
+  | "duration"
+  | "session";
 
 export interface CommandInsertPayload {
   kind: InsertCommandKind;

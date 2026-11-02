@@ -260,12 +260,22 @@ export class TrainingHistory {
     return records;
   }
 
-  /** Latest exact exercise match, independent of table sorting and filters. */
-  lastSet(exercise: string): WorkoutLogData | undefined {
+  /**
+   * Latest exact exercise match, independent of table sorting and filters;
+   * with `before` (a training day), only sets of earlier days.
+   */
+  lastSet(
+    exercise: string,
+    { before }: { before?: string } = {},
+  ): WorkoutLogData | undefined {
     const wanted = StringUtils.normalize(exercise);
     return this.chronological()
       .reverse()
-      .find((log) => StringUtils.normalize(log.exercise) === wanted);
+      .find(
+        (log) =>
+          StringUtils.normalize(log.exercise) === wanted &&
+          (before === undefined || trainingDay(log.date) < before),
+      );
   }
 
   /** Increase over the prior PR; the first weighted set is not a new record. */
@@ -410,6 +420,14 @@ export class TrainingHistory {
 /** A week needs at least one training day */
 function weeklyGoalOf(weeklyGoal: number): number {
   return Math.max(1, Math.floor(weeklyGoal) || 1);
+}
+
+/** Whether two workout names are the same workout (case, spacing, quotes ignored) */
+export function sameWorkout(
+  a: string | undefined,
+  b: string | undefined,
+): boolean {
+  return workoutKey(a) === workoutKey(b);
 }
 
 function workoutKey(workout: string | undefined): string {

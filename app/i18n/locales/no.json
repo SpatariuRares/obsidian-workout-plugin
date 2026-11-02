@@ -1114,5 +1114,19 @@
     "error": "Import mislyktes: {error}",
     "title": "Importer fra Strong eller Hevy",
     "intro": "Velg CSV-filen fra appens eksport av treningsdata. Ingenting skrives før du bekrefter."
+  },
+  "session": {
+    "exerciseOf": "Øvelse {current} av {total}",
+    "setOf": "Sett {set} av {sets}",
+    "setNumber": "Sett {set}",
+    "target": "Mål: {target}",
+    "targetReps": "{reps} repetisjoner",
+    "targetWeight": "{weight} {unit}",
+    "logSet": "Registrer sett",
+    "previous": "Forrige",
+    "next": "Neste",
+    "rest": "Hvile",
+    "done": "Trening ferdig. Sett registrert i dag: {sets}.",
+    "empty": "Legg til en `workout-log`-blokk med en øvelse i dette notatet for å følge det som en trening."
   }
 }

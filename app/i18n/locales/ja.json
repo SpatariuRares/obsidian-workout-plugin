@@ -1114,5 +1114,19 @@
     "error": "インポートに失敗しました: {error}",
     "title": "Strong または Hevy からインポート",
     "intro": "アプリのワークアウトデータのエクスポートからCSVを選択してください。確認するまで何も書き込まれません。"
+  },
+  "session": {
+    "exerciseOf": "種目 {current}/{total}",
+    "setOf": "セット {set}/{sets}",
+    "setNumber": "セット {set}",
+    "target": "目標: {target}",
+    "targetReps": "{reps}レップ",
+    "targetWeight": "{weight} {unit}",
+    "logSet": "セットを記録",
+    "previous": "前へ",
+    "next": "次へ",
+    "rest": "休憩",
+    "done": "ワークアウト完了: 今日の記録は{sets}セットです。",
+    "empty": "種目を指定した `workout-log` ブロックをこのノートに追加すると、ワークアウトとして追跡できます。"
   }
 }

@@ -17,6 +17,8 @@ import { tableBlock } from "@app/features/tables/tableBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
 import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { durationBlock } from "@app/features/duration/durationBlock";
+import { sessionBlock } from "@app/features/session/sessionBlock";
+import { EmbeddedSessionView } from "@app/features/session/views/EmbeddedSessionView";
 import type { CodeBlockSchema } from "@app/services/codeblocks/CodeBlockSchema";
 import { renderInvalidParams } from "@app/features/common/views/BaseView";
 import { EventAwareRenderChild } from "@app/services/core/EventAwareRenderChild";
@@ -97,6 +99,7 @@ export class CodeBlockProcessorService {
     private embeddedDashboardView: EmbeddedDashboardView,
     private activeTimers: Map<string, EmbeddedTimerView>,
     private eventBus: WorkoutEventBus,
+    private embeddedSessionView: EmbeddedSessionView,
   ) {
     // Initialize duration view internally (no external dependencies needed)
     this.embeddedDurationView = new EmbeddedDurationView(plugin);
@@ -124,6 +127,22 @@ export class CodeBlockProcessorService {
       durationBlock.type,
       (source, el, ctx) =>
         this.handleWorkoutDuration(source, el, ctx),
+    );
+    this.plugin.registerMarkdownCodeBlockProcessor(
+      sessionBlock.type,
+      (source, el, ctx) => this.handleWorkoutSession(source, el, ctx),
+    );
+  }
+
+  // Handle workout session code blocks: the session reads its own note
+  private handleWorkoutSession(
+    source: string,
+    el: HTMLElement,
+    ctx: MarkdownPostProcessorContext,
+  ) {
+    if (!this.parseParams(sessionBlock, source, el)) return;
+    ctx.addChild(
+      this.embeddedSessionView.createSession(el, ctx.sourcePath),
     );
   }
 

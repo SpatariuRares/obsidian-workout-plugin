@@ -426,3 +426,5 @@ preset: rest
 ````
 
 Each exercise has its table (showing recent sets) and its timer (for rest). The user scrolls down as they move through the workout. This is the primary interface.
+
+A `workout-session` block at the top turns that note into a **guided session**: the note's `workout-log` blocks are the **plan** (one step per exercise, `sets` and targets from the block, rest from the section's timer), shown one exercise at a time. Progress is today's sets of this workout in the log, never stored elsewhere.

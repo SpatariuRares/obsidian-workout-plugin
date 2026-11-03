@@ -103,7 +103,6 @@
       "allValid": "所有動作頁面皆有效",
       "noTags": "屬性中沒有肌肉標籤",
       "title": "檔案錯誤",
-      "tooManyTags": "過多的肌肉標籤（{count}）",
       "sharedName": "與 {pages} 的動作名稱相同：紀錄只會寫入其中一個"
     },
     "muscleTags": {
@@ -119,8 +118,6 @@
     "protocolDistribution": {
       "clearFilter": "清除篩選",
       "filterActive": "篩選條件：",
-      "noData": "過去 30 天內沒有任何組數紀錄",
-      "subtitle": "訓練法分布（過去 30 天）",
       "title": "訓練法分布"
     },
     "protocolEffectiveness": {
@@ -585,10 +582,8 @@
     "csvExercise": "CSV 動作",
     "customParameters": "自訂參數：",
     "customTitle": "自訂標題：",
-    "dataLimit": "資料限制：",
     "dataType": "資料類型：",
     "dateRange": "日期範圍（天數）：",
-    "daysRange": "日期範圍：",
     "delete": "刪除",
     "duration": "時長（秒）：",
     "editTag": "編輯標籤",

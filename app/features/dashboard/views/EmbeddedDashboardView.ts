@@ -28,6 +28,7 @@ import {
   Placement,
 } from "@app/features/dashboard/layout/gridLayout";
 import { DashboardActionSelect } from "@app/features/dashboard/ui/DashboardActionSelect";
+import { WidgetActionSelect } from "@app/features/dashboard/ui/WidgetActionSelect";
 import { getElementScopedId } from "@app/utils/IdUtils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { DomUtils } from "@app/utils/DomUtils";
@@ -267,6 +268,18 @@ export class EmbeddedDashboardView extends BaseView {
       // Tag what the widget drew, so the grid can place it
       for (const el of Array.from(gridEl.children).slice(drawn)) {
         (el as HTMLElement).dataset.widget = id;
+        if (state.sourcePath !== undefined) {
+          WidgetActionSelect.render(
+            el as HTMLElement,
+            this.plugin.app,
+            id,
+            params,
+            {
+              sourcePath: state.sourcePath,
+              matchWithoutId: state.matchWithoutId,
+            },
+          );
+        }
       }
     }
 

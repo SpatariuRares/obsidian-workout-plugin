@@ -2,6 +2,15 @@ import { defineCodeBlock } from "@app/services/codeblocks/CodeBlockSchema";
 import {
   DASHBOARD_WIDGET_IDS,
   DashboardWidgetId,
+  HEAT_MAP_METRICS,
+  HEAT_MAP_TIME_FRAMES,
+  HEAT_MAP_VIEWS,
+  PROTOCOL_CHART_TYPES,
+  PROTOCOL_SORTS,
+  QUICK_ACTION_IDS,
+  QUICK_STATS_METRIC_IDS,
+  QUICK_STATS_PERIOD_IDS,
+  SUMMARY_METRIC_IDS,
 } from "@app/features/dashboard/types";
 
 /** `grid.<widget>: column row width height`, one line per widget (layout: grid) */
@@ -26,4 +35,38 @@ export const dashboardBlock = defineCodeBlock("workout-dashboard", {
   ...gridFields,
   recentWorkoutsLimit: { kind: "number", min: 1, default: 5 },
   volumeTrendDays: { kind: "number", min: 1, default: 30 },
+  /** summary: the cards shown; unset: all of them */
+  summaryMetrics: { kind: "list", values: SUMMARY_METRIC_IDS },
+  /** volume: exercises in the top list, and whether the list shows at all */
+  volumeTopLimit: { kind: "number", min: 1, default: 5 },
+  volumeShowBreakdown: { kind: "boolean", default: true },
+  /** trainingCalendar: weeks shown */
+  calendarWeeks: { kind: "number", min: 1, max: 53, default: 53 },
+  calendarShowStats: { kind: "boolean", default: true },
+  /** quickStats: the columns and the rows shown; unset: all of them */
+  quickStatsPeriods: { kind: "list", values: QUICK_STATS_PERIOD_IDS },
+  quickStatsMetrics: { kind: "list", values: QUICK_STATS_METRIC_IDS },
+  /** heatMap: what its toggles start on */
+  heatMapTimeFrame: { kind: "enum", values: HEAT_MAP_TIME_FRAMES },
+  heatMapMetric: { kind: "enum", values: HEAT_MAP_METRICS },
+  heatMapView: { kind: "enum", values: HEAT_MAP_VIEWS },
+  heatMapShowImbalance: { kind: "boolean", default: true },
+  /** protocolDistribution: days counted */
+  protocolDays: { kind: "number", min: 1, default: 30 },
+  protocolChartType: { kind: "enum", values: PROTOCOL_CHART_TYPES },
+  /** protocolEffectiveness: sets a protocol needs to be compared */
+  protocolMinEntries: { kind: "number", min: 1, default: 5 },
+  protocolSortBy: { kind: "enum", values: PROTOCOL_SORTS },
+  /** duration: workouts compared, and the rest between sets in the estimate */
+  durationRecentCount: { kind: "number", min: 1, default: 5 },
+  durationRestSeconds: { kind: "number", min: 0, default: 90 },
+  durationShowTrend: { kind: "boolean", default: true },
+  /** quickActions: the buttons shown; unset: both */
+  quickActionsShown: { kind: "list", values: QUICK_ACTION_IDS },
+  /** fileErrors: rows shown (unset: all), the most muscle tags a page may have */
+  fileErrorsMaxItems: { kind: "number", min: 1 },
+  fileErrorsMaxTags: { kind: "number", min: 1, default: 3 },
+  fileErrorsCheckSharedNames: { kind: "boolean", default: true },
+  /** muscleTags: one block of badges per muscle group */
+  muscleTagsGroupByMuscle: { kind: "boolean", default: false },
 });

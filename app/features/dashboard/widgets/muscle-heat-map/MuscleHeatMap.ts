@@ -43,6 +43,7 @@ export class MuscleHeatMap {
     const infoPanel = heatMapEl.createDiv({
       cls: "workout-heatmap-info-panel",
     });
+    infoPanel.hidden = params.heatMapShowImbalance === false;
 
     // Create calculator with DI
     const calculator = new MuscleDataCalculator(
@@ -74,6 +75,11 @@ export class MuscleHeatMap {
       infoPanel,
       plugin,
       renderHeatMap,
+      {
+        timeFrame: params.heatMapTimeFrame ?? "week",
+        view: params.heatMapView ?? "front",
+        metric: params.heatMapMetric ?? "volume",
+      },
     );
 
     // Render initial heat map

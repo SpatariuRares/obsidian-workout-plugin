@@ -44,4 +44,12 @@ describe("VolumeAnalytics", () => {
 
     expect(lastCall()[0].id).toBe("volume-analytics-abc");
   });
+
+  it("leaves out the top exercises list when the block says so", () => {
+    const container = createObsidianContainer();
+
+    VolumeAnalytics.render(container, [], { volumeShowBreakdown: false });
+
+    expect(container.querySelector(".workout-muscle-group-breakdown")).toBeNull();
+  });
 });

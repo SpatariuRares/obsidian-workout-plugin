@@ -75,7 +75,6 @@ describe("block schemas", () => {
     it("leaves the data type to the exercise when unset", () => {
       expect(chartBlock.defaults).toEqual({
         chartType: "exercise",
-        dateRange: 30,
         showTrendLine: false,
         showTrend: true,
         showStats: true,
@@ -104,6 +103,19 @@ describe("block schemas", () => {
       expect(dashboardBlock.defaults).toEqual({
         recentWorkoutsLimit: 5,
         volumeTrendDays: 30,
+        volumeTopLimit: 5,
+        calendarWeeks: 53,
+        protocolDays: 30,
+        protocolMinEntries: 5,
+        durationRecentCount: 5,
+        durationRestSeconds: 90,
+        volumeShowBreakdown: true,
+        calendarShowStats: true,
+        heatMapShowImbalance: true,
+        durationShowTrend: true,
+        fileErrorsMaxTags: 3,
+        fileErrorsCheckSharedNames: true,
+        muscleTagsGroupByMuscle: false,
       });
     });
 

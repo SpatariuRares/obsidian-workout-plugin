@@ -16,8 +16,26 @@ jest.mock("@app/utils/IdUtils", () => ({
   ...jest.requireActual("@app/utils/IdUtils"),
   generateCodeBlockId: () => "d1",
 }));
+// Confirming is the only way through: the mock confirms as it opens
+jest.mock("@app/features/modals/common/ConfirmModal", () => ({
+  ConfirmModal: class {
+    constructor(
+      _app: unknown,
+      _message: string,
+      private onConfirm: () => void,
+    ) {}
+    open() {
+      this.onConfirm();
+    }
+  },
+}));
 import { InsertDashboardModal } from "@app/features/dashboard/modals/InsertDashboardModal";
 import { EditDashboardModal } from "@app/features/dashboard/modals/EditDashboardModal";
+import { EditWidgetModal } from "@app/features/dashboard/modals/EditWidgetModal";
+import type {
+  DashboardWidgetId,
+  EmbeddedDashboardParams,
+} from "@app/features/dashboard/types";
 import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { t } from "@app/i18n";
@@ -524,5 +542,159 @@ describe("dashboard modal, grid layout", () => {
         ),
       );
     });
+  });
+});
+
+describe("EditWidgetModal", () => {
+  const open = (
+    content: string,
+    id: DashboardWidgetId,
+    params: EmbeddedDashboardParams,
+  ) => {
+    const { app, state } = fakeApp(content);
+    const modal = new EditWidgetModal(app, id, params, {
+      sourcePath: "Stats.md",
+    });
+    const contentEl = createObsidianContainer();
+    Object.assign(modal, { contentEl, close: jest.fn() });
+    modal.onOpen();
+    const button = (text: string) =>
+      [...contentEl.querySelectorAll("button")].find(
+        (b) => b.getAttribute("aria-label") === text,
+      );
+    return { state, contentEl, button };
+  };
+
+  it("writes only the widget's changed setting", async () => {
+    const note0 = note("```workout-dashboard", "id: d1", "```");
+    const { state, contentEl, button } = open(note0, "recentWorkouts", {
+      id: "d1",
+    });
+
+    contentEl.querySelector<HTMLInputElement>("input")!.value = "8";
+    button(t("dashboard.widgetModal.update"))!.click();
+    await flush();
+
+    expect(state.content).toBe(
+      note("```workout-dashboard", "id: d1", "recentWorkoutsLimit: 8", "```"),
+    );
+  });
+
+  it("writes a choice only when it differs from the widget's default", async () => {
+    const { state, contentEl, button } = open(
+      note("```workout-dashboard", "id: d1", "```"),
+      "heatMap",
+      { id: "d1" },
+    );
+    const selects = contentEl.querySelectorAll("select");
+    selects[0].value = "month";
+    selects[1].value = "volume"; // its default: not written
+    button(t("dashboard.widgetModal.update"))!.click();
+    await flush();
+
+    expect(state.content).toBe(
+      note("```workout-dashboard", "id: d1", "heatMapTimeFrame: month", "```"),
+    );
+  });
+
+  it("writes a toggle only when it differs from the widget's default", async () => {
+    const { state, contentEl, button } = open(
+      note("```workout-dashboard", "id: d1", "```"),
+      "volume",
+      { id: "d1" },
+    );
+    const toggle = contentEl.querySelector<HTMLInputElement>(
+      "input[type=checkbox]",
+    )!;
+    toggle.checked = false;
+    button(t("dashboard.widgetModal.update"))!.click();
+    await flush();
+
+    expect(state.content).toBe(
+      note("```workout-dashboard", "id: d1", "volumeShowBreakdown: false", "```"),
+    );
+  });
+
+  it("leaves a number without a default empty, and writes it once filled", async () => {
+    const { state, contentEl, button } = open(
+      note("```workout-dashboard", "id: d1", "```"),
+      "fileErrors",
+      { id: "d1" },
+    );
+    const [maxItems, maxTags] = [
+      ...contentEl.querySelectorAll<HTMLInputElement>("input[type=number]"),
+    ];
+    expect(maxItems.value).toBe("");
+    expect(maxTags.value).toBe("3");
+    maxItems.value = "10";
+    button(t("dashboard.widgetModal.update"))!.click();
+    await flush();
+
+    expect(state.content).toContain("fileErrorsMaxItems: 10");
+  });
+
+  it("writes the checked options of a list, and none when all are", async () => {
+    const { state, contentEl, button } = open(
+      note("```workout-dashboard", "id: d1", "```"),
+      "quickStats",
+      { id: "d1" },
+    );
+    const boxes = [
+      ...contentEl.querySelectorAll<HTMLInputElement>("input[type=checkbox]"),
+    ];
+    boxes[1].checked = false; // month
+    button(t("dashboard.widgetModal.update"))!.click();
+    await flush();
+
+    expect(state.content).toContain("quickStatsPeriods: [week, year]");
+    expect(state.content).not.toContain("quickStatsMetrics");
+  });
+
+  it("removes the widget from a list, writing the ones left", async () => {
+    const { state, button } = open(
+      note("```workout-dashboard", "id: d1", "widgets: [summary, volume]", "```"),
+      "volume",
+      { id: "d1", widgets: ["summary", "volume"] },
+    );
+
+    button(t("dashboard.widgetModal.remove"))!.click();
+    await flush();
+
+    expect(state.content).toContain("widgets: [summary]");
+  });
+
+  it("removes the widget from a grid by dropping its line", async () => {
+    const { state, button } = open(
+      note(
+        "```workout-dashboard",
+        "id: d1",
+        "layout: grid",
+        "grid.summary: 1 1 2 1",
+        "grid.volume: 1 2 2 2",
+        "```",
+      ),
+      "volume",
+      {
+        id: "d1",
+        layout: "grid",
+        "grid.summary": { column: 1, row: 1, width: 2, height: 1 },
+        "grid.volume": { column: 1, row: 2, width: 2, height: 2 },
+      },
+    );
+
+    button(t("dashboard.widgetModal.remove"))!.click();
+    await flush();
+
+    expect(state.content).not.toContain("grid.volume");
+    expect(state.content).toContain("grid.summary: 1 1 2 1");
+  });
+
+  it("does not offer to remove the last widget of a list", () => {
+    const { button } = open("", "summary", {
+      id: "d1",
+      widgets: ["summary"],
+    });
+
+    expect(button(t("dashboard.widgetModal.remove"))).toBeUndefined();
   });
 });

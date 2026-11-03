@@ -18,6 +18,7 @@ import { QuickActions } from "@app/features/dashboard/widgets/quick-actions/Quic
 import { WidgetsFileError } from "@app/features/dashboard/widgets/file-errors/WidgetsFileError";
 import { MuscleTagsWidget } from "@app/features/dashboard/widgets/muscle-tags/MuscleTagsWidget";
 import { TrainingCalendarWidget } from "@app/features/dashboard/widgets/training-calendar/TrainingCalendarWidget";
+import { CONSTANTS } from "@app/constants";
 import { t } from "@app/i18n";
 
 /** What a widget can draw from */
@@ -38,9 +39,76 @@ export interface DashboardWidgetContext {
   history(): Promise<WorkoutLogData[]>;
 }
 
+/** A choice offered by an enum or list setting */
+export interface WidgetSettingOption {
+  value: string;
+  label(): string;
+}
+
+/**
+ * A block parameter that only one widget reads, edited from its own menu.
+ * A number shows its schema default when unset; a choice needs its own
+ * `default` (what the widget does when the parameter is absent) and a
+ * multi setting starts as "every option".
+ */
+export type WidgetSetting =
+  | {
+      kind: "number";
+      key:
+        | "recentWorkoutsLimit"
+        | "volumeTrendDays"
+        | "volumeTopLimit"
+        | "calendarWeeks"
+        | "protocolDays"
+        | "protocolMinEntries"
+        | "durationRecentCount"
+        | "durationRestSeconds"
+        | "fileErrorsMaxItems"
+        | "fileErrorsMaxTags";
+      label(): string;
+      min: number;
+      max?: number;
+    }
+  | {
+      kind: "choice";
+      key:
+        | "heatMapTimeFrame"
+        | "heatMapMetric"
+        | "heatMapView"
+        | "protocolChartType"
+        | "protocolSortBy";
+      label(): string;
+      options: WidgetSettingOption[];
+      default: string;
+    }
+  | {
+      kind: "multi";
+      key:
+        | "quickStatsPeriods"
+        | "quickStatsMetrics"
+        | "summaryMetrics"
+        | "quickActionsShown";
+      label(): string;
+      options: WidgetSettingOption[];
+    }
+  | {
+      kind: "toggle";
+      key:
+        | "volumeShowBreakdown"
+        | "calendarShowStats"
+        | "heatMapShowImbalance"
+        | "durationShowTrend"
+        | "fileErrorsCheckSharedNames"
+        | "muscleTagsGroupByMuscle";
+      label(): string;
+      default: boolean;
+    };
+
 interface DashboardWidget {
   /** Shown in the dashboard modal */
   label(): string;
+  /** The block parameters this widget reads; most have none */
+  settings?: WidgetSetting[];
   /** Grid layout: the fewest columns its content reads well in */
   minColumns: number;
   render(ctx: DashboardWidgetContext): void | Promise<void>;
@@ -53,6 +121,31 @@ export const DASHBOARD_WIDGETS: Record<
 > = {
   summary: {
     label: () => t("dashboard.summary.title"),
+    settings: [
+      {
+        kind: "multi",
+        key: "summaryMetrics",
+        label: () => t("dashboard.widgetModal.summaryMetrics"),
+        options: [
+          {
+            value: "workouts",
+            label: () => t("dashboard.summary.totalWorkouts"),
+          },
+          {
+            value: "streak",
+            label: () => t("dashboard.summary.currentStreak"),
+          },
+          {
+            value: "volume",
+            label: () => t("dashboard.summary.totalVolume"),
+          },
+          {
+            value: "records",
+            label: () => t("dashboard.summary.personalRecords"),
+          },
+        ],
+      },
+    ],
     minColumns: 1,
     // Records are judged against all history, not just this period
     render: async (ctx) =>
@@ -66,6 +159,21 @@ export const DASHBOARD_WIDGETS: Record<
   },
   trainingCalendar: {
     label: () => t("dashboard.trainingCalendar.title"),
+    settings: [
+      {
+        kind: "number",
+        key: "calendarWeeks",
+        label: () => t("dashboard.widgetModal.calendarWeeks"),
+        min: 1,
+        max: 53,
+      },
+      {
+        kind: "toggle",
+        key: "calendarShowStats",
+        label: () => t("dashboard.widgetModal.calendarShowStats"),
+        default: true,
+      },
+    ],
     minColumns: 2,
     // A year of training, whatever the dashboard's period
     render: async (ctx) =>
@@ -73,16 +181,91 @@ export const DASHBOARD_WIDGETS: Record<
         ctx.grid,
         await ctx.history(),
         ctx.plugin.settings.weeklyGoal,
+        undefined,
+        {
+          weeks: ctx.params.calendarWeeks,
+          showStats: ctx.params.calendarShowStats,
+        },
       ),
   },
   quickStats: {
     label: () => t("dashboard.quickStats.title"),
+    settings: [
+      {
+        kind: "multi",
+        key: "quickStatsPeriods",
+        label: () => t("dashboard.widgetModal.quickStatsPeriods"),
+        options: [
+          { value: "week", label: () => t("dashboard.quickStats.week") },
+          { value: "month", label: () => t("dashboard.quickStats.month") },
+          { value: "year", label: () => t("dashboard.quickStats.year") },
+        ],
+      },
+      {
+        kind: "multi",
+        key: "quickStatsMetrics",
+        label: () => t("dashboard.widgetModal.quickStatsMetrics"),
+        options: [
+          {
+            value: "workouts",
+            label: () => t("dashboard.quickStats.workouts"),
+          },
+          {
+            value: "volume",
+            label: () => CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_VOLUME,
+          },
+          {
+            value: "avgVolume",
+            label: () => CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_VOLUME,
+          },
+        ],
+      },
+    ],
     minColumns: 1,
     render: (ctx) =>
       QuickStatsCards.render(ctx.grid, ctx.data, ctx.params),
   },
   heatMap: {
     label: () => t("general.muscleHeatMap"),
+    settings: [
+      {
+        kind: "choice",
+        key: "heatMapTimeFrame",
+        label: () => t("dashboard.widgetModal.heatMapTimeFrame"),
+        options: [
+          { value: "week", label: () => t("timeperiods.week") },
+          { value: "month", label: () => t("timeperiods.month") },
+          { value: "year", label: () => t("timeperiods.year") },
+        ],
+        default: "week",
+      },
+      {
+        kind: "choice",
+        key: "heatMapMetric",
+        label: () => t("dashboard.widgetModal.heatMapMetric"),
+        options: ["volume", "sets", "reps"].map((metric) => ({
+          value: metric,
+          label: () => t(`dashboard.muscleHeatMap.metrics.${metric}`),
+        })),
+        default: "volume",
+      },
+      {
+        kind: "choice",
+        key: "heatMapView",
+        label: () => t("dashboard.widgetModal.heatMapView"),
+        options: [
+          { value: "front", label: () => t("general.front") },
+          { value: "back", label: () => t("general.back") },
+        ],
+        default: "front",
+      },
+      {
+        kind: "toggle",
+        key: "heatMapShowImbalance",
+        label: () => t("dashboard.widgetModal.heatMapShowImbalance"),
+        default: true,
+      },
+    ],
     minColumns: 2,
     render: (ctx) =>
       MuscleHeatMap.render(
@@ -94,6 +277,26 @@ export const DASHBOARD_WIDGETS: Record<
   },
   volume: {
     label: () => t("dashboard.volumeAnalytics.title"),
+    settings: [
+      {
+        kind: "number",
+        key: "volumeTrendDays",
+        label: () => t("dashboard.modal.volumeTrendDays"),
+        min: 1,
+      },
+      {
+        kind: "number",
+        key: "volumeTopLimit",
+        label: () => t("dashboard.widgetModal.volumeTopLimit"),
+        min: 1,
+      },
+      {
+        kind: "toggle",
+        key: "volumeShowBreakdown",
+        label: () => t("dashboard.widgetModal.volumeShowBreakdown"),
+        default: true,
+      },
+    ],
     minColumns: 2,
     render: (ctx) =>
       VolumeAnalytics.render(ctx.grid, ctx.data, ctx.params, {
@@ -102,12 +305,41 @@ export const DASHBOARD_WIDGETS: Record<
   },
   recentWorkouts: {
     label: () => t("dashboard.recentWorkouts.title"),
+    settings: [
+      {
+        kind: "number",
+        key: "recentWorkoutsLimit",
+        label: () => t("dashboard.modal.recentWorkoutsLimit"),
+        min: 1,
+      },
+    ],
     minColumns: 1,
     render: (ctx) =>
       RecentWorkouts.render(ctx.grid, ctx.data, ctx.params),
   },
   protocolDistribution: {
     label: () => t("dashboard.protocolDistribution.title"),
+    settings: [
+      {
+        kind: "number",
+        key: "protocolDays",
+        label: () => t("dashboard.widgetModal.protocolDays"),
+        min: 1,
+      },
+      {
+        kind: "choice",
+        key: "protocolChartType",
+        label: () => t("dashboard.widgetModal.protocolChartType"),
+        options: [
+          { value: "pie", label: () => t("dashboard.widgetModal.chartPie") },
+          {
+            value: "doughnut",
+            label: () => t("dashboard.widgetModal.chartDoughnut"),
+          },
+        ],
+        default: "pie",
+      },
+    ],
     minColumns: 2,
     render: (ctx) =>
       ProtocolDistribution.render(
@@ -118,11 +350,41 @@ export const DASHBOARD_WIDGETS: Record<
           chartId: `protocol-distribution-${ctx.dashboardId}`,
           onFilterChange: ctx.onProtocolFilterChange,
           activeFilter: ctx.activeProtocolFilter,
+          days: ctx.params.protocolDays,
+          chartType: ctx.params.protocolChartType,
         },
       ),
   },
   protocolEffectiveness: {
     label: () => t("dashboard.protocolEffectiveness.title"),
+    settings: [
+      {
+        kind: "number",
+        key: "protocolMinEntries",
+        label: () => t("dashboard.widgetModal.protocolMinEntries"),
+        min: 1,
+      },
+      {
+        kind: "choice",
+        key: "protocolSortBy",
+        label: () => t("dashboard.widgetModal.protocolSortBy"),
+        options: [
+          {
+            value: "progressionRate",
+            label: () => t("dashboard.protocolEffectiveness.columnProgression"),
+          },
+          {
+            value: "avgVolumeChange",
+            label: () => t("dashboard.protocolEffectiveness.columnVolumeChange"),
+          },
+          {
+            value: "entryCount",
+            label: () => t("dashboard.protocolEffectiveness.columnEntries"),
+          },
+        ],
+        default: "progressionRate",
+      },
+    ],
     minColumns: 2,
     render: (ctx) =>
       ProtocolEffectiveness.render(
@@ -134,6 +396,26 @@ export const DASHBOARD_WIDGETS: Record<
   },
   duration: {
     label: () => t("dashboard.durationComparison.title"),
+    settings: [
+      {
+        kind: "number",
+        key: "durationRecentCount",
+        label: () => t("dashboard.widgetModal.durationRecentCount"),
+        min: 1,
+      },
+      {
+        kind: "number",
+        key: "durationRestSeconds",
+        label: () => t("dashboard.widgetModal.durationRestSeconds"),
+        min: 0,
+      },
+      {
+        kind: "toggle",
+        key: "durationShowTrend",
+        label: () => t("dashboard.widgetModal.durationShowTrend"),
+        default: true,
+      },
+    ],
     minColumns: 2,
     render: (ctx) =>
       DurationComparison.render(
@@ -147,17 +429,63 @@ export const DASHBOARD_WIDGETS: Record<
   },
   quickActions: {
     label: () => t("dashboard.quickActions.title"),
+    settings: [
+      {
+        kind: "multi",
+        key: "quickActionsShown",
+        label: () => t("dashboard.widgetModal.quickActionsShown"),
+        options: [
+          {
+            value: "addLog",
+            label: () => t("dashboard.quickActions.addWorkoutLog"),
+          },
+          {
+            value: "viewExercises",
+            label: () => t("dashboard.quickActions.viewExercises"),
+          },
+        ],
+      },
+    ],
     minColumns: 1,
     render: (ctx) =>
       QuickActions.render(ctx.grid, ctx.params, ctx.plugin),
   },
   fileErrors: {
     label: () => t("dashboard.fileErrors.title"),
+    settings: [
+      {
+        kind: "number",
+        key: "fileErrorsMaxItems",
+        label: () => t("dashboard.widgetModal.fileErrorsMaxItems"),
+        min: 1,
+      },
+      {
+        kind: "number",
+        key: "fileErrorsMaxTags",
+        label: () => t("dashboard.widgetModal.fileErrorsMaxTags"),
+        min: 1,
+      },
+      {
+        kind: "toggle",
+        key: "fileErrorsCheckSharedNames",
+        label: () => t("dashboard.widgetModal.fileErrorsCheckSharedNames"),
+        default: true,
+      },
+    ],
     minColumns: 1,
-    render: (ctx) => WidgetsFileError.render(ctx.grid, ctx.plugin),
+    render: (ctx) =>
+      WidgetsFileError.render(ctx.grid, ctx.plugin, ctx.params),
   },
   muscleTags: {
     label: () => t("dashboard.muscleTags.title"),
+    settings: [
+      {
+        kind: "toggle",
+        key: "muscleTagsGroupByMuscle",
+        label: () => t("dashboard.widgetModal.muscleTagsGroupByMuscle"),
+        default: false,
+      },
+    ],
     minColumns: 2,
     render: (ctx) =>
       MuscleTagsWidget.render(ctx.grid, ctx.params, ctx.plugin),

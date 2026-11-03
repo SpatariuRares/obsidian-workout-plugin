@@ -19,7 +19,7 @@ function getMuscleGroupEmoji(muscleGroup: string): string {
 export class MuscleTagsWidget {
   static async render(
     container: HTMLElement,
-    _params: EmbeddedDashboardParams,
+    params: EmbeddedDashboardParams,
     plugin: MuscleTagPort,
   ): Promise<void> {
     const widgetEl = WidgetContainer.create(container, {
@@ -33,20 +33,47 @@ export class MuscleTagsWidget {
       text: t("dashboard.muscleTags.description"),
     });
 
-    // Create muscle tags grid
-    const tagsGrid = widgetEl.createDiv({
-      cls: "workout-muscle-tags-grid",
-    });
-
     // Get tags from MuscleTagService (includes custom user tags)
     const tagMap = await plugin.getMuscleTagService().tagMap();
     const sortedTags = Array.from(tagMap.entries()).sort(([a], [b]) =>
       a.localeCompare(b),
     );
 
-    sortedTags.forEach(([tag, muscleGroup]) => {
-      this.createMuscleTagBadge(tagsGrid, tag, muscleGroup);
-    });
+    if (params.muscleTagsGroupByMuscle) {
+      const byGroup = new Map<string, [string, string][]>();
+      for (const entry of sortedTags) {
+        const group = byGroup.get(entry[1]) ?? [];
+        group.push(entry);
+        byGroup.set(entry[1], group);
+      }
+      const groups = [...byGroup.keys()].sort((a, b) => a.localeCompare(b));
+      // One card per muscle, side by side; its tags are cards inside it
+      const cardsEl = widgetEl.createDiv({
+        cls: "workout-muscle-group-cards",
+      });
+      for (const muscleGroup of groups) {
+        const cardEl = cardsEl.createDiv({
+          cls: "workout-muscle-group-card",
+        });
+        cardEl.createEl("h4", {
+          text: `${getMuscleGroupEmoji(muscleGroup)} ${this.formatMuscleName(muscleGroup)}`,
+          cls: "workout-muscle-group-title",
+        });
+        const tagsEl = cardEl.createDiv({
+          cls: "workout-muscle-group-tags",
+        });
+        for (const [tag] of byGroup.get(muscleGroup) ?? []) {
+          this.createMuscleTagBadge(tagsEl, tag, muscleGroup);
+        }
+      }
+    } else {
+      const tagsGrid = widgetEl.createDiv({
+        cls: "workout-muscle-tags-grid",
+      });
+      sortedTags.forEach(([tag, muscleGroup]) => {
+        this.createMuscleTagBadge(tagsGrid, tag, muscleGroup);
+      });
+    }
 
     // Add info section
     const infoEl = widgetEl.createDiv({

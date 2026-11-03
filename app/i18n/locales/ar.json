@@ -103,7 +103,6 @@
       "allValid": "جميع صفحات التمارين صالحة",
       "noTags": "لا توجد علامات عضلات في البيانات الوصفية (frontmatter)",
       "title": "أخطاء الملفات",
-      "tooManyTags": "عدد كبير من علامات العضلات ({count})",
       "sharedName": "نفس اسم التمرين كما في {pages}: يتم تسجيل السجلات في واحد فقط منهم."
     },
     "muscleTags": {
@@ -119,8 +118,6 @@
     "protocolDistribution": {
       "clearFilter": "مسح التصفية",
       "filterActive": "مُصفّى حسب",
-      "noData": "لم تُسجَّل أي مجموعات في آخر 30 يومًا",
-      "subtitle": "تفصيل بروتوكول التدريب (آخر 30 يومًا)",
       "title": "توزيع البروتوكولات"
     },
     "protocolEffectiveness": {
@@ -585,10 +582,8 @@
     "csvExercise": "تمرين CSV",
     "customParameters": "المعلمات المخصصة:",
     "customTitle": "العنوان المخصص:",
-    "dataLimit": "الحد الأقصى للبيانات:",
     "dataType": "نوع البيانات:",
     "dateRange": "نطاق التواريخ (أيام):",
-    "daysRange": "نطاق الأيام:",
     "delete": "حذف",
     "duration": "المدة (الثواني):",
     "editTag": "تعديل العلامة",

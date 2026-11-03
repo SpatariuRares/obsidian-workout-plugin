@@ -103,7 +103,6 @@
       "allValid": "Todas las páginas de ejercicios son válidas",
       "noTags": "No hay etiquetas musculares en el frontmatter",
       "title": "Errores de archivo",
-      "tooManyTags": "Demasiadas etiquetas musculares ({count})",
       "sharedName": "Mismo nombre de ejercicio que {pages}: los registros solo se guardan en una de ellas."
     },
     "muscleTags": {
@@ -119,8 +118,6 @@
     "protocolDistribution": {
       "clearFilter": "Quitar filtro",
       "filterActive": "Filtrado por",
-      "noData": "No hay series registradas en los últimos 30 días",
-      "subtitle": "Desglose por protocolo de entrenamiento (últimos 30 días)",
       "title": "Distribución de protocolos"
     },
     "protocolEffectiveness": {
@@ -585,10 +582,8 @@
     "csvExercise": "Ejercicio CSV",
     "customParameters": "Parámetros personalizados:",
     "customTitle": "Título personalizado:",
-    "dataLimit": "Límite de datos:",
     "dataType": "Tipo de datos:",
     "dateRange": "Rango de fechas (días):",
-    "daysRange": "Rango de días:",
     "delete": "Eliminar",
     "duration": "Duración (segundos):",
     "editTag": "Editar etiqueta",

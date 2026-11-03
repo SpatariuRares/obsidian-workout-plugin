@@ -13,6 +13,7 @@ import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { TFile } from "obsidian";
 import { ListItem } from "@app/components/molecules";
 import { t } from "@app/i18n";
+import type { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { Icon } from "@app/components/atoms";
 import { ICONS } from "@app/constants/ui.constants";
 
@@ -20,6 +21,13 @@ type FileErrorContext = AppPort &
   SettingsPort &
   MuscleTagPort &
   ExerciseLibraryPort;
+
+/** What a page is checked for */
+interface FileErrorRules {
+  /** The most muscle tags a page may have */
+  maxTags: number;
+  checkSharedNames: boolean;
+}
 
 interface ExerciseFileError {
   file: TFile;
@@ -31,6 +39,7 @@ export class WidgetsFileError {
   static async render(
     container: HTMLElement,
     plugin: FileErrorContext,
+    params: EmbeddedDashboardParams = {},
   ): Promise<void> {
     const errorEl = WidgetContainer.create(container, {
       title: t("dashboard.fileErrors.title"),
@@ -38,7 +47,12 @@ export class WidgetsFileError {
     });
 
     // Get exercise files with errors
-    const fileErrors = await this.validateExerciseFiles(plugin);
+    const rules = {
+      maxTags: params.fileErrorsMaxTags ?? 3,
+      checkSharedNames: params.fileErrorsCheckSharedNames ?? true,
+    };
+    const allErrors = await this.validateExerciseFiles(plugin, rules);
+    const fileErrors = allErrors.slice(0, params.fileErrorsMaxItems);
 
     if (fileErrors.length === 0) {
       Feedback.renderSuccess(
@@ -90,16 +104,25 @@ export class WidgetsFileError {
         item.prepend(Icon.create(item, { name: ICONS.STATUS.WARNING }));
       });
     });
+
+    const hidden = allErrors.length - fileErrors.length;
+    if (hidden > 0) {
+      errorEl.createEl("small", {
+        text: t("dashboard.fileErrors.more", { count: hidden }),
+        cls: "workout-file-errors-more",
+      });
+    }
   }
 
   private static async validateExerciseFiles(
     plugin: FileErrorContext,
+    rules: FileErrorRules,
   ): Promise<ExerciseFileError[]> {
     const library = plugin.getExerciseLibrary();
     const fileErrors: ExerciseFileError[] = [];
 
     for (const page of library.pages()) {
-      const errors = await this.validatePage(page, library, plugin);
+      const errors = await this.validatePage(page, library, plugin, rules);
       if (errors.length > 0) {
         fileErrors.push({
           file: page.file,
@@ -116,6 +139,7 @@ export class WidgetsFileError {
     page: ExercisePage,
     library: ExerciseLibrary,
     plugin: FileErrorContext,
+    rules: FileErrorRules,
   ): Promise<string[]> {
     const errors: string[] = [];
 
@@ -128,13 +152,18 @@ export class WidgetsFileError {
 
     if (muscleTags.length === 0) {
       errors.push(t("dashboard.fileErrors.noTags"));
-    } else if (muscleTags.length > 3) {
+    } else if (muscleTags.length > rules.maxTags) {
       errors.push(
-        t("dashboard.fileErrors.tooManyTags", { count: muscleTags.length }),
+        t("dashboard.fileErrors.tooManyTags", {
+          count: muscleTags.length,
+          max: rules.maxTags,
+        }),
       );
     }
 
-    const sharing = library.pagesSharingAName(page);
+    const sharing = rules.checkSharedNames
+      ? library.pagesSharingAName(page)
+      : [];
     if (sharing.length > 0) {
       const pages = sharing.map((other) => other.file.basename).join(", ");
       errors.push(t("dashboard.fileErrors.sharedName", { pages }));

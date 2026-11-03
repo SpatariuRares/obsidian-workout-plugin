@@ -103,7 +103,6 @@
       "allValid": "Toate paginile de exerciții sunt valide",
       "noTags": "Nicio etichetă pentru mușchi în frontmatter",
       "title": "Erori în fișiere",
-      "tooManyTags": "Prea multe etichete pentru mușchi ({count})",
       "sharedName": "Aceeași denumire a exercițiului ca la {pages}: jurnalele sunt salvate doar într-unul dintre ele"
     },
     "muscleTags": {
@@ -119,8 +118,6 @@
     "protocolDistribution": {
       "clearFilter": "Șterge filtrul",
       "filterActive": "Filtrat după",
-      "noData": "Nicio serie înregistrată în ultimele 30 de zile",
-      "subtitle": "Distribuția protocoalelor de antrenament (ultimele 30 de zile)",
       "title": "Distribuția protocoalelor"
     },
     "protocolEffectiveness": {
@@ -585,10 +582,8 @@
     "csvExercise": "Exercițiu din CSV",
     "customParameters": "Parametri personalizați:",
     "customTitle": "Titlu personalizat:",
-    "dataLimit": "Limită de date:",
     "dataType": "Tip de date:",
     "dateRange": "Interval de date (număr de zile):",
-    "daysRange": "Interval de zile:",
     "delete": "Șterge",
     "duration": "Durată (secunde):",
     "editTag": "Modifică etichetă",

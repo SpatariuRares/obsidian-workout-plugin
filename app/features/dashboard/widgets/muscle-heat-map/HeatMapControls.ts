@@ -29,6 +29,12 @@ export class HeatMapControls {
     infoPanel: HTMLElement,
     plugin: WorkoutPluginContext,
     renderCallback: RenderCallback,
+    /** What the toggles start on */
+    initial: MuscleHeatMapOptions = {
+      timeFrame: "week",
+      view: "front",
+      metric: "volume",
+    },
   ): MuscleHeatMapOptions {
     const controlsEl = container.createDiv({
       cls: "workout-heatmap-controls",
@@ -39,23 +45,26 @@ export class HeatMapControls {
       cls: "workout-frame-toggle",
     });
 
+    const toggleClass = (on: boolean) =>
+      on ? "workout-toggle-btn active" : "workout-toggle-btn";
+
     const weekBtn = Button.create(timeFrameEl, {
       text: t("timeperiods.week"),
-      className: "workout-toggle-btn active",
+      className: toggleClass(initial.timeFrame === "week"),
       variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("timeperiods.week"),
     });
 
     const monthBtn = Button.create(timeFrameEl, {
       text: t("timeperiods.month"),
-      className: "workout-toggle-btn",
+      className: toggleClass(initial.timeFrame === "month"),
       variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("timeperiods.month"),
     });
 
     const yearBtn = Button.create(timeFrameEl, {
       text: t("timeperiods.year"),
-      className: "workout-toggle-btn",
+      className: toggleClass(initial.timeFrame === "year"),
       variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("timeperiods.year"),
     });
@@ -67,14 +76,14 @@ export class HeatMapControls {
 
     const frontBtn = Button.create(viewToggleEl, {
       text: t("general.front"),
-      className: "workout-toggle-btn active",
+      className: toggleClass(initial.view === "front"),
       variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("general.front"),
     });
 
     const backBtn = Button.create(viewToggleEl, {
       text: t("general.back"),
-      className: "workout-toggle-btn",
+      className: toggleClass(initial.view === "back"),
       variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("general.back"),
     });
@@ -85,22 +94,17 @@ export class HeatMapControls {
     });
 
     const metrics: HeatMapMetric[] = ["volume", "sets", "reps"];
-    const metricBtns = metrics.map((metric, index) =>
+    const metricBtns = metrics.map((metric) =>
       Button.create(metricToggleEl, {
         text: t(`dashboard.muscleHeatMap.metrics.${metric}`),
-        className:
-          index === 0 ? "workout-toggle-btn active" : "workout-toggle-btn",
+        className: toggleClass(metric === initial.metric),
         variant: BUTTONVARIANT.SECONDARY,
         ariaLabel: t(`dashboard.muscleHeatMap.metrics.${metric}`),
       }),
     );
 
     // Current options state
-    const currentOptions: MuscleHeatMapOptions = {
-      timeFrame: "week",
-      view: "front",
-      metric: "volume",
-    };
+    const currentOptions: MuscleHeatMapOptions = { ...initial };
 
     // Setup time frame event listeners
     [weekBtn, monthBtn, yearBtn].forEach((btn, index) => {

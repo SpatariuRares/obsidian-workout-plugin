@@ -22,6 +22,7 @@ export function prepareVolumeTrendData(
 
 export function calculateMuscleGroupVolume(
   data: WorkoutLogData[],
+  limit = 5,
 ): [string, number][] {
-  return new TrainingHistory(data).topExercisesByVolume(5);
+  return new TrainingHistory(data).topExercisesByVolume(limit);
 }

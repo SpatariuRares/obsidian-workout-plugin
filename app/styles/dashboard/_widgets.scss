@@ -74,3 +74,14 @@
     margin-bottom: var(--workout-space-md);
   }
 }
+
+/* A widget without a title row: its kebab sits in the top corner */
+.workout-dashboard-widget {
+  position: relative;
+}
+
+.workout-widget-menu-corner {
+  position: absolute;
+  top: var(--workout-space-sm);
+  right: var(--workout-space-sm);
+}

@@ -333,6 +333,19 @@ describe("dashboard calculations", () => {
   });
 
   describe("calculateMuscleGroupVolume", () => {
+    it("should keep as many exercises as the limit says", () => {
+      const day = new Date().toISOString();
+      const data: WorkoutLogData[] = [
+        createMockLog(day, "Squat", 2000, 200),
+        createMockLog(day, "Bench", 1800, 180),
+        createMockLog(day, "Deadlift", 1600, 160),
+      ];
+
+      expect(calculateMuscleGroupVolume(data, 2).map(([name]) => name)).toEqual(
+        ["Squat", "Bench"],
+      );
+    });
+
     it("should return top 5 exercises by volume", () => {
       const today = new Date();
       const data: WorkoutLogData[] = [

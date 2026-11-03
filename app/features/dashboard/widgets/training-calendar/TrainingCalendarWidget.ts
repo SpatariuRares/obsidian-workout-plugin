@@ -2,6 +2,7 @@ import { getUnitsMap } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import {
+  CALENDAR_WEEKS,
   CalendarDay,
   trainingCalendar,
 } from "@app/features/dashboard/widgets/training-calendar/business/trainingCalendar";
@@ -21,6 +22,12 @@ export class TrainingCalendarWidget {
     /** Training days a week that keep the streak */
     weeklyGoal: number,
     today: Date = new Date(),
+    { weeks = CALENDAR_WEEKS, showStats = true }: {
+      /** Weeks shown, counting back from this one */
+      weeks?: number;
+      /** The streaks and this week's progress above the grid */
+      showStats?: boolean;
+    } = {},
   ): void {
     const widgetEl = WidgetContainer.create(container, {
       title: t("dashboard.trainingCalendar.title"),
@@ -29,35 +36,37 @@ export class TrainingCalendarWidget {
     });
 
     const training = new TrainingHistory(history);
-    const calendar = trainingCalendar(training, today);
+    const calendar = trainingCalendar(training, today, weeks);
     const thisWeek = training.weekProgress(today, weeklyGoal);
 
-    const statsEl = widgetEl.createDiv({
-      cls: "workout-calendar-stats",
-    });
-    this.stat(
-      statsEl,
-      t("dashboard.trainingCalendar.currentStreak"),
-      t("dashboard.trainingCalendar.weeks", {
-        count: training.streak(today, weeklyGoal),
-      }),
-    );
-    this.stat(
-      statsEl,
-      t("dashboard.trainingCalendar.bestStreak"),
-      t("dashboard.trainingCalendar.weeks", {
-        count: training.bestStreak(weeklyGoal),
-      }),
-    );
-    this.stat(
-      statsEl,
-      t("dashboard.trainingCalendar.thisWeek"),
-      t("dashboard.trainingCalendar.daysOfGoal", {
-        days: thisWeek.days,
-        goal: thisWeek.goal,
-      }),
-      thisWeek.met,
-    );
+    if (showStats) {
+      const statsEl = widgetEl.createDiv({
+        cls: "workout-calendar-stats",
+      });
+      this.stat(
+        statsEl,
+        t("dashboard.trainingCalendar.currentStreak"),
+        t("dashboard.trainingCalendar.weeks", {
+          count: training.streak(today, weeklyGoal),
+        }),
+      );
+      this.stat(
+        statsEl,
+        t("dashboard.trainingCalendar.bestStreak"),
+        t("dashboard.trainingCalendar.weeks", {
+          count: training.bestStreak(weeklyGoal),
+        }),
+      );
+      this.stat(
+        statsEl,
+        t("dashboard.trainingCalendar.thisWeek"),
+        t("dashboard.trainingCalendar.daysOfGoal", {
+          days: thisWeek.days,
+          goal: thisWeek.goal,
+        }),
+        thisWeek.met,
+      );
+    }
 
     // Newest week first: the grid runs right to left (see _calendar.scss), so
     // the latest weeks show without scrolling when the year does not fit

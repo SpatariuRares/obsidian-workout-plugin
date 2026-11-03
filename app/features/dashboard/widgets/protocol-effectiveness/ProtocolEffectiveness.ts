@@ -13,7 +13,7 @@ import {
  * Minimum number of entries required to show statistics for a protocol.
  * Ensures statistical relevance of the displayed data.
  */
-const MIN_ENTRIES_FOR_STATS = 5;
+const DEFAULT_MIN_ENTRIES_FOR_STATS = 5;
 
 /**
  * Protocol effectiveness statistics
@@ -36,13 +36,13 @@ export class ProtocolEffectiveness {
    * Renders the protocol effectiveness widget
    * @param container - The container element to render in
    * @param data - Workout log data
-   * @param _params - Dashboard parameters (unused but kept for consistency)
+   * @param params - `protocolMinEntries`: sets a protocol needs to be compared
    * @param plugin - Plugin instance for accessing custom protocols
    */
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
-    _params: EmbeddedDashboardParams,
+    params: EmbeddedDashboardParams,
     plugin?: SettingsPort,
   ): void {
     const widgetEl = WidgetContainer.create(container, {
@@ -55,7 +55,12 @@ export class ProtocolEffectiveness {
     });
 
     // Calculate effectiveness statistics
-    const stats = this.calculateEffectivenessStats(data, plugin);
+    const stats = this.calculateEffectivenessStats(
+      data,
+      plugin,
+      params.protocolMinEntries ?? DEFAULT_MIN_ENTRIES_FOR_STATS,
+      params.protocolSortBy ?? "progressionRate",
+    );
 
     // Check if there's enough data
     if (stats.length === 0) {
@@ -80,11 +85,15 @@ export class ProtocolEffectiveness {
    * Calculates effectiveness statistics for each protocol
    * @param data - Workout log data
    * @param plugin - Plugin instance for custom protocols
+   * @param minEntries - Sets a protocol needs to be compared
+   * @param sortBy - The figure the table is ordered by, descending
    * @returns Array of protocol effectiveness statistics
    */
   private static calculateEffectivenessStats(
     data: WorkoutLogData[],
-    plugin?: SettingsPort,
+    plugin: SettingsPort | undefined,
+    minEntries: number,
+    sortBy: "progressionRate" | "avgVolumeChange" | "entryCount",
   ): ProtocolEffectivenessStats[] {
     const catalog = new ProtocolCatalog(plugin?.settings?.customProtocols);
 
@@ -103,7 +112,7 @@ export class ProtocolEffectiveness {
     // Process each protocol group
     protocolGroups.forEach((entries, protocol) => {
       // Skip protocols with insufficient data
-      if (entries.length < MIN_ENTRIES_FOR_STATS) {
+      if (entries.length < minEntries) {
         return;
       }
 
@@ -123,10 +132,8 @@ export class ProtocolEffectiveness {
       });
     });
 
-    // Sort by progression rate descending
-    return stats.sort(
-      (a, b) => b.progressionRate - a.progressionRate,
-    );
+    // Best first, by the column the block asks for
+    return stats.sort((a, b) => b[sortBy] - a[sortBy]);
   }
 
   /**

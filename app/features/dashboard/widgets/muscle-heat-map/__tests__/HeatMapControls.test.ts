@@ -50,3 +50,28 @@ describe("HeatMapControls metric toggle", () => {
     },
   );
 });
+
+describe("HeatMapControls starting options", () => {
+  it("starts on the options it is given", () => {
+    const container = createObsidianContainer();
+    const options = HeatMapControls.create(
+      container,
+      [],
+      document.createElement("div"),
+      document.createElement("div"),
+      {} as WorkoutPluginContext,
+      jest.fn().mockResolvedValue(undefined),
+      { timeFrame: "year", view: "back", metric: "sets" },
+    );
+
+    expect(options).toEqual({ timeFrame: "year", view: "back", metric: "sets" });
+    const active = [...container.querySelectorAll("button.active")].map(
+      (b) => b.textContent,
+    );
+    expect(active).toEqual([
+      t("timeperiods.year"),
+      t("general.back"),
+      t("dashboard.muscleHeatMap.metrics.sets"),
+    ]);
+  });
+});

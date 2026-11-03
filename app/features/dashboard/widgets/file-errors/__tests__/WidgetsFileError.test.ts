@@ -6,11 +6,14 @@ import { ExerciseLibrary } from "@app/services/exercise/ExerciseLibrary";
 import { FakeVault } from "@app/services/exercise/__tests__/FakeVault";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
+import type { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { t } from "@app/i18n";
 import { ICONS } from "@app/constants/ui.constants";
 
 /** data-icon of the icon in front of each error message, from the last errorsFor call */
 let lastErrorIcons: (string | null)[] = [];
+/** The text of the widget drawn by the last errorsFor call */
+let lastText = "";
 
 function note(tags: string[] | string): Record<string, unknown> {
   return { tags };
@@ -19,6 +22,7 @@ function note(tags: string[] | string): Record<string, unknown> {
 /** Exercise pages by name (or by path ending in .md under "exercises/") → frontmatter */
 async function errorsFor(
   notes: Record<string, Record<string, unknown>>,
+  params: EmbeddedDashboardParams = {},
 ): Promise<Record<string, string[]>> {
   const vault = new FakeVault(
     Object.fromEntries(
@@ -49,8 +53,9 @@ async function errorsFor(
     getMuscleTagService: () => muscleTags,
     getExerciseLibrary: () => library,
     triggerMuscleTagRefresh: () => {},
-  });
+  }, params);
 
+  lastText = container.textContent ?? "";
   lastErrorIcons = [
     ...container.querySelectorAll(".workout-file-error-message"),
   ].map(
@@ -100,7 +105,7 @@ describe("WidgetsFileError", () => {
     });
 
     expect(errors).toEqual({
-      Burpee: [t("dashboard.fileErrors.tooManyTags", { count: 4 })],
+      Burpee: [t("dashboard.fileErrors.tooManyTags", { count: 4, max: 3 })],
     });
   });
 
@@ -132,5 +137,36 @@ describe("WidgetsFileError", () => {
         t("dashboard.fileErrors.sharedName", { pages: "Squat" }),
       ],
     });
+  });
+
+  it("takes the most muscle tags a page may have from the block", async () => {
+    const pages = { Burpee: note(["chest", "quads", "glutes", "shoulders"]) };
+
+    expect(await errorsFor(pages, { fileErrorsMaxTags: 4 })).toEqual({});
+    expect(await errorsFor(pages, { fileErrorsMaxTags: 2 })).toEqual({
+      Burpee: [t("dashboard.fileErrors.tooManyTags", { count: 4, max: 2 })],
+    });
+  });
+
+  it("can leave out the shared name check", async () => {
+    const errors = await errorsFor(
+      {
+        Squat: note(["quads"]),
+        "Front.md": { exercise_name: "Squat", tags: ["quads"] },
+      },
+      { fileErrorsCheckSharedNames: false },
+    );
+
+    expect(errors).toEqual({});
+  });
+
+  it("lists only as many pages as the block says, and counts the rest", async () => {
+    const errors = await errorsFor(
+      { A: note(["x"]), B: note(["x"]), C: note(["x"]) },
+      { fileErrorsMaxItems: 2 },
+    );
+
+    expect(Object.keys(errors)).toHaveLength(2);
+    expect(lastText).toContain(t("dashboard.fileErrors.more", { count: 1 }));
   });
 });

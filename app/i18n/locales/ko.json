@@ -103,7 +103,6 @@
       "allValid": "모든 운동 페이지가 유효합니다",
       "noTags": "프론트매터에 근육 태그가 없습니다",
       "title": "파일 오류",
-      "tooManyTags": "너무 많은 근육 태그가 있습니다 ({count})",
       "sharedName": "{pages}와(과) 운동 이름이 같습니다: 로그는 그중 한 곳에만 저장됩니다."
     },
     "muscleTags": {
@@ -119,8 +118,6 @@
     "protocolDistribution": {
       "clearFilter": "필터 지우기",
       "filterActive": "필터 기준:",
-      "noData": "최근 30일 동안 기록된 세트가 없습니다",
-      "subtitle": "훈련 프로토콜 상세 내역 (최근 30일)",
       "title": "프로토콜 분포"
     },
     "protocolEffectiveness": {
@@ -585,10 +582,8 @@
     "csvExercise": "CSV 운동 종목",
     "customParameters": "사용자 정의 매개변수:",
     "customTitle": "사용자 지정 제목:",
-    "dataLimit": "데이터 제한:",
     "dataType": "데이터 유형:",
     "dateRange": "날짜 범위 (일):",
-    "daysRange": "일 범위:",
     "delete": "삭제",
     "duration": "지속 시간 (초):",
     "editTag": "태그 편집",

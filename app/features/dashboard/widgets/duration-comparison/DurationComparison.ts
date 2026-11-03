@@ -9,7 +9,7 @@ import { ICONS } from "@app/constants/ui.constants";
 /**
  * Number of recent workouts to display in the comparison
  */
-const RECENT_WORKOUT_COUNT = 5;
+const DEFAULT_RECENT_WORKOUT_COUNT = 5;
 
 /** Default rest duration between sets in seconds */
 const DEFAULT_REST_BETWEEN_SETS_SECONDS = 90;
@@ -63,13 +63,14 @@ export class DurationComparison {
    * Renders the duration comparison widget
    * @param container - The container element to render in
    * @param data - Workout log data
-   * @param _params - Dashboard parameters (unused but kept for consistency)
+   * @param params - `durationRecentCount` workouts compared, with
+   * `durationRestSeconds` of rest between sets in the estimate
    * @param estimate - `setDuration`: seconds per set, from settings
    */
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
-    _params: EmbeddedDashboardParams,
+    params: EmbeddedDashboardParams,
     estimate: { setDuration: number },
   ): void {
     const widgetEl = WidgetContainer.create(container, {
@@ -83,6 +84,8 @@ export class DurationComparison {
     const sessions = this.calculateWorkoutSessions(
       data,
       estimate.setDuration,
+      params.durationRestSeconds ?? DEFAULT_REST_BETWEEN_SETS_SECONDS,
+      params.durationRecentCount ?? DEFAULT_RECENT_WORKOUT_COUNT,
     );
 
     // Check if there's enough data
@@ -98,7 +101,7 @@ export class DurationComparison {
     this.renderComparisonTable(widgetEl, sessions);
 
     // Calculate and render variance trend
-    if (sessions.length >= 2) {
+    if (sessions.length >= 2 && (params.durationShowTrend ?? true)) {
       const trend = this.calculateVarianceTrend(sessions);
       this.renderVarianceTrend(widgetEl, trend);
     }
@@ -108,11 +111,15 @@ export class DurationComparison {
    * Named sessions with a plausible duration, compared with their estimate
    * @param data - Workout log data
    * @param setDuration - Estimated seconds per set
+   * @param restSeconds - Estimated rest between two sets
+   * @param recentCount - How many of the latest workouts to keep
    * @returns Array of workout sessions with duration data
    */
   private static calculateWorkoutSessions(
     data: WorkoutLogData[],
     setDuration: number,
+    restSeconds: number,
+    recentCount: number,
   ): WorkoutSession[] {
     const sessions: WorkoutSession[] = [];
 
@@ -124,11 +131,11 @@ export class DurationComparison {
       const actualDuration = session.duration;
 
       // Calculate estimated duration
-      // Estimate: setCount * setDuration + (setCount - 1) * 90 seconds rest between sets
+      // Estimate: setCount * setDuration + (setCount - 1) * rest between sets
       const setCount = session.sets.length;
       const estimatedDuration =
         setCount * setDuration +
-        Math.max(0, setCount - 1) * DEFAULT_REST_BETWEEN_SETS_SECONDS;
+        Math.max(0, setCount - 1) * restSeconds;
 
       // Calculate variance percentage
       const variancePercent =
@@ -153,7 +160,7 @@ export class DurationComparison {
     // Sort by start timestamp descending (most recent first) and take top N
     return sessions
       .sort((a, b) => b.startTimestamp - a.startTimestamp)
-      .slice(0, RECENT_WORKOUT_COUNT);
+      .slice(0, recentCount);
   }
 
   /**

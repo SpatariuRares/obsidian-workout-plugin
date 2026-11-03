@@ -103,7 +103,6 @@
       "allValid": "Toutes les pages d'exercices sont valides",
       "noTags": "Aucun tag musculaire dans le frontmatter",
       "title": "Erreurs de fichier",
-      "tooManyTags": "Trop de tags musculaires ({count})",
       "sharedName": "Même nom d'exercice que {pages} : les entrées de journal ne vont que dans l'une d'elles."
     },
     "muscleTags": {
@@ -119,8 +118,6 @@
     "protocolDistribution": {
       "clearFilter": "Effacer le filtre",
       "filterActive": "Filtré par",
-      "noData": "Aucune série enregistrée ces 30 derniers jours",
-      "subtitle": "Répartition des protocoles d'entraînement (30 derniers jours)",
       "title": "Répartition des protocoles"
     },
     "protocolEffectiveness": {
@@ -585,10 +582,8 @@
     "csvExercise": "Exercice CSV",
     "customParameters": "Paramètres personnalisés :",
     "customTitle": "Titre personnalisé :",
-    "dataLimit": "Limite de données :",
     "dataType": "Type de données :",
     "dateRange": "Période (en jours) :",
-    "daysRange": "Plage (en jours) :",
     "delete": "Supprimer",
     "duration": "Durée (en secondes) :",
     "editTag": "Modifier le tag",

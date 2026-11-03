@@ -103,7 +103,6 @@
       "allValid": "すべてのエクササイズページは有効です",
       "noTags": "フロントマターに筋肉タグがありません",
       "title": "ファイルのエラー",
-      "tooManyTags": "筋肉タグが多すぎます（{count}）",
       "sharedName": "{pages} と同じエクササイズの名前: ログは、そのうちのいずれか1つにのみ保存されます"
     },
     "muscleTags": {
@@ -119,8 +118,6 @@
     "protocolDistribution": {
       "clearFilter": "フィルターを解除",
       "filterActive": "絞り込み中",
-      "noData": "過去30日間に記録されたセットはありません",
-      "subtitle": "トレーニングプロトコルの詳細（過去30日間）",
       "title": "プロトコル配分"
     },
     "protocolEffectiveness": {
@@ -585,10 +582,8 @@
     "csvExercise": "CSVのエクササイズ",
     "customParameters": "カスタムパラメータ：",
     "customTitle": "カスタムタイトル:",
-    "dataLimit": "データ制限:",
     "dataType": "データ型:",
     "dateRange": "日付範囲（日数）：",
-    "daysRange": "日数範囲:",
     "delete": "削除",
     "duration": "時間（秒）：",
     "editTag": "タグを編集",

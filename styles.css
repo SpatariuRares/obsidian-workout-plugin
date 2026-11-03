@@ -3450,6 +3450,17 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
     margin-bottom: var(--workout-space-md);
   }
 }
+/* A widget without a title row: its kebab sits in the top corner */
+.workout-dashboard-widget {
+  position: relative;
+}
+
+.workout-widget-menu-corner {
+  position: absolute;
+  top: var(--workout-space-sm);
+  right: var(--workout-space-sm);
+}
+
 /* ============================================================================
    WORKOUT CHARTS PLUGIN - STYLES
    Modern styles using Obsidian CSS Variables
@@ -3886,6 +3897,38 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   color: var(--text-muted);
   font-size: var(--workout-font-sm);
   line-height: 1.5;
+}
+
+/* Grouped by muscle: a flex of cards, one per muscle, each holding a flex of
+   tag cards */
+.workout-muscle-group-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--workout-space-md);
+  margin-bottom: var(--workout-space-lg);
+}
+
+.workout-muscle-group-card {
+  /* Grows to share the row, wraps when narrower than its basis */
+  flex: 1 1 var(--workout-widget-min-width, 280px);
+  min-width: 0;
+  padding: var(--workout-space-md);
+  background: var(--background-primary);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
+  border-radius: var(--workout-radius-lg);
+}
+
+.workout-muscle-group-title {
+  margin: 0 0 var(--workout-space-sm);
+  color: var(--text-normal);
+  font-size: var(--workout-font-base);
+  font-weight: var(--workout-font-weight-semibold);
+}
+
+.workout-muscle-group-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--workout-space-sm);
 }
 
 .workout-muscle-tags-grid {

@@ -34,11 +34,14 @@ interface ProtocolDistributionOptions {
   onFilterChange?: ProtocolFilterCallback;
   /** The protocol the dashboard is filtered by, if any */
   activeFilter?: string | null;
+  /** Days counted, back from today */
+  days?: number;
+  chartType?: "pie" | "doughnut";
 }
 
 /**
  * Widget for displaying protocol usage distribution in the dashboard.
- * Shows a pie chart with protocol usage for the last 30 days.
+ * Shows a pie chart with protocol usage for the last `days` days (30 by default).
  * Supports click filtering to filter dashboard by protocol.
  */
 export class ProtocolDistribution {
@@ -55,18 +58,18 @@ export class ProtocolDistribution {
     plugin: SettingsPort | undefined,
     options: ProtocolDistributionOptions,
   ): void {
+    const days = options.days ?? 30;
     const onFilterChange = (protocol: string | null) =>
       options.onFilterChange?.(protocol);
 
     const widgetEl = WidgetContainer.create(container, {
       title: t("dashboard.protocolDistribution.title"),
-      subtitle: t("dashboard.protocolDistribution.subtitle"),
+      subtitle: t("dashboard.protocolDistribution.subtitle", { days }),
       className: "workout-protocol-distribution",
       isWide: true,
     });
 
-    // Filter data for last 30 days
-    const filteredData = DateUtils.filterByDaysAgo(data, 30);
+    const filteredData = DateUtils.filterByDaysAgo(data, days);
 
     // Calculate protocol statistics
     const stats = this.calculateProtocolStats(filteredData, plugin);
@@ -74,7 +77,7 @@ export class ProtocolDistribution {
     // Check if there's any data
     if (stats.length === 0 || stats.every((s) => s.count === 0)) {
       widgetEl.createDiv({
-        text: t("dashboard.protocolDistribution.noData"),
+        text: t("dashboard.protocolDistribution.noData", { days }),
         cls: "workout-protocol-no-data",
       });
       return;
@@ -103,6 +106,7 @@ export class ProtocolDistribution {
       options.chartId,
       onFilterChange,
       activeFilter,
+      options.chartType,
     );
 
     // Render legend with counts and percentages (clickable)
@@ -183,6 +187,7 @@ export class ProtocolDistribution {
     chartId: string,
     onFilterChange: ProtocolFilterCallback,
     activeFilter?: string | null,
+    chartType: "pie" | "doughnut" = "pie",
   ): void {
     const canvas = Canvas.create(container, {
       className: "workout-protocol-chart-canvas",
@@ -210,7 +215,7 @@ export class ProtocolDistribution {
     });
 
     const config: ChartConfiguration = {
-      type: "pie",
+      type: chartType,
       data: {
         labels: stats.map((s) => s.label),
         datasets: [

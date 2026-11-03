@@ -63,12 +63,17 @@ export class VolumeAnalytics {
       },
     );
 
+    if (params.volumeShowBreakdown === false) return;
+
     // Volume by muscle group breakdown
     const muscleGroupEl = analyticsEl.createDiv({
       cls: "workout-muscle-group-breakdown",
     });
 
-    const muscleGroupData = calculateMuscleGroupVolume(data);
+    const muscleGroupData = calculateMuscleGroupVolume(
+      data,
+      params.volumeTopLimit,
+    );
     this.renderMuscleGroupBreakdown(muscleGroupEl, muscleGroupData);
   }
 

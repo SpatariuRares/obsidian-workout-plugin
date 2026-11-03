@@ -103,7 +103,6 @@
       "allValid": "Alle øvelsessider er gyldige",
       "noTags": "Ingen muskeltagger i frontmatter",
       "title": "Filfeil",
-      "tooManyTags": "For mange muskeltagger ({count})",
       "sharedName": "Samme øvelsesnavn som {pages}: loggene går bare til én av dem."
     },
     "muscleTags": {
@@ -119,8 +118,6 @@
     "protocolDistribution": {
       "clearFilter": "Fjern filter",
       "filterActive": "Filtrert etter",
-      "noData": "Ingen sett logget de siste 30 dagene",
-      "subtitle": "Oversikt over fordelingen av treningsprotokoller (de siste 30 dagene)",
       "title": "Fordeling av protokoller"
     },
     "protocolEffectiveness": {
@@ -585,10 +582,8 @@
     "csvExercise": "CSV-øvelse",
     "customParameters": "Tilpassede parametere:",
     "customTitle": "Tilpasset tittel:",
-    "dataLimit": "Datagrense:",
     "dataType": "Datatype:",
     "dateRange": "Datointervall (dager):",
-    "daysRange": "Antall dager:",
     "delete": "Slett",
     "duration": "Varighet (sekunder):",
     "editTag": "Rediger tag",

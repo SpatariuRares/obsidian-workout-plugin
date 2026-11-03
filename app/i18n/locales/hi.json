@@ -103,7 +103,6 @@
       "allValid": "सभी व्यायाम पृष्ठ मान्य हैं",
       "noTags": "फ्रंटमैटर में कोई मांसपेशी टैग नहीं है",
       "title": "फ़ाइल त्रुटियाँ",
-      "tooManyTags": "बहुत अधिक मांसपेशी टैग ({count})",
       "sharedName": "{pages} का भी यही व्यायाम नाम है: लॉग इनमें से केवल एक में जाएँगे"
     },
     "muscleTags": {
@@ -119,8 +118,6 @@
     "protocolDistribution": {
       "clearFilter": "फ़िल्टर हटाएँ",
       "filterActive": "इसके अनुसार फ़िल्टर किया गया",
-      "noData": "पिछले 30 दिनों में कोई सेट दर्ज नहीं हुआ",
-      "subtitle": "प्रशिक्षण प्रोटोकॉल का विवरण (अंतिम 30 दिन)",
       "title": "प्रोटोकॉल वितरण"
     },
     "protocolEffectiveness": {
@@ -585,10 +582,8 @@
     "csvExercise": "CSV व्यायाम",
     "customParameters": "कस्टम पैरामीटर:",
     "customTitle": "कस्टम शीर्षक:",
-    "dataLimit": "डेटा सीमा:",
     "dataType": "डेटा प्रकार:",
     "dateRange": "तारीख सीमा (दिन):",
-    "daysRange": "दिनों की सीमा:",
     "delete": "हटाएं",
     "duration": "अवधि (सेकंड):",
     "editTag": "टैग संपादित करें",

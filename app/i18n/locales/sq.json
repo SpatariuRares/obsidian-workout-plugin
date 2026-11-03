@@ -103,7 +103,6 @@
       "allValid": "Të gjitha faqet e ushtrimeve janë të vlefshme",
       "noTags": "Nuk ka etiketa muskujsh në frontmatter",
       "title": "Gabime në skedarë",
-      "tooManyTags": "Shumë etiketa muskujsh ({count})",
       "sharedName": "Emri i ushtrimit është i njëjtë me {pages}: regjistrimet shkojnë vetëm në një prej tyre."
     },
     "muscleTags": {
@@ -119,8 +118,6 @@
     "protocolDistribution": {
       "clearFilter": "Pastro filtrin",
       "filterActive": "Filtruar sipas",
-      "noData": "Asnjë seri e regjistruar në 30 ditët e fundit",
-      "subtitle": "Ndarja sipas protokolleve të stërvitjes (30 ditët e fundit)",
       "title": "Shpërndarja e protokolleve"
     },
     "protocolEffectiveness": {
@@ -585,10 +582,8 @@
     "csvExercise": "Ushtrim CSV",
     "customParameters": "Parametrat e personalizuar:",
     "customTitle": "Titull i personalizuar:",
-    "dataLimit": "Kufiri i të dhënave:",
     "dataType": "Tip i të dhënave:",
     "dateRange": "Intervali i datave (ditë):",
-    "daysRange": "Intervali i ditëve:",
     "delete": "Fshi",
     "duration": "Kohëzgjatja (sekonda):",
     "editTag": "Redakto etiketën",

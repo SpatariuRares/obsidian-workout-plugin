@@ -103,7 +103,6 @@
       "allValid": "Semua halaman latihan valid",
       "noTags": "Tidak ada tag otot di frontmatter",
       "title": "Kesalahan pada file",
-      "tooManyTags": "Terlalu banyak tag otot ({count})",
       "sharedName": "Nama latihan sama dengan {pages}: log hanya masuk ke salah satunya."
     },
     "muscleTags": {
@@ -119,8 +118,6 @@
     "protocolDistribution": {
       "clearFilter": "Hapus filter",
       "filterActive": "Difilter berdasarkan",
-      "noData": "Tidak ada set yang dicatat dalam 30 hari terakhir",
-      "subtitle": "Rincian protokol pelatihan (30 hari terakhir)",
       "title": "Distribusi protokol"
     },
     "protocolEffectiveness": {
@@ -585,10 +582,8 @@
     "csvExercise": "Latihan di CSV",
     "customParameters": "Parameter khusus:",
     "customTitle": "Judul khusus:",
-    "dataLimit": "Batas data:",
     "dataType": "Tipe data:",
     "dateRange": "Rentang tanggal (hari):",
-    "daysRange": "Rentang hari:",
     "delete": "Hapus",
     "duration": "Durasi (detik):",
     "editTag": "Sunting tag",

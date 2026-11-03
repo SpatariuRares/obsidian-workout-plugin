@@ -95,6 +95,17 @@ describe("ProtocolEffectiveness", () => {
       ).not.toBeNull();
     });
 
+    it("compares a protocol with fewer sets when the block lowers the minimum", () => {
+      const container = createObsidianContainer();
+      ProtocolEffectiveness.render(
+        container,
+        series("Squat", [100, 100, 100, 100], [1, 1, 1, 1], "drop_set"),
+        { protocolMinEntries: 4 },
+      );
+
+      expect(rows(container)).toHaveLength(1);
+    });
+
     it("still shows a protocol whose custom definition was deleted, by its id", () => {
       const data = series("Squat", [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], "mystery");
       expect(render(data, pluginWith([])).textContent).toContain("mystery");
@@ -119,6 +130,25 @@ describe("ProtocolEffectiveness", () => {
         c.querySelector(".workout-protocol-effectiveness-disclaimer")
           ?.textContent,
       ).toBe(t("dashboard.protocolEffectiveness.disclaimer"));
+    });
+
+    it("orders the rows by the figure the block asks for", () => {
+      const data = [
+        ...series("Squat", [100, 100, 100, 100, 100], [1, 1, 1, 1, 1], "drop_set"),
+        ...series(
+          "Curl",
+          [10, 10, 10, 10, 10, 10, 10],
+          [1, 1, 1, 1, 1, 1, 1],
+          "rest_pause",
+          10,
+        ),
+      ];
+      const container = createObsidianContainer();
+      ProtocolEffectiveness.render(container, data, {
+        protocolSortBy: "entryCount",
+      });
+
+      expect(rows(container).map(entries)).toEqual(["7", "5"]);
     });
 
     it("should render a coloured badge for built-in protocols", () => {

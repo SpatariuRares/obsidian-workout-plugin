@@ -103,7 +103,6 @@
       "allValid": "Tüm egzersiz sayfaları geçerli",
       "noTags": "Frontmatter'da kas etiketi yok",
       "title": "Dosya hataları",
-      "tooManyTags": "Çok fazla kas etiketi ({count})",
       "sharedName": "{pages} ile aynı egzersiz adı: kayıtlar bunlardan yalnızca birine gider."
     },
     "muscleTags": {
@@ -119,8 +118,6 @@
     "protocolDistribution": {
       "clearFilter": "Filtreyi temizle",
       "filterActive": "Şuna göre filtrelendi:",
-      "noData": "Son 30 günde kaydedilmiş set yok",
-      "subtitle": "Antrenman protokolü dağılımı (son 30 gün)",
       "title": "Protokol dağılımı"
     },
     "protocolEffectiveness": {
@@ -585,10 +582,8 @@
     "csvExercise": "CSV egzersizi",
     "customParameters": "Özel parametreler:",
     "customTitle": "Özel başlık:",
-    "dataLimit": "Veri limiti:",
     "dataType": "Veri türü:",
     "dateRange": "Tarih aralığı (gün):",
-    "daysRange": "Gün aralığı:",
     "delete": "Sil",
     "duration": "Süre (saniye):",
     "editTag": "Etiket düzenle",

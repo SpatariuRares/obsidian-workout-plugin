@@ -1,6 +1,9 @@
 import { getUnitsMap } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
+import {
+  EmbeddedDashboardParams,
+  SUMMARY_METRIC_IDS,
+} from "@app/features/dashboard/types";
 import { calculateSummaryMetrics } from "@app/features/dashboard/widgets/summary/business/calculateSummaryMetrics";
 import { DashboardCard } from "@app/components/molecules";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
@@ -12,7 +15,7 @@ export class SummaryWidget {
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
-    _params: EmbeddedDashboardParams,
+    params: EmbeddedDashboardParams,
     /** Every logged set, so records are judged against all of them */
     history: WorkoutLogData[] = data,
     /** Training days a week that keep the streak */
@@ -33,35 +36,45 @@ export class SummaryWidget {
       weeklyGoal,
     );
 
-    this.createSummaryCard(
-      summaryEl,
-      t("dashboard.summary.totalWorkouts"),
-      metrics.totalWorkouts.toString(),
-      ICONS.METRICS.WORKOUTS,
-    );
+    const shown = params.summaryMetrics ?? SUMMARY_METRIC_IDS;
 
-    this.createSummaryCard(
-      summaryEl,
-      t("dashboard.summary.currentStreak"),
-      t("dashboard.summary.currentStreakSuffix", {
-        count: metrics.currentStreak,
-      }),
-      ICONS.METRICS.STREAK,
-    );
+    if (shown.includes("workouts")) {
+      this.createSummaryCard(
+        summaryEl,
+        t("dashboard.summary.totalWorkouts"),
+        metrics.totalWorkouts.toString(),
+        ICONS.METRICS.WORKOUTS,
+      );
+    }
 
-    this.createSummaryCard(
-      summaryEl,
-      t("dashboard.summary.totalVolume"),
-      `${FormatUtils.formatNumber(metrics.totalVolume)} ${getUnitsMap()["volume"]}`,
-      ICONS.METRICS.TOTAL_VOLUME,
-    );
+    if (shown.includes("streak")) {
+      this.createSummaryCard(
+        summaryEl,
+        t("dashboard.summary.currentStreak"),
+        t("dashboard.summary.currentStreakSuffix", {
+          count: metrics.currentStreak,
+        }),
+        ICONS.METRICS.STREAK,
+      );
+    }
 
-    this.createSummaryCard(
-      summaryEl,
-      t("dashboard.summary.personalRecords"),
-      metrics.personalRecords.toString(),
-      ICONS.METRICS.RECORDS,
-    );
+    if (shown.includes("volume")) {
+      this.createSummaryCard(
+        summaryEl,
+        t("dashboard.summary.totalVolume"),
+        `${FormatUtils.formatNumber(metrics.totalVolume)} ${getUnitsMap()["volume"]}`,
+        ICONS.METRICS.TOTAL_VOLUME,
+      );
+    }
+
+    if (shown.includes("records")) {
+      this.createSummaryCard(
+        summaryEl,
+        t("dashboard.summary.personalRecords"),
+        metrics.personalRecords.toString(),
+        ICONS.METRICS.RECORDS,
+      );
+    }
   }
 
   private static createSummaryCard(

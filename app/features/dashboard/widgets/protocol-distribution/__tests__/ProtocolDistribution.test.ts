@@ -44,6 +44,38 @@ describe("ProtocolDistribution", () => {
     (ChartRenderer.renderConfiguredChart as jest.Mock).mockClear();
   });
 
+  it("counts the days the block asks for and says so", () => {
+    const container = createObsidianContainer();
+    const tenDaysAgo = new Date(Date.now() - 10 * 86_400_000).toISOString();
+
+    ProtocolDistribution.render(
+      container,
+      [{ ...logs[0], date: tenDaysAgo }],
+      undefined,
+      { chartId: "protocol-distribution-a", days: 7 },
+    );
+
+    expect(container.textContent).toContain(
+      t("dashboard.protocolDistribution.noData", { days: 7 }),
+    );
+    expect(container.textContent).toContain(
+      t("dashboard.protocolDistribution.subtitle", { days: 7 }),
+    );
+  });
+
+  it("draws a doughnut when the block asks for one", () => {
+    ProtocolDistribution.render(createObsidianContainer(), logs, undefined, {
+      chartId: "protocol-distribution-a",
+      chartType: "doughnut",
+    });
+
+    expect(ChartRenderer.renderConfiguredChart).toHaveBeenCalledWith(
+      "protocol-distribution-a",
+      expect.any(HTMLCanvasElement),
+      expect.objectContaining({ type: "doughnut" }),
+    );
+  });
+
   it("renders the pie chart through ChartRenderer with the dashboard's chart id", () => {
     ProtocolDistribution.render(
       createObsidianContainer(),

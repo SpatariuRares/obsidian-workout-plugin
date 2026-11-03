@@ -65,35 +65,50 @@ export function createEditButtons<P extends { id?: string }>(
   Button.onClick(cancelBtn, () => modal.close());
 
   Button.onClick(updateBtn, () => {
-    const { id, target } = options;
-    const match: CodeBlockMatch | undefined = id
-      ? { id }
-      : target.matchWithoutId;
-    if (!match) {
-      new Notice(options.failureMessage);
-      modal.close();
-      return;
-    }
-
     const formNow = options.collectParams();
     const changes = changedParams(formAtOpen, formNow);
-    for (const key of target.invalidKeys ?? []) {
+    for (const key of options.target.invalidKeys ?? []) {
       changes[key as keyof P] = formNow[key as keyof P];
     }
     for (const key of options.retiredParams ?? []) changes[key] = undefined as P[keyof P];
-    // A block found by its body gets an id, so the next edit finds it by id
-    if ("body" in match) changes.id = generateCodeBlockId();
-
-    void CodeBlockEditorService.patchCodeBlock(
-      modal.app,
-      options.schema,
-      target.sourcePath,
-      match,
-      changes,
-    ).then((success) => {
-      new Notice(success ? options.successMessage : options.failureMessage);
-    });
-
-    modal.close();
+    applyBlockEdit(modal, options, changes);
   });
+}
+
+/**
+ * Writes `changes` into the block and closes the modal, with the notice for
+ * the outcome. The block is found by its id or, without one, by its body
+ * (and gets an id, so the next edit finds it by id).
+ */
+export function applyBlockEdit<P extends { id?: string }>(
+  modal: Modal,
+  options: Pick<
+    EditButtonsOptions<P>,
+    "schema" | "target" | "id" | "successMessage" | "failureMessage"
+  >,
+  changes: P,
+): void {
+  const { id, target } = options;
+  const match: CodeBlockMatch | undefined = id
+    ? { id }
+    : target.matchWithoutId;
+  if (!match) {
+    new Notice(options.failureMessage);
+    modal.close();
+    return;
+  }
+
+  if ("body" in match) changes.id = generateCodeBlockId();
+
+  void CodeBlockEditorService.patchCodeBlock(
+    modal.app,
+    options.schema,
+    target.sourcePath,
+    match,
+    changes,
+  ).then((success) => {
+    new Notice(success ? options.successMessage : options.failureMessage);
+  });
+
+  modal.close();
 }

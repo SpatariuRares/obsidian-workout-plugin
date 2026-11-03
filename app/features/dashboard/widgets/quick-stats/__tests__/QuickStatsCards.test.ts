@@ -48,4 +48,19 @@ describe("QuickStatsCards", () => {
     expect(rows[1].values).toEqual(["1,000", "4,000", "15,000"]);
     expect(rows[2].values).toEqual(["1,000", "2,000", "5,000"]);
   });
+
+  it("shows only the periods and rows the block lists", () => {
+    const container = createObsidianContainer();
+
+    QuickStatsCards.render(container, [set(1, 1000, "Leg day")], {
+      quickStatsPeriods: ["week", "year"],
+      quickStatsMetrics: ["workouts"],
+    });
+
+    const table = container.querySelector("table.workout-quick-stats-table")!;
+    expect(
+      [...table.querySelectorAll("thead th")].map((th) => th.textContent),
+    ).toEqual([t("dashboard.quickStats.week"), t("dashboard.quickStats.year")]);
+    expect(table.querySelectorAll("tbody tr")).toHaveLength(1);
+  });
 });

@@ -1,4 +1,7 @@
-import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
+import {
+  EmbeddedDashboardParams,
+  QUICK_ACTION_IDS,
+} from "@app/features/dashboard/types";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
@@ -19,33 +22,39 @@ export class QuickActions {
     const buttonsEl = Button.createContainer(actionsEl);
     buttonsEl.addClass("workout-action-buttons");
 
-    // Add workout log button
-    const addLogBtn = Button.create(buttonsEl, {
-      text: t("dashboard.quickActions.addWorkoutLog"),
-      variant: BUTTONVARIANT.PRIMARY,
-      ariaLabel: t("dashboard.quickActions.addWorkoutLog"),
-    });
+    const shown = params.quickActionsShown ?? QUICK_ACTION_IDS;
 
-    Button.onClick(addLogBtn, () => {
-      plugin.createLogModalHandler.openModal();
-    });
+    // Add workout log button
+    if (shown.includes("addLog")) {
+      const addLogBtn = Button.create(buttonsEl, {
+        text: t("dashboard.quickActions.addWorkoutLog"),
+        variant: BUTTONVARIANT.PRIMARY,
+        ariaLabel: t("dashboard.quickActions.addWorkoutLog"),
+      });
+
+      Button.onClick(addLogBtn, () => {
+        plugin.createLogModalHandler.openModal();
+      });
+    }
 
     // View all exercises button
-    const viewExercisesBtn = Button.create(buttonsEl, {
-      text: t("dashboard.quickActions.viewExercises"),
-      variant: BUTTONVARIANT.SECONDARY,
-      ariaLabel: t("dashboard.quickActions.viewExercises"),
-    });
+    if (shown.includes("viewExercises")) {
+      const viewExercisesBtn = Button.create(buttonsEl, {
+        text: t("dashboard.quickActions.viewExercises"),
+        variant: BUTTONVARIANT.SECONDARY,
+        ariaLabel: t("dashboard.quickActions.viewExercises"),
+      });
 
-    Button.onClick(viewExercisesBtn, () => {
-      // Navigate to exercises folder
-      if (plugin.app.workspace.getActiveFile()) {
-        plugin.app.workspace
-          .openLinkText(plugin.settings.exerciseFolderPath, "", false)
-          .catch(() => {
-            // Silent fail - failed to open exercises folder
-          });
-      }
-    });
+      Button.onClick(viewExercisesBtn, () => {
+        // Navigate to exercises folder
+        if (plugin.app.workspace.getActiveFile()) {
+          plugin.app.workspace
+            .openLinkText(plugin.settings.exerciseFolderPath, "", false)
+            .catch(() => {
+              // Silent fail - failed to open exercises folder
+            });
+        }
+      });
+    }
   }
 }

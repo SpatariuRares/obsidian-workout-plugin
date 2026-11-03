@@ -103,7 +103,6 @@
       "allValid": "所有训练页面均有效",
       "noTags": "属性中没有肌肉标签",
       "title": "文件错误",
-      "tooManyTags": "肌肉标签过多（{count}）",
       "sharedName": "与 {pages} 的训练动作名称相同：记录只会归入其中一个页面。"
     },
     "muscleTags": {
@@ -119,8 +118,6 @@
     "protocolDistribution": {
       "clearFilter": "清除筛选",
       "filterActive": "筛选条件：",
-      "noData": "最近 30 天没有记录任何组",
-      "subtitle": "训练方案细分（最近30天）",
       "title": "训练方案分布"
     },
     "protocolEffectiveness": {
@@ -585,10 +582,8 @@
     "csvExercise": "CSV 训练动作",
     "customParameters": "自定义参数：",
     "customTitle": "自定义标题：",
-    "dataLimit": "数据限制：",
     "dataType": "数据类型：",
     "dateRange": "日期范围（天）：",
-    "daysRange": "日期范围：",
     "delete": "删除",
     "duration": "时长（秒）：",
     "editTag": "编辑标签",

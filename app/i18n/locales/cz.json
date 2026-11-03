@@ -103,7 +103,6 @@
       "allValid": "Všechny stránky cvičení jsou v pořádku",
       "noTags": "Ve frontmatteru nejsou žádné štítky svalů",
       "title": "Chyby související se soubory",
-      "tooManyTags": "Příliš mnoho štítků svalů ({count})",
       "sharedName": "Stejný název cvičení jako {pages}: záznamy se ukládají pouze do jednoho z nich"
     },
     "muscleTags": {
@@ -119,8 +118,6 @@
     "protocolDistribution": {
       "clearFilter": "Zrušit filtr",
       "filterActive": "Filtrováno podle",
-      "noData": "Za posledních 30 dní nejsou zaznamenány žádné série",
-      "subtitle": "Rozdělení podle tréninkových protokolů (posledních 30 dní)",
       "title": "Rozdělení protokolů"
     },
     "protocolEffectiveness": {
@@ -585,10 +582,8 @@
     "csvExercise": "CSV cvičení",
     "customParameters": "Vlastní parametry:",
     "customTitle": "Vlastní název:",
-    "dataLimit": "Limit dat:",
     "dataType": "Datový typ:",
     "dateRange": "Období (dny):",
-    "daysRange": "Rozsah dní:",
     "delete": "Smazat",
     "duration": "Doba (sekundy):",
     "editTag": "Upravit štítek",

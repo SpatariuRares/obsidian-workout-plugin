@@ -18,6 +18,36 @@ export const DASHBOARD_WIDGET_IDS = [
 ] as const;
 export type DashboardWidgetId = (typeof DASHBOARD_WIDGET_IDS)[number];
 
+/** The periods the quick stats table can show, shortest first */
+export const QUICK_STATS_PERIOD_IDS = ["week", "month", "year"] as const;
+/** The rows the quick stats table can show */
+export const QUICK_STATS_METRIC_IDS = [
+  "workouts",
+  "volume",
+  "avgVolume",
+] as const;
+/** The cards of the summary widget */
+export const SUMMARY_METRIC_IDS = [
+  "workouts",
+  "streak",
+  "volume",
+  "records",
+] as const;
+/** The buttons of the quick actions widget */
+export const QUICK_ACTION_IDS = ["addLog", "viewExercises"] as const;
+/** How the protocol distribution is drawn */
+export const PROTOCOL_CHART_TYPES = ["pie", "doughnut"] as const;
+/** What the protocol effectiveness table is ordered by, best first */
+export const PROTOCOL_SORTS = [
+  "progressionRate",
+  "avgVolumeChange",
+  "entryCount",
+] as const;
+/** What the heat map's toggles can start on */
+export const HEAT_MAP_TIME_FRAMES = ["week", "month", "year"] as const;
+export const HEAT_MAP_METRICS = ["volume", "sets", "reps"] as const;
+export const HEAT_MAP_VIEWS = ["front", "back"] as const;
+
 /** Parameters of a `workout-dashboard` block; the schema is in dashboardBlock.ts */
 export type EmbeddedDashboardParams = BlockParams<
   typeof dashboardBlock

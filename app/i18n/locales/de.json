@@ -103,7 +103,6 @@
       "allValid": "Alle Übungsseiten sind gültig",
       "noTags": "Keine Muskel-Tags im Frontmatter",
       "title": "Dateifehler",
-      "tooManyTags": "Zu viele Muskel-Tags ({count})",
       "sharedName": "Gleicher Übungsname wie {pages}: Protokolle landen nur bei einer von ihnen."
     },
     "muscleTags": {
@@ -119,8 +118,6 @@
     "protocolDistribution": {
       "clearFilter": "Filter entfernen",
       "filterActive": "Gefiltert nach",
-      "noData": "Keine Sätze in den letzten 30 Tagen erfasst",
-      "subtitle": "Aufschlüsselung der Trainingsprotokolle (letzte 30 Tage)",
       "title": "Verteilung der Protokolle"
     },
     "protocolEffectiveness": {
@@ -585,10 +582,8 @@
     "csvExercise": "CSV-Übung",
     "customParameters": "Benutzerdefinierte Parameter:",
     "customTitle": "Benutzerdefinierter Titel:",
-    "dataLimit": "Datenbegrenzung:",
     "dataType": "Datentyp:",
     "dateRange": "Zeitraum (Tage):",
-    "daysRange": "Tagebereich:",
     "delete": "Löschen",
     "duration": "Dauer (Sekunden):",
     "editTag": "Tag bearbeiten",

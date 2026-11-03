@@ -1,5 +1,9 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
+import {
+  EmbeddedDashboardParams,
+  QUICK_STATS_METRIC_IDS,
+  QUICK_STATS_PERIOD_IDS,
+} from "@app/features/dashboard/types";
 import {
   calculatePeriodStats,
   PeriodStats,
@@ -20,39 +24,58 @@ export class QuickStatsCards {
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
-    _params: EmbeddedDashboardParams,
+    params: EmbeddedDashboardParams,
   ): void {
     const cardsEl = WidgetContainer.create(container, {
       title: t("dashboard.quickStats.title"),
       className: "workout-stats-cards",
     });
 
-    const periods = [
-      { label: t("dashboard.quickStats.week"), stats: calculatePeriodStats(data, 7) },
-      { label: t("dashboard.quickStats.month"), stats: calculatePeriodStats(data, 30) },
-      { label: t("dashboard.quickStats.year"), stats: calculatePeriodStats(data, 365) },
+    const shownPeriods = params.quickStatsPeriods ?? QUICK_STATS_PERIOD_IDS;
+    const shownMetrics = params.quickStatsMetrics ?? QUICK_STATS_METRIC_IDS;
+    const allPeriods: {
+      id: (typeof QUICK_STATS_PERIOD_IDS)[number];
+      label: string;
+      days: number;
+    }[] = [
+      { id: "week", label: t("dashboard.quickStats.week"), days: 7 },
+      { id: "month", label: t("dashboard.quickStats.month"), days: 30 },
+      { id: "year", label: t("dashboard.quickStats.year"), days: 365 },
     ];
-    const metrics: {
+    const periods = allPeriods
+      .filter((period) => shownPeriods.includes(period.id))
+      .map(({ label, days }) => ({
+        label,
+        stats: calculatePeriodStats(data, days),
+      }));
+    const allMetrics: {
+      id: (typeof QUICK_STATS_METRIC_IDS)[number];
       icon: string;
       label: string;
       value: (stats: PeriodStats) => number;
     }[] = [
       {
+        id: "workouts",
         icon: ICONS.METRICS.WORKOUTS,
         label: t("dashboard.quickStats.workouts"),
         value: (stats) => stats.workouts,
       },
       {
+        id: "volume",
         icon: ICONS.METRICS.TOTAL_VOLUME,
         label: CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_VOLUME,
         value: (stats) => stats.volume,
       },
       {
+        id: "avgVolume",
         icon: ICONS.METRICS.VOLUME,
         label: CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_VOLUME,
         value: (stats) => stats.avgVolume,
       },
     ];
+    const metrics = allMetrics.filter((metric) =>
+      shownMetrics.includes(metric.id),
+    );
 
     const table = cardsEl.createEl("table", {
       cls: "workout-quick-stats-table",

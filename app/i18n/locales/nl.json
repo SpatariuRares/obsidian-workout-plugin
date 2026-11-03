@@ -103,7 +103,6 @@
       "allValid": "Alle oefenpagina's zijn geldig",
       "noTags": "Geen spierlabels in de frontmatter",
       "title": "Foutmeldingen bij bestanden",
-      "tooManyTags": "Te veel spierlabels ({count})",
       "sharedName": "Dezelfde oefeningsnaam als {pages}: logs gaan naar maar één van hen"
     },
     "muscleTags": {
@@ -119,8 +118,6 @@
     "protocolDistribution": {
       "clearFilter": "Filter wissen",
       "filterActive": "Gefilterd op",
-      "noData": "Geen series gelogd in de afgelopen 30 dagen",
-      "subtitle": "Overzicht van de trainingsprotocollen (laatste 30 dagen)",
       "title": "Verdeling van protocollen"
     },
     "protocolEffectiveness": {
@@ -585,10 +582,8 @@
     "csvExercise": "Oefening met CSV",
     "customParameters": "Aangepaste parameters:",
     "customTitle": "Aangepaste titel:",
-    "dataLimit": "Gegevenslimiet:",
     "dataType": "Type gegevens:",
     "dateRange": "Datumbereik (dagen):",
-    "daysRange": "Aantal dagen:",
     "delete": "Verwijderen",
     "duration": "Duur (seconden):",
     "editTag": "Label bewerken",

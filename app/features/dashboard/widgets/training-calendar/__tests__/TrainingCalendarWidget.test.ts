@@ -16,13 +16,18 @@ const set = (date: string): WorkoutLogData => ({
 // Wednesday 17 January 2024, local time
 const today = new Date(2024, 0, 17, 12, 0);
 
-function render(history: WorkoutLogData[], weeklyGoal: number) {
+function render(
+  history: WorkoutLogData[],
+  weeklyGoal: number,
+  weeks?: number,
+) {
   const container = createObsidianContainer();
   TrainingCalendarWidget.render(
     container,
     history,
     weeklyGoal,
     today,
+    { weeks },
   );
   return container;
 }
@@ -40,6 +45,14 @@ describe("TrainingCalendarWidget", () => {
       grid?.querySelectorAll(".workout-calendar-level-4"),
     ).toHaveLength(2);
     expect(grid?.querySelectorAll(".is-future")).toHaveLength(4);
+  });
+
+  it("should draw only the weeks asked for", () => {
+    const container = render([], 1, 13);
+
+    expect(
+      container.querySelector(".workout-calendar-grid")?.children,
+    ).toHaveLength(13 * 7);
   });
 
   it("should put the current week first, so a narrow grid starts at it", () => {
@@ -81,5 +94,15 @@ describe("TrainingCalendarWidget", () => {
       }),
     ]);
     expect(container.querySelector(".is-met")).toBeNull();
+  });
+
+  it("should leave out the streaks when asked", () => {
+    const container = createObsidianContainer();
+    TrainingCalendarWidget.render(container, [], 1, today, {
+      showStats: false,
+    });
+
+    expect(container.querySelector(".workout-calendar-stats")).toBeNull();
+    expect(container.querySelector(".workout-calendar-grid")).not.toBeNull();
   });
 });

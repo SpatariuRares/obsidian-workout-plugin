@@ -123,6 +123,6 @@ describe("EditChartModal", () => {
     update();
     await new Promise((resolve) => setTimeout(resolve, 0));
     expect(state.content).not.toContain("soon");
-    expect(state.content).toContain(`dateRange: ${chartBlock.defaults.dateRange}`);
+    expect(state.content).not.toContain("dateRange");
   });
 });

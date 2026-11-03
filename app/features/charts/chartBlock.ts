@@ -19,7 +19,8 @@ export const chartBlock = defineCodeBlock("workout-chart", {
   type: { kind: "enum", values: Object.values(CHART_DATA_TYPE) },
   exercise: { kind: "string" },
   workout: { kind: "string" },
-  dateRange: { kind: "number", min: 1, max: 365, default: 30 },
+  /** Days back to show; unset shows all */
+  dateRange: { kind: "number", min: 1, max: 365 },
   /** Latest points to show; unset shows all */
   limit: { kind: "number", min: 1, max: 1000 },
   showTrendLine: { kind: "boolean", default: false },

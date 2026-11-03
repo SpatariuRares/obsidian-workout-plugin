@@ -63,12 +63,9 @@ export class EditChartModal extends InsertChartModal {
     this.targetElements.exerciseInput.value = params.exercise ?? "";
     this.targetElements.workoutInput.value = params.workout ?? "";
 
-    if (params.dateRange !== undefined) {
-      this.dateRangeInput.value = String(params.dateRange);
-    }
-    if (params.limit !== undefined) {
-      this.limitInput.value = String(params.limit);
-    }
+    // Unset means no restriction, which the form shows as 0
+    this.dateRangeInput.value = String(params.dateRange ?? 0);
+    this.limitInput.value = String(params.limit ?? 0);
     this.trendLineToggle.checked = params.showTrendLine ?? false;
     this.trendHeaderToggle.checked = params.showTrend ?? true;
     this.statsToggle.checked = params.showStats ?? true;

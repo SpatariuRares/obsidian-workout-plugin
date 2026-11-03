@@ -198,7 +198,6 @@ export class InsertChartModal extends BaseInsertModal {
       min: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE_MIN,
       max: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE_MAX,
       step: DATE_RANGE_INCREMENT,
-      unit: "d",
     });
 
     // Limit with +/- adjust
@@ -351,8 +350,8 @@ export class InsertChartModal extends BaseInsertModal {
       this.chartTypeSelect,
       this.currentFileName,
     );
-    const dateRange = parseInt(this.dateRangeInput.value) || 30;
-    const limit = parseInt(this.limitInput.value) || 50;
+    const dateRange = parseInt(this.dateRangeInput.value) || 0;
+    const limit = parseInt(this.limitInput.value) || 0;
     const showTrendLine = this.trendLineToggle.checked;
     const showTrend = this.trendHeaderToggle.checked;
     const showStats = this.statsToggle.checked;
@@ -365,8 +364,8 @@ export class InsertChartModal extends BaseInsertModal {
       type: dataType as CHART_DATA_TYPE,
       exercise: target.exercise || undefined,
       workout: target.workout || undefined,
-      dateRange,
-      limit,
+      dateRange: dateRange > 0 ? dateRange : undefined,
+      limit: limit > 0 ? limit : undefined,
       showTrendLine,
       showTrend,
       showStats,

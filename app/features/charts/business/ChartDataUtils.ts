@@ -43,19 +43,19 @@ export class ChartDataUtils {
   static processChartData(
     logData: WorkoutLogData[],
     chartType: CHART_DATA_TYPE | string,
-    dateRange: number = 30,
+    dateRange?: number,
     dateFormat: string = "DD/MM/YYYY",
     displayType: CHART_TYPE = CHART_TYPE.EXERCISE,
     customParamLabel?: string,
   ): { labels: string[]; datasets: ChartDataset[] } {
     // Filter by date range
     const cutoffDate = new Date();
-    cutoffDate.setDate(cutoffDate.getDate() - dateRange);
+    cutoffDate.setDate(cutoffDate.getDate() - (dateRange ?? 0));
 
-    const filteredData = logData.filter((log) => {
-      const logDate = new Date(log.date);
-      return logDate >= cutoffDate;
-    });
+    const filteredData =
+      dateRange === undefined
+        ? logData
+        : logData.filter((log) => new Date(log.date) >= cutoffDate);
 
     if (chartType === "e1rm") {
       const daily = new TrainingHistory(

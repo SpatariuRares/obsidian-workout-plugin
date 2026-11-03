@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "Toate paginile de exerciții sunt valide",
+      "more": "…și încă {count}",
       "noTags": "Nicio etichetă pentru mușchi în frontmatter",
       "title": "Erori în fișiere",
+      "tooManyTags": "Prea multe etichete pentru mușchi ({count}, cel mult {max})",
       "sharedName": "Aceeași denumire a exercițiului ca la {pages}: jurnalele sunt salvate doar într-unul dintre ele"
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "Șterge filtrul",
       "filterActive": "Filtrat după",
+      "noData": "Nu au fost înregistrate serii în ultimele {days} zile",
+      "subtitle": "Defalcarea protocoalelor de antrenament (ultimele {days} zile)",
       "title": "Distribuția protocoalelor"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "trainedDay": "{day}: {volume} {unit}",
       "trainedDayNoVolume": "{day}: antrenament",
       "weeks": "{count} săptămâni"
+    },
+    "widgetModal": {
+      "noSettings": "Acest widget nu are setări proprii.",
+      "update": "Actualizează widgetul",
+      "updated": "Widgetul a fost actualizat cu succes!",
+      "remove": "Scoate widgetul de pe tabloul de bord",
+      "removed": "Widgetul a fost scos de pe tabloul de bord.",
+      "edit": "Editează widgetul",
+      "removeConfirm": "Scoți \"{widget}\" de pe tabloul de bord?",
+      "removeConfirmButton": "Scoate",
+      "calendarWeeks": "Săptămâni afișate:",
+      "quickStatsPeriods": "Perioade afișate",
+      "quickStatsMetrics": "Rânduri afișate",
+      "heatMapTimeFrame": "Perioada de start",
+      "heatMapMetric": "Metrica de start",
+      "heatMapView": "Vizualizarea de start",
+      "volumeTopLimit": "Exerciții în top:",
+      "protocolDays": "Zile numărate:",
+      "protocolMinEntries": "Serii necesare unui protocol ca să fie comparat:",
+      "durationRecentCount": "Antrenamente comparate:",
+      "durationRestSeconds": "Pauza dintre serii în estimare (secunde):",
+      "summaryMetrics": "Carduri afișate",
+      "calendarShowStats": "Arată seriile și progresul din această săptămână",
+      "heatMapShowImbalance": "Arată panoul de dezechilibru",
+      "volumeShowBreakdown": "Arată lista celor mai folosite exerciții",
+      "protocolChartType": "Grafic",
+      "chartPie": "Plăcintă",
+      "chartDoughnut": "Inel",
+      "protocolSortBy": "Ordonat după (cel mai bun primul)",
+      "durationShowTrend": "Arată tendința variației",
+      "quickActionsShown": "Butoane afișate",
+      "fileErrorsMaxItems": "Pagini listate (gol: toate):",
+      "fileErrorsMaxTags": "Cele mai multe etichete pentru mușchi permise pe pagină:",
+      "fileErrorsCheckSharedNames": "Semnalează paginile care au același nume de exercițiu",
+      "muscleTagsGroupByMuscle": "Grupează etichetele după mușchi"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "Exercițiu din CSV",
     "customParameters": "Parametri personalizați:",
     "customTitle": "Titlu personalizat:",
+    "dataLimit": "Limită de date (0 = toate):",
     "dataType": "Tip de date:",
     "dateRange": "Interval de date (număr de zile):",
+    "daysRange": "Interval în zile (0 = toate):",
     "delete": "Șterge",
     "duration": "Durată (secunde):",
     "editTag": "Modifică etichetă",

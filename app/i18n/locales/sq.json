@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "Të gjitha faqet e ushtrimeve janë të vlefshme",
+      "more": "…dhe {count} të tjera",
       "noTags": "Nuk ka etiketa muskujsh në frontmatter",
       "title": "Gabime në skedarë",
+      "tooManyTags": "Shumë etiketa muskujsh ({count}, maksimumi {max})",
       "sharedName": "Emri i ushtrimit është i njëjtë me {pages}: regjistrimet shkojnë vetëm në një prej tyre."
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "Pastro filtrin",
       "filterActive": "Filtruar sipas",
+      "noData": "Asnjë seri e regjistruar në {days} ditët e fundit",
+      "subtitle": "Ndarja e protokolleve të stërvitjes ({days} ditët e fundit)",
       "title": "Shpërndarja e protokolleve"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "Më shumë",
       "trainedDayNoVolume": "{day}: u stërvit",
       "weeks": "{count} javë"
+    },
+    "widgetModal": {
+      "noSettings": "Ky element nuk ka cilësime të veta.",
+      "update": "Përditëso elementin",
+      "updated": "Elementi u përditësua me sukses!",
+      "remove": "Hiq elementin nga paneli",
+      "removed": "Elementi u hoq nga paneli.",
+      "edit": "Modifiko elementin",
+      "removeConfirm": "Të hiqet \"{widget}\" nga paneli?",
+      "removeConfirmButton": "Hiq",
+      "calendarWeeks": "Javët e shfaqura:",
+      "quickStatsPeriods": "Periudhat e shfaqura",
+      "quickStatsMetrics": "Rreshtat e shfaqur",
+      "heatMapTimeFrame": "Periudha fillestare",
+      "heatMapMetric": "Metrika fillestare",
+      "heatMapView": "Pamja fillestare",
+      "volumeTopLimit": "Ushtrimet në listën e kryesuesve:",
+      "protocolDays": "Ditët e numëruara:",
+      "protocolMinEntries": "Seritë e nevojshme për të krahasuar një protokoll:",
+      "durationRecentCount": "Stërvitjet e krahasuara:",
+      "durationRestSeconds": "Pushimi midis serive në vlerësim (sekonda):",
+      "summaryMetrics": "Kartat e shfaqura",
+      "calendarShowStats": "Shfaq seritë e ditëve dhe progresin e kësaj jave",
+      "heatMapShowImbalance": "Shfaq panelin e çekuilibrit",
+      "volumeShowBreakdown": "Shfaq listën e ushtrimeve kryesuese",
+      "protocolChartType": "Grafiku",
+      "chartPie": "Rrethor",
+      "chartDoughnut": "Unazë",
+      "protocolSortBy": "Renditur sipas (më i miri i pari)",
+      "durationShowTrend": "Shfaq trendin e devijimit",
+      "quickActionsShown": "Butonat e shfaqur",
+      "fileErrorsMaxItems": "Faqet e listuara (bosh: të gjitha):",
+      "fileErrorsMaxTags": "Numri më i madh i etiketave të muskujve për faqe:",
+      "fileErrorsCheckSharedNames": "Shëno faqet që ndajnë të njëjtin emër ushtrimi",
+      "muscleTagsGroupByMuscle": "Grupo etiketat sipas muskulit"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "Ushtrim CSV",
     "customParameters": "Parametrat e personalizuar:",
     "customTitle": "Titull i personalizuar:",
+    "dataLimit": "Kufiri i të dhënave (0 = të gjitha):",
     "dataType": "Tip i të dhënave:",
     "dateRange": "Intervali i datave (ditë):",
+    "daysRange": "Intervali i ditëve (0 = të gjitha):",
     "delete": "Fshi",
     "duration": "Kohëzgjatja (sekonda):",
     "editTag": "Redakto etiketën",

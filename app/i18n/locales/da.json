@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "Alle øvelsessider er gyldige",
+      "more": "…og {count} mere",
       "noTags": "Ingen muskeltags i frontmatter",
       "title": "Filfejl",
+      "tooManyTags": "For mange muskeltags ({count}, højst {max})",
       "sharedName": "Samme øvelsesnavn som {pages}: logfiler går kun til én af dem"
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "Ryd filter",
       "filterActive": "Filtreret efter",
+      "noData": "Ingen sæt logget de seneste {days} dage",
+      "subtitle": "Fordeling af træningsprotokoller (seneste {days} dage)",
       "title": "Fordeling af protokoller"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "Mere",
       "trainedDayNoVolume": "{day}: trænet",
       "weeks": "{count} uger"
+    },
+    "widgetModal": {
+      "noSettings": "Denne widget har ingen egne indstillinger.",
+      "update": "Opdater widget",
+      "updated": "Widget opdateret!",
+      "remove": "Fjern widget fra dashboardet",
+      "removed": "Widget fjernet fra dashboardet.",
+      "edit": "Rediger widget",
+      "removeConfirm": "Fjern \"{widget}\" fra dashboardet?",
+      "removeConfirmButton": "Fjern",
+      "calendarWeeks": "Viste uger:",
+      "quickStatsPeriods": "Viste perioder",
+      "quickStatsMetrics": "Viste rækker",
+      "heatMapTimeFrame": "Startperiode",
+      "heatMapMetric": "Startmetrik",
+      "heatMapView": "Startvisning",
+      "volumeTopLimit": "Øvelser på toplisten:",
+      "protocolDays": "Dage medregnet:",
+      "protocolMinEntries": "Sæt en protokol skal have for at blive sammenlignet:",
+      "durationRecentCount": "Træninger der sammenlignes:",
+      "durationRestSeconds": "Pause mellem sæt i estimatet (sekunder):",
+      "summaryMetrics": "Viste kort",
+      "calendarShowStats": "Vis stribene og ugens fremskridt",
+      "heatMapShowImbalance": "Vis ubalancepanelet",
+      "volumeShowBreakdown": "Vis listen over topøvelser",
+      "protocolChartType": "Diagram",
+      "chartPie": "Kagediagram",
+      "chartDoughnut": "Donut",
+      "protocolSortBy": "Sorteret efter (bedste først)",
+      "durationShowTrend": "Vis variansens tendens",
+      "quickActionsShown": "Viste knapper",
+      "fileErrorsMaxItems": "Viste sider (tom: alle):",
+      "fileErrorsMaxTags": "Flest muskeltags en side må have:",
+      "fileErrorsCheckSharedNames": "Marker sider der deler et øvelsesnavn",
+      "muscleTagsGroupByMuscle": "Gruppér tags efter muskel"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "CSV-øvelse",
     "customParameters": "Brugerdefinerede parametre:",
     "customTitle": "Brugerdefineret overskrift:",
+    "dataLimit": "Datagrænse (0 = alle):",
     "dataType": "Datatype:",
     "dateRange": "Datointerval (dage):",
+    "daysRange": "Dageinterval (0 = alle):",
     "delete": "Slet",
     "duration": "Varighed (sekunder):",
     "editTag": "Rediger et tag",

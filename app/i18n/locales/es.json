@@ -101,9 +101,11 @@
     },
     "fileErrors": {
       "allValid": "Todas las páginas de ejercicios son válidas",
+      "more": "…y {count} más",
       "noTags": "No hay etiquetas musculares en el frontmatter",
       "title": "Errores de archivo",
-      "sharedName": "Mismo nombre de ejercicio que {pages}: los registros solo se guardan en una de ellas."
+      "sharedName": "Mismo nombre de ejercicio que {pages}: los registros solo se guardan en una de ellas.",
+      "tooManyTags": "Demasiadas etiquetas musculares ({count}, como máximo {max})"
     },
     "muscleTags": {
       "description": "Descripción",
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "Quitar filtro",
       "filterActive": "Filtrado por",
+      "noData": "No hay series registradas en los últimos {days} días",
+      "subtitle": "Desglose de protocolos de entrenamiento (últimos {days} días)",
       "title": "Distribución de protocolos"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "Más",
       "trainedDayNoVolume": "{day}: entrenado",
       "weeks": "{count} semanas"
+    },
+    "widgetModal": {
+      "noSettings": "Este widget no tiene ajustes propios.",
+      "update": "Actualizar widget",
+      "updated": "¡Widget actualizado correctamente!",
+      "remove": "Quitar widget del panel",
+      "removed": "Widget quitado del panel.",
+      "edit": "Editar widget",
+      "removeConfirm": "¿Quitar \"{widget}\" del panel?",
+      "removeConfirmButton": "Quitar",
+      "calendarWeeks": "Semanas mostradas:",
+      "quickStatsPeriods": "Periodos mostrados",
+      "quickStatsMetrics": "Filas mostradas",
+      "heatMapTimeFrame": "Periodo inicial",
+      "heatMapMetric": "Métrica inicial",
+      "heatMapView": "Vista inicial",
+      "volumeTopLimit": "Ejercicios en la lista principal:",
+      "protocolDays": "Días contados:",
+      "protocolMinEntries": "Series que necesita un protocolo para compararse:",
+      "durationRecentCount": "Entrenamientos comparados:",
+      "durationRestSeconds": "Descanso entre series en la estimación (segundos):",
+      "summaryMetrics": "Tarjetas mostradas",
+      "calendarShowStats": "Mostrar las rachas y el progreso de esta semana",
+      "heatMapShowImbalance": "Mostrar el panel de desequilibrio",
+      "volumeShowBreakdown": "Mostrar la lista de ejercicios principales",
+      "protocolChartType": "Gráfico",
+      "chartPie": "Tarta",
+      "chartDoughnut": "Dona",
+      "protocolSortBy": "Ordenado por (mejor primero)",
+      "durationShowTrend": "Mostrar la tendencia de variación",
+      "quickActionsShown": "Botones mostrados",
+      "fileErrorsMaxItems": "Páginas listadas (vacío: todas):",
+      "fileErrorsMaxTags": "Máximo de etiquetas musculares por página:",
+      "fileErrorsCheckSharedNames": "Marcar páginas que comparten un nombre de ejercicio",
+      "muscleTagsGroupByMuscle": "Agrupar las etiquetas por músculo"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "Ejercicio CSV",
     "customParameters": "Parámetros personalizados:",
     "customTitle": "Título personalizado:",
+    "dataLimit": "Límite de datos (0 = todos):",
     "dataType": "Tipo de datos:",
     "dateRange": "Rango de fechas (días):",
+    "daysRange": "Rango de días (0 = todos):",
     "delete": "Eliminar",
     "duration": "Duración (segundos):",
     "editTag": "Editar etiqueta",

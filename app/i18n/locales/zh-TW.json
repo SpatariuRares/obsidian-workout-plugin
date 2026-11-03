@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "所有動作頁面皆有效",
+      "more": "還有 {count} 個",
       "noTags": "屬性中沒有肌肉標籤",
       "title": "檔案錯誤",
+      "tooManyTags": "肌肉標籤過多（{count} 個，最多 {max} 個）",
       "sharedName": "與 {pages} 的動作名稱相同：紀錄只會寫入其中一個"
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "清除篩選",
       "filterActive": "篩選條件：",
+      "noData": "最近 {days} 天沒有紀錄任何組",
+      "subtitle": "訓練法分布（最近 {days} 天）",
       "title": "訓練法分布"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "多",
       "trainedDayNoVolume": "{day}：已訓練",
       "weeks": "{count} 週"
+    },
+    "widgetModal": {
+      "noSettings": "此小工具沒有自己的設定。",
+      "update": "更新小工具",
+      "updated": "小工具已成功更新！",
+      "remove": "從儀表板移除小工具",
+      "removed": "已從儀表板移除小工具。",
+      "edit": "編輯小工具",
+      "removeConfirm": "要從儀表板移除「{widget}」嗎？",
+      "removeConfirmButton": "移除",
+      "calendarWeeks": "顯示的週數：",
+      "quickStatsPeriods": "顯示的期間",
+      "quickStatsMetrics": "顯示的列",
+      "heatMapTimeFrame": "起始期間",
+      "heatMapMetric": "起始指標",
+      "heatMapView": "起始檢視",
+      "volumeTopLimit": "排行榜中的動作數：",
+      "protocolDays": "計算的天數：",
+      "protocolMinEntries": "比較訓練法所需的組數：",
+      "durationRecentCount": "比較的運動次數：",
+      "durationRestSeconds": "估算中組與組之間的休息（秒）：",
+      "summaryMetrics": "顯示的卡片",
+      "calendarShowStats": "顯示連續紀錄與本週進度",
+      "heatMapShowImbalance": "顯示肌群失衡面板",
+      "volumeShowBreakdown": "顯示動作排行榜",
+      "protocolChartType": "圖表",
+      "chartPie": "圓餅圖",
+      "chartDoughnut": "環圈圖",
+      "protocolSortBy": "排序依據（最佳在前）",
+      "durationShowTrend": "顯示變異趨勢",
+      "quickActionsShown": "顯示的按鈕",
+      "fileErrorsMaxItems": "列出的頁面數（留空：全部）：",
+      "fileErrorsMaxTags": "每個頁面最多的肌肉標籤數：",
+      "fileErrorsCheckSharedNames": "標記共用動作名稱的頁面",
+      "muscleTagsGroupByMuscle": "依肌群分組標籤"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "CSV 動作",
     "customParameters": "自訂參數：",
     "customTitle": "自訂標題：",
+    "dataLimit": "資料上限（0 = 全部）：",
     "dataType": "資料類型：",
     "dateRange": "日期範圍（天數）：",
+    "daysRange": "天數範圍（0 = 全部）：",
     "delete": "刪除",
     "duration": "時長（秒）：",
     "editTag": "編輯標籤",

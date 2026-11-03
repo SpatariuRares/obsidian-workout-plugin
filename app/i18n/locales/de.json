@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "Alle Übungsseiten sind gültig",
+      "more": "…und {count} weitere",
       "noTags": "Keine Muskel-Tags im Frontmatter",
       "title": "Dateifehler",
+      "tooManyTags": "Zu viele Muskel-Tags ({count}, höchstens {max})",
       "sharedName": "Gleicher Übungsname wie {pages}: Protokolle landen nur bei einer von ihnen."
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "Filter entfernen",
       "filterActive": "Gefiltert nach",
+      "noData": "In den letzten {days} Tagen wurden keine Sätze erfasst",
+      "subtitle": "Aufteilung nach Trainingsprotokoll (letzte {days} Tage)",
       "title": "Verteilung der Protokolle"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "Mehr",
       "trainedDayNoVolume": "{day}: trainiert",
       "weeks": "{count} Wochen"
+    },
+    "widgetModal": {
+      "noSettings": "Dieses Widget hat keine eigenen Einstellungen.",
+      "update": "Widget aktualisieren",
+      "updated": "Widget erfolgreich aktualisiert!",
+      "remove": "Widget vom Dashboard entfernen",
+      "removed": "Widget wurde vom Dashboard entfernt.",
+      "edit": "Widget bearbeiten",
+      "removeConfirm": "„{widget}“ vom Dashboard entfernen?",
+      "removeConfirmButton": "Entfernen",
+      "calendarWeeks": "Angezeigte Wochen:",
+      "quickStatsPeriods": "Angezeigte Zeiträume",
+      "quickStatsMetrics": "Angezeigte Zeilen",
+      "heatMapTimeFrame": "Anfangszeitraum",
+      "heatMapMetric": "Anfangskennzahl",
+      "heatMapView": "Anfangsansicht",
+      "volumeTopLimit": "Übungen in der Topliste:",
+      "protocolDays": "Gezählte Tage:",
+      "protocolMinEntries": "Sätze, die ein Protokoll für den Vergleich braucht:",
+      "durationRecentCount": "Verglichene Trainings:",
+      "durationRestSeconds": "Pause zwischen den Sätzen in der Schätzung (Sekunden):",
+      "summaryMetrics": "Angezeigte Karten",
+      "calendarShowStats": "Serien und den Fortschritt dieser Woche anzeigen",
+      "heatMapShowImbalance": "Das Panel zu Ungleichgewichten anzeigen",
+      "volumeShowBreakdown": "Die Liste der Top-Übungen anzeigen",
+      "protocolChartType": "Diagramm",
+      "chartPie": "Kreis",
+      "chartDoughnut": "Ring",
+      "protocolSortBy": "Sortiert nach (bester zuerst)",
+      "durationShowTrend": "Den Trend der Abweichung anzeigen",
+      "quickActionsShown": "Angezeigte Schaltflächen",
+      "fileErrorsMaxItems": "Aufgelistete Seiten (leer: alle):",
+      "fileErrorsMaxTags": "Höchstanzahl Muskel-Tags pro Seite:",
+      "fileErrorsCheckSharedNames": "Seiten markieren, die sich einen Übungsnamen teilen",
+      "muscleTagsGroupByMuscle": "Tags nach Muskel gruppieren"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "CSV-Übung",
     "customParameters": "Benutzerdefinierte Parameter:",
     "customTitle": "Benutzerdefinierter Titel:",
+    "dataLimit": "Datenlimit (0 = alle):",
     "dataType": "Datentyp:",
     "dateRange": "Zeitraum (Tage):",
+    "daysRange": "Zeitraum in Tagen (0 = alle):",
     "delete": "Löschen",
     "duration": "Dauer (Sekunden):",
     "editTag": "Tag bearbeiten",

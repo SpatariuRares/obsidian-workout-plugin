@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "모든 운동 페이지가 유효합니다",
+      "more": "…외 {count}개 더",
       "noTags": "프론트매터에 근육 태그가 없습니다",
       "title": "파일 오류",
+      "tooManyTags": "근육 태그가 너무 많습니다 ({count}개, 최대 {max}개)",
       "sharedName": "{pages}와(과) 운동 이름이 같습니다: 로그는 그중 한 곳에만 저장됩니다."
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "필터 지우기",
       "filterActive": "필터 기준:",
+      "noData": "최근 {days}일 동안 기록된 세트가 없습니다",
+      "subtitle": "훈련 프로토콜 분석 (최근 {days}일)",
       "title": "프로토콜 분포"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "restDay": "{day}: 휴식",
       "less": "적음",
       "more": "많음"
+    },
+    "widgetModal": {
+      "noSettings": "이 위젯에는 별도의 설정이 없습니다.",
+      "update": "위젯 업데이트",
+      "updated": "위젯을 업데이트했습니다!",
+      "remove": "대시보드에서 위젯 제거",
+      "removed": "대시보드에서 위젯을 제거했습니다.",
+      "edit": "위젯 편집",
+      "removeConfirm": "대시보드에서 \"{widget}\"을(를) 제거할까요?",
+      "removeConfirmButton": "제거",
+      "calendarWeeks": "표시할 주 수:",
+      "quickStatsPeriods": "표시할 기간",
+      "quickStatsMetrics": "표시할 행",
+      "heatMapTimeFrame": "시작 기간",
+      "heatMapMetric": "시작 지표",
+      "heatMapView": "시작 보기",
+      "volumeTopLimit": "상위 목록의 운동 수:",
+      "protocolDays": "집계할 일수:",
+      "protocolMinEntries": "프로토콜을 비교하는 데 필요한 세트 수:",
+      "durationRecentCount": "비교할 운동 수:",
+      "durationRestSeconds": "추정에 쓸 세트 간 휴식 시간 (초):",
+      "summaryMetrics": "표시할 카드",
+      "calendarShowStats": "연속 기록과 이번 주 진행 상황 표시",
+      "heatMapShowImbalance": "근육 불균형 패널 표시",
+      "volumeShowBreakdown": "상위 운동 목록 표시",
+      "protocolChartType": "차트",
+      "chartPie": "원형",
+      "chartDoughnut": "도넛형",
+      "protocolSortBy": "정렬 기준 (좋은 순)",
+      "durationShowTrend": "편차 추세 표시",
+      "quickActionsShown": "표시할 버튼",
+      "fileErrorsMaxItems": "나열할 페이지 수 (비우면 전체):",
+      "fileErrorsMaxTags": "페이지당 근육 태그 최대 개수:",
+      "fileErrorsCheckSharedNames": "운동 이름이 같은 페이지 표시",
+      "muscleTagsGroupByMuscle": "태그를 근육별로 묶기"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "CSV 운동 종목",
     "customParameters": "사용자 정의 매개변수:",
     "customTitle": "사용자 지정 제목:",
+    "dataLimit": "데이터 개수 제한 (0 = 전체):",
     "dataType": "데이터 유형:",
     "dateRange": "날짜 범위 (일):",
+    "daysRange": "기간 (일, 0 = 전체):",
     "delete": "삭제",
     "duration": "지속 시간 (초):",
     "editTag": "태그 편집",

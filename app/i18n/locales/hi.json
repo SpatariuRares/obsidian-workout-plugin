@@ -101,9 +101,11 @@
     },
     "fileErrors": {
       "allValid": "सभी व्यायाम पृष्ठ मान्य हैं",
+      "more": "…और {count} अन्य",
       "noTags": "फ्रंटमैटर में कोई मांसपेशी टैग नहीं है",
       "title": "फ़ाइल त्रुटियाँ",
-      "sharedName": "{pages} का भी यही व्यायाम नाम है: लॉग इनमें से केवल एक में जाएँगे"
+      "sharedName": "{pages} का भी यही व्यायाम नाम है: लॉग इनमें से केवल एक में जाएँगे",
+      "tooManyTags": "बहुत अधिक मांसपेशी टैग ({count}, अधिकतम {max})"
     },
     "muscleTags": {
       "description": "विवरण",
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "फ़िल्टर हटाएँ",
       "filterActive": "इसके अनुसार फ़िल्टर किया गया",
+      "noData": "पिछले {days} दिनों में कोई सेट दर्ज नहीं हुआ",
+      "subtitle": "प्रशिक्षण प्रोटोकॉल का विवरण (पिछले {days} दिन)",
       "title": "प्रोटोकॉल वितरण"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "ज़्यादा",
       "trainedDayNoVolume": "{day}: प्रशिक्षित",
       "weeks": "{count} सप्ताह"
+    },
+    "widgetModal": {
+      "calendarShowStats": "स्ट्रीक और इस हफ़्ते की प्रगति दिखाएं",
+      "calendarWeeks": "दिखाए गए हफ़्ते:",
+      "chartDoughnut": "डोनट",
+      "chartPie": "पाई",
+      "durationRecentCount": "तुलना किए गए वर्कआउट:",
+      "durationRestSeconds": "अनुमान में सेटों के बीच आराम (सेकंड):",
+      "durationShowTrend": "वेरिएंस ट्रेंड दिखाएं",
+      "edit": "विजेट संपादित करें",
+      "fileErrorsCheckSharedNames": "वे पृष्ठ चिह्नित करें जिनका व्यायाम नाम एक जैसा है",
+      "fileErrorsMaxItems": "सूचीबद्ध पृष्ठ (खाली: सभी):",
+      "fileErrorsMaxTags": "एक पृष्ठ में अधिकतम मांसपेशी टैग:",
+      "heatMapMetric": "शुरुआती मीट्रिक",
+      "heatMapShowImbalance": "असंतुलन वाला पैनल दिखाएं",
+      "heatMapTimeFrame": "शुरुआती अवधि",
+      "heatMapView": "शुरुआती दृश्य",
+      "muscleTagsGroupByMuscle": "टैग को मांसपेशी के अनुसार समूहित करें",
+      "noSettings": "इस विजेट की अपनी कोई सेटिंग नहीं है।",
+      "protocolChartType": "चार्ट",
+      "protocolDays": "गिने गए दिन:",
+      "protocolMinEntries": "तुलना के लिए प्रोटोकॉल को कम से कम कितने सेट चाहिए:",
+      "protocolSortBy": "इसके अनुसार क्रमबद्ध (सबसे अच्छा पहले)",
+      "quickActionsShown": "दिखाए गए बटन",
+      "quickStatsMetrics": "दिखाई गई पंक्तियाँ",
+      "quickStatsPeriods": "दिखाई गई अवधियाँ",
+      "remove": "डैशबोर्ड से विजेट हटाएं",
+      "removeConfirm": "\"{widget}\" को डैशबोर्ड से हटाएं?",
+      "removeConfirmButton": "हटाएं",
+      "removed": "विजेट डैशबोर्ड से हटा दिया गया।",
+      "summaryMetrics": "दिखाए गए कार्ड",
+      "update": "विजेट अपडेट करें",
+      "updated": "विजेट सफलतापूर्वक अपडेट हुआ!",
+      "volumeShowBreakdown": "शीर्ष व्यायामों की सूची दिखाएं",
+      "volumeTopLimit": "शीर्ष सूची में व्यायाम:"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "CSV व्यायाम",
     "customParameters": "कस्टम पैरामीटर:",
     "customTitle": "कस्टम शीर्षक:",
+    "dataLimit": "डेटा सीमा (0 = सभी):",
     "dataType": "डेटा प्रकार:",
     "dateRange": "तारीख सीमा (दिन):",
+    "daysRange": "दिनों की अवधि (0 = सभी):",
     "delete": "हटाएं",
     "duration": "अवधि (सेकंड):",
     "editTag": "टैग संपादित करें",

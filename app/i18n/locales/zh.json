@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "所有训练页面均有效",
+      "more": "另有 {count} 项",
       "noTags": "属性中没有肌肉标签",
       "title": "文件错误",
+      "tooManyTags": "肌肉标签过多（{count} 个，最多 {max} 个）",
       "sharedName": "与 {pages} 的训练动作名称相同：记录只会归入其中一个页面。"
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "清除筛选",
       "filterActive": "筛选条件：",
+      "noData": "最近 {days} 天没有记录任何组",
+      "subtitle": "训练方案分布（最近 {days} 天）",
       "title": "训练方案分布"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "多",
       "trainedDayNoVolume": "{day}：已训练",
       "weeks": "{count} 周"
+    },
+    "widgetModal": {
+      "noSettings": "此小组件没有自己的设置。",
+      "update": "更新小组件",
+      "updated": "小组件已成功更新！",
+      "remove": "将小组件移出仪表盘",
+      "removed": "已将小组件移出仪表盘。",
+      "edit": "编辑小组件",
+      "removeConfirm": "要将“{widget}”移出仪表盘吗？",
+      "removeConfirmButton": "移除",
+      "calendarWeeks": "显示的周数：",
+      "quickStatsPeriods": "显示的时段",
+      "quickStatsMetrics": "显示的行",
+      "heatMapTimeFrame": "初始时段",
+      "heatMapMetric": "初始指标",
+      "heatMapView": "初始视图",
+      "volumeTopLimit": "最高训练动作列表中的动作数：",
+      "protocolDays": "统计的天数：",
+      "protocolMinEntries": "比较训练方案所需的最少组数：",
+      "durationRecentCount": "用于比较的训练次数：",
+      "durationRestSeconds": "估算中组间休息时间（秒）：",
+      "summaryMetrics": "显示的卡片",
+      "calendarShowStats": "显示连续训练和本周进度",
+      "heatMapShowImbalance": "显示失衡面板",
+      "volumeShowBreakdown": "显示训练量最高的训练动作列表",
+      "protocolChartType": "图表",
+      "chartPie": "饼图",
+      "chartDoughnut": "环形图",
+      "protocolSortBy": "排序方式（最佳在前）",
+      "durationShowTrend": "显示差距趋势",
+      "quickActionsShown": "显示的按钮",
+      "fileErrorsMaxItems": "列出的页面数（留空：全部）：",
+      "fileErrorsMaxTags": "每个页面最多的肌肉标签数：",
+      "fileErrorsCheckSharedNames": "标记与其他页面训练动作名称相同的页面",
+      "muscleTagsGroupByMuscle": "按肌肉分组标签"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "CSV 训练动作",
     "customParameters": "自定义参数：",
     "customTitle": "自定义标题：",
+    "dataLimit": "数据上限（0 = 全部）：",
     "dataType": "数据类型：",
     "dateRange": "日期范围（天）：",
+    "daysRange": "天数范围（0 = 全部）：",
     "delete": "删除",
     "duration": "时长（秒）：",
     "editTag": "编辑标签",

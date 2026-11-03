@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "جميع صفحات التمارين صالحة",
+      "more": "…و{count} أخرى",
       "noTags": "لا توجد علامات عضلات في البيانات الوصفية (frontmatter)",
       "title": "أخطاء الملفات",
+      "tooManyTags": "عدد علامات العضلات كبير جدًا ({count}، والحد الأقصى {max})",
       "sharedName": "نفس اسم التمرين كما في {pages}: يتم تسجيل السجلات في واحد فقط منهم."
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "مسح التصفية",
       "filterActive": "مُصفّى حسب",
+      "noData": "لم تُسجَّل أي مجموعات في آخر {days} يومًا",
+      "subtitle": "تفصيل بروتوكولات التدريب (آخر {days} يومًا)",
       "title": "توزيع البروتوكولات"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "أكثر",
       "trainedDayNoVolume": "{day}: تم التدريب",
       "weeks": "{count} أسبوع"
+    },
+    "widgetModal": {
+      "noSettings": "ليس لهذه الأداة إعدادات خاصة بها.",
+      "update": "تحديث الأداة",
+      "updated": "تم تحديث الأداة بنجاح!",
+      "remove": "إزالة الأداة من لوحة التحكم",
+      "removed": "تمت إزالة الأداة من لوحة التحكم.",
+      "edit": "تعديل الأداة",
+      "removeConfirm": "هل تريد إزالة \"{widget}\" من لوحة التحكم؟",
+      "removeConfirmButton": "إزالة",
+      "calendarWeeks": "عدد الأسابيع المعروضة:",
+      "quickStatsPeriods": "الفترات المعروضة",
+      "quickStatsMetrics": "الصفوف المعروضة",
+      "heatMapTimeFrame": "الفترة الافتراضية",
+      "heatMapMetric": "المقياس الافتراضي",
+      "heatMapView": "العرض الافتراضي",
+      "volumeTopLimit": "عدد التمارين في القائمة الأعلى:",
+      "protocolDays": "عدد الأيام المحسوبة:",
+      "protocolMinEntries": "عدد المجموعات اللازمة لمقارنة البروتوكول:",
+      "durationRecentCount": "عدد التدريبات المقارنة:",
+      "durationRestSeconds": "وقت الراحة بين المجموعات في التقدير (بالثواني):",
+      "summaryMetrics": "البطاقات المعروضة",
+      "calendarShowStats": "عرض السلاسل وتقدم هذا الأسبوع",
+      "heatMapShowImbalance": "عرض لوحة عدم التوازن",
+      "volumeShowBreakdown": "عرض قائمة أعلى التمارين",
+      "protocolChartType": "المخطط",
+      "chartPie": "دائري",
+      "chartDoughnut": "حلقي",
+      "protocolSortBy": "مرتّبة حسب (الأفضل أولاً)",
+      "durationShowTrend": "عرض اتجاه التباين",
+      "quickActionsShown": "الأزرار المعروضة",
+      "fileErrorsMaxItems": "الصفحات المدرجة (فارغ: الكل):",
+      "fileErrorsMaxTags": "أقصى عدد من علامات العضلات لكل صفحة:",
+      "fileErrorsCheckSharedNames": "الإبلاغ عن الصفحات التي تشترك في اسم تمرين",
+      "muscleTagsGroupByMuscle": "تجميع العلامات حسب العضلة"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "تمرين CSV",
     "customParameters": "المعلمات المخصصة:",
     "customTitle": "العنوان المخصص:",
+    "dataLimit": "حد البيانات (0 = الكل):",
     "dataType": "نوع البيانات:",
     "dateRange": "نطاق التواريخ (أيام):",
+    "daysRange": "نطاق الأيام (0 = الكل):",
     "delete": "حذف",
     "duration": "المدة (الثواني):",
     "editTag": "تعديل العلامة",

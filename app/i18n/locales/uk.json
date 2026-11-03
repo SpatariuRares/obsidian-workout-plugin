@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "Усі сторінки вправ коректні",
+      "more": "…і ще {count}",
       "noTags": "У frontmatter немає тегів м'язів",
       "title": "Помилки при роботі з файлами",
+      "tooManyTags": "Забагато тегів м'язів ({count}, не більше {max})",
       "sharedName": "Та сама назва вправи, що й у {pages}: журнал записується лише в одну з цих сторінок."
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "Скинути фільтр",
       "filterActive": "Фільтр:",
+      "noData": "За останні {days} днів підходів не записано",
+      "subtitle": "Розподіл тренувальних протоколів (останні {days} днів)",
       "title": "Розподіл протоколів"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "Більше",
       "trainedDayNoVolume": "{day}: тренування",
       "weeks": "{count} тиж."
+    },
+    "widgetModal": {
+      "noSettings": "Цей віджет не має власних налаштувань.",
+      "update": "Оновити віджет",
+      "updated": "Віджет успішно оновлено!",
+      "remove": "Прибрати віджет з панелі керування",
+      "removed": "Віджет прибрано з панелі керування.",
+      "edit": "Редагувати віджет",
+      "removeConfirm": "Прибрати «{widget}» з панелі керування?",
+      "removeConfirmButton": "Прибрати",
+      "calendarWeeks": "Показані тижні:",
+      "quickStatsPeriods": "Показані періоди",
+      "quickStatsMetrics": "Показані рядки",
+      "heatMapTimeFrame": "Початковий період",
+      "heatMapMetric": "Початкова метрика",
+      "heatMapView": "Початковий вигляд",
+      "volumeTopLimit": "Вправи у списку топ:",
+      "protocolDays": "Враховані дні:",
+      "protocolMinEntries": "Підходів, потрібних для порівняння протоколу:",
+      "durationRecentCount": "Порівняно тренувань:",
+      "durationRestSeconds": "Відпочинок між підходами в оцінці (секунди):",
+      "summaryMetrics": "Показані картки",
+      "calendarShowStats": "Показувати серії та прогрес цього тижня",
+      "heatMapShowImbalance": "Показувати панель дисбалансу",
+      "volumeShowBreakdown": "Показувати список топ-вправ",
+      "protocolChartType": "Графік",
+      "chartPie": "Кругова",
+      "chartDoughnut": "Кільцева",
+      "protocolSortBy": "Упорядкувати за (найкращі перші)",
+      "durationShowTrend": "Показувати тренд відхилень",
+      "quickActionsShown": "Показані кнопки",
+      "fileErrorsMaxItems": "Скільки сторінок показувати (порожньо: усі):",
+      "fileErrorsMaxTags": "Найбільше тегів м'язів на сторінці:",
+      "fileErrorsCheckSharedNames": "Позначати сторінки з однаковою назвою вправи",
+      "muscleTagsGroupByMuscle": "Групувати теги за м'язом"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "Вправа в CSV",
     "customParameters": "Власні параметри:",
     "customTitle": "Власний заголовок:",
+    "dataLimit": "Ліміт даних (0 = усі):",
     "dataType": "Тип даних:",
     "dateRange": "Діапазон дат (дні):",
+    "daysRange": "Діапазон днів (0 = усі):",
     "delete": "Видалити",
     "duration": "Тривалість (секунди):",
     "editTag": "Редагувати тег",

@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "Alle oefenpagina's zijn geldig",
+      "more": "…en {count} meer",
       "noTags": "Geen spierlabels in de frontmatter",
       "title": "Foutmeldingen bij bestanden",
+      "tooManyTags": "Te veel spierlabels ({count}, maximaal {max})",
       "sharedName": "Dezelfde oefeningsnaam als {pages}: logs gaan naar maar één van hen"
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "Filter wissen",
       "filterActive": "Gefilterd op",
+      "noData": "Geen series gelogd in de afgelopen {days} dagen",
+      "subtitle": "Verdeling van trainingsprotocollen (afgelopen {days} dagen)",
       "title": "Verdeling van protocollen"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "Meer",
       "trainedDayNoVolume": "{day}: getraind",
       "weeks": "{count} weken"
+    },
+    "widgetModal": {
+      "noSettings": "Deze widget heeft geen eigen instellingen.",
+      "update": "Widget bijwerken",
+      "updated": "Widget succesvol bijgewerkt!",
+      "remove": "Widget van het dashboard halen",
+      "removed": "Widget van het dashboard gehaald.",
+      "edit": "Widget bewerken",
+      "removeConfirm": "\"{widget}\" van het dashboard halen?",
+      "removeConfirmButton": "Verwijderen",
+      "calendarWeeks": "Getoonde weken:",
+      "quickStatsPeriods": "Getoonde periodes",
+      "quickStatsMetrics": "Getoonde rijen",
+      "heatMapTimeFrame": "Startperiode",
+      "heatMapMetric": "Startmeting",
+      "heatMapView": "Startweergave",
+      "volumeTopLimit": "Oefeningen in de topranglijst:",
+      "protocolDays": "Meegetelde dagen:",
+      "protocolMinEntries": "Series die een protocol nodig heeft om vergeleken te worden:",
+      "durationRecentCount": "Vergeleken trainingen:",
+      "durationRestSeconds": "Rust tussen series in de schatting (seconden):",
+      "summaryMetrics": "Getoonde kaarten",
+      "calendarShowStats": "Toon de reeksen en de voortgang van deze week",
+      "heatMapShowImbalance": "Toon het paneel met onbalans",
+      "volumeShowBreakdown": "Toon de lijst met topoefeningen",
+      "protocolChartType": "Grafiek",
+      "chartPie": "Taart",
+      "chartDoughnut": "Donut",
+      "protocolSortBy": "Gesorteerd op (beste eerst)",
+      "durationShowTrend": "Toon de variantietrend",
+      "quickActionsShown": "Getoonde knoppen",
+      "fileErrorsMaxItems": "Vermelde pagina's (leeg: alle):",
+      "fileErrorsMaxTags": "Meeste spierlabels die een pagina mag hebben:",
+      "fileErrorsCheckSharedNames": "Markeer pagina's die een oefeningsnaam delen",
+      "muscleTagsGroupByMuscle": "Groepeer de labels per spier"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "Oefening met CSV",
     "customParameters": "Aangepaste parameters:",
     "customTitle": "Aangepaste titel:",
+    "dataLimit": "Datalimiet (0 = alles):",
     "dataType": "Type gegevens:",
     "dateRange": "Datumbereik (dagen):",
+    "daysRange": "Dagenbereik (0 = alles):",
     "delete": "Verwijderen",
     "duration": "Duur (seconden):",
     "editTag": "Label bewerken",

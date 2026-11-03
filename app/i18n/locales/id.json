@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "Semua halaman latihan valid",
+      "more": "…dan {count} lainnya",
       "noTags": "Tidak ada tag otot di frontmatter",
       "title": "Kesalahan pada file",
+      "tooManyTags": "Terlalu banyak tag otot ({count}, maksimal {max})",
       "sharedName": "Nama latihan sama dengan {pages}: log hanya masuk ke salah satunya."
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "Hapus filter",
       "filterActive": "Difilter berdasarkan",
+      "noData": "Belum ada set yang dicatat dalam {days} hari terakhir",
+      "subtitle": "Rincian protokol latihan ({days} hari terakhir)",
       "title": "Distribusi protokol"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "Lebih banyak",
       "trainedDayNoVolume": "{day}: berlatih",
       "weeks": "{count} minggu"
+    },
+    "widgetModal": {
+      "noSettings": "Widget ini tidak memiliki pengaturan sendiri.",
+      "update": "Perbarui widget",
+      "updated": "Widget berhasil diperbarui!",
+      "remove": "Hapus widget dari dasbor",
+      "removed": "Widget dihapus dari dasbor.",
+      "edit": "Sunting widget",
+      "removeConfirm": "Hapus \"{widget}\" dari dasbor?",
+      "removeConfirmButton": "Hapus",
+      "calendarWeeks": "Minggu yang ditampilkan:",
+      "quickStatsPeriods": "Periode yang ditampilkan",
+      "quickStatsMetrics": "Baris yang ditampilkan",
+      "heatMapTimeFrame": "Periode awal",
+      "heatMapMetric": "Metrik awal",
+      "heatMapView": "Tampilan awal",
+      "volumeTopLimit": "Latihan dalam daftar teratas:",
+      "protocolDays": "Hari yang dihitung:",
+      "protocolMinEntries": "Set minimum agar protokol dapat dibandingkan:",
+      "durationRecentCount": "Latihan yang dibandingkan:",
+      "durationRestSeconds": "Istirahat antar set dalam estimasi (detik):",
+      "summaryMetrics": "Kartu yang ditampilkan",
+      "calendarShowStats": "Tampilkan streak dan progres minggu ini",
+      "heatMapShowImbalance": "Tampilkan panel ketidakseimbangan",
+      "volumeShowBreakdown": "Tampilkan daftar latihan teratas",
+      "protocolChartType": "Grafik",
+      "chartPie": "Pie",
+      "chartDoughnut": "Donat",
+      "protocolSortBy": "Diurutkan berdasarkan (terbaik dahulu)",
+      "durationShowTrend": "Tampilkan tren varians",
+      "quickActionsShown": "Tombol yang ditampilkan",
+      "fileErrorsMaxItems": "Halaman yang dicantumkan (kosong: semua):",
+      "fileErrorsMaxTags": "Tag otot terbanyak per halaman:",
+      "fileErrorsCheckSharedNames": "Tandai halaman yang berbagi nama latihan",
+      "muscleTagsGroupByMuscle": "Kelompokkan tag menurut otot"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "Latihan di CSV",
     "customParameters": "Parameter khusus:",
     "customTitle": "Judul khusus:",
+    "dataLimit": "Batas data (0 = semua):",
     "dataType": "Tipe data:",
     "dateRange": "Rentang tanggal (hari):",
+    "daysRange": "Rentang hari (0 = semua):",
     "delete": "Hapus",
     "duration": "Durasi (detik):",
     "editTag": "Sunting tag",

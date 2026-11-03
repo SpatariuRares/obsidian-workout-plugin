@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "Todas as páginas de exercício são válidas",
+      "more": "…e mais {count}",
       "noTags": "Nenhuma tag muscular no frontmatter",
       "title": "Erros de ficheiro",
+      "tooManyTags": "Demasiadas tags musculares ({count}, no máximo {max})",
       "sharedName": "Mesmo nome de exercício que {pages}: os registos são enviados apenas para um deles."
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "Limpar filtro",
       "filterActive": "Filtrado por",
+      "noData": "Nenhuma série registada nos últimos {days} dias",
+      "subtitle": "Distribuição dos protocolos de treino (últimos {days} dias)",
       "title": "Distribuição de protocolos"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "Mais",
       "trainedDayNoVolume": "{day}: treinou",
       "weeks": "{count} semanas"
+    },
+    "widgetModal": {
+      "noSettings": "Este widget não tem definições próprias.",
+      "update": "Atualizar widget",
+      "updated": "Widget atualizado com sucesso!",
+      "remove": "Remover widget do painel",
+      "removed": "Widget removido do painel.",
+      "edit": "Editar widget",
+      "removeConfirm": "Remover \"{widget}\" do painel?",
+      "removeConfirmButton": "Remover",
+      "calendarWeeks": "Semanas apresentadas:",
+      "quickStatsPeriods": "Períodos apresentados",
+      "quickStatsMetrics": "Linhas apresentadas",
+      "heatMapTimeFrame": "Período inicial",
+      "heatMapMetric": "Métrica inicial",
+      "heatMapView": "Vista inicial",
+      "volumeTopLimit": "Exercícios na lista dos principais:",
+      "protocolDays": "Dias contados:",
+      "protocolMinEntries": "Séries necessárias para comparar um protocolo:",
+      "durationRecentCount": "Treinos comparados:",
+      "durationRestSeconds": "Descanso entre séries na estimativa (segundos):",
+      "summaryMetrics": "Cartões apresentados",
+      "calendarShowStats": "Mostrar as sequências e o progresso desta semana",
+      "heatMapShowImbalance": "Mostrar o painel de desequilíbrio",
+      "volumeShowBreakdown": "Mostrar a lista dos exercícios principais",
+      "protocolChartType": "Gráfico",
+      "chartPie": "Circular",
+      "chartDoughnut": "Anel",
+      "protocolSortBy": "Ordenado por (melhor primeiro)",
+      "durationShowTrend": "Mostrar a tendência da variação",
+      "quickActionsShown": "Botões apresentados",
+      "fileErrorsMaxItems": "Páginas listadas (vazio: todas):",
+      "fileErrorsMaxTags": "Máximo de tags musculares por página:",
+      "fileErrorsCheckSharedNames": "Assinalar páginas que partilham um nome de exercício",
+      "muscleTagsGroupByMuscle": "Agrupar as tags por músculo"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "Exercício com ficheiro CSV",
     "customParameters": "Parâmetros personalizados:",
     "customTitle": "Título personalizado:",
+    "dataLimit": "Limite de dados (0 = todos):",
     "dataType": "Tipo de dados:",
     "dateRange": "Intervalo de datas (dias):",
+    "daysRange": "Intervalo de dias (0 = todos):",
     "delete": "Eliminar",
     "duration": "Duração (segundos):",
     "editTag": "Editar tag",

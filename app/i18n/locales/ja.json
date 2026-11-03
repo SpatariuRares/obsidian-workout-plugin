@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "すべてのエクササイズページは有効です",
+      "more": "…他 {count} 件",
       "noTags": "フロントマターに筋肉タグがありません",
       "title": "ファイルのエラー",
+      "tooManyTags": "筋肉タグが多すぎます（{count}件、最大{max}件）",
       "sharedName": "{pages} と同じエクササイズの名前: ログは、そのうちのいずれか1つにのみ保存されます"
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "フィルターを解除",
       "filterActive": "絞り込み中",
+      "noData": "過去{days}日間にセットは記録されていません",
+      "subtitle": "トレーニングプロトコルの内訳（過去{days}日間）",
       "title": "プロトコル配分"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "多",
       "trainedDayNoVolume": "{day}: トレーニング済み",
       "weeks": "{count}週"
+    },
+    "widgetModal": {
+      "noSettings": "このウィジェットには個別の設定はありません。",
+      "update": "ウィジェットを更新",
+      "updated": "ウィジェットを更新しました！",
+      "remove": "ダッシュボードからウィジェットを外す",
+      "removed": "ウィジェットをダッシュボードから外しました。",
+      "edit": "ウィジェットを編集",
+      "removeConfirm": "ダッシュボードから「{widget}」を外しますか？",
+      "removeConfirmButton": "外す",
+      "calendarWeeks": "表示する週数：",
+      "quickStatsPeriods": "表示する期間",
+      "quickStatsMetrics": "表示する行",
+      "heatMapTimeFrame": "開始期間",
+      "heatMapMetric": "開始する指標",
+      "heatMapView": "開始するビュー",
+      "volumeTopLimit": "上位リストに表示する種目数：",
+      "protocolDays": "集計する日数：",
+      "protocolMinEntries": "比較に必要なセット数：",
+      "durationRecentCount": "比較するワークアウト数：",
+      "durationRestSeconds": "推定に使うセット間の休憩（秒）：",
+      "summaryMetrics": "表示するカード",
+      "calendarShowStats": "ストリークと今週の進捗を表示",
+      "heatMapShowImbalance": "バランスパネルを表示",
+      "volumeShowBreakdown": "上位種目のリストを表示",
+      "protocolChartType": "グラフ",
+      "chartPie": "円",
+      "chartDoughnut": "ドーナツ",
+      "protocolSortBy": "並び順（良い順）",
+      "durationShowTrend": "ばらつきの推移を表示",
+      "quickActionsShown": "表示するボタン",
+      "fileErrorsMaxItems": "一覧に表示するページ数（空欄: すべて）：",
+      "fileErrorsMaxTags": "1ページに付けられる筋肉タグの上限：",
+      "fileErrorsCheckSharedNames": "同じ種目名を持つページに印を付ける",
+      "muscleTagsGroupByMuscle": "タグを筋肉ごとにグループ化"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "CSVのエクササイズ",
     "customParameters": "カスタムパラメータ：",
     "customTitle": "カスタムタイトル:",
+    "dataLimit": "データ件数の上限（0 = すべて）：",
     "dataType": "データ型:",
     "dateRange": "日付範囲（日数）：",
+    "daysRange": "日数の範囲（0 = すべて）：",
     "delete": "削除",
     "duration": "時間（秒）：",
     "editTag": "タグを編集",

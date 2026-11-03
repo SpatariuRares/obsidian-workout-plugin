@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "Tüm egzersiz sayfaları geçerli",
+      "more": "…ve {count} tane daha",
       "noTags": "Frontmatter'da kas etiketi yok",
       "title": "Dosya hataları",
+      "tooManyTags": "Çok fazla kas etiketi ({count}, en fazla {max})",
       "sharedName": "{pages} ile aynı egzersiz adı: kayıtlar bunlardan yalnızca birine gider."
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "Filtreyi temizle",
       "filterActive": "Şuna göre filtrelendi:",
+      "noData": "Son {days} günde kaydedilen set yok",
+      "subtitle": "Antrenman protokolü dağılımı (son {days} gün)",
       "title": "Protokol dağılımı"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "Çok",
       "trainedDayNoVolume": "{day}: antrenman yapıldı",
       "weeks": "{count} hafta"
+    },
+    "widgetModal": {
+      "noSettings": "Bu widget'ın kendine ait bir ayarı yok.",
+      "update": "Widget'ı güncelle",
+      "updated": "Widget başarıyla güncellendi!",
+      "remove": "Widget'ı gösterge panelinden kaldır",
+      "removed": "Widget gösterge panelinden kaldırıldı.",
+      "edit": "Widget'ı düzenle",
+      "removeConfirm": "\"{widget}\" gösterge panelinden kaldırılsın mı?",
+      "removeConfirmButton": "Kaldır",
+      "calendarWeeks": "Gösterilen hafta sayısı:",
+      "quickStatsPeriods": "Gösterilen dönemler",
+      "quickStatsMetrics": "Gösterilen satırlar",
+      "heatMapTimeFrame": "Başlangıç dönemi",
+      "heatMapMetric": "Başlangıç metriği",
+      "heatMapView": "Başlangıç görünümü",
+      "volumeTopLimit": "Üst listedeki egzersiz sayısı:",
+      "protocolDays": "Sayılan gün sayısı:",
+      "protocolMinEntries": "Protokolün karşılaştırılması için gereken set sayısı:",
+      "durationRecentCount": "Karşılaştırılan antrenman sayısı:",
+      "durationRestSeconds": "Tahminde setler arası dinlenme (saniye):",
+      "summaryMetrics": "Gösterilen kartlar",
+      "calendarShowStats": "Seriyi ve bu haftanın ilerlemesini göster",
+      "heatMapShowImbalance": "Dengesizlik panelini göster",
+      "volumeShowBreakdown": "En çok yapılan egzersizler listesini göster",
+      "protocolChartType": "Grafik",
+      "chartPie": "Pasta",
+      "chartDoughnut": "Halka",
+      "protocolSortBy": "Sıralama (en iyi önce)",
+      "durationShowTrend": "Varyans trendini göster",
+      "quickActionsShown": "Gösterilen düğmeler",
+      "fileErrorsMaxItems": "Listelenen sayfalar (boş: tümü):",
+      "fileErrorsMaxTags": "Bir sayfanın sahip olabileceği en fazla kas etiketi:",
+      "fileErrorsCheckSharedNames": "Aynı egzersiz adını paylaşan sayfaları işaretle",
+      "muscleTagsGroupByMuscle": "Etiketleri kasa göre grupla"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "CSV egzersizi",
     "customParameters": "Özel parametreler:",
     "customTitle": "Özel başlık:",
+    "dataLimit": "Veri sınırı (0 = tümü):",
     "dataType": "Veri türü:",
     "dateRange": "Tarih aralığı (gün):",
+    "daysRange": "Gün aralığı (0 = tümü):",
     "delete": "Sil",
     "duration": "Süre (saniye):",
     "editTag": "Etiket düzenle",

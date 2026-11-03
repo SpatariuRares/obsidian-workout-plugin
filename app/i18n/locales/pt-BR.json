@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "Todas as páginas de exercício são válidas",
+      "more": "…e mais {count}",
       "noTags": "Nenhuma tag muscular no frontmatter",
       "title": "Erros de arquivo",
+      "tooManyTags": "Muitas tags musculares ({count}, no máximo {max})",
       "sharedName": "Mesmo nome de exercício que {pages}: os registros vão para apenas um deles"
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "Limpar filtro",
       "filterActive": "Filtrado por",
+      "noData": "Nenhuma série registrada nos últimos {days} dias",
+      "subtitle": "Distribuição dos protocolos de treino (últimos {days} dias)",
       "title": "Distribuição de protocolos"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "Mais",
       "trainedDayNoVolume": "{day}: treinou",
       "weeks": "{count} semanas"
+    },
+    "widgetModal": {
+      "noSettings": "Este widget não tem configurações próprias.",
+      "update": "Atualizar widget",
+      "updated": "Widget atualizado com sucesso!",
+      "remove": "Remover widget do painel",
+      "removed": "Widget removido do painel.",
+      "edit": "Editar widget",
+      "removeConfirm": "Remover \"{widget}\" do painel?",
+      "removeConfirmButton": "Remover",
+      "calendarWeeks": "Semanas exibidas:",
+      "quickStatsPeriods": "Períodos exibidos",
+      "quickStatsMetrics": "Linhas exibidas",
+      "heatMapTimeFrame": "Período inicial",
+      "heatMapMetric": "Métrica inicial",
+      "heatMapView": "Visualização inicial",
+      "volumeTopLimit": "Exercícios na lista dos principais:",
+      "protocolDays": "Dias contados:",
+      "protocolMinEntries": "Séries que um protocolo precisa ter para ser comparado:",
+      "durationRecentCount": "Treinos comparados:",
+      "durationRestSeconds": "Descanso entre séries na estimativa (segundos):",
+      "summaryMetrics": "Cartões exibidos",
+      "calendarShowStats": "Mostrar as sequências e o progresso desta semana",
+      "heatMapShowImbalance": "Mostrar o painel de desequilíbrio",
+      "volumeShowBreakdown": "Mostrar a lista dos principais exercícios",
+      "protocolChartType": "Gráfico",
+      "chartPie": "Pizza",
+      "chartDoughnut": "Rosca",
+      "protocolSortBy": "Ordenado por (melhor primeiro)",
+      "durationShowTrend": "Mostrar a tendência da variação",
+      "quickActionsShown": "Botões exibidos",
+      "fileErrorsMaxItems": "Páginas listadas (vazio: todas):",
+      "fileErrorsMaxTags": "Máximo de tags musculares por página:",
+      "fileErrorsCheckSharedNames": "Sinalizar páginas que compartilham um nome de exercício",
+      "muscleTagsGroupByMuscle": "Agrupar as tags por músculo"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "Exercício com CSV",
     "customParameters": "Parâmetros personalizados:",
     "customTitle": "Título personalizado:",
+    "dataLimit": "Limite de dados (0 = todos):",
     "dataType": "Tipo de dado:",
     "dateRange": "Intervalo de datas (dias):",
+    "daysRange": "Intervalo de dias (0 = todos):",
     "delete": "Excluir",
     "duration": "Duração (segundos):",
     "editTag": "Editar tag",

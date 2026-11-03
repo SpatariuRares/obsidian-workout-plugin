@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "Všechny stránky cvičení jsou v pořádku",
+      "more": "…a dalších {count}",
       "noTags": "Ve frontmatteru nejsou žádné štítky svalů",
       "title": "Chyby související se soubory",
+      "tooManyTags": "Příliš mnoho štítků svalů ({count}, nejvýše {max})",
       "sharedName": "Stejný název cvičení jako {pages}: záznamy se ukládají pouze do jednoho z nich"
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "Zrušit filtr",
       "filterActive": "Filtrováno podle",
+      "noData": "Za posledních {days} dní nejsou zapsané žádné série",
+      "subtitle": "Rozložení tréninkových protokolů (posledních {days} dní)",
       "title": "Rozdělení protokolů"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "Více",
       "trainedDayNoVolume": "{day}: trénováno",
       "weeks": "{count} týd."
+    },
+    "widgetModal": {
+      "noSettings": "Tento widget nemá vlastní nastavení.",
+      "update": "Aktualizovat widget",
+      "updated": "Widget byl úspěšně aktualizován!",
+      "remove": "Odebrat widget z dashboardu",
+      "removed": "Widget byl odebrán z dashboardu.",
+      "edit": "Upravit widget",
+      "removeConfirm": "Odebrat „{widget}“ z dashboardu?",
+      "removeConfirmButton": "Odebrat",
+      "calendarWeeks": "Zobrazené týdny:",
+      "quickStatsPeriods": "Zobrazená období",
+      "quickStatsMetrics": "Zobrazené řádky",
+      "heatMapTimeFrame": "Výchozí období",
+      "heatMapMetric": "Výchozí metrika",
+      "heatMapView": "Výchozí zobrazení",
+      "volumeTopLimit": "Cviky v žebříčku nejlepších:",
+      "protocolDays": "Počítané dny:",
+      "protocolMinEntries": "Série potřebné k porovnání protokolu:",
+      "durationRecentCount": "Porovnávané tréninky:",
+      "durationRestSeconds": "Odpočinek mezi sériemi v odhadu (sekundy):",
+      "summaryMetrics": "Zobrazené karty",
+      "calendarShowStats": "Zobrazit série a postup tohoto týdne",
+      "heatMapShowImbalance": "Zobrazit panel nerovnováhy",
+      "volumeShowBreakdown": "Zobrazit seznam nejlepších cviků",
+      "protocolChartType": "Graf",
+      "chartPie": "Koláčový",
+      "chartDoughnut": "Prstencový",
+      "protocolSortBy": "Seřazeno podle (nejlepší první)",
+      "durationShowTrend": "Zobrazit trend rozptylu",
+      "quickActionsShown": "Zobrazená tlačítka",
+      "fileErrorsMaxItems": "Zobrazené stránky (prázdné: všechny):",
+      "fileErrorsMaxTags": "Nejvíce štítků svalů na stránku:",
+      "fileErrorsCheckSharedNames": "Označit stránky, které sdílejí název cviku",
+      "muscleTagsGroupByMuscle": "Seskupit štítky podle svalu"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "CSV cvičení",
     "customParameters": "Vlastní parametry:",
     "customTitle": "Vlastní název:",
+    "dataLimit": "Limit dat (0 = vše):",
     "dataType": "Datový typ:",
     "dateRange": "Období (dny):",
+    "daysRange": "Rozsah dní (0 = vše):",
     "delete": "Smazat",
     "duration": "Doba (sekundy):",
     "editTag": "Upravit štítek",

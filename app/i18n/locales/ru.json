@@ -101,9 +101,11 @@
     },
     "fileErrors": {
       "allValid": "Все страницы упражнений корректны",
+      "more": "…и ещё {count}",
       "noTags": "В свойствах заметки нет тегов мышц",
       "title": "Ошибки при работе с файлами",
-      "sharedName": "То же название упражнения, что и у {pages}: записи журнала попадают только в одну из них."
+      "sharedName": "То же название упражнения, что и у {pages}: записи журнала попадают только в одну из них.",
+      "tooManyTags": "Слишком много тегов мышц ({count}, не больше {max})"
     },
     "muscleTags": {
       "description": "Описание",
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "Сбросить фильтр",
       "filterActive": "Отфильтровано по:",
+      "noData": "За последние {days} дн. подходы не записаны",
+      "subtitle": "Распределение тренировочных протоколов (за последние {days} дн.)",
       "title": "Распределение протоколов"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "trainedDay": "{day}: {volume} {unit}",
       "trainedDayNoVolume": "{day}: тренировка",
       "weeks": "{count} нед."
+    },
+    "widgetModal": {
+      "noSettings": "У этого виджета нет собственных настроек.",
+      "update": "Обновить виджет",
+      "updated": "Виджет успешно обновлён!",
+      "remove": "Удалить виджет с панели",
+      "removed": "Виджет удалён с панели.",
+      "edit": "Редактировать виджет",
+      "removeConfirm": "Удалить «{widget}» с панели управления?",
+      "removeConfirmButton": "Удалить",
+      "calendarWeeks": "Показывать недель:",
+      "quickStatsPeriods": "Показываемые периоды",
+      "quickStatsMetrics": "Показываемые строки",
+      "heatMapTimeFrame": "Начальный период",
+      "heatMapMetric": "Начальный показатель",
+      "heatMapView": "Начальный вид",
+      "volumeTopLimit": "Упражнений в топе:",
+      "protocolDays": "Учитываемых дней:",
+      "protocolMinEntries": "Подходов для сравнения протокола:",
+      "durationRecentCount": "Сравниваемых тренировок:",
+      "durationRestSeconds": "Отдых между подходами в оценке (секунды):",
+      "summaryMetrics": "Показываемые карточки",
+      "calendarShowStats": "Показывать серии и прогресс этой недели",
+      "heatMapShowImbalance": "Показывать панель дисбаланса",
+      "volumeShowBreakdown": "Показывать список лучших упражнений",
+      "protocolChartType": "График",
+      "chartPie": "Круговая",
+      "chartDoughnut": "Кольцевая",
+      "protocolSortBy": "Сортировка (сначала лучшие)",
+      "durationShowTrend": "Показывать тренд разброса",
+      "quickActionsShown": "Показываемые кнопки",
+      "fileErrorsMaxItems": "Перечисляемых страниц (пусто: все):",
+      "fileErrorsMaxTags": "Максимум тегов мышц у страницы:",
+      "fileErrorsCheckSharedNames": "Отмечать страницы с одинаковым названием упражнения",
+      "muscleTagsGroupByMuscle": "Группировать теги по мышцам"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "Упражнение в CSV",
     "customParameters": "Настраиваемые параметры:",
     "customTitle": "Пользовательское название:",
+    "dataLimit": "Лимит данных (0 = все):",
     "dataType": "Тип данных:",
     "dateRange": "Диапазон дат (дни):",
+    "daysRange": "Диапазон дней (0 = все):",
     "delete": "Удалить",
     "duration": "Продолжительность (секунды):",
     "editTag": "Редактировать тег",

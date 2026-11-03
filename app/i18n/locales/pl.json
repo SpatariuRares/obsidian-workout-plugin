@@ -101,8 +101,10 @@
     },
     "fileErrors": {
       "allValid": "Wszystkie strony ćwiczeń są poprawne",
+      "more": "…i {count} więcej",
       "noTags": "Brak tagów mięśni we frontmatter",
       "title": "Błędy w plikach",
+      "tooManyTags": "Za dużo tagów mięśni ({count}, najwyżej {max})",
       "sharedName": "Ta sama nazwa ćwiczenia co w {pages}: logi trafiają tylko do jednej z tych stron."
     },
     "muscleTags": {
@@ -118,6 +120,8 @@
     "protocolDistribution": {
       "clearFilter": "Wyczyść filtr",
       "filterActive": "Filtrowane według",
+      "noData": "W ostatnich {days} dniach nie zapisano żadnych serii",
+      "subtitle": "Podział według protokołów treningowych (ostatnie {days} dni)",
       "title": "Rozkład protokołów"
     },
     "protocolEffectiveness": {
@@ -216,6 +220,41 @@
       "more": "Więcej",
       "trainedDayNoVolume": "{day}: trening",
       "weeks": "{count} tyg."
+    },
+    "widgetModal": {
+      "noSettings": "Ten widżet nie ma własnych ustawień.",
+      "update": "Zaktualizuj widżet",
+      "updated": "Widżet został zaktualizowany!",
+      "remove": "Usuń widżet z pulpitu",
+      "removed": "Widżet został usunięty z pulpitu.",
+      "edit": "Edytuj widżet",
+      "removeConfirm": "Usunąć „{widget}” z pulpitu?",
+      "removeConfirmButton": "Usuń",
+      "calendarWeeks": "Pokazane tygodnie:",
+      "quickStatsPeriods": "Pokazane okresy",
+      "quickStatsMetrics": "Pokazane wiersze",
+      "heatMapTimeFrame": "Okres startowy",
+      "heatMapMetric": "Metryka startowa",
+      "heatMapView": "Widok startowy",
+      "volumeTopLimit": "Ćwiczenia na liście najlepszych:",
+      "protocolDays": "Liczone dni:",
+      "protocolMinEntries": "Serie potrzebne, by porównać protokół:",
+      "durationRecentCount": "Porównywane treningi:",
+      "durationRestSeconds": "Odpoczynek między seriami w szacunku (sekundy):",
+      "summaryMetrics": "Pokazane karty",
+      "calendarShowStats": "Pokaż passy i postęp w tym tygodniu",
+      "heatMapShowImbalance": "Pokaż panel nierównowagi",
+      "volumeShowBreakdown": "Pokaż listę najczęściej wykonywanych ćwiczeń",
+      "protocolChartType": "Wykres",
+      "chartPie": "Kołowy",
+      "chartDoughnut": "Pierścieniowy",
+      "protocolSortBy": "Uporządkowane według (najlepsze pierwsze)",
+      "durationShowTrend": "Pokaż trend wariancji",
+      "quickActionsShown": "Pokazane przyciski",
+      "fileErrorsMaxItems": "Wypisane strony (puste: wszystkie):",
+      "fileErrorsMaxTags": "Najwięcej tagów mięśni na stronie:",
+      "fileErrorsCheckSharedNames": "Oznacz strony o tej samej nazwie ćwiczenia",
+      "muscleTagsGroupByMuscle": "Grupuj tagi według mięśni"
     }
   },
   "duration": {
@@ -582,8 +621,10 @@
     "csvExercise": "Ćwiczenie z pliku CSV",
     "customParameters": "Parametry niestandardowe:",
     "customTitle": "Własny tytuł:",
+    "dataLimit": "Limit danych (0 = wszystkie):",
     "dataType": "Typ danych:",
     "dateRange": "Zakres dat (dni):",
+    "daysRange": "Zakres dni (0 = wszystkie):",
     "delete": "Usuń",
     "duration": "Czas trwania (sekundy):",
     "editTag": "Edytuj tag",

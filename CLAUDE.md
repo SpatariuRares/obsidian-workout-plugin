@@ -317,6 +317,7 @@ import { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
 
 - `import { t } from "@app/i18n";` then `t("common.clear")`. Keys are nested JSON paths in `app/i18n/locales/en.json`.
 - **Only edit `en.json`.** The other 23 locales are filled by `.github/workflows/translate.yml` (Ollama translategemma, `AI translate/`, one runner per locale): it runs when `en.json` changes on `main`, when the pre-push hook asks for a branch, and commits the locales to that branch (a release only checks that none is missing). `AI translate/missing_locales.py` lists the locales still missing keys.
+- Before a release, the `translate` skill does it on this PC instead: one Haiku subagent per language adds the missing keys and creates or updates every `README.<CODE>.md` (code in upper case, e.g. `README.PT-BR.md`) from `README.md`, then commits only those files. `node scripts/translations-status.mjs` says what is out of date (a README is stale when `README.md` changed after the translation's last commit); the release skill runs it, and a hook blocks the release commit and version-tag pushes until it passes.
 - The translator repairs or rejects placeholder changes (`AI translate/placeholders.py`, e.g. the model turning `{count}` into `{{count}}`), and `AI translate/check_locales.py` fails the job before the locales are committed if any locale still breaks a placeholder, code span or `**bold**` of en.json. Python tests: `cd "AI translate" && venv/bin/python -m unittest test_placeholders`.
 - The job only translates **missing** keys. When you change the English text of an existing key (or remove a key), delete that key from every other locale too, otherwise the old translation stays. Untranslated keys fall back to English at runtime.
 - Write real UI text, never the key name spelled out ("Delete this log entry?", not "Delete Confirm"), in sentence case.
@@ -709,7 +710,8 @@ Claude can then read console errors, screenshot rendered code blocks, run JS in 
 
 ### Claude Code automations (`.claude/`)
 
-- **Hooks** (`.claude/settings.json`, scripts in `.claude/hooks/`): editing `main.js`, `styles.css` or any `.csv` is blocked (build outputs and user data); every edited `.ts` file is linted with `--max-warnings 0` right away.
+- **Hooks** (`.claude/settings.json`, scripts in `.claude/hooks/`): editing `main.js`, `styles.css` or any `.csv` is blocked (build outputs and user data); every edited `.ts` file is linted with `--max-warnings 0` right away; the release commit (`chore: release X.Y.Z`) and version-tag pushes are blocked while `scripts/translations-status.mjs` reports missing translations.
+- **`translate` skill**: translates locales and READMEs with Haiku subagents, one per language (`commit` to commit the result, `review` to also review existing values).
 - **`architecture-guardian` agent**: run it on a branch or diff before merging; it reports code that re-derives what a deep module owns (training days, exercise pages, fields, note blocks, the log CSV, protocols, muscles).
 - **`obsidian-verify` skill**: live check in the running Obsidian without writing notes or the log (rebuild, reload, detached renders, modals closed unsaved, console).
 - **`release` skill**: also pushes `main` first when it is ahead, reruns failed translation jobs, and puts the release notes on the GitHub release.

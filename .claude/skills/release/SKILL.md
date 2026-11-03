@@ -22,8 +22,7 @@ This skill bumps `manifest.json`, `package.json` and `package-lock.json` to the 
    - `git branch --show-current` is `main`
    - `git status --porcelain` is empty
    - `git fetch origin && git status -sb` shows the branch is not behind `origin/main`. Being **ahead** is fine: step 6 pushes `main` (those commits plus the release commit) before the tag. List the unpushed commits in the changelog preview.
-   - `cd "AI translate" && python3 missing_locales.py` prints nothing. If it lists locales, the Translate workflow is still running or failed: check `gh run list --workflow=translate.yml --limit 3`, wait for it (`gh run watch <id> --exit-status` in the background), `git pull`, and check again. Don't skip this: the release run no longer translates, it fails when a locale misses keys.
-   - If Translate **failed**: a locale job failing at "Start Ollama and pull model" is the runner failing to start Ollama or download the model, not our strings; and because one locale failed, "Check and commit locales" was skipped, so *no* locale was committed. Rerun only the failed jobs (their dependents rerun too): `gh run rerun <id> --failed`, wait, `git pull`, recheck. A failure at "Check translated locales" is a real placeholder problem: show the log (`gh run view <id> --log-failed`) to the user instead of rerunning.
+   - `node scripts/translations-status.mjs` exits 0. If it reports locales missing keys or READMEs out of date, run the `translate` skill with the argument `commit`: it translates on this PC with one Haiku subagent per language and commits only the translation files. Then check again. Don't skip this: the release run never translates, it fails when a locale misses keys, and a hook blocks the release commit until this passes.
 2. **Pick the version**:
    - Latest tag: `git tag --sort=-v:refname | head -1`
    - If `$ARGUMENTS` is an explicit `X.Y.Z`, use it. If it is `patch`/`minor`/`major`, or empty (defaults to `patch`), bump the latest tag.

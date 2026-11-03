@@ -1,7 +1,7 @@
 import { t } from "@app/i18n";
 import { CommandHandlerService } from "../CommandHandlerService";
 import { App, TFile } from "obsidian";
-import { ExerciseTypeMigration } from "@app/compatibility/migration";
+import { ExerciseTypeMigration } from "@app/compatibility/migration/ExerciseTypeMigration";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { CanvasExporter } from "@app/features/canvas/business/CanvasExporter";
 import { WorkoutFileSuggestModal } from "@app/features/canvas/modals/WorkoutFileSuggestModal";
@@ -104,7 +104,7 @@ jest.mock("@app/services/examples/GettingStartedGuide", () => ({
   createExampleNotes: jest.fn().mockResolvedValue("cancelled"),
   openGettingStartedGuide: jest.fn().mockResolvedValue(false),
 }));
-jest.mock("@app/compatibility/migration", () => ({
+jest.mock("@app/compatibility/migration/ExerciseTypeMigration", () => ({
   ExerciseTypeMigration: jest
     .fn()
     .mockImplementation(() => ({ migrateExerciseTypes: jest.fn() })),

@@ -4,7 +4,7 @@ import { t } from "@app/i18n";
 import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { runAddMissingBlockIds } from "@app/utils/BlockIdMigration";
-import { ExerciseTypeMigration } from "@app/compatibility/migration";
+import { ExerciseTypeMigration } from "@app/compatibility/migration/ExerciseTypeMigration";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 /**

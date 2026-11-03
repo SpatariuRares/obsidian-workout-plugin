@@ -24,7 +24,8 @@
     },
     "defaultTitle": "Trend {type}",
     "noTypesAvailable": "Keine verfügbaren Diagrammtypen",
-    "noEligibleE1rm": "Keine geeigneten Sätze für das geschätzte 1RM. Protokolliere ein positives Gewicht mit 1–12 Wiederholungen. Aufwärmsätze und Drop-Sets sind ausgeschlossen."
+    "noEligibleE1rm": "Keine geeigneten Sätze für das geschätzte 1RM. Protokolliere ein positives Gewicht mit 1–12 Wiederholungen. Aufwärmsätze und Drop-Sets sind ausgeschlossen.",
+    "editChart": "Diagramm bearbeiten"
   },
   "commands": {
     "addExerciseBlock": "Übungsblock hinzufügen",
@@ -558,7 +559,8 @@
       "decreaseBy": "{label} um {increment} verringern",
       "increaseBy": "{label} um {increment} erhöhen",
       "deleteSet": "Satz löschen",
-      "updateDashboard": "Dashboard aktualisieren"
+      "updateDashboard": "Dashboard aktualisieren",
+      "updateChart": "Diagramm aktualisieren"
     },
     "canvasLayout": "Anordnung",
     "canvasOptions": "Einstellungen",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field} muss eine ganze Zahl sein",
       "newRecord": "Neuer Rekord: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Diagramm erfolgreich eingefügt!",
+      "chartUpdated": "Diagramm erfolgreich aktualisiert!",
+      "chartUpdateFailed": "Diagramm konnte nicht aktualisiert werden: Es wurde in seiner Notiz nicht gefunden, oder ein anderes Diagramm ohne ID hat dieselben Einstellungen. Öffne die Notiz neu und versuche es noch einmal.",
       "dashboardInserted": "Dashboard erfolgreich eingefügt!",
       "exerciseNameRequired": "Bitte gib einen Namen für die Übung ein",
       "exerciseSectionCreated": "Übungsabschnitt erfolgreich erstellt!",
@@ -778,7 +782,8 @@
       "insertTable": "Tabelle der Trainingsprotokolle einfügen",
       "insertTimer": "Trainings-Timer einfügen",
       "muscleTagManager": "Muskel-Tags verwalten",
-      "editDashboard": "Dashboard bearbeiten"
+      "editDashboard": "Dashboard bearbeiten",
+      "editChart": "Diagrammeinstellungen bearbeiten"
     },
     "workout": "Training (optional):",
     "workoutFile": "Trainingsdatei:",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "Daten werden geladen...",
+    "noDataForWorkout": "Keine Daten für Training {workout} gefunden.",
+    "noDataForExerciseInWorkout": "Keine Daten für Übung {exercise} in Training {workout} gefunden.",
+    "loadError": {
+      "chart": "Fehler beim Laden des Diagramms: {error}",
+      "log": "Fehler beim Laden des Protokolls: {error}",
+      "timer": "Fehler beim Laden des Timers: {error}",
+      "dashboard": "Fehler beim Laden des Dashboards: {error}",
+      "duration": "Fehler beim Laden der Dauerschätzung: {error}"
+    },
     "validation": {
       "title": "Ungültige Parameter:",
       "notANumber": "{key} muss eine Zahl sein, aber es ist \"{value}\"",

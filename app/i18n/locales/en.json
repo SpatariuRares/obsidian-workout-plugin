@@ -24,7 +24,8 @@
     },
     "defaultTitle": "Trend {type}",
     "noTypesAvailable": "no chart types available",
-    "noEligibleE1rm": "No eligible sets for estimated 1RM. Log a positive weight with 1–12 reps, excluding warm-up and drop sets."
+    "noEligibleE1rm": "No eligible sets for estimated 1RM. Log a positive weight with 1–12 reps, excluding warm-up and drop sets.",
+    "editChart": "Edit chart"
   },
   "commands": {
     "addExerciseBlock": "Add exercise block",
@@ -558,7 +559,8 @@
       "updateTable": "Update table",
       "updateTargetWeight": "Update target",
       "updateTimer": "Update timer",
-      "updateDashboard": "Update dashboard"
+      "updateDashboard": "Update dashboard",
+      "updateChart": "Update chart"
     },
     "canvasLayout": "Layout",
     "canvasOptions": "Options",
@@ -644,6 +646,8 @@
       "canvasExportError": "Canvas Export Error: {error}",
       "canvasExported": "Canvas Exported ({path})",
       "chartInserted": "Chart inserted successfully!",
+      "chartUpdated": "Chart updated successfully!",
+      "chartUpdateFailed": "Failed to update chart: it was not found in its note, or another chart without an id has the same settings. Reopen the note and try again.",
       "confirmUpdateTarget": "Update the target to {targetWeight}{weightUnit}?",
       "dashboardInserted": "Dashboard inserted successfully!",
       "dismissAchievement": "Dismiss achievement",
@@ -790,7 +794,8 @@
       "insertTable": "Insert workout log table",
       "insertTimer": "Insert workout timer",
       "muscleTagManager": "Manage muscle tags",
-      "editDashboard": "Edit dashboard"
+      "editDashboard": "Edit dashboard",
+      "editChart": "Edit workout chart"
     },
     "weightUnitToggle": "Unit for this entry",
     "work": "Work",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "Loading data...",
+    "noDataForWorkout": "No data found for workout {workout}.",
+    "noDataForExerciseInWorkout": "No data found for exercise {exercise} in workout {workout}.",
+    "loadError": {
+      "chart": "Error loading chart: {error}",
+      "log": "Error loading log: {error}",
+      "timer": "Error loading timer: {error}",
+      "dashboard": "Error loading dashboard: {error}",
+      "duration": "Error loading duration estimator: {error}"
+    },
     "validation": {
       "title": "Invalid parameters:",
       "notANumber": "{key} must be a number, but it is \"{value}\"",

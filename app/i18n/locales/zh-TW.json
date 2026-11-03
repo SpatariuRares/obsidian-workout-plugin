@@ -24,7 +24,8 @@
     },
     "defaultTitle": "趨勢 {type}",
     "noTypesAvailable": "沒有可用的圖表類型",
-    "noEligibleE1rm": "無法估算 1RM。請紀錄 1–12 次、重量為正數的組，不包括熱身組和遞減組。"
+    "noEligibleE1rm": "無法估算 1RM。請紀錄 1–12 次、重量為正數的組，不包括熱身組和遞減組。",
+    "editChart": "編輯圖表"
   },
   "commands": {
     "addExerciseBlock": "新增動作區塊",
@@ -558,7 +559,8 @@
       "decreaseBy": "將{label}減少{increment}",
       "increaseBy": "將{label}增加{increment}",
       "deleteSet": "刪除組",
-      "updateDashboard": "更新儀表板"
+      "updateDashboard": "更新儀表板",
+      "updateChart": "更新圖表"
     },
     "canvasLayout": "佈局",
     "canvasOptions": "選項",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field} 必須為整數",
       "newRecord": "新紀錄：{weight} {unit}（+{increase} {unit}）",
       "chartInserted": "圖表已成功插入！",
+      "chartUpdated": "圖表已成功更新！",
+      "chartUpdateFailed": "無法更新圖表：在其所在筆記中找不到它，或另一個沒有 id 的圖表有相同設定。請重新開啟筆記後再試一次。",
       "dashboardInserted": "儀表板已成功插入！",
       "exerciseNameRequired": "請輸入動作名稱",
       "exerciseSectionCreated": "動作區段已成功建立！",
@@ -778,7 +782,8 @@
       "insertTable": "插入運動紀錄表格",
       "insertTimer": "插入運動計時器",
       "muscleTagManager": "管理肌肉標籤",
-      "editDashboard": "編輯儀表板"
+      "editDashboard": "編輯儀表板",
+      "editChart": "編輯運動圖表"
     },
     "workout": "運動（可選）：",
     "workoutFile": "運動檔案：",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "正在載入資料...",
+    "noDataForWorkout": "找不到運動 {workout} 的資料。",
+    "noDataForExerciseInWorkout": "找不到運動 {workout} 中動作 {exercise} 的資料。",
+    "loadError": {
+      "chart": "載入圖表時發生錯誤：{error}",
+      "log": "載入紀錄時發生錯誤：{error}",
+      "timer": "載入計時器時發生錯誤：{error}",
+      "dashboard": "載入儀表板時發生錯誤：{error}",
+      "duration": "載入時長估算時發生錯誤：{error}"
+    },
     "validation": {
       "title": "無效參數：",
       "notANumber": "{key} 必須為數字，但目前為 \"{value}\"",

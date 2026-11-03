@@ -1,6 +1,6 @@
 import { TrendIndicators } from "@app/types/CommonTypes";
 import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
-import { FormatUtils } from "@app/utils";
+import { FormatUtils } from "@app/utils/FormatUtils";
 import { t } from "@app/i18n";
 import { trendOf } from "@app/services/history/TrainingHistory";
 

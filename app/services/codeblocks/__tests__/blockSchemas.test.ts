@@ -46,6 +46,7 @@ describe("block schemas", () => {
       expect(dashboardBlock.parse("dateRange: 0")).toEqual({
         params: { dateRange: 0 },
         errors: [],
+        invalidKeys: [],
       });
     });
   });
@@ -112,6 +113,7 @@ describe("block schemas", () => {
       ).toEqual({
         params: { widgets: ["volume", "heatMap", "summary"] },
         errors: [],
+        invalidKeys: [],
       });
     });
 
@@ -127,6 +129,7 @@ describe("block schemas", () => {
           "grid.heatMap": { column: 1, row: 2, width: 2, height: 3 },
         },
         errors: [],
+        invalidKeys: [],
       });
     });
 

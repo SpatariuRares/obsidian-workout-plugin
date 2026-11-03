@@ -24,7 +24,8 @@
     },
     "defaultTitle": "ट्रेंड {type}",
     "noTypesAvailable": "कोई चार्ट प्रकार उपलब्ध नहीं",
-    "noEligibleE1rm": "अनुमानित 1RM के लिए कोई उपयुक्त सेट उपलब्ध नहीं हैं। वार्म-अप और ड्रॉप सेट को छोड़कर, 1–12 रेप्स के साथ एक सकारात्मक वजन लॉग करें।"
+    "noEligibleE1rm": "अनुमानित 1RM के लिए कोई उपयुक्त सेट उपलब्ध नहीं हैं। वार्म-अप और ड्रॉप सेट को छोड़कर, 1–12 रेप्स के साथ एक सकारात्मक वजन लॉग करें।",
+    "editChart": "चार्ट संपादित करें"
   },
   "commands": {
     "addExerciseBlock": "व्यायाम ब्लॉक जोड़ें",
@@ -558,7 +559,8 @@
       "decreaseBy": "{label} को {increment} से कम करें",
       "increaseBy": "{label} को {increment} से बढ़ाएं",
       "deleteSet": "सेट हटाएं",
-      "updateDashboard": "डैशबोर्ड अपडेट करें"
+      "updateDashboard": "डैशबोर्ड अपडेट करें",
+      "updateChart": "चार्ट अपडेट करें"
     },
     "canvasLayout": "लेआउट",
     "canvasOptions": "विकल्प",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field} एक पूर्ण संख्या होनी चाहिए",
       "newRecord": "नया रिकॉर्ड: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "चार्ट सफलतापूर्वक डाला गया!",
+      "chartUpdated": "चार्ट सफलतापूर्वक अपडेट हो गया!",
+      "chartUpdateFailed": "चार्ट अपडेट नहीं हो सका: यह अपने नोट में नहीं मिला, या बिना id वाला कोई दूसरा चार्ट इन्हीं सेटिंग्स के साथ मौजूद है। नोट दोबारा खोलें और फिर से कोशिश करें।",
       "dashboardInserted": "डैशबोर्ड सफलतापूर्वक डाला गया!",
       "exerciseNameRequired": "कृपया व्यायाम का नाम दर्ज करें",
       "exerciseSectionCreated": "व्यायाम अनुभाग सफलतापूर्वक बनाया गया!",
@@ -778,7 +782,8 @@
       "insertTable": "वर्कआउट लॉग तालिका डालें",
       "insertTimer": "वर्कआउट टाइमर डालें",
       "muscleTagManager": "मांसपेशी टैग प्रबंधित करें",
-      "editDashboard": "डैशबोर्ड संपादित करें"
+      "editDashboard": "डैशबोर्ड संपादित करें",
+      "editChart": "वर्कआउट चार्ट संपादित करें"
     },
     "workout": "वर्कआउट (वैकल्पिक):",
     "workoutFile": "वर्कआउट फ़ाइल:",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "डेटा लोड हो रहा है...",
+    "noDataForWorkout": "वर्कआउट {workout} के लिए कोई डेटा नहीं मिला।",
+    "noDataForExerciseInWorkout": "वर्कआउट {workout} में व्यायाम {exercise} के लिए कोई डेटा नहीं मिला।",
+    "loadError": {
+      "chart": "चार्ट लोड करने में त्रुटि: {error}",
+      "log": "लॉग लोड करने में त्रुटि: {error}",
+      "timer": "टाइमर लोड करने में त्रुटि: {error}",
+      "dashboard": "डैशबोर्ड लोड करने में त्रुटि: {error}",
+      "duration": "अवधि अनुमानक लोड करने में त्रुटि: {error}"
+    },
     "validation": {
       "title": "अवैध पैरामीटर:",
       "notANumber": "{key} एक संख्या होनी चाहिए, लेकिन यह \"{value}\" है।",

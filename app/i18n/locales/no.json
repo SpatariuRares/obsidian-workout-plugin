@@ -24,7 +24,8 @@
     },
     "defaultTitle": "Trend {type}",
     "noTypesAvailable": "Ingen diagramtyper tilgjengelig",
-    "noEligibleE1rm": "Ingen egnede sett for estimert 1RM. Logg en positiv vekt med 1–12 repetisjoner, ekskludert oppvarming og dropsett."
+    "noEligibleE1rm": "Ingen egnede sett for estimert 1RM. Logg en positiv vekt med 1–12 repetisjoner, ekskludert oppvarming og dropsett.",
+    "editChart": "Rediger diagram"
   },
   "commands": {
     "addExerciseBlock": "Legg til øvelsesblokk",
@@ -558,7 +559,8 @@
       "decreaseBy": "Reduser {label} med {increment}",
       "increaseBy": "Øk {label} med {increment}",
       "deleteSet": "Slett sett",
-      "updateDashboard": "Oppdater dashbord"
+      "updateDashboard": "Oppdater dashbord",
+      "updateChart": "Oppdater diagram"
     },
     "canvasLayout": "Oppsett",
     "canvasOptions": "Alternativer",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field} må være et helt tall",
       "newRecord": "Ny rekord: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Diagrammet er lagt inn med suksess!",
+      "chartUpdateFailed": "Kunne ikke oppdatere diagrammet: det ble ikke funnet i notatet, eller et annet diagram uten ID har de samme innstillingene. Åpne notatet på nytt og prøv igjen.",
+      "chartUpdated": "Diagrammet er oppdatert!",
       "dashboardInserted": "Dashboard er nå satt inn med suksess!",
       "exerciseNameRequired": "Vennligst oppgi et øvelsesnavn",
       "exerciseSectionCreated": "Øvelsesseksjon opprettet med suksess!",
@@ -778,7 +782,8 @@
       "insertTable": "Legg til tabell for treningslogg",
       "insertTimer": "Legg til trenings-timer",
       "muscleTagManager": "Administrer muskeltagger",
-      "editDashboard": "Rediger dashbord"
+      "editDashboard": "Rediger dashbord",
+      "editChart": "Rediger treningsdiagram"
     },
     "workout": "Trening (valgfritt):",
     "workoutFile": "Treningsfil:",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "Laster inn data...",
+    "noDataForWorkout": "Ingen data funnet for trening {workout}.",
+    "noDataForExerciseInWorkout": "Ingen data funnet for øvelsen {exercise} i trening {workout}.",
+    "loadError": {
+      "chart": "Feil ved lasting av diagram: {error}",
+      "log": "Feil ved lasting av logg: {error}",
+      "timer": "Feil ved lasting av timer: {error}",
+      "dashboard": "Feil ved lasting av dashbord: {error}",
+      "duration": "Feil ved lasting av varighetsestimator: {error}"
+    },
     "validation": {
       "title": "Ugyldige parametere:",
       "notANumber": "{key} må være et tall, men det er \"{value}\"",

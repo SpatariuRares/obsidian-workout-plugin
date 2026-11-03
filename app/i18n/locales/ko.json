@@ -24,7 +24,8 @@
     },
     "defaultTitle": "추세 {type}",
     "noTypesAvailable": "사용 가능한 차트 유형이 없습니다",
-    "noEligibleE1rm": "1RM 추정에 사용할 수 있는 세트가 없습니다. 워밍업과 드롭 세트를 제외하고, 1–12회 반복하는 양의 무게를 기록하세요."
+    "noEligibleE1rm": "1RM 추정에 사용할 수 있는 세트가 없습니다. 워밍업과 드롭 세트를 제외하고, 1–12회 반복하는 양의 무게를 기록하세요.",
+    "editChart": "차트 편집"
   },
   "commands": {
     "addExerciseBlock": "운동 블록 추가",
@@ -558,7 +559,8 @@
       "decreaseBy": "{label}을(를) {increment} 줄이기",
       "increaseBy": "{label}을(를) {increment} 늘리기",
       "deleteSet": "세트 삭제",
-      "updateDashboard": "대시보드 업데이트"
+      "updateDashboard": "대시보드 업데이트",
+      "updateChart": "차트 업데이트"
     },
     "canvasLayout": "레이아웃",
     "canvasOptions": "옵션",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field}은(는) 정수여야 합니다",
       "newRecord": "새로운 기록: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "차트가 성공적으로 삽입되었습니다!",
+      "chartUpdated": "차트가 성공적으로 업데이트되었습니다!",
+      "chartUpdateFailed": "차트를 업데이트하지 못했습니다. 노트에서 찾을 수 없거나, ID가 없는 다른 차트가 같은 설정을 가지고 있습니다. 노트를 다시 열고 다시 시도하세요.",
       "dashboardInserted": "대시보드가 성공적으로 삽입되었습니다!",
       "exerciseNameRequired": "운동 종목 이름을 입력해 주세요.",
       "exerciseSectionCreated": "운동 섹션이 성공적으로 생성되었습니다!",
@@ -778,7 +782,8 @@
       "insertTable": "운동 기록 테이블 삽입",
       "insertTimer": "운동 타이머 삽입",
       "muscleTagManager": "근육 태그 관리",
-      "editDashboard": "대시보드 편집"
+      "editDashboard": "대시보드 편집",
+      "editChart": "차트 편집"
     },
     "workout": "운동 루틴 (선택 사항):",
     "workoutFile": "운동 루틴 파일:",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "데이터 불러오는 중...",
+    "noDataForWorkout": "운동 루틴 {workout}에 대한 데이터가 없습니다.",
+    "noDataForExerciseInWorkout": "운동 루틴 {workout}의 운동 종목 {exercise}에 대한 데이터가 없습니다.",
+    "loadError": {
+      "chart": "차트 로드 오류: {error}",
+      "log": "로그 로드 오류: {error}",
+      "timer": "타이머 로드 오류: {error}",
+      "dashboard": "대시보드 로드 오류: {error}",
+      "duration": "운동 시간 추정기 로드 오류: {error}"
+    },
     "validation": {
       "title": "유효하지 않은 매개변수:",
       "notANumber": "{key}는 숫자여야 하지만, \"{value}\"입니다.",

@@ -24,7 +24,8 @@
     },
     "defaultTitle": "Trend {type}",
     "noTypesAvailable": "není dostupných žádných typů grafů",
-    "noEligibleE1rm": "Žádné vhodné série pro odhad 1RM. Zaznamenejte kladnou váhu s 1–12 opakováními. Rozcvičkové série a série s poklesem váhy se nepočítají."
+    "noEligibleE1rm": "Žádné vhodné série pro odhad 1RM. Zaznamenejte kladnou váhu s 1–12 opakováními. Rozcvičkové série a série s poklesem váhy se nepočítají.",
+    "editChart": "Upravit graf"
   },
   "commands": {
     "addExerciseBlock": "Přidat blok cvičení",
@@ -558,7 +559,8 @@
       "decreaseBy": "Snížit {label} o {increment}",
       "increaseBy": "Zvýšit {label} o {increment}",
       "deleteSet": "Smazat sérii",
-      "updateDashboard": "Aktualizovat dashboard"
+      "updateDashboard": "Aktualizovat dashboard",
+      "updateChart": "Aktualizovat graf"
     },
     "canvasLayout": "Rozvržení",
     "canvasOptions": "Možnosti",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field} musí být celé číslo.",
       "newRecord": "Nový osobní rekord: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Graf byl úspěšně vložen!",
+      "chartUpdated": "Graf byl úspěšně aktualizován!",
+      "chartUpdateFailed": "Nepodařilo se aktualizovat graf: nebyl nalezen v poznámce, nebo jiný graf bez ID má stejná nastavení. Otevřete poznámku znovu a zkuste to znovu.",
       "dashboardInserted": "Dashboard byl úspěšně vložen!",
       "exerciseNameRequired": "Prosím, zadejte název cvičení.",
       "exerciseSectionCreated": "Úsek pro cvičení byl úspěšně vytvořen!",
@@ -778,7 +782,8 @@
       "insertTable": "Vložit tabulku záznamů tréninku",
       "insertTimer": "Vložit časovač tréninku",
       "muscleTagManager": "Spravovat štítky svalů",
-      "editDashboard": "Upravit dashboard"
+      "editDashboard": "Upravit dashboard",
+      "editChart": "Upravit graf tréninku"
     },
     "workout": "Trénink (volitelné):",
     "workoutFile": "Soubor tréninku:",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "Načítání dat...",
+    "noDataForWorkout": "Pro trénink {workout} nebyla nalezena žádná data.",
+    "noDataForExerciseInWorkout": "Pro cvičení {exercise} v tréninku {workout} nebyla nalezena žádná data.",
+    "loadError": {
+      "chart": "Chyba při načítání grafu: {error}",
+      "log": "Chyba při načítání záznamů: {error}",
+      "timer": "Chyba při načítání časovače: {error}",
+      "dashboard": "Chyba při načítání přehledu: {error}",
+      "duration": "Chyba při načítání odhadu délky tréninku: {error}"
+    },
     "validation": {
       "title": "Neplatné parametry:",
       "notANumber": "Hodnota {key} musí být číslo, ale je \"{value}\"",

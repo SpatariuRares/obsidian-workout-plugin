@@ -67,9 +67,7 @@ export class EmbeddedChartView extends BaseView {
   ): Promise<void> {
     const freshData = await this.loadChartData(params);
     container.empty();
-    if (freshData.length > 0) {
-      await this.createChart(container, freshData, params);
-    }
+    await this.createChart(container, freshData, params);
   }
 
   async createChart(

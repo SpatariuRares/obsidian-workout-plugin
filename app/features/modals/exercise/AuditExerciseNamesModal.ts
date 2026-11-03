@@ -2,7 +2,8 @@ import { App, Notice } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
-import { StringUtils, ErrorUtils } from "@app/utils";
+import { StringUtils } from "@app/utils/StringUtils";
+import { ErrorUtils } from "@app/utils/ErrorUtils";
 import {
   findNameMismatches,
   type MismatchEntry,

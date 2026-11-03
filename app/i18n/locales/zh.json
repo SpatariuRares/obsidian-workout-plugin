@@ -24,7 +24,8 @@
     },
     "defaultTitle": "趋势 {type}",
     "noTypesAvailable": "没有可用的图表类型",
-    "noEligibleE1rm": "没有可计入预估 1RM 的组。请记录重量为正数、次数为 1–12 次的组，不包括热身组和递减组。"
+    "noEligibleE1rm": "没有可计入预估 1RM 的组。请记录重量为正数、次数为 1–12 次的组，不包括热身组和递减组。",
+    "editChart": "编辑图表"
   },
   "commands": {
     "addExerciseBlock": "添加训练动作块",
@@ -558,7 +559,8 @@
       "decreaseBy": "将{label}减少{increment}",
       "increaseBy": "将{label}增加{increment}",
       "deleteSet": "删除组",
-      "updateDashboard": "更新仪表盘"
+      "updateDashboard": "更新仪表盘",
+      "updateChart": "更新图表"
     },
     "canvasLayout": "布局",
     "canvasOptions": "选项",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field} 必须是整数",
       "newRecord": "新记录：{weight} {unit}（+{increase} {unit}）",
       "chartInserted": "图表已成功插入！",
+      "chartUpdated": "图表已成功更新！",
+      "chartUpdateFailed": "更新图表失败：在其所在笔记中找不到该图表，或另一个没有 id 的图表具有相同设置。请重新打开笔记后再试。",
       "dashboardInserted": "仪表盘已成功插入！",
       "exerciseNameRequired": "请输入训练动作名称",
       "exerciseSectionCreated": "训练板块已成功创建！",
@@ -778,7 +782,8 @@
       "insertTable": "插入训练记录表格",
       "insertTimer": "插入训练计时器",
       "muscleTagManager": "管理肌肉标签",
-      "editDashboard": "编辑仪表盘"
+      "editDashboard": "编辑仪表盘",
+      "editChart": "编辑训练图表"
     },
     "workout": "训练（可选）：",
     "workoutFile": "训练文件：",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "正在加载数据...",
+    "noDataForWorkout": "未找到训练 {workout} 的数据。",
+    "noDataForExerciseInWorkout": "未找到训练 {workout} 中训练动作 {exercise} 的数据。",
+    "loadError": {
+      "chart": "加载图表时出错：{error}",
+      "log": "加载记录时出错：{error}",
+      "timer": "加载计时器时出错：{error}",
+      "dashboard": "加载仪表盘时出错：{error}",
+      "duration": "加载时长估算器时出错：{error}"
+    },
     "validation": {
       "title": "无效参数：",
       "notANumber": "{key} 必须是一个数字，但它却是“{value}”",

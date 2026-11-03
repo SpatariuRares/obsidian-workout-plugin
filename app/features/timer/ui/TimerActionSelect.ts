@@ -1,6 +1,6 @@
 import { App } from "obsidian";
 
-import { IconDropdown } from "@app/components/molecules/IconDropdown";
+import { BlockMenu } from "@app/features/common/ui/BlockMenu";
 import { t } from "@app/i18n";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { EditTimerModal } from "@app/features/timer/modals/EditTimerModal";
@@ -37,34 +37,20 @@ export class TimerActionSelect {
       return null;
     }
 
-    const { wrapper } = IconDropdown.create(container, {
-      icon: ICONS.ACTIONS.MENU,
-      ariaLabel: t("table.actions"),
-      options: [
+    return BlockMenu.render(
+      container,
+      [
         {
           label: t("timer.editTimer"),
-          value: "edit",
           icon: ICONS.ACTIONS.EDIT,
+          edits: true,
+          run: () =>
+            new EditTimerModal(app, plugin, params, {
+              sourcePath,
+            }).open(),
         },
       ],
-    });
-
-    IconDropdown.onChange(
-      wrapper,
-      (value) => {
-        if (value === "edit") {
-          const modal = new EditTimerModal(
-            app,
-            plugin,
-            params,
-            sourcePath,
-          );
-          modal.open();
-        }
-      },
       signal,
     );
-
-    return wrapper;
   }
 }

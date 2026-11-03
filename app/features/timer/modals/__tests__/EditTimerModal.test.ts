@@ -60,7 +60,9 @@ function openModal(note = NOTE) {
   } as unknown as WorkoutPluginContext;
 
   const params = timerBlock.parse(note.split("\n").slice(1, -1).join("\n")).params;
-  const modal = new EditTimerModal(app, plugin, params, "Leg day.md");
+  const modal = new EditTimerModal(app, plugin, params, {
+    sourcePath: "Leg day.md",
+  });
   const contentEl = createObsidianContainer();
   Object.assign(modal, { contentEl, close: jest.fn() });
   modal.onOpen();

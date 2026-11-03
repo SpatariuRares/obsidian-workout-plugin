@@ -18,6 +18,14 @@ export type CodeBlockMatch =
   | { exercise: string }
   | { body: string; lines?: { start: number; end: number } };
 
+/** Where a rendered block is written, for its edit menu */
+export interface BlockLocation {
+  /** The note the block is written in */
+  sourcePath: string;
+  /** How to find the block when it has no id, read when the menu is used */
+  matchWithoutId: () => CodeBlockMatch;
+}
+
 /** Edits code block parameters in a note */
 export class CodeBlockEditorService {
   /**

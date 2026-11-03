@@ -6,7 +6,10 @@ import {
   TABLE_TYPE,
 } from "@app/features/tables/types";
 import { tableBlock } from "@app/features/tables/tableBlock";
-import { createEditButtons } from "@app/features/modals/base/components/createEditButtons";
+import {
+  createEditButtons,
+  type EditTarget,
+} from "@app/features/modals/base/components/createEditButtons";
 import { t } from "@app/i18n";
 
 /**
@@ -18,18 +21,16 @@ import { t } from "@app/i18n";
  */
 export class EditTableModal extends InsertTableModal {
   private readonly initialParams: EmbeddedTableParams;
-  private readonly sourcePath: string;
 
-  /** @param sourcePath - The note the block is written in */
+  /** @param where - The note the block is written in, and how to find it without an id */
   constructor(
     app: App,
     plugin: WorkoutPluginContext,
     params: EmbeddedTableParams,
-    sourcePath: string,
+    private readonly where: EditTarget,
   ) {
     super(app, plugin);
     this.initialParams = params;
-    this.sourcePath = sourcePath;
   }
 
   protected getModalTitle(): string {
@@ -124,8 +125,8 @@ export class EditTableModal extends InsertTableModal {
     const { id } = this.initialParams;
     createEditButtons(this, container, {
       schema: tableBlock,
-      path: this.sourcePath,
-      match: id ? { id } : null,
+      target: this.where,
+      id,
       collectParams: () => this.collectParams(),
       // The rows now follow the planned sets (tableRowLimit)
       retiredParams: ["limit"],

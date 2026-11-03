@@ -4,6 +4,12 @@
    CHART STYLES
    ============================================================================ */
 
+/* Row with the block's edit menu, above whatever the block shows */
+.workout-block-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
 /* Chart Container Styling */
 .workout-charts-container {
   width: 100%;

@@ -24,7 +24,8 @@
     },
     "defaultTitle": "Évolution {type}",
     "noTypesAvailable": "Aucun type de graphique disponible",
-    "noEligibleE1rm": "Aucune série éligible pour l'estimation du 1RM. Enregistrez un poids positif avec 1 à 12 répétitions, hors échauffements et drop sets."
+    "noEligibleE1rm": "Aucune série éligible pour l'estimation du 1RM. Enregistrez un poids positif avec 1 à 12 répétitions, hors échauffements et drop sets.",
+    "editChart": "Modifier le graphique"
   },
   "commands": {
     "addExerciseBlock": "Ajouter un bloc d'exercice",
@@ -558,7 +559,8 @@
       "decreaseBy": "Diminuer {label} de {increment}",
       "increaseBy": "Augmenter {label} de {increment}",
       "deleteSet": "Supprimer la série",
-      "updateDashboard": "Mettre à jour le tableau de bord"
+      "updateDashboard": "Mettre à jour le tableau de bord",
+      "updateChart": "Mettre à jour le graphique"
     },
     "canvasLayout": "Mise en page",
     "canvasOptions": "Options",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field} doit être un nombre entier.",
       "newRecord": "Nouveau record : {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Le graphique a été inséré avec succès !",
+      "chartUpdated": "Le graphique a été mis à jour avec succès !",
+      "chartUpdateFailed": "Échec de la mise à jour du graphique : il est introuvable dans sa note, ou un autre graphique sans identifiant a les mêmes réglages. Rouvrez la note et réessayez.",
       "dashboardInserted": "Le tableau de bord a été inséré avec succès !",
       "exerciseNameRequired": "Veuillez saisir le nom de l'exercice.",
       "exerciseSectionCreated": "La section d'exercices a été créée avec succès !",
@@ -778,7 +782,8 @@
       "insertTable": "Insérer le tableau du journal d'entraînement",
       "insertTimer": "Insérer un minuteur d'entraînement",
       "muscleTagManager": "Gérer les tags musculaires",
-      "editDashboard": "Modifier le tableau de bord"
+      "editDashboard": "Modifier le tableau de bord",
+      "editChart": "Modifier le graphique d'entraînement"
     },
     "workout": "Entraînement (facultatif) :",
     "workoutFile": "Fichier d'entraînement :",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "Chargement des données...",
+    "noDataForWorkout": "Aucune donnée trouvée pour l'entraînement {workout}.",
+    "noDataForExerciseInWorkout": "Aucune donnée trouvée pour l'exercice {exercise} dans l'entraînement {workout}.",
+    "loadError": {
+      "chart": "Erreur lors du chargement du graphique : {error}",
+      "log": "Erreur lors du chargement du journal : {error}",
+      "timer": "Erreur lors du chargement du minuteur : {error}",
+      "dashboard": "Erreur lors du chargement du tableau de bord : {error}",
+      "duration": "Erreur lors du chargement de l'estimateur de durée : {error}"
+    },
     "validation": {
       "title": "Paramètres invalides :",
       "notANumber": "{key} doit être un nombre, mais il s'agit de \"{value}\".",

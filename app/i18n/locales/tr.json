@@ -24,7 +24,8 @@
     },
     "defaultTitle": "{type} trendi",
     "noTypesAvailable": "kullanılabilir grafik türü yok",
-    "noEligibleE1rm": "Tahmini 1RM için uygun set yok. Isınma setleri ve drop setler hariç, 1–12 tekrarlı ve pozitif ağırlıklı bir set kaydedin."
+    "noEligibleE1rm": "Tahmini 1RM için uygun set yok. Isınma setleri ve drop setler hariç, 1–12 tekrarlı ve pozitif ağırlıklı bir set kaydedin.",
+    "editChart": "Grafiği düzenle"
   },
   "commands": {
     "addExerciseBlock": "Egzersiz bloğu ekle",
@@ -558,7 +559,8 @@
       "decreaseBy": "{label} değerini {increment} azalt",
       "increaseBy": "{label} değerini {increment} artır",
       "deleteSet": "Set'i sil",
-      "updateDashboard": "Gösterge panelini güncelle"
+      "updateDashboard": "Gösterge panelini güncelle",
+      "updateChart": "Grafiği güncelle"
     },
     "canvasLayout": "Düzen",
     "canvasOptions": "Seçenekler",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field} tamsayı olmalıdır",
       "newRecord": "Yeni kişisel rekor: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Grafik başarıyla eklendi!",
+      "chartUpdated": "Grafik başarıyla güncellendi!",
+      "chartUpdateFailed": "Grafik güncellenemedi: not içinde bulunamadı veya kimliği olmayan başka bir grafikte aynı ayarlar var. Notu yeniden açıp tekrar deneyin.",
       "dashboardInserted": "Gösterge paneli başarıyla eklendi!",
       "exerciseNameRequired": "Lütfen bir egzersiz adı girin",
       "exerciseSectionCreated": "Egzersiz bölümü başarıyla oluşturuldu!",
@@ -778,7 +782,8 @@
       "insertTable": "Antrenman kaydı tablosu ekle",
       "insertTimer": "Antrenman zamanlayıcısı ekle",
       "muscleTagManager": "Kas etiketlerini yönet",
-      "editDashboard": "Gösterge panelini düzenle"
+      "editDashboard": "Gösterge panelini düzenle",
+      "editChart": "Antrenman grafiğini düzenle"
     },
     "workout": "Antrenman (isteğe bağlı):",
     "workoutFile": "Antrenman dosyası:",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "Veriler yükleniyor...",
+    "noDataForWorkout": "Antrenman {workout} için veri bulunamadı.",
+    "noDataForExerciseInWorkout": "Antrenman {workout} içinde {exercise} egzersizi için veri bulunamadı.",
+    "loadError": {
+      "chart": "Grafik yüklenirken hata: {error}",
+      "log": "Antrenman kaydı yüklenirken hata: {error}",
+      "timer": "Zamanlayıcı yüklenirken hata: {error}",
+      "dashboard": "Gösterge paneli yüklenirken hata: {error}",
+      "duration": "Süre tahmincisi yüklenirken hata: {error}"
+    },
     "validation": {
       "title": "Geçersiz parametreler:",
       "notANumber": "{key} bir sayı olmalıdır, ancak \"{value}\" olarak girilmiştir.",

@@ -3,7 +3,10 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { InsertTimerModal } from "@app/features/timer/modals/InsertTimerModal";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
 import { timerBlock } from "@app/features/timer/timerBlock";
-import { createEditButtons } from "@app/features/modals/base/components/createEditButtons";
+import {
+  createEditButtons,
+  type EditTarget,
+} from "@app/features/modals/base/components/createEditButtons";
 import { Chip } from "@app/components/atoms/Chip";
 import { t } from "@app/i18n";
 
@@ -16,18 +19,16 @@ import { t } from "@app/i18n";
  */
 export class EditTimerModal extends InsertTimerModal {
   private readonly initialParams: EmbeddedTimerParams;
-  private readonly sourcePath: string;
 
-  /** @param sourcePath - The note the block is written in */
+  /** @param where - The note the block is written in, and how to find it without an id */
   constructor(
     app: App,
     plugin: WorkoutPluginContext,
     params: EmbeddedTimerParams,
-    sourcePath: string,
+    private readonly where: EditTarget,
   ) {
     super(app, plugin);
     this.initialParams = params;
-    this.sourcePath = sourcePath;
   }
 
   protected getModalTitle(): string {
@@ -122,8 +123,8 @@ export class EditTimerModal extends InsertTimerModal {
     const { id } = this.initialParams;
     createEditButtons(this, container, {
       schema: timerBlock,
-      path: this.sourcePath,
-      match: id ? { id } : null,
+      target: this.where,
+      id,
       collectParams: () => this.collectParams(),
       buttonText: this.getButtonText(),
       successMessage: this.getSuccessMessage(),

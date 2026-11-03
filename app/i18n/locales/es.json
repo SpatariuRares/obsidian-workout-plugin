@@ -24,7 +24,8 @@
     },
     "defaultTitle": "Tendencia {type}",
     "noTypesAvailable": "no hay tipos de gráficos disponibles",
-    "noEligibleE1rm": "No hay series válidas para el 1RM estimado. Registra un peso positivo con 1-12 repeticiones, excluyendo las series de calentamiento y las series descendentes."
+    "noEligibleE1rm": "No hay series válidas para el 1RM estimado. Registra un peso positivo con 1-12 repeticiones, excluyendo las series de calentamiento y las series descendentes.",
+    "editChart": "Editar gráfico"
   },
   "commands": {
     "addExerciseBlock": "Añadir bloque de ejercicio",
@@ -558,7 +559,8 @@
       "decreaseBy": "Disminuir {label} en {increment}",
       "increaseBy": "Aumentar {label} en {increment}",
       "deleteSet": "Eliminar serie",
-      "updateDashboard": "Actualizar panel"
+      "updateDashboard": "Actualizar panel",
+      "updateChart": "Actualizar gráfico"
     },
     "canvasLayout": "Diseño",
     "canvasOptions": "Opciones",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field} debe ser un número entero",
       "newRecord": "Nuevo récord: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "¡El gráfico se ha insertado correctamente!",
+      "chartUpdated": "¡El gráfico se ha actualizado correctamente!",
+      "chartUpdateFailed": "No se pudo actualizar el gráfico: no se encontró en su nota, o hay otro gráfico sin ID con la misma configuración. Vuelve a abrir la nota e inténtalo de nuevo.",
       "dashboardInserted": "¡El panel de control se ha insertado correctamente!",
       "exerciseNameRequired": "Introduce un nombre de ejercicio",
       "exerciseSectionCreated": "¡Se ha creado la sección de ejercicios con éxito!",
@@ -778,7 +782,8 @@
       "insertTable": "Insertar tabla de registro de entrenamiento",
       "insertTimer": "Insertar temporizador de entrenamiento",
       "muscleTagManager": "Gestionar etiquetas musculares",
-      "editDashboard": "Editar panel"
+      "editDashboard": "Editar panel",
+      "editChart": "Editar gráfico de entrenamiento"
     },
     "workout": "Entrenamiento (opcional):",
     "workoutFile": "Archivo de entrenamiento:",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "Cargando datos...",
+    "noDataForWorkout": "No se encontraron datos del entrenamiento {workout}.",
+    "noDataForExerciseInWorkout": "No se encontraron datos del ejercicio {exercise} en el entrenamiento {workout}.",
+    "loadError": {
+      "chart": "Error al cargar el gráfico: {error}",
+      "log": "Error al cargar el registro: {error}",
+      "timer": "Error al cargar el temporizador: {error}",
+      "dashboard": "Error al cargar el panel de control: {error}",
+      "duration": "Error al cargar el estimador de duración: {error}"
+    },
     "validation": {
       "title": "Parámetros inválidos:",
       "notANumber": "{key} debe ser un número, pero es \"{value}\"",

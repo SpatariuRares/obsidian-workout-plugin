@@ -24,7 +24,8 @@
     },
     "defaultTitle": "Tendință {type}",
     "noTypesAvailable": "Nu sunt disponibile tipuri de grafice.",
-    "noEligibleE1rm": "Nu există serii eligibile pentru estimarea 1RM. Înregistrează o greutate pozitivă cu 1–12 repetări, excluzând seriile de încălzire și de scădere."
+    "noEligibleE1rm": "Nu există serii eligibile pentru estimarea 1RM. Înregistrează o greutate pozitivă cu 1–12 repetări, excluzând seriile de încălzire și de scădere.",
+    "editChart": "Modifică graficul"
   },
   "commands": {
     "addExerciseBlock": "Adaugă bloc de exercițiu",
@@ -558,7 +559,8 @@
       "decreaseBy": "Scade {label} cu {increment}",
       "increaseBy": "Crește {label} cu {increment}",
       "deleteSet": "Șterge seria",
-      "updateDashboard": "Actualizează tabloul de bord"
+      "updateDashboard": "Actualizează tabloul de bord",
+      "updateChart": "Actualizează graficul"
     },
     "canvasLayout": "Aranjament",
     "canvasOptions": "Opțiuni",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field} trebuie să fie un număr întreg",
       "newRecord": "Record nou: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Graficul a fost inserat cu succes!",
+      "chartUpdated": "Graficul a fost actualizat cu succes!",
+      "chartUpdateFailed": "Nu s-a putut actualiza graficul: nu a fost găsit în nota lui sau un alt grafic fără ID are aceleași setări. Redeschide nota și încearcă din nou.",
       "dashboardInserted": "Tabloul de bord a fost inserat cu succes!",
       "exerciseNameRequired": "Introdu numele exercițiului",
       "exerciseSectionCreated": "Secțiunea de exerciții a fost creată cu succes!",
@@ -778,7 +782,8 @@
       "insertTable": "Adaugă tabelul jurnalului de antrenament",
       "insertTimer": "Adaugă temporizator pentru antrenament",
       "muscleTagManager": "Gestionează etichetele pentru mușchi",
-      "editDashboard": "Editează tabloul de bord"
+      "editDashboard": "Editează tabloul de bord",
+      "editChart": "Modifică graficul antrenamentului"
     },
     "workout": "Antrenament (opțional):",
     "workoutFile": "Fișierul antrenamentului:",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "Se încarcă datele...",
+    "noDataForWorkout": "Nu s-au găsit date pentru antrenamentul {workout}.",
+    "noDataForExerciseInWorkout": "Nu s-au găsit date pentru exercițiul {exercise} din antrenamentul {workout}.",
+    "loadError": {
+      "chart": "Eroare la încărcarea graficului: {error}",
+      "log": "Eroare la încărcarea jurnalului: {error}",
+      "timer": "Eroare la încărcarea temporizatorului: {error}",
+      "dashboard": "Eroare la încărcarea tabloului de bord: {error}",
+      "duration": "Eroare la încărcarea estimatorului de durată: {error}"
+    },
     "validation": {
       "title": "Parametri incorecți:",
       "notANumber": "{key} trebuie să fie un număr, dar este \"{value}\"",

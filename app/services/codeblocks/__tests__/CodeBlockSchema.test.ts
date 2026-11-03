@@ -8,6 +8,15 @@ function body(...lines: string[]): string {
 
 describe("CodeBlockSchema (workout-log schema)", () => {
   describe("parse", () => {
+    it("names the parameters whose value is invalid", () => {
+      const { params, invalidKeys } = tableBlock.parse(
+        body("exercise: Squat", "limit: many", "sortOrder: up"),
+      );
+
+      expect(invalidKeys).toEqual(["limit", "sortOrder"]);
+      expect(params).toEqual({ exercise: "Squat" });
+    });
+
     it("reads each parameter as its declared type", () => {
       const { params, errors } = tableBlock.parse(
         body(

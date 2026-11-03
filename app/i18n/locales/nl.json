@@ -24,7 +24,8 @@
     },
     "defaultTitle": "Trend {type}",
     "noTypesAvailable": "Geen beschikbare grafiektypen",
-    "noEligibleE1rm": "Geen geschikte series voor de geschatte 1RM. Noteer een positief gewicht met 1–12 herhalingen, exclusief warming-up en drop sets."
+    "noEligibleE1rm": "Geen geschikte series voor de geschatte 1RM. Noteer een positief gewicht met 1–12 herhalingen, exclusief warming-up en drop sets.",
+    "editChart": "Grafiek bewerken"
   },
   "commands": {
     "addExerciseBlock": "Oefeningsblok toevoegen",
@@ -558,7 +559,8 @@
       "decreaseBy": "{label} met {increment} verlagen",
       "increaseBy": "{label} met {increment} verhogen",
       "deleteSet": "Serie verwijderen",
-      "updateDashboard": "Dashboard bijwerken"
+      "updateDashboard": "Dashboard bijwerken",
+      "updateChart": "Grafiek bijwerken"
     },
     "canvasLayout": "Indeling",
     "canvasOptions": "Opties",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field} moet een geheel getal zijn",
       "newRecord": "Nieuw record: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Grafiek succesvol ingevoegd!",
+      "chartUpdated": "Grafiek is succesvol bijgewerkt!",
+      "chartUpdateFailed": "Grafiek bijwerken mislukt: hij stond niet meer in de notitie, of een andere grafiek zonder ID heeft dezelfde instellingen. Open de notitie opnieuw en probeer het nog eens.",
       "dashboardInserted": "Dashboard succesvol ingevoegd!",
       "exerciseNameRequired": "Geef een naam voor de oefening op",
       "exerciseSectionCreated": "Oefeningssectie succesvol aangemaakt!",
@@ -778,7 +782,8 @@
       "insertTable": "Trainingslogtabel invoegen",
       "insertTimer": "Trainingstimer invoegen",
       "muscleTagManager": "Spierlabels beheren",
-      "editDashboard": "Dashboard bewerken"
+      "editDashboard": "Dashboard bewerken",
+      "editChart": "Trainingsgrafiek bewerken"
     },
     "workout": "Training (optioneel):",
     "workoutFile": "Trainingsbestand:",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "Gegevens laden...",
+    "noDataForWorkout": "Geen gegevens gevonden voor training {workout}.",
+    "noDataForExerciseInWorkout": "Geen gegevens gevonden voor oefening {exercise} in training {workout}.",
+    "loadError": {
+      "chart": "Fout bij laden van de grafiek: {error}",
+      "log": "Fout bij laden van het logboek: {error}",
+      "timer": "Fout bij laden van de timer: {error}",
+      "dashboard": "Fout bij laden van het dashboard: {error}",
+      "duration": "Fout bij laden van de duurschatter: {error}"
+    },
     "validation": {
       "title": "Ongeldige parameters:",
       "notANumber": "{key} moet een getal zijn, maar het is \"{value}\"",

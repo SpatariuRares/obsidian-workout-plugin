@@ -2,8 +2,10 @@ import { App } from "obsidian";
 import { InsertDashboardModal } from "@app/features/dashboard/modals/InsertDashboardModal";
 import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
-import type { CodeBlockMatch } from "@app/services/editor/CodeBlockEditorService";
-import { createEditButtons } from "@app/features/modals/base/components/createEditButtons";
+import {
+  createEditButtons,
+  type EditTarget,
+} from "@app/features/modals/base/components/createEditButtons";
 import { t } from "@app/i18n";
 
 /**
@@ -12,28 +14,20 @@ import { t } from "@app/i18n";
  * block, found by its ID or, without one, by its body.
  */
 export class EditDashboardModal extends InsertDashboardModal {
-  private readonly sourcePath: string;
-  private readonly matchWithoutId?: CodeBlockMatch;
+  private readonly target: EditTarget;
 
   /**
-   * @param where.sourcePath - The note the block is written in
-   * @param where.matchWithoutId - How to find a block written without an
-   * id (it gets one when saved)
-   * @param where.noteWidth - Width of the dashboard in the note, for the
-   * grid's columns
+   * @param where - The note the block is written in and how to find it
+   * without an id, plus `noteWidth`, the dashboard's width in the note (for
+   * the grid's columns)
    */
   constructor(
     app: App,
     params: EmbeddedDashboardParams,
-    where: {
-      sourcePath: string;
-      matchWithoutId?: CodeBlockMatch;
-      noteWidth?: number;
-    },
+    where: EditTarget & { noteWidth?: number },
   ) {
     super(app, params, where.noteWidth);
-    this.sourcePath = where.sourcePath;
-    this.matchWithoutId = where.matchWithoutId;
+    this.target = where;
   }
 
   protected getModalTitle(): string {
@@ -52,8 +46,8 @@ export class EditDashboardModal extends InsertDashboardModal {
     const { id } = this.initialParams;
     createEditButtons(this, container, {
       schema: dashboardBlock,
-      path: this.sourcePath,
-      match: id ? { id } : (this.matchWithoutId ?? null),
+      target: this.target,
+      id,
       collectParams: () => this.collectParams(),
       buttonText: this.getButtonText(),
       successMessage: this.getSuccessMessage(),

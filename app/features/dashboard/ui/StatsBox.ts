@@ -5,7 +5,7 @@ import {
   CHART_DATA_TYPE,
 } from "@app/features/charts/types";
 import { ListItem } from "@app/components/molecules";
-import { FormatUtils } from "@app/utils";
+import { FormatUtils } from "@app/utils/FormatUtils";
 import { t } from "@app/i18n";
 
 /**

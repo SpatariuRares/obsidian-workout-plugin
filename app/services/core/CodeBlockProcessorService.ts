@@ -1,17 +1,24 @@
 import { Feedback } from "@app/components/atoms/Feedback";
+import {
+  BLOCK_MENU_CLASS,
+  BlockMenu,
+} from "@app/features/common/ui/BlockMenu";
+import { ICONS } from "@app/constants/ui.constants";
+import { EditChartModal } from "@app/features/charts/modals/EditChartModal";
+import { EditTableModal } from "@app/features/tables/modals/EditTableModal";
+import { EditTimerModal } from "@app/features/timer/modals/EditTimerModal";
+import { EditDashboardModal } from "@app/features/dashboard/modals/EditDashboardModal";
+import { t } from "@app/i18n";
+import type { BlockLocation } from "@app/services/editor/CodeBlockEditorService";
+import type { EditTarget } from "@app/features/modals/base/components/createEditButtons";
 import { EmbeddedChartView } from "@app/features/charts/views/EmbeddedChartView";
 import { EmbeddedTableView } from "@app/features/tables/views/EmbeddedTableView";
 import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
 import { EmbeddedDurationView } from "@app/features/duration/views/EmbeddedDurationView";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
-import { EmbeddedChartParams } from "@app/features/charts/types";
-import { EmbeddedTableParams } from "@app/features/tables/types";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
-import {
-  DashboardViewState,
-  EmbeddedDashboardParams,
-} from "@app/features/dashboard/types";
+import { DashboardViewState } from "@app/features/dashboard/types";
 import { chartBlock } from "@app/features/charts/chartBlock";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
@@ -147,115 +154,102 @@ export class CodeBlockProcessorService {
   }
 
   // Handle workout chart code blocks
-  private async handleWorkoutChart(
+  private handleWorkoutChart(
     source: string,
     el: HTMLElement,
     ctx: MarkdownPostProcessorContext,
   ) {
-    try {
-      const parsed = this.parseParams(chartBlock, source, el);
-      if (!parsed) return;
-      const params: EmbeddedChartParams = {
-        ...chartBlock.defaults,
-        ...parsed,
-      };
-      const logData = await this.embeddedChartView.loadChartData(params);
-
-      if (logData.length === 0) {
-        this.renderNoDataMessage(el, ctx);
-        return;
-      }
-
-      await this.embeddedChartView.createChart(el, logData, params);
-
-      ctx.addChild(
-        new EventAwareRenderChild(
-          el,
-          this.eventBus,
-          {
-            exercise: params.exercise,
-            workout: params.workout,
-            exactMatch: params.exactMatch,
-            muscleTagsAware: false,
-          },
-          () => this.embeddedChartView.refreshChart(el, params),
-        ),
-      );
-    } catch (error) {
-      const errorMessage = ErrorUtils.getErrorMessage(error);
-      Feedback.renderError(
-        el,
-        `Error loading chart: ${errorMessage}`,
-      );
-    }
+    return this.renderBlock(el, source, ctx, {
+      schema: chartBlock,
+      editLabel: t("charts.editChart"),
+      edit: (params, target) =>
+        new EditChartModal(
+          this.plugin.app,
+          this.plugin,
+          params,
+          target,
+        ).open(),
+      loadError: (error) =>
+        t("codeBlocks.loadError.chart", { error }),
+      draw: async (body, params, syncMenu) => {
+        const logData =
+          await this.embeddedChartView.loadChartData(params);
+        if (logData.length === 0) {
+          this.renderNoDataMessage(body, ctx);
+          return;
+        }
+        await this.embeddedChartView.createChart(
+          body,
+          logData,
+          params,
+        );
+        this.refreshOnLogChange(ctx, body, params, () =>
+          this.embeddedChartView
+            .refreshChart(body, params)
+            .finally(syncMenu),
+        );
+      },
+    });
   }
 
   // Handle workout log code blocks
-  private async handleWorkoutLog(
+  private handleWorkoutLog(
     source: string,
     el: HTMLElement,
     ctx: MarkdownPostProcessorContext,
   ) {
-    try {
-      const parsed = this.parseParams(tableBlock, source, el);
-      if (!parsed) return;
-      const params: EmbeddedTableParams = {
-        ...tableBlock.defaults,
-        ...parsed,
-      };
-
-      const logData = await this.loadLogData();
-      await this.embeddedTableView.createTable(
-        el,
-        logData,
-        params,
-        ctx.sourcePath,
-      );
-
-      ctx.addChild(
-        new EventAwareRenderChild(
-          el,
-          this.eventBus,
-          {
-            exercise: params.exercise,
-            workout: params.workout,
-            exactMatch: params.exactMatch,
-            muscleTagsAware: false,
-          },
-          () =>
-            this.embeddedTableView.refreshTable(el, params, ctx.sourcePath),
-        ),
-      );
-    } catch (error) {
-      const errorMessage = ErrorUtils.getErrorMessage(error);
-      Feedback.renderError(el, `Error loading log: ${errorMessage}`, {
-        className: "workout-feedback-error",
-      });
-    }
+    return this.renderBlock(el, source, ctx, {
+      schema: tableBlock,
+      editLabel: t("table.editTable"),
+      edit: (params, target) =>
+        new EditTableModal(
+          this.plugin.app,
+          this.plugin,
+          params,
+          target,
+        ).open(),
+      loadError: (error) => t("codeBlocks.loadError.log", { error }),
+      draw: async (body, params, syncMenu) => {
+        const logData = await this.loadLogData();
+        await this.embeddedTableView.createTable(
+          body,
+          logData,
+          params,
+          ctx.sourcePath,
+        );
+        this.refreshOnLogChange(ctx, body, params, () =>
+          this.embeddedTableView
+            .refreshTable(body, params, ctx.sourcePath)
+            .finally(syncMenu),
+        );
+      },
+    });
   }
 
   // Handle workout timer code blocks
-  private async handleWorkoutTimer(
+  private handleWorkoutTimer(
     source: string,
     el: HTMLElement,
     ctx: MarkdownPostProcessorContext,
   ) {
-    try {
+    return this.renderBlock(el, source, ctx, {
+      schema: timerBlock,
       // Defaults are applied by the timer view, after the preset
-      const params = this.parseParams(timerBlock, source, el);
-      if (!params) return;
-
-      this.createEmbeddedTimer(el, params, ctx);
-    } catch (error) {
-      const errorMessage = ErrorUtils.getErrorMessage(error);
-      Feedback.renderError(
-        el,
-        `Error loading timer: ${errorMessage}`,
-        {
-          className: "workout-timer-error",
-        },
-      );
-    }
+      withDefaults: false,
+      editLabel: t("timer.editTimer"),
+      edit: (params, target) =>
+        new EditTimerModal(
+          this.plugin.app,
+          this.plugin,
+          params,
+          target,
+        ).open(),
+      loadError: (error) =>
+        t("codeBlocks.loadError.timer", { error }),
+      errorClass: "workout-timer-error",
+      draw: async (body, params) =>
+        this.createEmbeddedTimer(body, params, ctx),
+    });
   }
 
   // Create embedded timer using the dedicated view
@@ -298,68 +292,52 @@ export class CodeBlockProcessorService {
   }
 
   // Handle workout dashboard code blocks
-  private async handleWorkoutDashboard(
+  private handleWorkoutDashboard(
     source: string,
     el: HTMLElement,
     ctx: MarkdownPostProcessorContext,
   ) {
-    try {
-      const parsed = this.parseParams(dashboardBlock, source, el);
-      if (!parsed) return;
-      const params: EmbeddedDashboardParams = {
-        ...dashboardBlock.defaults,
-        ...parsed,
-      };
-      // Where the block is, for the edit menu
-      const state: DashboardViewState = {
-        sourcePath: ctx.sourcePath,
-        matchWithoutId: () => {
-          const section = ctx.getSectionInfo(el);
-          return {
-            body: source,
-            lines: section
-              ? { start: section.lineStart, end: section.lineEnd }
-              : undefined,
-          };
-        },
-      };
-      const logData =
-        await this.embeddedDashboardView.loadDashboardData(params);
-
-      if (logData.length === 0) {
-        this.renderNoDataMessage(el, ctx);
-        return;
-      }
-
-      await this.embeddedDashboardView.createDashboard(
-        el,
-        logData,
-        params,
-        state,
-      );
-
-      ctx.addChild(
-        new EventAwareRenderChild(
-          el,
-          this.eventBus,
-          {
-            // Nessun filtro esercizio/workout = sempre refresh
-            muscleTagsAware: true, // Dashboard mostra muscle heat map
-          },
-          () =>
-            this.embeddedDashboardView.refreshDashboard(el, params, state),
-        ),
-      );
-    } catch (error) {
-      const errorMessage = ErrorUtils.getErrorMessage(error);
-      Feedback.renderError(
-        el,
-        `Error loading dashboard: ${errorMessage}`,
-        {
-          className: "workout-feedback-error",
-        },
-      );
-    }
+    // Where the block is, for the edit menu
+    const state: DashboardViewState = this.locate(el, source, ctx);
+    return this.renderBlock(el, source, ctx, {
+      schema: dashboardBlock,
+      editLabel: t("dashboard.editDashboard"),
+      edit: (params, target, body) =>
+        new EditDashboardModal(this.plugin.app, params, {
+          ...target,
+          noteWidth: body.getBoundingClientRect().width || undefined,
+        }).open(),
+      loadError: (error) =>
+        t("codeBlocks.loadError.dashboard", { error }),
+      draw: async (body, params, syncMenu) => {
+        const logData =
+          await this.embeddedDashboardView.loadDashboardData(params);
+        if (logData.length === 0) {
+          this.renderNoDataMessage(body, ctx);
+          return;
+        }
+        await this.embeddedDashboardView.createDashboard(
+          body,
+          logData,
+          params,
+          state,
+        );
+        ctx.addChild(
+          new EventAwareRenderChild(
+            body,
+            this.eventBus,
+            {
+              // Nessun filtro esercizio/workout = sempre refresh
+              muscleTagsAware: true, // Dashboard mostra muscle heat map
+            },
+            () =>
+              this.embeddedDashboardView
+                .refreshDashboard(body, params, state)
+                .finally(syncMenu),
+          ),
+        );
+      },
+    });
   }
 
   // Handle workout duration code blocks
@@ -384,7 +362,7 @@ export class CodeBlockProcessorService {
       const errorMessage = ErrorUtils.getErrorMessage(error);
       Feedback.renderError(
         el,
-        `Error loading duration estimator: ${errorMessage}`,
+        t("codeBlocks.loadError.duration", { error: errorMessage }),
         { className: "workout-duration-error" },
       );
     }
@@ -395,6 +373,153 @@ export class CodeBlockProcessorService {
     import("@app/types/WorkoutLogData").WorkoutLogData[]
   > {
     return (await this.dataService.getWorkoutLogData()) || [];
+  }
+
+  /**
+   * What every block with an edit menu does: read its parameters (the
+   * schema's defaults under them, unless `withDefaults` is false), draw the
+   * menu row, then let `draw` fill the body. Invalid parameters and any error
+   * are shown in the body, and the menu follows whatever ends up there.
+   */
+  private async renderBlock<P extends object>(
+    el: HTMLElement,
+    source: string,
+    ctx: MarkdownPostProcessorContext,
+    spec: {
+      schema: CodeBlockSchema<P>;
+      withDefaults?: boolean;
+      editLabel: string;
+      edit: (
+        params: P,
+        target: EditTarget,
+        body: HTMLElement,
+      ) => void;
+      loadError: (error: string) => string;
+      errorClass?: string;
+      draw: (
+        body: HTMLElement,
+        params: P,
+        syncMenu: () => void,
+      ) => Promise<void>;
+    },
+  ): Promise<void> {
+    const {
+      params: parsed,
+      errors,
+      invalidKeys,
+    } = spec.schema.parse(source);
+    const params =
+      spec.withDefaults === false
+        ? parsed
+        : { ...spec.schema.defaults, ...parsed };
+    const { body, syncMenu } = this.frame(
+      el,
+      source,
+      ctx,
+      spec.editLabel,
+      invalidKeys,
+      (target) => spec.edit(params, target, body),
+    );
+
+    try {
+      if (errors.length > 0) {
+        renderInvalidParams(body, errors);
+        return;
+      }
+      await spec.draw(body, params, syncMenu);
+    } catch (error) {
+      Feedback.renderError(
+        body,
+        spec.loadError(ErrorUtils.getErrorMessage(error)),
+        { className: spec.errorClass ?? "workout-feedback-error" },
+      );
+    } finally {
+      syncMenu();
+    }
+  }
+
+  // Re-draw a block when a set it shows is logged, changed or deleted
+  private refreshOnLogChange(
+    ctx: MarkdownPostProcessorContext,
+    body: HTMLElement,
+    filter: {
+      exercise?: string;
+      workout?: string;
+      exactMatch?: boolean;
+    },
+    refresh: () => Promise<void>,
+  ): void {
+    ctx.addChild(
+      new EventAwareRenderChild(
+        body,
+        this.eventBus,
+        {
+          exercise: filter.exercise,
+          workout: filter.workout,
+          exactMatch: filter.exactMatch,
+          muscleTagsAware: false,
+        },
+        refresh,
+      ),
+    );
+  }
+
+  /**
+   * The body a view draws into, with a row for the block's edit menu above
+   * it. The row holds this menu only when the view drew none of its own
+   * (`syncMenu`, after every render), so whatever the block shows (data, no
+   * data, an error, invalid parameters) it can be edited, with one menu.
+   */
+  private frame(
+    el: HTMLElement,
+    source: string,
+    ctx: MarkdownPostProcessorContext,
+    label: string,
+    invalidKeys: string[],
+    edit: (target: EditTarget) => void,
+  ): { body: HTMLElement; syncMenu: () => void } {
+    const row = el.createDiv({ cls: "workout-block-actions" });
+    const body = el.createDiv();
+    const where = this.locate(el, source, ctx);
+    const syncMenu = () => {
+      row.empty();
+      if (!body.querySelector(`.${BLOCK_MENU_CLASS}`)) {
+        BlockMenu.render(row, [
+          {
+            label,
+            icon: ICONS.ACTIONS.EDIT,
+            edits: true,
+            run: () =>
+              edit({
+                sourcePath: where.sourcePath,
+                matchWithoutId: where.matchWithoutId(),
+                invalidKeys,
+              }),
+          },
+        ]);
+      }
+    };
+    return { body, syncMenu };
+  }
+
+  // Where a block is written, for its edit menu
+  private locate(
+    el: HTMLElement,
+    source: string,
+    ctx: MarkdownPostProcessorContext,
+  ): BlockLocation {
+    return {
+      sourcePath: ctx.sourcePath,
+      matchWithoutId: () => {
+        const section = ctx.getSectionInfo(el);
+        return {
+          body: source,
+          lines: section
+            ? { start: section.lineStart, end: section.lineEnd }
+            : undefined,
+        };
+      },
+    };
   }
 
   // Render "no data" callout with page link from context

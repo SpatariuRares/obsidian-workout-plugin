@@ -4,7 +4,7 @@ import {
   type CanonicalMuscleGroup,
 } from "@app/constants/muscles.constants";
 import type { ParsedMuscleTagImportResult } from "@app/features/modals/muscle/types";
-import { StringUtils } from "@app/utils";
+import { StringUtils } from "@app/utils/StringUtils";
 import { parseCsv } from "@app/utils/data/CsvCodec";
 
 export class MuscleTagImportLogic {

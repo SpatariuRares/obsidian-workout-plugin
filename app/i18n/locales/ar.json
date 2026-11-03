@@ -24,7 +24,8 @@
     },
     "defaultTitle": "الاتجاه {type}",
     "noTypesAvailable": "لا توجد أنواع مخططات متاحة",
-    "noEligibleE1rm": "لا توجد مجموعات مناسبة لتقدير الوزن الأقصى (1RM). سجل وزنًا إيجابيًا مع 1-12 تكرارًا، مع استثناء تمارين الإحماء ومجموعات التخفيض."
+    "noEligibleE1rm": "لا توجد مجموعات مناسبة لتقدير الوزن الأقصى (1RM). سجل وزنًا إيجابيًا مع 1-12 تكرارًا، مع استثناء تمارين الإحماء ومجموعات التخفيض.",
+    "editChart": "تحرير المخطط"
   },
   "commands": {
     "addExerciseBlock": "إضافة كتلة تمرين",
@@ -558,7 +559,8 @@
       "decreaseBy": "تقليل {label} بمقدار {increment}",
       "increaseBy": "زيادة {label} بمقدار {increment}",
       "deleteSet": "حذف المجموعة",
-      "updateDashboard": "تحديث لوحة التحكم"
+      "updateDashboard": "تحديث لوحة التحكم",
+      "updateChart": "تحديث المخطط"
     },
     "canvasLayout": "الترتيب",
     "canvasOptions": "الخيارات",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "يجب أن تكون القيمة {field} عبارة عن عدد صحيح.",
       "newRecord": "رقم قياسي جديد: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "تم إدراج الرسم البياني بنجاح!",
+      "chartUpdated": "تم تحديث المخطط بنجاح!",
+      "chartUpdateFailed": "تعذّر تحديث المخطط: لم يُعثر عليه في ملاحظته، أو يوجد مخطط آخر بلا معرّف بالإعدادات نفسها. أعد فتح الملاحظة وحاول مرة أخرى.",
       "dashboardInserted": "تم إدراج لوحة التحكم بنجاح!",
       "exerciseNameRequired": "الرجاء إدخال اسم التمرين",
       "exerciseSectionCreated": "تم إنشاء قسم التمرين بنجاح!",
@@ -778,7 +782,8 @@
       "insertTable": "إدراج جدول سجل التدريب",
       "insertTimer": "إدراج مؤقت التدريب",
       "muscleTagManager": "إدارة علامات العضلات",
-      "editDashboard": "تعديل لوحة التحكم"
+      "editDashboard": "تعديل لوحة التحكم",
+      "editChart": "تعديل مخطط التدريب"
     },
     "workout": "التدريب (اختياري):",
     "workoutFile": "ملف التدريب:",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "جارٍ تحميل البيانات...",
+    "noDataForWorkout": "لا توجد بيانات للتدريب {workout}.",
+    "noDataForExerciseInWorkout": "لا توجد بيانات للتمرين {exercise} في التدريب {workout}.",
+    "loadError": {
+      "chart": "خطأ في تحميل المخطط: {error}",
+      "log": "خطأ في تحميل السجل: {error}",
+      "timer": "خطأ في تحميل المؤقت: {error}",
+      "dashboard": "خطأ في تحميل لوحة التحكم: {error}",
+      "duration": "خطأ في تحميل مقدّر مدة التدريب: {error}"
+    },
     "validation": {
       "title": "معلمات غير صالحة:",
       "notANumber": "يجب أن يكون {key} رقمًا، ولكنه \"{value}\"",

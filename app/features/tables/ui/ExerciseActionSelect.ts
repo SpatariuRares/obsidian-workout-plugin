@@ -1,6 +1,9 @@
 import { App } from "obsidian";
 
-import { IconDropdown, type IconDropdownOption } from "@app/components/molecules/IconDropdown";
+import {
+  BlockMenu,
+  type BlockMenuAction,
+} from "@app/features/common/ui/BlockMenu";
 import { t } from "@app/i18n";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { EditTableModal } from "@app/features/tables/modals/EditTableModal";
@@ -39,42 +42,27 @@ export class ExerciseActionSelect {
   ): HTMLElement {
     const { exerciseName, app, plugin, params, sourcePath } = props;
 
-    const options: IconDropdownOption[] = [
+    const actions: BlockMenuAction[] = [
       {
-        icon: ICONS.ACTIONS.GOTO,
         label: t("table.gotoExercise"),
-        value: "goto",
+        icon: ICONS.ACTIONS.GOTO,
+        run: () => openExercisePage(plugin, exerciseName),
       },
     ];
 
     // Only show edit option when the code block can be found
     if (params.id && sourcePath) {
-      options.push({
-        icon: ICONS.ACTIONS.EDIT,
+      actions.push({
         label: t("table.editTable"),
-        value: "edit",
+        icon: ICONS.ACTIONS.EDIT,
+        edits: true,
+        run: () =>
+          new EditTableModal(app, plugin, params, {
+            sourcePath,
+          }).open(),
       });
     }
 
-    const { wrapper } = IconDropdown.create(container, {
-      icon: ICONS.ACTIONS.MENU,
-      ariaLabel: t("table.actions"),
-      options,
-    });
-
-    IconDropdown.onChange(
-      wrapper,
-      (value) => {
-        if (value === "goto") {
-          openExercisePage(plugin, exerciseName);
-        } else if (value === "edit" && sourcePath) {
-          const modal = new EditTableModal(app, plugin, params, sourcePath);
-          modal.open();
-        }
-      },
-      signal,
-    );
-
-    return wrapper;
+    return BlockMenu.render(container, actions, signal);
   }
 }

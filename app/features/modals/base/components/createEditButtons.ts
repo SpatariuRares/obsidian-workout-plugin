@@ -11,12 +11,25 @@ import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
 import { t } from "@app/i18n";
 
+/** Where an edit modal finds its block */
+export interface EditTarget {
+  /** The note the block is written in (`ctx.sourcePath`) */
+  sourcePath: string;
+  /** How to find a block written without an id (it gets one when saved) */
+  matchWithoutId?: CodeBlockMatch;
+  /**
+   * Parameters whose value in the block is invalid: Update writes the form's
+   * value for them even when the form is as it opened (it can't tell they
+   * were wrong)
+   */
+  invalidKeys?: string[];
+}
+
 export interface EditButtonsOptions<P> {
   schema: CodeBlockSchema<P>;
-  /** The note the block is written in (`ctx.sourcePath`) */
-  path: string;
-  /** How to find the block; null when it can't be found (update fails) */
-  match: CodeBlockMatch | null;
+  target: EditTarget;
+  /** The block's id; without one the block is found by `target.matchWithoutId` */
+  id?: string;
   collectParams: () => P;
   /** Parameters the form no longer offers: Update removes them from the block */
   retiredParams?: (keyof P)[];
@@ -52,14 +65,21 @@ export function createEditButtons<P extends { id?: string }>(
   Button.onClick(cancelBtn, () => modal.close());
 
   Button.onClick(updateBtn, () => {
-    const { match } = options;
+    const { id, target } = options;
+    const match: CodeBlockMatch | undefined = id
+      ? { id }
+      : target.matchWithoutId;
     if (!match) {
       new Notice(options.failureMessage);
       modal.close();
       return;
     }
 
-    const changes = changedParams(formAtOpen, options.collectParams());
+    const formNow = options.collectParams();
+    const changes = changedParams(formAtOpen, formNow);
+    for (const key of target.invalidKeys ?? []) {
+      changes[key as keyof P] = formNow[key as keyof P];
+    }
     for (const key of options.retiredParams ?? []) changes[key] = undefined as P[keyof P];
     // A block found by its body gets an id, so the next edit finds it by id
     if ("body" in match) changes.id = generateCodeBlockId();
@@ -67,7 +87,7 @@ export function createEditButtons<P extends { id?: string }>(
     void CodeBlockEditorService.patchCodeBlock(
       modal.app,
       options.schema,
-      options.path,
+      target.sourcePath,
       match,
       changes,
     ).then((success) => {

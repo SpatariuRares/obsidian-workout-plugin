@@ -24,7 +24,8 @@
     },
     "defaultTitle": "トレンド {type}",
     "noTypesAvailable": "利用可能なグラフの種類はありません",
-    "noEligibleE1rm": "1RM（推定最大挙上重量）の対象となるセットがありません。ウォーミングアップとドロップセットを除き、1～12レップで正の重量を記録してください。"
+    "noEligibleE1rm": "1RM（推定最大挙上重量）の対象となるセットがありません。ウォーミングアップとドロップセットを除き、1～12レップで正の重量を記録してください。",
+    "editChart": "グラフの編集"
   },
   "commands": {
     "addExerciseBlock": "エクササイズブロックを追加",
@@ -558,7 +559,8 @@
       "decreaseBy": "{label}を{increment}減らす",
       "increaseBy": "{label}を{increment}増やす",
       "deleteSet": "セットを削除",
-      "updateDashboard": "ダッシュボードを更新"
+      "updateDashboard": "ダッシュボードを更新",
+      "updateChart": "グラフを更新"
     },
     "canvasLayout": "レイアウト",
     "canvasOptions": "オプション",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field}は整数である必要があります",
       "newRecord": "新規記録: {weight} {unit}（+{increase} {unit}）",
       "chartInserted": "グラフが正常に挿入されました！",
+      "chartUpdated": "グラフが正常に更新されました！",
+      "chartUpdateFailed": "グラフを更新できませんでした。対象がメモ内に見つからないか、ID のない別のグラフが同じ設定になっています。メモを開き直して、もう一度お試しください。",
       "dashboardInserted": "ダッシュボードの挿入に成功しました！",
       "exerciseNameRequired": "エクササイズ名を入力してください",
       "exerciseSectionCreated": "エクササイズセクションの作成に成功しました！",
@@ -778,7 +782,8 @@
       "insertTable": "ワークアウト記録テーブルを挿入",
       "insertTimer": "ワークアウトタイマーを挿入",
       "muscleTagManager": "筋肉タグを管理",
-      "editDashboard": "ダッシュボードを編集"
+      "editDashboard": "ダッシュボードを編集",
+      "editChart": "ワークアウトグラフを編集"
     },
     "workout": "ワークアウト（任意）：",
     "workoutFile": "ワークアウトファイル:",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "データを読み込み中...",
+    "noDataForWorkout": "ワークアウト {workout} のデータが見つかりません。",
+    "noDataForExerciseInWorkout": "ワークアウト {workout} のエクササイズ {exercise} のデータが見つかりません。",
+    "loadError": {
+      "chart": "グラフの読み込みエラー: {error}",
+      "log": "ログの読み込みエラー: {error}",
+      "timer": "タイマーの読み込みエラー: {error}",
+      "dashboard": "ダッシュボードの読み込みエラー: {error}",
+      "duration": "所要時間の推定の読み込みエラー: {error}"
+    },
     "validation": {
       "title": "無効なパラメータ:",
       "notANumber": "{key} は数値である必要がありますが、現在は \"{value}\" です。",

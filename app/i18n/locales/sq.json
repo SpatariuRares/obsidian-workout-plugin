@@ -24,7 +24,8 @@
     },
     "defaultTitle": "Tendenca {type}",
     "noTypesAvailable": "Nuk ka lloje grafikësh të disponueshme",
-    "noEligibleE1rm": "Nuk ka seri të përshtatshme për 1RM të vlerësuar. Regjistroni një peshë pozitive me 1–12 përsëritje, duke përjashtuar seritë e ngrohjes dhe ato me ulje peshe."
+    "noEligibleE1rm": "Nuk ka seri të përshtatshme për 1RM të vlerësuar. Regjistroni një peshë pozitive me 1–12 përsëritje, duke përjashtuar seritë e ngrohjes dhe ato me ulje peshe.",
+    "editChart": "Redakto grafikun"
   },
   "commands": {
     "addExerciseBlock": "Shto bllok ushtrimi",
@@ -558,7 +559,8 @@
       "decreaseBy": "Ul {label} me {increment}",
       "increaseBy": "Rrit {label} me {increment}",
       "deleteSet": "Fshi serinë",
-      "updateDashboard": "Përditëso panelin"
+      "updateDashboard": "Përditëso panelin",
+      "updateChart": "Përditëso grafikun"
     },
     "canvasLayout": "Paraqitja",
     "canvasOptions": "Opsione",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field} duhet të jetë një numër i plotë",
       "newRecord": "Rekord i ri: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Grafiku u shtua me sukses!",
+      "chartUpdated": "Grafiku u përditësua me sukses!",
+      "chartUpdateFailed": "Përditësimi i grafikut dështoi: ai nuk u gjet në shënimin e tij, ose një tjetër grafik pa ID ka të njëjtat cilësime. Hapeni përsëri shënimin dhe provoni përsëri.",
       "dashboardInserted": "Paneli u shtua me sukses!",
       "exerciseNameRequired": "Ju lutemi, vendosni emrin e ushtrimit",
       "exerciseSectionCreated": "Seksioni i ushtrimeve u krijua me sukses!",
@@ -778,7 +782,8 @@
       "insertTable": "Shto tabelë regjistrimi stërvitjeje",
       "insertTimer": "Shto timer stërvitjeje",
       "muscleTagManager": "Menaxho etiketat e muskujve",
-      "editDashboard": "Redakto panelin"
+      "editDashboard": "Redakto panelin",
+      "editChart": "Redakto grafikun"
     },
     "workout": "Stërvitja (opsionale):",
     "workoutFile": "Skedari i stërvitjes:",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "Po ngarkohen të dhënat...",
+    "noDataForWorkout": "Nuk u gjetën të dhëna për stërvitjen {workout}.",
+    "noDataForExerciseInWorkout": "Nuk u gjetën të dhëna për ushtrimin {exercise} në stërvitjen {workout}.",
+    "loadError": {
+      "chart": "Gabim gjatë ngarkimit të grafikut: {error}",
+      "log": "Gabim gjatë ngarkimit të regjistrit: {error}",
+      "timer": "Gabim gjatë ngarkimit të timerit: {error}",
+      "dashboard": "Gabim gjatë ngarkimit të panelit: {error}",
+      "duration": "Gabim gjatë ngarkimit të vlerësuesit të kohëzgjatjes: {error}"
+    },
     "validation": {
       "title": "Parametra të pavlefshëm:",
       "notANumber": "{key} duhet të jetë një numër, por është \"{value}\"",

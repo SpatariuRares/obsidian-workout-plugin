@@ -86,6 +86,8 @@ export interface ParseResult<P> {
   params: P;
   /** One message per parameter whose value doesn't fit its type */
   errors: string[];
+  /** Those parameters' names, as written in the block */
+  invalidKeys: string[];
 }
 
 export interface CodeBlockSchema<P> {
@@ -139,6 +141,7 @@ export function defineCodeBlock<
     parse(source) {
       const params: Record<string, unknown> = {};
       const errors: string[] = [];
+      const invalidKeys: string[] = [];
       for (const { key, value } of readLines(source)) {
         const field = fields[key];
         if (!field) continue;
@@ -146,11 +149,12 @@ export function defineCodeBlock<
         if ("error" in result) {
           delete params[key];
           errors.push(result.error);
+          invalidKeys.push(key);
         } else {
           params[key] = result.value;
         }
       }
-      return { params: params as P, errors };
+      return { params: params as P, errors, invalidKeys };
     },
 
     serialize(params) {

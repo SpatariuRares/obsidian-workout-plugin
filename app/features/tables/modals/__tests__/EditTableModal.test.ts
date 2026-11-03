@@ -65,7 +65,9 @@ function openModal(note = NOTE) {
     ...tableBlock.defaults,
     ...tableBlock.parse(blockBody).params,
   };
-  const modal = new EditTableModal(app, plugin, params, "Leg day.md");
+  const modal = new EditTableModal(app, plugin, params, {
+    sourcePath: "Leg day.md",
+  });
   const contentEl = createObsidianContainer();
   Object.assign(modal, { contentEl, close: jest.fn() });
   modal.onOpen();

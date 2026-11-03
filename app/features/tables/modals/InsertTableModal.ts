@@ -1,4 +1,5 @@
 // Refactored InsertTableModal extending BaseInsertModal
+import { AdjustField } from "@app/components/molecules/AdjustField";
 import { CONSTANTS, getDynamicModalLabels } from "@app/constants";
 import { DomUtils } from "@app/utils/DomUtils";
 import { App, Notice } from "obsidian";
@@ -18,13 +19,6 @@ import {
 } from "@app/features/tables/types";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { Chip } from "@app/components/atoms/Chip";
-import {
-  Button,
-  BUTTONSIZE,
-  BUTTONVARIANT,
-} from "@app/components/atoms/Button";
-import { Input } from "@app/components/atoms/Input";
-import { INPUT_TYPE } from "@app/types/InputTypes";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { t } from "@app/i18n";
 
@@ -144,15 +138,14 @@ export class InsertTableModal extends BaseInsertModal {
     });
 
     // Date range with +/- adjust
-    this.dateRangeInput = this.createAdjustField(
-      parametersContainer,
-      t("modal.dateRange"),
-      0,
-      0,
-      365,
-      DATE_RANGE_INCREMENT,
-      "d",
-    );
+    this.dateRangeInput = AdjustField.create(parametersContainer, {
+      label: t("modal.dateRange"),
+      value: 0,
+      min: 0,
+      max: 365,
+      step: DATE_RANGE_INCREMENT,
+      unit: "d",
+    });
 
     // Progressive Overload Section
     this.progressiveSection = this.createSection(
@@ -167,34 +160,37 @@ export class InsertTableModal extends BaseInsertModal {
       });
 
     // Target weight with +/- adjust
-    this.targetWeightInput = this.createAdjustField(
+    this.targetWeightInput = AdjustField.create(
       targetParametersContainer,
-      getDynamicModalLabels().TARGET_WEIGHT,
-      0,
-      0,
-      1000,
-      TARGET_WEIGHT_INCREMENT,
+      {
+        label: getDynamicModalLabels().TARGET_WEIGHT,
+        value: 0,
+        min: 0,
+        max: 1000,
+        step: TARGET_WEIGHT_INCREMENT,
+      },
     );
 
     // Target reps with +/- adjust
-    this.targetRepsInput = this.createAdjustField(
+    this.targetRepsInput = AdjustField.create(
       targetParametersContainer,
-      t("modal.labels.targetReps"),
-      0,
-      0,
-      100,
-      TARGET_REPS_INCREMENT,
+      {
+        label: t("modal.labels.targetReps"),
+        value: 0,
+        min: 0,
+        max: 100,
+        step: TARGET_REPS_INCREMENT,
+      },
     );
 
     // Planned sets, counted by a workout-session block in the note
-    this.setsInput = this.createAdjustField(
-      targetParametersContainer,
-      t("modal.labels.plannedSets"),
-      0,
-      0,
-      20,
-      1,
-    );
+    this.setsInput = AdjustField.create(targetParametersContainer, {
+      label: t("modal.labels.plannedSets"),
+      value: 0,
+      min: 0,
+      max: 20,
+      step: 1,
+    });
 
     // Advanced Options Section using reusable component
     this.advancedElements = AdvancedOptionsSection.create(
@@ -222,74 +218,6 @@ export class InsertTableModal extends BaseInsertModal {
     // Update hidden select and dispatch change event
     this.tableTypeSelect.value = value;
     this.tableTypeSelect.dispatchEvent(new Event("change"));
-  }
-
-  /**
-   * Creates a field with +/- adjust buttons (same pattern as TimerConfigurationSection)
-   */
-  private createAdjustField(
-    parent: HTMLElement,
-    label: string,
-    defaultValue: number,
-    min: number,
-    max: number,
-    increment: number,
-    unit?: string,
-  ): HTMLInputElement {
-    const fieldContainer = parent.createDiv({
-      cls: "workout-field-with-adjust",
-    });
-
-    const labelText = unit ? `${label} (${unit})` : label;
-    const labelEl = fieldContainer.createDiv({
-      cls: "workout-field-label",
-    });
-    labelEl.textContent = labelText;
-
-    const inputContainer = fieldContainer.createDiv({
-      cls: "workout-input-with-adjust",
-    });
-
-    const minusBtn = Button.create(inputContainer, {
-      text: t("modal.buttons.adjustMinus") + increment,
-      className: "workout-adjust-btn workout-adjust-minus",
-      ariaLabel: t("modal.buttons.decreaseBy", { label, increment }),
-      variant: BUTTONVARIANT.SECONDARY,
-      size: BUTTONSIZE.SMALL,
-    });
-    minusBtn.type = "button";
-
-    const input = Input.create(inputContainer, {
-      type: INPUT_TYPE.NUMBER,
-      className: "workout-charts-input",
-      min,
-      max,
-      step: 1,
-      value: defaultValue,
-    });
-
-    const plusBtn = Button.create(inputContainer, {
-      text: t("modal.buttons.adjustPlus") + increment,
-      className: "workout-adjust-btn workout-adjust-plus",
-      ariaLabel: t("modal.buttons.increaseBy", { label, increment }),
-      variant: BUTTONVARIANT.SECONDARY,
-      size: BUTTONSIZE.SMALL,
-    });
-    plusBtn.type = "button";
-
-    Button.onClick(minusBtn, () => {
-      const current = parseInt(input.value) || 0;
-      input.value = Math.max(min, current - increment).toString();
-      input.dispatchEvent(new Event("input"));
-    });
-
-    Button.onClick(plusBtn, () => {
-      const current = parseInt(input.value) || 0;
-      input.value = Math.min(max, current + increment).toString();
-      input.dispatchEvent(new Event("input"));
-    });
-
-    return input;
   }
 
   protected updateSectionsVisibility(targetHandlers: {
@@ -355,7 +283,9 @@ export class InsertTableModal extends BaseInsertModal {
     const targetReps = this.targetRepsInput
       ? parseInt(this.targetRepsInput.value) || 0
       : 0;
-    const sets = this.setsInput ? parseInt(this.setsInput.value) || 0 : 0;
+    const sets = this.setsInput
+      ? parseInt(this.setsInput.value) || 0
+      : 0;
 
     if (
       tableType === TABLE_TYPE.COMBINED &&

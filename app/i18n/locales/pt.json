@@ -24,7 +24,8 @@
     },
     "defaultTitle": "Tendência {type}",
     "noTypesAvailable": "nenhum tipo de gráfico disponível",
-    "noEligibleE1rm": "Não há séries elegíveis para o 1RM estimado. Registe um peso positivo com 1–12 repetições, excluindo as séries de aquecimento e drop set."
+    "noEligibleE1rm": "Não há séries elegíveis para o 1RM estimado. Registe um peso positivo com 1–12 repetições, excluindo as séries de aquecimento e drop set.",
+    "editChart": "Editar gráfico"
   },
   "commands": {
     "addExerciseBlock": "Adicionar bloco de exercício",
@@ -558,7 +559,8 @@
       "decreaseBy": "Diminuir {label} em {increment}",
       "increaseBy": "Aumentar {label} em {increment}",
       "deleteSet": "Eliminar série",
-      "updateDashboard": "Atualizar painel"
+      "updateDashboard": "Atualizar painel",
+      "updateChart": "Atualizar gráfico"
     },
     "canvasLayout": "Layout",
     "canvasOptions": "Opções",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field} deve ser um número inteiro",
       "newRecord": "Novo recorde: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Gráfico inserido com sucesso!",
+      "chartUpdated": "Gráfico atualizado com sucesso!",
+      "chartUpdateFailed": "Não foi possível atualizar o gráfico: não foi encontrado na sua nota, ou outro gráfico sem id tem as mesmas definições. Reabra a nota e tente novamente.",
       "dashboardInserted": "Painel inserido com sucesso!",
       "exerciseNameRequired": "Por favor, introduza o nome do exercício",
       "exerciseSectionCreated": "Secção de exercícios criada com sucesso!",
@@ -778,7 +782,8 @@
       "insertTable": "Inserir tabela de registo de treino",
       "insertTimer": "Inserir temporizador de treino",
       "muscleTagManager": "Gerir tags musculares",
-      "editDashboard": "Editar painel"
+      "editDashboard": "Editar painel",
+      "editChart": "Editar gráfico de treino"
     },
     "workout": "Treino (opcional):",
     "workoutFile": "Ficheiro de treino:",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "A carregar dados...",
+    "noDataForWorkout": "Não foram encontrados dados para o treino {workout}.",
+    "noDataForExerciseInWorkout": "Não foram encontrados dados para o exercício {exercise} no treino {workout}.",
+    "loadError": {
+      "chart": "Erro ao carregar o gráfico: {error}",
+      "log": "Erro ao carregar o registo: {error}",
+      "timer": "Erro ao carregar o temporizador: {error}",
+      "dashboard": "Erro ao carregar o painel: {error}",
+      "duration": "Erro ao carregar o estimador de duração: {error}"
+    },
     "validation": {
       "title": "Parâmetros inválidos:",
       "notANumber": "{key} deve ser um número, mas é \"{value}\"",

@@ -77,7 +77,10 @@ export abstract class BaseView {
         workout.split("/").pop()?.replace(/\.md$/i, "") || workout;
       Feedback.renderWarning(
         container,
-        `No data found for exercise ${exercise} in workout ${workoutFilename}.`,
+        t("codeBlocks.noDataForExerciseInWorkout", {
+          exercise,
+          workout: workoutFilename,
+        }),
       );
       if (exercise) {
         LogCallouts.renderCreateLogButtonForExercise(
@@ -111,7 +114,7 @@ export abstract class BaseView {
     if (isWorkoutView) {
       Feedback.renderWarning(
         container,
-        `No data found for workout ${titlePrefix}.`,
+        t("codeBlocks.noDataForWorkout", { workout: titlePrefix }),
       );
     } else {
       const exerciseName =
@@ -136,7 +139,7 @@ export abstract class BaseView {
     container: HTMLElement,
   ): HTMLElement {
     return LoadingSpinner.create(container, {
-      message: "Loading data...",
+      message: t("codeBlocks.loading"),
       icon: ICONS.STATUS.LOADING,
       className: "workout-feedback-info",
     });

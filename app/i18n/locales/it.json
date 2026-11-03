@@ -24,7 +24,8 @@
     },
     "defaultTitle": "Andamento {type}",
     "noTypesAvailable": "nessun tipo di grafico disponibile",
-    "noEligibleE1rm": "Non ci sono serie valide per calcolare il 1RM stimato. Registra un peso positivo con 1–12 ripetizioni, escludendo riscaldamento e drop set."
+    "noEligibleE1rm": "Non ci sono serie valide per calcolare il 1RM stimato. Registra un peso positivo con 1–12 ripetizioni, escludendo riscaldamento e drop set.",
+    "editChart": "Modifica grafico"
   },
   "commands": {
     "addExerciseBlock": "Aggiungi blocco esercizio",
@@ -558,7 +559,8 @@
       "decreaseBy": "Diminuisci {label} di {increment}",
       "increaseBy": "Aumenta {label} di {increment}",
       "deleteSet": "Elimina serie",
-      "updateDashboard": "Aggiorna dashboard"
+      "updateDashboard": "Aggiorna dashboard",
+      "updateChart": "Aggiorna grafico"
     },
     "canvasLayout": "Disposizione",
     "canvasOptions": "Opzioni",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field} deve essere un numero intero",
       "newRecord": "Nuovo record: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Grafico inserito correttamente!",
+      "chartUpdated": "Grafico aggiornato correttamente!",
+      "chartUpdateFailed": "Impossibile aggiornare il grafico: non è stato trovato nella sua nota, oppure un altro grafico senza ID ha le stesse impostazioni. Riapri la nota e riprova.",
       "dashboardInserted": "Dashboard inserita correttamente!",
       "exerciseNameRequired": "Inserisci il nome dell'esercizio",
       "exerciseSectionCreated": "Sezione esercizi creata con successo!",
@@ -778,7 +782,8 @@
       "insertTable": "Inserisci tabella registro",
       "insertTimer": "Inserisci timer allenamento",
       "muscleTagManager": "Gestisci tag muscolari",
-      "editDashboard": "Modifica dashboard"
+      "editDashboard": "Modifica dashboard",
+      "editChart": "Modifica grafico allenamento"
     },
     "workout": "Allenamento (opzionale):",
     "workoutFile": "File allenamento:",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "Caricamento dei dati...",
+    "noDataForWorkout": "Nessun dato trovato per l'allenamento {workout}.",
+    "noDataForExerciseInWorkout": "Nessun dato trovato per l'esercizio {exercise} nell'allenamento {workout}.",
+    "loadError": {
+      "chart": "Errore nel caricamento del grafico: {error}",
+      "log": "Errore nel caricamento del registro: {error}",
+      "timer": "Errore nel caricamento del timer: {error}",
+      "dashboard": "Errore nel caricamento della dashboard: {error}",
+      "duration": "Errore nel caricamento della stima della durata: {error}"
+    },
     "validation": {
       "title": "Parametri non validi:",
       "notANumber": "{key} deve essere un numero, ma è \"{value}\"",

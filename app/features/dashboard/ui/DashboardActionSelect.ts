@@ -1,6 +1,6 @@
 import { App } from "obsidian";
 
-import { IconDropdown } from "@app/components/molecules/IconDropdown";
+import { BlockMenu } from "@app/features/common/ui/BlockMenu";
 import { t } from "@app/i18n";
 import { EditDashboardModal } from "@app/features/dashboard/modals/EditDashboardModal";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
@@ -26,28 +26,18 @@ export class DashboardActionSelect {
       noteWidth: () => number;
     },
   ): HTMLElement {
-    const { wrapper } = IconDropdown.create(container, {
-      icon: ICONS.ACTIONS.MENU,
-      ariaLabel: t("table.actions"),
-      options: [
-        {
-          label: t("dashboard.editDashboard"),
-          value: "edit",
-          icon: ICONS.ACTIONS.EDIT,
-        },
-      ],
-    });
-
-    IconDropdown.onChange(wrapper, (value) => {
-      if (value === "edit") {
-        new EditDashboardModal(app, params, {
-          sourcePath: where.sourcePath,
-          matchWithoutId: where.matchWithoutId?.(),
-          noteWidth: where.noteWidth() || undefined,
-        }).open();
-      }
-    });
-
-    return wrapper;
+    return BlockMenu.render(container, [
+      {
+        label: t("dashboard.editDashboard"),
+        icon: ICONS.ACTIONS.EDIT,
+        edits: true,
+        run: () =>
+          new EditDashboardModal(app, params, {
+            sourcePath: where.sourcePath,
+            matchWithoutId: where.matchWithoutId?.(),
+            noteWidth: where.noteWidth() || undefined,
+          }).open(),
+      },
+    ]);
   }
 }

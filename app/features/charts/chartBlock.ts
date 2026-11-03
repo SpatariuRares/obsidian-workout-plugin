@@ -3,6 +3,7 @@ import { CHART_DATA_TYPE, CHART_TYPE } from "@app/types/WorkoutConfigTypes";
 
 /** The `workout-chart` code block: its parameters, types and defaults */
 export const chartBlock = defineCodeBlock("workout-chart", {
+  id: { kind: "string" },
   /** exercise = daily average; workout/combined/all = daily total (all ignores filters) */
   chartType: {
     kind: "enum",

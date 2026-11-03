@@ -1,14 +1,11 @@
+import { AdjustField } from "@app/components/molecules/AdjustField";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { EmbeddedTimerParams, TIMER_TYPE } from "@app/features/timer/types";
+import {
+  EmbeddedTimerParams,
+  TIMER_TYPE,
+} from "@app/features/timer/types";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { Chip } from "@app/components/atoms/Chip";
-import {
-  Button,
-  BUTTONSIZE,
-  BUTTONVARIANT,
-} from "@app/components/atoms/Button";
-import { Input } from "@app/components/atoms/Input";
-import { INPUT_TYPE } from "@app/types/InputTypes";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
@@ -96,7 +93,9 @@ export class TimerConfigurationSection {
 
     // Presets of the selected type, between the type and its values
     const presetGroup = modal.createFormGroup(container);
-    presetGroup.createEl("label", { text: t("modal.sections.preset") });
+    presetGroup.createEl("label", {
+      text: t("modal.sections.preset"),
+    });
     const presetChipsContainer = presetGroup.createDiv({
       cls: "workout-timer-preset-chips",
     });
@@ -110,44 +109,39 @@ export class TimerConfigurationSection {
     const durationContainer = parametersContainer.createDiv({
       cls: "workout-field-with-adjust",
     });
-    const durationInput =
-      TimerConfigurationSection.createAdjustFieldInContainer(
-        durationContainer,
-        t("modal.duration"),
-        CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION,
-        CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION_MIN,
-        CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION_MAX,
-        DURATION_INCREMENT,
-        "s",
-      );
+    const durationInput = AdjustField.fill(durationContainer, {
+      label: t("modal.duration"),
+      value: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION,
+      min: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION_MIN,
+      max: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION_MAX,
+      step: DURATION_INCREMENT,
+      unit: "s",
+    });
 
     // Rest field with +/- adjust (interval only)
     const restContainer = parametersContainer.createDiv({
       cls: "workout-field-with-adjust",
     });
-    const restInput = TimerConfigurationSection.createAdjustFieldInContainer(
-      restContainer,
-      t("modal.rest"),
-      0,
-      0,
-      CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION_MAX,
-      REST_INCREMENT,
-      "s",
-    );
+    const restInput = AdjustField.fill(restContainer, {
+      label: t("modal.rest"),
+      value: 0,
+      min: 0,
+      max: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION_MAX,
+      step: REST_INCREMENT,
+      unit: "s",
+    });
 
     // Rounds field with +/- adjust
     const roundsContainer = parametersContainer.createDiv({
       cls: "workout-field-with-adjust",
     });
-    const roundsInput =
-      TimerConfigurationSection.createAdjustFieldInContainer(
-        roundsContainer,
-        t("modal.rounds"),
-        CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_ROUNDS,
-        CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_ROUNDS_MIN,
-        CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_ROUNDS_MAX,
-        ROUNDS_INCREMENT,
-      );
+    const roundsInput = AdjustField.fill(roundsContainer, {
+      label: t("modal.rounds"),
+      value: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_ROUNDS,
+      min: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_ROUNDS_MIN,
+      max: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_ROUNDS_MAX,
+      step: ROUNDS_INCREMENT,
+    });
 
     // Exercise autocomplete
     const { elements: exerciseElements } =
@@ -253,95 +247,6 @@ export class TimerConfigurationSection {
   }
 
   /**
-   * Creates a field with +/- adjust buttons (replicates DynamicFieldsRenderer pattern)
-   */
-  private static createAdjustField(
-    parent: HTMLElement,
-    label: string,
-    defaultValue: number,
-    min: number,
-    max: number,
-    increment: number,
-    unit?: string,
-  ): HTMLInputElement {
-    const fieldContainer = parent.createDiv({
-      cls: "workout-field-with-adjust",
-    });
-
-    return TimerConfigurationSection.createAdjustFieldInContainer(
-      fieldContainer,
-      label,
-      defaultValue,
-      min,
-      max,
-      increment,
-      unit,
-    );
-  }
-
-  /**
-   * Creates adjust field content inside a given container
-   */
-  private static createAdjustFieldInContainer(
-    fieldContainer: HTMLElement,
-    label: string,
-    defaultValue: number,
-    min: number,
-    max: number,
-    increment: number,
-    unit?: string,
-  ): HTMLInputElement {
-    const labelText = unit ? `${label} (${unit})` : label;
-    const labelEl = fieldContainer.createDiv({
-      cls: "workout-field-label",
-    });
-    labelEl.textContent = labelText;
-
-    const inputContainer = fieldContainer.createDiv({
-      cls: "workout-input-with-adjust",
-    });
-
-    const minusBtn = Button.create(inputContainer, {
-      text: t("modal.buttons.adjustMinus") + increment,
-      className: "workout-adjust-btn workout-adjust-minus",
-      ariaLabel: t("modal.buttons.decreaseBy", { label, increment }),
-      variant: BUTTONVARIANT.SECONDARY,
-      size: BUTTONSIZE.SMALL,
-    });
-    minusBtn.type = "button";
-
-    const input = Input.create(inputContainer, {
-      type: INPUT_TYPE.NUMBER,
-      className: "workout-charts-input",
-      min,
-      max,
-      step: 1,
-      value: defaultValue,
-    });
-
-    const plusBtn = Button.create(inputContainer, {
-      text: t("modal.buttons.adjustPlus") + increment,
-      className: "workout-adjust-btn workout-adjust-plus",
-      ariaLabel: t("modal.buttons.increaseBy", { label, increment }),
-      variant: BUTTONVARIANT.SECONDARY,
-      size: BUTTONSIZE.SMALL,
-    });
-    plusBtn.type = "button";
-
-    Button.onClick(minusBtn, () => {
-      const current = parseInt(input.value) || 0;
-      input.value = Math.max(min, current - increment).toString();
-    });
-
-    Button.onClick(plusBtn, () => {
-      const current = parseInt(input.value) || 0;
-      input.value = Math.min(max, current + increment).toString();
-    });
-
-    return input;
-  }
-
-  /**
    * Gets the timer configuration values from the elements
    */
   static getValues(
@@ -363,7 +268,10 @@ export class TimerConfigurationSection {
     // For intervals the duration field is the work phase of each round
     if (timerType === TIMER_TYPE.INTERVAL) {
       values.work = parseInt(elements.durationInput.value) || 30;
-      values.rest = Math.max(0, parseInt(elements.restInput.value) || 0);
+      values.rest = Math.max(
+        0,
+        parseInt(elements.restInput.value) || 0,
+      );
       values.rounds = parseInt(elements.roundsInput.value) || 5;
     }
 

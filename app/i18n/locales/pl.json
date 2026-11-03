@@ -24,7 +24,8 @@
     },
     "defaultTitle": "Trend {type}",
     "noTypesAvailable": "Brak dostępnych typów wykresów",
-    "noEligibleE1rm": "Brak dostępnych serii do szacowanego 1RM. Zarejestruj dodatnią wagę z 1–12 powtórzeniami, pomijając serie rozgrzewkowe i drop sety."
+    "noEligibleE1rm": "Brak dostępnych serii do szacowanego 1RM. Zarejestruj dodatnią wagę z 1–12 powtórzeniami, pomijając serie rozgrzewkowe i drop sety.",
+    "editChart": "Edytuj wykres"
   },
   "commands": {
     "addExerciseBlock": "Dodaj blok ćwiczeń",
@@ -558,7 +559,8 @@
       "decreaseBy": "Zmniejsz {label} o {increment}",
       "increaseBy": "Zwiększ {label} o {increment}",
       "deleteSet": "Usuń serię",
-      "updateDashboard": "Zaktualizuj panel kontrolny"
+      "updateDashboard": "Zaktualizuj panel kontrolny",
+      "updateChart": "Zaktualizuj wykres"
     },
     "canvasLayout": "Układ",
     "canvasOptions": "Opcje",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field} musi być liczbą całkowitą",
       "newRecord": "Nowy rekord: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Wykres został pomyślnie wstawiony!",
+      "chartUpdated": "Wykres został pomyślnie zaktualizowany!",
+      "chartUpdateFailed": "Nie udało się zaktualizować wykresu: nie znaleziono go w notatce albo inny wykres bez identyfikatora ma takie same ustawienia. Otwórz notatkę ponownie i spróbuj jeszcze raz.",
       "dashboardInserted": "Panel został pomyślnie wstawiony!",
       "exerciseNameRequired": "Proszę podać nazwę ćwiczenia.",
       "exerciseSectionCreated": "Sekcja ćwiczeń została pomyślnie utworzona!",
@@ -778,7 +782,8 @@
       "insertTable": "Dodaj tabelę z dziennikiem treningów",
       "insertTimer": "Dodaj timer treningowy",
       "muscleTagManager": "Zarządzaj tagami mięśni",
-      "editDashboard": "Edytuj panel kontrolny"
+      "editDashboard": "Edytuj panel kontrolny",
+      "editChart": "Edytuj wykres treningu"
     },
     "workout": "Trening (opcjonalnie):",
     "workoutFile": "Plik treningowy:",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "Wczytywanie danych...",
+    "noDataForWorkout": "Brak danych dla treningu {workout}.",
+    "noDataForExerciseInWorkout": "Brak danych dla ćwiczenia {exercise} w treningu {workout}.",
+    "loadError": {
+      "chart": "Błąd ładowania wykresu: {error}",
+      "log": "Błąd ładowania dziennika: {error}",
+      "timer": "Błąd ładowania timera: {error}",
+      "dashboard": "Błąd ładowania panelu kontrolnego: {error}",
+      "duration": "Błąd ładowania estymatora czasu trwania: {error}"
+    },
     "validation": {
       "title": "Nieprawidłowe parametry:",
       "notANumber": "{key} musi być liczbą, ale jest \"{value}\"",

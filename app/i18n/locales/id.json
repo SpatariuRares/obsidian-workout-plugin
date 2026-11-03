@@ -24,7 +24,8 @@
     },
     "defaultTitle": "Tren {type}",
     "noTypesAvailable": "Tidak ada jenis grafik yang tersedia",
-    "noEligibleE1rm": "Tidak ada set yang memenuhi syarat untuk estimasi 1RM. Catat beban positif dengan 1–12 repetisi. Pemanasan dan set penurunan beban tidak termasuk."
+    "noEligibleE1rm": "Tidak ada set yang memenuhi syarat untuk estimasi 1RM. Catat beban positif dengan 1–12 repetisi. Pemanasan dan set penurunan beban tidak termasuk.",
+    "editChart": "Sunting grafik"
   },
   "commands": {
     "addExerciseBlock": "Tambah blok latihan",
@@ -558,7 +559,8 @@
       "decreaseBy": "Kurangi {label} sebesar {increment}",
       "increaseBy": "Tambah {label} sebesar {increment}",
       "deleteSet": "Hapus set",
-      "updateDashboard": "Perbarui dasbor"
+      "updateDashboard": "Perbarui dasbor",
+      "updateChart": "Perbarui grafik"
     },
     "canvasLayout": "Tata letak",
     "canvasOptions": "Pilihan",
@@ -674,6 +676,8 @@
       "validMustBeWholeNumber": "{field} harus berupa bilangan bulat",
       "newRecord": "Rekor baru: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Grafik berhasil ditambahkan!",
+      "chartUpdated": "Grafik berhasil diperbarui!",
+      "chartUpdateFailed": "Gagal memperbarui grafik: grafik tidak ditemukan di catatannya, atau grafik lain tanpa ID memiliki pengaturan yang sama. Buka kembali catatan lalu coba lagi.",
       "dashboardInserted": "Dasbor berhasil ditambahkan!",
       "exerciseNameRequired": "Mohon masukkan nama latihan",
       "exerciseSectionCreated": "Bagian latihan berhasil dibuat!",
@@ -778,7 +782,8 @@
       "insertTable": "Sisipkan tabel log latihan",
       "insertTimer": "Sisipkan timer latihan",
       "muscleTagManager": "Kelola tag otot",
-      "editDashboard": "Sunting dasbor"
+      "editDashboard": "Sunting dasbor",
+      "editChart": "Sunting grafik latihan"
     },
     "workout": "Latihan (opsional):",
     "workoutFile": "File latihan:",
@@ -1057,6 +1062,16 @@
     }
   },
   "codeBlocks": {
+    "loading": "Memuat data...",
+    "noDataForWorkout": "Tidak ada data untuk sesi latihan {workout}.",
+    "noDataForExerciseInWorkout": "Tidak ada data untuk latihan {exercise} pada sesi {workout}.",
+    "loadError": {
+      "chart": "Kesalahan saat memuat grafik: {error}",
+      "log": "Kesalahan saat memuat log latihan: {error}",
+      "timer": "Kesalahan saat memuat timer: {error}",
+      "dashboard": "Kesalahan saat memuat dasbor: {error}",
+      "duration": "Kesalahan saat memuat estimator durasi: {error}"
+    },
     "validation": {
       "title": "Parameter tidak valid:",
       "notANumber": "{key} harus berupa angka, tetapi sekarang \"{value}\"",

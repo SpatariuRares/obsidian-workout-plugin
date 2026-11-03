@@ -1,5 +1,6 @@
 // Refactored InsertChartModal extending BaseInsertModal
 
+import { AdjustField } from "@app/components/molecules/AdjustField";
 import { getYAxisLabel } from "@app/features/charts/config/ChartConstants";
 import { DomUtils } from "@app/utils/DomUtils";
 import { App } from "obsidian";
@@ -23,15 +24,8 @@ import {
   getDefaultChartDataType,
   isValidChartDataType,
 } from "@app/features/charts/config/ChartConstants";
-import { ParameterUtils } from "@app/utils";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { Chip } from "@app/components/atoms/Chip";
-import {
-  Button,
-  BUTTONSIZE,
-  BUTTONVARIANT,
-} from "@app/components/atoms/Button";
-import { Input } from "@app/components/atoms/Input";
-import { INPUT_TYPE } from "@app/types/InputTypes";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
 
@@ -39,18 +33,19 @@ const DATE_RANGE_INCREMENT = 7;
 const LIMIT_INCREMENT = 10;
 
 export class InsertChartModal extends BaseInsertModal {
-  private chartTypeSelect?: HTMLSelectElement;
-  private chartTypeChips: Map<string, HTMLButtonElement> = new Map();
-  private dataTypeSelect?: HTMLSelectElement;
-  private dataTypeChips: Map<string, HTMLButtonElement> = new Map();
+  protected chartTypeSelect?: HTMLSelectElement;
+  protected chartTypeChips: Map<string, HTMLButtonElement> =
+    new Map();
+  protected dataTypeSelect?: HTMLSelectElement;
+  protected dataTypeChips: Map<string, HTMLButtonElement> = new Map();
   private dataTypeChipContainer?: HTMLElement;
-  private targetElements?: TargetSectionWithAutocompleteElements;
-  private dateRangeInput?: HTMLInputElement;
-  private limitInput?: HTMLInputElement;
-  private trendLineToggle?: HTMLInputElement;
-  private trendHeaderToggle?: HTMLInputElement;
-  private statsToggle?: HTMLInputElement;
-  private advancedElements?: AdvancedOptionsElements;
+  protected targetElements?: TargetSectionWithAutocompleteElements;
+  protected dateRangeInput?: HTMLInputElement;
+  protected limitInput?: HTMLInputElement;
+  protected trendLineToggle?: HTMLInputElement;
+  protected trendHeaderToggle?: HTMLInputElement;
+  protected statsToggle?: HTMLInputElement;
+  protected advancedElements?: AdvancedOptionsElements;
   private currentFileName: string;
 
   constructor(app: App, plugin: WorkoutPluginContext) {
@@ -197,25 +192,23 @@ export class InsertChartModal extends BaseInsertModal {
     });
 
     // Date range with +/- adjust
-    this.dateRangeInput = this.createAdjustField(
-      parametersContainer,
-      t("modal.daysRange"),
-      CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE,
-      CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE_MIN,
-      CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE_MAX,
-      DATE_RANGE_INCREMENT,
-      "d",
-    );
+    this.dateRangeInput = AdjustField.create(parametersContainer, {
+      label: t("modal.daysRange"),
+      value: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE,
+      min: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE_MIN,
+      max: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE_MAX,
+      step: DATE_RANGE_INCREMENT,
+      unit: "d",
+    });
 
     // Limit with +/- adjust
-    this.limitInput = this.createAdjustField(
-      parametersContainer,
-      t("modal.dataLimit"),
-      CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT,
-      CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT_MIN,
-      CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT_MAX,
-      LIMIT_INCREMENT,
-    );
+    this.limitInput = AdjustField.create(parametersContainer, {
+      label: t("modal.dataLimit"),
+      value: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT,
+      min: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT_MIN,
+      max: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT_MAX,
+      step: LIMIT_INCREMENT,
+    });
 
     // Display Options Section
     const displaySection = this.createSection(
@@ -269,7 +262,7 @@ export class InsertChartModal extends BaseInsertModal {
       this.plugin.settings.defaultExactMatch;
   }
 
-  private onChartTypeChipClick(value: string): void {
+  protected onChartTypeChipClick(value: string): void {
     if (!this.chartTypeSelect) return;
 
     // Update chips
@@ -282,7 +275,7 @@ export class InsertChartModal extends BaseInsertModal {
     this.chartTypeSelect.dispatchEvent(new Event("change"));
   }
 
-  private onDataTypeChipClick(value: string): void {
+  protected onDataTypeChipClick(value: string): void {
     if (!this.dataTypeSelect) return;
 
     // Update chips
@@ -331,73 +324,12 @@ export class InsertChartModal extends BaseInsertModal {
     }
   }
 
-  /**
-   * Creates a field with +/- adjust buttons (same pattern as InsertTableModal)
-   */
-  private createAdjustField(
-    parent: HTMLElement,
-    label: string,
-    defaultValue: number,
-    min: number,
-    max: number,
-    increment: number,
-    unit?: string,
-  ): HTMLInputElement {
-    const fieldContainer = parent.createDiv({
-      cls: "workout-field-with-adjust",
-    });
-
-    const labelText = unit ? `${label} (${unit})` : label;
-    const labelEl = fieldContainer.createDiv({
-      cls: "workout-field-label",
-    });
-    labelEl.textContent = labelText;
-
-    const inputContainer = fieldContainer.createDiv({
-      cls: "workout-input-with-adjust",
-    });
-
-    const minusBtn = Button.create(inputContainer, {
-      text: t("modal.buttons.adjustMinus") + increment,
-      className: "workout-adjust-btn workout-adjust-minus",
-      ariaLabel: t("modal.buttons.decreaseBy", { label, increment }),
-      variant: BUTTONVARIANT.SECONDARY,
-      size: BUTTONSIZE.SMALL,
-    });
-    minusBtn.type = "button";
-
-    const input = Input.create(inputContainer, {
-      type: INPUT_TYPE.NUMBER,
-      className: "workout-charts-input",
-      min,
-      max,
-      step: 1,
-      value: defaultValue,
-    });
-
-    const plusBtn = Button.create(inputContainer, {
-      text: t("modal.buttons.adjustPlus") + increment,
-      className: "workout-adjust-btn workout-adjust-plus",
-      ariaLabel: t("modal.buttons.increaseBy", { label, increment }),
-      variant: BUTTONVARIANT.SECONDARY,
-      size: BUTTONSIZE.SMALL,
-    });
-    plusBtn.type = "button";
-
-    Button.onClick(minusBtn, () => {
-      const current = parseInt(input.value) || 0;
-      input.value = Math.max(min, current - increment).toString();
-    });
-
-    Button.onClick(plusBtn, () => {
-      const current = parseInt(input.value) || 0;
-      input.value = Math.min(max, current + increment).toString();
-    });
-
-    return input;
+  protected generateCode(): string {
+    return chartBlock.serialize(this.collectParams());
   }
 
-  protected generateCode(): string {
+  /** The form as block parameters */
+  protected collectParams(): EmbeddedChartParams {
     if (
       !this.chartTypeSelect ||
       !this.dataTypeSelect ||
@@ -428,7 +360,7 @@ export class InsertChartModal extends BaseInsertModal {
       this.advancedElements,
     );
 
-    return chartBlock.serialize({
+    return {
       chartType: chartType as EmbeddedChartParams["chartType"],
       type: dataType as CHART_DATA_TYPE,
       exercise: target.exercise || undefined,
@@ -440,13 +372,13 @@ export class InsertChartModal extends BaseInsertModal {
       showStats,
       exactMatch: advancedValues.exactMatch ? true : undefined,
       title: advancedValues.title || undefined,
-    });
+    };
   }
 
   /**
    * Updates the data type options based on the selected exercise
    */
-  private async updateDataTypeOptions(
+  protected async updateDataTypeOptions(
     exerciseName: string,
   ): Promise<void> {
     if (!this.dataTypeSelect || !this.plugin) return;
@@ -469,7 +401,11 @@ export class InsertChartModal extends BaseInsertModal {
           attr: { value: opt.value },
         });
       });
-      if (standardOptions.some((option) => option.value === currentValue)) {
+      if (
+        standardOptions.some(
+          (option) => option.value === currentValue,
+        )
+      ) {
         this.dataTypeSelect.value = currentValue;
       }
       this.buildDataTypeChips(standardOptions);
@@ -520,7 +456,11 @@ export class InsertChartModal extends BaseInsertModal {
     });
 
     // Update selected value to default if current is invalid
-    this.dataTypeSelect.value = isValidChartDataType(typeId, currentVal, customParams)
+    this.dataTypeSelect.value = isValidChartDataType(
+      typeId,
+      currentVal,
+      customParams,
+    )
       ? currentVal
       : getDefaultChartDataType(typeId, customParams);
 

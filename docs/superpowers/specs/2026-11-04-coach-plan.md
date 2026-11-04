@@ -208,7 +208,75 @@ Each phase is usable on its own.
 
 ---
 
-## 6. Open questions
+## 6. Market and positioning
+
+Input: `docs/research/2026-11-04-coaching-software-market.md` (CoachPlus and
+eight competitors; numbers reported, not verified).
+
+### What the market says
+
+- Coaching SaaS is crowded and cheap in Italy: €10–25 a month for 10–100
+  clients, NoSpot unlimited at €12.99, Allenio, Apex Coach and FIT Click with
+  free tiers, AI or branding at entry level. CoachPlus wins on depth
+  (training + nutrition + booking + payments + wearables), not price.
+- Their common weak point is **the client in the gym**: rest timer, density of
+  the workout screen, notes and history hard to reach between sets. That is
+  exactly what this plugin was built around (the note is the workout).
+- Data ownership is a gap: CoachPlus's store listing says data can't be deleted;
+  only FIT Click advertises export.
+
+### The hard truth for us
+
+1. **Every client would need Obsidian.** Most personal-training clients don't
+   use it and won't install it for their coach. A coach app whose only client
+   app is our plugin is a niche of a niche. This decides the product more than
+   any feature.
+2. **We would not beat them on the lock-screen timer either**: a plugin can't
+   do Live Activities or background alarms
+   (`docs/research/2026-11-01-timer-mobile-feasibility.md`). Our in-gym edge is
+   the note-as-workout and fast logging, and fast logging still needs work
+   (`docs/competitors/2026-10-31.md`: one tap in LiftOff and others, 2–3 taps
+   plus a modal for us).
+3. **Feature parity is out of reach** for this project: nutrition, booking,
+   payments, photos, questionnaires, branded apps, wearables. Chasing it means
+   becoming a worse CoachPlus.
+4. "Coach" is already the name of an Obsidian plugin in our competitor list:
+   choose another name.
+
+### Proposed positioning
+
+**"The coach app for clients who own their training data."**
+
+- **Who**: online strength coaches (powerlifting, hybrid, calisthenics) with
+  tech-savvy clients, and lifters who already log in Obsidian and want a coach.
+  Small, but nobody serves it, and they are the people who care about owning
+  their data.
+- **Training only**: programs, logging, progress, adherence, later check-ins.
+  No nutrition, booking or payments; the coach keeps their tools for those.
+- **Data ownership as the product**: the client's vault is the original, export
+  and deletion are one button, the program format is open and documented.
+- **Interoperable from day one**: the coach app also accepts clients who log
+  elsewhere (Strong/Hevy CSV exports, which the plugin already reads with
+  `readWorkoutExport`), so a coach isn't forced to move every client to
+  Obsidian. A light web client for non-Obsidian clients stays in "Later",
+  and only if the niche works.
+- **Automation without AI hype**: "clients at risk" (missed sessions, falling
+  adherence, stalled lifts) computed deterministically from `TrainingHistory`
+  in K4, the same need CoachPlus's announced AI assistant targets.
+- **Price**: don't open with a price war. Free for a few clients while
+  validating (K0–K2); a price only once coaches use it every week.
+
+### What this changes in the roadmap
+
+- K0 must answer one question first: *will 5 real coaches accept clients who log
+  in Obsidian or by import?* If not, stop before building a server.
+- Fast logging in the plugin (one tap on a prefilled row) becomes a
+  prerequisite of K2: it is the in-gym quality the coach product sells.
+- Strong/Hevy import as a client source moves into K2.
+
+---
+
+## 7. Open questions
 
 1. Supabase or Cloudflare? (Proposal: Supabase, for auth, row-level security
    and realtime for chat, EU region.)

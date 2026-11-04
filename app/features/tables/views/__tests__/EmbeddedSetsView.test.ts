@@ -114,7 +114,13 @@ function setup(
 
   const el = createObsidianContainer();
   const view = new EmbeddedSetsView(plugin, new Map());
-  const child = view.createSets(el, params, NOTE_PATH, editBlock);
+  const editAction = editBlock && {
+    label: t("sets.editBlock"),
+    icon: "pencil",
+    edits: true,
+    run: editBlock,
+  };
+  const child = view.createSets(el, params, NOTE_PATH, editAction);
   child.load();
   // As CodeBlockProcessorService: one draw, then one on every log change
   void child.render();

@@ -5,6 +5,7 @@ import { TableDataProcessor } from "@app/features/tables/business/TableDataProce
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import { renderTargetSection } from "@app/features/tables/ui/TargetSection";
+import type { BlockMenuAction } from "@app/features/common/ui/BlockMenu";
 import {
   EmbeddedTableParams,
   TableData,
@@ -17,28 +18,36 @@ import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import { t } from "@app/i18n";
 import { PathUtils } from "@app/utils/PathUtils";
 
+/** Where a table is written: its note, and the edit action for its ⋮ menu */
+interface TableWhere {
+  sourcePath: string;
+  editAction?: BlockMenuAction;
+}
+
 export class EmbeddedTableView extends BaseView {
   /** Aborts the listeners of each table's last draw */
   private signals = new Map<HTMLElement, AbortController>();
 
   /**
    * @param sourcePath - The note containing the code block: the origin of
-   * logs added from this table, and where its edit menu writes
+   * logs added from this table
+   * @param editAction - The block's edit action (CodeBlockProcessorService), in its ⋮ menu
    */
   async createTable(
     container: HTMLElement,
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
     sourcePath = "",
+    editAction?: BlockMenuAction,
   ): Promise<void> {
-    await this.renderTable(container, logData, params, sourcePath);
+    await this.renderTable(container, logData, params, { sourcePath, editAction });
   }
 
   private async renderTable(
     container: HTMLElement,
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
-    sourcePath: string,
+    where: TableWhere,
   ): Promise<void> {
     try {
       const loadingDiv = this.showLoadingIndicator(container);
@@ -48,8 +57,8 @@ export class EmbeddedTableView extends BaseView {
           container,
           logData,
           params.exercise,
-          sourcePath || undefined,
-          params.id,
+          where.sourcePath || undefined,
+          where.editAction,
         )
       ) {
         loadingDiv.remove();
@@ -66,7 +75,7 @@ export class EmbeddedTableView extends BaseView {
       if (filterResult.filteredData.length === 0) {
         loadingDiv.remove();
         if (params.exercise) {
-          this.renderEmptyExerciseTable(container, params, logData, sourcePath);
+          this.renderEmptyExerciseTable(container, params, logData, where);
           return;
         }
         this.handleNoFilteredData(
@@ -89,7 +98,7 @@ export class EmbeddedTableView extends BaseView {
       this.renderTableContentOptimized(
         container,
         { ...tableData, params },
-        sourcePath,
+        where,
       );
     } catch (error) {
       this.handleError(container, error);
@@ -99,7 +108,7 @@ export class EmbeddedTableView extends BaseView {
   private renderTableContentOptimized(
     container: HTMLElement,
     tableData: TableData,
-    sourcePath: string,
+    where: TableWhere,
   ): void {
     const { headers, rows, filterResult, params } = tableData;
 
@@ -117,7 +126,7 @@ export class EmbeddedTableView extends BaseView {
         params,
         filterResult,
         signal,
-        sourcePath,
+        where,
       );
     }
 
@@ -128,10 +137,10 @@ export class EmbeddedTableView extends BaseView {
         plugin: this.plugin,
         params,
         schema: tableBlock,
-        sourcePath,
+        sourcePath: where.sourcePath,
         sets: filterResult.filteredData,
         onTargetUpdated: (updated) =>
-          this.refreshTable(container, updated, sourcePath),
+          this.refreshTable(container, updated, where.sourcePath, where.editAction),
       },
       signal,
     );
@@ -170,7 +179,7 @@ export class EmbeddedTableView extends BaseView {
     container: HTMLElement,
     params: EmbeddedTableParams,
     logData: WorkoutLogData[],
-    sourcePath: string,
+    where: TableWhere,
   ): void {
     const signal = this.newSignal(container);
     container.empty();
@@ -190,7 +199,7 @@ export class EmbeddedTableView extends BaseView {
         params,
         { filteredData: logData },
         signal,
-        sourcePath,
+        where,
         firstLog,
       );
     }
@@ -208,11 +217,11 @@ export class EmbeddedTableView extends BaseView {
     params: EmbeddedTableParams,
     filterResult: { filteredData: WorkoutLogData[] },
     signal: AbortSignal,
-    sourcePath: string,
+    where: TableWhere,
     firstLog = false,
   ): void {
     const currentPageLink =
-      PathUtils.toWikiLink(sourcePath) || this.getActivePageLink();
+      PathUtils.toWikiLink(where.sourcePath) || this.getActivePageLink();
     const exerciseName =
       params.exercise || t("modal.sections.workout");
 
@@ -238,13 +247,7 @@ export class EmbeddedTableView extends BaseView {
     if (params.exercise) {
       ExerciseActionSelect.render(
         buttonContainer,
-        {
-          exerciseName: params.exercise,
-          app: this.plugin.app,
-          plugin: this.plugin,
-          params,
-          sourcePath,
-        },
+        { exerciseName: params.exercise, plugin: this.plugin, edit: where.editAction },
         signal,
       );
     }
@@ -254,15 +257,13 @@ export class EmbeddedTableView extends BaseView {
     container: HTMLElement,
     params: EmbeddedTableParams,
     sourcePath = "",
+    editAction?: BlockMenuAction,
   ): Promise<void> {
     try {
       const logData = await this.plugin.getWorkoutLogData();
-      await this.renderTable(container, logData, params, sourcePath);
+      await this.renderTable(container, logData, params, { sourcePath, editAction });
     } catch (error) {
-      this.handleError(
-        container,
-        error,
-      );
+      this.handleError(container, error);
     }
   }
 

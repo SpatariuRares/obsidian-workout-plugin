@@ -34,10 +34,9 @@ export class RestTimer {
     return this.timerFor(rest).isTimerRunning();
   }
 
-  /** Draws the rest's timer, without the block id (its menu belongs to the block) */
-  draw(container: HTMLElement, rest: EmbeddedTimerParams, sourcePath: string): void {
-    const { id: _id, ...params } = rest;
-    this.timerFor(rest).createTimer(container, params, sourcePath);
+  /** Draws the rest's timer, without a menu (the menu belongs to its block) */
+  draw(container: HTMLElement, rest: EmbeddedTimerParams): void {
+    this.timerFor(rest).createTimer(container, rest);
   }
 
   /** A set was logged: the rest starts over */

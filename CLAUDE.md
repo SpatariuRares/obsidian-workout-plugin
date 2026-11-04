@@ -155,13 +155,18 @@ All embedded views extend `BaseView` (`app/features/common/views/BaseView.ts`) f
 
 ```typescript
 abstract class BaseView {
-  protected handleError(container, error): void;
-  protected handleEmptyData(container, logData, exerciseName?, currentPageLink?, codeBlockId?): boolean;
+  protected handleError(container, error: unknown): void;
+  protected handleEmptyData(container, logData, exerciseName?, sourcePath?, editAction?): boolean;
+  protected filteredOrExplain(container, logData, params, viewType, { sourcePath?, title? }): WorkoutLogData[] | null; // empty log / no match, explained
   protected handleNoFilteredData(container, params, titlePrefix, viewType): void;
   protected showLoadingIndicator(container): HTMLElement;
-  protected filterData(...); validateAndHandleErrors(...); showSuccessMessage(...);
+  protected filterData(logData, params);
+  protected track(child): child; // render children unloaded by cleanup()
+  cleanup(): void;
 }
 ```
+
+**Rendering and menus (CodeBlockProcessorService):** a view loads its own data and draws in one call (`EmbeddedChartView.render`, `EmbeddedDashboardView.render`, `EmbeddedTableView.refreshTable`, `SetSheet.render`); the processor awaits it once, then calls it again from `refreshOnLogChange` (an `EventAwareRenderChild`) on every log change, also when the log was empty, so a block fills in with the first set. `renderBlock` builds each block's edit action (`BlockMenuAction`, with the block's note, how to find it without an id and its invalid keys) and hands it to `draw`: a view with its own ⋮ menu puts it there (`ExerciseActionSelect`'s `edit`, the timer's controls, the dashboard header); otherwise the frame shows it in a row above the block. Never build an edit modal for the block menu inside a view. Insert modals add the block `id` in `generateCode` (`schema.serialize({ id: generateCodeBlockId(), ...this.collectParams() })`); `collectParams` never returns one, so an edit doesn't see it as a change.
 
 **Views:**
 
@@ -232,7 +237,7 @@ app/features/
 │   ├── components/      # TableActions, TableDataProcessor
 │   ├── business/        # TargetCalculator (progressive overload), setSheet (workout-sets rows)
 │   ├── modals/          # Insert/EditTableModal, Insert/EditSetsModal, components/PlanFields
-│   ├── ui/              # ActionButtons, TargetHeader, TargetSection, ExerciseActionSelect
+│   ├── ui/              # ActionButtons, TargetHeader, TargetSection, ExerciseActionSelect (⋮: go to exercise + edit)
 │   └── views/           # EmbeddedTableView, EmbeddedSetsView
 │
 ├── dashboard/
@@ -471,7 +476,7 @@ The "Set sheet" in `CONTEXT.md`: the V2 of `workout-log`, made for logging on th
 - **Columns and values**: headers from `TableColumnResolver.formatParameterHeader` + `mapColumnIdentifiersToLabels`; a logged set's cells from `TableRowProcessor.displayRow` (weight as entered, N/A).
 - **Protocol badge**: `ProtocolBadge.forProtocol(parent, catalog.resolve(id))`.
 - **Targets**: `renderTargetSection` (`tables/ui/TargetSection.ts`): target, progress bar, achievement badge that writes the next weight into the block with its own schema.
-- **Menu**: the ⋮ of `workout-log`, always in the top right corner of the block's first row: `ExerciseActionSelect` (go to exercise + the block's edit action, `edit` for a non-table block), only edit when the block names no exercise. The view draws it, and the processor redraws the sheet like a table (`await sheet.render()`, then `refreshOnLogChange(… () => sheet.render().finally(syncMenu))`), so the frame adds no second menu.
+- **Menu**: the ⋮ of `workout-log`, always in the top right corner of the block's first row: `ExerciseActionSelect` (go to exercise + the processor's edit action), only edit when the block names no exercise, so the frame adds no second menu. The processor redraws the sheet like a table (`await sheet.render()`, then `refreshOnLogChange(… () => sheet.render().finally(syncMenu))`).
 - **Exercise fields**: `parametersOrNone(plugin, exercise)` (`ExerciseDefinitionService.ts`), the fields or none, as the session and the log modal's history read them.
 - **Rest**: `RestTimer` (`timer/views/RestTimer.ts`), the same as `workout-session`: a rest that names a `workout-timer` id runs on that block's timer (shared through `activeTimers`), else on the block's own. `restOf(params, plan)` (setSheet) picks it: `rest` seconds, else the exercise's section rest from `readNotePlan`/`stepOf` (sessionPlan), none with `rest: 0`. It is drawn at the top and restarts on each tick, except after the last row to fill in.
 - **Logging**: a logged row opens `EditLogModal`; a new set goes through `LogEntryDraft` (`readSetFields`, `validate`, `toEntry`) like the log form.
@@ -519,7 +524,7 @@ grid.heatMap: 1 2 2 2
 
 The grid rules (no overlap, inside the columns, at least the widget's `minColumns`, first-fit packing, reading order) are only in `app/features/dashboard/layout/gridLayout.ts` (pure); `dashboardGrid.ts` turns a block's `grid.<id>` lines into placements and back and its problems into messages. The view draws the placed widgets in reading order and sets `--workout-grid-columns` / `--workout-cell-column` / `--workout-cell-row`; the columns follow the dashboard's width (`columnsForWidth`, one `ResizeObserver` per dashboard): as saved when they fit, packed again (`fitColumns`) when narrower. `GridEditor` (`dashboard/ui/`) is the modal's grid: tiles, stash, pointer drag (listeners on the document) and keyboard; it calls only `gridLayout`.
 
-The widgets live in one registry, `app/features/dashboard/widgets/dashboardWidgets.ts` (`DASHBOARD_WIDGETS` with label, `minColumns` and render; `resolveWidgets(params)`); the view loops over it. `InsertDashboardModal` is the form (checkboxes + ↑/↓ order) and writes `widgets` only when it differs from the default, so untouched dashboards get later widgets; `EditDashboardModal` (kebab menu on every dashboard, `DashboardActionSelect`) patches the change. The old `showSummary`/`showQuickStats`/... flags were removed: the schema skips them, so such blocks show every widget. A block without an `id` is found by its body (`CodeBlockMatch { body, lines? }`: the processor's `source`, within `ctx.getSectionInfo`'s lines when Obsidian gives them, which it doesn't inside a callout in Live Preview; it must be the only match) and gets an `id` when saved. `EmbeddedDashboardParams` holds only block parameters; what the view knows besides them (its note, how to find it without an id, the protocol picked in the pie chart) is `DashboardViewState`, passed to `createDashboard`/`refreshDashboard` separately.
+The widgets live in one registry, `app/features/dashboard/widgets/dashboardWidgets.ts` (`DASHBOARD_WIDGETS` with label, `minColumns` and render; `resolveWidgets(params)`); the view loops over it. `InsertDashboardModal` is the form (checkboxes + ↑/↓ order) and writes `widgets` only when it differs from the default, so untouched dashboards get later widgets; `EditDashboardModal` (the processor's edit action, in the ⋮ of every dashboard's header) patches the change. The old `showSummary`/`showQuickStats`/... flags were removed: the schema skips them, so such blocks show every widget. A block without an `id` is found by its body (`CodeBlockMatch { body, lines? }`: the processor's `source`, within `ctx.getSectionInfo`'s lines when Obsidian gives them, which it doesn't inside a callout in Live Preview; it must be the only match) and gets an `id` when saved. `EmbeddedDashboardParams` holds only block parameters; what the view knows besides them (its note and how to find it without an id, for the widget menus; its edit action; the protocol picked in the pie chart) is `DashboardViewState`, passed to `render`/`createDashboard` separately.
 
 Code blocks written by the insert modals also carry an `id`, used to find the block when it is edited.
 

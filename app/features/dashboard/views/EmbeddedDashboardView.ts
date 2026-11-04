@@ -26,7 +26,7 @@ import {
   fitColumns,
   Placement,
 } from "@app/features/dashboard/layout/gridLayout";
-import { DashboardActionSelect } from "@app/features/dashboard/ui/DashboardActionSelect";
+import { BlockMenu } from "@app/features/common/ui/BlockMenu";
 import { WidgetActionSelect } from "@app/features/dashboard/ui/WidgetActionSelect";
 import { getElementScopedId } from "@app/utils/IdUtils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
@@ -71,16 +71,14 @@ export class EmbeddedDashboardView extends BaseView {
   /**
    * Loads the log and draws the dashboard: on the first render and on every
    * log change, so a dashboard drawn on an empty log fills in with the first set.
-   * @param sourcePath - The note the block is written in (its "first log" button)
    */
   async render(
     container: HTMLElement,
     params: EmbeddedDashboardParams,
     state: DashboardViewState = {},
-    sourcePath?: string,
   ): Promise<void> {
     const logData = (await this.plugin.getWorkoutLogData()) || [];
-    await this.createDashboard(container, logData, params, state, sourcePath);
+    await this.createDashboard(container, logData, params, state);
   }
 
   /**
@@ -91,7 +89,6 @@ export class EmbeddedDashboardView extends BaseView {
     logData: WorkoutLogData[],
     params: EmbeddedDashboardParams,
     state: DashboardViewState = {},
-    sourcePath?: string,
   ): Promise<void> {
     container.empty();
     const loadingIndicator = this.showLoadingIndicator(container);
@@ -101,7 +98,7 @@ export class EmbeddedDashboardView extends BaseView {
         logData,
         params,
         VIEW_TYPES.DASHBOARD,
-        { sourcePath, title: params.title || t("general.dashboard") },
+        { sourcePath: state.sourcePath, title: params.title || t("general.dashboard") },
       );
       if (!filteredData) return;
       loadingIndicator.remove();
@@ -110,13 +107,10 @@ export class EmbeddedDashboardView extends BaseView {
       // Create dashboard layout
       // Re-render this dashboard (and only this one) on pie chart clicks
       const onProtocolFilterChange = (protocol: string | null) => {
-        void this.createDashboard(
-          container,
-          logData,
-          params,
-          { ...state, activeProtocolFilter: protocol },
-          sourcePath,
-        );
+        void this.createDashboard(container, logData, params, {
+          ...state,
+          activeProtocolFilter: protocol,
+        });
       };
 
       await this.renderDashboard(
@@ -177,13 +171,7 @@ export class EmbeddedDashboardView extends BaseView {
         cls: "workout-dashboard-title",
       });
     }
-    if (state.sourcePath !== undefined) {
-      DashboardActionSelect.render(headerEl, this.plugin.app, params, {
-        sourcePath: state.sourcePath,
-        matchWithoutId: state.matchWithoutId,
-        noteWidth: () => dashboardEl.getBoundingClientRect().width,
-      });
-    }
+    if (state.editAction) BlockMenu.render(headerEl, [state.editAction]);
 
     // Grid layout: each widget in its cells; a broken grid shows why instead
     const placements =

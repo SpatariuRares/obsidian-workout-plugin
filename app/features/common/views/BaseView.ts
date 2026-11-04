@@ -1,4 +1,5 @@
 import { MarkdownRenderChild } from "obsidian";
+import type { BlockMenuAction } from "@app/features/common/ui/BlockMenu";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { DataFilter } from "@app/services/data/DataFilter";
@@ -51,7 +52,7 @@ export abstract class BaseView {
     logData: WorkoutLogData[],
     exerciseName?: string,
     sourcePath?: string,
-    codeBlockId?: string,
+    editAction?: BlockMenuAction,
   ): boolean {
     if (logData.length === 0) {
       LogCallouts.renderCsvNoDataMessage(
@@ -59,7 +60,7 @@ export abstract class BaseView {
         this.plugin,
         exerciseName,
         sourcePath,
-        codeBlockId,
+        editAction,
       );
       return true;
     }

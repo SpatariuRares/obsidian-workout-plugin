@@ -476,13 +476,14 @@ describe("CodeBlockProcessorService", () => {
         blockBody(el),
         { ...tableBlock.defaults, exercise: "Squat", limit: 10 },
         "test/path.md",
+        expect.objectContaining({ edits: true }),
       );
       expect(ctx.addChild).toHaveBeenCalledWith(expect.any(EventAwareRenderChild));
     });
   });
 
   describe("handleWorkoutDashboard", () => {
-    it("draws the dashboard with its parameters, state and note", async () => {
+    it("draws the dashboard with its parameters, its place and its edit action", async () => {
       const el = createObsidianContainer();
       const ctx = {
         addChild: jest.fn(),
@@ -494,8 +495,10 @@ describe("CodeBlockProcessorService", () => {
       expect(mockDashboardView.render).toHaveBeenCalledWith(
         blockBody(el),
         expect.objectContaining({ dateRange: 30 }),
-        expect.objectContaining({ sourcePath: "test/path.md" }),
-        "test/path.md",
+        expect.objectContaining({
+          sourcePath: "test/path.md",
+          editAction: expect.objectContaining({ edits: true }),
+        }),
       );
     });
 

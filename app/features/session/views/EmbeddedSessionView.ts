@@ -215,7 +215,7 @@ class SessionRenderChild extends MarkdownRenderChild {
         (resting || this.restTimer.isRunning(this.restingStep.rest))
           ? this.restingStep
           : step;
-      this.restTimer.draw(restEl.createDiv(), restStep.rest, this.sourcePath);
+      this.restTimer.draw(restEl.createDiv(), restStep.rest);
       return true;
     } catch (error) {
       this.onError(error);

@@ -657,31 +657,19 @@ describe("EmbeddedTableView", () => {
       );
     });
 
-    it("passes the block's own params (without defaults) to the edit action", async () => {
-      const params = { id: "t1", exercise: "Bench" };
+    it("puts the block's edit action in its ⋮ menu", async () => {
+      const editAction = { label: "Edit", icon: "pencil", edits: true, run: jest.fn() };
 
-      await view.createTable(
-        document.createElement("div"),
-        [createLog()],
-        params,
-      );
-
-      const props = (ExerciseActionSelect.render as jest.Mock).mock
-        .calls[0][1];
-      expect(props.params).toEqual(params);
-    });
-
-    it("gives the edit action the note the block is written in", async () => {
       await view.createTable(
         document.createElement("div"),
         [createLog()],
         { id: "t1", exercise: "Bench" },
         "Workouts/Stats.md",
+        editAction,
       );
 
-      const props = (ExerciseActionSelect.render as jest.Mock).mock
-        .calls[0][1];
-      expect(props.sourcePath).toBe("Workouts/Stats.md");
+      const props = (ExerciseActionSelect.render as jest.Mock).mock.calls[0][1];
+      expect(props.edit).toBe(editAction);
     });
   });
 

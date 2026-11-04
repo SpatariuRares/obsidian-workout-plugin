@@ -5,6 +5,7 @@ import { describeSet } from "@app/features/modals/log/LogHistory";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 import { TableRowProcessor } from "@app/features/tables/business/TableRowProcessor";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
+import type { BlockMenuAction } from "@app/features/common/ui/BlockMenu";
 import { renderTargetSection } from "@app/features/tables/ui/TargetSection";
 import { toEntry } from "@app/features/modals/base/logic/LogEntryDraft";
 import {
@@ -66,13 +67,13 @@ export class EmbeddedSetsView extends BaseView {
    * The block's render child. It draws on `render()`: the caller draws it
    * once, then on every log change (EventAwareRenderChild), like a table.
    * @param sourcePath - The note the block is written in: its workout and the sets' origin
-   * @param editBlock - Opens the block's edit form, for its ⋮ menu
+   * @param editAction - The block's edit action (CodeBlockProcessorService), in its ⋮ menu
    */
   createSets(
     container: HTMLElement,
     params: EmbeddedSetsParams,
     sourcePath: string,
-    editBlock?: () => void,
+    editAction?: BlockMenuAction,
   ): SetSheet {
     return this.track(
       new SetSheet(
@@ -81,7 +82,7 @@ export class EmbeddedSetsView extends BaseView {
         new RestTimer(this.plugin, this.activeTimers),
         params,
         sourcePath,
-        editBlock,
+        editAction,
         (error) => this.handleError(container, error),
       ),
     );
@@ -121,7 +122,7 @@ export class SetSheet extends MarkdownRenderChild {
     private restTimer: RestTimer,
     private params: EmbeddedSetsParams,
     private sourcePath: string,
-    private editBlock: (() => void) | undefined,
+    private editAction: BlockMenuAction | undefined,
     private onError: (error: unknown) => void,
   ) {
     super(containerEl);
@@ -183,7 +184,7 @@ export class SetSheet extends MarkdownRenderChild {
         t("sets.progress", { done: todaysSets.length, sets: drawn.planned }),
       );
       if (drawn.rest) {
-        this.restTimer.draw(sheet.createDiv({ cls: "workout-sets-rest" }), drawn.rest, this.sourcePath);
+        this.restTimer.draw(sheet.createDiv({ cls: "workout-sets-rest" }), drawn.rest);
       }
       renderTargetSection(sheet, {
         plugin: this.plugin,
@@ -236,9 +237,8 @@ export class SetSheet extends MarkdownRenderChild {
     if (progress) header.createDiv({ cls: "workout-sets-meta", text: progress });
     ExerciseActionSelect.render(header, {
       exerciseName: exercise ?? "",
-      app: this.plugin.app,
       plugin: this.plugin,
-      edit: this.editBlock && { label: t("sets.editBlock"), open: this.editBlock },
+      edit: this.editAction,
     });
   }
 

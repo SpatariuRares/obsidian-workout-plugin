@@ -46,13 +46,6 @@ export class EditTableModal extends InsertTableModal {
     return t("modal.notices.tableUpdated");
   }
 
-  /**
-   * Preserve the existing code block ID instead of generating a new one
-   */
-  protected getCodeBlockId(): string {
-    return this.initialParams.id || super.getCodeBlockId();
-  }
-
   protected createConfigurationSections(
     container: HTMLElement,
   ): void {

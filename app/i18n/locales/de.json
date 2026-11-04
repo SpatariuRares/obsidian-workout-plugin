@@ -1105,8 +1105,7 @@
       "chart": "Fehler beim Laden des Diagramms: {error}",
       "log": "Fehler beim Laden des Protokolls: {error}",
       "timer": "Fehler beim Laden des Timers: {error}",
-      "dashboard": "Fehler beim Laden des Dashboards: {error}",
-      "duration": "Fehler beim Laden der Dauerschätzung: {error}"
+      "dashboard": "Fehler beim Laden des Dashboards: {error}"
     },
     "validation": {
       "title": "Ungültige Parameter:",

@@ -1105,8 +1105,7 @@
       "chart": "Fejl ved indlæsning af diagram: {error}",
       "log": "Fejl ved indlæsning af logbog: {error}",
       "timer": "Fejl ved indlæsning af timer: {error}",
-      "dashboard": "Fejl ved indlæsning af dashboard: {error}",
-      "duration": "Fejl ved indlæsning af varighedsestimator: {error}"
+      "dashboard": "Fejl ved indlæsning af dashboard: {error}"
     },
     "validation": {
       "title": "Ugyldige parametre:",

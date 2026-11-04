@@ -1105,8 +1105,7 @@
       "chart": "Erro ao carregar o gráfico: {error}",
       "log": "Erro ao carregar o registro: {error}",
       "timer": "Erro ao carregar o temporizador: {error}",
-      "dashboard": "Erro ao carregar o painel de controle: {error}",
-      "duration": "Erro ao carregar o estimador de duração: {error}"
+      "dashboard": "Erro ao carregar o painel de controle: {error}"
     },
     "validation": {
       "title": "Parâmetros inválidos:",

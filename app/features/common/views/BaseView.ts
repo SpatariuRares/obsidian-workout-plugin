@@ -1,3 +1,4 @@
+import { MarkdownRenderChild } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { DataFilter } from "@app/services/data/DataFilter";
@@ -7,7 +8,7 @@ import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 import { CHART_TYPE } from "@app/types/WorkoutConfigTypes";
 import { EmbeddedViewParams } from "@app/types/PluginTypes";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
-import { ErrorCollector } from "@app/orchestration/ErrorCollector";
+import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { t } from "@app/i18n";
 import { CONSTANTS, ICONS } from "@app/constants";
 /**
@@ -15,24 +16,29 @@ import { CONSTANTS, ICONS } from "@app/constants";
  * and reduces code duplication across Chart, Table, and Timer views.
  */
 export abstract class BaseView {
+  /** Render children this view made (see track), unloaded by cleanup */
+  private tracked = new Set<MarkdownRenderChild>();
+
   constructor(protected plugin: WorkoutPluginContext) {}
+
+  /** Keeps a render child until it unloads, so cleanup can unload it with the plugin */
+  protected track<C extends MarkdownRenderChild>(child: C): C {
+    this.tracked.add(child);
+    child.register(() => this.tracked.delete(child));
+    return child;
+  }
+
+  /** Called on plugin unload; views with more to release override it */
+  cleanup(): void {
+    for (const child of [...this.tracked]) child.unload();
+    this.tracked.clear();
+  }
 
   /**
    * Common error handling pattern for all views
    */
-  protected handleError(container: HTMLElement, error: Error): void {
-    // Log error for DOE learning system
-    ErrorCollector.logError({
-      type: "view_error",
-      view: this.constructor.name,
-      error: error,
-      context: {
-        timestamp: Date.now(),
-      },
-    });
-
-    // Render user-friendly error message
-    Feedback.renderError(container, error.message, {
+  protected handleError(container: HTMLElement, error: unknown): void {
+    Feedback.renderError(container, ErrorUtils.getErrorMessage(error), {
       title: CONSTANTS.WORKOUT.ERRORS.TYPES.GENERIC,
     });
   }
@@ -153,30 +159,6 @@ export abstract class BaseView {
     params: EmbeddedViewParams,
   ) {
     return DataFilter.filterData(logData, params);
-  }
-
-  /**
-   * Common validation error handling pattern
-   */
-  protected validateAndHandleErrors(
-    container: HTMLElement,
-    validationErrors: string[],
-  ): boolean {
-    if (validationErrors.length > 0) {
-      renderInvalidParams(container, validationErrors);
-      return false;
-    }
-    return true;
-  }
-
-  /**
-   * Common success message pattern
-   */
-  protected showSuccessMessage(
-    container: HTMLElement,
-    message: string,
-  ): void {
-    Feedback.renderSuccess(container, message);
   }
 }
 

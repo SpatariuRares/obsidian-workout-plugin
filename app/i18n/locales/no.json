@@ -1105,8 +1105,7 @@
       "chart": "Feil ved lasting av diagram: {error}",
       "log": "Feil ved lasting av logg: {error}",
       "timer": "Feil ved lasting av timer: {error}",
-      "dashboard": "Feil ved lasting av dashbord: {error}",
-      "duration": "Feil ved lasting av varighetsestimator: {error}"
+      "dashboard": "Feil ved lasting av dashbord: {error}"
     },
     "validation": {
       "title": "Ugyldige parametere:",

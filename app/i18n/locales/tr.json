@@ -1105,8 +1105,7 @@
       "chart": "Grafik yüklenirken hata: {error}",
       "log": "Antrenman kaydı yüklenirken hata: {error}",
       "timer": "Zamanlayıcı yüklenirken hata: {error}",
-      "dashboard": "Gösterge paneli yüklenirken hata: {error}",
-      "duration": "Süre tahmincisi yüklenirken hata: {error}"
+      "dashboard": "Gösterge paneli yüklenirken hata: {error}"
     },
     "validation": {
       "title": "Geçersiz parametreler:",

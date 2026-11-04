@@ -1105,8 +1105,7 @@
       "chart": "Kesalahan saat memuat grafik: {error}",
       "log": "Kesalahan saat memuat log latihan: {error}",
       "timer": "Kesalahan saat memuat timer: {error}",
-      "dashboard": "Kesalahan saat memuat dasbor: {error}",
-      "duration": "Kesalahan saat memuat estimator durasi: {error}"
+      "dashboard": "Kesalahan saat memuat dasbor: {error}"
     },
     "validation": {
       "title": "Parameter tidak valid:",

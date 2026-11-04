@@ -93,9 +93,7 @@ export class EmbeddedTimerView extends BaseView {
         this.timerCore.start();
       }
     } catch (error) {
-      const errorObj =
-        error instanceof Error ? error : new Error(String(error));
-      this.handleError(container, errorObj);
+      this.handleError(container, error);
     }
   }
 

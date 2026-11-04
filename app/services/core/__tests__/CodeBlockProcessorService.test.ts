@@ -55,13 +55,6 @@ jest.mock("@app/utils/BlockIdMigration", () => ({
   runAddMissingBlockIds: jest.fn(),
 }));
 
-jest.mock("@app/orchestration/ErrorCollector", () => ({
-  ErrorCollector: {
-    logError: jest.fn(),
-    getInstance: jest.fn().mockReturnValue({ isEnabled: true }),
-  },
-}));
-
 jest.mock("@app/i18n", () => ({
   t: jest.fn((key, params) =>
     params ? `${key} ${JSON.stringify(params)}` : key,
@@ -1016,44 +1009,6 @@ describe("CodeBlockProcessorService", () => {
       expect(
         (service as any).embeddedDurationView.createDurationEstimator,
       ).toHaveBeenCalled();
-    });
-
-    it("should catch errors", async () => {
-      const el = createObsidianContainer();
-      const ctx = {
-        addChild: jest.fn(),
-        sourcePath: "test/path.md",
-      } as unknown as MarkdownPostProcessorContext;
-      (service as any).embeddedDurationView = {
-        createDurationEstimator: jest
-          .fn()
-          .mockRejectedValue(new Error("Duration Fail")),
-      };
-
-      await (service as any).handleWorkoutDuration("source", el, ctx);
-
-      expect(Feedback.renderError).toHaveBeenCalled();
-    });
-
-    it("should handle non-Error exceptions", async () => {
-      const el = createObsidianContainer();
-      const ctx = {
-        addChild: jest.fn(),
-        sourcePath: "test/path.md",
-      } as unknown as MarkdownPostProcessorContext;
-      (service as any).embeddedDurationView = {
-        createDurationEstimator: jest
-          .fn()
-          .mockRejectedValue("string error"),
-      };
-
-      await (service as any).handleWorkoutDuration("source", el, ctx);
-
-      expect(Feedback.renderError).toHaveBeenCalledWith(
-        el,
-        expect.stringContaining("string error"),
-        expect.any(Object),
-      );
     });
   });
 });

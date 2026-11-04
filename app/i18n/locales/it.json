@@ -1105,8 +1105,7 @@
       "chart": "Errore nel caricamento del grafico: {error}",
       "log": "Errore nel caricamento del registro: {error}",
       "timer": "Errore nel caricamento del timer: {error}",
-      "dashboard": "Errore nel caricamento della dashboard: {error}",
-      "duration": "Errore nel caricamento della stima della durata: {error}"
+      "dashboard": "Errore nel caricamento della dashboard: {error}"
     },
     "validation": {
       "title": "Parametri non validi:",

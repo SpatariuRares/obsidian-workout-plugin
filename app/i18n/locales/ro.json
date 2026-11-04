@@ -1105,8 +1105,7 @@
       "chart": "Eroare la încărcarea graficului: {error}",
       "log": "Eroare la încărcarea jurnalului: {error}",
       "timer": "Eroare la încărcarea temporizatorului: {error}",
-      "dashboard": "Eroare la încărcarea tabloului de bord: {error}",
-      "duration": "Eroare la încărcarea estimatorului de durată: {error}"
+      "dashboard": "Eroare la încărcarea tabloului de bord: {error}"
     },
     "validation": {
       "title": "Parametri incorecți:",

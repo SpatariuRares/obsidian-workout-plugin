@@ -44,13 +44,6 @@ export class EditTimerModal extends InsertTimerModal {
   }
 
   /**
-   * Preserve the existing code block ID instead of generating a new one
-   */
-  protected getCodeBlockId(): string {
-    return this.initialParams.id || super.getCodeBlockId();
-  }
-
-  /**
    * An interval block written with `duration` (before `work` existed) keeps
    * that line, so editing the work never leaves two conflicting values
    */

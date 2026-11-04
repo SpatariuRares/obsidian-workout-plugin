@@ -1105,8 +1105,7 @@
       "chart": "Gabim gjatë ngarkimit të grafikut: {error}",
       "log": "Gabim gjatë ngarkimit të regjistrit: {error}",
       "timer": "Gabim gjatë ngarkimit të timerit: {error}",
-      "dashboard": "Gabim gjatë ngarkimit të panelit: {error}",
-      "duration": "Gabim gjatë ngarkimit të vlerësuesit të kohëzgjatjes: {error}"
+      "dashboard": "Gabim gjatë ngarkimit të panelit: {error}"
     },
     "validation": {
       "title": "Parametra të pavlefshëm:",

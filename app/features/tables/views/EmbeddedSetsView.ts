@@ -51,8 +51,6 @@ import { t } from "@app/i18n";
  * in rows not ticked yet lives only here, until the note is closed.
  */
 export class EmbeddedSetsView extends BaseView {
-  private sheets = new Set<SetSheet>();
-
   /**
    * @param activeTimers - The plugin's timers by block id, shared with the
    * `workout-timer` blocks so a section's rest runs on one timer
@@ -76,23 +74,17 @@ export class EmbeddedSetsView extends BaseView {
     sourcePath: string,
     editBlock?: () => void,
   ): SetSheet {
-    const sheet = new SetSheet(
-      container,
-      this.plugin,
-      new RestTimer(this.plugin, this.activeTimers),
-      params,
-      sourcePath,
-      editBlock,
-      (error) => this.handleError(container, error),
-      () => this.sheets.delete(sheet),
+    return this.track(
+      new SetSheet(
+        container,
+        this.plugin,
+        new RestTimer(this.plugin, this.activeTimers),
+        params,
+        sourcePath,
+        editBlock,
+        (error) => this.handleError(container, error),
+      ),
     );
-    this.sheets.add(sheet);
-    return sheet;
-  }
-
-  cleanup(): void {
-    for (const sheet of this.sheets) sheet.unload();
-    this.sheets.clear();
   }
 }
 
@@ -130,8 +122,7 @@ export class SetSheet extends MarkdownRenderChild {
     private params: EmbeddedSetsParams,
     private sourcePath: string,
     private editBlock: (() => void) | undefined,
-    private onError: (error: Error) => void,
-    private onUnload: () => void,
+    private onError: (error: unknown) => void,
   ) {
     super(containerEl);
     this.workout = params.workout || PathUtils.noteName(sourcePath);
@@ -139,7 +130,6 @@ export class SetSheet extends MarkdownRenderChild {
 
   onunload(): void {
     this.restTimer.destroy();
-    this.onUnload();
   }
 
   async render(): Promise<void> {
@@ -226,7 +216,7 @@ export class SetSheet extends MarkdownRenderChild {
         void this.render();
       });
     } catch (error) {
-      this.onError(error instanceof Error ? error : new Error(String(error)));
+      this.onError(error);
     }
   }
 

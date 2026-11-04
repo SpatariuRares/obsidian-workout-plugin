@@ -31,8 +31,6 @@ import { t } from "@app/i18n";
  * sets logged today for this workout, so it survives closing the note.
  */
 export class EmbeddedSessionView extends BaseView {
-  private sessions = new Set<SessionRenderChild>();
-
   /**
    * @param activeTimers - The plugin's timers by block id, shared with the
    * `workout-timer` blocks so a section's rest runs on one timer
@@ -46,21 +44,15 @@ export class EmbeddedSessionView extends BaseView {
 
   /** @param sourcePath - The note the block is written in: its plan and workout name */
   createSession(container: HTMLElement, sourcePath: string): MarkdownRenderChild {
-    const session = new SessionRenderChild(
-      container,
-      this.plugin,
-      this.activeTimers,
-      sourcePath,
-      (error) => this.handleError(container, error),
-      () => this.sessions.delete(session),
+    return this.track(
+      new SessionRenderChild(
+        container,
+        this.plugin,
+        this.activeTimers,
+        sourcePath,
+        (error) => this.handleError(container, error),
+      ),
     );
-    this.sessions.add(session);
-    return session;
-  }
-
-  cleanup(): void {
-    for (const session of this.sessions) session.unload();
-    this.sessions.clear();
   }
 }
 
@@ -81,8 +73,7 @@ class SessionRenderChild extends MarkdownRenderChild {
     private plugin: WorkoutPluginContext,
     private activeTimers: Map<string, EmbeddedTimerView>,
     private sourcePath: string,
-    private onError: (error: Error) => void,
-    private onUnload: () => void,
+    private onError: (error: unknown) => void,
   ) {
     super(containerEl);
     this.workout = PathUtils.noteName(sourcePath);
@@ -109,7 +100,6 @@ class SessionRenderChild extends MarkdownRenderChild {
 
   onunload(): void {
     this.restTimer.destroy();
-    this.onUnload();
   }
 
   /**
@@ -228,7 +218,7 @@ class SessionRenderChild extends MarkdownRenderChild {
       this.restTimer.draw(restEl.createDiv(), restStep.rest, this.sourcePath);
       return true;
     } catch (error) {
-      this.onError(error instanceof Error ? error : new Error(String(error)));
+      this.onError(error);
       return false;
     }
   }

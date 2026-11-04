@@ -210,7 +210,7 @@ export class InsertTableModal extends BaseInsertModal {
   }
 
   protected generateCode(): string {
-    return tableBlock.serialize(this.collectParams());
+    return tableBlock.serialize({ id: generateCodeBlockId(), ...this.collectParams() });
   }
 
   /**
@@ -251,7 +251,6 @@ export class InsertTableModal extends BaseInsertModal {
     }
 
     return {
-      id: this.getCodeBlockId(),
       exercise: target.exercise || undefined,
       workout: target.workout || undefined,
       dateRange: dateRange > 0 ? dateRange : undefined,
@@ -259,13 +258,5 @@ export class InsertTableModal extends BaseInsertModal {
       exactMatch: advancedValues.exactMatch ? true : undefined,
       ...plan,
     };
-  }
-
-  /**
-   * Generates a unique ID for the code block.
-   * Subclasses can override to preserve an existing ID.
-   */
-  protected getCodeBlockId(): string {
-    return generateCodeBlockId();
   }
 }

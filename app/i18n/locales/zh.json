@@ -1105,8 +1105,7 @@
       "chart": "加载图表时出错：{error}",
       "log": "加载记录时出错：{error}",
       "timer": "加载计时器时出错：{error}",
-      "dashboard": "加载仪表盘时出错：{error}",
-      "duration": "加载时长估算器时出错：{error}"
+      "dashboard": "加载仪表盘时出错：{error}"
     },
     "validation": {
       "title": "无效参数：",

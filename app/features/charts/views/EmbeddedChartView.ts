@@ -23,7 +23,6 @@ import { ChartDataUtils } from "@app/features/charts/business/ChartDataUtils";
 import { getElementScopedId } from "@app/utils/IdUtils";
 import { ChartTypeResolver } from "@app/features/charts/business/ChartTypeResolver";
 import { BaseView } from "@app/features/common/views/BaseView";
-import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { Feedback } from "@app/components/atoms/Feedback";
 import {
@@ -32,10 +31,6 @@ import {
 } from "@app/features/tour/tourTargets";
 
 export class EmbeddedChartView extends BaseView {
-  constructor(plugin: WorkoutPluginContext) {
-    super(plugin);
-  }
-
   /**
    * Cleanup method to be called during plugin unload.
    * Destroys all Chart.js instances and clears internal state to prevent memory leaks.
@@ -164,9 +159,7 @@ export class EmbeddedChartView extends BaseView {
         params: resolvedParams,
       });
     } catch (error) {
-      const errorObj =
-        error instanceof Error ? error : new Error(String(error));
-      this.handleError(container, errorObj);
+      this.handleError(container, error);
     }
   }
 

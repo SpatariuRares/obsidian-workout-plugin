@@ -1105,8 +1105,7 @@
       "chart": "Erreur lors du chargement du graphique : {error}",
       "log": "Erreur lors du chargement du journal : {error}",
       "timer": "Erreur lors du chargement du minuteur : {error}",
-      "dashboard": "Erreur lors du chargement du tableau de bord : {error}",
-      "duration": "Erreur lors du chargement de l'estimateur de durée : {error}"
+      "dashboard": "Erreur lors du chargement du tableau de bord : {error}"
     },
     "validation": {
       "title": "Paramètres invalides :",

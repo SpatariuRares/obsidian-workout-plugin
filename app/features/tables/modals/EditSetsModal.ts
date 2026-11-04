@@ -36,10 +36,6 @@ export class EditSetsModal extends InsertSetsModal {
     return t("sets.blockUpdated");
   }
 
-  protected getCodeBlockId(): string {
-    return this.initialParams.id || super.getCodeBlockId();
-  }
-
   protected createConfigurationSections(container: HTMLElement): void {
     super.createConfigurationSections(container);
     const { exercise, workout } = this.initialParams;

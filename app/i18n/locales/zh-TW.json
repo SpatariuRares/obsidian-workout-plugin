@@ -1105,8 +1105,7 @@
       "chart": "載入圖表時發生錯誤：{error}",
       "log": "載入紀錄時發生錯誤：{error}",
       "timer": "載入計時器時發生錯誤：{error}",
-      "dashboard": "載入儀表板時發生錯誤：{error}",
-      "duration": "載入時長估算時發生錯誤：{error}"
+      "dashboard": "載入儀表板時發生錯誤：{error}"
     },
     "validation": {
       "title": "無效參數：",

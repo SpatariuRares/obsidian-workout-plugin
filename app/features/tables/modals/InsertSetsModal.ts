@@ -70,22 +70,16 @@ export class InsertSetsModal extends BaseInsertModal {
       new Notice(t("modal.notices.validChooseExercise"));
       throw new Error(t("modal.notices.validChooseExercise"));
     }
-    return setsBlock.serialize(params);
+    return setsBlock.serialize({ id: generateCodeBlockId(), ...params });
   }
 
   /** The block parameters the form sets; empty or zero ones are left out */
   protected collectParams(): EmbeddedSetsParams {
     return {
-      id: this.getCodeBlockId(),
       exercise: this.exerciseInput?.value.trim() || undefined,
       workout: this.workoutInput?.value.trim() || undefined,
       ...(this.planFields ? PlanFields.read(this.planFields) : {}),
       rest: parseInt(this.restInput?.value ?? "") || undefined,
     };
-  }
-
-  /** A new id; the edit modal keeps the block's */
-  protected getCodeBlockId(): string {
-    return generateCodeBlockId();
   }
 }

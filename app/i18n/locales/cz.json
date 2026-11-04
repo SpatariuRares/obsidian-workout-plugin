@@ -1105,8 +1105,7 @@
       "chart": "Chyba při načítání grafu: {error}",
       "log": "Chyba při načítání záznamů: {error}",
       "timer": "Chyba při načítání časovače: {error}",
-      "dashboard": "Chyba při načítání přehledu: {error}",
-      "duration": "Chyba při načítání odhadu délky tréninku: {error}"
+      "dashboard": "Chyba při načítání přehledu: {error}"
     },
     "validation": {
       "title": "Neplatné parametry:",

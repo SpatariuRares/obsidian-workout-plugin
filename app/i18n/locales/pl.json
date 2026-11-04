@@ -1105,8 +1105,7 @@
       "chart": "Błąd ładowania wykresu: {error}",
       "log": "Błąd ładowania dziennika: {error}",
       "timer": "Błąd ładowania timera: {error}",
-      "dashboard": "Błąd ładowania panelu kontrolnego: {error}",
-      "duration": "Błąd ładowania estymatora czasu trwania: {error}"
+      "dashboard": "Błąd ładowania panelu kontrolnego: {error}"
     },
     "validation": {
       "title": "Nieprawidłowe parametry:",

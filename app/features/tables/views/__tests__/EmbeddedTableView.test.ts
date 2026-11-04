@@ -26,8 +26,8 @@ jest.mock("@app/features/common/views/BaseView", () => ({
     constructor(plugin: any) {
       this.plugin = plugin;
     }
-    handleError(container: HTMLElement, error: Error) {
-      container.textContent = error.message;
+    handleError(container: HTMLElement, error: unknown) {
+      container.textContent = error instanceof Error ? error.message : String(error);
     }
     handleEmptyData(_container: HTMLElement, logData: any[]) {
       return logData.length === 0;
@@ -46,12 +46,6 @@ jest.mock("@app/features/common/views/BaseView", () => ({
       return div;
     }
     handleNoFilteredData() {}
-    validateAndHandleErrors(
-      _container: HTMLElement,
-      errors: string[],
-    ) {
-      return errors.length === 0;
-    }
   },
 }));
 

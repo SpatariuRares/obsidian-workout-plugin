@@ -1105,8 +1105,7 @@
       "chart": "グラフの読み込みエラー: {error}",
       "log": "ログの読み込みエラー: {error}",
       "timer": "タイマーの読み込みエラー: {error}",
-      "dashboard": "ダッシュボードの読み込みエラー: {error}",
-      "duration": "所要時間の推定の読み込みエラー: {error}"
+      "dashboard": "ダッシュボードの読み込みエラー: {error}"
     },
     "validation": {
       "title": "無効なパラメータ:",

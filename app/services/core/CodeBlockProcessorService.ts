@@ -17,6 +17,7 @@ import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
 import { EmbeddedDurationView } from "@app/features/duration/views/EmbeddedDurationView";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
+import { PathUtils } from "@app/utils/PathUtils";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
 import { DashboardViewState } from "@app/features/dashboard/types";
 import { chartBlock } from "@app/features/charts/chartBlock";
@@ -312,9 +313,7 @@ export class CodeBlockProcessorService {
 
     // Resolve workout: fallback to current file title if not in code block
     const timerExercise = params.exercise;
-    const timerWorkout =
-      params.workout ||
-      ctx.sourcePath.split("/").pop()?.replace(/\.md$/i, "");
+    const timerWorkout = params.workout || PathUtils.noteName(ctx.sourcePath);
 
     // Register lifecycle manager + auto-start listener on log-added
     ctx.addChild(
@@ -382,30 +381,15 @@ export class CodeBlockProcessorService {
   }
 
   // Handle workout duration code blocks
+  // Handle workout duration code blocks: the view shows its own errors
   private async handleWorkoutDuration(
     source: string,
     el: HTMLElement,
     ctx: MarkdownPostProcessorContext,
   ) {
-    try {
-      const params = this.parseParams(durationBlock, source, el);
-      if (!params) return;
-
-      // Get current file path from context
-      const currentFilePath = ctx.sourcePath;
-
-      await this.embeddedDurationView.createDurationEstimator(
-        el,
-        params,
-        currentFilePath,
-      );
-    } catch (error) {
-      const errorMessage = ErrorUtils.getErrorMessage(error);
-      Feedback.renderError(
-        el,
-        t("codeBlocks.loadError.duration", { error: errorMessage }),
-        { className: "workout-duration-error" },
-      );
+    const params = this.parseParams(durationBlock, source, el);
+    if (params) {
+      await this.embeddedDurationView.createDurationEstimator(el, params, ctx.sourcePath);
     }
   }
 

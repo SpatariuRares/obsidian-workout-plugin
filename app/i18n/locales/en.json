@@ -1112,7 +1112,6 @@
       "log": "Error loading log: {error}",
       "timer": "Error loading timer: {error}",
       "dashboard": "Error loading dashboard: {error}",
-      "duration": "Error loading duration estimator: {error}",
       "sets": "Error loading sets: {error}"
     },
     "validation": {

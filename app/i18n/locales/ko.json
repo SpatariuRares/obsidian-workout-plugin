@@ -1105,8 +1105,7 @@
       "chart": "차트 로드 오류: {error}",
       "log": "로그 로드 오류: {error}",
       "timer": "타이머 로드 오류: {error}",
-      "dashboard": "대시보드 로드 오류: {error}",
-      "duration": "운동 시간 추정기 로드 오류: {error}"
+      "dashboard": "대시보드 로드 오류: {error}"
     },
     "validation": {
       "title": "유효하지 않은 매개변수:",

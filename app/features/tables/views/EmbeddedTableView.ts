@@ -1,5 +1,5 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { MarkdownView, MarkdownRenderChild } from "obsidian";
+import { MarkdownView } from "obsidian";
 import { TableRenderer } from "@app/features/tables/components/TableRenderer";
 import { TableDataProcessor } from "@app/features/tables/business/TableDataProcessor";
 import { tableBlock } from "@app/features/tables/tableBlock";
@@ -11,50 +11,15 @@ import {
 } from "@app/features/tables/types";
 import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 import { BaseView } from "@app/features/common/views/BaseView";
-import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { Button } from "@app/components";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import { t } from "@app/i18n";
 import { PathUtils } from "@app/utils/PathUtils";
 
-/**
- * TableRenderChild extends MarkdownRenderChild to manage event listener lifecycle
- * This ensures all event listeners are properly cleaned up when the table is refreshed or removed
- */
-class TableRenderChild extends MarkdownRenderChild {
-  private abortController: AbortController;
-
-  constructor(containerEl: HTMLElement) {
-    super(containerEl);
-    this.abortController = new AbortController();
-  }
-
-  onload(): void {
-    // Event listeners will be registered here with { signal: this.abortController.signal }
-  }
-
-  onunload(): void {
-    // Abort all event listeners when the child is unloaded
-    this.abortController.abort();
-  }
-
-  /**
-   * Get the abort signal for registering event listeners
-   */
-  getSignal(): AbortSignal {
-    return this.abortController.signal;
-  }
-}
-
 export class EmbeddedTableView extends BaseView {
-  private renderChildren: Map<HTMLElement, TableRenderChild> =
-    new Map();
-
-  constructor(plugin: WorkoutPluginContext) {
-    super(plugin);
-
-  }
+  /** Aborts the listeners of each table's last draw */
+  private signals = new Map<HTMLElement, AbortController>();
 
   /**
    * @param sourcePath - The note containing the code block: the origin of
@@ -127,9 +92,7 @@ export class EmbeddedTableView extends BaseView {
         sourcePath,
       );
     } catch (error) {
-      const errorObj =
-        error instanceof Error ? error : new Error(String(error));
-      this.handleError(container, errorObj);
+      this.handleError(container, error);
     }
   }
 
@@ -140,16 +103,12 @@ export class EmbeddedTableView extends BaseView {
   ): void {
     const { headers, rows, filterResult, params } = tableData;
 
-    this.unloadRenderChild(container);
+    const signal = this.newSignal(container);
     container.empty();
-
-    const renderChild = new TableRenderChild(container);
-    this.renderChildren.set(container, renderChild);
 
     const contentDiv = container.createDiv({
       cls: "workout-table-content-container",
     });
-    const signal = renderChild.getSignal();
 
     // Render action buttons (Add Log + Goto Exercise)
     if (params.showAddButton !== false) {
@@ -197,7 +156,6 @@ export class EmbeddedTableView extends BaseView {
       );
     }
 
-    renderChild.load();
   }
 
   /**
@@ -214,11 +172,8 @@ export class EmbeddedTableView extends BaseView {
     logData: WorkoutLogData[],
     sourcePath: string,
   ): void {
-    this.unloadRenderChild(container);
+    const signal = this.newSignal(container);
     container.empty();
-
-    const renderChild = new TableRenderChild(container);
-    this.renderChildren.set(container, renderChild);
     const contentDiv = container.createDiv({
       cls: "workout-table-content-container",
     });
@@ -234,7 +189,7 @@ export class EmbeddedTableView extends BaseView {
         contentDiv,
         params,
         { filteredData: logData },
-        renderChild.getSignal(),
+        signal,
         sourcePath,
         firstLog,
       );
@@ -243,7 +198,6 @@ export class EmbeddedTableView extends BaseView {
       LogCallouts.renderNoMatchMessage(contentDiv);
     }
 
-    renderChild.load();
   }
 
   /**
@@ -307,7 +261,7 @@ export class EmbeddedTableView extends BaseView {
     } catch (error) {
       this.handleError(
         container,
-        error instanceof Error ? error : new Error(String(error)),
+        error,
       );
     }
   }
@@ -323,30 +277,15 @@ export class EmbeddedTableView extends BaseView {
    * Cleanup method to be called during plugin unload
    */
   public cleanup(): void {
-    try {
-      for (const renderChild of this.renderChildren.values()) {
-        try {
-          renderChild.unload();
-        } catch {
-          // Continue cleanup even if individual unload fails
-        }
-      }
-
-      this.renderChildren.clear();
-    } catch {
-      // Silently fail cleanup
-    }
+    for (const controller of this.signals.values()) controller.abort();
+    this.signals.clear();
   }
 
-  private unloadRenderChild(container: HTMLElement): void {
-    const existingChild = this.renderChildren.get(container);
-    if (!existingChild) return;
-
-    try {
-      existingChild.unload();
-    } catch {
-      // Continue rendering even if cleanup fails
-    }
-    this.renderChildren.delete(container);
+  /** Ends the listeners of the table's previous draw; the signal is for this one's */
+  private newSignal(container: HTMLElement): AbortSignal {
+    this.signals.get(container)?.abort();
+    const controller = new AbortController();
+    this.signals.set(container, controller);
+    return controller.signal;
   }
 }

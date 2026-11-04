@@ -1,6 +1,5 @@
 import { Platform } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import {
   BaseView,
   renderInvalidParams,
@@ -54,10 +53,6 @@ export class EmbeddedDashboardView extends BaseView {
     HTMLElement,
     { observer: ResizeObserver; timer: number | null }
   >();
-
-  constructor(plugin: WorkoutPluginContext) {
-    super(plugin);
-  }
 
   /**
    * Cleanup method to be called during plugin unload.
@@ -157,7 +152,7 @@ export class EmbeddedDashboardView extends BaseView {
         onProtocolFilterChange,
       );
     } catch (error) {
-      this.handleError(container, error as Error);
+      this.handleError(container, error);
     }
   }
 

@@ -117,6 +117,8 @@ Estimates total workout duration based on exercises, sets, and configurable set 
 
 ### 6. `workout-sets` - Set Sheet (Logging on the Phone)
 
+**Beta**: off until the user turns on "Workout sets" in Settings → Beta features; until then the block shows how to turn it on and its insert command is hidden.
+
 The V2 of `workout-log`: the same exercise table (columns, values as entered, protocol badges, target with progress and achievement badge, menu), made for logging instead of reading history. One exercise, today's sets as rows with one input per field of the exercise type (kg + reps for strength, duration/distance for cardio):
 
 ```yaml
@@ -136,6 +138,12 @@ rest: 90 # seconds of rest after each set; 0 = none; unset = the section's worko
 - **Rest**: a rest timer at the top starts by itself when a set is ticked (not after the last row to fill in). It runs on the section's `workout-timer` when the block has no `rest`, so both show one countdown.
 - **Ticking** logs the set at once (in the settings unit, origin = the note). Tapping a ticked set opens the edit form (change or delete). What is typed in rows not ticked yet is kept while the note is open, never stored.
 - A `workout-session` in the note reads `workout-sets` blocks as plan steps too; a section's table and sets of the same exercise are one step.
+
+---
+
+### Beta features
+
+New features ship as **beta features**: each has a toggle in Settings → Beta features, off by default, so updating the plugin never changes how someone trains until they choose to try something. A beta feature that is off shows nothing new (a block of it explains where to turn it on). When a feature is ready for everyone, its toggle goes away and it is simply on.
 
 ---
 

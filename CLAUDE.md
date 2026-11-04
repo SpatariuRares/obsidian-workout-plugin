@@ -470,7 +470,7 @@ targetWeight: 80
 rest: 90 # seconds after each set; 0 = no timer; unset = the section's workout-timer (else the default preset)
 ```
 
-The "Set sheet" in `CONTEXT.md`: the V2 of `workout-log`, made for logging on the phone. It lives in `app/features/tables/` and shares the table's pieces, so add a behavior to both blocks by changing the shared piece, not by copying it:
+Beta (`setSheet`, see "Beta features"): off by default. The "Set sheet" in `CONTEXT.md`: the V2 of `workout-log`, made for logging on the phone. It lives in `app/features/tables/` and shares the table's pieces, so add a behavior to both blocks by changing the shared piece, not by copying it:
 
 - **Parameters**: `EXERCISE_FIELDS` and `PLAN_FIELDS` (`tables/exerciseBlockFields.ts`) are spread into both `tableBlock` and `setsBlock`; the forms read and fill the plan with `PlanFields` (`tables/modals/components/PlanFields.ts`).
 - **Columns and values**: headers from `TableColumnResolver.formatParameterHeader` + `mapColumnIdentifiersToLabels`; a logged set's cells from `TableRowProcessor.displayRow` (weight as entered, N/A).
@@ -570,6 +570,15 @@ The settings tab is declarative (Obsidian 1.13+ settings search). Every row come
 - Add a row as `{ name, desc, render: (setting) => setting.addToggle(...) }` in a section's `definitions()`. Build definitions with the local types in `settingDefinitionTypes.ts`, not Obsidian's `SettingDefinition*` types (naming their 1.13-only members fails `obsidianmd/no-unsupported-api`), and never extend a 1.13-only class (`SettingPage`) at module level.
 - Entries the user adds/edits/deletes (timer presets, protocols) are `type: "list"` with `addItem`, `onDelete` and an `action` per item; their editor is a `Modal`. After changing the list call the section's `refresh` (tab `update()` on 1.13+, `display()` before).
 - Test a section by drawing its definitions with `renderSettingDefinitions` in a jsdom test and driving the shared `Setting` mock (`mockSettingNamed`, in `__mocks__/obsidian.ts`).
+
+### Beta features (opt-in releases)
+
+A new user-facing feature ships off, behind a toggle in Settings → Beta features, so an update never changes how someone trains until they opt in. Bug fixes and refactors are not gated.
+
+- The list is `BETA_FEATURES` in `app/services/features/BetaFeatures.ts`; `settings.betaFeatures` (`Record<id, boolean>`, missing = off) holds the user's choice; `betaEnabled(settings, id)` is the only check.
+- To add one: its id in `BETA_FEATURES`, `settings.beta.<id>.name`/`.desc` in `en.json` (the settings section draws a toggle per id), then gate where it shows up: its block draws `settings.beta.disabledBlock` (with its ⋮ menu) instead of its content, its commands use `checkCallback` returning false. The toggle emits `settings:changed` (`betaFeatures`), so blocks redraw at once through `EventAwareRenderChild`.
+- To release it for everyone: remove the id, its checks and its `settings.beta.<id>` keys (from every locale too).
+- Current: `setSheet` (`workout-sets` block and `insert-workout-sets`).
 
 ### Adding New Dashboard Widgets
 

@@ -18,6 +18,7 @@ import { TemplatesSettings } from "@app/features/settings/components/TemplatesSe
 import { DurationEstimationSettings } from "@app/features/duration/settings/DurationEstimationSettings";
 import { QuickLogSettings } from "@app/features/settings/components/QuickLogSettings";
 import { MaintenanceSettings } from "@app/features/settings/components/MaintenanceSettings";
+import { BetaFeaturesSettings } from "@app/features/settings/components/BetaFeaturesSettings";
 
 /** What the settings sections need from the plugin */
 type SettingsTabContext = Plugin &
@@ -37,6 +38,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
   private durationEstimation: DurationEstimationSettings;
   private templates: TemplatesSettings;
   private maintenance: MaintenanceSettings;
+  private beta: BetaFeaturesSettings;
 
   constructor(app: App, plugin: SettingsTabContext) {
     super(app, plugin);
@@ -58,6 +60,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     this.durationEstimation = new DurationEstimationSettings(plugin);
     this.templates = new TemplatesSettings(plugin);
     this.maintenance = new MaintenanceSettings(app, plugin);
+    this.beta = new BetaFeaturesSettings(plugin);
   }
 
   /**
@@ -79,6 +82,8 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       ...this.customProtocols.definitions(),
       // Training parameters
       ...this.durationEstimation.definitions(),
+      // New features the user opts into
+      ...this.beta.definitions(),
       {
         type: "page",
         name: t("settings.sections.advanced"),

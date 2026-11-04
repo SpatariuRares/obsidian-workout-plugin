@@ -966,7 +966,8 @@
       "timerPresets": "Timer presets",
       "timerDeviceCues": "Timer device cues",
       "trainingParameters": "Training parameters",
-      "gettingStarted": "Getting started"
+      "gettingStarted": "Getting started",
+      "beta": "Beta features"
     },
     "tooltips": {
       "deletePreset": "Delete preset",
@@ -991,6 +992,14 @@
     "presetHelp": {
       "tabata": "20 seconds of all-out work, 10 seconds of rest, 8 rounds: 4 minutes in total.",
       "emom": "Every minute on the minute: start your reps at the top of each minute and rest for what is left of it, 10 rounds."
+    },
+    "beta": {
+      "intro": "New features to try before they are ready for everyone. They are off until you turn them on, and may still change.",
+      "setSheet": {
+        "name": "Workout sets",
+        "desc": "The `workout-sets` block: today's sets as rows to fill in on your phone, with the last time's values as hints and a rest timer that starts on each tick."
+      },
+      "disabledBlock": "{feature} is a beta feature. Turn it on in Settings → Beta features to use this block."
     }
   },
   "stats": {

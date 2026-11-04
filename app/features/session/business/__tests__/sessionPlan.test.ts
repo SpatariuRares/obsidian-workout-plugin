@@ -79,6 +79,42 @@ describe("readSessionPlan", () => {
 
     expect(steps).toEqual([]);
   });
+
+  it("makes a step of a workout-sets block too", () => {
+    const steps = readSessionPlan(
+      "## Bench\n\n```workout-sets\nexercise: Bench\nsets: 3\ntargetReps: 10\n```",
+    );
+
+    expect(steps).toEqual([
+      { exercise: "Bench", sets: 3, targetReps: 10, targetWeight: undefined, rest: {} },
+    ]);
+  });
+
+  it("joins a section's table and sets of one exercise into one step", () => {
+    const steps = readSessionPlan(
+      [
+        "## Bench",
+        "```workout-log",
+        "exercise: Bench",
+        "targetWeight: 80",
+        "```",
+        "```workout-sets",
+        "exercise: bench",
+        "sets: 4",
+        "targetWeight: 90",
+        "```",
+        "## Again",
+        "```workout-sets",
+        "exercise: Bench",
+        "```",
+      ].join("\n"),
+    );
+
+    expect(steps).toMatchObject([
+      { exercise: "Bench", sets: 4, targetWeight: 80 },
+      { exercise: "Bench", sets: undefined },
+    ]);
+  });
 });
 
 describe("sessionProgress", () => {

@@ -1,5 +1,6 @@
 import { readWorkoutNote } from "@app/services/notes/WorkoutNote";
 import { tableBlock } from "@app/features/tables/tableBlock";
+import { setsBlock } from "@app/features/sets/setsBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
 import type { EmbeddedTimerParams } from "@app/features/timer/types";
 import {
@@ -8,6 +9,7 @@ import {
 } from "@app/types/WorkoutLogData";
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
 import { StringUtils } from "@app/utils/StringUtils";
+import { t } from "@app/i18n";
 
 /** One exercise of the plan a workout note describes */
 export interface SessionStep {
@@ -21,8 +23,11 @@ export interface SessionStep {
 }
 
 /**
- * The plan of a workout note: one step per `workout-log` block that names an
- * exercise, in note order. Blocks with invalid parameters are left out.
+ * The plan of a workout note: one step per `workout-log` or `workout-sets`
+ * block that names an exercise, in note order. Blocks with invalid
+ * parameters are left out. Two blocks of the same exercise in one section
+ * (its table and its sets) are one step: the first, with the plan values
+ * it lacks taken from the other.
  */
 export function readSessionPlan(content: string): SessionStep[] {
   const steps: SessionStep[] = [];
@@ -32,11 +37,29 @@ export function readSessionPlan(content: string): SessionStep[] {
     const rest =
       timerRead && timerRead.errors.length === 0 ? timerRead.params : {};
 
+    const sectionSteps: SessionStep[] = [];
     for (const block of section.blocks) {
-      if (block.type !== tableBlock.type) continue;
-      const { params, errors } = tableBlock.parse(block.body);
+      const read =
+        block.type === tableBlock.type
+          ? tableBlock.parse(block.body)
+          : block.type === setsBlock.type
+            ? setsBlock.parse(block.body)
+            : undefined;
+      if (!read) continue;
+      const { params, errors } = read;
       if (errors.length > 0 || !params.exercise) continue;
-      steps.push({
+
+      const exercise = StringUtils.normalize(params.exercise);
+      const same = sectionSteps.find(
+        (step) => StringUtils.normalize(step.exercise) === exercise,
+      );
+      if (same) {
+        same.sets ??= params.sets;
+        same.targetReps ??= params.targetReps;
+        same.targetWeight ??= params.targetWeight;
+        continue;
+      }
+      sectionSteps.push({
         exercise: params.exercise,
         sets: params.sets,
         targetReps: params.targetReps,
@@ -44,6 +67,7 @@ export function readSessionPlan(content: string): SessionStep[] {
         rest,
       });
     }
+    steps.push(...sectionSteps);
   }
   return steps;
 }
@@ -92,4 +116,17 @@ export function sessionProgress(
   };
   const current = steps.findIndex((_, index) => !complete(index));
   return { done, current };
+}
+
+/** "80 kg × 8", "8 reps" or "80 kg": a step's targets; undefined without any */
+export function describeTarget(
+  { targetReps: reps, targetWeight: weight }: { targetReps?: number; targetWeight?: number },
+  unit: string,
+): string | undefined {
+  if (reps !== undefined && weight !== undefined) {
+    return t("logs.weightedSet", { weight, unit, reps });
+  }
+  if (reps !== undefined) return t("session.targetReps", { reps });
+  if (weight !== undefined) return t("session.targetWeight", { weight, unit });
+  return undefined;
 }

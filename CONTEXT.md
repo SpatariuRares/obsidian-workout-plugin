@@ -40,7 +40,7 @@ Workout Planner turns Obsidian into a gym tracking system. It reads/writes worko
 
 ---
 
-## The 5 Code Blocks
+## The Code Blocks
 
 **Code block parameters**: the `key: value` lines inside a block. Each block type has one **schema** (`app/features/<feature>/<name>Block.ts`, built with `CodeBlockSchema`) listing its parameters with type, default and allowed values. Rendering, the insert/edit modals and validation all read that schema. Editing a block **patches** it: only the lines of parameters the user changed are rewritten, so comments, order and parameters the form doesn't show are kept as typed.
 
@@ -114,6 +114,26 @@ volumeTrendDays: 30
 ### 5. `workout-duration` - Session Time Estimator
 
 Estimates total workout duration based on exercises, sets, and configurable set duration (default 45s).
+
+### 6. `workout-sets` - Set Sheet (Logging on the Phone)
+
+The table made for logging, not for reading history. One exercise, today's sets as rows with one input per field of the exercise type (kg + reps for strength, duration/distance for cardio):
+
+```yaml
+exercise: Bench Press
+sets: 4 # rows to fill in; unset: as many as last time
+targetReps: 8
+targetWeight: 80
+workout: Push Day # unset: the note's name
+```
+
+**Set sheet** rules:
+
+- **Rows**: today's sets of the exercise in this workout come first, ticked; then rows to fill in up to `sets`. "Add set" adds one more row for this view only.
+- **Hints** (input placeholders): the same set number on the last earlier day the exercise was done (any workout), the last set of that day past its end, else the targets. Ticking a row with an empty field logs its hint, so "same as last time" is one tap.
+- **Protocol and notes**: the arrow opens a row's protocol chips (the settings list) and notes. A row starts with the protocol of the same set last time when that was not standard (a warm-up stays a warm-up).
+- **Ticking** logs the set at once (in the settings unit, origin = the note). Tapping a ticked set opens the edit form (change or delete). What is typed in rows not ticked yet is kept while the note is open, never stored.
+- A `workout-session` in the note reads `workout-sets` blocks as plan steps too; a section's table and sets of the same exercise are one step.
 
 ---
 
@@ -283,6 +303,7 @@ Everything. `isDesktopOnly: false`. No Node.js/Electron APIs. No regex lookbehin
 | Create CSV log file         | Creates the CSV file if missing              |
 | Insert workout chart        | Opens InsertChartModal                       |
 | Insert workout table        | Opens InsertTableModal                       |
+| Insert workout sets         | Opens InsertSetsModal                        |
 | Insert workout timer        | Opens InsertTimerModal                       |
 | Insert workout dashboard    | Opens InsertDashboardModal                   |
 | Insert workout duration     | Opens InsertDurationModal                    |
@@ -430,4 +451,4 @@ preset: rest
 
 Each exercise has its table (showing recent sets) and its timer (for rest). The user scrolls down as they move through the workout. This is the primary interface.
 
-A `workout-session` block at the top turns that note into a **guided session**: the note's `workout-log` blocks are the **plan** (one step per exercise, `sets` and targets from the block, rest from the section's timer), shown one exercise at a time. Progress is today's sets of this workout in the log, never stored elsewhere.
+A `workout-session` block at the top turns that note into a **guided session**: the note's `workout-log` and `workout-sets` blocks are the **plan** (one step per exercise, `sets` and targets from the block, rest from the section's timer), shown one exercise at a time. Progress is today's sets of this workout in the log, never stored elsewhere.

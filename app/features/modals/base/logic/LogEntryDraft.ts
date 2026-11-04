@@ -9,7 +9,11 @@ import {
 } from "@app/types/WorkoutLogData";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import type { LogFormData } from "@app/types/ModalTypes";
-import { fieldFor, readField } from "@app/services/exercise/ExerciseFields";
+import {
+  fieldFor,
+  readField,
+  type FieldValue,
+} from "@app/services/exercise/ExerciseFields";
 import { trainingDay } from "@app/services/history/TrainingHistory";
 
 const DEFAULT_ORIGIN = "[[Workout Charts Plugin]]";
@@ -30,6 +34,31 @@ export function fromLog(log: WorkoutLogData): Partial<LogFormData> {
     protocol: log.protocol,
     customFields: log.customFields,
   };
+}
+
+/**
+ * Where each read field value goes in a set: reps and weight have their own
+ * columns, every other field is a custom field.
+ */
+export function setValues(values: Map<string, FieldValue>): {
+  reps: number;
+  weight: number;
+  customFields?: Record<string, FieldValue>;
+} {
+  const customFields: Record<string, FieldValue> = {};
+  for (const [key, value] of values) {
+    if (key !== "reps" && key !== "weight") customFields[key] = value;
+  }
+  return {
+    reps: numberOr0(values.get("reps")),
+    weight: numberOr0(values.get("weight")),
+    customFields:
+      Object.keys(customFields).length > 0 ? customFields : undefined,
+  };
+}
+
+function numberOr0(value: FieldValue | undefined): number {
+  return typeof value === "number" ? value : 0;
 }
 
 /** Why the form can't be saved, and the field to fix: "exercise" or a parameter key */

@@ -12,6 +12,7 @@ import { timerBlock } from "@app/features/timer/timerBlock";
 import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { durationBlock } from "@app/features/duration/durationBlock";
 import { sessionBlock } from "@app/features/session/sessionBlock";
+import { setsBlock } from "@app/features/sets/setsBlock";
 import { resolveTimer } from "@app/features/timer/business/resolveTimer";
 import { gridProblems } from "@app/features/dashboard/layout/gridLayout";
 import {
@@ -31,6 +32,7 @@ const schemas = {
   "workout-dashboard": dashboardBlock,
   "workout-duration": durationBlock,
   "workout-session": sessionBlock,
+  "workout-sets": setsBlock,
 } as const;
 
 const blocksOf = (content: string) =>
@@ -116,6 +118,12 @@ describe("example notes", () => {
   it("covers the guided session and the import", () => {
     expect(notes.showcase).toContain("`workout-session`");
     expect(notes.showcase).toContain(t("examples.featureShowcase.importTitle"));
+  });
+
+  it("shows a workout-sets block with an exercise and planned sets", () => {
+    const sets = blocksOf(notes.showcase).filter((b) => b.type === "workout-sets");
+    expect(sets).toHaveLength(1);
+    expect(sets[0].params).toMatchObject({ exercise: expect.any(String), sets: 4 });
   });
 
   it("keeps headings out of indented code in the workout note", () => {

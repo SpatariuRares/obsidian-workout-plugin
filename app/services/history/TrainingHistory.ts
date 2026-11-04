@@ -278,6 +278,38 @@ export class TrainingHistory {
       );
   }
 
+  /**
+   * The exercise's sets of one training day, in set order; with `workout`,
+   * only that workout's (case, spacing and quotes ignored).
+   */
+  setsOn(
+    exercise: string,
+    day: string,
+    { workout }: { workout?: string } = {},
+  ): WorkoutLogData[] {
+    const wanted = StringUtils.normalize(exercise);
+    return this.chronological().filter(
+      (log) =>
+        StringUtils.normalize(log.exercise) === wanted &&
+        trainingDay(log.date) === day &&
+        (workout === undefined || sameWorkout(log.workout, workout)),
+    );
+  }
+
+  /**
+   * The last training day before `before` on which the exercise was done
+   * (in any workout), with that day's sets in set order.
+   */
+  previousDay(
+    exercise: string,
+    before: string,
+  ): { day: string; sets: WorkoutLogData[] } | undefined {
+    const last = this.lastSet(exercise, { before });
+    if (!last) return undefined;
+    const day = trainingDay(last.date);
+    return { day, sets: this.setsOn(exercise, day) };
+  }
+
   /** Increase over the prior PR; the first weighted set is not a new record. */
   recordIncrease(set: WorkoutLogData): number | undefined {
     if (!countsForRecord(set)) return undefined;

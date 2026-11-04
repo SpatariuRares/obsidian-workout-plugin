@@ -24,6 +24,7 @@ import {
 } from "@app/features/dashboard/exampleDashboardGenerator";
 import { generateDurationBlock } from "@app/features/duration/exampleDurationGenerator";
 import { generateSessionBlock } from "@app/features/session/exampleSessionGenerator";
+import { generateSetsBlock } from "@app/features/sets/exampleSetsGenerator";
 import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
 import {
   ProtocolCatalog,
@@ -214,6 +215,12 @@ ${generateWorkoutLogBlock(lowerBody, 15)}
 
 ${generateCombinedLogBlock(squatMultiPower, lowerBody, 10)}
 
+### ${t("examples.featureShowcase.setsTitle")}
+
+${t("examples.featureShowcase.setsIntro")}
+
+${generateSetsBlock(benchPress, { sets: 4, targetReps: 8 })}
+
 ---
 
 ## ${t("examples.featureShowcase.timersTitle")}
@@ -298,6 +305,7 @@ ${t("examples.featureShowcase.importIntro", { command: t("commands.importWorkout
 |---|---|
 | \`workout-chart\` | ${t("examples.featureShowcase.codeBlockWorkoutChart")} |
 | \`workout-log\` | ${t("examples.featureShowcase.codeBlockWorkoutLog")} |
+| \`workout-sets\` | ${t("examples.featureShowcase.codeBlockWorkoutSets")} |
 | \`workout-timer\` | ${t("examples.featureShowcase.codeBlockWorkoutTimer")} |
 | \`workout-duration\` | ${t("examples.featureShowcase.codeBlockWorkoutDuration")} |
 | \`workout-session\` | ${t("examples.featureShowcase.codeBlockWorkoutSession")} |

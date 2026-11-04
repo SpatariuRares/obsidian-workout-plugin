@@ -26,6 +26,9 @@ import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { durationBlock } from "@app/features/duration/durationBlock";
 import { sessionBlock } from "@app/features/session/sessionBlock";
 import { EmbeddedSessionView } from "@app/features/session/views/EmbeddedSessionView";
+import { setsBlock } from "@app/features/sets/setsBlock";
+import { EmbeddedSetsView } from "@app/features/sets/views/EmbeddedSetsView";
+import { EditSetsModal } from "@app/features/sets/modals/EditSetsModal";
 import type { CodeBlockSchema } from "@app/services/codeblocks/CodeBlockSchema";
 import { renderInvalidParams } from "@app/features/common/views/BaseView";
 import { EventAwareRenderChild } from "@app/services/core/EventAwareRenderChild";
@@ -107,6 +110,7 @@ export class CodeBlockProcessorService {
     private activeTimers: Map<string, EmbeddedTimerView>,
     private eventBus: WorkoutEventBus,
     private embeddedSessionView: EmbeddedSessionView,
+    private embeddedSetsView: EmbeddedSetsView,
   ) {
     // Initialize duration view internally (no external dependencies needed)
     this.embeddedDurationView = new EmbeddedDurationView(plugin);
@@ -139,6 +143,30 @@ export class CodeBlockProcessorService {
       sessionBlock.type,
       (source, el, ctx) => this.handleWorkoutSession(source, el, ctx),
     );
+    this.plugin.registerMarkdownCodeBlockProcessor(
+      setsBlock.type,
+      (source, el, ctx) => this.handleWorkoutSets(source, el, ctx),
+    );
+  }
+
+  // Handle workout sets code blocks: rows to fill in, kept across log changes
+  private handleWorkoutSets(
+    source: string,
+    el: HTMLElement,
+    ctx: MarkdownPostProcessorContext,
+  ) {
+    return this.renderBlock(el, source, ctx, {
+      schema: setsBlock,
+      editLabel: t("sets.editBlock"),
+      edit: (params, target) =>
+        new EditSetsModal(this.plugin.app, this.plugin, params, target).open(),
+      loadError: (error) => t("codeBlocks.loadError.sets", { error }),
+      draw: async (body, params) => {
+        ctx.addChild(
+          this.embeddedSetsView.createSets(body, params, ctx.sourcePath),
+        );
+      },
+    });
   }
 
   // Handle workout session code blocks: the session reads its own note

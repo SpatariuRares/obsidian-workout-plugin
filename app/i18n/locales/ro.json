@@ -1216,7 +1216,6 @@
     "previous": "Anterior",
     "next": "Următorul",
     "rest": "Pauză",
-    "done": "Antrenament finalizat. Serii înregistrate azi: {sets}.",
-    "empty": "Adaugă în această notă un bloc `workout-log` cu un exercițiu ca să o urmărești ca antrenament."
+    "done": "Antrenament finalizat. Serii înregistrate azi: {sets}."
   }
 }

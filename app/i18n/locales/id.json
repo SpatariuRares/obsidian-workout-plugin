@@ -1216,7 +1216,6 @@
     "previous": "Sebelumnya",
     "next": "Berikutnya",
     "rest": "Istirahat",
-    "done": "Latihan selesai: {sets} set tercatat hari ini.",
-    "empty": "Tambahkan blok `workout-log` dengan latihan ke catatan ini untuk mengikutinya sebagai sesi latihan."
+    "done": "Latihan selesai: {sets} set tercatat hari ini."
   }
 }

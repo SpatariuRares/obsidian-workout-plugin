@@ -7,6 +7,7 @@ import { fromLog } from "@app/features/modals/base/logic/LogEntryDraft";
 import {
   readSessionPlan,
   sessionProgress,
+  describeTarget,
   type SessionStep,
 } from "@app/features/session/business/sessionPlan";
 import {
@@ -209,7 +210,7 @@ class SessionRenderChild extends MarkdownRenderChild {
             : t("session.setNumber", { set: setsDone + 1 }),
       });
 
-      const target = this.targetText(step);
+      const target = describeTarget(step, this.plugin.settings.weightUnit);
       if (target) {
         card.createDiv({ cls: "workout-session-meta", text: t("session.target", { target }) });
       }
@@ -343,17 +344,6 @@ class SessionRenderChild extends MarkdownRenderChild {
       PathUtils.toWikiLink(this.sourcePath),
       prefill,
     ).open();
-  }
-
-  private targetText(step: SessionStep): string | undefined {
-    const unit = this.plugin.settings.weightUnit;
-    const { targetReps: reps, targetWeight: weight } = step;
-    if (reps !== undefined && weight !== undefined) {
-      return t("logs.weightedSet", { weight, unit, reps });
-    }
-    if (reps !== undefined) return t("session.targetReps", { reps });
-    if (weight !== undefined) return t("session.targetWeight", { weight, unit });
-    return undefined;
   }
 
   private async parametersOf(exercise: string): Promise<ParameterDefinition[]> {

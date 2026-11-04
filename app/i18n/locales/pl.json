@@ -1216,7 +1216,6 @@
     "previous": "Poprzednia",
     "next": "Dalej",
     "rest": "Odpoczynek",
-    "done": "Trening zakończony. Dziś zapisane serie: {sets}.",
-    "empty": "Dodaj do tej notatki blok `workout-log` z ćwiczeniem, aby śledzić ją jako trening."
+    "done": "Trening zakończony. Dziś zapisane serie: {sets}."
   }
 }

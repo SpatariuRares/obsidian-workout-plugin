@@ -376,7 +376,10 @@
       "dashboardGridIntro": "With `layout: grid` each widget takes the cells of its line: column, row, width and height. In a narrower note the widgets are packed again in reading order.",
       "trainingCalendarIntro": "The training calendar shows a year of training days and how many weeks in a row reached your weekly goal (Settings → Weekly goal).",
       "importTitle": "8. Import from Strong or Hevy",
-      "importIntro": "Run **{command}** from the command palette and choose the CSV the app exported. Sets already in your log are skipped, and the log is backed up first."
+      "importIntro": "Run **{command}** from the command palette and choose the CSV the app exported. Sets already in your log are skipped, and the log is backed up first.",
+      "setsTitle": "Logging sets on your phone",
+      "setsIntro": "A `workout-sets` block shows today's sets as rows. The grey numbers are the same set last time: tick a row to log them as they are, or type what you did. Tap the arrow for the set's protocol and notes, and a logged set to edit it.",
+      "codeBlockWorkoutSets": "Log today's sets row by row"
     },
     "fileNames": {
       "dashboard": "Dashboard",
@@ -596,7 +599,8 @@
       "updateTargetWeight": "Update target",
       "updateTimer": "Update timer",
       "updateDashboard": "Update dashboard",
-      "updateChart": "Update chart"
+      "updateChart": "Update chart",
+      "insertSets": "Insert sets"
     },
     "canvasLayout": "Layout",
     "canvasOptions": "Options",
@@ -737,7 +741,8 @@
       "validationCombinedMode": "For 'exercise + workout' type you must fill both fields!",
       "validationFillAll": "Please fill in all fields with valid values",
       "dashboardUpdated": "Dashboard updated successfully!",
-      "dashboardUpdateFailed": "Failed to update dashboard: it was not found in its note, or another dashboard without an id has the same settings. Reopen the note and try again."
+      "dashboardUpdateFailed": "Failed to update dashboard: it was not found in its note, or another dashboard without an id has the same settings. Reopen the note and try again.",
+      "setsInserted": "Sets inserted"
     },
     "parameterKey": "Key:",
     "parameterLabel": "Label:",
@@ -831,7 +836,8 @@
       "insertTimer": "Insert workout timer",
       "muscleTagManager": "Manage muscle tags",
       "editDashboard": "Edit dashboard",
-      "editChart": "Edit workout chart"
+      "editChart": "Edit workout chart",
+      "insertSets": "Insert workout sets"
     },
     "weightUnitToggle": "Unit for this entry",
     "work": "Work",
@@ -1106,7 +1112,8 @@
       "log": "Error loading log: {error}",
       "timer": "Error loading timer: {error}",
       "dashboard": "Error loading dashboard: {error}",
-      "duration": "Error loading duration estimator: {error}"
+      "duration": "Error loading duration estimator: {error}",
+      "sets": "Error loading sets: {error}"
     },
     "validation": {
       "title": "Invalid parameters:",
@@ -1217,6 +1224,27 @@
     "next": "Next",
     "rest": "Rest",
     "done": "Workout done: {sets} sets logged today.",
-    "empty": "Add a `workout-log` block with an exercise to this note to follow it as a session."
+    "empty": "Add a `workout-log` or `workout-sets` block with an exercise to this note to follow it as a session."
+  },
+  "sets": {
+    "noExercise": "Add `exercise:` to this block to log its sets.",
+    "progress": "{done}/{sets} sets",
+    "lastTime": "Last time ({date}): {sets}",
+    "setColumn": "Set",
+    "fieldOfSet": "{field}, set {set}",
+    "details": "Protocol and notes of set {set}",
+    "logSet": "Log set {set}",
+    "editSet": "Edit set {set}",
+    "addSet": "Add set",
+    "protocol": "Protocol",
+    "notes": "Notes",
+    "yes": "Yes",
+    "no": "No",
+    "noValue": "–",
+    "editBlock": "Edit sets",
+    "blockUpdated": "Sets updated",
+    "blockUpdateFailed": "Failed to update the sets: the block was not found in its note. Reopen the note and try again.",
+    "workoutLabel": "Workout:",
+    "workoutPlaceholder": "Empty: {note}"
   }
 }

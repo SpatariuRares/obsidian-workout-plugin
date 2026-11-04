@@ -1,6 +1,7 @@
 import type { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { WorkoutProtocol } from "@app/types/WorkoutLogData";
+import { setValues } from "@app/features/modals/base/logic/LogEntryDraft";
 import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
 import {
   fieldFor,
@@ -39,11 +40,7 @@ export function readLogForm(
     if (value !== undefined) values.set(key, value);
   }
 
-  const customFields: Record<string, FieldValue> = {};
-  for (const [key, value] of values) {
-    if (key !== "reps" && key !== "weight") customFields[key] = value;
-  }
-
+  const { reps, weight, customFields } = setValues(values);
   const weightInput = form.dynamicFieldInputs.get("weight");
   const workout =
     form.currentWorkoutToggle?.checked && currentFileName
@@ -54,8 +51,8 @@ export function readLogForm(
     fields,
     data: {
       exercise: form.exerciseElements.exerciseInput.value.trim(),
-      reps: numberOr0(values.get("reps")),
-      weight: numberOr0(values.get("weight")),
+      reps,
+      weight,
       weightUnit: weightInput
         ? DynamicFieldsRenderer.getWeightUnit(weightInput)
         : undefined,
@@ -64,12 +61,7 @@ export function readLogForm(
       date: form.dateInput?.value || undefined,
       protocol:
         form.protocolSelect?.value || WorkoutProtocol.STANDARD,
-      customFields:
-        Object.keys(customFields).length > 0 ? customFields : undefined,
+      customFields,
     },
   };
-}
-
-function numberOr0(value: FieldValue | undefined): number {
-  return typeof value === "number" ? value : 0;
 }

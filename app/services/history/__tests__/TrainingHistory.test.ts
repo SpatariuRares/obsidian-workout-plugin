@@ -516,3 +516,41 @@ describe("set order", () => {
     ).toBe(22.5);
   });
 });
+
+describe("setsOn", () => {
+  it("gives the exercise's sets of that day in set order, optionally one workout's", () => {
+    const history = new TrainingHistory([
+      set("2026-11-02T10:10:00Z", "Leg Day", { weight: 110 }),
+      set("2026-11-02T10:00:00Z", "Leg Day", { weight: 100 }),
+      set("2026-11-02T18:00:00Z", "Evening", { weight: 60 }),
+      set("2026-11-01T10:00:00Z", "Leg Day", { weight: 90 }),
+      set("2026-11-02T10:05:00Z", "Leg Day", { exercise: "Bench" }),
+    ]);
+
+    expect(history.setsOn("squat", "2026-11-02").map((s) => s.weight)).toEqual([
+      100, 110, 60,
+    ]);
+    expect(
+      history
+        .setsOn("Squat", "2026-11-02", { workout: "leg  day" })
+        .map((s) => s.weight),
+    ).toEqual([100, 110]);
+  });
+});
+
+describe("previousDay", () => {
+  it("gives the last earlier day with the exercise and all its sets", () => {
+    const history = new TrainingHistory([
+      set("2026-10-28T10:00:00Z", "A", { weight: 80 }),
+      set("2026-10-30T10:00:00Z", "A", { weight: 90 }),
+      set("2026-10-30T10:05:00Z", "B", { weight: 95 }),
+      set("2026-11-02T10:00:00Z", "A", { weight: 105 }),
+    ]);
+
+    expect(history.previousDay("Squat", "2026-11-02")).toEqual({
+      day: "2026-10-30",
+      sets: [expect.objectContaining({ weight: 90 }), expect.objectContaining({ weight: 95 })],
+    });
+    expect(history.previousDay("Squat", "2026-10-28")).toBeUndefined();
+  });
+});

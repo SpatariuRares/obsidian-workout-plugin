@@ -1216,7 +1216,6 @@
     "previous": "Forrige",
     "next": "Neste",
     "rest": "Hvile",
-    "done": "Trening ferdig. Sett registrert i dag: {sets}.",
-    "empty": "Legg til en `workout-log`-blokk med en øvelse i dette notatet for å følge det som en trening."
+    "done": "Trening ferdig. Sett registrert i dag: {sets}."
   }
 }

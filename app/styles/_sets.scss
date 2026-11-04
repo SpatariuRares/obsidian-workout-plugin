@@ -1,0 +1,229 @@
+@use "variables";
+
+/* ============================================================================
+   WORKOUT SETS STYLES
+   Today's sets of one exercise as rows to fill in and tick, sized for thumbs
+   ============================================================================ */
+
+.workout-sets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
+  border-radius: var(--workout-radius-xl);
+  padding: var(--workout-space-md);
+}
+
+.workout-sets-message,
+.workout-sets-meta {
+  color: var(--text-muted);
+}
+
+.workout-sets-meta {
+  font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.workout-sets-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--workout-space-sm);
+}
+
+.workout-sets-exercise {
+  font-size: var(--workout-font-lg);
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--workout-text-accent);
+}
+
+.workout-sets-progress {
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.workout-sets-rows {
+  // Set number, one column per field, details toggle, tick
+  --workout-sets-columns: 2.25rem repeat(var(--workout-sets-fields, 2), minmax(0, 1fr))
+    2.5rem 3.25rem;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.workout-sets-columns,
+.workout-sets-row-main {
+  display: grid;
+  grid-template-columns: var(--workout-sets-columns);
+  gap: var(--workout-space-sm);
+  align-items: center;
+}
+
+.workout-sets-columns {
+  align-items: end;
+  padding: 0 var(--workout-space-xs) var(--workout-space-xs);
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+
+  > span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  > span:first-child {
+    text-align: center;
+  }
+}
+
+.workout-sets-row {
+  border-top: var(--workout-border-thin) solid var(--workout-border-color);
+
+  .workout-field-error {
+    padding: 0 var(--workout-space-xs) var(--workout-space-sm);
+  }
+}
+
+.workout-sets-row-main {
+  min-height: 3.5rem;
+  padding: var(--workout-space-xs);
+}
+
+.workout-sets-row.is-logged .workout-sets-row-main {
+  cursor: pointer;
+  border-radius: var(--workout-radius-md);
+}
+
+.workout-sets-number {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--workout-space-3xs);
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+
+  .workout-protocol-badge {
+    font-size: var(--workout-font-2xs);
+  }
+}
+
+.workout-sets-field {
+  min-width: 0;
+}
+
+.workout-sets-input {
+  width: 100%;
+  height: 2.75rem;
+  font-size: var(--workout-font-lg);
+  font-weight: var(--workout-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+
+  &::placeholder {
+    color: var(--text-faint);
+    font-weight: var(--workout-font-weight-medium);
+  }
+}
+
+.workout-sets-value {
+  min-width: 0;
+  padding-left: var(--workout-space-sm);
+  font-size: var(--workout-font-lg);
+  font-weight: var(--workout-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.workout-sets-details-toggle {
+  position: relative;
+  justify-self: center;
+  width: var(--workout-touch-target-min, 44px);
+  height: var(--workout-touch-target-min, 44px);
+
+  svg {
+    transition: transform var(--workout-transition);
+  }
+}
+
+.workout-sets-row.is-open .workout-sets-details-toggle svg {
+  transform: rotate(180deg);
+}
+
+// Something other than the defaults is set in the hidden details
+.workout-sets-details-dot {
+  position: absolute;
+  top: var(--workout-space-xs);
+  right: var(--workout-space-xs);
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: var(--workout-radius-round);
+  background: var(--workout-accent-fill);
+}
+
+.workout-sets-check {
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 2.75rem;
+  padding: 0;
+  border-radius: var(--workout-radius-lg);
+  border: var(--workout-border-medium) solid var(--workout-border-color);
+  background: var(--background-primary);
+  color: var(--text-faint);
+  cursor: pointer;
+
+  &.is-done {
+    border-color: var(--workout-accent-fill);
+    background: var(--workout-accent-fill);
+    color: var(--text-on-accent);
+  }
+}
+
+.workout-sets-note {
+  padding: 0 var(--workout-space-xs) var(--workout-space-sm) 2.75rem;
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+}
+
+.workout-sets-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-xs);
+  padding: 0 var(--workout-space-xs) var(--workout-space-md) 2.75rem;
+}
+
+.workout-sets-label {
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+}
+
+// One scrolling row of chips, so the list stays short on a phone
+.workout-sets-chips {
+  display: flex;
+  gap: var(--workout-space-xs);
+  overflow-x: auto;
+  padding-bottom: var(--workout-space-2xs);
+
+  .workout-chip {
+    flex: none;
+  }
+}
+
+.workout-sets-notes {
+  width: 100%;
+  min-height: 3.5rem;
+  resize: vertical;
+}
+
+.workout-sets-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (hover: hover) {
+  .workout-sets-row.is-logged .workout-sets-row-main:hover {
+    background: var(--background-modifier-hover);
+  }
+}

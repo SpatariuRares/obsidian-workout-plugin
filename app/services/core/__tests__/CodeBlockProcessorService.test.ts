@@ -88,6 +88,7 @@ describe("CodeBlockProcessorService", () => {
   let mockTableView: any;
   let mockDashboardView: any;
   let mockSessionView: any;
+  let mockSetsView: any;
   let activeTimers: Map<string, EmbeddedTimerView>;
   let mockMuscleTagService: any;
   let eventBus: WorkoutEventBus;
@@ -126,6 +127,9 @@ describe("CodeBlockProcessorService", () => {
     mockSessionView = {
       createSession: jest.fn().mockReturnValue({}),
     };
+    mockSetsView = {
+      createSets: jest.fn().mockReturnValue({}),
+    };
     activeTimers = new Map();
     mockMuscleTagService = {
       getTagMap: jest.fn().mockReturnValue(new Map()),
@@ -141,6 +145,7 @@ describe("CodeBlockProcessorService", () => {
       activeTimers,
       eventBus,
       mockSessionView,
+      mockSetsView,
     );
 
     jest.clearAllMocks();
@@ -156,7 +161,7 @@ describe("CodeBlockProcessorService", () => {
 
       expect(
         mockPlugin.registerMarkdownCodeBlockProcessor,
-      ).toHaveBeenCalledTimes(6);
+      ).toHaveBeenCalledTimes(7);
       expect(
         mockPlugin.registerMarkdownCodeBlockProcessor,
       ).toHaveBeenCalledWith(

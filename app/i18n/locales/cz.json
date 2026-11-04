@@ -1216,7 +1216,6 @@
     "previous": "Předchozí",
     "next": "Další",
     "rest": "Odpočinek",
-    "done": "Trénink hotov. Dnes zapsané série: {sets}.",
-    "empty": "Přidejte do této poznámky blok `workout-log` s cvikem, abyste ji mohli sledovat jako trénink."
+    "done": "Trénink hotov. Dnes zapsané série: {sets}."
   }
 }

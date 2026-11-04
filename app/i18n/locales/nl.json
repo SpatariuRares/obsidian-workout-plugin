@@ -1216,7 +1216,6 @@
     "previous": "Vorige",
     "next": "Volgende",
     "rest": "Rust",
-    "done": "Training klaar. Vandaag geregistreerde series: {sets}.",
-    "empty": "Voeg een `workout-log`-blok met een oefening aan deze notitie toe om hem als training te volgen."
+    "done": "Training klaar. Vandaag geregistreerde series: {sets}."
   }
 }

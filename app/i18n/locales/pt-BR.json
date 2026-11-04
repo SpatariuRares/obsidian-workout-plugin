@@ -1216,7 +1216,6 @@
     "previous": "Anterior",
     "next": "Próximo",
     "rest": "Descanso",
-    "done": "Treino concluído. Séries registradas hoje: {sets}.",
-    "empty": "Adicione a esta nota um bloco `workout-log` com um exercício para acompanhá-la como treino."
+    "done": "Treino concluído. Séries registradas hoje: {sets}."
   }
 }

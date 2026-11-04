@@ -50,7 +50,7 @@ The build process is sequential and must complete in order. Development mode (`n
 - **Facade Pattern**: Services expose clean APIs while delegating to internal components
 - **Atomic Design**: UI components organized by complexity (atoms → molecules → features)
 - **Domain-Driven Features**: Features organized by domain (charts, tables, dashboard, modals, etc.)
-- **Embedded Views**: Code blocks (`workout-chart`, `workout-log`, `workout-timer`, `workout-dashboard`, `workout-duration`, `workout-session`) render inside notes
+- **Embedded Views**: Code blocks (`workout-chart`, `workout-log`, `workout-sets`, `workout-timer`, `workout-dashboard`, `workout-duration`, `workout-session`) render inside notes
 - **Type Safety**: Strict TypeScript with path aliases (`@app/*`)
 
 ### TypeScript Configuration
@@ -82,6 +82,7 @@ WorkoutChartsPlugin
 │   ├── EmbeddedChartView         # workout-chart (Chart.js visualizations)
 │   ├── EmbeddedTableView         # workout-log (sortable data tables)
 │   ├── EmbeddedTimerView         # workout-timer (countdown/interval)
+│   ├── EmbeddedSetsView          # workout-sets (today's sets as rows to fill in, for the phone)
 │   ├── EmbeddedDashboardView     # workout-dashboard (stats, analytics, heat maps)
 │   └── EmbeddedSessionView       # workout-session (guided session through the note's plan)
 │
@@ -398,7 +399,7 @@ Views (Chart, Table, Dashboard) or Public API
 
 ### Code Block Syntax
 
-Source of truth: one schema per block, built with `defineCodeBlock` (`app/services/codeblocks/CodeBlockSchema.ts`): `app/features/charts/chartBlock.ts`, `tables/tableBlock.ts`, `timer/timerBlock.ts`, `dashboard/dashboardBlock.ts`, `duration/durationBlock.ts`. Each lists every parameter with its type, default and allowed values; the `Embedded*Params` types are derived from it (`BlockParams<typeof tableBlock>`). All params are optional.
+Source of truth: one schema per block, built with `defineCodeBlock` (`app/services/codeblocks/CodeBlockSchema.ts`): `app/features/charts/chartBlock.ts`, `tables/tableBlock.ts`, `sets/setsBlock.ts`, `timer/timerBlock.ts`, `dashboard/dashboardBlock.ts`, `duration/durationBlock.ts`. Each lists every parameter with its type, default and allowed values; the `Embedded*Params` types are derived from it (`BlockParams<typeof tableBlock>`). All params are optional.
 
 - **Reading**: `CodeBlockProcessorService` calls `schema.parse(source)`. Invalid values show an error in place of the block; views get the params with `schema.defaults` applied (the timer applies them itself, under the preset).
 - **Writing**: insert modals and example generators call `schema.serialize(params)`. Never build a block with string concatenation.
@@ -453,9 +454,21 @@ targetReps: 8
 sets: 4 # planned sets, counted by workout-session; without limit the table shows sets × 2 rows
 ```
 
+#### workout-sets
+
+```yaml
+exercise: Bench Press
+workout: Push Day # unset: the note's name
+sets: 4 # rows to fill in; unset: as many as last time (at least one)
+targetReps: 8 # hint when the exercise was never done
+targetWeight: 80
+```
+
+The "Set sheet" in `CONTEXT.md`. `setRows` (`app/features/sets/business/setSheet.ts`, pure) gives the rows: today's sets of the exercise in this workout (`TrainingHistory.setsOn`) ticked, then rows to fill in, each with placeholders from the same set of `TrainingHistory.previousDay` (else the targets) and that set's protocol as suggestion. `rowToFormData` turns a row into the set to log (typed value, else placeholder; checked with `LogEntryDraft.validate`, mapped with `setValues`), then `toEntry` and `addWorkoutLogEntry`. `EmbeddedSetsView` keeps the drafts of unticked rows in its render child across the `log:*` redraws (a row is removed from the drafts before the add, so the redraw already shows it logged); a ticked row opens `EditLogModal`. Insert: `InsertSetsModal` (`insert-workout-sets`), edit: `EditSetsModal`.
+
 #### workout-session
 
-No parameters. `readSessionPlan` (`app/features/session/business/sessionPlan.ts`) reads the note's plan with `readWorkoutNote`: one step per `workout-log` block with an `exercise`, in note order, with its `sets`/`targetReps`/`targetWeight`, and the rest from the `workout-timer` in the same `##` section. `sessionProgress` hands today's sets of this workout (`TrainingHistory.sessions({ workout: note name })`) to the steps; nothing is stored, so progress comes back from the log. `EmbeddedSessionView` shows the current step, logs through `CreateLogModal` (prefill: today's last set, else the last set with the targets on top) and starts the rest on `log:added` (not after the plan's last set). The rest runs on the section timer's own `EmbeddedTimerView` when that block has an `id` (shared through `activeTimers`, so the block and the card show one countdown), otherwise on the session's own timer. There is no weekly schedule: the user opens the note they want to train. The `insert-workout-session` command writes the empty block at the cursor; the example "Lower Body A" note has one right after its chart, before the exercises, and its tables carry `sets`.
+No parameters. `readSessionPlan` (`app/features/session/business/sessionPlan.ts`) reads the note's plan with `readWorkoutNote`: one step per `workout-log` or `workout-sets` block with an `exercise`, in note order (a section's table and sets of one exercise are one step), with its `sets`/`targetReps`/`targetWeight`, and the rest from the `workout-timer` in the same `##` section. `sessionProgress` hands today's sets of this workout (`TrainingHistory.sessions({ workout: note name })`) to the steps; nothing is stored, so progress comes back from the log. `EmbeddedSessionView` shows the current step, logs through `CreateLogModal` (prefill: today's last set, else the last set with the targets on top) and starts the rest on `log:added` (not after the plan's last set). The rest runs on the section timer's own `EmbeddedTimerView` when that block has an `id` (shared through `activeTimers`, so the block and the card show one countdown), otherwise on the session's own timer. There is no weekly schedule: the user opens the note they want to train. The `insert-workout-session` command writes the empty block at the cursor; the example "Lower Body A" note has one right after its chart, before the exercises, and its tables carry `sets`.
 
 #### workout-timer
 

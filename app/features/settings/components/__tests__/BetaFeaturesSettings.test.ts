@@ -45,19 +45,3 @@ describe("BetaFeaturesSettings", () => {
     ]);
   });
 });
-
-describe("BetaFeaturesSettings with no feature in beta", () => {
-  it("hides the section", () => {
-    jest.isolateModules(() => {
-      jest.doMock("@app/services/features/BetaFeatures", () => ({
-        ...jest.requireActual("@app/services/features/BetaFeatures"),
-        betaFeatures: () => [],
-      }));
-      const { BetaFeaturesSettings: Section } = jest.requireActual(
-        "@app/features/settings/components/BetaFeaturesSettings",
-      ) as typeof import("@app/features/settings/components/BetaFeaturesSettings");
-      const [group] = new Section({ settings: { betaFeatures: {} } } as never).definitions();
-      expect(group).toMatchObject({ visible: false });
-    });
-  });
-});

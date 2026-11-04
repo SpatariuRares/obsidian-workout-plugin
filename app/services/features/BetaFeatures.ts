@@ -1,42 +1,25 @@
 import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 
 /**
- * Where a feature is in its release. "beta": off until the user turns it on
- * in Settings → Beta features. "stable": on for everyone, with no toggle.
- */
-export type FeatureStage = "beta" | "stable";
-
-/**
- * Every feature that shipped behind a toggle, with its stage. See "Beta
- * features" in CONTEXT.md.
+ * Features still in beta. Each one is off until the user turns it on in
+ * Settings → Beta features, so an update never changes how someone trains
+ * without them asking. See "Beta features" in CONTEXT.md.
  *
- * To add one: its id here as "beta", its `settings.beta.<id>` name and
- * description in en.json, and a `featureEnabled(settings, id)` check where
- * it shows up (its block, its commands).
- * To release it: change "beta" to "stable". It is then on for everyone and
- * its toggle is gone; the checks and its texts can be removed later.
+ * To add one: an id here, its `settings.beta.<id>` name and description in
+ * en.json, and a `betaEnabled(settings, id)` check where it shows up (its
+ * block, its command). To release it: remove the id and the checks.
  */
-export const FEATURES = {
+export const BETA_FEATURES = [
   /** The `workout-sets` block (rows to fill in on the phone, rest timer) */
-  setSheet: "beta",
-} as const satisfies Record<string, FeatureStage>;
+  "setSheet",
+] as const;
 
-export type Feature = keyof typeof FEATURES;
+export type BetaFeature = (typeof BETA_FEATURES)[number];
 
-/** The features still in beta, which get a toggle in the settings */
-export function betaFeatures(
-  features: Record<string, FeatureStage> = FEATURES,
-): Feature[] {
-  return (Object.keys(features) as Feature[]).filter(
-    (feature) => features[feature] === "beta",
-  );
-}
-
-/** Whether the feature is on: always once stable, else when the user turned it on */
-export function featureEnabled(
+/** Whether the user turned the beta feature on */
+export function betaEnabled(
   settings: Pick<WorkoutChartsSettings, "betaFeatures">,
-  feature: Feature,
-  features: Record<string, FeatureStage> = FEATURES,
+  feature: BetaFeature,
 ): boolean {
-  return features[feature] === "stable" || settings.betaFeatures?.[feature] === true;
+  return settings.betaFeatures?.[feature] === true;
 }

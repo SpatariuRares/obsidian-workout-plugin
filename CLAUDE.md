@@ -575,10 +575,10 @@ The settings tab is declarative (Obsidian 1.13+ settings search). Every row come
 
 A new user-facing feature ships off, behind a toggle in Settings → Beta features, so an update never changes how someone trains until they opt in. Bug fixes and refactors are not gated.
 
-- The registry is `FEATURES` in `app/services/features/BetaFeatures.ts`: each feature id with its stage, `"beta"` or `"stable"`. `settings.betaFeatures` (`Record<id, boolean>`, missing = off) holds the user's choice for beta ones; `featureEnabled(settings, id)` is the only check (true for a stable feature, else the user's choice); `betaFeatures()` lists the ones in beta, which get a toggle (the section is hidden when there is none).
-- To add one: `id: "beta"` in `FEATURES`, `settings.beta.<id>.name`/`.desc` in `en.json` (the section draws its toggle), then gate where it shows up: its block draws `settings.beta.disabledBlock` (with its ⋮ menu) instead of its content, its commands use `checkCallback` returning false. The toggle emits `settings:changed` (`betaFeatures`), so blocks redraw at once through `EventAwareRenderChild`.
-- To release it for everyone: change its stage to `"stable"`. It is on for every user (also one who had turned it off) and its toggle disappears. Later, removing the entry, its `featureEnabled` checks and its `settings.beta.<id>` keys (from every locale too) is cleanup only.
-- Current: `setSheet` (beta: `workout-sets` block and `insert-workout-sets`).
+- The list is `BETA_FEATURES` in `app/services/features/BetaFeatures.ts`; `settings.betaFeatures` (`Record<id, boolean>`, missing = off) holds the user's choice; `betaEnabled(settings, id)` is the only check.
+- To add one: its id in `BETA_FEATURES`, `settings.beta.<id>.name`/`.desc` in `en.json` (the settings section draws a toggle per id), then gate where it shows up: its block draws `settings.beta.disabledBlock` (with its ⋮ menu) instead of its content, its commands use `checkCallback` returning false. The toggle emits `settings:changed` (`betaFeatures`), so blocks redraw at once through `EventAwareRenderChild`.
+- To release it for everyone: remove the id, its checks and its `settings.beta.<id>` keys (from every locale too).
+- Current: `setSheet` (`workout-sets` block and `insert-workout-sets`).
 
 ### Adding New Dashboard Widgets
 

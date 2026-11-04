@@ -143,7 +143,7 @@ rest: 90 # seconds of rest after each set; 0 = none; unset = the section's worko
 
 ### Beta features
 
-New features ship as **beta features**: each has a toggle in Settings → Beta features, off by default, so updating the plugin never changes how someone trains until they choose to try something. A beta feature that is off shows nothing new (a block of it explains where to turn it on). When a feature is ready for everyone it becomes **stable**: it is on for every user and its toggle goes away.
+New features ship as **beta features**: each has a toggle in Settings → Beta features, off by default, so updating the plugin never changes how someone trains until they choose to try something. A beta feature that is off shows nothing new (a block of it explains where to turn it on). When a feature is ready for everyone, its toggle goes away and it is simply on.
 
 ---
 

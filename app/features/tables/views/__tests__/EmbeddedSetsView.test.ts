@@ -84,7 +84,7 @@ function setup(
 
   const el = createObsidianContainer();
   const view = new EmbeddedSetsView(plugin);
-  const child = view.createSets(el, params, NOTE_PATH, editBlock);
+  const child = view.createSets(el, params, NOTE_PATH, { editBlock });
   child.load();
   return { el, view, child, added, eventBus };
 }
@@ -258,12 +258,52 @@ describe("EmbeddedSetsView", () => {
     expect(el.querySelector(".workout-progress-fill")).not.toBeNull();
   });
 
-  it("offers the table's menu with this block's edit action", async () => {
+  const menuItems = (el: HTMLElement) =>
+    Array.from(el.querySelectorAll<HTMLButtonElement>(".workout-icon-dropdown-item"));
+
+  it("has the table's ⋮ menu in its top row: edit this block, go to the exercise", async () => {
     const editBlock = jest.fn();
     const { el } = setup([], { exercise: "Bench Press" }, editBlock);
     await flush();
 
-    expect(el.querySelector(".workout-block-menu")).not.toBeNull();
+    const header = el.querySelector(".workout-sets-header")!;
+    expect(header.lastElementChild?.querySelector(".workout-block-menu")).not.toBeNull();
+    expect(menuItems(el).map((item) => item.textContent)).toEqual([
+      t("table.gotoExercise"),
+      t("sets.editBlock"),
+    ]);
+    menuItems(el)[1].click();
+    expect(editBlock).toHaveBeenCalled();
+  });
+
+  it("tells the block's frame after each draw, once its menu is there", async () => {
+    const eventBus = { on: jest.fn(() => () => {}) };
+    const seen: boolean[] = [];
+    const el = createObsidianContainer();
+    const plugin = {
+      app: {},
+      settings: { weightUnit: "kg", customProtocols: [], achievedTargets: {} },
+      eventBus,
+      getWorkoutLogData: async () => [],
+      getExerciseDefinitionService: () => ({ getParametersForExercise: async () => STRENGTH }),
+    } as unknown as WorkoutPluginContext;
+    new EmbeddedSetsView(plugin)
+      .createSets(el, { exercise: "Bench Press" }, NOTE_PATH, {
+        editBlock: () => {},
+        onRendered: () => seen.push(el.querySelector(".workout-block-menu") !== null),
+      })
+      .load();
+    await flush();
+
+    expect(seen).toEqual([true]);
+  });
+
+  it("keeps the ⋮ menu with edit when the block names no exercise", async () => {
+    const editBlock = jest.fn();
+    const { el } = setup([], {}, editBlock);
+    await flush();
+
+    expect(menuItems(el).map((item) => item.textContent)).toEqual([t("sets.editBlock")]);
   });
 
   it("asks for an exercise when the block has none", async () => {

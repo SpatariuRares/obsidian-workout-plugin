@@ -31,24 +31,32 @@
   font-variant-numeric: tabular-nums;
 }
 
+// Title | progress | ⋮ on one row: the menu stays in the top right corner
 .workout-sets-header {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
+  align-items: center;
   gap: var(--workout-space-sm);
+}
+
+.workout-sets-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.workout-sets-header-side {
+  flex: none;
+}
+
+.workout-sets-menu {
+  flex: none;
+  margin-left: auto;
 }
 
 .workout-sets-exercise {
   font-size: var(--workout-font-lg);
   font-weight: var(--workout-font-weight-semibold);
   color: var(--workout-text-accent);
-}
-
-.workout-sets-header-side {
-  display: flex;
-  align-items: center;
-  gap: var(--workout-space-xs);
 }
 
 .workout-sets-progress {

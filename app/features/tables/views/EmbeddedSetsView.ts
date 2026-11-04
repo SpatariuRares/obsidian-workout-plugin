@@ -5,6 +5,7 @@ import { describeSet } from "@app/features/modals/log/LogHistory";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 import { TableRowProcessor } from "@app/features/tables/business/TableRowProcessor";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
+import { BlockMenu } from "@app/features/common/ui/BlockMenu";
 import { renderTargetSection } from "@app/features/tables/ui/TargetSection";
 import { toEntry } from "@app/features/modals/base/logic/LogEntryDraft";
 import {
@@ -52,20 +53,19 @@ export class EmbeddedSetsView extends BaseView {
 
   /**
    * @param sourcePath - The note the block is written in: its workout and the sets' origin
-   * @param editBlock - Opens the block's edit form, for its menu
    */
   createSets(
     container: HTMLElement,
     params: EmbeddedSetsParams,
     sourcePath: string,
-    editBlock?: () => void,
+    options: SetsViewOptions = {},
   ): MarkdownRenderChild {
     const sheet = new SetsRenderChild(
       container,
       this.plugin,
       params,
       sourcePath,
-      editBlock,
+      options,
       (error) => this.handleError(container, error),
       () => this.sheets.delete(sheet),
     );
@@ -77,6 +77,16 @@ export class EmbeddedSetsView extends BaseView {
     for (const sheet of this.sheets) sheet.unload();
     this.sheets.clear();
   }
+}
+
+export interface SetsViewOptions {
+  /** Opens the block's edit form, for its ⋮ menu */
+  editBlock?: () => void;
+  /**
+   * Called after every draw (an error included), so the block's frame can
+   * tell whether the view drew its menu
+   */
+  onRendered?: () => void;
 }
 
 /** What a drawn sheet knows, for its event handlers */
@@ -106,7 +116,7 @@ class SetsRenderChild extends MarkdownRenderChild {
     private plugin: WorkoutPluginContext,
     private params: EmbeddedSetsParams,
     private sourcePath: string,
-    private editBlock: (() => void) | undefined,
+    private options: SetsViewOptions,
     private onError: (error: Error) => void,
     private onUnload: () => void,
   ) {
@@ -135,10 +145,10 @@ class SetsRenderChild extends MarkdownRenderChild {
     try {
       if (!exercise) {
         this.containerEl.empty();
-        this.containerEl.createDiv({
-          cls: "workout-sets workout-sets-message",
-          text: t("sets.noExercise"),
-        });
+        const sheet = this.containerEl.createDiv({ cls: "workout-sets" });
+        const header = this.renderHeaderRow(sheet);
+        header.title.addClass("workout-sets-message");
+        header.title.setText(t("sets.noExercise"));
         return;
       }
 
@@ -204,6 +214,8 @@ class SetsRenderChild extends MarkdownRenderChild {
       });
     } catch (error) {
       this.onError(error instanceof Error ? error : new Error(String(error)));
+    } finally {
+      if (render === this.renders) this.options.onRendered?.();
     }
   }
 
@@ -213,21 +225,44 @@ class SetsRenderChild extends MarkdownRenderChild {
     done: number,
     planned: number,
   ): void {
-    const header = sheet.createDiv({ cls: "workout-sets-header" });
-    header.createDiv({ cls: "workout-sets-exercise", text: exercise });
-    const side = header.createDiv({ cls: "workout-sets-header-side" });
-    side.createDiv({
+    const header = this.renderHeaderRow(sheet, exercise);
+    header.title.addClass("workout-sets-exercise");
+    header.title.setText(exercise);
+    header.side.createDiv({
       cls: "workout-sets-progress",
       text: t("sets.progress", { done, sets: planned }),
     });
-    // The table's menu: go to the exercise, edit this block
-    const editBlock = this.editBlock;
-    ExerciseActionSelect.render(side, {
-      exerciseName: exercise,
-      app: this.plugin.app,
-      plugin: this.plugin,
-      edit: editBlock ? { label: t("sets.editBlock"), open: editBlock } : undefined,
-    });
+  }
+
+  /**
+   * The block's top row: a title on the left and, always in the top right
+   * corner, the ⋮ menu `workout-log` has: go to the exercise (once the block
+   * names one) and edit this block. The menu sits on the row, so it never
+   * wraps under the title on a narrow phone.
+   */
+  private renderHeaderRow(
+    sheet: HTMLElement,
+    exercise?: string,
+  ): { title: HTMLElement; side: HTMLElement } {
+    const header = sheet.createDiv({ cls: "workout-sets-header" });
+    const title = header.createDiv({ cls: "workout-sets-title" });
+    const side = header.createDiv({ cls: "workout-sets-header-side" });
+    const menu = header.createDiv({ cls: "workout-sets-menu" });
+    const editBlock = this.options.editBlock;
+    const edit = editBlock ? { label: t("sets.editBlock"), open: editBlock } : undefined;
+    if (exercise) {
+      ExerciseActionSelect.render(menu, {
+        exerciseName: exercise,
+        app: this.plugin.app,
+        plugin: this.plugin,
+        edit,
+      });
+    } else if (edit) {
+      BlockMenu.render(menu, [
+        { label: edit.label, icon: ICONS.ACTIONS.EDIT, edits: true, run: edit.open },
+      ]);
+    }
+    return { title, side };
   }
 
   /** "Last time (31/10): 80 kg × 8 · 80 kg × 7" */

@@ -4,7 +4,7 @@ import { t } from "@app/i18n";
 import { InsertChartModal } from "@app/features/charts/modals/InsertChartModal";
 import { InsertTableModal } from "@app/features/tables/modals/InsertTableModal";
 import { InsertSetsModal } from "@app/features/tables/modals/InsertSetsModal";
-import { betaEnabled } from "@app/services/features/BetaFeatures";
+import { featureEnabled } from "@app/services/features/BetaFeatures";
 import { InsertTimerModal } from "@app/features/timer/modals/InsertTimerModal";
 import { InsertDashboardModal } from "@app/features/dashboard/modals/InsertDashboardModal";
 import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";
@@ -118,7 +118,7 @@ export class CommandHandlerService {
       name: t("modal.titles.insertSets"),
       // Beta: only offered once turned on in Settings → Beta features
       checkCallback: (checking) => {
-        if (!betaEnabled(this.plugin.settings, "setSheet")) return false;
+        if (!featureEnabled(this.plugin.settings, "setSheet")) return false;
         if (!checking) {
           this.emitInsert("sets");
           new InsertSetsModal(this.app, this.plugin).open();

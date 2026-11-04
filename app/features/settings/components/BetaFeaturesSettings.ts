@@ -2,30 +2,36 @@ import type { Setting } from "obsidian";
 import { t } from "@app/i18n";
 import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
 import {
-  BETA_FEATURES,
-  betaEnabled,
-  type BetaFeature,
+  betaFeatures,
+  featureEnabled,
+  type Feature,
 } from "@app/services/features/BetaFeatures";
 import type { EventBusPort, WorkoutPluginContext } from "@app/types/PluginPorts";
 
-/** Settings → Beta features: one toggle per feature still in beta, all off by default */
+/**
+ * Settings → Beta features: one toggle per feature still in beta, all off by
+ * default. A stable feature has none (it is on); with none in beta the
+ * section is hidden.
+ */
 export class BetaFeaturesSettings {
   constructor(private plugin: WorkoutPluginContext & EventBusPort) {}
 
   definitions(): DefinitionItem[] {
+    const features = betaFeatures();
     return [
       {
         type: "group",
         heading: t("settings.sections.beta"),
+        visible: features.length > 0,
         items: [
           { name: t("settings.sections.beta"), desc: t("settings.beta.intro") },
-          ...BETA_FEATURES.map((feature) => ({
+          ...features.map((feature) => ({
             name: t(`settings.beta.${feature}.name`),
             desc: t(`settings.beta.${feature}.desc`),
             render: (setting: Setting) =>
               setting.addToggle((toggle) =>
                 toggle
-                  .setValue(betaEnabled(this.plugin.settings, feature))
+                  .setValue(featureEnabled(this.plugin.settings, feature))
                   .onChange((value) => this.toggle(feature, value)),
               ),
           })),
@@ -34,7 +40,7 @@ export class BetaFeaturesSettings {
     ];
   }
 
-  private async toggle(feature: BetaFeature, on: boolean): Promise<void> {
+  private async toggle(feature: Feature, on: boolean): Promise<void> {
     const previousValue = { ...this.plugin.settings.betaFeatures };
     const newValue = { ...previousValue, [feature]: on };
     this.plugin.settings.betaFeatures = newValue;

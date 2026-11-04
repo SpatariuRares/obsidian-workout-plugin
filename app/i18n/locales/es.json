@@ -1105,8 +1105,7 @@
       "chart": "Error al cargar el gráfico: {error}",
       "log": "Error al cargar el registro: {error}",
       "timer": "Error al cargar el temporizador: {error}",
-      "dashboard": "Error al cargar el panel de control: {error}",
-      "duration": "Error al cargar el estimador de duración: {error}"
+      "dashboard": "Error al cargar el panel de control: {error}"
     },
     "validation": {
       "title": "Parámetros inválidos:",
@@ -1216,7 +1215,6 @@
     "previous": "Anterior",
     "next": "Siguiente",
     "rest": "Descanso",
-    "done": "Entrenamiento terminado. Series registradas hoy: {sets}.",
-    "empty": "Añade a esta nota un bloque `workout-log` con un ejercicio para seguirla como entrenamiento."
+    "done": "Entrenamiento terminado. Series registradas hoy: {sets}."
   }
 }

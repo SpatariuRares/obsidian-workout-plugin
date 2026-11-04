@@ -8,7 +8,7 @@ import { RecentWorkouts } from "@app/features/dashboard/widgets/recent-workouts/
 import { QuickActions } from "@app/features/dashboard/widgets/quick-actions/QuickActions";
 import { MuscleHeatMap } from "@app/features/dashboard/widgets/muscle-heat-map/MuscleHeatMap";
 import { ProtocolDistribution } from "@app/features/dashboard/widgets/protocol-distribution/ProtocolDistribution";
-import { DashboardActionSelect } from "@app/features/dashboard/ui/DashboardActionSelect";
+import { BlockMenu } from "@app/features/common/ui/BlockMenu";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { t } from "@app/i18n";
@@ -348,23 +348,20 @@ describe("EmbeddedDashboardView view state", () => {
 
   afterEach(() => jest.restoreAllMocks());
 
-  it("keeps the block's place for the edit menu after a protocol is picked, apart from the block parameters", async () => {
-    const menu = jest.spyOn(DashboardActionSelect, "render");
+  it("keeps its edit menu and the block's place after a protocol is picked, apart from the block parameters", async () => {
+    const menu = jest.spyOn(BlockMenu, "render");
     const view = new EmbeddedDashboardView({
       settings: {},
       getWorkoutLogData: async () => history,
     } as unknown as WorkoutChartsPlugin);
     const params: EmbeddedDashboardParams = { title: "Stats" };
+    const editAction = { label: "Edit", icon: "pencil", edits: true, run: jest.fn() };
 
-    await view.createDashboard(
-      createObsidianContainer(),
-      logs,
-      params,
-      {
-        sourcePath: "Stats.md",
-        matchWithoutId: () => ({ body: "title: Stats" }),
-      },
-    );
+    await view.createDashboard(createObsidianContainer(), logs, params, {
+      sourcePath: "Stats.md",
+      matchWithoutId: () => ({ body: "title: Stats" }),
+      editAction,
+    });
     // The options the protocol widget was last drawn with
     const widgetOptions = () =>
       (ProtocolDistribution.render as jest.Mock).mock.calls.at(-1).at(-1) as {
@@ -374,10 +371,35 @@ describe("EmbeddedDashboardView view state", () => {
     widgetOptions().onFilterChange("dropset");
     await new Promise((resolve) => setTimeout(resolve, 0));
 
-    const [, , menuParams, where] = menu.mock.calls.at(-1)!;
-    expect(where.sourcePath).toBe("Stats.md");
-    expect(where.matchWithoutId?.()).toEqual({ body: "title: Stats" });
-    expect(menuParams).toEqual({ title: "Stats" });
+    const dashboardMenus = menu.mock.calls.filter(([, actions]) => actions[0] === editAction);
+    expect(dashboardMenus).toHaveLength(2);
     expect(widgetOptions().activeFilter).toBe("dropset");
+  });
+});
+
+describe("EmbeddedDashboardView render", () => {
+  beforeEach(() => jest.clearAllMocks());
+  const view = (rows: typeof history) =>
+    new EmbeddedDashboardView({
+      settings: { weeklyGoal: 3, csvLogFilePath: "log.csv" },
+      app: { vault: { getAbstractFileByPath: () => null } },
+      getWorkoutLogData: async () => rows,
+    } as unknown as WorkoutChartsPlugin);
+
+  it("explains an empty log instead of drawing widgets, without the loading spinner", async () => {
+    const container = createObsidianContainer();
+    await view([]).render(container, {});
+
+    expect(SummaryWidget.render).not.toHaveBeenCalled();
+    expect(container.querySelector(".loading-spinner")).toBeNull();
+    expect(container.textContent).not.toBe("");
+  });
+
+  it("says no set matches when its filters leave nothing (it used to show 'no data')", async () => {
+    const container = createObsidianContainer();
+    await view(history).render(container, { exercise: "Bench Press" });
+
+    expect(SummaryWidget.render).not.toHaveBeenCalled();
+    expect(container.querySelector(".workout-log-no-match")).not.toBeNull();
   });
 });

@@ -1,3 +1,5 @@
+import { MarkdownRenderChild } from "obsidian";
+import type { BlockMenuAction } from "@app/features/common/ui/BlockMenu";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { DataFilter } from "@app/services/data/DataFilter";
@@ -7,7 +9,7 @@ import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 import { CHART_TYPE } from "@app/types/WorkoutConfigTypes";
 import { EmbeddedViewParams } from "@app/types/PluginTypes";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
-import { ErrorCollector } from "@app/orchestration/ErrorCollector";
+import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { t } from "@app/i18n";
 import { CONSTANTS, ICONS } from "@app/constants";
 /**
@@ -15,24 +17,29 @@ import { CONSTANTS, ICONS } from "@app/constants";
  * and reduces code duplication across Chart, Table, and Timer views.
  */
 export abstract class BaseView {
+  /** Render children this view made (see track), unloaded by cleanup */
+  private tracked = new Set<MarkdownRenderChild>();
+
   constructor(protected plugin: WorkoutPluginContext) {}
+
+  /** Keeps a render child until it unloads, so cleanup can unload it with the plugin */
+  protected track<C extends MarkdownRenderChild>(child: C): C {
+    this.tracked.add(child);
+    child.register(() => this.tracked.delete(child));
+    return child;
+  }
+
+  /** Called on plugin unload; views with more to release override it */
+  cleanup(): void {
+    for (const child of [...this.tracked]) child.unload();
+    this.tracked.clear();
+  }
 
   /**
    * Common error handling pattern for all views
    */
-  protected handleError(container: HTMLElement, error: Error): void {
-    // Log error for DOE learning system
-    ErrorCollector.logError({
-      type: "view_error",
-      view: this.constructor.name,
-      error: error,
-      context: {
-        timestamp: Date.now(),
-      },
-    });
-
-    // Render user-friendly error message
-    Feedback.renderError(container, error.message, {
+  protected handleError(container: HTMLElement, error: unknown): void {
+    Feedback.renderError(container, ErrorUtils.getErrorMessage(error), {
       title: CONSTANTS.WORKOUT.ERRORS.TYPES.GENERIC,
     });
   }
@@ -45,7 +52,7 @@ export abstract class BaseView {
     logData: WorkoutLogData[],
     exerciseName?: string,
     sourcePath?: string,
-    codeBlockId?: string,
+    editAction?: BlockMenuAction,
   ): boolean {
     if (logData.length === 0) {
       LogCallouts.renderCsvNoDataMessage(
@@ -53,7 +60,7 @@ export abstract class BaseView {
         this.plugin,
         exerciseName,
         sourcePath,
-        codeBlockId,
+        editAction,
       );
       return true;
     }
@@ -61,9 +68,26 @@ export abstract class BaseView {
   }
 
   /**
-   * Common pattern for handling no filtered data
+   * The rows a block shows, filtered by its parameters; null once it has
+   * drawn why there are none: an empty log (with the button to log a first
+   * set) or no row matching the filters.
+   * @param title - Names the rows in the no-match message (the filter's own by default)
    */
+  protected filteredOrExplain(
+    container: HTMLElement,
+    logData: WorkoutLogData[],
+    params: EmbeddedViewParams,
+    viewType: VIEW_TYPES,
+    { sourcePath, title }: { sourcePath?: string; title?: string } = {},
+  ): WorkoutLogData[] | null {
+    if (this.handleEmptyData(container, logData, undefined, sourcePath)) return null;
+    const result = this.filterData(logData, params);
+    if (result.filteredData.length > 0) return result.filteredData;
+    this.handleNoFilteredData(container, params, title ?? result.titlePrefix, viewType);
+    return null;
+  }
 
+  /** Explains a block whose filters match no row */
   protected handleNoFilteredData(
     container: HTMLElement,
     params: EmbeddedViewParams,
@@ -94,22 +118,8 @@ export abstract class BaseView {
 
     const isWorkoutView =
       viewType === VIEW_TYPES.CHART
-        ? (() => {
-            type ViewCategory =
-              | CHART_TYPE.EXERCISE
-              | CHART_TYPE.WORKOUT;
-            const effectiveChartCategory: ViewCategory =
-              "chartType" in params &&
-              (params.chartType === CHART_TYPE.EXERCISE ||
-                params.chartType === CHART_TYPE.WORKOUT)
-                ? params.chartType
-                : CHART_TYPE.EXERCISE;
-            return effectiveChartCategory === CHART_TYPE.WORKOUT;
-          })()
-        : !(
-            "exercise" in params &&
-            (params as { exercise?: string }).exercise
-          );
+        ? "chartType" in params && params.chartType === CHART_TYPE.WORKOUT
+        : !("exercise" in params && params.exercise);
 
     if (isWorkoutView) {
       Feedback.renderWarning(
@@ -153,30 +163,6 @@ export abstract class BaseView {
     params: EmbeddedViewParams,
   ) {
     return DataFilter.filterData(logData, params);
-  }
-
-  /**
-   * Common validation error handling pattern
-   */
-  protected validateAndHandleErrors(
-    container: HTMLElement,
-    validationErrors: string[],
-  ): boolean {
-    if (validationErrors.length > 0) {
-      renderInvalidParams(container, validationErrors);
-      return false;
-    }
-    return true;
-  }
-
-  /**
-   * Common success message pattern
-   */
-  protected showSuccessMessage(
-    container: HTMLElement,
-    message: string,
-  ): void {
-    Feedback.renderSuccess(container, message);
   }
 }
 

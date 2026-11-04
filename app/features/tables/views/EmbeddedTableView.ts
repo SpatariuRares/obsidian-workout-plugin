@@ -1,81 +1,53 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { MarkdownView, MarkdownRenderChild } from "obsidian";
+import { MarkdownView } from "obsidian";
 import { TableRenderer } from "@app/features/tables/components/TableRenderer";
 import { TableDataProcessor } from "@app/features/tables/business/TableDataProcessor";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
-import { TargetHeader } from "@app/features/tables/ui/TargetHeader";
-import { AchievementBadge } from "@app/features/tables/ui/AchievementBadge";
+import { renderTargetSection } from "@app/features/tables/ui/TargetSection";
+import type { BlockMenuAction } from "@app/features/common/ui/BlockMenu";
 import {
   EmbeddedTableParams,
   TableData,
 } from "@app/features/tables/types";
 import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 import { BaseView } from "@app/features/common/views/BaseView";
-import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
-import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
 import { Button } from "@app/components";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import { t } from "@app/i18n";
 import { PathUtils } from "@app/utils/PathUtils";
 
-/**
- * TableRenderChild extends MarkdownRenderChild to manage event listener lifecycle
- * This ensures all event listeners are properly cleaned up when the table is refreshed or removed
- */
-class TableRenderChild extends MarkdownRenderChild {
-  private abortController: AbortController;
-
-  constructor(containerEl: HTMLElement) {
-    super(containerEl);
-    this.abortController = new AbortController();
-  }
-
-  onload(): void {
-    // Event listeners will be registered here with { signal: this.abortController.signal }
-  }
-
-  onunload(): void {
-    // Abort all event listeners when the child is unloaded
-    this.abortController.abort();
-  }
-
-  /**
-   * Get the abort signal for registering event listeners
-   */
-  getSignal(): AbortSignal {
-    return this.abortController.signal;
-  }
+/** Where a table is written: its note, and the edit action for its ⋮ menu */
+interface TableWhere {
+  sourcePath: string;
+  editAction?: BlockMenuAction;
 }
 
 export class EmbeddedTableView extends BaseView {
-  private renderChildren: Map<HTMLElement, TableRenderChild> =
-    new Map();
-
-  constructor(plugin: WorkoutPluginContext) {
-    super(plugin);
-
-  }
+  /** Aborts the listeners of each table's last draw */
+  private signals = new Map<HTMLElement, AbortController>();
 
   /**
    * @param sourcePath - The note containing the code block: the origin of
-   * logs added from this table, and where its edit menu writes
+   * logs added from this table
+   * @param editAction - The block's edit action (CodeBlockProcessorService), in its ⋮ menu
    */
   async createTable(
     container: HTMLElement,
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
     sourcePath = "",
+    editAction?: BlockMenuAction,
   ): Promise<void> {
-    await this.renderTable(container, logData, params, sourcePath);
+    await this.renderTable(container, logData, params, { sourcePath, editAction });
   }
 
   private async renderTable(
     container: HTMLElement,
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
-    sourcePath: string,
+    where: TableWhere,
   ): Promise<void> {
     try {
       const loadingDiv = this.showLoadingIndicator(container);
@@ -85,8 +57,8 @@ export class EmbeddedTableView extends BaseView {
           container,
           logData,
           params.exercise,
-          sourcePath || undefined,
-          params.id,
+          where.sourcePath || undefined,
+          where.editAction,
         )
       ) {
         loadingDiv.remove();
@@ -103,7 +75,7 @@ export class EmbeddedTableView extends BaseView {
       if (filterResult.filteredData.length === 0) {
         loadingDiv.remove();
         if (params.exercise) {
-          this.renderEmptyExerciseTable(container, params, logData, sourcePath);
+          this.renderEmptyExerciseTable(container, params, logData, where);
           return;
         }
         this.handleNoFilteredData(
@@ -126,32 +98,26 @@ export class EmbeddedTableView extends BaseView {
       this.renderTableContentOptimized(
         container,
         { ...tableData, params },
-        sourcePath,
+        where,
       );
     } catch (error) {
-      const errorObj =
-        error instanceof Error ? error : new Error(String(error));
-      this.handleError(container, errorObj);
+      this.handleError(container, error);
     }
   }
 
   private renderTableContentOptimized(
     container: HTMLElement,
     tableData: TableData,
-    sourcePath: string,
+    where: TableWhere,
   ): void {
     const { headers, rows, filterResult, params } = tableData;
 
-    this.unloadRenderChild(container);
+    const signal = this.newSignal(container);
     container.empty();
-
-    const renderChild = new TableRenderChild(container);
-    this.renderChildren.set(container, renderChild);
 
     const contentDiv = container.createDiv({
       cls: "workout-table-content-container",
     });
-    const signal = renderChild.getSignal();
 
     // Render action buttons (Add Log + Goto Exercise)
     if (params.showAddButton !== false) {
@@ -160,34 +126,24 @@ export class EmbeddedTableView extends BaseView {
         params,
         filterResult,
         signal,
-        sourcePath,
+        where,
       );
     }
 
-    // Render target header with progress bar
-    TargetHeader.render(contentDiv, {
-      targetWeight: params.targetWeight,
-      targetReps: params.targetReps,
-      filteredData: filterResult.filteredData,
-      weightUnit: this.plugin.settings.weightUnit,
-    });
-
-    // Render achievement badge if applicable
-    if (
-      params.targetWeight !== undefined &&
-      params.targetReps !== undefined &&
-      params.exercise
-    ) {
-      this.renderAchievementBadgeWithCallbacks(
-        contentDiv,
+    // Target with its progress bar, and the badge once it is reached
+    renderTargetSection(
+      contentDiv,
+      {
+        plugin: this.plugin,
         params,
-        filterResult.filteredData,
-        container,
-        signal,
-        this.plugin.settings.weightUnit,
-        sourcePath,
-      );
-    }
+        schema: tableBlock,
+        sourcePath: where.sourcePath,
+        sets: filterResult.filteredData,
+        onTargetUpdated: (updated) =>
+          this.refreshTable(container, updated, where.sourcePath, where.editAction),
+      },
+      signal,
+    );
 
     // Render the table
     const tableContainer =
@@ -209,7 +165,6 @@ export class EmbeddedTableView extends BaseView {
       );
     }
 
-    renderChild.load();
   }
 
   /**
@@ -224,13 +179,10 @@ export class EmbeddedTableView extends BaseView {
     container: HTMLElement,
     params: EmbeddedTableParams,
     logData: WorkoutLogData[],
-    sourcePath: string,
+    where: TableWhere,
   ): void {
-    this.unloadRenderChild(container);
+    const signal = this.newSignal(container);
     container.empty();
-
-    const renderChild = new TableRenderChild(container);
-    this.renderChildren.set(container, renderChild);
     const contentDiv = container.createDiv({
       cls: "workout-table-content-container",
     });
@@ -246,8 +198,8 @@ export class EmbeddedTableView extends BaseView {
         contentDiv,
         params,
         { filteredData: logData },
-        renderChild.getSignal(),
-        sourcePath,
+        signal,
+        where,
         firstLog,
       );
     }
@@ -255,7 +207,6 @@ export class EmbeddedTableView extends BaseView {
       LogCallouts.renderNoMatchMessage(contentDiv);
     }
 
-    renderChild.load();
   }
 
   /**
@@ -266,11 +217,11 @@ export class EmbeddedTableView extends BaseView {
     params: EmbeddedTableParams,
     filterResult: { filteredData: WorkoutLogData[] },
     signal: AbortSignal,
-    sourcePath: string,
+    where: TableWhere,
     firstLog = false,
   ): void {
     const currentPageLink =
-      PathUtils.toWikiLink(sourcePath) || this.getActivePageLink();
+      PathUtils.toWikiLink(where.sourcePath) || this.getActivePageLink();
     const exerciseName =
       params.exercise || t("modal.sections.workout");
 
@@ -296,96 +247,23 @@ export class EmbeddedTableView extends BaseView {
     if (params.exercise) {
       ExerciseActionSelect.render(
         buttonContainer,
-        {
-          exerciseName: params.exercise,
-          app: this.plugin.app,
-          plugin: this.plugin,
-          params,
-          sourcePath,
-        },
+        { exerciseName: params.exercise, plugin: this.plugin, edit: where.editAction },
         signal,
       );
     }
-  }
-
-  /**
-   * Renders achievement badge with callbacks wired to plugin settings and refresh
-   */
-  private renderAchievementBadgeWithCallbacks(
-    contentDiv: HTMLElement,
-    params: EmbeddedTableParams,
-    filteredData: WorkoutLogData[],
-    tableContainer: HTMLElement,
-    signal: AbortSignal,
-    weightUnit: string,
-    sourcePath: string,
-  ): void {
-    const { targetWeight, targetReps, exercise } = params;
-
-    if (
-      targetWeight === undefined ||
-      targetReps === undefined ||
-      !exercise
-    ) {
-      return;
-    }
-
-    const dismissedWeight =
-      this.plugin.settings.achievedTargets[exercise];
-    const isDismissedForWeight = dismissedWeight === targetWeight;
-
-    AchievementBadge.render(
-      contentDiv,
-      {
-        app: this.plugin.app,
-        exercise,
-        targetWeight,
-        targetReps,
-        filteredData,
-        weightIncrement: this.plugin.settings.weightIncrement,
-        isDismissedForWeight,
-        weightUnit,
-      },
-      {
-        onDismiss: async () => {
-          this.plugin.settings.achievedTargets[exercise] =
-            targetWeight;
-          await this.plugin.saveSettings();
-        },
-        onUpdateTarget: async (newWeight: number) => {
-          const success = await CodeBlockEditorService.patchCodeBlock(
-            this.plugin.app,
-            tableBlock,
-            sourcePath,
-            params.id ? { id: params.id } : { exercise },
-            { targetWeight: newWeight },
-          );
-          if (success) {
-            await this.refreshTable(
-              tableContainer,
-              { ...params, targetWeight: newWeight },
-              sourcePath,
-            );
-          }
-        },
-      },
-      signal,
-    );
   }
 
   public async refreshTable(
     container: HTMLElement,
     params: EmbeddedTableParams,
     sourcePath = "",
+    editAction?: BlockMenuAction,
   ): Promise<void> {
     try {
       const logData = await this.plugin.getWorkoutLogData();
-      await this.renderTable(container, logData, params, sourcePath);
+      await this.renderTable(container, logData, params, { sourcePath, editAction });
     } catch (error) {
-      this.handleError(
-        container,
-        error instanceof Error ? error : new Error(String(error)),
-      );
+      this.handleError(container, error);
     }
   }
 
@@ -400,30 +278,15 @@ export class EmbeddedTableView extends BaseView {
    * Cleanup method to be called during plugin unload
    */
   public cleanup(): void {
-    try {
-      for (const renderChild of this.renderChildren.values()) {
-        try {
-          renderChild.unload();
-        } catch {
-          // Continue cleanup even if individual unload fails
-        }
-      }
-
-      this.renderChildren.clear();
-    } catch {
-      // Silently fail cleanup
-    }
+    for (const controller of this.signals.values()) controller.abort();
+    this.signals.clear();
   }
 
-  private unloadRenderChild(container: HTMLElement): void {
-    const existingChild = this.renderChildren.get(container);
-    if (!existingChild) return;
-
-    try {
-      existingChild.unload();
-    } catch {
-      // Continue rendering even if cleanup fails
-    }
-    this.renderChildren.delete(container);
+  /** Ends the listeners of the table's previous draw; the signal is for this one's */
+  private newSignal(container: HTMLElement): AbortSignal {
+    this.signals.get(container)?.abort();
+    const controller = new AbortController();
+    this.signals.set(container, controller);
+    return controller.signal;
   }
 }

@@ -1,12 +1,8 @@
 import type { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { WorkoutProtocol } from "@app/types/WorkoutLogData";
+import { readSetFields } from "@app/features/modals/base/logic/LogEntryDraft";
 import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
-import {
-  fieldFor,
-  readField,
-  type FieldValue,
-} from "@app/services/exercise/ExerciseFields";
 
 export interface LogFormReading {
   data: LogFormData;
@@ -24,26 +20,17 @@ export function readLogForm(
   currentFileName: string | undefined,
   parameters: ParameterDefinition[],
 ): LogFormReading {
-  const fields = new Map<string, string | boolean>();
-  const values = new Map<string, FieldValue>();
-  for (const [key, input] of form.dynamicFieldInputs) {
-    const param = parameters.find((p) => p.key === key) ?? {
-      key,
-      label: key,
-      type: input.type === "checkbox" ? "boolean" : "string",
-      required: false,
-    };
-    const raw = param.type === "boolean" ? input.checked : input.value;
-    fields.set(key, raw);
-    const { value } = readField(fieldFor(param), raw);
-    if (value !== undefined) values.set(key, value);
-  }
-
-  const customFields: Record<string, FieldValue> = {};
-  for (const [key, value] of values) {
-    if (key !== "reps" && key !== "weight") customFields[key] = value;
-  }
-
+  const { fields, reps, weight, customFields } = readSetFields(
+    Array.from(form.dynamicFieldInputs, ([key, input]): [ParameterDefinition, string | boolean] => {
+      const param = parameters.find((p) => p.key === key) ?? {
+        key,
+        label: key,
+        type: input.type === "checkbox" ? "boolean" : "string",
+        required: false,
+      };
+      return [param, param.type === "boolean" ? input.checked : input.value];
+    }),
+  );
   const weightInput = form.dynamicFieldInputs.get("weight");
   const workout =
     form.currentWorkoutToggle?.checked && currentFileName
@@ -54,8 +41,8 @@ export function readLogForm(
     fields,
     data: {
       exercise: form.exerciseElements.exerciseInput.value.trim(),
-      reps: numberOr0(values.get("reps")),
-      weight: numberOr0(values.get("weight")),
+      reps,
+      weight,
       weightUnit: weightInput
         ? DynamicFieldsRenderer.getWeightUnit(weightInput)
         : undefined,
@@ -64,12 +51,7 @@ export function readLogForm(
       date: form.dateInput?.value || undefined,
       protocol:
         form.protocolSelect?.value || WorkoutProtocol.STANDARD,
-      customFields:
-        Object.keys(customFields).length > 0 ? customFields : undefined,
+      customFields,
     },
   };
-}
-
-function numberOr0(value: FieldValue | undefined): number {
-  return typeof value === "number" ? value : 0;
 }

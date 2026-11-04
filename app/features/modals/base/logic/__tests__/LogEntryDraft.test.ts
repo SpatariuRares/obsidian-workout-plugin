@@ -4,6 +4,7 @@
 
 import {
   fromLog,
+  readSetFields,
   toEntry,
   validate,
 } from "@app/features/modals/base/logic/LogEntryDraft";
@@ -193,6 +194,40 @@ describe("LogEntryDraft", () => {
 
     it("ignores optional fields", () => {
       expect(validate("Squat", fields({ rpe: "" }), params)).toBeNull();
+    });
+  });
+});
+
+describe("readSetFields", () => {
+  const param = (key: string, type: ParameterDefinition["type"] = "number"): ParameterDefinition => ({
+    key,
+    label: key,
+    type,
+    required: false,
+  });
+
+  it("puts reps and weight in their columns and the rest in custom fields", () => {
+    const read = readSetFields([
+      [param("reps"), "8"],
+      [param("weight"), "82.5"],
+      [param("duration"), "45"],
+      [param("assisted", "boolean"), true],
+      [param("rpe"), ""],
+    ]);
+
+    expect(read).toMatchObject({
+      reps: 8,
+      weight: 82.5,
+      customFields: { duration: 45, assisted: true },
+    });
+    expect(read.fields.get("rpe")).toBe("");
+  });
+
+  it("has no custom fields and zero reps and weight when nothing is filled in", () => {
+    expect(readSetFields([[param("reps"), ""]])).toMatchObject({
+      reps: 0,
+      weight: 0,
+      customFields: undefined,
     });
   });
 });

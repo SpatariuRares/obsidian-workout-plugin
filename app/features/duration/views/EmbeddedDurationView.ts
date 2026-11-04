@@ -54,9 +54,7 @@ export class EmbeddedDurationView extends BaseView {
       // Render the duration info card
       this.renderer.renderDurationCard(container, analysis);
     } catch (error) {
-      const errorObj =
-        error instanceof Error ? error : new Error(String(error));
-      this.handleError(container, errorObj);
+      this.handleError(container, error);
     }
   }
 }

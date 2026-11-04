@@ -14,6 +14,7 @@ import {
   AdvancedOptionsSection,
   AdvancedOptionsElements,
 } from "@app/features/modals/components/AdvancedOptionsSection";
+import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { chartBlock } from "@app/features/charts/chartBlock";
 import {
   CHART_DATA_TYPE,
@@ -324,7 +325,7 @@ export class InsertChartModal extends BaseInsertModal {
   }
 
   protected generateCode(): string {
-    return chartBlock.serialize(this.collectParams());
+    return chartBlock.serialize({ id: generateCodeBlockId(), ...this.collectParams() });
   }
 
   /** The form as block parameters */

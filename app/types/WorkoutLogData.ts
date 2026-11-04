@@ -142,6 +142,8 @@ export interface WorkoutChartsSettings {
   weeklyGoal: number;
   /** The welcome modal was shown (set the first time, whatever the user picks) */
   welcomeShown: boolean;
+  /** Beta features the user turned on, by id (see BetaFeatures.ts); missing = off */
+  betaFeatures: Record<string, boolean>;
 }
 
 /**

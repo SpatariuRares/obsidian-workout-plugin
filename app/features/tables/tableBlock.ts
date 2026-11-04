@@ -1,13 +1,16 @@
 import { defineCodeBlock } from "@app/services/codeblocks/CodeBlockSchema";
 import { DEFAULT_TABLE_CONFIG } from "@app/constants/defaults.constants";
 import { TABLE_SORT_FIELDS } from "@app/features/tables/types";
+import {
+  EXERCISE_FIELDS,
+  PLAN_FIELDS,
+} from "@app/features/tables/exerciseBlockFields";
 
 /** The `workout-log` code block: its parameters, types and defaults */
 export const tableBlock = defineCodeBlock("workout-log", {
   /** Written by the insert modal so the block can be edited in place */
   id: { kind: "string" },
-  exercise: { kind: "string" },
-  workout: { kind: "string" },
+  ...EXERCISE_FIELDS,
   /** Days to look back, including the boundary day; 0 = no limit */
   dateRange: { kind: "number", min: 0 },
   /** Rows shown; unset = `tableRowLimit` (two workouts when `sets` is set) */
@@ -22,10 +25,7 @@ export const tableBlock = defineCodeBlock("workout-log", {
   showAddButton: { kind: "boolean", default: true },
   /** Unset: columns follow the exercise type */
   columns: { kind: "list" },
-  /** Sets planned for this exercise; the workout-session block counts them */
-  sets: { kind: "number", min: 1 },
-  targetWeight: { kind: "number", min: 0 },
-  targetReps: { kind: "number", min: 0 },
+  ...PLAN_FIELDS,
   showProtocol: { kind: "boolean", default: true },
 });
 

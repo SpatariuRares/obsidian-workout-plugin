@@ -1,6 +1,5 @@
 import { Platform } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import {
   BaseView,
   renderInvalidParams,
@@ -27,12 +26,11 @@ import {
   fitColumns,
   Placement,
 } from "@app/features/dashboard/layout/gridLayout";
-import { DashboardActionSelect } from "@app/features/dashboard/ui/DashboardActionSelect";
+import { BlockMenu } from "@app/features/common/ui/BlockMenu";
 import { WidgetActionSelect } from "@app/features/dashboard/ui/WidgetActionSelect";
 import { getElementScopedId } from "@app/utils/IdUtils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { DomUtils } from "@app/utils/DomUtils";
-import { DataFilter } from "@app/services/data/DataFilter";
 import { t } from "@app/i18n";
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
 import {
@@ -55,10 +53,6 @@ export class EmbeddedDashboardView extends BaseView {
     { observer: ResizeObserver; timer: number | null }
   >();
 
-  constructor(plugin: WorkoutPluginContext) {
-    super(plugin);
-  }
-
   /**
    * Cleanup method to be called during plugin unload.
    * Clears any internal state and ensures proper resource cleanup to prevent memory leaks.
@@ -75,29 +69,16 @@ export class EmbeddedDashboardView extends BaseView {
   }
 
   /**
-   * Load dashboard data from the plugin. Filtering is centralized in DataFilter.
+   * Loads the log and draws the dashboard: on the first render and on every
+   * log change, so a dashboard drawn on an empty log fills in with the first set.
    */
-  async loadDashboardData(
-    params: EmbeddedDashboardParams,
-  ): Promise<WorkoutLogData[]> {
-    const logData = (await this.plugin.getWorkoutLogData()) || [];
-    return DataFilter.filterRows(logData, params);
-  }
-
-  /**
-   * Refresh a dashboard by clearing cache, reloading data, and re-rendering.
-   * Symmetric with EmbeddedTableView.refreshTable() and EmbeddedChartView.refreshChart().
-   */
-  async refreshDashboard(
+  async render(
     container: HTMLElement,
     params: EmbeddedDashboardParams,
     state: DashboardViewState = {},
   ): Promise<void> {
-    const freshData = await this.loadDashboardData(params);
-    container.empty();
-    if (freshData.length > 0) {
-      await this.createDashboard(container, freshData, params, state);
-    }
+    const logData = (await this.plugin.getWorkoutLogData()) || [];
+    await this.createDashboard(container, logData, params, state);
   }
 
   /**
@@ -109,36 +90,19 @@ export class EmbeddedDashboardView extends BaseView {
     params: EmbeddedDashboardParams,
     state: DashboardViewState = {},
   ): Promise<void> {
+    container.empty();
+    const loadingIndicator = this.showLoadingIndicator(container);
     try {
-      // Clear container
-      container.empty();
-
-      // Show loading indicator
-      const loadingIndicator = this.showLoadingIndicator(container);
-
-      // Handle empty data
-      if (this.handleEmptyData(container, logData)) {
-        return;
-      }
-
-      // Filter data based on parameters
-      const filterResult = this.filterData(logData, params);
-      const filteredData = filterResult.filteredData;
-
-      // Handle no filtered data
-      if (filteredData.length === 0) {
-        loadingIndicator.remove();
-        this.handleNoFilteredData(
-          container,
-          params,
-          params.title || t("general.dashboard"),
-          VIEW_TYPES.DASHBOARD,
-        );
-        return;
-      }
-
-      // Remove loading indicator
+      const filteredData = this.filteredOrExplain(
+        container,
+        logData,
+        params,
+        VIEW_TYPES.DASHBOARD,
+        { sourcePath: state.sourcePath, title: params.title || t("general.dashboard") },
+      );
+      if (!filteredData) return;
       loadingIndicator.remove();
+
 
       // Create dashboard layout
       // Re-render this dashboard (and only this one) on pie chart clicks
@@ -157,7 +121,9 @@ export class EmbeddedDashboardView extends BaseView {
         onProtocolFilterChange,
       );
     } catch (error) {
-      this.handleError(container, error as Error);
+      this.handleError(container, error);
+    } finally {
+      loadingIndicator.remove();
     }
   }
 
@@ -205,13 +171,7 @@ export class EmbeddedDashboardView extends BaseView {
         cls: "workout-dashboard-title",
       });
     }
-    if (state.sourcePath !== undefined) {
-      DashboardActionSelect.render(headerEl, this.plugin.app, params, {
-        sourcePath: state.sourcePath,
-        matchWithoutId: state.matchWithoutId,
-        noteWidth: () => dashboardEl.getBoundingClientRect().width,
-      });
-    }
+    if (state.editAction) BlockMenu.render(headerEl, [state.editAction]);
 
     // Grid layout: each widget in its cells; a broken grid shows why instead
     const placements =

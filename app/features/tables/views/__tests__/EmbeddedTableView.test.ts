@@ -26,8 +26,8 @@ jest.mock("@app/features/common/views/BaseView", () => ({
     constructor(plugin: any) {
       this.plugin = plugin;
     }
-    handleError(container: HTMLElement, error: Error) {
-      container.textContent = error.message;
+    handleError(container: HTMLElement, error: unknown) {
+      container.textContent = error instanceof Error ? error.message : String(error);
     }
     handleEmptyData(_container: HTMLElement, logData: any[]) {
       return logData.length === 0;
@@ -46,12 +46,6 @@ jest.mock("@app/features/common/views/BaseView", () => ({
       return div;
     }
     handleNoFilteredData() {}
-    validateAndHandleErrors(
-      _container: HTMLElement,
-      errors: string[],
-    ) {
-      return errors.length === 0;
-    }
   },
 }));
 
@@ -663,31 +657,19 @@ describe("EmbeddedTableView", () => {
       );
     });
 
-    it("passes the block's own params (without defaults) to the edit action", async () => {
-      const params = { id: "t1", exercise: "Bench" };
+    it("puts the block's edit action in its ⋮ menu", async () => {
+      const editAction = { label: "Edit", icon: "pencil", edits: true, run: jest.fn() };
 
-      await view.createTable(
-        document.createElement("div"),
-        [createLog()],
-        params,
-      );
-
-      const props = (ExerciseActionSelect.render as jest.Mock).mock
-        .calls[0][1];
-      expect(props.params).toEqual(params);
-    });
-
-    it("gives the edit action the note the block is written in", async () => {
       await view.createTable(
         document.createElement("div"),
         [createLog()],
         { id: "t1", exercise: "Bench" },
         "Workouts/Stats.md",
+        editAction,
       );
 
-      const props = (ExerciseActionSelect.render as jest.Mock).mock
-        .calls[0][1];
-      expect(props.sourcePath).toBe("Workouts/Stats.md");
+      const props = (ExerciseActionSelect.render as jest.Mock).mock.calls[0][1];
+      expect(props.edit).toBe(editAction);
     });
   });
 

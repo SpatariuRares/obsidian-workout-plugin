@@ -1,6 +1,8 @@
 /* Achievement badge */
 .workout-achievement-badge {
   display: flex;
+  // On a phone the suggestion and its button go under the text
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--workout-space-md);
@@ -19,6 +21,7 @@
 
 .workout-achievement-text {
   flex: 1;
+  min-width: 0;
   font-weight: var(--workout-font-weight-semibold);
   font-size: var(--workout-font-base);
 }
@@ -42,6 +45,7 @@
 /* Weight suggestion */
 .workout-weight-suggestion {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--workout-space-md);
   flex: 1;

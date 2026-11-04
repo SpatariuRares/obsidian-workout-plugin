@@ -86,6 +86,8 @@ workout: {{workout}}
   weeklyGoal: 1,
   /** The welcome modal was shown */
   welcomeShown: false,
+  /** Every beta feature off: updates don't change anything until the user opts in */
+  betaFeatures: {},
 };
 
 /**

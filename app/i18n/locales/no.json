@@ -1105,8 +1105,7 @@
       "chart": "Feil ved lasting av diagram: {error}",
       "log": "Feil ved lasting av logg: {error}",
       "timer": "Feil ved lasting av timer: {error}",
-      "dashboard": "Feil ved lasting av dashbord: {error}",
-      "duration": "Feil ved lasting av varighetsestimator: {error}"
+      "dashboard": "Feil ved lasting av dashbord: {error}"
     },
     "validation": {
       "title": "Ugyldige parametere:",
@@ -1216,7 +1215,6 @@
     "previous": "Forrige",
     "next": "Neste",
     "rest": "Hvile",
-    "done": "Trening ferdig. Sett registrert i dag: {sets}.",
-    "empty": "Legg til en `workout-log`-blokk med en øvelse i dette notatet for å følge det som en trening."
+    "done": "Trening ferdig. Sett registrert i dag: {sets}."
   }
 }

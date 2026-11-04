@@ -1105,8 +1105,7 @@
       "chart": "Grafik yüklenirken hata: {error}",
       "log": "Antrenman kaydı yüklenirken hata: {error}",
       "timer": "Zamanlayıcı yüklenirken hata: {error}",
-      "dashboard": "Gösterge paneli yüklenirken hata: {error}",
-      "duration": "Süre tahmincisi yüklenirken hata: {error}"
+      "dashboard": "Gösterge paneli yüklenirken hata: {error}"
     },
     "validation": {
       "title": "Geçersiz parametreler:",
@@ -1216,7 +1215,6 @@
     "previous": "Önceki",
     "next": "Sonraki",
     "rest": "Dinlenme",
-    "done": "Antrenman tamamlandı. Bugün kaydedilen set: {sets}.",
-    "empty": "Bu nota bir egzersizli `workout-log` bloğu ekleyin; böylece antrenman olarak takip edilir."
+    "done": "Antrenman tamamlandı. Bugün kaydedilen set: {sets}."
   }
 }

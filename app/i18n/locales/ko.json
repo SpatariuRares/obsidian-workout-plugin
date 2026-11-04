@@ -1105,8 +1105,7 @@
       "chart": "차트 로드 오류: {error}",
       "log": "로그 로드 오류: {error}",
       "timer": "타이머 로드 오류: {error}",
-      "dashboard": "대시보드 로드 오류: {error}",
-      "duration": "운동 시간 추정기 로드 오류: {error}"
+      "dashboard": "대시보드 로드 오류: {error}"
     },
     "validation": {
       "title": "유효하지 않은 매개변수:",
@@ -1216,7 +1215,6 @@
     "previous": "이전",
     "next": "다음",
     "rest": "휴식",
-    "done": "운동 완료: 오늘 기록한 세트 {sets}개.",
-    "empty": "이 노트에 운동을 지정한 `workout-log` 블록을 추가하면 운동 세션으로 추적할 수 있습니다."
+    "done": "운동 완료: 오늘 기록한 세트 {sets}개."
   }
 }

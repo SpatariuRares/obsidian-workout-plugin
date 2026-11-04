@@ -6,6 +6,7 @@ import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { fromLog } from "@app/features/modals/base/logic/LogEntryDraft";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
+import type { BlockMenuAction } from "@app/features/common/ui/BlockMenu";
 import { t } from "@app/i18n";
 import { openGettingStartedGuide } from "@app/services/examples/GettingStartedGuide";
 import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
@@ -41,7 +42,7 @@ export class LogCallouts {
     plugin: WorkoutPluginContext,
     exerciseName?: string,
     sourcePath?: string,
-    codeBlockId?: string,
+    editAction?: BlockMenuAction,
   ): void {
     Feedback.renderEmpty(container, "", {
       className: "workout-log-no-data",
@@ -107,16 +108,7 @@ export class LogCallouts {
     });
 
     if (exerciseName) {
-      ExerciseActionSelect.render(buttonDiv, {
-        exerciseName,
-        app: plugin.app,
-        plugin,
-        params: {
-          exercise: exerciseName,
-          id: codeBlockId,
-        },
-        sourcePath,
-      });
+      ExerciseActionSelect.render(buttonDiv, { exerciseName, plugin, edit: editAction });
     }
   }
 

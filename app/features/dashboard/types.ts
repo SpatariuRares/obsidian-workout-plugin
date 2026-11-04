@@ -1,3 +1,4 @@
+import type { BlockMenuAction } from "@app/features/common/ui/BlockMenu";
 import type { CodeBlockMatch } from "@app/services/editor/CodeBlockEditorService";
 import type { BlockParams } from "@app/services/codeblocks/CodeBlockSchema";
 import type { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
@@ -61,6 +62,8 @@ export interface DashboardViewState {
   sourcePath?: string;
   /** How to find the block when it has no id, read when the menu is used */
   matchWithoutId?: () => CodeBlockMatch;
+  /** The block's edit action (CodeBlockProcessorService), in the dashboard's ⋮ menu */
+  editAction?: BlockMenuAction;
 }
 
 /**

@@ -1105,8 +1105,7 @@
       "chart": "載入圖表時發生錯誤：{error}",
       "log": "載入紀錄時發生錯誤：{error}",
       "timer": "載入計時器時發生錯誤：{error}",
-      "dashboard": "載入儀表板時發生錯誤：{error}",
-      "duration": "載入時長估算時發生錯誤：{error}"
+      "dashboard": "載入儀表板時發生錯誤：{error}"
     },
     "validation": {
       "title": "無效參數：",
@@ -1216,7 +1215,6 @@
     "previous": "上一步",
     "next": "下一步",
     "rest": "休息",
-    "done": "訓練完成：今天已紀錄 {sets} 組。",
-    "empty": "在此筆記中加入一個含動作的 `workout-log` 區塊，即可將它當作訓練來進行。"
+    "done": "訓練完成：今天已紀錄 {sets} 組。"
   }
 }

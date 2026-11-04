@@ -7,6 +7,7 @@ import {
   fieldKey,
   formatFieldNumber,
 } from "@app/services/exercise/ExerciseFields";
+import { parametersOrNone } from "@app/services/exercise/ExerciseDefinitionService";
 import { t } from "@app/i18n";
 
 /** Read-only context next to the exercise, using the full history. */
@@ -22,10 +23,7 @@ export class LogHistory {
     try {
       const [history, parameters] = await Promise.all([
         plugin.getWorkoutLogData().then((rows) => new TrainingHistory(rows)),
-        plugin
-          .getExerciseDefinitionService()
-          .getParametersForExercise(exercise)
-          .catch((): ParameterDefinition[] => []),
+        parametersOrNone(plugin, exercise),
       ]);
       if (container.dataset.exercise !== exercise) return;
       container.empty();

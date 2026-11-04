@@ -1,4 +1,5 @@
 import { tableBlock } from "@app/features/tables/tableBlock";
+import { setsBlock } from "@app/features/tables/setsBlock";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 
 export function generateExerciseLogBlock(
@@ -43,4 +44,12 @@ export function generateCombinedLogBlock(
     limit,
     exactMatch: true,
   });
+}
+
+/** A `workout-sets` block: the table made for logging on the phone */
+export function generateSetsBlock(
+  exercise: string,
+  opts: { workout?: string; sets?: number; targetReps?: number; targetWeight?: number } = {},
+): string {
+  return setsBlock.serialize({ id: generateCodeBlockId(), exercise, ...opts });
 }

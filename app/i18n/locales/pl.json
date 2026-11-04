@@ -1105,8 +1105,7 @@
       "chart": "Błąd ładowania wykresu: {error}",
       "log": "Błąd ładowania dziennika: {error}",
       "timer": "Błąd ładowania timera: {error}",
-      "dashboard": "Błąd ładowania panelu kontrolnego: {error}",
-      "duration": "Błąd ładowania estymatora czasu trwania: {error}"
+      "dashboard": "Błąd ładowania panelu kontrolnego: {error}"
     },
     "validation": {
       "title": "Nieprawidłowe parametry:",
@@ -1216,7 +1215,6 @@
     "previous": "Poprzednia",
     "next": "Dalej",
     "rest": "Odpoczynek",
-    "done": "Trening zakończony. Dziś zapisane serie: {sets}.",
-    "empty": "Dodaj do tej notatki blok `workout-log` z ćwiczeniem, aby śledzić ją jako trening."
+    "done": "Trening zakończony. Dziś zapisane serie: {sets}."
   }
 }

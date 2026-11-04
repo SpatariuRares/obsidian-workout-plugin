@@ -11,10 +11,7 @@ import { TableErrorMessage } from "@app/features/tables/ui/TableErrorMessage";
 import { TableHeader } from "@app/features/tables/ui/TableHeader";
 import { SpacerStat, ProtocolBadge } from "@app/components/atoms";
 import { SpacerRowCalculator } from "@app/features/tables/business/SpacerRowCalculator";
-import {
-  ProtocolCatalog,
-  type ProtocolInfo,
-} from "@app/services/protocols/ProtocolCatalog";
+import { ProtocolCatalog } from "@app/services/protocols/ProtocolCatalog";
 import { CONSTANTS, mapColumnIdentifiersToLabels } from "@app/constants";
 import { t } from "@app/i18n";
 
@@ -184,7 +181,7 @@ export class TableRenderer {
           });
         } else if (cellIndex === protocolColumnIndex) {
           const td = tr.createEl("td", { cls: "workout-table-protocol-cell" });
-          this.renderProtocolBadge(td, protocol);
+          ProtocolBadge.forProtocol(td, protocol);
         } else if (cellIndex === notesColumnIndex) {
           tr.createEl("td", {
             cls: "workout-table-notes-cell",
@@ -216,26 +213,5 @@ export class TableRenderer {
       const hasDetails = cellAt(notesColumnIndex) !== "" || hasBadge;
       tr.classList.toggle("workout-table-row-with-details", hasDetails);
     });
-  }
-
-  /**
-   * Renders a protocol badge in the given cell.
-   * Name, abbreviation and color come from ProtocolCatalog.
-   * @param cell - The table cell to render the badge in
-   * @param info - The row's protocol, resolved by ProtocolCatalog
-   */
-  private static renderProtocolBadge(
-    cell: HTMLElement,
-    info: ProtocolInfo,
-  ): void {
-    // Standard sets have no abbreviation, so no badge
-    if (info.abbreviation) {
-      ProtocolBadge.create(cell, {
-        text: info.abbreviation,
-        className: `workout-protocol-badge ${info.badgeClass}`,
-        tooltip: info.name,
-        color: info.badgeColor,
-      });
-    }
   }
 }

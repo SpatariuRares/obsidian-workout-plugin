@@ -139,7 +139,7 @@ export class InsertTimerModal extends BaseInsertModal {
   }
 
   protected generateCode(): string {
-    return timerBlock.serialize(this.collectParams());
+    return timerBlock.serialize({ id: generateCodeBlockId(), ...this.collectParams() });
   }
 
   /**
@@ -155,7 +155,6 @@ export class InsertTimerModal extends BaseInsertModal {
     const type = values.type as TIMER_TYPE;
 
     return {
-      id: this.getCodeBlockId(),
       preset: this.selectedPreset || undefined,
       type,
       duration: values.duration || undefined,
@@ -169,13 +168,5 @@ export class InsertTimerModal extends BaseInsertModal {
       showControls: values.showControls,
       sound: values.sound,
     };
-  }
-
-  /**
-   * Generates a unique ID for the code block.
-   * Subclasses can override to preserve an existing ID.
-   */
-  protected getCodeBlockId(): string {
-    return generateCodeBlockId();
   }
 }

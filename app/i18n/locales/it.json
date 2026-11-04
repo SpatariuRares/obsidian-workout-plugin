@@ -1105,8 +1105,7 @@
       "chart": "Errore nel caricamento del grafico: {error}",
       "log": "Errore nel caricamento del registro: {error}",
       "timer": "Errore nel caricamento del timer: {error}",
-      "dashboard": "Errore nel caricamento della dashboard: {error}",
-      "duration": "Errore nel caricamento della stima della durata: {error}"
+      "dashboard": "Errore nel caricamento della dashboard: {error}"
     },
     "validation": {
       "title": "Parametri non validi:",
@@ -1216,7 +1215,6 @@
     "previous": "Precedente",
     "next": "Avanti",
     "rest": "Riposo",
-    "done": "Allenamento completato. Serie registrate oggi: {sets}.",
-    "empty": "Aggiungi a questa nota un blocco `workout-log` con un esercizio per seguirla come allenamento."
+    "done": "Allenamento completato. Serie registrate oggi: {sets}."
   }
 }

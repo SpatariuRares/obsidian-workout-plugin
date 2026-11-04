@@ -9,7 +9,11 @@ import {
 } from "@app/types/WorkoutLogData";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import type { LogFormData } from "@app/types/ModalTypes";
-import { fieldFor, readField } from "@app/services/exercise/ExerciseFields";
+import {
+  fieldFor,
+  readField,
+  type FieldValue,
+} from "@app/services/exercise/ExerciseFields";
 import { trainingDay } from "@app/services/history/TrainingHistory";
 
 const DEFAULT_ORIGIN = "[[Workout Charts Plugin]]";
@@ -29,6 +33,43 @@ export function fromLog(log: WorkoutLogData): Partial<LogFormData> {
     date: trainingDay(log.date),
     protocol: log.protocol,
     customFields: log.customFields,
+  };
+}
+
+/** What a set's fields hold, read: for `validate`, and the set's values */
+export interface SetFields {
+  /** What each field holds as typed (text, or a checkbox's state) */
+  fields: Map<string, string | boolean>;
+  reps: number;
+  weight: number;
+  /** Every field but reps and weight */
+  customFields?: Record<string, FieldValue>;
+}
+
+/**
+ * Reads a set's fields, each with its parameter and what it holds as typed.
+ * The log form and the `workout-sets` rows both read their inputs this way.
+ */
+export function readSetFields(
+  entries: Iterable<[ParameterDefinition, string | boolean]>,
+): SetFields {
+  const fields = new Map<string, string | boolean>();
+  const customFields: Record<string, FieldValue> = {};
+  let reps = 0;
+  let weight = 0;
+  for (const [param, raw] of entries) {
+    fields.set(param.key, raw);
+    const { value } = readField(fieldFor(param), raw);
+    if (value === undefined) continue;
+    if (param.key === "reps") reps = typeof value === "number" ? value : 0;
+    else if (param.key === "weight") weight = typeof value === "number" ? value : 0;
+    else customFields[param.key] = value;
+  }
+  return {
+    fields,
+    reps,
+    weight,
+    customFields: Object.keys(customFields).length > 0 ? customFields : undefined,
   };
 }
 

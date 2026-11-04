@@ -11,7 +11,7 @@ import {
   TIMER_TYPE,
 } from "@app/features/timer/types";
 import { BaseView } from "@app/features/common/views/BaseView";
-import { TimerActionSelect } from "@app/features/timer/ui/TimerActionSelect";
+import { BlockMenu, type BlockMenuAction } from "@app/features/common/ui/BlockMenu";
 import { resolveTimer } from "@app/features/timer/business/resolveTimer";
 import { intervalPlan } from "@app/features/timer/business/intervalSchedule";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
@@ -36,11 +36,11 @@ export class EmbeddedTimerView extends BaseView {
     });
   }
 
-  /** @param sourcePath - The note the block is written in, for its edit menu */
+  /** @param editAction - The block's edit action, for its ⋮ menu (none for a rest timer) */
   createTimer(
     container: HTMLElement,
     params: EmbeddedTimerParams,
-    sourcePath: string,
+    editAction?: BlockMenuAction,
   ): void {
     try {
       // Resolve parameters from preset and defaults
@@ -85,7 +85,7 @@ export class EmbeddedTimerView extends BaseView {
 
       this.timerCore.setSoundEnabled(resolvedParams.sound !== false);
 
-      this.renderTimerContent(container, resolvedParams, params, sourcePath);
+      this.renderTimerContent(container, resolvedParams, editAction);
 
       // autoStart fires once per timer, not on every re-render
       if (resolvedParams.autoStart && !this.autoStarted) {
@@ -93,9 +93,7 @@ export class EmbeddedTimerView extends BaseView {
         this.timerCore.start();
       }
     } catch (error) {
-      const errorObj =
-        error instanceof Error ? error : new Error(String(error));
-      this.handleError(container, errorObj);
+      this.handleError(container, error);
     }
   }
 
@@ -116,8 +114,7 @@ export class EmbeddedTimerView extends BaseView {
   private renderTimerContent(
     container: HTMLElement,
     params: EmbeddedTimerParams,
-    originalParams: EmbeddedTimerParams,
-    sourcePath: string,
+    editAction?: BlockMenuAction,
   ): void {
     container.empty();
 
@@ -167,13 +164,7 @@ export class EmbeddedTimerView extends BaseView {
         TimerDisplay.createRoundCounter(actionsGroup);
     }
 
-    // Menu button (only if code block has an ID)
-    TimerActionSelect.render(actionsGroup, {
-      app: this.plugin.app,
-      plugin: this.plugin,
-      params: originalParams,
-      sourcePath,
-    });
+    if (editAction) BlockMenu.render(actionsGroup, [editAction]);
 
     // Draw on this rendering too (the note may also be open in another view)
     this.timerCore.addSurface({

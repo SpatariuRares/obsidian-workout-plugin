@@ -11,9 +11,6 @@ import { t } from "@app/i18n";
 import type WorkoutChartsPlugin from "main";
 
 jest.mock("@app/features/timer/components/TimerAudio");
-jest.mock("@app/features/timer/ui/TimerActionSelect", () => ({
-  TimerActionSelect: { render: jest.fn() },
-}));
 
 const createPlugin = () =>
   ({
@@ -33,6 +30,29 @@ describe("EmbeddedTimerView", () => {
 
   afterEach(() => {
     jest.restoreAllMocks();
+  });
+
+  describe("menu", () => {
+    it("shows the block's edit action in its ⋮ menu", () => {
+      const view = new EmbeddedTimerView(createPlugin(), "t1");
+      const container = createObsidianContainer();
+      const run = jest.fn();
+
+      view.createTimer(container, { duration: 30 }, { label: "Edit", icon: "pencil", edits: true, run });
+
+      expect(container.querySelector(".workout-block-menu")).not.toBeNull();
+      view.destroy();
+    });
+
+    it("has no menu as a rest timer, drawn without an edit action", () => {
+      const view = new EmbeddedTimerView(createPlugin(), "t1");
+      const container = createObsidianContainer();
+
+      view.createTimer(container, { duration: 30 });
+
+      expect(container.querySelector(".workout-icon-dropdown")).toBeNull();
+      view.destroy();
+    });
   });
 
   describe("sound", () => {

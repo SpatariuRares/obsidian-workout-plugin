@@ -1105,8 +1105,7 @@
       "chart": "Kesalahan saat memuat grafik: {error}",
       "log": "Kesalahan saat memuat log latihan: {error}",
       "timer": "Kesalahan saat memuat timer: {error}",
-      "dashboard": "Kesalahan saat memuat dasbor: {error}",
-      "duration": "Kesalahan saat memuat estimator durasi: {error}"
+      "dashboard": "Kesalahan saat memuat dasbor: {error}"
     },
     "validation": {
       "title": "Parameter tidak valid:",
@@ -1216,7 +1215,6 @@
     "previous": "Sebelumnya",
     "next": "Berikutnya",
     "rest": "Istirahat",
-    "done": "Latihan selesai: {sets} set tercatat hari ini.",
-    "empty": "Tambahkan blok `workout-log` dengan latihan ke catatan ini untuk mengikutinya sebagai sesi latihan."
+    "done": "Latihan selesai: {sets} set tercatat hari ini."
   }
 }

@@ -1105,8 +1105,7 @@
       "chart": "Fout bij laden van de grafiek: {error}",
       "log": "Fout bij laden van het logboek: {error}",
       "timer": "Fout bij laden van de timer: {error}",
-      "dashboard": "Fout bij laden van het dashboard: {error}",
-      "duration": "Fout bij laden van de duurschatter: {error}"
+      "dashboard": "Fout bij laden van het dashboard: {error}"
     },
     "validation": {
       "title": "Ongeldige parameters:",
@@ -1216,7 +1215,6 @@
     "previous": "Vorige",
     "next": "Volgende",
     "rest": "Rust",
-    "done": "Training klaar. Vandaag geregistreerde series: {sets}.",
-    "empty": "Voeg een `workout-log`-blok met een oefening aan deze notitie toe om hem als training te volgen."
+    "done": "Training klaar. Vandaag geregistreerde series: {sets}."
   }
 }

@@ -1,5 +1,7 @@
+import { TFile, type Vault } from "obsidian";
 import { readWorkoutNote } from "@app/services/notes/WorkoutNote";
 import { tableBlock } from "@app/features/tables/tableBlock";
+import { setsBlock } from "@app/features/tables/setsBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
 import type { EmbeddedTimerParams } from "@app/features/timer/types";
 import {
@@ -21,8 +23,11 @@ export interface SessionStep {
 }
 
 /**
- * The plan of a workout note: one step per `workout-log` block that names an
- * exercise, in note order. Blocks with invalid parameters are left out.
+ * The plan of a workout note: one step per `workout-log` or `workout-sets`
+ * block that names an exercise, in note order. Blocks with invalid
+ * parameters are left out. Two blocks of the same exercise in one section
+ * (its table and its sets) are one step: the first, with the plan values
+ * it lacks taken from the other.
  */
 export function readSessionPlan(content: string): SessionStep[] {
   const steps: SessionStep[] = [];
@@ -32,11 +37,26 @@ export function readSessionPlan(content: string): SessionStep[] {
     const rest =
       timerRead && timerRead.errors.length === 0 ? timerRead.params : {};
 
+    const sectionSteps: SessionStep[] = [];
     for (const block of section.blocks) {
-      if (block.type !== tableBlock.type) continue;
-      const { params, errors } = tableBlock.parse(block.body);
+      const read =
+        block.type === tableBlock.type
+          ? tableBlock.parse(block.body)
+          : block.type === setsBlock.type
+            ? setsBlock.parse(block.body)
+            : undefined;
+      if (!read) continue;
+      const { params, errors } = read;
       if (errors.length > 0 || !params.exercise) continue;
-      steps.push({
+
+      const same = stepOf(sectionSteps, params.exercise);
+      if (same) {
+        same.sets ??= params.sets;
+        same.targetReps ??= params.targetReps;
+        same.targetWeight ??= params.targetWeight;
+        continue;
+      }
+      sectionSteps.push({
         exercise: params.exercise,
         sets: params.sets,
         targetReps: params.targetReps,
@@ -44,8 +64,28 @@ export function readSessionPlan(content: string): SessionStep[] {
         rest,
       });
     }
+    steps.push(...sectionSteps);
   }
   return steps;
+}
+
+/** The plan of the note at `path`; null when there is no such note */
+export async function readNotePlan(
+  vault: Pick<Vault, "getAbstractFileByPath" | "cachedRead">,
+  path: string,
+): Promise<SessionStep[] | null> {
+  const file = vault.getAbstractFileByPath(path);
+  if (!(file instanceof TFile)) return null;
+  return readSessionPlan(await vault.cachedRead(file));
+}
+
+/** The step of an exercise (case and spacing ignored), the first if repeated */
+export function stepOf(
+  steps: SessionStep[],
+  exercise: string,
+): SessionStep | undefined {
+  const wanted = StringUtils.normalize(exercise);
+  return steps.find((step) => StringUtils.normalize(step.exercise) === wanted);
 }
 
 /** What is done of the plan today */

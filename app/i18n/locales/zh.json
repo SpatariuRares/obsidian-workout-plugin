@@ -1105,8 +1105,7 @@
       "chart": "加载图表时出错：{error}",
       "log": "加载记录时出错：{error}",
       "timer": "加载计时器时出错：{error}",
-      "dashboard": "加载仪表盘时出错：{error}",
-      "duration": "加载时长估算器时出错：{error}"
+      "dashboard": "加载仪表盘时出错：{error}"
     },
     "validation": {
       "title": "无效参数：",
@@ -1216,7 +1215,6 @@
     "previous": "上一步",
     "next": "下一步",
     "rest": "休息",
-    "done": "训练完成：今天已记录 {sets} 组。",
-    "empty": "在此笔记中添加一个带练习的 `workout-log` 代码块，即可将其作为训练来进行。"
+    "done": "训练完成：今天已记录 {sets} 组。"
   }
 }

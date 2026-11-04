@@ -1105,8 +1105,7 @@
       "chart": "Erreur lors du chargement du graphique : {error}",
       "log": "Erreur lors du chargement du journal : {error}",
       "timer": "Erreur lors du chargement du minuteur : {error}",
-      "dashboard": "Erreur lors du chargement du tableau de bord : {error}",
-      "duration": "Erreur lors du chargement de l'estimateur de durée : {error}"
+      "dashboard": "Erreur lors du chargement du tableau de bord : {error}"
     },
     "validation": {
       "title": "Paramètres invalides :",
@@ -1216,7 +1215,6 @@
     "previous": "Précédent",
     "next": "Suivant",
     "rest": "Repos",
-    "done": "Entraînement terminé. Séries enregistrées aujourd'hui : {sets}.",
-    "empty": "Ajoutez à cette note un bloc `workout-log` avec un exercice pour la suivre comme un entraînement."
+    "done": "Entraînement terminé. Séries enregistrées aujourd'hui : {sets}."
   }
 }

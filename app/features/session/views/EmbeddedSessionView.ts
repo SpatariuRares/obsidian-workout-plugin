@@ -1,11 +1,13 @@
-import { MarkdownRenderChild, TFile } from "obsidian";
+import { MarkdownRenderChild } from "obsidian";
 import { BaseView } from "@app/features/common/views/BaseView";
 import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
+import { RestTimer } from "@app/features/timer/views/RestTimer";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { describeSet } from "@app/features/modals/log/LogHistory";
 import { fromLog } from "@app/features/modals/base/logic/LogEntryDraft";
 import {
-  readSessionPlan,
+  readNotePlan,
+  stepOf,
   sessionProgress,
   type SessionStep,
 } from "@app/features/session/business/sessionPlan";
@@ -14,15 +16,13 @@ import {
   localDay,
   sameWorkout,
 } from "@app/services/history/TrainingHistory";
-import { StringUtils } from "@app/utils/StringUtils";
-import type { EmbeddedTimerParams } from "@app/features/timer/types";
-import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import type { LogFormData } from "@app/types/ModalTypes";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
 import { ICONS } from "@app/constants";
 import { PathUtils } from "@app/utils/PathUtils";
+import { parametersOrNone } from "@app/services/exercise/ExerciseDefinitionService";
 import { t } from "@app/i18n";
 
 /**
@@ -31,8 +31,6 @@ import { t } from "@app/i18n";
  * sets logged today for this workout, so it survives closing the note.
  */
 export class EmbeddedSessionView extends BaseView {
-  private sessions = new Set<SessionRenderChild>();
-
   /**
    * @param activeTimers - The plugin's timers by block id, shared with the
    * `workout-timer` blocks so a section's rest runs on one timer
@@ -46,28 +44,22 @@ export class EmbeddedSessionView extends BaseView {
 
   /** @param sourcePath - The note the block is written in: its plan and workout name */
   createSession(container: HTMLElement, sourcePath: string): MarkdownRenderChild {
-    const session = new SessionRenderChild(
-      container,
-      this.plugin,
-      this.activeTimers,
-      sourcePath,
-      (error) => this.handleError(container, error),
-      () => this.sessions.delete(session),
+    return this.track(
+      new SessionRenderChild(
+        container,
+        this.plugin,
+        this.activeTimers,
+        sourcePath,
+        (error) => this.handleError(container, error),
+      ),
     );
-    this.sessions.add(session);
-    return session;
-  }
-
-  cleanup(): void {
-    for (const session of this.sessions) session.unload();
-    this.sessions.clear();
   }
 }
 
 class SessionRenderChild extends MarkdownRenderChild {
   private readonly workout: string;
-  /** The rest timer of steps whose section timer has no id */
-  private readonly ownTimer: EmbeddedTimerView;
+  /** The rest after a set, on the section's timer (see RestTimer) */
+  private readonly restTimer: RestTimer;
   /** The step picked with previous/next; undefined follows the progress */
   private position?: number;
   /** The step just logged, whose rest is shown while it runs */
@@ -81,12 +73,11 @@ class SessionRenderChild extends MarkdownRenderChild {
     private plugin: WorkoutPluginContext,
     private activeTimers: Map<string, EmbeddedTimerView>,
     private sourcePath: string,
-    private onError: (error: Error) => void,
-    private onUnload: () => void,
+    private onError: (error: unknown) => void,
   ) {
     super(containerEl);
     this.workout = PathUtils.noteName(sourcePath);
-    this.ownTimer = new EmbeddedTimerView(plugin);
+    this.restTimer = new RestTimer(plugin, activeTimers);
   }
 
   onload(): void {
@@ -108,9 +99,7 @@ class SessionRenderChild extends MarkdownRenderChild {
   }
 
   onunload(): void {
-    // Shared timers belong to activeTimers, destroyed with the plugin
-    this.ownTimer.destroy();
-    this.onUnload();
+    this.restTimer.destroy();
   }
 
   /**
@@ -126,17 +115,11 @@ class SessionRenderChild extends MarkdownRenderChild {
       return;
     }
     this.position = undefined;
-    const exercise = StringUtils.normalize(context.exercise);
-    const step = (await this.readPlan())?.find(
-      (s) => StringUtils.normalize(s.exercise) === exercise,
-    );
+    const plan = await this.readPlan();
+    const step = plan ? stepOf(plan, context.exercise) : undefined;
     if (step) this.restingStep = step;
     const restShown = await this.render(step !== undefined);
-    if (step && restShown) {
-      const timer = this.timerFor(step);
-      timer.reset();
-      timer.start();
-    }
+    if (step && restShown) this.restTimer.restart(step.rest);
   }
 
   /** The note was saved: redraw only if its plan is not the one shown */
@@ -147,10 +130,8 @@ class SessionRenderChild extends MarkdownRenderChild {
     }
   }
 
-  private async readPlan(): Promise<SessionStep[] | null> {
-    const file = this.plugin.app.vault.getAbstractFileByPath(this.sourcePath);
-    if (!(file instanceof TFile)) return null;
-    return readSessionPlan(await this.plugin.app.vault.cachedRead(file));
+  private readPlan(): Promise<SessionStep[] | null> {
+    return readNotePlan(this.plugin.app.vault, this.sourcePath);
   }
 
   /**
@@ -178,7 +159,7 @@ class SessionRenderChild extends MarkdownRenderChild {
           ? Math.min(this.position, steps.length - 1)
           : current;
       const step = steps[index];
-      const parameters = step ? await this.parametersOf(step.exercise) : [];
+      const parameters = step ? await parametersOrNone(this.plugin, step.exercise) : [];
       if (render !== this.renders) return false;
 
       this.drawnPlan = JSON.stringify(steps);
@@ -231,17 +212,13 @@ class SessionRenderChild extends MarkdownRenderChild {
       restEl.createDiv({ cls: "workout-session-meta", text: t("session.rest") });
       const restStep =
         this.restingStep &&
-        (resting || this.timerFor(this.restingStep).isTimerRunning())
+        (resting || this.restTimer.isRunning(this.restingStep.rest))
           ? this.restingStep
           : step;
-      this.timerFor(restStep).createTimer(
-        restEl.createDiv(),
-        restOf(restStep),
-        this.sourcePath,
-      );
+      this.restTimer.draw(restEl.createDiv(), restStep.rest);
       return true;
     } catch (error) {
-      this.onError(error instanceof Error ? error : new Error(String(error)));
+      this.onError(error);
       return false;
     }
   }
@@ -289,22 +266,6 @@ class SessionRenderChild extends MarkdownRenderChild {
       disabled: index === total - 1,
     });
     Button.onClick(next, () => this.moveTo(index + 1));
-  }
-
-  /**
-   * The timer a step rests on: the one of its section's `workout-timer` block
-   * when that has an id (created here if the block hasn't rendered yet, and
-   * picked up by the block later), so one countdown shows in both places
-   */
-  private timerFor(step: SessionStep): EmbeddedTimerView {
-    const id = step.rest.id;
-    if (!id) return this.ownTimer;
-    let timer = this.activeTimers.get(id);
-    if (!timer) {
-      timer = new EmbeddedTimerView(this.plugin, id);
-      this.activeTimers.set(id, timer);
-    }
-    return timer;
   }
 
   private moveTo(index: number): void {
@@ -355,17 +316,4 @@ class SessionRenderChild extends MarkdownRenderChild {
     if (weight !== undefined) return t("session.targetWeight", { weight, unit });
     return undefined;
   }
-
-  private async parametersOf(exercise: string): Promise<ParameterDefinition[]> {
-    return this.plugin
-      .getExerciseDefinitionService()
-      .getParametersForExercise(exercise)
-      .catch((): ParameterDefinition[] => []);
-  }
-}
-
-/** The step's timer, without the block id (its menu belongs to the block) */
-function restOf(step: SessionStep): EmbeddedTimerParams {
-  const { id: _id, ...rest } = step.rest;
-  return rest;
 }

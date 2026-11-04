@@ -46,6 +46,7 @@ export class EditSetsModal extends InsertSetsModal {
     if (this.exerciseInput) this.exerciseInput.value = exercise ?? "";
     if (this.workoutInput) this.workoutInput.value = workout ?? "";
     if (this.planFields) PlanFields.fill(this.planFields, this.initialParams);
+    if (this.restInput) this.restInput.value = String(this.initialParams.rest ?? 0);
   }
 
   protected createButtons(container: HTMLElement): void {

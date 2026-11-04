@@ -1,5 +1,6 @@
 import {
   emptyDraft,
+  restOf,
   rowProtocol,
   rowToFormData,
   setRows,
@@ -132,5 +133,27 @@ describe("rowToFormData", () => {
 
     const wrong = rowToFormData(row, { values: { reps: "8", weight: "abc" }, notes: "" }, context);
     expect(wrong).toMatchObject({ error: { field: "weight" } });
+  });
+});
+
+describe("restOf", () => {
+  const plan = [
+    { exercise: "Bench Press", rest: { id: "benchRest", duration: 120 } },
+  ];
+
+  it("counts down the block's own rest", () => {
+    expect(restOf({ exercise: "Bench Press", rest: 90 }, plan)).toEqual({
+      type: "countdown",
+      duration: 90,
+    });
+  });
+
+  it("rests on the exercise's section timer without one, else the default preset", () => {
+    expect(restOf({ exercise: "bench  press" }, plan)).toEqual({ id: "benchRest", duration: 120 });
+    expect(restOf({ exercise: "Squat" }, plan)).toEqual({});
+  });
+
+  it("has no rest with rest: 0", () => {
+    expect(restOf({ exercise: "Bench Press", rest: 0 }, plan)).toBeUndefined();
   });
 });

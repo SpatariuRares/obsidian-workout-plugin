@@ -125,6 +125,7 @@ sets: 4 # rows to fill in; unset: as many as last time
 targetReps: 8
 targetWeight: 80
 workout: Push Day # unset: the note's name
+rest: 90 # seconds of rest after each set; 0 = none; unset = the section's workout-timer
 ```
 
 **Set sheet** rules:
@@ -132,6 +133,7 @@ workout: Push Day # unset: the note's name
 - **Rows**: today's sets of the exercise in this workout come first, ticked; then rows to fill in up to `sets`. "Add set" adds one more row for this view only.
 - **Hints** (input placeholders): the same set number on the last earlier day the exercise was done (any workout), the last set of that day past its end, else the targets. Ticking a row with an empty field logs its hint, so "same as last time" is one tap.
 - **Protocol and notes**: the arrow opens a row's protocol chips (the settings list) and notes. A row starts with the protocol of the same set last time when that was not standard (a warm-up stays a warm-up).
+- **Rest**: a rest timer at the top starts by itself when a set is ticked (not after the last row to fill in). It runs on the section's `workout-timer` when the block has no `rest`, so both show one countdown.
 - **Ticking** logs the set at once (in the settings unit, origin = the note). Tapping a ticked set opens the edit form (change or delete). What is typed in rows not ticked yet is kept while the note is open, never stored.
 - A `workout-session` in the note reads `workout-sets` blocks as plan steps too; a section's table and sets of the same exercise are one step.
 

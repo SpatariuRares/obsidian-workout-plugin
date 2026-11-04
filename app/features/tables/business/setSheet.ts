@@ -9,6 +9,8 @@ import {
   type FieldValue,
 } from "@app/services/exercise/ExerciseFields";
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
+import { stepOf, type SessionStep } from "@app/features/session/business/sessionPlan";
+import { TIMER_TYPE, type EmbeddedTimerParams } from "@app/features/timer/types";
 import {
   readSetFields,
   validate,
@@ -160,4 +162,20 @@ export function rowToFormData(
       protocol: rowProtocol(row, draft),
     },
   };
+}
+
+/**
+ * The timer a block rests on after each set: its own `rest` seconds; without
+ * one the rest of its exercise's section (the section's `workout-timer`, or
+ * {} for the default preset); none with `rest: 0`.
+ */
+export function restOf(
+  params: { exercise?: string; rest?: number },
+  plan: SessionStep[],
+): EmbeddedTimerParams | undefined {
+  if (params.rest === 0) return undefined;
+  if (params.rest !== undefined) {
+    return { type: TIMER_TYPE.COUNTDOWN, duration: params.rest };
+  }
+  return (params.exercise && stepOf(plan, params.exercise)?.rest) || {};
 }

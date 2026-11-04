@@ -12,6 +12,7 @@ import {
   rowProtocol,
   rowToFormData,
   plannedSets,
+  restOf,
   setRows,
   type SetDraft,
   type SetRow,
@@ -38,15 +39,30 @@ import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { WorkoutProtocol, type WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { parametersOrNone } from "@app/services/exercise/ExerciseDefinitionService";
+import { readNotePlan } from "@app/features/session/business/sessionPlan";
+import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
+import { RestTimer } from "@app/features/timer/views/RestTimer";
+import type { EmbeddedTimerParams } from "@app/features/timer/types";
 import { t } from "@app/i18n";
 
 /**
  * The `workout-sets` block: today's sets of one exercise as rows to fill in
- * and tick (see setSheet). What is logged comes from the log; what is typed
+ * and tick (see setSheet), under the rest timer that starts on each tick. What is logged comes from the log; what is typed
  * in rows not ticked yet lives only here, until the note is closed.
  */
 export class EmbeddedSetsView extends BaseView {
   private sheets = new Set<SetSheet>();
+
+  /**
+   * @param activeTimers - The plugin's timers by block id, shared with the
+   * `workout-timer` blocks so a section's rest runs on one timer
+   */
+  constructor(
+    plugin: WorkoutPluginContext,
+    private activeTimers: Map<string, EmbeddedTimerView>,
+  ) {
+    super(plugin);
+  }
 
   /**
    * The block's render child. It draws on `render()`: the caller draws it
@@ -63,6 +79,7 @@ export class EmbeddedSetsView extends BaseView {
     const sheet = new SetSheet(
       container,
       this.plugin,
+      new RestTimer(this.plugin, this.activeTimers),
       params,
       sourcePath,
       editBlock,
@@ -88,6 +105,8 @@ interface Drawn {
   /** The columns as the table's header shows them */
   labels: string[];
   protocols: ProtocolCatalog;
+  /** The rest after each set; undefined with `rest: 0` */
+  rest?: EmbeddedTimerParams;
   /** Today's sets, to tell whether a ticked row was planned or added */
   todayCount: number;
   planned: number;
@@ -107,6 +126,7 @@ export class SetSheet extends MarkdownRenderChild {
   constructor(
     containerEl: HTMLElement,
     private plugin: WorkoutPluginContext,
+    private restTimer: RestTimer,
     private params: EmbeddedSetsParams,
     private sourcePath: string,
     private editBlock: (() => void) | undefined,
@@ -118,6 +138,7 @@ export class SetSheet extends MarkdownRenderChild {
   }
 
   onunload(): void {
+    this.restTimer.destroy();
     this.onUnload();
   }
 
@@ -131,9 +152,10 @@ export class SetSheet extends MarkdownRenderChild {
         return;
       }
 
-      const [logs, parameters] = await Promise.all([
+      const [logs, parameters, plan] = await Promise.all([
         this.plugin.getWorkoutLogData(),
         parametersOrNone(this.plugin, exercise),
+        readNotePlan(this.plugin.app.vault, this.sourcePath),
       ]);
       if (render !== this.renders) return;
 
@@ -158,6 +180,7 @@ export class SetSheet extends MarkdownRenderChild {
         columns,
         labels: mapColumnIdentifiersToLabels(columns),
         protocols: new ProtocolCatalog(this.plugin.settings.customProtocols),
+        rest: restOf(this.params, plan ?? []),
         todayCount: todaysSets.length,
         planned: plannedSets(input),
       };
@@ -169,6 +192,9 @@ export class SetSheet extends MarkdownRenderChild {
         exercise,
         t("sets.progress", { done: todaysSets.length, sets: drawn.planned }),
       );
+      if (drawn.rest) {
+        this.restTimer.draw(sheet.createDiv({ cls: "workout-sets-rest" }), drawn.rest, this.sourcePath);
+      }
       renderTargetSection(sheet, {
         plugin: this.plugin,
         params: this.params,
@@ -475,7 +501,10 @@ export class SetSheet extends MarkdownRenderChild {
           pageLink: PathUtils.toWikiLink(this.sourcePath),
         }),
       );
-      // The log:added redraw (EventAwareRenderChild) shows it logged
+      // The log:added redraw (EventAwareRenderChild) shows it logged; the
+      // rest starts, unless that was the last row to fill in
+      const rowsLeft = drawn.rows.filter((r) => !r.logged).length - 1;
+      if (drawn.rest && rowsLeft > 0) this.restTimer.restart(drawn.rest);
     } catch (error) {
       Object.assign(this, before);
       new Notice(t("modal.notices.genericError", { error: ErrorUtils.getErrorMessage(error) }));

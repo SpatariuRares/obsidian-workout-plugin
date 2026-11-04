@@ -1,6 +1,7 @@
 import { App, Notice } from "obsidian";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
+import { AdjustField } from "@app/components/molecules/AdjustField";
 import { setsBlock, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
 import {
   PlanFields,
@@ -11,12 +12,14 @@ import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { t } from "@app/i18n";
 
 const DEFAULT_SETS = 3;
+const REST_INCREMENT = 15;
 
 /** Inserts a `workout-sets` block: exercise, workout, planned sets and targets */
 export class InsertSetsModal extends BaseInsertModal {
   protected exerciseInput?: HTMLInputElement;
   protected workoutInput?: HTMLInputElement;
   protected planFields?: PlanFieldsElements;
+  protected restInput?: HTMLInputElement;
 
   constructor(app: App, plugin: WorkoutPluginContext) {
     super(app, plugin);
@@ -50,6 +53,15 @@ export class InsertSetsModal extends BaseInsertModal {
 
     const plan = this.createSection(container, t("modal.sections.progressiveOverload"));
     this.planFields = PlanFields.create(plan, DEFAULT_SETS);
+    // 0 leaves `rest` out: the rest of the section's workout-timer
+    this.restInput = AdjustField.create(plan, {
+      label: t("sets.restLabel"),
+      value: 0,
+      min: 0,
+      max: 600,
+      step: REST_INCREMENT,
+      unit: "s",
+    });
   }
 
   protected generateCode(): string {
@@ -68,6 +80,7 @@ export class InsertSetsModal extends BaseInsertModal {
       exercise: this.exerciseInput?.value.trim() || undefined,
       workout: this.workoutInput?.value.trim() || undefined,
       ...(this.planFields ? PlanFields.read(this.planFields) : {}),
+      rest: parseInt(this.restInput?.value ?? "") || undefined,
     };
   }
 

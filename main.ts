@@ -149,7 +149,7 @@ export default class WorkoutChartsPlugin extends Plugin {
       this,
       this.activeTimers,
     );
-    this.embeddedSetsView = new EmbeddedSetsView(this);
+    this.embeddedSetsView = new EmbeddedSetsView(this, this.activeTimers);
 
     // Initialize services
     this.workoutLogFile = new WorkoutLogFile(

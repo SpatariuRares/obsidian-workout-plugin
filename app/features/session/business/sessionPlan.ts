@@ -1,3 +1,4 @@
+import { TFile, type Vault } from "obsidian";
 import { readWorkoutNote } from "@app/services/notes/WorkoutNote";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { setsBlock } from "@app/features/tables/setsBlock";
@@ -48,10 +49,7 @@ export function readSessionPlan(content: string): SessionStep[] {
       const { params, errors } = read;
       if (errors.length > 0 || !params.exercise) continue;
 
-      const exercise = StringUtils.normalize(params.exercise);
-      const same = sectionSteps.find(
-        (step) => StringUtils.normalize(step.exercise) === exercise,
-      );
+      const same = stepOf(sectionSteps, params.exercise);
       if (same) {
         same.sets ??= params.sets;
         same.targetReps ??= params.targetReps;
@@ -69,6 +67,25 @@ export function readSessionPlan(content: string): SessionStep[] {
     steps.push(...sectionSteps);
   }
   return steps;
+}
+
+/** The plan of the note at `path`; null when there is no such note */
+export async function readNotePlan(
+  vault: Pick<Vault, "getAbstractFileByPath" | "cachedRead">,
+  path: string,
+): Promise<SessionStep[] | null> {
+  const file = vault.getAbstractFileByPath(path);
+  if (!(file instanceof TFile)) return null;
+  return readSessionPlan(await vault.cachedRead(file));
+}
+
+/** The step of an exercise (case and spacing ignored), the first if repeated */
+export function stepOf(
+  steps: SessionStep[],
+  exercise: string,
+): SessionStep | undefined {
+  const wanted = StringUtils.normalize(exercise);
+  return steps.find((step) => StringUtils.normalize(step.exercise) === wanted);
 }
 
 /** What is done of the plan today */

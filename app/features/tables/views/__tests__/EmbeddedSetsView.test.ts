@@ -22,6 +22,31 @@ jest.mock("@app/features/modals/log/EditLogModal", () => ({
   },
 }));
 
+interface TimerState {
+  params: unknown;
+  started: number;
+}
+const timers: TimerState[] = [];
+jest.mock("@app/features/timer/views/EmbeddedTimerView", () => ({
+  EmbeddedTimerView: class {
+    state: TimerState = { params: undefined, started: 0 };
+    constructor() {
+      timers.push(this.state);
+    }
+    createTimer(_el: HTMLElement, params: unknown) {
+      this.state.params = params;
+    }
+    reset() {}
+    start() {
+      this.state.started++;
+    }
+    isTimerRunning() {
+      return this.state.started > 0;
+    }
+    destroy() {}
+  },
+}));
+
 const NOTE_PATH = "Workouts/Push Day.md";
 const STRENGTH: ParameterDefinition[] = [
   { key: "reps", label: "Reps", type: "number", required: true, min: 0 },
@@ -53,7 +78,7 @@ function setup(
   const added: LogEntryInput[] = [];
   const reads = { count: 0 };
   const plugin = {
-    app: {},
+    app: { vault: { getAbstractFileByPath: () => null } },
     settings: {
       weightUnit: "kg",
       weightIncrement: 2.5,
@@ -88,7 +113,7 @@ function setup(
   } as unknown as WorkoutPluginContext;
 
   const el = createObsidianContainer();
-  const view = new EmbeddedSetsView(plugin);
+  const view = new EmbeddedSetsView(plugin, new Map());
   const child = view.createSets(el, params, NOTE_PATH, editBlock);
   child.load();
   // As CodeBlockProcessorService: one draw, then one on every log change
@@ -115,6 +140,7 @@ const type = (input: HTMLInputElement, value: string) => {
 
 beforeEach(() => {
   editedSets.length = 0;
+  timers.length = 0;
 });
 
 describe("EmbeddedSetsView", () => {
@@ -303,6 +329,33 @@ describe("EmbeddedSetsView", () => {
     await flush();
 
     expect(menuItems(el).map((item) => item.textContent)).toEqual([t("sets.editBlock")]);
+  });
+
+  it("shows the rest timer on top and starts it when a set is logged", async () => {
+    const { el } = setup([], { exercise: "Bench Press", sets: 2, targetReps: 8, targetWeight: 80, rest: 90 });
+    await flush();
+
+    expect(el.querySelector(".workout-sets-rest")).not.toBeNull();
+    expect(timers[0].params).toEqual({ type: "countdown", duration: 90 });
+    check(rowsOf(el)[0]).click();
+    await flush();
+    expect(timers[0].started).toBe(1);
+  });
+
+  it("does not rest after the last row to fill in", async () => {
+    const { el } = setup([], { exercise: "Bench Press", sets: 1, targetReps: 8, targetWeight: 80, rest: 90 });
+    await flush();
+
+    check(rowsOf(el)[0]).click();
+    await flush();
+    expect(timers[0].started).toBe(0);
+  });
+
+  it("has no rest timer with rest: 0", async () => {
+    const { el } = setup([], { exercise: "Bench Press", rest: 0 });
+    await flush();
+
+    expect(el.querySelector(".workout-sets-rest")).toBeNull();
   });
 
   it("asks for an exercise when the block has none", async () => {

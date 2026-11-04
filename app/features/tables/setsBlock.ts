@@ -17,6 +17,12 @@ export const setsBlock = defineCodeBlock("workout-sets", {
   id: { kind: "string" },
   ...EXERCISE_FIELDS,
   ...PLAN_FIELDS,
+  /**
+   * Seconds of rest after each set, counted down at the top of the block;
+   * 0 = no rest timer; unset = the section's `workout-timer` (else the
+   * default preset)
+   */
+  rest: { kind: "number", min: 0 },
 });
 
 export type EmbeddedSetsParams = BlockParams<typeof setsBlock>;

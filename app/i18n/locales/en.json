@@ -1242,6 +1242,7 @@
     "blockUpdated": "Sets updated",
     "blockUpdateFailed": "Failed to update the sets: the block was not found in its note. Reopen the note and try again.",
     "workoutLabel": "Workout:",
-    "workoutPlaceholder": "Empty: {note}"
+    "workoutPlaceholder": "Empty: {note}",
+    "restLabel": "Rest after each set (0 = the section's timer)"
   }
 }

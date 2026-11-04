@@ -462,6 +462,7 @@ workout: Push Day # unset: the note's name
 sets: 4 # rows to fill in; unset: as many as last time (at least one)
 targetReps: 8 # hint when the exercise was never done
 targetWeight: 80
+rest: 90 # seconds after each set; 0 = no timer; unset = the section's workout-timer (else the default preset)
 ```
 
 The "Set sheet" in `CONTEXT.md`: the V2 of `workout-log`, made for logging on the phone. It lives in `app/features/tables/` and shares the table's pieces, so add a behavior to both blocks by changing the shared piece, not by copying it:
@@ -472,6 +473,7 @@ The "Set sheet" in `CONTEXT.md`: the V2 of `workout-log`, made for logging on th
 - **Targets**: `renderTargetSection` (`tables/ui/TargetSection.ts`): target, progress bar, achievement badge that writes the next weight into the block with its own schema.
 - **Menu**: the ⋮ of `workout-log`, always in the top right corner of the block's first row: `ExerciseActionSelect` (go to exercise + the block's edit action, `edit` for a non-table block), only edit when the block names no exercise. The view draws it, and the processor redraws the sheet like a table (`await sheet.render()`, then `refreshOnLogChange(… () => sheet.render().finally(syncMenu))`), so the frame adds no second menu.
 - **Exercise fields**: `parametersOrNone(plugin, exercise)` (`ExerciseDefinitionService.ts`), the fields or none, as the session and the log modal's history read them.
+- **Rest**: `RestTimer` (`timer/views/RestTimer.ts`), the same as `workout-session`: a rest that names a `workout-timer` id runs on that block's timer (shared through `activeTimers`), else on the block's own. `restOf(params, plan)` (setSheet) picks it: `rest` seconds, else the exercise's section rest from `readNotePlan`/`stepOf` (sessionPlan), none with `rest: 0`. It is drawn at the top and restarts on each tick, except after the last row to fill in.
 - **Logging**: a logged row opens `EditLogModal`; a new set goes through `LogEntryDraft` (`readSetFields`, `validate`, `toEntry`) like the log form.
 
 What only the sets block has: `setRows` (`tables/business/setSheet.ts`, pure) gives the rows: today's sets of the exercise in this workout (`TrainingHistory.setsOn`) ticked, then rows to fill in, each with placeholders from the same set of `TrainingHistory.previousDay` (else the targets) and that set's protocol as suggestion; `rowToFormData` turns a row into the set to log (typed value, else placeholder). `EmbeddedSetsView` keeps the drafts of unticked rows in its `SetSheet` render child across the `log:*` redraws (a row is removed from the drafts before the add, so the `log:added` redraw already shows it logged). It finds sets with `TrainingHistory` (exact exercise name), not `DataFilter`: logging must never match a similar exercise. Insert: `InsertSetsModal` (`insert-workout-sets`), edit: `EditSetsModal`.

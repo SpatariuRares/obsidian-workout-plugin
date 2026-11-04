@@ -24,6 +24,20 @@ import type {
 } from "@app/services/exercise/ExerciseLibrary";
 import { StringUtils } from "@app/utils/StringUtils";
 
+/**
+ * The fields a set of the exercise records, or none when its page can't be
+ * read: views that only show or log sets draw without them instead of failing.
+ */
+export async function parametersOrNone(
+  plugin: { getExerciseDefinitionService(): Pick<ExerciseDefinitionService, "getParametersForExercise"> },
+  exercise: string,
+): Promise<ParameterDefinition[]> {
+  return plugin
+    .getExerciseDefinitionService()
+    .getParametersForExercise(exercise)
+    .catch((): ParameterDefinition[] => []);
+}
+
 export class ExerciseDefinitionService {
   constructor(
     private app: Pick<App, "vault" | "fileManager">,

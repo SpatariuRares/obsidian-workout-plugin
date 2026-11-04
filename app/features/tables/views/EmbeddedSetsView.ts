@@ -5,13 +5,13 @@ import { describeSet } from "@app/features/modals/log/LogHistory";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 import { TableRowProcessor } from "@app/features/tables/business/TableRowProcessor";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
-import { BlockMenu } from "@app/features/common/ui/BlockMenu";
 import { renderTargetSection } from "@app/features/tables/ui/TargetSection";
 import { toEntry } from "@app/features/modals/base/logic/LogEntryDraft";
 import {
   emptyDraft,
   rowProtocol,
   rowToFormData,
+  plannedSets,
   setRows,
   type SetDraft,
   type SetRow,
@@ -28,7 +28,7 @@ import {
 } from "@app/services/protocols/ProtocolCatalog";
 import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
 import { Chip } from "@app/components/atoms/Chip";
-import { ProtocolBadge } from "@app/components/atoms/ProtocolBadge";
+import { ProtocolBadge, type BadgeProtocol } from "@app/components/atoms/ProtocolBadge";
 import { ICONS, mapColumnIdentifiersToLabels } from "@app/constants";
 import { DateUtils } from "@app/utils/DateUtils";
 import { DomUtils } from "@app/utils/DomUtils";
@@ -37,6 +37,7 @@ import { PathUtils } from "@app/utils/PathUtils";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { WorkoutProtocol, type WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
+import { parametersOrNone } from "@app/services/exercise/ExerciseDefinitionService";
 import { t } from "@app/i18n";
 
 /**
@@ -45,27 +46,26 @@ import { t } from "@app/i18n";
  * in rows not ticked yet lives only here, until the note is closed.
  */
 export class EmbeddedSetsView extends BaseView {
-  private sheets = new Set<SetsRenderChild>();
-
-  constructor(plugin: WorkoutPluginContext) {
-    super(plugin);
-  }
+  private sheets = new Set<SetSheet>();
 
   /**
+   * The block's render child. It draws on `render()`: the caller draws it
+   * once, then on every log change (EventAwareRenderChild), like a table.
    * @param sourcePath - The note the block is written in: its workout and the sets' origin
+   * @param editBlock - Opens the block's edit form, for its ⋮ menu
    */
   createSets(
     container: HTMLElement,
     params: EmbeddedSetsParams,
     sourcePath: string,
-    options: SetsViewOptions = {},
-  ): MarkdownRenderChild {
-    const sheet = new SetsRenderChild(
+    editBlock?: () => void,
+  ): SetSheet {
+    const sheet = new SetSheet(
       container,
       this.plugin,
       params,
       sourcePath,
-      options,
+      editBlock,
       (error) => this.handleError(container, error),
       () => this.sheets.delete(sheet),
     );
@@ -79,28 +79,21 @@ export class EmbeddedSetsView extends BaseView {
   }
 }
 
-export interface SetsViewOptions {
-  /** Opens the block's edit form, for its ⋮ menu */
-  editBlock?: () => void;
-  /**
-   * Called after every draw (an error included), so the block's frame can
-   * tell whether the view drew its menu
-   */
-  onRendered?: () => void;
-}
-
 /** What a drawn sheet knows, for its event handlers */
 interface Drawn {
   rows: SetRow[];
   parameters: ParameterDefinition[];
   /** Each parameter's column, as the table names it ("Wgt (kg)") */
   columns: string[];
+  /** The columns as the table's header shows them */
+  labels: string[];
+  protocols: ProtocolCatalog;
   /** Today's sets, to tell whether a ticked row was planned or added */
   todayCount: number;
   planned: number;
 }
 
-class SetsRenderChild extends MarkdownRenderChild {
+export class SetSheet extends MarkdownRenderChild {
   private readonly workout: string;
   /** Drafts of the rows to fill in, in row order */
   private drafts: SetDraft[] = [];
@@ -116,7 +109,7 @@ class SetsRenderChild extends MarkdownRenderChild {
     private plugin: WorkoutPluginContext,
     private params: EmbeddedSetsParams,
     private sourcePath: string,
-    private options: SetsViewOptions,
+    private editBlock: (() => void) | undefined,
     private onError: (error: Error) => void,
     private onUnload: () => void,
   ) {
@@ -124,37 +117,23 @@ class SetsRenderChild extends MarkdownRenderChild {
     this.workout = params.workout || PathUtils.noteName(sourcePath);
   }
 
-  onload(): void {
-    const { eventBus } = this.plugin;
-    const refresh = () => void this.render();
-    this.register(eventBus.on("log:added", refresh));
-    this.register(eventBus.on("log:updated", refresh));
-    this.register(eventBus.on("log:deleted", refresh));
-    this.register(eventBus.on("log:bulk-changed", refresh));
-    this.register(eventBus.on("settings:changed", refresh));
-    refresh();
-  }
-
   onunload(): void {
     this.onUnload();
   }
 
-  private async render(): Promise<void> {
+  async render(): Promise<void> {
     const render = ++this.renders;
     const exercise = this.params.exercise;
     try {
       if (!exercise) {
         this.containerEl.empty();
-        const sheet = this.containerEl.createDiv({ cls: "workout-sets" });
-        const header = this.renderHeaderRow(sheet);
-        header.title.addClass("workout-sets-message");
-        header.title.setText(t("sets.noExercise"));
+        this.renderHeader(this.containerEl.createDiv({ cls: "workout-sets" }));
         return;
       }
 
       const [logs, parameters] = await Promise.all([
         this.plugin.getWorkoutLogData(),
-        this.parametersOf(exercise),
+        parametersOrNone(this.plugin, exercise),
       ]);
       if (render !== this.renders) return;
 
@@ -162,7 +141,7 @@ class SetsRenderChild extends MarkdownRenderChild {
       const history = new TrainingHistory(logs);
       const todaysSets = history.setsOn(exercise, today, { workout: this.workout });
       const previous = history.previousDay(exercise, today);
-      const rows = setRows({
+      const input = {
         parameters,
         today: todaysSets,
         previous: previous?.sets ?? [],
@@ -170,18 +149,26 @@ class SetsRenderChild extends MarkdownRenderChild {
         targetReps: this.params.targetReps,
         targetWeight: this.params.targetWeight,
         extraRows: this.extraRows,
-      });
+      };
+      const rows = setRows(input);
+      const columns = parameters.map((p) => TableColumnResolver.formatParameterHeader(p));
       const drawn: Drawn = {
         rows,
         parameters,
-        columns: parameters.map((p) => TableColumnResolver.formatParameterHeader(p)),
+        columns,
+        labels: mapColumnIdentifiersToLabels(columns),
+        protocols: new ProtocolCatalog(this.plugin.settings.customProtocols),
         todayCount: todaysSets.length,
-        planned: this.params.sets ?? Math.max(previous?.sets.length ?? 0, 1),
+        planned: plannedSets(input),
       };
 
       this.containerEl.empty();
       const sheet = this.containerEl.createDiv({ cls: "workout-sets" });
-      this.renderHeader(sheet, exercise, todaysSets.length, drawn.planned);
+      this.renderHeader(
+        sheet,
+        exercise,
+        t("sets.progress", { done: todaysSets.length, sets: drawn.planned }),
+      );
       renderTargetSection(sheet, {
         plugin: this.plugin,
         params: this.params,
@@ -199,7 +186,7 @@ class SetsRenderChild extends MarkdownRenderChild {
       DomUtils.setCssProps(table, {
         "--workout-sets-fields": String(Math.max(parameters.length, 1)),
       });
-      this.renderColumns(table, drawn.columns);
+      this.renderColumns(table, drawn.labels);
       for (const row of rows) this.renderRow(table, row, drawn);
 
       const footer = sheet.createDiv({ cls: "workout-sets-footer" });
@@ -214,55 +201,29 @@ class SetsRenderChild extends MarkdownRenderChild {
       });
     } catch (error) {
       this.onError(error instanceof Error ? error : new Error(String(error)));
-    } finally {
-      if (render === this.renders) this.options.onRendered?.();
     }
-  }
-
-  private renderHeader(
-    sheet: HTMLElement,
-    exercise: string,
-    done: number,
-    planned: number,
-  ): void {
-    const header = this.renderHeaderRow(sheet, exercise);
-    header.title.addClass("workout-sets-exercise");
-    header.title.setText(exercise);
-    header.side.createDiv({
-      cls: "workout-sets-progress",
-      text: t("sets.progress", { done, sets: planned }),
-    });
   }
 
   /**
-   * The block's top row: a title on the left and, always in the top right
-   * corner, the ⋮ menu `workout-log` has: go to the exercise (once the block
-   * names one) and edit this block. The menu sits on the row, so it never
-   * wraps under the title on a narrow phone.
+   * The block's top row: the exercise (or what to add) and, always in the
+   * top right corner, the ⋮ menu `workout-log` has: go to the exercise and
+   * edit this block. The menu sits on the row, so it never wraps under the
+   * title on a narrow phone.
+   * @param progress - Text before the menu ("2/4 sets")
    */
-  private renderHeaderRow(
-    sheet: HTMLElement,
-    exercise?: string,
-  ): { title: HTMLElement; side: HTMLElement } {
+  private renderHeader(sheet: HTMLElement, exercise?: string, progress?: string): void {
     const header = sheet.createDiv({ cls: "workout-sets-header" });
-    const title = header.createDiv({ cls: "workout-sets-title" });
-    const side = header.createDiv({ cls: "workout-sets-header-side" });
-    const menu = header.createDiv({ cls: "workout-sets-menu" });
-    const editBlock = this.options.editBlock;
-    const edit = editBlock ? { label: t("sets.editBlock"), open: editBlock } : undefined;
-    if (exercise) {
-      ExerciseActionSelect.render(menu, {
-        exerciseName: exercise,
-        app: this.plugin.app,
-        plugin: this.plugin,
-        edit,
-      });
-    } else if (edit) {
-      BlockMenu.render(menu, [
-        { label: edit.label, icon: ICONS.ACTIONS.EDIT, edits: true, run: edit.open },
-      ]);
-    }
-    return { title, side };
+    header.createDiv({
+      cls: exercise ? "workout-sets-title workout-sets-exercise" : "workout-sets-title workout-sets-message",
+      text: exercise ?? t("sets.noExercise"),
+    });
+    if (progress) header.createDiv({ cls: "workout-sets-meta", text: progress });
+    ExerciseActionSelect.render(header, {
+      exerciseName: exercise ?? "",
+      app: this.plugin.app,
+      plugin: this.plugin,
+      edit: this.editBlock && { label: t("sets.editBlock"), open: this.editBlock },
+    });
   }
 
   /** "Last time (31/10): 80 kg × 8 · 80 kg × 7" */
@@ -281,21 +242,18 @@ class SetsRenderChild extends MarkdownRenderChild {
     });
   }
 
-  private renderColumns(table: HTMLElement, columns: string[]): void {
+  private renderColumns(table: HTMLElement, labels: string[]): void {
     const row = table.createDiv({
       cls: "workout-sets-columns",
       attr: { "aria-hidden": "true" },
     });
-    row.createSpan({ text: t("sets.setColumn") });
-    for (const label of mapColumnIdentifiersToLabels(columns)) {
-      row.createSpan({ text: label });
-    }
+    for (const label of [t("sets.setColumn"), ...labels]) row.createSpan({ text: label });
   }
 
   private renderRow(table: HTMLElement, row: SetRow, drawn: Drawn): void {
     const el = table.createDiv({ cls: "workout-sets-row" });
     if (row.logged) {
-      this.renderLoggedRow(el, row, row.logged, drawn.columns);
+      this.renderLoggedRow(el, row, row.logged, drawn);
       return;
     }
 
@@ -303,13 +261,10 @@ class SetsRenderChild extends MarkdownRenderChild {
     const open = this.openRow === row.number;
     if (open) el.addClass("is-open");
     const main = el.createDiv({ cls: "workout-sets-row-main" });
-    this.renderNumber(main, row.number, rowProtocol(row, draft));
-
-    const inputs: HTMLInputElement[] = [];
-    const labels = mapColumnIdentifiersToLabels(drawn.columns);
-    drawn.parameters.forEach((param, index) => {
-      inputs.push(this.renderInput(main, row, draft, param, labels[index]));
-    });
+    this.renderNumber(main, row.number, drawn.protocols.resolve(rowProtocol(row, draft)));
+    const inputs = drawn.parameters.map((param, index) =>
+      this.renderInput(main, row, draft, param, drawn.labels[index]),
+    );
 
     const details = main.createEl("button", {
       cls: "workout-sets-details-toggle clickable-icon",
@@ -348,14 +303,14 @@ class SetsRenderChild extends MarkdownRenderChild {
       });
     }
 
-    if (open) this.renderDetails(el, row, draft);
+    if (open) this.renderDetails(el, row, draft, drawn.protocols);
   }
 
   private renderLoggedRow(
     el: HTMLElement,
     row: SetRow,
     set: WorkoutLogData,
-    columns: string[],
+    drawn: Drawn,
   ): void {
     el.addClass("is-logged");
     const main = el.createDiv({
@@ -366,16 +321,16 @@ class SetsRenderChild extends MarkdownRenderChild {
         "aria-label": t("sets.editSet", { set: row.number }),
       },
     });
-    this.renderNumber(main, row.number, set.protocol);
+    this.renderNumber(main, row.number, drawn.protocols.resolve(set.protocol));
     // The values as the table shows them (weight as entered, N/A…)
-    for (const value of TableRowProcessor.displayRow(set, columns)) {
+    for (const value of TableRowProcessor.displayRow(set, drawn.columns)) {
       main.createDiv({ cls: "workout-sets-value", text: value });
     }
     main.createSpan();
     const check = main.createSpan({ cls: "workout-sets-check is-done" });
     setIcon(check, "check");
     if (set.notes) {
-      el.createDiv({ cls: "workout-sets-note", text: set.notes });
+      el.createDiv({ cls: "workout-sets-note workout-sets-meta", text: set.notes });
     }
 
     const edit = () =>
@@ -389,11 +344,10 @@ class SetsRenderChild extends MarkdownRenderChild {
     });
   }
 
-  private renderNumber(main: HTMLElement, number: number, protocol?: string): void {
-    const cell = main.createDiv({ cls: "workout-sets-number", text: String(number) });
+  private renderNumber(main: HTMLElement, number: number, protocol: BadgeProtocol): void {
     ProtocolBadge.forProtocol(
-      cell,
-      new ProtocolCatalog(this.plugin.settings.customProtocols).resolve(protocol),
+      main.createDiv({ cls: "workout-sets-number", text: String(number) }),
+      protocol,
     );
   }
 
@@ -439,12 +393,16 @@ class SetsRenderChild extends MarkdownRenderChild {
   }
 
   /** The row's protocol chips and notes */
-  private renderDetails(el: HTMLElement, row: SetRow, draft: SetDraft): void {
+  private renderDetails(
+    el: HTMLElement,
+    row: SetRow,
+    draft: SetDraft,
+    catalog: ProtocolCatalog,
+  ): void {
     const details = el.createDiv({ cls: "workout-sets-details" });
     details.createDiv({ cls: "workout-sets-label", text: t("sets.protocol") });
     const chips = details.createDiv({ cls: "workout-sets-chips" });
     const current = rowProtocol(row, draft);
-    const catalog = new ProtocolCatalog(this.plugin.settings.customProtocols);
     const protocols = catalog.all();
     // A suggestion no longer in the settings list still shows (and stays)
     if (!protocols.some((p) => p.id === current)) protocols.push(catalog.resolve(current));
@@ -517,12 +475,13 @@ class SetsRenderChild extends MarkdownRenderChild {
           pageLink: PathUtils.toWikiLink(this.sourcePath),
         }),
       );
+      // The log:added redraw (EventAwareRenderChild) shows it logged
     } catch (error) {
       Object.assign(this, before);
       new Notice(t("modal.notices.genericError", { error: ErrorUtils.getErrorMessage(error) }));
+      await this.render();
     } finally {
       this.saving = undefined;
-      await this.render();
     }
   }
 
@@ -531,12 +490,5 @@ class SetsRenderChild extends MarkdownRenderChild {
     const index = row.number - 1 - drawn.todayCount;
     while (this.drafts.length <= index) this.drafts.push(emptyDraft());
     return this.drafts[index];
-  }
-
-  private async parametersOf(exercise: string): Promise<ParameterDefinition[]> {
-    return this.plugin
-      .getExerciseDefinitionService()
-      .getParametersForExercise(exercise)
-      .catch((): ParameterDefinition[] => []);
   }
 }

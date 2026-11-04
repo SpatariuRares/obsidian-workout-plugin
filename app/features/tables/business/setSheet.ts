@@ -6,12 +6,11 @@ import {
   fieldFor,
   fieldKey,
   formatFieldNumber,
-  readField,
   type FieldValue,
 } from "@app/services/exercise/ExerciseFields";
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
 import {
-  setValues,
+  readSetFields,
   validate,
   type FormError,
 } from "@app/features/modals/base/logic/LogEntryDraft";
@@ -56,30 +55,32 @@ export interface SheetInput {
   extraRows: number;
 }
 
+/** Planned sets: the block's `sets`, else as many as last time (at least one) */
+export function plannedSets({ sets, previous }: Pick<SheetInput, "sets" | "previous">): number {
+  return sets ?? Math.max(previous.length, 1);
+}
+
 /**
  * The rows the sheet shows: today's sets first (logged), then rows to fill
  * in up to the planned sets (as many as last time without a plan, at least
  * one), plus the ones the user added.
  */
 export function setRows(input: SheetInput): SetRow[] {
-  const planned = input.sets ?? Math.max(input.previous.length, 1);
+  const planned = plannedSets(input);
   const pending = Math.max(planned - input.today.length, 0) + input.extraRows;
   const total = input.today.length + pending;
 
-  const rows: SetRow[] = [];
-  for (let index = 0; index < total; index++) {
+  return Array.from({ length: total }, (_, index) => {
     const sameSet = input.previous[index];
-    const hint = sameSet ?? input.previous[input.previous.length - 1];
-    const suggested = sameSet ? protocolId(sameSet.protocol) : undefined;
-    rows.push({
+    const suggested = sameSet && protocolId(sameSet.protocol);
+    return {
       number: index + 1,
       logged: input.today[index],
-      placeholders: placeholdersFor(input, hint),
+      placeholders: placeholdersFor(input, sameSet ?? input.previous[input.previous.length - 1]),
       suggestedProtocol:
-        suggested === protocolId(WorkoutProtocol.STANDARD) ? undefined : suggested,
-    });
-  }
-  return rows;
+        suggested && suggested !== protocolId(WorkoutProtocol.STANDARD) ? suggested : undefined,
+    };
+  });
 }
 
 function placeholdersFor(
@@ -140,33 +141,21 @@ export function rowToFormData(
   draft: SetDraft,
   { exercise, workout, parameters }: RowContext,
 ): { data: LogFormData } | { error: FormError } {
-  const fields = new Map<string, string | boolean>();
-  for (const param of parameters) {
-    const typed = draft.values[param.key];
-    if (param.type === "boolean") {
-      fields.set(param.key, typed === "true");
-      continue;
-    }
-    const text = typed?.trim() ? typed.trim() : (row.placeholders[param.key] ?? "");
-    fields.set(param.key, text);
-  }
-
+  const { fields, ...values } = readSetFields(
+    parameters.map((param): [ParameterDefinition, string | boolean] => {
+      const typed = draft.values[param.key];
+      if (param.type === "boolean") return [param, typed === "true"];
+      return [param, typed?.trim() ? typed.trim() : (row.placeholders[param.key] ?? "")];
+    }),
+  );
   const error = validate(exercise, fields, parameters);
   if (error) return { error };
-
-  const values = new Map<string, FieldValue>();
-  for (const param of parameters) {
-    const raw = fields.get(param.key);
-    if (raw === undefined) continue;
-    const { value } = readField(fieldFor(param), raw);
-    if (value !== undefined) values.set(param.key, value);
-  }
 
   return {
     data: {
       exercise,
       workout,
-      ...setValues(values),
+      ...values,
       notes: draft.notes.trim(),
       protocol: rowProtocol(row, draft),
     },

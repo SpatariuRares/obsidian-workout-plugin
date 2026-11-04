@@ -36,29 +36,41 @@ export function fromLog(log: WorkoutLogData): Partial<LogFormData> {
   };
 }
 
-/**
- * Where each read field value goes in a set: reps and weight have their own
- * columns, every other field is a custom field.
- */
-export function setValues(values: Map<string, FieldValue>): {
+/** What a set's fields hold, read: for `validate`, and the set's values */
+export interface SetFields {
+  /** What each field holds as typed (text, or a checkbox's state) */
+  fields: Map<string, string | boolean>;
   reps: number;
   weight: number;
+  /** Every field but reps and weight */
   customFields?: Record<string, FieldValue>;
-} {
-  const customFields: Record<string, FieldValue> = {};
-  for (const [key, value] of values) {
-    if (key !== "reps" && key !== "weight") customFields[key] = value;
-  }
-  return {
-    reps: numberOr0(values.get("reps")),
-    weight: numberOr0(values.get("weight")),
-    customFields:
-      Object.keys(customFields).length > 0 ? customFields : undefined,
-  };
 }
 
-function numberOr0(value: FieldValue | undefined): number {
-  return typeof value === "number" ? value : 0;
+/**
+ * Reads a set's fields, each with its parameter and what it holds as typed.
+ * The log form and the `workout-sets` rows both read their inputs this way.
+ */
+export function readSetFields(
+  entries: Iterable<[ParameterDefinition, string | boolean]>,
+): SetFields {
+  const fields = new Map<string, string | boolean>();
+  const customFields: Record<string, FieldValue> = {};
+  let reps = 0;
+  let weight = 0;
+  for (const [param, raw] of entries) {
+    fields.set(param.key, raw);
+    const { value } = readField(fieldFor(param), raw);
+    if (value === undefined) continue;
+    if (param.key === "reps") reps = typeof value === "number" ? value : 0;
+    else if (param.key === "weight") weight = typeof value === "number" ? value : 0;
+    else customFields[param.key] = value;
+  }
+  return {
+    fields,
+    reps,
+    weight,
+    customFields: Object.keys(customFields).length > 0 ? customFields : undefined,
+  };
 }
 
 /** Why the form can't be saved, and the field to fix: "exercise" or a parameter key */

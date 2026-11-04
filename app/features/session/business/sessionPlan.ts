@@ -9,7 +9,6 @@ import {
 } from "@app/types/WorkoutLogData";
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
 import { StringUtils } from "@app/utils/StringUtils";
-import { t } from "@app/i18n";
 
 /** One exercise of the plan a workout note describes */
 export interface SessionStep {
@@ -116,17 +115,4 @@ export function sessionProgress(
   };
   const current = steps.findIndex((_, index) => !complete(index));
   return { done, current };
-}
-
-/** "80 kg × 8", "8 reps" or "80 kg": a step's targets; undefined without any */
-export function describeTarget(
-  { targetReps: reps, targetWeight: weight }: { targetReps?: number; targetWeight?: number },
-  unit: string,
-): string | undefined {
-  if (reps !== undefined && weight !== undefined) {
-    return t("logs.weightedSet", { weight, unit, reps });
-  }
-  if (reps !== undefined) return t("session.targetReps", { reps });
-  if (weight !== undefined) return t("session.targetWeight", { weight, unit });
-  return undefined;
 }

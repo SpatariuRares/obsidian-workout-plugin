@@ -2290,25 +2290,14 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
   overflow-wrap: anywhere;
 }
 
-.workout-sets-header-side {
+.workout-sets-header > :not(.workout-sets-title) {
   flex: none;
-}
-
-.workout-sets-menu {
-  flex: none;
-  margin-left: auto;
 }
 
 .workout-sets-exercise {
   font-size: var(--workout-font-lg);
   font-weight: var(--workout-font-weight-semibold);
   color: var(--workout-text-accent);
-}
-
-.workout-sets-progress {
-  font-size: var(--workout-font-sm);
-  color: var(--text-muted);
-  font-variant-numeric: tabular-nums;
 }
 
 .workout-sets-rows {
@@ -2326,11 +2315,15 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
   align-items: center;
 }
 
+.workout-sets-columns,
+.workout-sets-label {
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+}
+
 .workout-sets-columns {
   align-items: end;
   padding: 0 var(--workout-space-xs) var(--workout-space-xs);
-  font-size: var(--workout-font-xs);
-  color: var(--text-muted);
 }
 .workout-sets-columns > span {
   min-width: 0;
@@ -2374,12 +2367,16 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
   min-width: 0;
 }
 
-.workout-sets-input {
-  width: 100%;
-  height: 2.75rem;
+.workout-sets-input,
+.workout-sets-value {
   font-size: var(--workout-font-lg);
   font-weight: var(--workout-font-weight-semibold);
   font-variant-numeric: tabular-nums;
+}
+
+.workout-sets-input {
+  width: 100%;
+  height: 2.75rem;
 }
 .workout-sets-input::placeholder {
   color: var(--text-faint);
@@ -2389,9 +2386,6 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
 .workout-sets-value {
   min-width: 0;
   padding-left: var(--workout-space-sm);
-  font-size: var(--workout-font-lg);
-  font-weight: var(--workout-font-weight-semibold);
-  font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
 }
 
@@ -2439,8 +2433,6 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
 
 .workout-sets-note {
   padding: 0 var(--workout-space-xs) var(--workout-space-sm) 2.75rem;
-  font-size: var(--workout-font-sm);
-  color: var(--text-muted);
 }
 
 .workout-sets-details {
@@ -2448,11 +2440,6 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
   flex-direction: column;
   gap: var(--workout-space-xs);
   padding: 0 var(--workout-space-xs) var(--workout-space-md) 2.75rem;
-}
-
-.workout-sets-label {
-  font-size: var(--workout-font-xs);
-  color: var(--text-muted);
 }
 
 .workout-sets-chips {

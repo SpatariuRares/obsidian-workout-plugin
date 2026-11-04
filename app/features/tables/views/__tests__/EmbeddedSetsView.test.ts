@@ -2,6 +2,7 @@
 
 import { EmbeddedSetsView } from "@app/features/tables/views/EmbeddedSetsView";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
+import { EventAwareRenderChild } from "@app/services/core/EventAwareRenderChild";
 import { localDay } from "@app/services/history/TrainingHistory";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import type { EmbeddedSetsParams } from "@app/features/tables/setsBlock";
@@ -50,6 +51,7 @@ function setup(
 ) {
   const eventBus = new WorkoutEventBus();
   const added: LogEntryInput[] = [];
+  const reads = { count: 0 };
   const plugin = {
     app: {},
     settings: {
@@ -60,7 +62,10 @@ function setup(
     },
     saveSettings: async () => {},
     eventBus,
-    getWorkoutLogData: async () => rows,
+    getWorkoutLogData: async () => {
+      reads.count++;
+      return rows;
+    },
     getExerciseDefinitionService: () => ({
       getParametersForExercise: async () => STRENGTH,
     }),
@@ -84,9 +89,14 @@ function setup(
 
   const el = createObsidianContainer();
   const view = new EmbeddedSetsView(plugin);
-  const child = view.createSets(el, params, NOTE_PATH, { editBlock });
+  const child = view.createSets(el, params, NOTE_PATH, editBlock);
   child.load();
-  return { el, view, child, added, eventBus };
+  // As CodeBlockProcessorService: one draw, then one on every log change
+  void child.render();
+  new EventAwareRenderChild(el, eventBus, { exercise: params.exercise, exactMatch: true }, () =>
+    child.render(),
+  ).load();
+  return { el, view, child, added, eventBus, reads };
 }
 
 const flush = async () => {
@@ -151,6 +161,17 @@ describe("EmbeddedSetsView", () => {
     ]);
     expect(rowsOf(el)[0].classList.contains("is-logged")).toBe(true);
     expect(rowsOf(el)).toHaveLength(2);
+  });
+
+  it("draws once per logged set, on the log's event", async () => {
+    const { el, reads } = setup([], { exercise: "Bench Press", sets: 2, targetReps: 8, targetWeight: 80 });
+    await flush();
+    const before = reads.count;
+
+    check(rowsOf(el)[0]).click();
+    await flush();
+
+    expect(reads.count).toBe(before + 1);
   });
 
   it("keeps what is typed in other rows when a set is logged", async () => {
@@ -267,35 +288,13 @@ describe("EmbeddedSetsView", () => {
     await flush();
 
     const header = el.querySelector(".workout-sets-header")!;
-    expect(header.lastElementChild?.querySelector(".workout-block-menu")).not.toBeNull();
+    expect(header.lastElementChild?.classList.contains("workout-block-menu")).toBe(true);
     expect(menuItems(el).map((item) => item.textContent)).toEqual([
       t("table.gotoExercise"),
       t("sets.editBlock"),
     ]);
     menuItems(el)[1].click();
     expect(editBlock).toHaveBeenCalled();
-  });
-
-  it("tells the block's frame after each draw, once its menu is there", async () => {
-    const eventBus = { on: jest.fn(() => () => {}) };
-    const seen: boolean[] = [];
-    const el = createObsidianContainer();
-    const plugin = {
-      app: {},
-      settings: { weightUnit: "kg", customProtocols: [], achievedTargets: {} },
-      eventBus,
-      getWorkoutLogData: async () => [],
-      getExerciseDefinitionService: () => ({ getParametersForExercise: async () => STRENGTH }),
-    } as unknown as WorkoutPluginContext;
-    new EmbeddedSetsView(plugin)
-      .createSets(el, { exercise: "Bench Press" }, NOTE_PATH, {
-        editBlock: () => {},
-        onRendered: () => seen.push(el.querySelector(".workout-block-menu") !== null),
-      })
-      .load();
-    await flush();
-
-    expect(seen).toEqual([true]);
   });
 
   it("keeps the ⋮ menu with edit when the block names no exercise", async () => {

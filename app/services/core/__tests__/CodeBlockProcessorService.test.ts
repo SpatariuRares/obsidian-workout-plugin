@@ -128,7 +128,9 @@ describe("CodeBlockProcessorService", () => {
       createSession: jest.fn().mockReturnValue({}),
     };
     mockSetsView = {
-      createSets: jest.fn().mockReturnValue({}),
+      createSets: jest.fn().mockReturnValue({
+        render: jest.fn().mockResolvedValue(undefined),
+      }),
     };
     activeTimers = new Map();
     mockMuscleTagService = {

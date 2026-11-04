@@ -7,7 +7,6 @@ import { fromLog } from "@app/features/modals/base/logic/LogEntryDraft";
 import {
   readSessionPlan,
   sessionProgress,
-  describeTarget,
   type SessionStep,
 } from "@app/features/session/business/sessionPlan";
 import {
@@ -17,13 +16,13 @@ import {
 } from "@app/services/history/TrainingHistory";
 import { StringUtils } from "@app/utils/StringUtils";
 import type { EmbeddedTimerParams } from "@app/features/timer/types";
-import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import type { LogFormData } from "@app/types/ModalTypes";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
 import { ICONS } from "@app/constants";
 import { PathUtils } from "@app/utils/PathUtils";
+import { parametersOrNone } from "@app/services/exercise/ExerciseDefinitionService";
 import { t } from "@app/i18n";
 
 /**
@@ -179,7 +178,7 @@ class SessionRenderChild extends MarkdownRenderChild {
           ? Math.min(this.position, steps.length - 1)
           : current;
       const step = steps[index];
-      const parameters = step ? await this.parametersOf(step.exercise) : [];
+      const parameters = step ? await parametersOrNone(this.plugin, step.exercise) : [];
       if (render !== this.renders) return false;
 
       this.drawnPlan = JSON.stringify(steps);
@@ -210,7 +209,7 @@ class SessionRenderChild extends MarkdownRenderChild {
             : t("session.setNumber", { set: setsDone + 1 }),
       });
 
-      const target = describeTarget(step, this.plugin.settings.weightUnit);
+      const target = this.targetText(step);
       if (target) {
         card.createDiv({ cls: "workout-session-meta", text: t("session.target", { target }) });
       }
@@ -346,11 +345,15 @@ class SessionRenderChild extends MarkdownRenderChild {
     ).open();
   }
 
-  private async parametersOf(exercise: string): Promise<ParameterDefinition[]> {
-    return this.plugin
-      .getExerciseDefinitionService()
-      .getParametersForExercise(exercise)
-      .catch((): ParameterDefinition[] => []);
+  private targetText(step: SessionStep): string | undefined {
+    const unit = this.plugin.settings.weightUnit;
+    const { targetReps: reps, targetWeight: weight } = step;
+    if (reps !== undefined && weight !== undefined) {
+      return t("logs.weightedSet", { weight, unit, reps });
+    }
+    if (reps !== undefined) return t("session.targetReps", { reps });
+    if (weight !== undefined) return t("session.targetWeight", { weight, unit });
+    return undefined;
   }
 }
 

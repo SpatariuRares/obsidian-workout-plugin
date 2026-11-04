@@ -162,18 +162,21 @@ export class CodeBlockProcessorService {
         new EditSetsModal(this.plugin.app, this.plugin, params, target).open(),
       loadError: (error) => t("codeBlocks.loadError.sets", { error }),
       draw: async (body, params, syncMenu) => {
-        // The view draws the table's ⋮ menu itself, with this edit action;
-        // after each draw the frame checks it is there (else adds its own)
+        // The sheet draws the table's ⋮ menu itself, with this edit action
         const where = this.locate(el, source, ctx);
-        ctx.addChild(
-          this.embeddedSetsView.createSets(body, params, ctx.sourcePath, {
-            editBlock: () =>
-              new EditSetsModal(this.plugin.app, this.plugin, params, {
-                sourcePath: where.sourcePath,
-                matchWithoutId: where.matchWithoutId(),
-              }).open(),
-            onRendered: syncMenu,
-          }),
+        const sheet = this.embeddedSetsView.createSets(body, params, ctx.sourcePath, () =>
+          new EditSetsModal(this.plugin.app, this.plugin, params, {
+            sourcePath: where.sourcePath,
+            matchWithoutId: where.matchWithoutId(),
+          }).open(),
+        );
+        ctx.addChild(sheet);
+        await sheet.render();
+        this.refreshOnLogChange(
+          ctx,
+          body,
+          { exercise: params.exercise, exactMatch: true },
+          () => sheet.render().finally(syncMenu),
         );
       },
     });

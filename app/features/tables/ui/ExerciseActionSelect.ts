@@ -20,6 +20,7 @@ import { ICONS } from "@app/constants/ui.constants";
  * via a custom dropdown panel triggered by an icon-only button.
  */
 export interface ExerciseActionSelectProps {
+  /** Empty: a block that names no exercise yet, so only its edit action */
   exerciseName: string;
   app: App;
   plugin: WorkoutPluginContext;
@@ -46,13 +47,15 @@ export class ExerciseActionSelect {
   ): HTMLElement {
     const { exerciseName, app, plugin, params, sourcePath, edit } = props;
 
-    const actions: BlockMenuAction[] = [
-      {
-        label: t("table.gotoExercise"),
-        icon: ICONS.ACTIONS.GOTO,
-        run: () => openExercisePage(plugin, exerciseName),
-      },
-    ];
+    const actions: BlockMenuAction[] = exerciseName
+      ? [
+          {
+            label: t("table.gotoExercise"),
+            icon: ICONS.ACTIONS.GOTO,
+            run: () => openExercisePage(plugin, exerciseName),
+          },
+        ]
+      : [];
 
     if (edit) {
       actions.push({

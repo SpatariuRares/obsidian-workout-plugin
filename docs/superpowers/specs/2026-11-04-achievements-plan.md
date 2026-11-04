@@ -236,6 +236,12 @@ Each phase is a release on its own; each one only adds.
   settings, README "Network use" paragraph, a setting to turn the fetch off.
 - First challenge: the month after the release.
 
+**Phase 1.6 — Collective goal ("500 t together", section 7)**
+- Cloudflare Worker + D1 in `community/worker/`, `PRIVACY.md`, README disclosure.
+- Challenge card with the shared bar, Join / Leave and delete, hourly sync of
+  the user's total, *Contributor* and *We did it* medals.
+- First collective month: 500 t.
+
 **Phase 2 — Trophy case**
 - Dashboard widget, `workout-achievements` block (schema, insert/edit modals,
   command `insert-workout-achievements`), detail modal, example notes, README.
@@ -320,6 +326,69 @@ trusted and will be gamed; they also reward the strongest, against principle 1
 ("reward showing up"). It needs accounts, moderation and a service to run for
 years. Revisit only if B shows real demand (e.g. private groups of friends
 comparing consistency, not weight).
+
+### The collective goal: "this month, together, 500 tonnes"
+
+The first community feature to build after level A. It is level B reduced to
+one number per user per challenge.
+
+**The challenge** is an entry of `challenges.json` with a collective part:
+
+```json
+{ "id": "community.2026-12.volume", "metric": "volume",
+  "window": { "from": "2026-12-01", "to": "2026-12-31" },
+  "collective": { "target": 500000 },
+  "tiers": [{ "tier": "bronze", "threshold": 1 }],
+  "name": { "en": "December: 500 tonnes together", "it": "Dicembre: 500 tonnellate insieme" } }
+```
+
+`target` is in kg; the author sets it per month from last month's participation
+(500 t is about 12 people training regularly; raise it as the community grows).
+
+**Joining.** The challenge card shows the shared progress bar to everyone
+(read-only, level A). To add your sets you press "Join", and the card says
+exactly what will be sent: *"Your total volume in this challenge (now 12.4 t)
+and a random id. Nothing else."* Off by default; one setting ("Community
+challenges: share my total") remembers the choice; "Leave and delete" removes
+your contribution.
+
+**What is sent.** `PUT /challenges/{id}/contributions/{installId}` with
+`{ volumeKg }`: the user's **whole total** for the window, computed locally by
+the challenge metric (`TrainingHistory`, converted to kg), not an increment.
+The server keeps the latest value per install id, so edits, deletions and
+re-imports correct themselves and nothing is counted twice. Sent at most once
+an hour after a `log:added`/`log:bulk-changed`, and when the card opens; never
+outside the window; never when not joined. `installId` is a random UUID made at
+join time, stored in settings, unrelated to anything else.
+
+**What is read.** `GET /challenges/{id}` → `{ totalKg, participants, target,
+closed }`, public, cached 15 minutes on both sides. The card: "Together:
+312 / 500 t · 41 athletes · you added 12.4 t".
+
+**Medals.**
+- *Contributor* (local): you joined and logged at least one session in the
+  window.
+- *We did it* (community): the total reached the target by the end of the
+  window. When the challenge closes the plugin saves the final `{ totalKg,
+  participants, reached }` in settings, so the medal stays even offline and
+  after the server forgets the challenge (the one exception to "derived from
+  the log", because the fact is not in the log).
+
+**Abuse.** Self-reported, so: a per-user cap per challenge on the server (e.g.
+the window's days × 50 t), rate limiting per IP, totals rounded to 100 kg. A
+cheater can at worst add one capped number to a shared bar; there is no ranking
+to win.
+
+**Backend.** One Cloudflare Worker + D1 table `contributions(challenge_id,
+install_id, volume_kg, updated_at)`, source in this repo (`community/worker/`)
+so anyone can audit it; the free tier covers this for years. Rows older than
+the window + 30 days are deleted; only the closed totals are kept.
+
+**Disclosures before release.** README "Network use" paragraph (GitHub raw for
+challenges, the worker for the collective goal, what is sent and why), a
+`PRIVACY.md` linked from the README and the join dialog, a delete endpoint
+(`DELETE /contributions/{installId}`). Data is pseudonymous and coarse; still get
+a GDPR opinion, since training volume could be read as health-related data.
 
 ### Cheating
 

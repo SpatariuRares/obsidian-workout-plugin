@@ -26,9 +26,9 @@ import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { durationBlock } from "@app/features/duration/durationBlock";
 import { sessionBlock } from "@app/features/session/sessionBlock";
 import { EmbeddedSessionView } from "@app/features/session/views/EmbeddedSessionView";
-import { setsBlock } from "@app/features/sets/setsBlock";
-import { EmbeddedSetsView } from "@app/features/sets/views/EmbeddedSetsView";
-import { EditSetsModal } from "@app/features/sets/modals/EditSetsModal";
+import { setsBlock } from "@app/features/tables/setsBlock";
+import { EmbeddedSetsView } from "@app/features/tables/views/EmbeddedSetsView";
+import { EditSetsModal } from "@app/features/tables/modals/EditSetsModal";
 import type { CodeBlockSchema } from "@app/services/codeblocks/CodeBlockSchema";
 import { renderInvalidParams } from "@app/features/common/views/BaseView";
 import { EventAwareRenderChild } from "@app/services/core/EventAwareRenderChild";
@@ -162,8 +162,15 @@ export class CodeBlockProcessorService {
         new EditSetsModal(this.plugin.app, this.plugin, params, target).open(),
       loadError: (error) => t("codeBlocks.loadError.sets", { error }),
       draw: async (body, params) => {
+        // The view draws the table's menu itself, with this edit action
+        const where = this.locate(el, source, ctx);
         ctx.addChild(
-          this.embeddedSetsView.createSets(body, params, ctx.sourcePath),
+          this.embeddedSetsView.createSets(body, params, ctx.sourcePath, () =>
+            new EditSetsModal(this.plugin.app, this.plugin, params, {
+              sourcePath: where.sourcePath,
+              matchWithoutId: where.matchWithoutId(),
+            }).open(),
+          ),
         );
       },
     });

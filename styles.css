@@ -1543,6 +1543,7 @@ tr.workout-table-row-tappable:active {
 /* Achievement badge */
 .workout-achievement-badge {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--workout-space-md);
@@ -1560,6 +1561,7 @@ tr.workout-table-row-tappable:active {
 
 .workout-achievement-text {
   flex: 1;
+  min-width: 0;
   font-weight: var(--workout-font-weight-semibold);
   font-size: var(--workout-font-base);
 }
@@ -1582,6 +1584,7 @@ tr.workout-table-row-tappable:active {
 /* Weight suggestion */
 .workout-weight-suggestion {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--workout-space-md);
   flex: 1;
@@ -2265,6 +2268,11 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
   color: var(--text-muted);
 }
 
+.workout-sets .workout-target-header {
+  margin: 0;
+  background: var(--background-primary);
+}
+
 .workout-sets-meta {
   font-size: var(--workout-font-sm);
   font-variant-numeric: tabular-nums;
@@ -2282,6 +2290,12 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
   font-size: var(--workout-font-lg);
   font-weight: var(--workout-font-weight-semibold);
   color: var(--workout-text-accent);
+}
+
+.workout-sets-header-side {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-xs);
 }
 
 .workout-sets-progress {

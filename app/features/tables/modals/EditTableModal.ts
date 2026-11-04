@@ -6,6 +6,7 @@ import {
   TABLE_TYPE,
 } from "@app/features/tables/types";
 import { tableBlock } from "@app/features/tables/tableBlock";
+import { PlanFields } from "@app/features/tables/modals/components/PlanFields";
 import {
   createEditButtons,
   type EditTarget,
@@ -84,16 +85,8 @@ export class EditTableModal extends InsertTableModal {
       this.dateRangeInput.value = params.dateRange.toString();
     }
 
-    // Pre-fill progressive overload targets
-    if (this.targetWeightInput && params.targetWeight !== undefined) {
-      this.targetWeightInput.value = params.targetWeight.toString();
-    }
-    if (this.targetRepsInput && params.targetReps !== undefined) {
-      this.targetRepsInput.value = params.targetReps.toString();
-    }
-    if (this.setsInput && params.sets !== undefined) {
-      this.setsInput.value = params.sets.toString();
-    }
+    // Pre-fill the plan (sets and progressive overload targets)
+    if (this.planFields) PlanFields.fill(this.planFields, params);
 
     // Pre-fill advanced options
     if (this.advancedElements) {

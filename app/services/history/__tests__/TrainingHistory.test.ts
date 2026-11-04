@@ -517,6 +517,18 @@ describe("set order", () => {
   });
 });
 
+describe("setsOf", () => {
+  it("gives every set of the exercise in set order, ignoring case and spacing", () => {
+    const history = new TrainingHistory([
+      set("2026-11-02T10:00:00Z", "A", { weight: 105 }),
+      set("2026-10-30T10:00:00Z", "B", { weight: 90, exercise: " squat " }),
+      set("2026-10-31T10:00:00Z", "A", { exercise: "Bench" }),
+    ]);
+
+    expect(history.setsOf("SQUAT").map((s) => s.weight)).toEqual([90, 105]);
+  });
+});
+
 describe("setsOn", () => {
   it("gives the exercise's sets of that day in set order, optionally one workout's", () => {
     const history = new TrainingHistory([

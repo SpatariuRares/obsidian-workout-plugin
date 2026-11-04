@@ -17,6 +17,7 @@ import {
   generateExerciseOnlyLogBlock,
   generateWorkoutLogBlock,
   generateCombinedLogBlock,
+  generateSetsBlock,
 } from "@app/features/tables/exampleTableGenerator";
 import {
   generateDashboardBlock,
@@ -24,7 +25,7 @@ import {
 } from "@app/features/dashboard/exampleDashboardGenerator";
 import { generateDurationBlock } from "@app/features/duration/exampleDurationGenerator";
 import { generateSessionBlock } from "@app/features/session/exampleSessionGenerator";
-import { generateSetsBlock } from "@app/features/sets/exampleSetsGenerator";
+
 import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
 import {
   ProtocolCatalog,

@@ -278,6 +278,14 @@ export class TrainingHistory {
       );
   }
 
+  /** Every set of the exercise (case and spacing ignored), in set order */
+  setsOf(exercise: string): WorkoutLogData[] {
+    const wanted = StringUtils.normalize(exercise);
+    return this.chronological().filter(
+      (log) => StringUtils.normalize(log.exercise) === wanted,
+    );
+  }
+
   /**
    * The exercise's sets of one training day, in set order; with `workout`,
    * only that workout's (case, spacing and quotes ignored).
@@ -287,10 +295,8 @@ export class TrainingHistory {
     day: string,
     { workout }: { workout?: string } = {},
   ): WorkoutLogData[] {
-    const wanted = StringUtils.normalize(exercise);
-    return this.chronological().filter(
+    return this.setsOf(exercise).filter(
       (log) =>
-        StringUtils.normalize(log.exercise) === wanted &&
         trainingDay(log.date) === day &&
         (workout === undefined || sameWorkout(log.workout, workout)),
     );

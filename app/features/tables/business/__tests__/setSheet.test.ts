@@ -4,7 +4,7 @@ import {
   rowToFormData,
   setRows,
   type SheetInput,
-} from "@app/features/sets/business/setSheet";
+} from "@app/features/tables/business/setSheet";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
 

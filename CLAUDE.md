@@ -228,12 +228,12 @@ app/features/
 │   ├── ui/              # Chart-specific UI helpers
 │   └── views/           # EmbeddedChartView
 │
-├── tables/
+├── tables/              # workout-log and its phone version workout-sets (see "workout-sets")
 │   ├── components/      # TableActions, TableDataProcessor
-│   ├── business/        # TargetCalculator (progressive overload)
-│   ├── modals/          # InsertTableModal, EditTableModal
-│   ├── ui/              # ActionButtons, TargetHeader, TableErrorMessage
-│   └── views/           # EmbeddedTableView
+│   ├── business/        # TargetCalculator (progressive overload), setSheet (workout-sets rows)
+│   ├── modals/          # Insert/EditTableModal, Insert/EditSetsModal, components/PlanFields
+│   ├── ui/              # ActionButtons, TargetHeader, TargetSection, ExerciseActionSelect
+│   └── views/           # EmbeddedTableView, EmbeddedSetsView
 │
 ├── dashboard/
 │   ├── ui/              # DashboardCard, StatsBox
@@ -399,7 +399,7 @@ Views (Chart, Table, Dashboard) or Public API
 
 ### Code Block Syntax
 
-Source of truth: one schema per block, built with `defineCodeBlock` (`app/services/codeblocks/CodeBlockSchema.ts`): `app/features/charts/chartBlock.ts`, `tables/tableBlock.ts`, `sets/setsBlock.ts`, `timer/timerBlock.ts`, `dashboard/dashboardBlock.ts`, `duration/durationBlock.ts`. Each lists every parameter with its type, default and allowed values; the `Embedded*Params` types are derived from it (`BlockParams<typeof tableBlock>`). All params are optional.
+Source of truth: one schema per block, built with `defineCodeBlock` (`app/services/codeblocks/CodeBlockSchema.ts`): `app/features/charts/chartBlock.ts`, `tables/tableBlock.ts`, `tables/setsBlock.ts`, `timer/timerBlock.ts`, `dashboard/dashboardBlock.ts`, `duration/durationBlock.ts`. Each lists every parameter with its type, default and allowed values; the `Embedded*Params` types are derived from it (`BlockParams<typeof tableBlock>`). All params are optional.
 
 - **Reading**: `CodeBlockProcessorService` calls `schema.parse(source)`. Invalid values show an error in place of the block; views get the params with `schema.defaults` applied (the timer applies them itself, under the preset).
 - **Writing**: insert modals and example generators call `schema.serialize(params)`. Never build a block with string concatenation.
@@ -464,7 +464,16 @@ targetReps: 8 # hint when the exercise was never done
 targetWeight: 80
 ```
 
-The "Set sheet" in `CONTEXT.md`. `setRows` (`app/features/sets/business/setSheet.ts`, pure) gives the rows: today's sets of the exercise in this workout (`TrainingHistory.setsOn`) ticked, then rows to fill in, each with placeholders from the same set of `TrainingHistory.previousDay` (else the targets) and that set's protocol as suggestion. `rowToFormData` turns a row into the set to log (typed value, else placeholder; checked with `LogEntryDraft.validate`, mapped with `setValues`), then `toEntry` and `addWorkoutLogEntry`. `EmbeddedSetsView` keeps the drafts of unticked rows in its render child across the `log:*` redraws (a row is removed from the drafts before the add, so the redraw already shows it logged); a ticked row opens `EditLogModal`. Insert: `InsertSetsModal` (`insert-workout-sets`), edit: `EditSetsModal`.
+The "Set sheet" in `CONTEXT.md`: the V2 of `workout-log`, made for logging on the phone. It lives in `app/features/tables/` and shares the table's pieces, so add a behavior to both blocks by changing the shared piece, not by copying it:
+
+- **Parameters**: `EXERCISE_FIELDS` and `PLAN_FIELDS` (`tables/exerciseBlockFields.ts`) are spread into both `tableBlock` and `setsBlock`; the forms read and fill the plan with `PlanFields` (`tables/modals/components/PlanFields.ts`).
+- **Columns and values**: headers from `TableColumnResolver.formatParameterHeader` + `mapColumnIdentifiersToLabels`; a logged set's cells from `TableRowProcessor.displayRow` (weight as entered, N/A).
+- **Protocol badge**: `ProtocolBadge.forProtocol(parent, catalog.resolve(id))`.
+- **Targets**: `renderTargetSection` (`tables/ui/TargetSection.ts`): target, progress bar, achievement badge that writes the next weight into the block with its own schema.
+- **Menu**: `ExerciseActionSelect` (go to exercise + the block's edit action, `edit` for a non-table block). The view draws it, so the processor's frame adds no menu of its own.
+- **Logging**: a logged row opens `EditLogModal`; a new set goes through `LogEntryDraft` (`validate`, `setValues`, `toEntry`) like `CreateLogModal`.
+
+What only the sets block has: `setRows` (`tables/business/setSheet.ts`, pure) gives the rows: today's sets of the exercise in this workout (`TrainingHistory.setsOn`) ticked, then rows to fill in, each with placeholders from the same set of `TrainingHistory.previousDay` (else the targets) and that set's protocol as suggestion; `rowToFormData` turns a row into the set to log (typed value, else placeholder). `EmbeddedSetsView` keeps the drafts of unticked rows in its render child across the `log:*` redraws (a row is removed from the drafts before the add, so the redraw already shows it logged). It finds sets with `TrainingHistory` (exact exercise name), not `DataFilter`: logging must never match a similar exercise. Insert: `InsertSetsModal` (`insert-workout-sets`), edit: `EditSetsModal`.
 
 #### workout-session
 

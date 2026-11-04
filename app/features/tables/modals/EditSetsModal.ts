@@ -1,7 +1,8 @@
 import { App } from "obsidian";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import { InsertSetsModal } from "@app/features/sets/modals/InsertSetsModal";
-import { setsBlock, type EmbeddedSetsParams } from "@app/features/sets/setsBlock";
+import { InsertSetsModal } from "@app/features/tables/modals/InsertSetsModal";
+import { PlanFields } from "@app/features/tables/modals/components/PlanFields";
+import { setsBlock, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
 import {
   createEditButtons,
   type EditTarget,
@@ -41,13 +42,10 @@ export class EditSetsModal extends InsertSetsModal {
 
   protected createConfigurationSections(container: HTMLElement): void {
     super.createConfigurationSections(container);
-    const { exercise, workout, sets, targetReps, targetWeight } = this.initialParams;
+    const { exercise, workout } = this.initialParams;
     if (this.exerciseInput) this.exerciseInput.value = exercise ?? "";
     if (this.workoutInput) this.workoutInput.value = workout ?? "";
-    // An unset value shows as 0, which collectParams leaves out again
-    if (this.setsInput) this.setsInput.value = String(sets ?? 0);
-    if (this.targetRepsInput) this.targetRepsInput.value = String(targetReps ?? 0);
-    if (this.targetWeightInput) this.targetWeightInput.value = String(targetWeight ?? 0);
+    if (this.planFields) PlanFields.fill(this.planFields, this.initialParams);
   }
 
   protected createButtons(container: HTMLElement): void {

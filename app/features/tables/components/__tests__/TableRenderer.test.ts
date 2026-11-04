@@ -74,6 +74,18 @@ jest.mock("@app/components/atoms", () => ({
         return span;
       },
     ),
+    // As the real one: a badge only for a protocol with an abbreviation
+    forProtocol(
+      parent: HTMLElement,
+      protocol: { abbreviation: string; name: string; badgeColor?: string },
+    ) {
+      if (!protocol.abbreviation) return null;
+      return this.create(parent, {
+        text: protocol.abbreviation,
+        tooltip: protocol.name,
+        color: protocol.badgeColor,
+      });
+    },
   },
 }));
 

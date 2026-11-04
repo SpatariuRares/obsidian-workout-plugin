@@ -12,7 +12,7 @@ import { timerBlock } from "@app/features/timer/timerBlock";
 import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { durationBlock } from "@app/features/duration/durationBlock";
 import { sessionBlock } from "@app/features/session/sessionBlock";
-import { setsBlock } from "@app/features/sets/setsBlock";
+import { setsBlock } from "@app/features/tables/setsBlock";
 import { resolveTimer } from "@app/features/timer/business/resolveTimer";
 import { gridProblems } from "@app/features/dashboard/layout/gridLayout";
 import {

@@ -113,32 +113,7 @@ export class TableRowProcessor {
         dateKeyCache.set(log.date, dateKey);
       }
 
-      // Values by field key; custom fields by their loose key, so a "heartrate"
-      // column from an older CSV fills the heart rate column and a "Max load"
-      // header finds the "max_load" field
-      const values: Record<string, string> = {
-        date: formattedDate,
-        exercise: this.getExerciseDisplay(log.exercise),
-        reps: log.reps?.toString() || t("table.notAvailable"),
-        weight: this.getWeightDisplay(log),
-        volume: this.getVolumeDisplay(log),
-        notes: log.notes || "",
-        protocol: protocolId(log.protocol),
-        actions: "", // Placeholder for actions
-      };
-      const custom = new Map<string, string | number | boolean>();
-      for (const [key, value] of Object.entries(log.customFields ?? {})) {
-        custom.set(looseKey(fieldKey(key)), value);
-      }
-
-      const displayRow = headers.map((header) => {
-        const key = fieldKey(header);
-        if (key in values) return values[key];
-        const value = custom.get(looseKey(key));
-        return KNOWN_CUSTOM_FIELDS.has(key)
-          ? this.formatCustomFieldValue(value)
-          : (value?.toString() ?? "");
-      });
+      const displayRow = this.displayRow(log, headers, formattedDate);
 
       const row = {
         displayRow,
@@ -151,6 +126,45 @@ export class TableRowProcessor {
     }
 
     return rows;
+  }
+
+  /**
+   * What each column shows for a set, by header ("Rep", "Wgt (kg)", a custom
+   * field's label…): the weight as entered, N/A for a missing known field.
+   * The `workout-log` rows and the logged rows of `workout-sets` both use it.
+   * @param formattedDate - The date cell's text (only tables have one)
+   */
+  static displayRow(
+    log: WorkoutLogData,
+    headers: string[],
+    formattedDate = "",
+  ): string[] {
+    // Values by field key; custom fields by their loose key, so a "heartrate"
+    // column from an older CSV fills the heart rate column and a "Max load"
+    // header finds the "max_load" field
+    const values: Record<string, string> = {
+      date: formattedDate,
+      exercise: this.getExerciseDisplay(log.exercise),
+      reps: log.reps?.toString() || t("table.notAvailable"),
+      weight: this.getWeightDisplay(log),
+      volume: this.getVolumeDisplay(log),
+      notes: log.notes || "",
+      protocol: protocolId(log.protocol),
+      actions: "", // Placeholder for actions
+    };
+    const custom = new Map<string, string | number | boolean>();
+    for (const [key, value] of Object.entries(log.customFields ?? {})) {
+      custom.set(looseKey(fieldKey(key)), value);
+    }
+
+    return headers.map((header) => {
+      const key = fieldKey(header);
+      if (key in values) return values[key];
+      const value = custom.get(looseKey(key));
+      return KNOWN_CUSTOM_FIELDS.has(key)
+        ? this.formatCustomFieldValue(value)
+        : (value?.toString() ?? "");
+    });
   }
 
   /**

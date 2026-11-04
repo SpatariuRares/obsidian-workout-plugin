@@ -2,28 +2,25 @@ import { MarkdownRenderChild, Notice, setIcon } from "obsidian";
 import { BaseView } from "@app/features/common/views/BaseView";
 import { EditLogModal } from "@app/features/modals/log/EditLogModal";
 import { describeSet } from "@app/features/modals/log/LogHistory";
+import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
+import { TableRowProcessor } from "@app/features/tables/business/TableRowProcessor";
+import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
+import { renderTargetSection } from "@app/features/tables/ui/TargetSection";
 import { toEntry } from "@app/features/modals/base/logic/LogEntryDraft";
-import { describeTarget } from "@app/features/session/business/sessionPlan";
 import {
   emptyDraft,
-  loggedValue,
   rowProtocol,
   rowToFormData,
   setRows,
   type SetDraft,
   type SetRow,
-} from "@app/features/sets/business/setSheet";
-import type { EmbeddedSetsParams } from "@app/features/sets/setsBlock";
+} from "@app/features/tables/business/setSheet";
+import { setsBlock, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
 import {
   TrainingHistory,
   localDay,
 } from "@app/services/history/TrainingHistory";
-import {
-  fieldFor,
-  fieldKey,
-  formatFieldNumber,
-  type FieldValue,
-} from "@app/services/exercise/ExerciseFields";
+import { fieldFor } from "@app/services/exercise/ExerciseFields";
 import {
   ProtocolCatalog,
   protocolId,
@@ -31,7 +28,7 @@ import {
 import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
 import { Chip } from "@app/components/atoms/Chip";
 import { ProtocolBadge } from "@app/components/atoms/ProtocolBadge";
-import { ICONS } from "@app/constants";
+import { ICONS, mapColumnIdentifiersToLabels } from "@app/constants";
 import { DateUtils } from "@app/utils/DateUtils";
 import { DomUtils } from "@app/utils/DomUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
@@ -53,17 +50,22 @@ export class EmbeddedSetsView extends BaseView {
     super(plugin);
   }
 
-  /** @param sourcePath - The note the block is written in: its workout and the sets' origin */
+  /**
+   * @param sourcePath - The note the block is written in: its workout and the sets' origin
+   * @param editBlock - Opens the block's edit form, for its menu
+   */
   createSets(
     container: HTMLElement,
     params: EmbeddedSetsParams,
     sourcePath: string,
+    editBlock?: () => void,
   ): MarkdownRenderChild {
     const sheet = new SetsRenderChild(
       container,
       this.plugin,
       params,
       sourcePath,
+      editBlock,
       (error) => this.handleError(container, error),
       () => this.sheets.delete(sheet),
     );
@@ -81,6 +83,8 @@ export class EmbeddedSetsView extends BaseView {
 interface Drawn {
   rows: SetRow[];
   parameters: ParameterDefinition[];
+  /** Each parameter's column, as the table names it ("Wgt (kg)") */
+  columns: string[];
   /** Today's sets, to tell whether a ticked row was planned or added */
   todayCount: number;
   planned: number;
@@ -102,6 +106,7 @@ class SetsRenderChild extends MarkdownRenderChild {
     private plugin: WorkoutPluginContext,
     private params: EmbeddedSetsParams,
     private sourcePath: string,
+    private editBlock: (() => void) | undefined,
     private onError: (error: Error) => void,
     private onUnload: () => void,
   ) {
@@ -159,6 +164,7 @@ class SetsRenderChild extends MarkdownRenderChild {
       const drawn: Drawn = {
         rows,
         parameters,
+        columns: parameters.map((p) => TableColumnResolver.formatParameterHeader(p)),
         todayCount: todaysSets.length,
         planned: this.params.sets ?? Math.max(previous?.sets.length ?? 0, 1),
       };
@@ -166,13 +172,24 @@ class SetsRenderChild extends MarkdownRenderChild {
       this.containerEl.empty();
       const sheet = this.containerEl.createDiv({ cls: "workout-sets" });
       this.renderHeader(sheet, exercise, todaysSets.length, drawn.planned);
+      renderTargetSection(sheet, {
+        plugin: this.plugin,
+        params: this.params,
+        schema: setsBlock,
+        sourcePath: this.sourcePath,
+        sets: history.setsOf(exercise),
+        onTargetUpdated: (updated) => {
+          this.params = updated;
+          return this.render();
+        },
+      });
       if (previous) this.renderLastTime(sheet, previous.sets, parameters);
 
       const table = sheet.createDiv({ cls: "workout-sets-rows" });
       DomUtils.setCssProps(table, {
         "--workout-sets-fields": String(Math.max(parameters.length, 1)),
       });
-      this.renderColumns(table, parameters);
+      this.renderColumns(table, drawn.columns);
       for (const row of rows) this.renderRow(table, row, drawn);
 
       const footer = sheet.createDiv({ cls: "workout-sets-footer" });
@@ -198,17 +215,19 @@ class SetsRenderChild extends MarkdownRenderChild {
   ): void {
     const header = sheet.createDiv({ cls: "workout-sets-header" });
     header.createDiv({ cls: "workout-sets-exercise", text: exercise });
-    header.createDiv({
+    const side = header.createDiv({ cls: "workout-sets-header-side" });
+    side.createDiv({
       cls: "workout-sets-progress",
       text: t("sets.progress", { done, sets: planned }),
     });
-    const target = describeTarget(this.params, this.plugin.settings.weightUnit);
-    if (target) {
-      sheet.createDiv({
-        cls: "workout-sets-meta",
-        text: t("session.target", { target }),
-      });
-    }
+    // The table's menu: go to the exercise, edit this block
+    const editBlock = this.editBlock;
+    ExerciseActionSelect.render(side, {
+      exerciseName: exercise,
+      app: this.plugin.app,
+      plugin: this.plugin,
+      edit: editBlock ? { label: t("sets.editBlock"), open: editBlock } : undefined,
+    });
   }
 
   /** "Last time (31/10): 80 kg × 8 · 80 kg × 7" */
@@ -227,21 +246,21 @@ class SetsRenderChild extends MarkdownRenderChild {
     });
   }
 
-  private renderColumns(table: HTMLElement, parameters: ParameterDefinition[]): void {
-    const columns = table.createDiv({
+  private renderColumns(table: HTMLElement, columns: string[]): void {
+    const row = table.createDiv({
       cls: "workout-sets-columns",
       attr: { "aria-hidden": "true" },
     });
-    columns.createSpan({ text: t("sets.setColumn") });
-    for (const param of parameters) {
-      columns.createSpan({ text: this.labelOf(param) });
+    row.createSpan({ text: t("sets.setColumn") });
+    for (const label of mapColumnIdentifiersToLabels(columns)) {
+      row.createSpan({ text: label });
     }
   }
 
   private renderRow(table: HTMLElement, row: SetRow, drawn: Drawn): void {
     const el = table.createDiv({ cls: "workout-sets-row" });
     if (row.logged) {
-      this.renderLoggedRow(el, row, row.logged, drawn.parameters);
+      this.renderLoggedRow(el, row, row.logged, drawn.columns);
       return;
     }
 
@@ -252,9 +271,10 @@ class SetsRenderChild extends MarkdownRenderChild {
     this.renderNumber(main, row.number, rowProtocol(row, draft));
 
     const inputs: HTMLInputElement[] = [];
-    for (const param of drawn.parameters) {
-      inputs.push(this.renderInput(main, row, draft, param));
-    }
+    const labels = mapColumnIdentifiersToLabels(drawn.columns);
+    drawn.parameters.forEach((param, index) => {
+      inputs.push(this.renderInput(main, row, draft, param, labels[index]));
+    });
 
     const details = main.createEl("button", {
       cls: "workout-sets-details-toggle clickable-icon",
@@ -300,7 +320,7 @@ class SetsRenderChild extends MarkdownRenderChild {
     el: HTMLElement,
     row: SetRow,
     set: WorkoutLogData,
-    parameters: ParameterDefinition[],
+    columns: string[],
   ): void {
     el.addClass("is-logged");
     const main = el.createDiv({
@@ -312,10 +332,9 @@ class SetsRenderChild extends MarkdownRenderChild {
       },
     });
     this.renderNumber(main, row.number, set.protocol);
-    for (const param of parameters) {
-      const value = loggedValue(set, fieldKey(param.key));
-      const cell = main.createDiv({ cls: "workout-sets-value" });
-      cell.setText(this.formatValue(param, value));
+    // The values as the table shows them (weight as entered, N/A…)
+    for (const value of TableRowProcessor.displayRow(set, columns)) {
+      main.createDiv({ cls: "workout-sets-value", text: value });
     }
     main.createSpan();
     const check = main.createSpan({ cls: "workout-sets-check is-done" });
@@ -337,15 +356,10 @@ class SetsRenderChild extends MarkdownRenderChild {
 
   private renderNumber(main: HTMLElement, number: number, protocol?: string): void {
     const cell = main.createDiv({ cls: "workout-sets-number", text: String(number) });
-    const info = new ProtocolCatalog(this.plugin.settings.customProtocols).resolve(protocol);
-    if (info.abbreviation) {
-      ProtocolBadge.create(cell, {
-        text: info.abbreviation,
-        className: `workout-protocol-badge ${info.badgeClass}`,
-        tooltip: info.name,
-        color: info.badgeColor,
-      });
-    }
+    ProtocolBadge.forProtocol(
+      cell,
+      new ProtocolCatalog(this.plugin.settings.customProtocols).resolve(protocol),
+    );
   }
 
   private renderInput(
@@ -353,9 +367,10 @@ class SetsRenderChild extends MarkdownRenderChild {
     row: SetRow,
     draft: SetDraft,
     param: ParameterDefinition,
+    column: string,
   ): HTMLInputElement {
     const cell = main.createDiv({ cls: "workout-sets-field" });
-    const label = t("sets.fieldOfSet", { field: this.labelOf(param), set: row.number });
+    const label = t("sets.fieldOfSet", { field: column, set: row.number });
     if (param.type === "boolean") {
       const box = cell.createEl("input", {
         attr: { type: "checkbox", "aria-label": label },
@@ -481,18 +496,6 @@ class SetsRenderChild extends MarkdownRenderChild {
     const index = row.number - 1 - drawn.todayCount;
     while (this.drafts.length <= index) this.drafts.push(emptyDraft());
     return this.drafts[index];
-  }
-
-  private labelOf(param: ParameterDefinition): string {
-    const unit =
-      fieldKey(param.key) === "weight" ? this.plugin.settings.weightUnit : param.unit;
-    return unit ? `${param.label} (${unit})` : param.label;
-  }
-
-  private formatValue(param: ParameterDefinition, value: FieldValue | undefined): string {
-    if (typeof value === "number") return formatFieldNumber(fieldFor(param), value);
-    if (typeof value === "boolean") return value ? t("sets.yes") : t("sets.no");
-    return value === undefined || value === "" ? t("sets.noValue") : value;
   }
 
   private async parametersOf(exercise: string): Promise<ParameterDefinition[]> {

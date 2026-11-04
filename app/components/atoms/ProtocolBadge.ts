@@ -11,6 +11,15 @@ export interface ProtocolBadgeProps {
   className?: string;
 }
 
+/** What a set's badge shows: a resolved protocol (ProtocolCatalog's ProtocolInfo) */
+export interface BadgeProtocol {
+  name: string;
+  /** Empty for standard, which has no badge */
+  abbreviation: string;
+  badgeClass: string;
+  badgeColor?: string;
+}
+
 /**
  * Creates protocol badge elements with dynamic coloring
  * This is an atom - it has no dependencies on other UI components
@@ -46,6 +55,23 @@ export class ProtocolBadge {
     }
 
     return badge;
+  }
+
+  /**
+   * The badge of a set's protocol, as tables and set rows show it; nothing
+   * for standard sets
+   */
+  static forProtocol(
+    parent: HTMLElement,
+    protocol: BadgeProtocol,
+  ): HTMLSpanElement | null {
+    if (!protocol.abbreviation) return null;
+    return this.create(parent, {
+      text: protocol.abbreviation,
+      className: `workout-protocol-badge ${protocol.badgeClass}`,
+      tooltip: protocol.name,
+      color: protocol.badgeColor,
+    });
   }
 
   /**

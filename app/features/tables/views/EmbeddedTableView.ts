@@ -4,8 +4,7 @@ import { TableRenderer } from "@app/features/tables/components/TableRenderer";
 import { TableDataProcessor } from "@app/features/tables/business/TableDataProcessor";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
-import { TargetHeader } from "@app/features/tables/ui/TargetHeader";
-import { AchievementBadge } from "@app/features/tables/ui/AchievementBadge";
+import { renderTargetSection } from "@app/features/tables/ui/TargetSection";
 import {
   EmbeddedTableParams,
   TableData,
@@ -14,7 +13,6 @@ import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 import { BaseView } from "@app/features/common/views/BaseView";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
-import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
 import { Button } from "@app/components";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import { t } from "@app/i18n";
@@ -164,30 +162,20 @@ export class EmbeddedTableView extends BaseView {
       );
     }
 
-    // Render target header with progress bar
-    TargetHeader.render(contentDiv, {
-      targetWeight: params.targetWeight,
-      targetReps: params.targetReps,
-      filteredData: filterResult.filteredData,
-      weightUnit: this.plugin.settings.weightUnit,
-    });
-
-    // Render achievement badge if applicable
-    if (
-      params.targetWeight !== undefined &&
-      params.targetReps !== undefined &&
-      params.exercise
-    ) {
-      this.renderAchievementBadgeWithCallbacks(
-        contentDiv,
+    // Target with its progress bar, and the badge once it is reached
+    renderTargetSection(
+      contentDiv,
+      {
+        plugin: this.plugin,
         params,
-        filterResult.filteredData,
-        container,
-        signal,
-        this.plugin.settings.weightUnit,
+        schema: tableBlock,
         sourcePath,
-      );
-    }
+        sets: filterResult.filteredData,
+        onTargetUpdated: (updated) =>
+          this.refreshTable(container, updated, sourcePath),
+      },
+      signal,
+    );
 
     // Render the table
     const tableContainer =
@@ -306,71 +294,6 @@ export class EmbeddedTableView extends BaseView {
         signal,
       );
     }
-  }
-
-  /**
-   * Renders achievement badge with callbacks wired to plugin settings and refresh
-   */
-  private renderAchievementBadgeWithCallbacks(
-    contentDiv: HTMLElement,
-    params: EmbeddedTableParams,
-    filteredData: WorkoutLogData[],
-    tableContainer: HTMLElement,
-    signal: AbortSignal,
-    weightUnit: string,
-    sourcePath: string,
-  ): void {
-    const { targetWeight, targetReps, exercise } = params;
-
-    if (
-      targetWeight === undefined ||
-      targetReps === undefined ||
-      !exercise
-    ) {
-      return;
-    }
-
-    const dismissedWeight =
-      this.plugin.settings.achievedTargets[exercise];
-    const isDismissedForWeight = dismissedWeight === targetWeight;
-
-    AchievementBadge.render(
-      contentDiv,
-      {
-        app: this.plugin.app,
-        exercise,
-        targetWeight,
-        targetReps,
-        filteredData,
-        weightIncrement: this.plugin.settings.weightIncrement,
-        isDismissedForWeight,
-        weightUnit,
-      },
-      {
-        onDismiss: async () => {
-          this.plugin.settings.achievedTargets[exercise] =
-            targetWeight;
-          await this.plugin.saveSettings();
-        },
-        onUpdateTarget: async (newWeight: number) => {
-          const success = await CodeBlockEditorService.patchCodeBlock(
-            this.plugin.app,
-            tableBlock,
-            sourcePath,
-            params.id ? { id: params.id } : { exercise },
-            { targetWeight: newWeight },
-          );
-          if (success) {
-            await this.refreshTable(
-              tableContainer,
-              { ...params, targetWeight: newWeight },
-              sourcePath,
-            );
-          }
-        },
-      },
-      signal,
-    );
   }
 
   public async refreshTable(

@@ -1,27 +1,22 @@
 import { App, Notice } from "obsidian";
-import { AdjustField } from "@app/components/molecules/AdjustField";
-import { getDynamicModalLabels } from "@app/constants";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
+import { setsBlock, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
 import {
-  MAX_PLANNED_SETS,
-  setsBlock,
-  type EmbeddedSetsParams,
-} from "@app/features/sets/setsBlock";
+  PlanFields,
+  type PlanFieldsElements,
+} from "@app/features/tables/modals/components/PlanFields";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { t } from "@app/i18n";
 
 const DEFAULT_SETS = 3;
-const TARGET_WEIGHT_INCREMENT = 5;
 
 /** Inserts a `workout-sets` block: exercise, workout, planned sets and targets */
 export class InsertSetsModal extends BaseInsertModal {
   protected exerciseInput?: HTMLInputElement;
   protected workoutInput?: HTMLInputElement;
-  protected setsInput?: HTMLInputElement;
-  protected targetRepsInput?: HTMLInputElement;
-  protected targetWeightInput?: HTMLInputElement;
+  protected planFields?: PlanFieldsElements;
 
   constructor(app: App, plugin: WorkoutPluginContext) {
     super(app, plugin);
@@ -54,28 +49,7 @@ export class InsertSetsModal extends BaseInsertModal {
     );
 
     const plan = this.createSection(container, t("modal.sections.progressiveOverload"));
-    const grid = plan.createDiv({ cls: "workout-parameters-container" });
-    this.setsInput = AdjustField.create(grid, {
-      label: t("modal.labels.plannedSets"),
-      value: DEFAULT_SETS,
-      min: 0,
-      max: MAX_PLANNED_SETS,
-      step: 1,
-    });
-    this.targetRepsInput = AdjustField.create(grid, {
-      label: t("modal.labels.targetReps"),
-      value: 0,
-      min: 0,
-      max: 100,
-      step: 1,
-    });
-    this.targetWeightInput = AdjustField.create(grid, {
-      label: getDynamicModalLabels().TARGET_WEIGHT,
-      value: 0,
-      min: 0,
-      max: 1000,
-      step: TARGET_WEIGHT_INCREMENT,
-    });
+    this.planFields = PlanFields.create(plan, DEFAULT_SETS);
   }
 
   protected generateCode(): string {
@@ -89,18 +63,11 @@ export class InsertSetsModal extends BaseInsertModal {
 
   /** The block parameters the form sets; empty or zero ones are left out */
   protected collectParams(): EmbeddedSetsParams {
-    const positive = (input?: HTMLInputElement) => {
-      const value = parseFloat(input?.value ?? "");
-      return Number.isFinite(value) && value > 0 ? value : undefined;
-    };
-    const sets = positive(this.setsInput);
     return {
       id: this.getCodeBlockId(),
       exercise: this.exerciseInput?.value.trim() || undefined,
       workout: this.workoutInput?.value.trim() || undefined,
-      sets: sets !== undefined ? Math.round(sets) : undefined,
-      targetReps: positive(this.targetRepsInput),
-      targetWeight: positive(this.targetWeightInput),
+      ...(this.planFields ? PlanFields.read(this.planFields) : {}),
     };
   }
 

@@ -1,10 +1,10 @@
 /** @jest-environment jsdom */
 
-import { EmbeddedSetsView } from "@app/features/sets/views/EmbeddedSetsView";
+import { EmbeddedSetsView } from "@app/features/tables/views/EmbeddedSetsView";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import { localDay } from "@app/services/history/TrainingHistory";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
-import type { EmbeddedSetsParams } from "@app/features/sets/setsBlock";
+import type { EmbeddedSetsParams } from "@app/features/tables/setsBlock";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import type { LogEntryInput, WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
@@ -46,12 +46,19 @@ const set = (
 function setup(
   rows: WorkoutLogData[],
   params: EmbeddedSetsParams = { exercise: "Bench Press", sets: 3 },
+  editBlock?: () => void,
 ) {
   const eventBus = new WorkoutEventBus();
   const added: LogEntryInput[] = [];
   const plugin = {
     app: {},
-    settings: { weightUnit: "kg", customProtocols: defaultProtocolEntries() },
+    settings: {
+      weightUnit: "kg",
+      weightIncrement: 2.5,
+      achievedTargets: {},
+      customProtocols: defaultProtocolEntries(),
+    },
+    saveSettings: async () => {},
     eventBus,
     getWorkoutLogData: async () => rows,
     getExerciseDefinitionService: () => ({
@@ -77,7 +84,7 @@ function setup(
 
   const el = createObsidianContainer();
   const view = new EmbeddedSetsView(plugin);
-  const child = view.createSets(el, params, NOTE_PATH);
+  const child = view.createSets(el, params, NOTE_PATH, editBlock);
   child.load();
   return { el, view, child, added, eventBus };
 }
@@ -229,6 +236,34 @@ describe("EmbeddedSetsView", () => {
     rowsOf(el)[0].querySelector<HTMLElement>(".workout-sets-row-main")!.click();
 
     expect(editedSets).toEqual([logged]);
+  });
+
+  it("shows a set logged in the other unit as entered, like the table", async () => {
+    const { el } = setup([set(100, 5, today, { enteredWeight: 220, enteredUnit: "lb" })]);
+    await flush();
+
+    expect(rowsOf(el)[0].textContent).toContain("220 lb");
+  });
+
+  it("shows the table's target with its progress", async () => {
+    const { el } = setup([set(80, 6, "2020-01-01")], {
+      exercise: "Bench Press",
+      sets: 1,
+      targetReps: 8,
+      targetWeight: 80,
+    });
+    await flush();
+
+    expect(el.querySelector(".workout-target-header")).not.toBeNull();
+    expect(el.querySelector(".workout-progress-fill")).not.toBeNull();
+  });
+
+  it("offers the table's menu with this block's edit action", async () => {
+    const editBlock = jest.fn();
+    const { el } = setup([], { exercise: "Bench Press" }, editBlock);
+    await flush();
+
+    expect(el.querySelector(".workout-block-menu")).not.toBeNull();
   });
 
   it("asks for an exercise when the block has none", async () => {

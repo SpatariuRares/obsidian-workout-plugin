@@ -14,7 +14,7 @@ import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { TimerDeviceEffects } from "@app/features/timer/business/TimerDeviceEffects";
 import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
 import { EmbeddedSessionView } from "@app/features/session/views/EmbeddedSessionView";
-import { EmbeddedSetsView } from "@app/features/sets/views/EmbeddedSetsView";
+import { EmbeddedSetsView } from "@app/features/tables/views/EmbeddedSetsView";
 import { CommandHandlerService } from "@app/services/core/CommandHandlerService";
 import { TourEngine } from "@app/features/tour/TourEngine";
 import {

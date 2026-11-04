@@ -101,7 +101,7 @@ function placeholdersFor(
 }
 
 /** A field's value in a logged set (weight in the settings unit) */
-export function loggedValue(
+function loggedValue(
   set: WorkoutLogData,
   key: string,
 ): FieldValue | undefined {

@@ -117,7 +117,7 @@ Estimates total workout duration based on exercises, sets, and configurable set 
 
 ### 6. `workout-sets` - Set Sheet (Logging on the Phone)
 
-The table made for logging, not for reading history. One exercise, today's sets as rows with one input per field of the exercise type (kg + reps for strength, duration/distance for cardio):
+The V2 of `workout-log`: the same exercise table (columns, values as entered, protocol badges, target with progress and achievement badge, menu), made for logging instead of reading history. One exercise, today's sets as rows with one input per field of the exercise type (kg + reps for strength, duration/distance for cardio):
 
 ```yaml
 exercise: Bench Press

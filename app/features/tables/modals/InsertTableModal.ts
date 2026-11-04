@@ -1,6 +1,6 @@
 // Refactored InsertTableModal extending BaseInsertModal
 import { AdjustField } from "@app/components/molecules/AdjustField";
-import { CONSTANTS, getDynamicModalLabels } from "@app/constants";
+import { CONSTANTS } from "@app/constants";
 import { DomUtils } from "@app/utils/DomUtils";
 import { App, Notice } from "obsidian";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
@@ -18,13 +18,15 @@ import {
   type EmbeddedTableParams,
 } from "@app/features/tables/types";
 import { tableBlock } from "@app/features/tables/tableBlock";
+import {
+  PlanFields,
+  type PlanFieldsElements,
+} from "@app/features/tables/modals/components/PlanFields";
 import { Chip } from "@app/components/atoms/Chip";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { t } from "@app/i18n";
 
 const DATE_RANGE_INCREMENT = 7;
-const TARGET_WEIGHT_INCREMENT = 5;
-const TARGET_REPS_INCREMENT = 1;
 
 export class InsertTableModal extends BaseInsertModal {
   protected tableTypeSelect?: HTMLSelectElement;
@@ -33,9 +35,7 @@ export class InsertTableModal extends BaseInsertModal {
   protected targetElements?: TargetSectionWithAutocompleteElements;
   protected dateRangeInput?: HTMLInputElement;
   protected advancedElements?: AdvancedOptionsElements;
-  protected targetWeightInput?: HTMLInputElement;
-  protected targetRepsInput?: HTMLInputElement;
-  protected setsInput?: HTMLInputElement;
+  protected planFields?: PlanFieldsElements;
   protected progressiveSection?: HTMLElement;
   protected currentFileName: string;
 
@@ -153,44 +153,7 @@ export class InsertTableModal extends BaseInsertModal {
       t("modal.sections.progressiveOverload"),
     );
 
-    // Target parameters container (grid layout)
-    const targetParametersContainer =
-      this.progressiveSection.createDiv({
-        cls: "workout-parameters-container",
-      });
-
-    // Target weight with +/- adjust
-    this.targetWeightInput = AdjustField.create(
-      targetParametersContainer,
-      {
-        label: getDynamicModalLabels().TARGET_WEIGHT,
-        value: 0,
-        min: 0,
-        max: 1000,
-        step: TARGET_WEIGHT_INCREMENT,
-      },
-    );
-
-    // Target reps with +/- adjust
-    this.targetRepsInput = AdjustField.create(
-      targetParametersContainer,
-      {
-        label: t("modal.labels.targetReps"),
-        value: 0,
-        min: 0,
-        max: 100,
-        step: TARGET_REPS_INCREMENT,
-      },
-    );
-
-    // Planned sets, counted by a workout-session block in the note
-    this.setsInput = AdjustField.create(targetParametersContainer, {
-      label: t("modal.labels.plannedSets"),
-      value: 0,
-      min: 0,
-      max: 20,
-      step: 1,
-    });
+    this.planFields = PlanFields.create(this.progressiveSection);
 
     // Advanced Options Section using reusable component
     this.advancedElements = AdvancedOptionsSection.create(
@@ -277,15 +240,7 @@ export class InsertTableModal extends BaseInsertModal {
     const advancedValues = AdvancedOptionsSection.getValues(
       this.advancedElements,
     );
-    const targetWeight = this.targetWeightInput
-      ? parseFloat(this.targetWeightInput.value) || 0
-      : 0;
-    const targetReps = this.targetRepsInput
-      ? parseInt(this.targetRepsInput.value) || 0
-      : 0;
-    const sets = this.setsInput
-      ? parseInt(this.setsInput.value) || 0
-      : 0;
+    const plan = this.planFields ? PlanFields.read(this.planFields) : {};
 
     if (
       tableType === TABLE_TYPE.COMBINED &&
@@ -302,9 +257,7 @@ export class InsertTableModal extends BaseInsertModal {
       dateRange: dateRange > 0 ? dateRange : undefined,
       showAddButton: showAddButton ? undefined : false,
       exactMatch: advancedValues.exactMatch ? true : undefined,
-      targetWeight: targetWeight > 0 ? targetWeight : undefined,
-      targetReps: targetReps > 0 ? targetReps : undefined,
-      sets: sets > 0 ? sets : undefined,
+      ...plan,
     };
   }
 

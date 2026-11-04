@@ -83,6 +83,21 @@ Parametri, tipi, default (limit: 50, sortBy: date, sortOrder: desc, showAddButto
 - `TargetHeader` (UI) - mostra la barra progresso
 - `AchievementBadge` (UI) - mostra il badge di obiettivo raggiunto
 
+
+---
+
+### 5. setSheet (`workout-sets`)
+
+**File**: `setSheet.ts`
+**Scopo**: le righe del blocco `workout-sets`, la V2 della tabella per inserire le serie dal telefono. Puro, senza DOM.
+
+| Funzione          | Cosa fa                                                                                                     |
+| ----------------- | ----------------------------------------------------------------------------------------------------------- |
+| `setRows()`       | Serie di oggi (spuntate), poi righe da compilare fino a `sets`; placeholder = stessa serie dell'ultima volta (altrimenti gli obiettivi); protocollo suggerito |
+| `rowProtocol()`   | Il protocollo scelto nella riga, altrimenti il suggerito, altrimenti standard                              |
+| `rowToFormData()` | La serie da registrare: valore scritto o placeholder, validato con `LogEntryDraft.validate`                 |
+
+I parametri (`EXERCISE_FIELDS`, `PLAN_FIELDS` in `../exerciseBlockFields.ts`), le colonne (`TableColumnResolver`), i valori delle serie registrate (`TableRowProcessor.displayRow`) e gli obiettivi (`TargetCalculator` tramite `ui/TargetSection.ts`) sono gli stessi della tabella.
 ---
 
 ## Flusso dati completo
@@ -130,3 +145,4 @@ Ogni modulo ha la propria test suite in `__tests__/`:
 | -------------------- | ---------------------------- | ---- | -------------------------------------------------------- |
 | `TableDataProcessor` | `TableDataProcessor.test.ts` | 20+  | Headers dinamici, sorting, limiting, custom fields       |
 | `TargetCalculator`   | `TargetCalculator.test.ts`   | 14   | Calcoli best reps, target achieved, progress, edge cases |
+| `setSheet`           | `setSheet.test.ts`           | 10   | Righe, placeholder, protocollo suggerito, serie da registrare |

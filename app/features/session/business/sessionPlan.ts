@@ -1,6 +1,6 @@
 import { readWorkoutNote } from "@app/services/notes/WorkoutNote";
 import { tableBlock } from "@app/features/tables/tableBlock";
-import { setsBlock } from "@app/features/sets/setsBlock";
+import { setsBlock } from "@app/features/tables/setsBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
 import type { EmbeddedTimerParams } from "@app/features/timer/types";
 import {

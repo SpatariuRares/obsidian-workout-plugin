@@ -14,17 +14,21 @@ import { ICONS } from "@app/constants/ui.constants";
 /**
  * ExerciseActionSelect - Icon button dropdown for exercise-level actions
  *
- * Offers "Go to exercise" (its page, or creating one) and, when the block
- * has an ID and its note is known, "Edit table" actions
+ * Offers "Go to exercise" (its page, or creating one) and the block's edit
+ * action: "Edit table" when a table has an ID and its note is known, or the
+ * one the caller gives
  * via a custom dropdown panel triggered by an icon-only button.
  */
 export interface ExerciseActionSelectProps {
   exerciseName: string;
   app: App;
   plugin: WorkoutPluginContext;
-  params: EmbeddedTableParams;
+  /** A `workout-log` block's parameters: its edit action opens EditTableModal */
+  params?: EmbeddedTableParams;
   /** The note the block is written in; without it the table can't be edited */
   sourcePath?: string;
+  /** Another block's edit action (a `workout-sets` block), in place of the table's */
+  edit?: { label: string; open: () => void };
 }
 
 export class ExerciseActionSelect {
@@ -40,7 +44,7 @@ export class ExerciseActionSelect {
     props: ExerciseActionSelectProps,
     signal?: AbortSignal,
   ): HTMLElement {
-    const { exerciseName, app, plugin, params, sourcePath } = props;
+    const { exerciseName, app, plugin, params, sourcePath, edit } = props;
 
     const actions: BlockMenuAction[] = [
       {
@@ -50,8 +54,15 @@ export class ExerciseActionSelect {
       },
     ];
 
-    // Only show edit option when the code block can be found
-    if (params.id && sourcePath) {
+    if (edit) {
+      actions.push({
+        label: edit.label,
+        icon: ICONS.ACTIONS.EDIT,
+        edits: true,
+        run: edit.open,
+      });
+    } else if (params?.id && sourcePath) {
+      // Only show the table's edit option when its code block can be found
       actions.push({
         label: t("table.editTable"),
         icon: ICONS.ACTIONS.EDIT,

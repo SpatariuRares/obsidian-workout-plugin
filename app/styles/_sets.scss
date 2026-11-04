@@ -20,6 +20,12 @@
   color: var(--text-muted);
 }
 
+// The target with its progress bar, as the table shows it, without its margins
+.workout-sets .workout-target-header {
+  margin: 0;
+  background: var(--background-primary);
+}
+
 .workout-sets-meta {
   font-size: var(--workout-font-sm);
   font-variant-numeric: tabular-nums;
@@ -37,6 +43,12 @@
   font-size: var(--workout-font-lg);
   font-weight: var(--workout-font-weight-semibold);
   color: var(--workout-text-accent);
+}
+
+.workout-sets-header-side {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-xs);
 }
 
 .workout-sets-progress {

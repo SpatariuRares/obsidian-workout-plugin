@@ -93,6 +93,31 @@ describe("ProtocolBadge atom", () => {
     });
   });
 
+  describe("forProtocol", () => {
+    it("draws a set's badge with its class, name and color", () => {
+      const parent = createObsidianContainer();
+      const badge = ProtocolBadge.forProtocol(parent, {
+        name: "Drop set",
+        abbreviation: "DS",
+        badgeClass: "workout-protocol-badge-drop",
+        badgeColor: "#ff0000",
+      });
+
+      expect(badge?.textContent).toBe("DS");
+      expect(badge?.className).toBe("workout-protocol-badge workout-protocol-badge-drop");
+      expect(badge?.getAttribute("title")).toBe("Drop set");
+      expect(badge?.style.backgroundColor).toBe("rgb(255, 0, 0)");
+    });
+
+    it("draws nothing for standard", () => {
+      const parent = createObsidianContainer();
+      expect(
+        ProtocolBadge.forProtocol(parent, { name: "Standard", abbreviation: "", badgeClass: "" }),
+      ).toBeNull();
+      expect(parent.children).toHaveLength(0);
+    });
+  });
+
   describe("getContrastColor", () => {
     describe("hex colors", () => {
       it("returns white for dark colors", () => {

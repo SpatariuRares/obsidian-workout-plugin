@@ -28,5 +28,6 @@ export { Chip, type ChipProps } from "@app/components/atoms/Chip";
 export {
   ProtocolBadge,
   type ProtocolBadgeProps,
+  type BadgeProtocol,
 } from "@app/components/atoms/ProtocolBadge";
 export { Feedback } from "@app/components/atoms/Feedback";

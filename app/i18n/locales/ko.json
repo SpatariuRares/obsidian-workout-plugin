@@ -376,7 +376,10 @@
       "dashboardGridIntro": "`layout: grid`를 쓰면 각 위젯은 자기 행의 칸을 차지합니다: 열, 행, 너비, 높이. 더 좁은 노트에서는 위젯이 읽는 순서대로 다시 배치됩니다.",
       "trainingCalendarIntro": "트레이닝 캘린더는 1년 동안의 운동 일수와 주간 목표를 연속으로 달성한 주 수를 보여 줍니다 (설정 → 주간 목표).",
       "importTitle": "8. Strong 또는 Hevy에서 가져오기",
-      "importIntro": "명령 팔레트에서 **{command}**를 실행하고 앱이 내보낸 CSV를 선택하세요. 기록에 이미 있는 세트는 건너뛰며, 기록은 먼저 백업됩니다."
+      "importIntro": "명령 팔레트에서 **{command}**를 실행하고 앱이 내보낸 CSV를 선택하세요. 기록에 이미 있는 세트는 건너뛰며, 기록은 먼저 백업됩니다.",
+      "setsTitle": "스마트폰에서 로그를 기록",
+      "setsIntro": "`workout-sets` 블록은 오늘의 세트를 행 형태로 보여줍니다. 회색 숫자는 이전 세트와 동일하며, 행을 선택하여 그대로 기록하거나, 수행한 내용을 입력합니다. 세트의 프로토콜 및 메모를 보려면 화살표를 탭하고, 기록된 세트를 편집할 수 있습니다.",
+      "codeBlockWorkoutSets": "오늘의 운동 세트 목록을 한 번에 기록"
     },
     "fileNames": {
       "dashboard": "대시보드",
@@ -596,7 +599,8 @@
       "increaseBy": "{label}을(를) {increment} 늘리기",
       "deleteSet": "세트 삭제",
       "updateDashboard": "대시보드 업데이트",
-      "updateChart": "차트 업데이트"
+      "updateChart": "차트 업데이트",
+      "insertSets": "세트 삽입"
     },
     "canvasLayout": "레이아웃",
     "canvasOptions": "옵션",
@@ -726,7 +730,8 @@
       "validChooseExercise": "운동 종목을 선택하세요",
       "validationCombinedMode": "'운동 종목 + 운동 루틴' 유형에서는 두 필드를 모두 입력해야 합니다!",
       "dashboardUpdated": "대시보드가 업데이트되었습니다!",
-      "dashboardUpdateFailed": "대시보드를 업데이트하지 못했습니다. 노트에서 찾을 수 없거나, ID가 없는 다른 대시보드가 같은 설정을 가지고 있습니다. 노트를 다시 열고 다시 시도하세요."
+      "dashboardUpdateFailed": "대시보드를 업데이트하지 못했습니다. 노트에서 찾을 수 없거나, ID가 없는 다른 대시보드가 같은 설정을 가지고 있습니다. 노트를 다시 열고 다시 시도하세요.",
+      "setsInserted": "세트가 삽입되었습니다"
     },
     "parameterKey": "키:",
     "parameterLabel": "레이블:",
@@ -819,7 +824,8 @@
       "insertTimer": "운동 타이머 삽입",
       "muscleTagManager": "근육 태그 관리",
       "editDashboard": "대시보드 편집",
-      "editChart": "차트 편집"
+      "editChart": "차트 편집",
+      "insertSets": "운동 세트 추가"
     },
     "workout": "운동 루틴 (선택 사항):",
     "workoutFile": "운동 루틴 파일:",
@@ -960,7 +966,8 @@
       "trainingParameters": "훈련 설정",
       "gettingStarted": "시작하기",
       "timerDeviceCues": "타이머 장치 관련 알림",
-      "customProtocols": "프로토콜"
+      "customProtocols": "프로토콜",
+      "beta": "베타 기능"
     },
     "tooltips": {
       "deletePreset": "프리셋 삭제",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20초 최대 강도 운동, 10초 휴식, 8라운드: 총 4분.",
       "emom": "매 분 정각마다 운동을 시작하고, 남은 시간은 휴식으로 사용합니다. 총 10라운드."
+    },
+    "beta": {
+      "intro": "모두에게 공개되기 전에 사용해 볼 수 있는 새로운 기능입니다. 아직 활성화되지 않았으며, 사용자가 켜면 변경될 수 있습니다.",
+      "setSheet": {
+        "name": "운동 세트",
+        "desc": "`workout-sets` 블록: 오늘 운동 세트를 폰에서 채울 수 있도록 행으로 표시하고, 이전 세트의 값을 참고 자료로 제공하며, 각 틱마다 시작되는 휴식 타이머를 포함합니다."
+      },
+      "disabledBlock": "{feature}는 베타 기능입니다. 이 기능을 사용하려면 설정 → 베타 기능에서 활성화하십시오."
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "차트 로드 오류: {error}",
       "log": "로그 로드 오류: {error}",
       "timer": "타이머 로드 오류: {error}",
-      "dashboard": "대시보드 로드 오류: {error}"
+      "dashboard": "대시보드 로드 오류: {error}",
+      "sets": "세트 로딩 오류: {error}"
     },
     "validation": {
       "title": "유효하지 않은 매개변수:",
@@ -1215,6 +1231,26 @@
     "previous": "이전",
     "next": "다음",
     "rest": "휴식",
-    "done": "운동 완료: 오늘 기록한 세트 {sets}개."
+    "done": "운동 완료: 오늘 기록한 세트 {sets}개.",
+    "empty": "Add a `workout-log` or `workout-sets` block with an exercise to this note to follow it as a session."
+  },
+  "sets": {
+    "editSet": "Edit set {set}",
+    "addSet": "세트 추가",
+    "protocol": "프로토콜",
+    "notes": "참고 사항",
+    "editBlock": "세트 편집",
+    "blockUpdated": "세트가 업데이트되었습니다",
+    "blockUpdateFailed": "세트 업데이트에 실패했습니다: 해당 블록이 노트에 없습니다. 노트를 다시 열고 시도해 보세요.",
+    "workoutLabel": "운동:",
+    "workoutPlaceholder": "비어 있음: {note}",
+    "restLabel": "세트 사이에 휴식 (0 = 섹션의 타이머)",
+    "noExercise": "이 블록에 `exercise:`를 추가하여 세트 수를 기록합니다.",
+    "progress": "{done}/{sets} 세트",
+    "lastTime": "마지막 ({date}): {sets}",
+    "setColumn": "설정",
+    "fieldOfSet": "{field}, {set} 설정",
+    "details": "세트 {set}의 프로토콜 및 메모",
+    "logSet": "로그 세트 {set}"
   }
 }

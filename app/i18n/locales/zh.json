@@ -376,7 +376,10 @@
       "dashboardGridIntro": "使用 `layout: grid` 时，每个小组件占据其所在行的单元格：列、行、宽度和高度。在较窄的笔记中，小组件会按阅读顺序重新排列。",
       "trainingCalendarIntro": "训练日历显示一年的训练日，以及连续达成每周目标的周数（设置 → 每周目标）。",
       "importTitle": "8. 从 Strong 或 Hevy 导入",
-      "importIntro": "从命令面板运行 **{command}**，然后选择应用导出的 CSV。日志中已有的组会被跳过，日志会先备份。"
+      "importIntro": "从命令面板运行 **{command}**，然后选择应用导出的 CSV。日志中已有的组会被跳过，日志会先备份。",
+      "setsTitle": "在您的手机上记录设置",
+      "setsIntro": "一个 `workout-sets` 块显示今天的训练计划，以行形式呈现。灰色数字表示上次的相同训练计划：勾选一行以记录，或者输入您执行的内容。点击该训练计划的协议和备注，以及已记录的训练计划以进行编辑。",
+      "codeBlockWorkoutSets": "今天记录每个训练组，逐行记录。"
     },
     "fileNames": {
       "dashboard": "仪表盘",
@@ -596,7 +599,8 @@
       "increaseBy": "将{label}增加{increment}",
       "deleteSet": "删除组",
       "updateDashboard": "更新仪表盘",
-      "updateChart": "更新图表"
+      "updateChart": "更新图表",
+      "insertSets": "插入集合"
     },
     "canvasLayout": "布局",
     "canvasOptions": "选项",
@@ -726,7 +730,8 @@
       "validChooseExercise": "请选择一个训练动作",
       "validationCombinedMode": "对于“训练动作 + 训练计划”类型，您必须同时填写这两个字段！",
       "dashboardUpdated": "仪表盘已成功更新！",
-      "dashboardUpdateFailed": "更新仪表盘失败：在其所在笔记中找不到该仪表盘，或另一个没有 id 的仪表盘具有相同设置。请重新打开笔记后再试。"
+      "dashboardUpdateFailed": "更新仪表盘失败：在其所在笔记中找不到该仪表盘，或另一个没有 id 的仪表盘具有相同设置。请重新打开笔记后再试。",
+      "setsInserted": "已插入"
     },
     "parameterKey": "键：",
     "parameterLabel": "显示名称：",
@@ -819,7 +824,8 @@
       "insertTimer": "插入训练计时器",
       "muscleTagManager": "管理肌肉标签",
       "editDashboard": "编辑仪表盘",
-      "editChart": "编辑训练图表"
+      "editChart": "编辑训练图表",
+      "insertSets": "添加锻炼计划"
     },
     "workout": "训练（可选）：",
     "workoutFile": "训练文件：",
@@ -960,7 +966,8 @@
       "trainingParameters": "训练参数",
       "gettingStarted": "入门",
       "timerDeviceCues": "计时器设备提示",
-      "customProtocols": "训练方案"
+      "customProtocols": "训练方案",
+      "beta": "β 版本功能"
     },
     "tooltips": {
       "deletePreset": "删除预设",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20 秒高强度工作，10 秒休息，共 8 轮：总共 4 分钟。",
       "emom": "每分钟整点开始：在每分钟开始时做一次动作，剩余时间休息，共 10 轮。"
+    },
+    "beta": {
+      "intro": "提供一些新功能，供您在它们正式发布前体验。这些功能目前处于测试阶段，您需要手动开启，并且可能会在后续版本中进行修改。",
+      "setSheet": {
+        "name": "锻炼套装",
+        "desc": "`workout-sets` 块：今天的工作室设置，以行形式显示在您的手机上，前一天的值作为提示，并带有启动的休息计时器。"
+      },
+      "disabledBlock": "{feature} 是一种测试功能。要使用此功能，请在“设置”→“测试功能”中启用它。"
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "加载图表时出错：{error}",
       "log": "加载记录时出错：{error}",
       "timer": "加载计时器时出错：{error}",
-      "dashboard": "加载仪表盘时出错：{error}"
+      "dashboard": "加载仪表盘时出错：{error}",
+      "sets": "加载集合时出错：{error}"
     },
     "validation": {
       "title": "无效参数：",
@@ -1215,6 +1231,26 @@
     "previous": "上一步",
     "next": "下一步",
     "rest": "休息",
-    "done": "训练完成：今天已记录 {sets} 组。"
+    "done": "训练完成：今天已记录 {sets} 组。",
+    "empty": "Add a `workout-log` or `workout-sets` block with an exercise to this note to follow it as a session."
+  },
+  "sets": {
+    "editSet": "编辑集合 {set}",
+    "addSet": "添加集合",
+    "protocol": "协议",
+    "notes": "备注",
+    "editBlock": "编辑集合",
+    "blockUpdated": "集合已更新",
+    "blockUpdateFailed": "未能更新集合：该区块未在笔记中找到。请重新打开笔记并尝试再次操作。",
+    "workoutLabel": "锻炼：",
+    "workoutPlaceholder": "为空：{note}",
+    "restLabel": "在每个组之间休息 (0 = 该部分的计时器)",
+    "noExercise": "将 `exercise:` 添加到此块中，以便记录其训练组。",
+    "progress": "{done}/{sets} 组",
+    "lastTime": "上次 ({date}): {sets}",
+    "setColumn": "设置",
+    "fieldOfSet": "{field}，设置 {set}",
+    "details": "协议和关于 {set} 集合的记录",
+    "logSet": "记录集 {set}"
   }
 }

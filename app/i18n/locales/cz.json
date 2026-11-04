@@ -376,7 +376,10 @@
       "dashboardGridIntro": "S `layout: grid` zabere každý widget buňky svého řádku: sloupec, řádek, šířku a výšku. V užší poznámce se widgety znovu seřadí v pořadí čtení.",
       "trainingCalendarIntro": "Tréninkový kalendář zobrazuje rok tréninkových dnů a kolik týdnů v řadě jste splnili týdenní cíl (Nastavení → Týdenní cíl).",
       "importTitle": "8. Import ze Strong nebo Hevy",
-      "importIntro": "Spusťte **{command}** z panelu příkazů a vyberte CSV, které aplikace exportovala. Série, které už jsou v deníku, se přeskočí a deník se nejprve zálohuje."
+      "importIntro": "Spusťte **{command}** z panelu příkazů a vyberte CSV, které aplikace exportovala. Série, které už jsou v deníku, se přeskočí a deník se nejprve zálohuje.",
+      "setsTitle": "Záznamy aktivit na vašem telefonu",
+      "setsIntro": "Blok `workout-sets` zobrazuje dnešní sady jako řádky. Šedé čísla představují stejnou sadu z předchozího dne: označte řádek, abyste ji zaznamenali, nebo zadejte, co jste dělali. Klepnutím na šipku získáte protokol a poznámky pro danou sadu a můžete ji upravit.",
+      "codeBlockWorkoutSets": "Zaznamenejte si dnešní série postupně, řádek po řádku."
     },
     "fileNames": {
       "dashboard": "Přehled",
@@ -596,7 +599,8 @@
       "increaseBy": "Zvýšit {label} o {increment}",
       "deleteSet": "Smazat sérii",
       "updateDashboard": "Aktualizovat dashboard",
-      "updateChart": "Aktualizovat graf"
+      "updateChart": "Aktualizovat graf",
+      "insertSets": "Sady pro vložení"
     },
     "canvasLayout": "Rozvržení",
     "canvasOptions": "Možnosti",
@@ -726,7 +730,8 @@
       "validChooseExercise": "Vyberte si cvičení",
       "validationCombinedMode": "Pro typ „cvičení + trénink“ musíte vyplnit obě pole!",
       "dashboardUpdated": "Dashboard byl úspěšně aktualizován!",
-      "dashboardUpdateFailed": "Nepodařilo se aktualizovat dashboard: nebyl nalezen v poznámce, nebo jiný dashboard bez ID má stejná nastavení. Otevřete poznámku znovu a zkuste to znovu."
+      "dashboardUpdateFailed": "Nepodařilo se aktualizovat dashboard: nebyl nalezen v poznámce, nebo jiný dashboard bez ID má stejná nastavení. Otevřete poznámku znovu a zkuste to znovu.",
+      "setsInserted": "Sady byly přidány"
     },
     "parameterKey": "Klíč:",
     "parameterLabel": "Název:",
@@ -819,7 +824,8 @@
       "insertTimer": "Vložit časovač tréninku",
       "muscleTagManager": "Spravovat štítky svalů",
       "editDashboard": "Upravit dashboard",
-      "editChart": "Upravit graf tréninku"
+      "editChart": "Upravit graf tréninku",
+      "insertSets": "Přidejte sérii cviků"
     },
     "workout": "Trénink (volitelné):",
     "workoutFile": "Soubor tréninku:",
@@ -960,7 +966,8 @@
       "trainingParameters": "Parametry tréninku",
       "gettingStarted": "Začít",
       "timerDeviceCues": "Upozornění zařízení pro časovač",
-      "customProtocols": "Protokoly"
+      "customProtocols": "Protokoly",
+      "beta": "Funkce pro testování (beta)"
     },
     "tooltips": {
       "deletePreset": "Smazat předvolbu",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20 sekund intenzivní práce, 10 sekund odpočinku, 8 kol: celkem 4 minuty.",
       "emom": "Každou minutu, vždy na jejím začátku: začněte sérii opakování a zbytek minuty odpočívejte. Celkem 10 kol."
+    },
+    "beta": {
+      "intro": "Nové funkce, které si můžete vyzkoušet, než budou dostupné všem. Jsou zatím nedostupné a mohou se ještě změnit.",
+      "setSheet": {
+        "name": "Sady pro cvičení",
+        "desc": "Blok `workout-sets`: dnešní série jako řádky, které můžete vyplnit na svém telefonu, s hodnotami z předchozího dne jako vodítkem a časovačem odpočinku, který začne při každém tiknutí."
+      },
+      "disabledBlock": "{feature} je funkce v beta verzi. Pro použití této funkce zapněte ji v Nastavení → Funkce v beta verzi."
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "Chyba při načítání grafu: {error}",
       "log": "Chyba při načítání záznamů: {error}",
       "timer": "Chyba při načítání časovače: {error}",
-      "dashboard": "Chyba při načítání přehledu: {error}"
+      "dashboard": "Chyba při načítání přehledu: {error}",
+      "sets": "Chyba při načítání sad: {error}"
     },
     "validation": {
       "title": "Neplatné parametry:",
@@ -1215,6 +1231,26 @@
     "previous": "Předchozí",
     "next": "Další",
     "rest": "Odpočinek",
-    "done": "Trénink hotov. Dnes zapsané série: {sets}."
+    "done": "Trénink hotov. Dnes zapsané série: {sets}.",
+    "empty": "Přidejte blok `workout-log` nebo `workout-sets` s cvičením do této poznámky, abyste ji mohli použít jako součást tréninku."
+  },
+  "sets": {
+    "editSet": "Upravit sadu {set}",
+    "addSet": "Přidat sadu",
+    "protocol": "Protokol",
+    "notes": "Poznámky",
+    "editBlock": "Upravit sady",
+    "blockUpdated": "Sady aktualizovány",
+    "blockUpdateFailed": "Neúspěšné provedení aktualizace sad: blok nebyl nalezen ve zadané poznámce. Otevřete poznámku znovu a zkuste to znovu.",
+    "workoutLabel": "Trénink:",
+    "workoutPlaceholder": "Prázdné: {note}",
+    "restLabel": "Odpočívejte po každém setu (0 = časovač sekce)",
+    "noExercise": "Přidejte `exercise:` do tohoto bloku, abyste zaznamenali jeho série.",
+    "progress": "{done}/{sets} sadů",
+    "lastTime": "Poslední případ ({date}): {sets}",
+    "setColumn": "Nastavit",
+    "fieldOfSet": "{field}, nastavte {set}",
+    "details": "Protokol a poznámky pro sadu {set}",
+    "logSet": "Nastavení protokolu {set}"
   }
 }

@@ -376,7 +376,10 @@
       "dashboardGridIntro": "Me `layout: grid`, çdo widget zë qelizat e rreshtit të vet: kolona, rreshti, gjerësia dhe lartësia. Në një shënim më të ngushtë, widget-et riorganizohen sipas rendit të leximit.",
       "trainingCalendarIntro": "Kalendari i stërvitjes shfaq një vit ditësh stërvitjeje dhe sa javë radhazi ke arritur objektivin tënd javor (Cilësimet → Objektivi javor).",
       "importTitle": "8. Importo nga Strong ose Hevy",
-      "importIntro": "Ekzekuto **{command}** nga paleta e komandave dhe zgjidh CSV-në që aplikacioni eksportoi. Seritë që janë tashmë në regjistrin tënd kapërcehen, dhe regjistri kopjohet së pari."
+      "importIntro": "Ekzekuto **{command}** nga paleta e komandave dhe zgjidh CSV-në që aplikacioni eksportoi. Seritë që janë tashmë në regjistrin tënd kapërcehen, dhe regjistri kopjohet së pari.",
+      "setsTitle": "Shënimet për grupet në telefonin tuaj",
+      "setsIntro": "Një seksion me titull `workout-sets` tregon serit e ditës si radha. Numrat e argjyt janë serit të fundit: hap një radhë për të regjistruar atë siç është, ose shkruaj çfarë ke bërë. Kagj një buton për protokollen dhe notat e serit, dhe për të redaktuar një ser të regjistruar.",
+      "codeBlockWorkoutSets": "Log today's sets row by row"
     },
     "fileNames": {
       "dashboard": "Paneli",
@@ -596,7 +599,8 @@
       "increaseBy": "Rrit {label} me {increment}",
       "deleteSet": "Fshi serinë",
       "updateDashboard": "Përditëso panelin",
-      "updateChart": "Përditëso grafikun"
+      "updateChart": "Përditëso grafikun",
+      "insertSets": "Setet e shtrimit"
     },
     "canvasLayout": "Paraqitja",
     "canvasOptions": "Opsione",
@@ -726,7 +730,8 @@
       "validChooseExercise": "Zgjidhni një ushtrim",
       "validationCombinedMode": "Për tipin 'ushtrim + stërvitje' duhet të plotësoni të dyja fushat!",
       "dashboardUpdated": "Paneli u përditësua me sukses!",
-      "dashboardUpdateFailed": "Përditësimi i panelit dështoi: ai nuk u gjet në shënimin e tij, ose një tjetër panel pa ID ka të njëjtat cilësime. Hapeni përsëri shënimin dhe provoni përsëri."
+      "dashboardUpdateFailed": "Përditësimi i panelit dështoi: ai nuk u gjet në shënimin e tij, ose një tjetër panel pa ID ka të njëjtat cilësime. Hapeni përsëri shënimin dhe provoni përsëri.",
+      "setsInserted": "Grupet janë krijuar"
     },
     "parameterKey": "Çelësi:",
     "parameterLabel": "Etiketa:",
@@ -819,7 +824,8 @@
       "insertTimer": "Shto timer stërvitjeje",
       "muscleTagManager": "Menaxho etiketat e muskujve",
       "editDashboard": "Redakto panelin",
-      "editChart": "Redakto grafikun"
+      "editChart": "Redakto grafikun",
+      "insertSets": "Shtypni për të vendosur seritë e stërvitjes"
     },
     "workout": "Stërvitja (opsionale):",
     "workoutFile": "Skedari i stërvitjes:",
@@ -960,7 +966,8 @@
       "trainingParameters": "Parametrat e stërvitjes",
       "gettingStarted": "Fillimi",
       "timerDeviceCues": "Sinjalet e timerit në pajisje",
-      "customProtocols": "Protokollet"
+      "customProtocols": "Protokollet",
+      "beta": "Funksionet beta"
     },
     "tooltips": {
       "deletePreset": "Fshi paracaktimin",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20 sekonda punë maksimale, 10 sekonda pushim, 8 raunde: gjithsej 4 minuta.",
       "emom": "Çdo minutë, në fillim të minutës: filloni serinë në fillim të çdo minute dhe pushoni për pjesën që mbetet, 10 raunde."
+    },
+    "beta": {
+      "intro": "Funksionet të reja për të provuar para se të jen gati për të gjithë. Ato janë të ndezura derësnëse ju i aktivizoni, dhe ende mund të ndryshojnë.",
+      "setSheet": {
+        "name": "Seri stërdhuese",
+        "desc": "Bloku `workout-sets`: serit e sotme si rreshta për të kompletuar në telefon, me vlerat e seancës të fundit si këshillë dhe një timer për pauzë që fillon në çdo klik."
+      },
+      "disabledBlock": "{feature} është një funksion i provës. Aktivizojeni në \"Settings\" → \"Funksionet e provës\" për të përdorur këtë blok."
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "Gabim gjatë ngarkimit të grafikut: {error}",
       "log": "Gabim gjatë ngarkimit të regjistrit: {error}",
       "timer": "Gabim gjatë ngarkimit të timerit: {error}",
-      "dashboard": "Gabim gjatë ngarkimit të panelit: {error}"
+      "dashboard": "Gabim gjatë ngarkimit të panelit: {error}",
+      "sets": "Gabim në ngarkimin e set-eve: {error}"
     },
     "validation": {
       "title": "Parametra të pavlefshëm:",
@@ -1215,6 +1231,26 @@
     "previous": "E mëparshme",
     "next": "Tjetra",
     "rest": "Pushim",
-    "done": "Stërvitja u përfundua. Seri të regjistruara sot: {sets}."
+    "done": "Stërvitja u përfundua. Seri të regjistruara sot: {sets}.",
+    "empty": "Shto një seksion me titull `workout-log` ose `workout-sets` me një veprim, në këtë notë, për të ndjekur seancën."
+  },
+  "sets": {
+    "editSet": "Redakto setin {set}",
+    "addSet": "Shto set",
+    "protocol": "Protokol",
+    "notes": "Shënime",
+    "editBlock": "Redakto setet",
+    "blockUpdated": "Seret janë përditësuar",
+    "blockUpdateFailed": "Nuk u mor sukses në përditësimin e set-eve: bloku nuk u gjet në notën e tij. Hapur përsëri notën dhe provoni përsëri.",
+    "workoutLabel": "Trajnimi:",
+    "workoutPlaceholder": "Vacant: {note}",
+    "restLabel": "Pa re pas secilës serije (0 = timeri i seksionit)",
+    "noExercise": "Shto `exercise:` në këtë seksion për të regjistruar seritë e tij.",
+    "progress": "{done}/{sets} grupet",
+    "lastTime": "Herë e fundit ({date}): {sets}",
+    "setColumn": "Krijo",
+    "fieldOfSet": "{field}, ndërtoje {set}",
+    "details": "Protokoli dhe notat e setit {set}",
+    "logSet": "Rekord i regjistruar {set}"
   }
 }

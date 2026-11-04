@@ -376,7 +376,10 @@
       "dashboardGridIntro": "`layout: grid` के साथ हर विजेट अपनी पंक्ति के सेल लेता है: कॉलम, पंक्ति, चौड़ाई और ऊँचाई। संकरे नोट में विजेट पढ़ने के क्रम में फिर से व्यवस्थित होते हैं।",
       "trainingCalendarIntro": "ट्रेनिंग कैलेंडर एक साल के प्रशिक्षण दिन और यह दिखाता है कि आपने लगातार कितने हफ़्तों में साप्ताहिक लक्ष्य पूरा किया (सेटिंग्स → साप्ताहिक लक्ष्य)।",
       "importTitle": "8. Strong या Hevy से आयात करें",
-      "importIntro": "कमांड पैलेट से **{command}** चलाएँ और ऐप द्वारा निर्यात की गई CSV चुनें। आपके लॉग में पहले से मौजूद सेट छोड़ दिए जाते हैं, और लॉग का पहले बैकअप लिया जाता है।"
+      "importIntro": "कमांड पैलेट से **{command}** चलाएँ और ऐप द्वारा निर्यात की गई CSV चुनें। आपके लॉग में पहले से मौजूद सेट छोड़ दिए जाते हैं, और लॉग का पहले बैकअप लिया जाता है।",
+      "setsTitle": "अपने फोन पर लॉग इन सेटिंग्स",
+      "setsIntro": "A `workout-sets` block shows today's sets as rows. The grey numbers are the same set last time: tick a row to log them as they are, or type what you did. Tap the arrow for the set's protocol and notes, and a logged set to edit it.",
+      "codeBlockWorkoutSets": "आज के सेट को पंक्ति दर पंक्ति लॉग करें।"
     },
     "fileNames": {
       "dashboard": "डैशबोर्ड",
@@ -596,7 +599,8 @@
       "increaseBy": "{label} को {increment} से बढ़ाएं",
       "deleteSet": "सेट हटाएं",
       "updateDashboard": "डैशबोर्ड अपडेट करें",
-      "updateChart": "चार्ट अपडेट करें"
+      "updateChart": "चार्ट अपडेट करें",
+      "insertSets": "सेट डालें"
     },
     "canvasLayout": "लेआउट",
     "canvasOptions": "विकल्प",
@@ -726,7 +730,8 @@
       "validChooseExercise": "एक व्यायाम चुनें",
       "validationCombinedMode": "'व्यायाम + वर्कआउट' प्रकार के लिए, आपको दोनों फ़ील्ड भरना होगा!",
       "dashboardUpdated": "डैशबोर्ड सफलतापूर्वक अपडेट हुआ!",
-      "dashboardUpdateFailed": "डैशबोर्ड अपडेट नहीं हो सका: यह अपने नोट में नहीं मिला, या बिना id वाला कोई दूसरा डैशबोर्ड इन्हीं सेटिंग्स के साथ मौजूद है। नोट दोबारा खोलें और फिर से कोशिश करें।"
+      "dashboardUpdateFailed": "डैशबोर्ड अपडेट नहीं हो सका: यह अपने नोट में नहीं मिला, या बिना id वाला कोई दूसरा डैशबोर्ड इन्हीं सेटिंग्स के साथ मौजूद है। नोट दोबारा खोलें और फिर से कोशिश करें।",
+      "setsInserted": "सेट डाले गए"
     },
     "parameterKey": "कुंजी:",
     "parameterLabel": "लेबल:",
@@ -819,7 +824,8 @@
       "insertTimer": "वर्कआउट टाइमर डालें",
       "muscleTagManager": "मांसपेशी टैग प्रबंधित करें",
       "editDashboard": "डैशबोर्ड संपादित करें",
-      "editChart": "वर्कआउट चार्ट संपादित करें"
+      "editChart": "वर्कआउट चार्ट संपादित करें",
+      "insertSets": "वर्कआउट सेट डालें"
     },
     "workout": "वर्कआउट (वैकल्पिक):",
     "workoutFile": "वर्कआउट फ़ाइल:",
@@ -960,7 +966,8 @@
       "trainingParameters": "प्रशिक्षण पैरामीटर",
       "gettingStarted": "शुरू करना",
       "timerDeviceCues": "टाइमर डिवाइस संकेत",
-      "customProtocols": "प्रोटोकॉल"
+      "customProtocols": "प्रोटोकॉल",
+      "beta": "बीटा सुविधाएँ"
     },
     "tooltips": {
       "deletePreset": "प्रीसेट हटाएं",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20 सेकंड तक लगातार मेहनत, 10 सेकंड का आराम, 8 राउंड: कुल 4 मिनट।",
       "emom": "हर मिनट के शुरू में अपने रेप्स शुरू करें और बचे हुए समय में आराम करें, कुल 10 राउंड।"
+    },
+    "beta": {
+      "intro": "उन नई सुविधाओं को आज़माने के लिए जो अभी सभी के लिए उपलब्ध नहीं हैं। ये सुविधाएँ तब तक बंद रहेंगी जब तक आप उन्हें चालू नहीं कर देते, और उनमें अभी भी बदलाव हो सकते हैं।",
+      "setSheet": {
+        "name": "वर्कआउट सेट",
+        "desc": "The `workout-sets` block: today's sets as rows to fill in on your phone, with the last time's values as hints and a rest timer that starts on each tick."
+      },
+      "disabledBlock": "{feature} एक बीटा सुविधा है। इस सुविधा का उपयोग करने के लिए, इसे सेटिंग्स → बीटा सुविधाओं में चालू करें।"
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "चार्ट लोड करने में त्रुटि: {error}",
       "log": "लॉग लोड करने में त्रुटि: {error}",
       "timer": "टाइमर लोड करने में त्रुटि: {error}",
-      "dashboard": "डैशबोर्ड लोड करने में त्रुटि: {error}"
+      "dashboard": "डैशबोर्ड लोड करने में त्रुटि: {error}",
+      "sets": "सेट लोड करने में त्रुटि: {error}"
     },
     "validation": {
       "title": "अवैध पैरामीटर:",
@@ -1215,6 +1231,26 @@
     "previous": "पिछला",
     "next": "अगला",
     "rest": "आराम",
-    "done": "वर्कआउट पूरा: आज {sets} सेट दर्ज किए गए।"
+    "done": "वर्कआउट पूरा: आज {sets} सेट दर्ज किए गए।",
+    "empty": "Add a `workout-log` or `workout-sets` block with an exercise to this note to follow it as a session."
+  },
+  "sets": {
+    "editSet": "सेट संपादित करें {set}",
+    "addSet": "सेट जोड़ें",
+    "protocol": "प्रोटोकॉल",
+    "notes": "टिप्पणियाँ",
+    "editBlock": "सेट संपादित करें",
+    "blockUpdated": "सेट अपडेट किए गए",
+    "blockUpdateFailed": "सेट अपडेट करने में विफल: ब्लॉक नोट में नहीं मिला। नोट को फिर से खोलें और फिर से प्रयास करें।",
+    "workoutLabel": "वर्कआउट:",
+    "workoutPlaceholder": "खाली: {note}",
+    "restLabel": "प्रत्येक सेट के बाद आराम करें (0 = अनुभाग का टाइमर)",
+    "noExercise": "इस ब्लॉक में `exercise:` जोड़ें ताकि इसके सेट को लॉग किया जा सके।",
+    "progress": "{done}/{sets} सेट",
+    "lastTime": "पिछली बार ({date}): {sets}",
+    "setColumn": "सेट",
+    "fieldOfSet": "{field}, {set} सेट करें",
+    "details": "प्रोटोकॉल और नोट्स, सेट {set}",
+    "logSet": "लॉग सेट {set}"
   }
 }

@@ -376,7 +376,10 @@
       "dashboardGridIntro": "Z `layout: grid` każdy widżet zajmuje komórki swojego wiersza: kolumnę, wiersz, szerokość i wysokość. W węższej notatce widżety są ponownie upakowane w kolejności czytania.",
       "trainingCalendarIntro": "Kalendarz treningów pokazuje rok dni treningowych i ile tygodni z rzędu osiągnąłeś tygodniowy cel (Ustawienia → Cel tygodniowy).",
       "importTitle": "8. Import z Strong lub Hevy",
-      "importIntro": "Uruchom **{command}** z palety poleceń i wybierz plik CSV wyeksportowany przez aplikację. Serie, które są już w dzienniku, zostaną pominięte, a dziennik zostanie najpierw skopiowany."
+      "importIntro": "Uruchom **{command}** z palety poleceń i wybierz plik CSV wyeksportowany przez aplikację. Serie, które są już w dzienniku, zostaną pominięte, a dziennik zostanie najpierw skopiowany.",
+      "setsTitle": "Zapisywanie zestawów na swoim telefonie",
+      "setsIntro": "Blok `workout-sets` wyświetla dzisiejsze serie jako wiersze. Szare liczby oznaczają tę samą serię z poprzedniej sesji: zaznacz wiersz, aby zapisać, co zrobiłeś, lub wpisz to. Dotknij strzałki, aby zobaczyć protokół i notatki dla danej serii, a także edytować zapisaną serię.",
+      "codeBlockWorkoutSets": "Zapisz dzisiejsze serie, po kolei."
     },
     "fileNames": {
       "dashboard": "Panel kontrolny",
@@ -596,7 +599,8 @@
       "increaseBy": "Zwiększ {label} o {increment}",
       "deleteSet": "Usuń serię",
       "updateDashboard": "Zaktualizuj panel kontrolny",
-      "updateChart": "Zaktualizuj wykres"
+      "updateChart": "Zaktualizuj wykres",
+      "insertSets": "Zestawy do wstawiania"
     },
     "canvasLayout": "Układ",
     "canvasOptions": "Opcje",
@@ -726,7 +730,8 @@
       "validChooseExercise": "Wybierz ćwiczenie",
       "validationCombinedMode": "Dla typu 'ćwiczenia + trening' musisz wypełnić oba pola!",
       "dashboardUpdated": "Panel kontrolny został pomyślnie zaktualizowany!",
-      "dashboardUpdateFailed": "Nie udało się zaktualizować panelu kontrolnego: nie znaleziono go w notatce albo inny panel bez identyfikatora ma takie same ustawienia. Otwórz notatkę ponownie i spróbuj jeszcze raz."
+      "dashboardUpdateFailed": "Nie udało się zaktualizować panelu kontrolnego: nie znaleziono go w notatce albo inny panel bez identyfikatora ma takie same ustawienia. Otwórz notatkę ponownie i spróbuj jeszcze raz.",
+      "setsInserted": "Zestawy dodane"
     },
     "parameterKey": "Klucz:",
     "parameterLabel": "Etykieta:",
@@ -819,7 +824,8 @@
       "insertTimer": "Dodaj timer treningowy",
       "muscleTagManager": "Zarządzaj tagami mięśni",
       "editDashboard": "Edytuj panel kontrolny",
-      "editChart": "Edytuj wykres treningu"
+      "editChart": "Edytuj wykres treningu",
+      "insertSets": "Dodaj zestaw ćwiczeń"
     },
     "workout": "Trening (opcjonalnie):",
     "workoutFile": "Plik treningowy:",
@@ -960,7 +966,8 @@
       "trainingParameters": "Parametry treningu",
       "gettingStarted": "Jak zacząć",
       "timerDeviceCues": "Przypomnienia dotyczące urządzenia timera",
-      "customProtocols": "Protokoły"
+      "customProtocols": "Protokoły",
+      "beta": "Funkcje beta"
     },
     "tooltips": {
       "deletePreset": "Usuń ustawienie",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20 sekund intensywnej pracy, 10 sekund odpoczynku, 8 rund: łącznie 4 minuty.",
       "emom": "Co minutę: zacznij serię na początku każdej minuty i odpoczywaj do końca tej minuty, 10 rund."
+    },
+    "beta": {
+      "intro": "Nowe funkcje, które można wypróbować przed ich oficjalnym udostępnieniem. Są one wyłączone domyślnie i mogą ulec zmianie.",
+      "setSheet": {
+        "name": "Zestawy ćwiczeń",
+        "desc": "Blok `workout-sets`: dzisiejsze serie wyświetlane jako wiersze, które można wypełnić na swoim telefonie, z wartościami z poprzedniej sesji jako wskazówkami oraz timera odpoczynku, który rozpoczyna się przy każdym kliknięciu."
+      },
+      "disabledBlock": "{feature} to funkcja beta. Włącz ją w ustawieniach → Funkcjach beta, aby korzystać z tej funkcji."
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "Błąd ładowania wykresu: {error}",
       "log": "Błąd ładowania dziennika: {error}",
       "timer": "Błąd ładowania timera: {error}",
-      "dashboard": "Błąd ładowania panelu kontrolnego: {error}"
+      "dashboard": "Błąd ładowania panelu kontrolnego: {error}",
+      "sets": "Błąd podczas ładowania zestawów: {error}"
     },
     "validation": {
       "title": "Nieprawidłowe parametry:",
@@ -1215,6 +1231,26 @@
     "previous": "Poprzednia",
     "next": "Dalej",
     "rest": "Odpoczynek",
-    "done": "Trening zakończony. Dziś zapisane serie: {sets}."
+    "done": "Trening zakończony. Dziś zapisane serie: {sets}.",
+    "empty": "Dodaj blok `workout-log` lub `workout-sets` z ćwiczeniem do tej notatki, aby móc ją traktować jako sesję."
+  },
+  "sets": {
+    "editSet": "Edytuj zestaw {set}",
+    "addSet": "Dodaj zestaw",
+    "protocol": "Protokół",
+    "notes": "Notatki",
+    "editBlock": "Edytuj zbiory",
+    "blockUpdated": "Zestawy zaktualizowane",
+    "blockUpdateFailed": "Nie udało się zaktualizować zestawów: blok nie został znaleziony w notatce. Otwórz notatkę ponownie i spróbuj jeszcze raz.",
+    "workoutLabel": "Trening:",
+    "workoutPlaceholder": "Puste: {note}",
+    "restLabel": "Odpocznij po każdym zestawie (0 = timer sekcji)",
+    "noExercise": "Dodaj `exercise:` do tego bloku, aby rejestrować wykonane serie.",
+    "progress": "{done}/{sets} zestawów",
+    "lastTime": "Ostatni raz ({date}): {sets}",
+    "setColumn": "Ustaw",
+    "fieldOfSet": "{field}, ustaw {set}",
+    "details": "Protokół i notatki dotyczące zestawu {set}",
+    "logSet": "Zestaw dzienników {set}"
   }
 }

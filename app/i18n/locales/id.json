@@ -376,7 +376,10 @@
       "dashboardGridIntro": "Dengan `layout: grid`, setiap widget menempati sel barisnya: kolom, baris, lebar, dan tinggi. Di catatan yang lebih sempit, widget disusun ulang sesuai urutan baca.",
       "trainingCalendarIntro": "Kalender latihan menampilkan setahun hari latihan dan berapa minggu berturut-turut kamu mencapai target mingguan (Pengaturan → Target mingguan).",
       "importTitle": "8. Impor dari Strong atau Hevy",
-      "importIntro": "Jalankan **{command}** dari palet perintah lalu pilih CSV yang diekspor aplikasi. Set yang sudah ada di log dilewati, dan log dicadangkan terlebih dahulu."
+      "importIntro": "Jalankan **{command}** dari palet perintah lalu pilih CSV yang diekspor aplikasi. Set yang sudah ada di log dilewati, dan log dicadangkan terlebih dahulu.",
+      "setsTitle": "Mencatat set di ponsel Anda",
+      "setsIntro": "Sebuah blok `workout-sets` menampilkan set yang tersedia hari ini dalam bentuk baris. Angka abu-abu tersebut adalah set yang sama dari sebelumnya: pilih baris untuk mencatatnya seperti apa, atau ketik apa yang Anda lakukan. Ketuk panah untuk protokol dan catatan set, dan untuk mengedit set yang sudah dicatat.",
+      "codeBlockWorkoutSets": "Catat setiap set yang dilakukan hari ini, satu per satu."
     },
     "fileNames": {
       "dashboard": "Dasbor",
@@ -596,7 +599,8 @@
       "increaseBy": "Tambah {label} sebesar {increment}",
       "deleteSet": "Hapus set",
       "updateDashboard": "Perbarui dasbor",
-      "updateChart": "Perbarui grafik"
+      "updateChart": "Perbarui grafik",
+      "insertSets": "Tambahkan set"
     },
     "canvasLayout": "Tata letak",
     "canvasOptions": "Pilihan",
@@ -726,7 +730,8 @@
       "dashboardUpdated": "Dasbor berhasil diperbarui!",
       "dashboardUpdateFailed": "Gagal memperbarui dasbor: dasbor tidak ditemukan di catatannya, atau dasbor lain tanpa ID memiliki pengaturan yang sama. Buka kembali catatan lalu coba lagi.",
       "tableUpdateFailed": "Gagal memperbarui tabel: tabel tidak ditemukan di catatannya. Buka kembali catatan lalu coba lagi.",
-      "timerUpdateFailed": "Gagal memperbarui timer: timer tidak ditemukan di catatannya. Buka kembali catatan lalu coba lagi."
+      "timerUpdateFailed": "Gagal memperbarui timer: timer tidak ditemukan di catatannya. Buka kembali catatan lalu coba lagi.",
+      "setsInserted": "Set telah ditambahkan"
     },
     "parameterKey": "Kunci:",
     "parameterLabel": "Label:",
@@ -819,7 +824,8 @@
       "insertTimer": "Sisipkan timer latihan",
       "muscleTagManager": "Kelola tag otot",
       "editDashboard": "Sunting dasbor",
-      "editChart": "Sunting grafik latihan"
+      "editChart": "Sunting grafik latihan",
+      "insertSets": "Masukkan rangkaian latihan"
     },
     "workout": "Latihan (opsional):",
     "workoutFile": "File latihan:",
@@ -960,7 +966,8 @@
       "trainingParameters": "Parameter pelatihan",
       "gettingStarted": "Memulai",
       "timerDeviceCues": "Petunjuk perangkat timer",
-      "customProtocols": "Protokol"
+      "customProtocols": "Protokol",
+      "beta": "Fitur Beta"
     },
     "tooltips": {
       "deletePreset": "Hapus preset",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20 detik kerja maksimal, 10 detik istirahat, 8 putaran: total 4 menit.",
       "emom": "Setiap menit penuh: mulai repetisi Anda di awal setiap menit dan istirahat selama sisa waktunya, 10 putaran."
+    },
+    "beta": {
+      "intro": "Fitur-fitur baru yang dapat Anda coba sebelum dirilis untuk semua pengguna. Fitur-fitur ini bersifat sementara dan akan dinonaktifkan hingga Anda mengaktifkannya, dan mungkin masih dapat berubah.",
+      "setSheet": {
+        "name": "Set latihan",
+        "desc": "Blok `workout-sets`: set hari ini ditampilkan sebagai baris yang dapat Anda isi di ponsel, dengan nilai dari waktu sebelumnya sebagai petunjuk, dan timer istirahat yang dimulai setiap kali."
+      },
+      "disabledBlock": "{feature} adalah fitur beta. Aktifkan fitur ini di Pengaturan → Fitur Beta untuk menggunakan blok ini."
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "Kesalahan saat memuat grafik: {error}",
       "log": "Kesalahan saat memuat log latihan: {error}",
       "timer": "Kesalahan saat memuat timer: {error}",
-      "dashboard": "Kesalahan saat memuat dasbor: {error}"
+      "dashboard": "Kesalahan saat memuat dasbor: {error}",
+      "sets": "Kesalahan saat memuat set: {error}"
     },
     "validation": {
       "title": "Parameter tidak valid:",
@@ -1215,6 +1231,26 @@
     "previous": "Sebelumnya",
     "next": "Berikutnya",
     "rest": "Istirahat",
-    "done": "Latihan selesai: {sets} set tercatat hari ini."
+    "done": "Latihan selesai: {sets} set tercatat hari ini.",
+    "empty": "Tambahkan blok `workout-log` atau `workout-sets` dengan latihan ke catatan ini untuk melacaknya sebagai bagian dari sesi."
+  },
+  "sets": {
+    "editSet": "Edit set {set}",
+    "addSet": "Tambahkan set",
+    "protocol": "Protokol",
+    "notes": "Catatan",
+    "editBlock": "Edit kumpulan",
+    "blockUpdated": "Set telah diperbarui",
+    "blockUpdateFailed": "Gagal memperbarui set: blok tidak ditemukan dalam catatan. Buka kembali catatan dan coba lagi.",
+    "workoutLabel": "Latihan:",
+    "workoutPlaceholder": "Kosong: {note}",
+    "restLabel": "Istirahat setelah setiap set (0 = timer bagian ini)",
+    "noExercise": "Tambahkan `exercise:` ke blok ini untuk mencatat jumlah setnya.",
+    "progress": "{done}/{sets} grup",
+    "lastTime": "Terakhir ({date}): {sets}",
+    "setColumn": "Atur",
+    "fieldOfSet": "{field}, atur {set}",
+    "details": "Protokol dan catatan untuk set {set}",
+    "logSet": "Pengaturan log {set}"
   }
 }

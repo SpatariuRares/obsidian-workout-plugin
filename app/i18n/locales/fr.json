@@ -376,7 +376,10 @@
       "dashboardGridIntro": "Avec `layout: grid`, chaque widget occupe les cellules de sa ligne : colonne, ligne, largeur et hauteur. Dans une note plus étroite, les widgets sont réorganisés dans l'ordre de lecture.",
       "trainingCalendarIntro": "Le calendrier d'entraînement affiche une année de jours d'entraînement et le nombre de semaines consécutives où tu as atteint ton objectif hebdomadaire (Paramètres → Objectif hebdomadaire).",
       "importTitle": "8. Importer depuis Strong ou Hevy",
-      "importIntro": "Lance **{command}** depuis la palette de commandes et choisis le CSV exporté par l'application. Les séries déjà présentes dans ton journal sont ignorées, et le journal est sauvegardé au préalable."
+      "importIntro": "Lance **{command}** depuis la palette de commandes et choisis le CSV exporté par l'application. Les séries déjà présentes dans ton journal sont ignorées, et le journal est sauvegardé au préalable.",
+      "setsTitle": "Gestion des ensembles sur votre téléphone",
+      "setsIntro": "Un bloc `workout-sets` affiche les séries disponibles aujourd'hui sous forme de lignes. Les chiffres gris correspondent à la même série lors de la dernière séance : cochez une ligne pour enregistrer les informations, ou saisissez ce que vous avez fait. Appuyez sur la flèche pour consulter le protocole et les notes de la série, et pour modifier une série enregistrée.",
+      "codeBlockWorkoutSets": "Enregistrez les séries de l'entraînement, une par une."
     },
     "fileNames": {
       "dashboard": "Tableau de bord",
@@ -596,7 +599,8 @@
       "increaseBy": "Augmenter {label} de {increment}",
       "deleteSet": "Supprimer la série",
       "updateDashboard": "Mettre à jour le tableau de bord",
-      "updateChart": "Mettre à jour le graphique"
+      "updateChart": "Mettre à jour le graphique",
+      "insertSets": "Ensembles à insérer"
     },
     "canvasLayout": "Mise en page",
     "canvasOptions": "Options",
@@ -726,7 +730,8 @@
       "dashboardUpdated": "Tableau de bord mis à jour avec succès !",
       "tableUpdateFailed": "Échec de la mise à jour du tableau : il est introuvable dans sa note. Rouvrez la note et réessayez.",
       "timerUpdateFailed": "Échec de la mise à jour du minuteur : il est introuvable dans sa note. Rouvrez la note et réessayez.",
-      "dashboardUpdateFailed": "Échec de la mise à jour du tableau de bord : il est introuvable dans sa note, ou un autre tableau de bord sans identifiant a les mêmes réglages. Rouvrez la note et réessayez."
+      "dashboardUpdateFailed": "Échec de la mise à jour du tableau de bord : il est introuvable dans sa note, ou un autre tableau de bord sans identifiant a les mêmes réglages. Rouvrez la note et réessayez.",
+      "setsInserted": "Ensembles ajoutés"
     },
     "parameterKey": "Clé :",
     "parameterLabel": "Étiquette :",
@@ -819,7 +824,8 @@
       "insertTimer": "Insérer un minuteur d'entraînement",
       "muscleTagManager": "Gérer les tags musculaires",
       "editDashboard": "Modifier le tableau de bord",
-      "editChart": "Modifier le graphique d'entraînement"
+      "editChart": "Modifier le graphique d'entraînement",
+      "insertSets": "Ajouter des séries d'exercices"
     },
     "workout": "Entraînement (facultatif) :",
     "workoutFile": "Fichier d'entraînement :",
@@ -960,7 +966,8 @@
       "trainingParameters": "Paramètres d'entraînement",
       "gettingStarted": "Premiers pas",
       "timerDeviceCues": "Signaux du minuteur sur l'appareil",
-      "customProtocols": "Protocoles"
+      "customProtocols": "Protocoles",
+      "beta": "Fonctionnalités bêta"
     },
     "tooltips": {
       "deletePreset": "Supprimer le préréglage",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20 secondes de travail à intensité maximale, 10 secondes de repos, 8 tours : 4 minutes au total.",
       "emom": "Chaque minute pile : commencez vos répétitions au début de chaque minute, puis reposez-vous jusqu'à la fin de celle-ci, 10 tours."
+    },
+    "beta": {
+      "intro": "Nouvelles fonctionnalités à tester avant leur lancement général. Elles sont temporairement désactivées et peuvent encore être modifiées.",
+      "setSheet": {
+        "name": "Ensembles d'entraînement",
+        "desc": "Le bloc `workout-sets` : les séries de l'aujourd'hui présentées sous forme de lignes à remplir sur votre téléphone, avec les valeurs de la dernière séance comme indication, et un minuteur de repos qui démarre à chaque clic."
+      },
+      "disabledBlock": "{feature} est une fonctionnalité en version bêta. Activez-la dans les paramètres → Fonctionnalités bêta pour utiliser cette fonctionnalité."
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "Erreur lors du chargement du graphique : {error}",
       "log": "Erreur lors du chargement du journal : {error}",
       "timer": "Erreur lors du chargement du minuteur : {error}",
-      "dashboard": "Erreur lors du chargement du tableau de bord : {error}"
+      "dashboard": "Erreur lors du chargement du tableau de bord : {error}",
+      "sets": "Erreur lors du chargement des ensembles : {error}"
     },
     "validation": {
       "title": "Paramètres invalides :",
@@ -1215,6 +1231,26 @@
     "previous": "Précédent",
     "next": "Suivant",
     "rest": "Repos",
-    "done": "Entraînement terminé. Séries enregistrées aujourd'hui : {sets}."
+    "done": "Entraînement terminé. Séries enregistrées aujourd'hui : {sets}.",
+    "empty": "Ajoutez un bloc `workout-log` ou `workout-sets` contenant un exercice à cette note afin de pouvoir la suivre comme une séance."
+  },
+  "sets": {
+    "editSet": "Modifier l'ensemble {set}",
+    "addSet": "Ajouter un ensemble",
+    "protocol": "Protocole",
+    "notes": "Notes",
+    "editBlock": "Modifier les ensembles",
+    "blockUpdated": "Ensemble mis à jour",
+    "blockUpdateFailed": "Échec de la mise à jour des ensembles : l'élément n'a pas été trouvé dans sa note. Ouvrez à nouveau la note et réessayez.",
+    "workoutLabel": "Entraînement:",
+    "workoutPlaceholder": "Vide : {note}",
+    "restLabel": "Repos après chaque série (0 = le minuteur de la section)",
+    "noExercise": "Add `exercise:` to this block to log its sets.",
+    "progress": "{done}/{sets} ensembles",
+    "lastTime": "Dernière fois ({date}): {sets}",
+    "setColumn": "Définir",
+    "fieldOfSet": "{field}, définir {set}",
+    "details": "Protocole et notes du groupe {set}",
+    "logSet": "Enregistrement sélectionné {set}"
   }
 }

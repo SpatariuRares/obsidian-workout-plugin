@@ -376,7 +376,10 @@
       "dashboardGridIntro": "使用 `layout: grid` 時，每個小工具會佔用其所在列的儲存格：欄、列、寬度與高度。在較窄的筆記中，小工具會依閱讀順序重新排列。",
       "trainingCalendarIntro": "訓練日曆顯示一整年的訓練日，以及連續達成每週目標的週數（設定 → 每週目標）。",
       "importTitle": "8. 從 Strong 或 Hevy 匯入",
-      "importIntro": "從命令面板執行 **{command}**，然後選擇應用程式匯出的 CSV。紀錄中已有的組會被略過，紀錄會先備份。"
+      "importIntro": "從命令面板執行 **{command}**，然後選擇應用程式匯出的 CSV。紀錄中已有的組會被略過，紀錄會先備份。",
+      "setsTitle": "在手機上記錄您的設定",
+      "setsIntro": "A `workout-sets` block shows today's sets as rows. The grey numbers are the same set last time: tick a row to log them as they are, or type what you did. Tap the arrow for the set's protocol and notes, and a logged set to edit it.",
+      "codeBlockWorkoutSets": "記錄今日的訓練組，逐行記錄。"
     },
     "fileNames": {
       "dashboard": "儀表板",
@@ -596,7 +599,8 @@
       "increaseBy": "將{label}增加{increment}",
       "deleteSet": "刪除組",
       "updateDashboard": "更新儀表板",
-      "updateChart": "更新圖表"
+      "updateChart": "更新圖表",
+      "insertSets": "插入集合"
     },
     "canvasLayout": "佈局",
     "canvasOptions": "選項",
@@ -726,7 +730,8 @@
       "validChooseExercise": "請選擇一個動作",
       "validationCombinedMode": "對於「動作 + 運動」類型，您必須填寫兩個欄位！",
       "dashboardUpdated": "儀表板已成功更新！",
-      "dashboardUpdateFailed": "無法更新儀表板：在其所在筆記中找不到它，或另一個沒有 id 的儀表板有相同設定。請重新開啟筆記後再試一次。"
+      "dashboardUpdateFailed": "無法更新儀表板：在其所在筆記中找不到它，或另一個沒有 id 的儀表板有相同設定。請重新開啟筆記後再試一次。",
+      "setsInserted": "已新增設定"
     },
     "parameterKey": "鍵：",
     "parameterLabel": "標籤：",
@@ -819,7 +824,8 @@
       "insertTimer": "插入運動計時器",
       "muscleTagManager": "管理肌肉標籤",
       "editDashboard": "編輯儀表板",
-      "editChart": "編輯運動圖表"
+      "editChart": "編輯運動圖表",
+      "insertSets": "新增運動組"
     },
     "workout": "運動（可選）：",
     "workoutFile": "運動檔案：",
@@ -960,7 +966,8 @@
       "trainingParameters": "訓練參數",
       "gettingStarted": "開始使用",
       "timerDeviceCues": "計時器設備提示",
-      "customProtocols": "訓練法"
+      "customProtocols": "訓練法",
+      "beta": "β 版本功能"
     },
     "tooltips": {
       "deletePreset": "刪除預設",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20 秒高強度運動，10 秒休息，共 8 輪：總共 4 分鐘。",
       "emom": "每分鐘的整點開始一組動作，剩餘時間休息，共 10 輪。"
+    },
+    "beta": {
+      "intro": "新增功能，可在您準備好之前先嘗試。這些功能目前尚未正式推出，您需要自行開啟，並且可能在之後進行變更。",
+      "setSheet": {
+        "name": "運動組",
+        "desc": "The `workout-sets` block: today's sets as rows to fill in on your phone, with the last time's values as hints and a rest timer that starts on each tick."
+      },
+      "disabledBlock": "{feature} 是一個測試版本功能。請在「設定」→「測試版本功能」中開啟此功能，以便使用。"
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "載入圖表時發生錯誤：{error}",
       "log": "載入紀錄時發生錯誤：{error}",
       "timer": "載入計時器時發生錯誤：{error}",
-      "dashboard": "載入儀表板時發生錯誤：{error}"
+      "dashboard": "載入儀表板時發生錯誤：{error}",
+      "sets": "載入組別時發生錯誤：{error}"
     },
     "validation": {
       "title": "無效參數：",
@@ -1215,6 +1231,26 @@
     "previous": "上一步",
     "next": "下一步",
     "rest": "休息",
-    "done": "訓練完成：今天已紀錄 {sets} 組。"
+    "done": "訓練完成：今天已紀錄 {sets} 組。",
+    "empty": "Add a `workout-log` or `workout-sets` block with an exercise to this note to follow it as a session."
+  },
+  "sets": {
+    "editSet": "編輯集合 {set}",
+    "addSet": "新增集合",
+    "protocol": "協定",
+    "notes": "備註",
+    "editBlock": "編輯集合",
+    "blockUpdated": "集合已更新",
+    "blockUpdateFailed": "無法更新集合：該區塊未在備註中找到。請重新開啟備註並再次嘗試。",
+    "workoutLabel": "運動：",
+    "workoutPlaceholder": "無內容：{note}",
+    "restLabel": "在每個組之間休息 (0 = 該區塊的計時器)",
+    "noExercise": "將 `exercise:` 添加到此區塊中，以便記錄該動作的組數。",
+    "progress": "{done}/{sets} sets",
+    "lastTime": "上次 ({date}): {sets}",
+    "setColumn": "設定",
+    "fieldOfSet": "{field}, set {set}",
+    "details": "{set} 設定的協議與備註",
+    "logSet": "記錄集 {set}"
   }
 }

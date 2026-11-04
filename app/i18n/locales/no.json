@@ -376,7 +376,10 @@
       "dashboardGridIntro": "Med `layout: grid` tar hver widget cellene på linjen sin: kolonne, rad, bredde og høyde. I et smalere notat pakkes widgetene på nytt i leserekkefølge.",
       "trainingCalendarIntro": "Treningskalenderen viser et år med treningsdager og hvor mange uker på rad du har nådd ukemålet ditt (Innstillinger → Ukentlig mål).",
       "importTitle": "8. Importer fra Strong eller Hevy",
-      "importIntro": "Kjør **{command}** fra kommandopaletten og velg CSV-filen appen eksporterte. Sett som allerede er i loggen din, hoppes over, og loggen sikkerhetskopieres først."
+      "importIntro": "Kjør **{command}** fra kommandopaletten og velg CSV-filen appen eksporterte. Sett som allerede er i loggen din, hoppes over, og loggen sikkerhetskopieres først.",
+      "setsTitle": "Vis eksempler på loggingsett på telefonen din",
+      "setsIntro": "A `workout-sets` block shows today's sets as rows. The grey numbers are the same set last time: tick a row to log them as they are, or type what you did. Tap the arrow for the set's protocol and notes, and a logged set to edit it.",
+      "codeBlockWorkoutSets": "Logg treningssettet for i dag, rad for rad."
     },
     "fileNames": {
       "dashboard": "Dashboard",
@@ -596,7 +599,8 @@
       "increaseBy": "Øk {label} med {increment}",
       "deleteSet": "Slett sett",
       "updateDashboard": "Oppdater dashbord",
-      "updateChart": "Oppdater diagram"
+      "updateChart": "Oppdater diagram",
+      "insertSets": "Sett for innsetting"
     },
     "canvasLayout": "Oppsett",
     "canvasOptions": "Alternativer",
@@ -726,7 +730,8 @@
       "validChooseExercise": "Velg en øvelse",
       "validationCombinedMode": "For type 'øvelse + trening' må du fylle ut begge feltene!",
       "dashboardUpdated": "Dashbordet ble oppdatert!",
-      "dashboardUpdateFailed": "Kunne ikke oppdatere dashbordet: det ble ikke funnet i notatet, eller et annet dashbord uten ID har de samme innstillingene. Åpne notatet på nytt og prøv igjen."
+      "dashboardUpdateFailed": "Kunne ikke oppdatere dashbordet: det ble ikke funnet i notatet, eller et annet dashbord uten ID har de samme innstillingene. Åpne notatet på nytt og prøv igjen.",
+      "setsInserted": "Sett lagt til"
     },
     "parameterKey": "Nøkkel:",
     "parameterLabel": "Etikett:",
@@ -819,7 +824,8 @@
       "insertTimer": "Legg til trenings-timer",
       "muscleTagManager": "Administrer muskeltagger",
       "editDashboard": "Rediger dashbord",
-      "editChart": "Rediger treningsdiagram"
+      "editChart": "Rediger treningsdiagram",
+      "insertSets": "Legg til treningssett"
     },
     "workout": "Trening (valgfritt):",
     "workoutFile": "Treningsfil:",
@@ -960,7 +966,8 @@
       "trainingParameters": "Treningsparametere",
       "gettingStarted": "Komme i gang",
       "timerDeviceCues": "Varsler for tidtakeren",
-      "customProtocols": "Protokoller"
+      "customProtocols": "Protokoller",
+      "beta": "Funksjoner for beta-versjonen"
     },
     "tooltips": {
       "deletePreset": "Slett forhåndsinnstilling",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20 sekunder med maksimal innsats, 10 sekunder med hvile, 8 runder: totalt 4 minutter.",
       "emom": "Hvert minutt på minuttet: start repetisjonene i begynnelsen av hvert minutt, og hvil resten av minuttet, 10 runder."
+    },
+    "beta": {
+      "intro": "Nye funksjoner du kan prøve før de er klare for alle. De er midlertidig deaktivert, og kan fortsatt endres.",
+      "setSheet": {
+        "name": "Treningssett",
+        "desc": "`workout-sets`-blokken: dagens treningssett som rader du kan fylle ut på telefonen, med verdiene fra forrige økt som veiledning, og en pausetimer som starter ved hvert klikk."
+      },
+      "disabledBlock": "{feature} er en beta-funksjon. Slå den på i Innstillinger → Beta-funksjoner for å bruke denne funksjonen."
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "Feil ved lasting av diagram: {error}",
       "log": "Feil ved lasting av logg: {error}",
       "timer": "Feil ved lasting av timer: {error}",
-      "dashboard": "Feil ved lasting av dashbord: {error}"
+      "dashboard": "Feil ved lasting av dashbord: {error}",
+      "sets": "Feil ved lasting av sett: {error}"
     },
     "validation": {
       "title": "Ugyldige parametere:",
@@ -1215,6 +1231,26 @@
     "previous": "Forrige",
     "next": "Neste",
     "rest": "Hvile",
-    "done": "Trening ferdig. Sett registrert i dag: {sets}."
+    "done": "Trening ferdig. Sett registrert i dag: {sets}.",
+    "empty": "Add a `workout-log` or `workout-sets` block with an exercise to this note to follow it as a session."
+  },
+  "sets": {
+    "editSet": "Rediger sett {set}",
+    "addSet": "Legg til sett",
+    "protocol": "Protokoll",
+    "notes": "Merknader",
+    "editBlock": "Rediger sett",
+    "blockUpdated": "Sett oppdatert",
+    "blockUpdateFailed": "Feilet ved oppdatering av settene: blokken ble ikke funnet i notatet. Åpne notatet på nytt og prøv igjen.",
+    "workoutLabel": "Trening:",
+    "workoutPlaceholder": "Tomt: {note}",
+    "restLabel": "Hvile etter hver serie (0 = tidsinnstilling for seksjonen)",
+    "noExercise": "Legg til `exercise:` i dette området for å logge antall sett.",
+    "progress": "{done}/{sets} sett",
+    "lastTime": "Siste gang ({date}): {sets}",
+    "setColumn": "Sett",
+    "fieldOfSet": "{field}, sett {set}",
+    "details": "Protokoll og notater for sett {set}",
+    "logSet": "Logg satt {set}"
   }
 }

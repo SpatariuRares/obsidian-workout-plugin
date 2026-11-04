@@ -376,7 +376,10 @@
       "dashboardGridIntro": "مع `layout: grid` تشغل كل أداة خلايا سطرها: العمود والسطر والعرض والارتفاع. في ملاحظة أضيق تُعاد ترتيب الأدوات حسب ترتيب القراءة.",
       "trainingCalendarIntro": "يعرض تقويم التدريب سنة من أيام التدريب وعدد الأسابيع المتتالية التي بلغت فيها هدفك الأسبوعي (الإعدادات → الهدف الأسبوعي).",
       "importTitle": "8. الاستيراد من Strong أو Hevy",
-      "importIntro": "شغّل **{command}** من لوحة الأوامر، واختر ملف CSV الذي صدّره التطبيق. تُتخطى المجموعات الموجودة في سجلّك، ويُنشأ نسخة احتياطية من السجل أولًا."
+      "importIntro": "شغّل **{command}** من لوحة الأوامر، واختر ملف CSV الذي صدّره التطبيق. تُتخطى المجموعات الموجودة في سجلّك، ويُنشأ نسخة احتياطية من السجل أولًا.",
+      "setsTitle": "تسجيل مجموعات على هاتفك",
+      "setsIntro": "A `workout-sets` block shows today's sets as rows. The grey numbers are the same set last time: tick a row to log them as they are, or type what you did. Tap the arrow for the set's protocol and notes, and a logged set to edit it.",
+      "codeBlockWorkoutSets": "سجل مجموعات اليوم صفًا تلو الآخر."
     },
     "fileNames": {
       "dashboard": "لوحة التحكم",
@@ -596,7 +599,8 @@
       "increaseBy": "زيادة {label} بمقدار {increment}",
       "deleteSet": "حذف المجموعة",
       "updateDashboard": "تحديث لوحة التحكم",
-      "updateChart": "تحديث المخطط"
+      "updateChart": "تحديث المخطط",
+      "insertSets": "مجموعات الإدخال"
     },
     "canvasLayout": "الترتيب",
     "canvasOptions": "الخيارات",
@@ -726,7 +730,8 @@
       "dashboardUpdated": "تم تحديث لوحة التحكم بنجاح!",
       "tableUpdateFailed": "تعذّر تحديث الجدول: لم يُعثر عليه في ملاحظته. أعد فتح الملاحظة وحاول مرة أخرى.",
       "timerUpdateFailed": "تعذّر تحديث المؤقت: لم يُعثر عليه في ملاحظته. أعد فتح الملاحظة وحاول مرة أخرى.",
-      "dashboardUpdateFailed": "تعذّر تحديث لوحة التحكم: لم يُعثر عليها في ملاحظتها، أو توجد لوحة أخرى بلا معرّف بالإعدادات نفسها. أعد فتح الملاحظة وحاول مرة أخرى."
+      "dashboardUpdateFailed": "تعذّر تحديث لوحة التحكم: لم يُعثر عليها في ملاحظتها، أو توجد لوحة أخرى بلا معرّف بالإعدادات نفسها. أعد فتح الملاحظة وحاول مرة أخرى.",
+      "setsInserted": "تم إدخال المجموعات"
     },
     "parameterKey": "المفتاح:",
     "parameterLabel": "الاسم:",
@@ -819,7 +824,8 @@
       "insertTimer": "إدراج مؤقت التدريب",
       "muscleTagManager": "إدارة علامات العضلات",
       "editDashboard": "تعديل لوحة التحكم",
-      "editChart": "تعديل مخطط التدريب"
+      "editChart": "تعديل مخطط التدريب",
+      "insertSets": "إدراج مجموعات التمرين"
     },
     "workout": "التدريب (اختياري):",
     "workoutFile": "ملف التدريب:",
@@ -960,7 +966,8 @@
       "trainingParameters": "معلمات التدريب",
       "gettingStarted": "البدء",
       "timerDeviceCues": "إشارات جهاز المؤقت",
-      "customProtocols": "البروتوكولات"
+      "customProtocols": "البروتوكولات",
+      "beta": "ميزات الإصدار التجريبي"
     },
     "tooltips": {
       "deletePreset": "حذف الإعداد المسبق",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20 ثانية من العمل المكثف، 10 ثوانٍ للراحة، 8 جولات: إجمالي مدة 4 دقائق.",
       "emom": "كل دقيقة في موعدها: ابدأ تكراراتك في بداية كل دقيقة، وخذ استراحة لما تبقى منها، لمدة 10 جولات."
+    },
+    "beta": {
+      "intro": "ميزات جديدة لتجربتها قبل أن تكون جاهزة للجميع. ستكون معطلة حتى تقوم بتفعيلها، وقد تتغير لاحقًا.",
+      "setSheet": {
+        "name": "مجموعات التمرين",
+        "desc": "The `workout-sets` block: today's sets as rows to fill in on your phone, with the last time's values as hints and a rest timer that starts on each tick."
+      },
+      "disabledBlock": "{feature} هي ميزة تجريبية. قم بتفعيلها في الإعدادات → ميزات تجريبية لاستخدام هذه الميزة."
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "خطأ في تحميل المخطط: {error}",
       "log": "خطأ في تحميل السجل: {error}",
       "timer": "خطأ في تحميل المؤقت: {error}",
-      "dashboard": "خطأ في تحميل لوحة التحكم: {error}"
+      "dashboard": "خطأ في تحميل لوحة التحكم: {error}",
+      "sets": "خطأ في تحميل المجموعات: {error}"
     },
     "validation": {
       "title": "معلمات غير صالحة:",
@@ -1215,6 +1231,26 @@
     "previous": "السابق",
     "next": "التالي",
     "rest": "راحة",
-    "done": "اكتمل التدريب: تم تسجيل {sets} مجموعة اليوم."
+    "done": "اكتمل التدريب: تم تسجيل {sets} مجموعة اليوم.",
+    "empty": "Add a `workout-log` or `workout-sets` block with an exercise to this note to follow it as a session."
+  },
+  "sets": {
+    "editSet": "تحرير المجموعة {set}",
+    "addSet": "إضافة مجموعة",
+    "protocol": "البروتوكول",
+    "notes": "ملاحظات",
+    "editBlock": "تحرير المجموعات",
+    "blockUpdated": "تم تحديث المجموعات",
+    "blockUpdateFailed": "فشلت عملية تحديث المجموعات: لم يتم العثور على العنصر في الملاحظة. أعد فتح الملاحظة وحاول مرة أخرى.",
+    "workoutLabel": "تمارين:",
+    "workoutPlaceholder": "فارغ: {note}",
+    "restLabel": "الراحة بعد كل مجموعة (0 = مؤقت القسم)",
+    "noExercise": "أضف `exercise:` إلى هذا القسم لتسجيل مجموعاته.",
+    "progress": "{done}/{sets} sets",
+    "lastTime": "آخر مرة ({date}): {sets}",
+    "setColumn": "إعداد",
+    "fieldOfSet": "{field}، قم بتعيين {set}",
+    "details": "البروتوكول والملاحظات الخاصة بالمجموعة {set}",
+    "logSet": "مجموعة السجلات {set}"
   }
 }

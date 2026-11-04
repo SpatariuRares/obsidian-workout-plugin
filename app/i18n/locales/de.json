@@ -376,7 +376,10 @@
       "dashboardGridIntro": "Mit `layout: grid` belegt jedes Widget die Zellen seiner Zeile: Spalte, Zeile, Breite und Höhe. In einer schmaleren Notiz werden die Widgets in Lesereihenfolge neu angeordnet.",
       "trainingCalendarIntro": "Der Trainingskalender zeigt ein Jahr mit Trainingstagen und wie viele Wochen in Folge du dein Wochenziel erreicht hast (Einstellungen → Wochenziel).",
       "importTitle": "8. Import aus Strong oder Hevy",
-      "importIntro": "Führe **{command}** in der Befehlspalette aus und wähle die CSV-Datei, die die App exportiert hat. Sätze, die schon in deinem Protokoll stehen, werden übersprungen, und das Protokoll wird vorher gesichert."
+      "importIntro": "Führe **{command}** in der Befehlspalette aus und wähle die CSV-Datei, die die App exportiert hat. Sätze, die schon in deinem Protokoll stehen, werden übersprungen, und das Protokoll wird vorher gesichert.",
+      "setsTitle": "Protokollierung von Sets auf Ihrem Telefon",
+      "setsIntro": "Ein Block mit `workout-sets` zeigt die heutigen Sätze als Zeilen an. Die grauen Zahlen entsprechen dem letzten Satz: markieren Sie eine Zeile, um sie so zu protokollieren, oder geben Sie an, was Sie getan haben. Tippen Sie auf den Pfeil, um das Protokoll und die Notizen für den Satz anzuzeigen, und um den protokollierten Satz zu bearbeiten.",
+      "codeBlockWorkoutSets": "Erfassen Sie heute die Trainingssätze, zeile für Zeile."
     },
     "fileNames": {
       "dashboard": "Dashboard",
@@ -596,7 +599,8 @@
       "increaseBy": "{label} um {increment} erhöhen",
       "deleteSet": "Satz löschen",
       "updateDashboard": "Dashboard aktualisieren",
-      "updateChart": "Diagramm aktualisieren"
+      "updateChart": "Diagramm aktualisieren",
+      "insertSets": "Mengen einfügen"
     },
     "canvasLayout": "Anordnung",
     "canvasOptions": "Einstellungen",
@@ -726,7 +730,8 @@
       "validChooseExercise": "Wähle eine Übung",
       "validationCombinedMode": "Für den Typ \"Übung + Training\" musst du beide Felder ausfüllen!",
       "dashboardUpdated": "Dashboard erfolgreich aktualisiert!",
-      "dashboardUpdateFailed": "Dashboard konnte nicht aktualisiert werden: Es wurde in seiner Notiz nicht gefunden, oder ein anderes Dashboard ohne ID hat dieselben Einstellungen. Öffne die Notiz neu und versuche es noch einmal."
+      "dashboardUpdateFailed": "Dashboard konnte nicht aktualisiert werden: Es wurde in seiner Notiz nicht gefunden, oder ein anderes Dashboard ohne ID hat dieselben Einstellungen. Öffne die Notiz neu und versuche es noch einmal.",
+      "setsInserted": "Datensätze hinzugefügt"
     },
     "parameterKey": "Schlüssel:",
     "parameterLabel": "Beschriftung:",
@@ -819,7 +824,8 @@
       "insertTimer": "Trainings-Timer einfügen",
       "muscleTagManager": "Muskel-Tags verwalten",
       "editDashboard": "Dashboard bearbeiten",
-      "editChart": "Diagrammeinstellungen bearbeiten"
+      "editChart": "Diagrammeinstellungen bearbeiten",
+      "insertSets": "Übungen hinzufügen"
     },
     "workout": "Training (optional):",
     "workoutFile": "Trainingsdatei:",
@@ -960,7 +966,8 @@
       "trainingParameters": "Parameter für das Training",
       "gettingStarted": "Erste Schritte",
       "timerDeviceCues": "Hinweise für Timer-Geräte",
-      "customProtocols": "Protokolle"
+      "customProtocols": "Protokolle",
+      "beta": "Funktionen für die Beta-Version"
     },
     "tooltips": {
       "deletePreset": "Voreinstellung löschen",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20 Sekunden volle Belastung, 10 Sekunden Pause, 8 Runden: insgesamt 4 Minuten.",
       "emom": "Jede Minute zur vollen Minute: Beginne die Wiederholungen am Anfang jeder Minute und pausiere für den Rest der Minute, 10 Runden."
+    },
+    "beta": {
+      "intro": "Neue Funktionen, die Sie ausprobieren können, bevor sie für alle verfügbar sind. Sie sind vorerst deaktiviert und können sich noch ändern.",
+      "setSheet": {
+        "name": "Trainingsprogramme",
+        "desc": "The `workout-sets` block: today's sets as rows to fill in on your phone, with the last time's values as hints and a rest timer that starts on each tick."
+      },
+      "disabledBlock": "{feature} ist eine Beta-Funktion. Aktivieren Sie diese Funktion unter \"Einstellungen\" → Beta-Funktionen, um diese Funktion zu nutzen."
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "Fehler beim Laden des Diagramms: {error}",
       "log": "Fehler beim Laden des Protokolls: {error}",
       "timer": "Fehler beim Laden des Timers: {error}",
-      "dashboard": "Fehler beim Laden des Dashboards: {error}"
+      "dashboard": "Fehler beim Laden des Dashboards: {error}",
+      "sets": "Fehler beim Laden von Sätzen: {error}"
     },
     "validation": {
       "title": "Ungültige Parameter:",
@@ -1215,6 +1231,26 @@
     "previous": "Zurück",
     "next": "Weiter",
     "rest": "Pause",
-    "done": "Training abgeschlossen. Heute erfasste Sätze: {sets}."
+    "done": "Training abgeschlossen. Heute erfasste Sätze: {sets}.",
+    "empty": "Fügen Sie einen `workout-log` oder `workout-sets` Block mit einer Übung zu dieser Notiz hinzu, um sie als Trainingssession zu verfolgen."
+  },
+  "sets": {
+    "editSet": "Set bearbeiten {set}",
+    "addSet": "Set hinzufügen",
+    "protocol": "Protokoll",
+    "notes": "Anmerkungen",
+    "editBlock": "Sets bearbeiten",
+    "blockUpdated": "Sets wurden aktualisiert",
+    "blockUpdateFailed": "Fehlgeschlagenes Aktualisieren der Datensätze: Der Eintrag wurde nicht gefunden. Bitte den Eintrag erneut öffnen und erneut versuchen.",
+    "workoutLabel": "Training:",
+    "workoutPlaceholder": "Leer: {note}",
+    "restLabel": "Pause nach jeder Übungseinheit (0 = Timer der Übungsabteilung)",
+    "noExercise": "Fügen Sie `exercise:` zu diesem Block hinzu, um die Sätze zu protokollieren.",
+    "progress": "{done}/{sets} Sätze",
+    "lastTime": "Letzte Zeit ({date}): {sets}",
+    "setColumn": "Einstellen",
+    "fieldOfSet": "{field}, Feld {set} festlegen",
+    "details": "Protokoll und Notizen für den Satz {set}",
+    "logSet": "Protokoll-Satz {set}"
   }
 }

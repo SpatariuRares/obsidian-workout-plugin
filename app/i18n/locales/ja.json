@@ -376,7 +376,10 @@
       "dashboardGridIntro": "`layout: grid` を使うと、各ウィジェットはその行のセルを占めます: 列、行、幅、高さ。幅の狭いノートでは、ウィジェットが読み順に並べ直されます。",
       "trainingCalendarIntro": "トレーニングカレンダーは 1 年分のトレーニング日と、週間目標を連続で達成した週数を表示します（設定 → 週間目標）。",
       "importTitle": "8. Strong または Hevy からインポート",
-      "importIntro": "コマンドパレットから **{command}** を実行し、アプリがエクスポートした CSV を選びます。ログにある済みのセットはスキップされ、ログは先にバックアップされます。"
+      "importIntro": "コマンドパレットから **{command}** を実行し、アプリがエクスポートした CSV を選びます。ログにある済みのセットはスキップされ、ログは先にバックアップされます。",
+      "setsTitle": "電話で設定を保存する",
+      "setsIntro": "`workout-sets`ブロックは、今日のワークアウトを「セット」として表示します。灰色で表示されている数字は、以前のセットと同じです。行を選択して記録するか、行った内容を入力します。セットのプロトコルとメモを確認するには、矢印をタップします。また、記録されたセットを編集することも可能です。",
+      "codeBlockWorkoutSets": "今日の日程を、1つずつ記録してください。"
     },
     "fileNames": {
       "dashboard": "ダッシュボード",
@@ -596,7 +599,8 @@
       "increaseBy": "{label}を{increment}増やす",
       "deleteSet": "セットを削除",
       "updateDashboard": "ダッシュボードを更新",
-      "updateChart": "グラフを更新"
+      "updateChart": "グラフを更新",
+      "insertSets": "セットを挿入する"
     },
     "canvasLayout": "レイアウト",
     "canvasOptions": "オプション",
@@ -726,7 +730,8 @@
       "validChooseExercise": "エクササイズを選択してください",
       "validationCombinedMode": "「エクササイズ + ワークアウト」タイプの場合は、両方のフィールドを必ず入力してください！",
       "dashboardUpdated": "ダッシュボードを更新しました！",
-      "dashboardUpdateFailed": "ダッシュボードを更新できませんでした。対象がメモ内に見つからないか、ID のない別のダッシュボードが同じ設定になっています。メモを開き直して、もう一度お試しください。"
+      "dashboardUpdateFailed": "ダッシュボードを更新できませんでした。対象がメモ内に見つからないか、ID のない別のダッシュボードが同じ設定になっています。メモを開き直して、もう一度お試しください。",
+      "setsInserted": "設定が追加されました"
     },
     "parameterKey": "キー:",
     "parameterLabel": "ラベル:",
@@ -819,7 +824,8 @@
       "insertTimer": "ワークアウトタイマーを挿入",
       "muscleTagManager": "筋肉タグを管理",
       "editDashboard": "ダッシュボードを編集",
-      "editChart": "ワークアウトグラフを編集"
+      "editChart": "ワークアウトグラフを編集",
+      "insertSets": "エクササイズのセットを追加する"
     },
     "workout": "ワークアウト（任意）：",
     "workoutFile": "ワークアウトファイル:",
@@ -960,7 +966,8 @@
       "trainingParameters": "トレーニングパラメータ",
       "gettingStarted": "開始",
       "timerDeviceCues": "タイマーのデバイス通知",
-      "customProtocols": "プロトコル"
+      "customProtocols": "プロトコル",
+      "beta": "ベータ機能"
     },
     "tooltips": {
       "deletePreset": "プリセットを削除",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20秒の全力運動と10秒の休憩を8ラウンド行います。合計4分です。",
       "emom": "毎分の始めにレップを開始し、残りの時間は休憩します。10ラウンド行います。"
+    },
+    "beta": {
+      "intro": "他のユーザー向けに準備が整っていない新機能をお試しいただけます。これらの機能は、設定を有効にするまで利用できません。また、今後変更される可能性があります。",
+      "setSheet": {
+        "name": "ワークアウトセット",
+        "desc": "`workout-sets` 項目: 携帯電話で入力するための、今日のワークアウトのセットを一覧表示します。最後のワークアウトの値がヒントとして表示され、各タイミングでリセットタイマーが開始されます。"
+      },
+      "disabledBlock": "{feature} はベータ機能です。この機能を有効にするには、「設定」→「ベータ機能」でオンにします。"
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "グラフの読み込みエラー: {error}",
       "log": "ログの読み込みエラー: {error}",
       "timer": "タイマーの読み込みエラー: {error}",
-      "dashboard": "ダッシュボードの読み込みエラー: {error}"
+      "dashboard": "ダッシュボードの読み込みエラー: {error}",
+      "sets": "セットの読み込みエラー: {error}"
     },
     "validation": {
       "title": "無効なパラメータ:",
@@ -1215,6 +1231,26 @@
     "previous": "前へ",
     "next": "次へ",
     "rest": "休憩",
-    "done": "ワークアウト完了: 今日の記録は{sets}セットです。"
+    "done": "ワークアウト完了: 今日の記録は{sets}セットです。",
+    "empty": "Add a `workout-log` or `workout-sets` block with an exercise to this note to follow it as a session."
+  },
+  "sets": {
+    "editSet": "{set} を編集する",
+    "addSet": "セットを追加",
+    "protocol": "プロトコル",
+    "notes": "メモ",
+    "editBlock": "セットを編集する",
+    "blockUpdated": "設定が更新されました",
+    "blockUpdateFailed": "設定の更新に失敗しました: 指定されたブロックはメモ内に見つかりませんでした。メモを再度開き、再度お試しください。",
+    "workoutLabel": "ワークアウト:",
+    "workoutPlaceholder": "空: {note}",
+    "restLabel": "各セットの後に休憩する (0 = セクションのタイマー)",
+    "noExercise": "このブロックに `exercise:` を追加して、そのセットを記録します。",
+    "progress": "{done}/{sets} セット",
+    "lastTime": "前回 ({date}): {sets}",
+    "setColumn": "設定",
+    "fieldOfSet": "{field}, {set} を設定",
+    "details": "プロトコルと、セット {set} に関するメモ",
+    "logSet": "ログセット {set}"
   }
 }

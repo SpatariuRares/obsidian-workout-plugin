@@ -376,7 +376,10 @@
       "dashboardGridIntro": "Con `layout: grid` ogni widget occupa le celle della sua riga: colonna, riga, larghezza e altezza. In una nota più stretta i widget vengono riordinati in ordine di lettura.",
       "trainingCalendarIntro": "Il calendario di allenamento mostra un anno di giorni di allenamento e quante settimane di fila hai raggiunto il tuo obiettivo settimanale (Impostazioni → Obiettivo settimanale).",
       "importTitle": "8. Importa da Strong o Hevy",
-      "importIntro": "Esegui **{command}** dalla palette dei comandi e scegli il CSV esportato dall'app. Le serie già presenti nel registro vengono saltate, e il registro viene prima salvato in backup."
+      "importIntro": "Esegui **{command}** dalla palette dei comandi e scegli il CSV esportato dall'app. Le serie già presenti nel registro vengono saltate, e il registro viene prima salvato in backup.",
+      "setsTitle": "Gestisci i tuoi set di registrazioni sul tuo telefono",
+      "setsIntro": "Un blocco chiamato `workout-sets` mostra gli allenamenti odierni in forma di righe. I numeri grigi rappresentano lo stesso allenamento dell'ultima volta: seleziona una riga per registrarlo così com'è, oppure digita cosa hai fatto. Tocca la freccia per accedere al protocollo e alle note dell'allenamento, e per modificarlo se è già stato registrato.",
+      "codeBlockWorkoutSets": "Registra ogni serie eseguita oggi, una alla volta."
     },
     "fileNames": {
       "dashboard": "Dashboard",
@@ -596,7 +599,8 @@
       "increaseBy": "Aumenta {label} di {increment}",
       "deleteSet": "Elimina serie",
       "updateDashboard": "Aggiorna dashboard",
-      "updateChart": "Aggiorna grafico"
+      "updateChart": "Aggiorna grafico",
+      "insertSets": "Inserisci insiemi"
     },
     "canvasLayout": "Disposizione",
     "canvasOptions": "Opzioni",
@@ -726,7 +730,8 @@
       "validChooseExercise": "Seleziona un esercizio",
       "validationCombinedMode": "Per il tipo \"esercizio + allenamento\", è necessario compilare entrambi i campi!",
       "dashboardUpdated": "Dashboard aggiornata con successo!",
-      "dashboardUpdateFailed": "Impossibile aggiornare la dashboard: non è stata trovata nella sua nota, oppure un'altra dashboard senza ID ha le stesse impostazioni. Riapri la nota e riprova."
+      "dashboardUpdateFailed": "Impossibile aggiornare la dashboard: non è stata trovata nella sua nota, oppure un'altra dashboard senza ID ha le stesse impostazioni. Riapri la nota e riprova.",
+      "setsInserted": "Impostazioni inserite"
     },
     "parameterKey": "Chiave:",
     "parameterLabel": "Etichetta:",
@@ -819,7 +824,8 @@
       "insertTimer": "Inserisci timer allenamento",
       "muscleTagManager": "Gestisci tag muscolari",
       "editDashboard": "Modifica dashboard",
-      "editChart": "Modifica grafico allenamento"
+      "editChart": "Modifica grafico allenamento",
+      "insertSets": "Aggiungi serie di esercizi"
     },
     "workout": "Allenamento (opzionale):",
     "workoutFile": "File allenamento:",
@@ -960,7 +966,8 @@
       "trainingParameters": "Parametri di allenamento",
       "gettingStarted": "Per iniziare",
       "timerDeviceCues": "Segnali del timer sul dispositivo",
-      "customProtocols": "Protocolli"
+      "customProtocols": "Protocolli",
+      "beta": "Funzionalità beta"
     },
     "tooltips": {
       "deletePreset": "Elimina preset",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20 secondi di lavoro intenso, 10 secondi di riposo, 8 round: in totale 4 minuti.",
       "emom": "Ogni minuto intero: inizia le ripetizioni all'inizio di ogni minuto e riposa per il tempo rimasto, per un totale di 10 round."
+    },
+    "beta": {
+      "intro": "Nuove funzionalità da provare prima che siano pronte per tutti. Sono disabilitate fino a quando non le attivi, e potrebbero comunque cambiare.",
+      "setSheet": {
+        "name": "Serie di allenamento",
+        "desc": "Il blocco `workout-sets`: le serie di allenamento odierne, visualizzate come righe da compilare sul tuo telefono, con i valori dell'ultima sessione come suggerimenti e un timer di riposo che parte ad ogni intervallo."
+      },
+      "disabledBlock": "{feature} è una funzionalità in versione beta. Attivala nelle Impostazioni → Funzionalità beta per utilizzare questa opzione."
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "Errore nel caricamento del grafico: {error}",
       "log": "Errore nel caricamento del registro: {error}",
       "timer": "Errore nel caricamento del timer: {error}",
-      "dashboard": "Errore nel caricamento della dashboard: {error}"
+      "dashboard": "Errore nel caricamento della dashboard: {error}",
+      "sets": "Errore nel caricamento dei set: {error}"
     },
     "validation": {
       "title": "Parametri non validi:",
@@ -1215,6 +1231,26 @@
     "previous": "Precedente",
     "next": "Avanti",
     "rest": "Riposo",
-    "done": "Allenamento completato. Serie registrate oggi: {sets}."
+    "done": "Allenamento completato. Serie registrate oggi: {sets}.",
+    "empty": "Add a `workout-log` or `workout-sets` block with an exercise to this note to follow it as a session."
+  },
+  "sets": {
+    "editSet": "Modifica set {set}",
+    "addSet": "Aggiungi set",
+    "protocol": "Protocollo",
+    "notes": "Note",
+    "editBlock": "Modifica i set",
+    "blockUpdated": "Impostazioni aggiornate",
+    "blockUpdateFailed": "Impossibile aggiornare le impostazioni: l'elemento non è stato trovato nella nota. Riaprire la nota e riprovare.",
+    "workoutLabel": "Allenamento:",
+    "workoutPlaceholder": "Vuoto: {note}",
+    "restLabel": "Riposo dopo ogni serie (0 = timer della sezione)",
+    "noExercise": "Aggiungi la riga `exercise:` a questo blocco per registrare i suoi esercizi.",
+    "progress": "{done}/{sets} gruppi",
+    "lastTime": "Ultima volta ({date}): {sets}",
+    "setColumn": "Imposta",
+    "fieldOfSet": "{field}, imposta {set}",
+    "details": "Protocollo e appunti per il set {set}",
+    "logSet": "Imposta log {set}"
   }
 }

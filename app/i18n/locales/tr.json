@@ -376,7 +376,10 @@
       "dashboardGridIntro": "`layout: grid` ile her widget kendi satırındaki hücreleri kaplar: sütun, satır, genişlik ve yükseklik. Daha dar bir notta widget'lar okuma sırasına göre yeniden düzenlenir.",
       "trainingCalendarIntro": "Antrenman takvimi bir yıllık antrenman günlerini ve haftalık hedefinize üst üste kaç hafta ulaştığınızı gösterir (Ayarlar → Haftalık hedef).",
       "importTitle": "8. Strong veya Hevy'den içe aktar",
-      "importIntro": "Komut paletinden **{command}** komutunu çalıştırın ve uygulamanın dışa aktardığı CSV'yi seçin. Günlüğünüzde zaten bulunan setler atlanır ve günlük önce yedeklenir."
+      "importIntro": "Komut paletinden **{command}** komutunu çalıştırın ve uygulamanın dışa aktardığı CSV'yi seçin. Günlüğünüzde zaten bulunan setler atlanır ve günlük önce yedeklenir.",
+      "setsTitle": "Telefonunuzdaki kayıtları yönetme",
+      "setsIntro": "`workout-sets` bloğu, güncel antrenman setlerini satırlar halinde gösterir. Gri renkli sayılar, önceki antrenmanda aynı setin gösterilmesini ifade eder: Bir satırı işaretleyerek mevcut durumunu kaydedebilir veya yaptığınızı yazabilirsiniz. Bir setin protokolü ve notları için oka dokunun ve kaydedilmiş bir seti düzenlemek için kullanın.",
+      "codeBlockWorkoutSets": "Bugünün antrenmanlarını, satır satır kaydet."
     },
     "fileNames": {
       "dashboard": "Gösterge paneli",
@@ -596,7 +599,8 @@
       "increaseBy": "{label} değerini {increment} artır",
       "deleteSet": "Set'i sil",
       "updateDashboard": "Gösterge panelini güncelle",
-      "updateChart": "Grafiği güncelle"
+      "updateChart": "Grafiği güncelle",
+      "insertSets": "Set ekle"
     },
     "canvasLayout": "Düzen",
     "canvasOptions": "Seçenekler",
@@ -726,7 +730,8 @@
       "validChooseExercise": "Bir egzersiz seçin",
       "validationCombinedMode": "'Egzersiz + antrenman' türü için her iki alanı da doldurun!",
       "dashboardUpdated": "Gösterge paneli başarıyla güncellendi!",
-      "dashboardUpdateFailed": "Gösterge paneli güncellenemedi: not içinde bulunamadı veya kimliği olmayan başka bir gösterge panelinde aynı ayarlar var. Notu yeniden açıp tekrar deneyin."
+      "dashboardUpdateFailed": "Gösterge paneli güncellenemedi: not içinde bulunamadı veya kimliği olmayan başka bir gösterge panelinde aynı ayarlar var. Notu yeniden açıp tekrar deneyin.",
+      "setsInserted": "Kümeler eklendi"
     },
     "parameterKey": "Anahtar:",
     "parameterLabel": "Etiket:",
@@ -819,7 +824,8 @@
       "insertTimer": "Antrenman zamanlayıcısı ekle",
       "muscleTagManager": "Kas etiketlerini yönet",
       "editDashboard": "Gösterge panelini düzenle",
-      "editChart": "Antrenman grafiğini düzenle"
+      "editChart": "Antrenman grafiğini düzenle",
+      "insertSets": "Egzersiz setlerini ekle"
     },
     "workout": "Antrenman (isteğe bağlı):",
     "workoutFile": "Antrenman dosyası:",
@@ -960,7 +966,8 @@
       "trainingParameters": "Antrenman parametreleri",
       "gettingStarted": "Başlangıç",
       "timerDeviceCues": "Zamanlayıcı cihaz uyarıları",
-      "customProtocols": "Protokoller"
+      "customProtocols": "Protokoller",
+      "beta": "Beta özellikleri"
     },
     "tooltips": {
       "deletePreset": "Ön ayarı sil",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20 saniye boyunca maksimum yoğunlukta çalışma, 10 saniye dinlenme, 8 tur: toplamda 4 dakika.",
       "emom": "Dakikada bir: Her dakikanın başında tekrarınızı başlatın ve kalan sürede dinlenin, 10 tur."
+    },
+    "beta": {
+      "intro": "Herkese ulaşmadan önce denemek için yeni özellikler. Bu özellikler henüz kullanıma hazır değil, ancak siz bunları etkinleştirene kadar kullanılabilir durumda kalacak ve hala değişiklikler geçirebilir.",
+      "setSheet": {
+        "name": "Egzersiz setleri",
+        "desc": "`workout-sets` bloğu: Telefonunuzda doldurabileceğiniz günün antrenman setlerini, son antrenmanda elde ettiğiniz değerleri ipucu olarak ve her tıklama ile başlayan bir dinlenme zamanlayıcısını içerir."
+      },
+      "disabledBlock": "{feature}, beta sürümündeki bir özelliktir. Bu özelliği kullanmak için, Ayarlar → Beta Özellikler bölümünde etkinleştirin."
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "Grafik yüklenirken hata: {error}",
       "log": "Antrenman kaydı yüklenirken hata: {error}",
       "timer": "Zamanlayıcı yüklenirken hata: {error}",
-      "dashboard": "Gösterge paneli yüklenirken hata: {error}"
+      "dashboard": "Gösterge paneli yüklenirken hata: {error}",
+      "sets": "Setleri yüklenirken hata oluştu: {error}"
     },
     "validation": {
       "title": "Geçersiz parametreler:",
@@ -1215,6 +1231,26 @@
     "previous": "Önceki",
     "next": "Sonraki",
     "rest": "Dinlenme",
-    "done": "Antrenman tamamlandı. Bugün kaydedilen set: {sets}."
+    "done": "Antrenman tamamlandı. Bugün kaydedilen set: {sets}.",
+    "empty": "Add a `workout-log` or `workout-sets` block with an exercise to this note to follow it as a session."
+  },
+  "sets": {
+    "editSet": "{set} kümesini düzenle",
+    "addSet": "Kodu ekle",
+    "protocol": "Protokol",
+    "notes": "Notlar",
+    "editBlock": "Setleri düzenle",
+    "blockUpdated": "Setler güncellendi",
+    "blockUpdateFailed": "Setlerin güncellenmesi başarısız oldu: Blok, notunda bulunamadı. Notu yeniden açın ve tekrar deneyin.",
+    "workoutLabel": "Egzersiz:",
+    "workoutPlaceholder": "Boş: {note}",
+    "restLabel": "Her setten sonra dinlenin (0 = bölümün zamanlayıcısı)",
+    "noExercise": "Bu bloğa `exercise:` ekleyerek, bu egzersizin setlerini kaydetebilirsiniz.",
+    "progress": "{done}/{sets} kümesi",
+    "lastTime": "Son kez ({date}): {sets}",
+    "setColumn": "Ayarla",
+    "fieldOfSet": "{field}, {set} ayarını yap",
+    "details": "Protokol ve notlar, set {set}",
+    "logSet": "Günlük kaydı kümesi {set}"
   }
 }

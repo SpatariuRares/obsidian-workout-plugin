@@ -376,7 +376,10 @@
       "dashboardGridIntro": "Met `layout: grid` neemt elke widget de cellen van zijn regel in: kolom, rij, breedte en hoogte. In een smallere notitie worden de widgets in leesvolgorde opnieuw geschikt.",
       "trainingCalendarIntro": "De trainingskalender toont een jaar aan trainingsdagen en hoeveel weken achter elkaar je wekelijkse doel is gehaald (Instellingen → Wekelijks doel).",
       "importTitle": "8. Importeren uit Strong of Hevy",
-      "importIntro": "Voer **{command}** uit via het opdrachtenpalet en kies de CSV die de app heeft geëxporteerd. Sets die al in je logboek staan worden overgeslagen, en het logboek wordt eerst geback-upt."
+      "importIntro": "Voer **{command}** uit via het opdrachtenpalet en kies de CSV die de app heeft geëxporteerd. Sets die al in je logboek staan worden overgeslagen, en het logboek wordt eerst geback-upt.",
+      "setsTitle": "Voorbeelden van logboekfuncties op uw telefoon",
+      "setsIntro": "Een blok met `workout-sets` toont de huidige sets als rijen. De grijze getallen zijn dezelfde set van de vorige keer: vink een rij aan om deze te registreren zoals ze zijn, of typ wat je hebt gedaan. Tik op de pijl voor het protocol en de notities van de set, en om de geregistreerde set te bewerken.",
+      "codeBlockWorkoutSets": "Registreer de huidige trainingssets, rij voor rij."
     },
     "fileNames": {
       "dashboard": "Dashboard",
@@ -596,7 +599,8 @@
       "increaseBy": "{label} met {increment} verhogen",
       "deleteSet": "Serie verwijderen",
       "updateDashboard": "Dashboard bijwerken",
-      "updateChart": "Grafiek bijwerken"
+      "updateChart": "Grafiek bijwerken",
+      "insertSets": "Sets invoegen"
     },
     "canvasLayout": "Indeling",
     "canvasOptions": "Opties",
@@ -726,7 +730,8 @@
       "validChooseExercise": "Kies een oefening",
       "validationCombinedMode": "Voor het type 'oefening + training' moet je beide velden invullen!",
       "dashboardUpdated": "Dashboard succesvol bijgewerkt!",
-      "dashboardUpdateFailed": "Dashboard bijwerken mislukt: het stond niet meer in de notitie, of een ander dashboard zonder ID heeft dezelfde instellingen. Open de notitie opnieuw en probeer het nog eens."
+      "dashboardUpdateFailed": "Dashboard bijwerken mislukt: het stond niet meer in de notitie, of een ander dashboard zonder ID heeft dezelfde instellingen. Open de notitie opnieuw en probeer het nog eens.",
+      "setsInserted": "Sets zijn toegevoegd"
     },
     "parameterKey": "Sleutel:",
     "parameterLabel": "Label:",
@@ -819,7 +824,8 @@
       "insertTimer": "Trainingstimer invoegen",
       "muscleTagManager": "Spierlabels beheren",
       "editDashboard": "Dashboard bewerken",
-      "editChart": "Trainingsgrafiek bewerken"
+      "editChart": "Trainingsgrafiek bewerken",
+      "insertSets": "Voeg trainingssets toe"
     },
     "workout": "Training (optioneel):",
     "workoutFile": "Trainingsbestand:",
@@ -960,7 +966,8 @@
       "trainingParameters": "Trainingsparameters",
       "gettingStarted": "Beginnen",
       "timerDeviceCues": "Timersignalen op het apparaat",
-      "customProtocols": "Protocollen"
+      "customProtocols": "Protocollen",
+      "beta": "Kenmerken voor bèta-gebruikers"
     },
     "tooltips": {
       "deletePreset": "Voorinstelling verwijderen",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20 seconden intensieve inspanning, 10 seconden rust, 8 ronden: in totaal 4 minuten.",
       "emom": "Elke minuut, precies op de minuut: begin elke serie aan het begin van de minuut en rust voor de tijd die overblijft, 10 rondes."
+    },
+    "beta": {
+      "intro": "Nieuwe functies om uit te proberen voordat ze voor iedereen beschikbaar zijn. Ze zijn tijdelijk uitgeschakeld en kunnen nog veranderen.",
+      "setSheet": {
+        "name": "Trainingssets",
+        "desc": "De sectie `workout-sets`: de huidige sets als rijen om in te vullen op je telefoon, met de waarden van de vorige keer als suggesties en een timer voor rust die begint bij elke tik."
+      },
+      "disabledBlock": "{feature} is een bèta-functie. Schakel deze in onder Instellingen → Bèta-functies om deze blok te gebruiken."
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "Fout bij laden van de grafiek: {error}",
       "log": "Fout bij laden van het logboek: {error}",
       "timer": "Fout bij laden van de timer: {error}",
-      "dashboard": "Fout bij laden van het dashboard: {error}"
+      "dashboard": "Fout bij laden van het dashboard: {error}",
+      "sets": "Fout bij het laden van sets: {error}"
     },
     "validation": {
       "title": "Ongeldige parameters:",
@@ -1215,6 +1231,26 @@
     "previous": "Vorige",
     "next": "Volgende",
     "rest": "Rust",
-    "done": "Training klaar. Vandaag geregistreerde series: {sets}."
+    "done": "Training klaar. Vandaag geregistreerde series: {sets}.",
+    "empty": "Voeg een blok met een `workout-log` of `workout-sets` toe aan deze notitie, inclusief een oefening, zodat u deze kunt gebruiken als een sessie."
+  },
+  "sets": {
+    "editSet": "Set bewerken {set}",
+    "addSet": "Voeg set toe",
+    "protocol": "Protocol",
+    "notes": "Opmerkingen",
+    "editBlock": "Bewerk verzamelingen",
+    "blockUpdated": "Collecties bijgewerkt",
+    "blockUpdateFailed": "Update van de sets is mislukt: het blok werd niet gevonden in de notitie. Open de notitie opnieuw en probeer het opnieuw.",
+    "workoutLabel": "Training:",
+    "workoutPlaceholder": "Leeg: {note}",
+    "restLabel": "Rust na elke set (0 = de timer van de sectie)",
+    "noExercise": "Voeg `exercise:` toe aan deze sectie om de sets te loggen.",
+    "progress": "{done}/{sets} sets",
+    "lastTime": "Laatste keer ({date}): {sets}",
+    "setColumn": "Instellen",
+    "fieldOfSet": "{field}, stel {set}",
+    "details": "Protocol en notities van set {set}",
+    "logSet": "Logboek {set}"
   }
 }

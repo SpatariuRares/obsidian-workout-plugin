@@ -376,7 +376,10 @@
       "dashboardGridIntro": "Cu `layout: grid`, fiecare widget ocupă celulele rândului său: coloană, rând, lățime și înălțime. Într-o notiță mai îngustă, widgeturile sunt reorganizate în ordinea de citire.",
       "trainingCalendarIntro": "Calendarul de antrenament arată un an de zile de antrenament și câte săptămâni la rând ai atins obiectivul săptămânal (Setări → Obiectiv săptămânal).",
       "importTitle": "8. Import din Strong sau Hevy",
-      "importIntro": "Rulează **{command}** din paleta de comenzi și alege fișierul CSV exportat de aplicație. Seriile deja din jurnal sunt sărite, iar jurnalul se salvează întâi."
+      "importIntro": "Rulează **{command}** din paleta de comenzi și alege fișierul CSV exportat de aplicație. Seriile deja din jurnal sunt sărite, iar jurnalul se salvează întâi.",
+      "setsTitle": "Gestionarea seturilor de înregistrare pe telefonul tău",
+      "setsIntro": "Un bloc `workout-sets` afișează seturile disponibile astăzi sub forma de rânduri. Numerele gri reprezintă același set din ultima sesiune: selectați un rând pentru a le înregistra așa cum sunt, sau introduceți ce ați făcut. Atingeți săgeata pentru a accesa protocolul și notele setului, și pentru a edita un set deja înregistrat.",
+      "codeBlockWorkoutSets": "Înregistrează fiecare serie din ziua de azi, pas cu pas."
     },
     "fileNames": {
       "dashboard": "Tablou de bord",
@@ -596,7 +599,8 @@
       "increaseBy": "Crește {label} cu {increment}",
       "deleteSet": "Șterge seria",
       "updateDashboard": "Actualizează tabloul de bord",
-      "updateChart": "Actualizează graficul"
+      "updateChart": "Actualizează graficul",
+      "insertSets": "Seturi de inserare"
     },
     "canvasLayout": "Aranjament",
     "canvasOptions": "Opțiuni",
@@ -726,7 +730,8 @@
       "validChooseExercise": "Alege un exercițiu",
       "validationCombinedMode": "Pentru tipul „exercițiu + antrenament”, completează ambele câmpuri!",
       "dashboardUpdated": "Tabloul de bord a fost actualizat cu succes!",
-      "dashboardUpdateFailed": "Nu s-a putut actualiza tabloul de bord: nu a fost găsit în nota lui sau un alt tablou de bord fără ID are aceleași setări. Redeschide nota și încearcă din nou."
+      "dashboardUpdateFailed": "Nu s-a putut actualiza tabloul de bord: nu a fost găsit în nota lui sau un alt tablou de bord fără ID are aceleași setări. Redeschide nota și încearcă din nou.",
+      "setsInserted": "Seturi adăugate"
     },
     "parameterKey": "Cheie:",
     "parameterLabel": "Etichetă:",
@@ -819,7 +824,8 @@
       "insertTimer": "Adaugă temporizator pentru antrenament",
       "muscleTagManager": "Gestionează etichetele pentru mușchi",
       "editDashboard": "Editează tabloul de bord",
-      "editChart": "Modifică graficul antrenamentului"
+      "editChart": "Modifică graficul antrenamentului",
+      "insertSets": "Adaugă seturi de exerciții"
     },
     "workout": "Antrenament (opțional):",
     "workoutFile": "Fișierul antrenamentului:",
@@ -960,7 +966,8 @@
       "trainingParameters": "Parametri de antrenament",
       "gettingStarted": "Începe",
       "timerDeviceCues": "Semnale ale temporizatorului pe dispozitiv",
-      "customProtocols": "Protocoale"
+      "customProtocols": "Protocoale",
+      "beta": "Funcționalități Beta"
     },
     "tooltips": {
       "deletePreset": "Șterge preset",
@@ -985,6 +992,14 @@
     "presetHelp": {
       "tabata": "20 de secunde de efort maxim, 10 secunde de pauză, 8 runde: în total, 4 minute.",
       "emom": "La fiecare minut, fix: începe repetările la începutul fiecărui minut și fă pauză până la finalul lui, 10 runde."
+    },
+    "beta": {
+      "intro": "Funcții noi, pe care le puteți încerca înainte de a fi disponibile tuturor. Sunt dezactivate până când le activați, și pot suferi încă modificări.",
+      "setSheet": {
+        "name": "Serii de exerciții",
+        "desc": "Blocul `workout-sets`: seturile de astăzi, afișate ca rânduri pe care le puteți completa pe telefon, cu valorile din ultima sesiune ca sugestii și un cronometru de pauză care pornește la fiecare clic."
+      },
+      "disabledBlock": "{feature} este o funcție beta. Activați-o în Setări → Funcții beta pentru a utiliza această funcție."
     }
   },
   "stats": {
@@ -1105,7 +1120,8 @@
       "chart": "Eroare la încărcarea graficului: {error}",
       "log": "Eroare la încărcarea jurnalului: {error}",
       "timer": "Eroare la încărcarea temporizatorului: {error}",
-      "dashboard": "Eroare la încărcarea tabloului de bord: {error}"
+      "dashboard": "Eroare la încărcarea tabloului de bord: {error}",
+      "sets": "Eroare la încărcarea seturilor: {error}"
     },
     "validation": {
       "title": "Parametri incorecți:",
@@ -1215,6 +1231,26 @@
     "previous": "Anterior",
     "next": "Următorul",
     "rest": "Pauză",
-    "done": "Antrenament finalizat. Serii înregistrate azi: {sets}."
+    "done": "Antrenament finalizat. Serii înregistrate azi: {sets}.",
+    "empty": "Adăugați un bloc `workout-log` sau `workout-sets` cu un exercițiu, la această notă, pentru a o folosi ca sesiune."
+  },
+  "sets": {
+    "editSet": "Modifică setul {set}",
+    "addSet": "Adaugă set",
+    "protocol": "Protocol",
+    "notes": "Note",
+    "editBlock": "Modifică seturi",
+    "blockUpdated": "Seturi actualizate",
+    "blockUpdateFailed": "Nu s-a putut actualiza seturile: blocul nu a fost găsit în nota corespunzătoare. Redeschide nota și încearcă din nou.",
+    "workoutLabel": "Antrenament:",
+    "workoutPlaceholder": "Gol: {note}",
+    "restLabel": "Odihnește-te după fiecare serie (0 = temporizatorul secțiunii)",
+    "noExercise": "Adăugați `exercise:` în acest bloc pentru a înregistra numărul de serii.",
+    "progress": "{done}/{sets} grupuri",
+    "lastTime": "Ultima dată ({date}): {sets}",
+    "setColumn": "Set",
+    "fieldOfSet": "{field}, setează {set}",
+    "details": "Protocol și note pentru setul {set}",
+    "logSet": "Set de înregistrare {set}"
   }
 }

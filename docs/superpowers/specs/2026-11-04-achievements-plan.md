@@ -228,6 +228,14 @@ Each phase is a release on its own; each one only adds.
 - Settings section, rename `AchievementBadge` → `TargetReachedBadge`, en.json keys,
   `CONTEXT.md` glossary, this file updated.
 
+- Catalog in the declarative format of section 7 (metric registry + windows),
+  so community challenges need no engine change later.
+
+**Phase 1.5 — Community challenges (level A of section 7)**
+- `community/challenges.json` in the repo, fetched with `requestUrl`, cached in
+  settings, README "Network use" paragraph, a setting to turn the fetch off.
+- First challenge: the month after the release.
+
 **Phase 2 — Trophy case**
 - Dashboard widget, `workout-achievements` block (schema, insert/edit modals,
   command `insert-workout-achievements`), detail modal, example notes, README.
@@ -248,12 +256,99 @@ Each phase is a release on its own; each one only adds.
   days"), with its own medal kept forever as a collectible of that year.
 - **Personal goals**: user-defined achievements in a code block (`goal: Squat
   140 kg by June`), evaluated with the same engine.
+- **Community aggregates** (level B of section 7), only if level A gets used:
+  opt-in rarity and collective goals.
 - Ideas parked here, to decide later: seasonal events, shareable medal image
-  (canvas export), comparing with a friend's exported log.
+  (canvas export), comparing with a friend's exported log, private groups
+  (level C).
 
 ---
 
-## 7. Open questions
+## 7. Community: global achievements
+
+Goal: achievements that are not only mine, but shared with everyone who uses
+the plugin: everyone chasing the same challenge, knowing how rare a medal is,
+building something together.
+
+### The constraint: Obsidian developer policies
+
+From the [developer policies](https://docs.obsidian.md/Community+directory/Developer+policies):
+
+- **Not allowed**: "Include client-side telemetry." The plugin must never send
+  usage or training data on its own.
+- **Allowed if disclosed in the README**: "Network use. Clearly explain which
+  remote services are used and why they're needed", "An account is required for
+  full access", "Server-side telemetry. Link to a privacy policy that explains
+  how the data is handled must be included."
+
+So: reading public data from the network is fine (disclosed). Sending anything
+is only acceptable as a feature the user explicitly turns on, off by default,
+showing exactly what is sent, with a privacy policy and a way to leave and
+delete. The log never leaves the vault.
+
+### Three levels, from cheapest to heaviest
+
+**A. Community challenges, read-only (no data sent).**
+The plugin fetches a small public JSON (in this repo, served from GitHub raw,
+e.g. `community/challenges.json`) listing time-boxed challenges, the same for
+everyone: "November 2026: 12 sessions", "Winter: 50 km of cardio", "2027: 150
+training days". Each user's progress is computed locally from their log; the
+medal ("November 2026 challenger") is collected forever. Everyone works on the
+same thing in the same month: that is the community feeling, at zero privacy
+cost and zero server. Discussions/Discord can host "I did it" posts.
+Cost: a JSON file and a README paragraph. Fails gracefully offline (cached
+last copy, then nothing).
+
+**B. Opt-in anonymous aggregates (small server).**
+A user presses "Join the community" in settings. The plugin then sends, only
+for them: a random install id and the list of earned `(id, tier)` pairs, plus
+optional coarse totals for collective goals (e.g. volume per challenge, capped
+per day). Nothing else: no sets, no exercise names, no dates beyond the week.
+In return everyone who joined sees:
+- **rarity**: "Gold Iron Week: earned by 3% of athletes";
+- **collective goals**: "Together this month: 812 / 1 000 tonnes";
+- **participation**: "1 240 athletes completed the November challenge".
+Backend: one Cloudflare Worker + D1 (free tier is enough for years at this
+scale), endpoints `POST /sync`, `GET /stats`, `DELETE /me`. Needs: privacy
+policy page, README disclosure, rate limiting, a "Leave and delete my data"
+button. Under GDPR training-derived data may count as health data: keep it to
+achievement ids and coarse totals, pseudonymous, and get advice before launch.
+
+**C. Leaderboards, profiles, friends (accounts).**
+Not recommended. The log is a CSV anyone can edit, so rankings can't be
+trusted and will be gamed; they also reward the strongest, against principle 1
+("reward showing up"). It needs accounts, moderation and a service to run for
+years. Revisit only if B shows real demand (e.g. private groups of friends
+comparing consistency, not weight).
+
+### Cheating
+
+Everything is self-reported, so community features are **non-competitive by
+design**: rarity, participation and collective goals are barely affected by a
+few fake logs (and contributions to collective totals are capped per user per
+day). No ranking, no prize.
+
+### What this changes in phase 1
+
+Achievements must be **data, not code**, so a challenge can arrive as JSON:
+
+```ts
+{ id: "community.2026-11.sessions", road: "community",
+  metric: "sessions", window: { from: "2026-11-01", to: "2026-11-30" },
+  tiers: [{ tier: "gold", threshold: 12 }] }
+```
+
+`metric` names one entry of a fixed registry of pure functions over
+`TrainingHistory` (`sessions`, `trainingDays`, `volume`, `distance`, `records`,
+`distinctExercises`, ...) and `window` limits it to a date range. Remote JSON
+can only combine known metrics: no code is ever loaded from the network, and
+the built-in catalog uses the same format. Names and descriptions of remote
+challenges come in the JSON with one text per language (fallback English),
+since they can't be in `en.json`.
+
+---
+
+## 8. Open questions
 
 1. Notice only, or a small modal for gold and above? (Proposal: notice for all
    in phase 1; decide after using it in the gym.)

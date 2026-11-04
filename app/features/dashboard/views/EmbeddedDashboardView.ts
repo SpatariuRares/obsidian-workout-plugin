@@ -31,7 +31,6 @@ import { WidgetActionSelect } from "@app/features/dashboard/ui/WidgetActionSelec
 import { getElementScopedId } from "@app/utils/IdUtils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { DomUtils } from "@app/utils/DomUtils";
-import { DataFilter } from "@app/services/data/DataFilter";
 import { t } from "@app/i18n";
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
 import {
@@ -70,29 +69,18 @@ export class EmbeddedDashboardView extends BaseView {
   }
 
   /**
-   * Load dashboard data from the plugin. Filtering is centralized in DataFilter.
+   * Loads the log and draws the dashboard: on the first render and on every
+   * log change, so a dashboard drawn on an empty log fills in with the first set.
+   * @param sourcePath - The note the block is written in (its "first log" button)
    */
-  async loadDashboardData(
-    params: EmbeddedDashboardParams,
-  ): Promise<WorkoutLogData[]> {
-    const logData = (await this.plugin.getWorkoutLogData()) || [];
-    return DataFilter.filterRows(logData, params);
-  }
-
-  /**
-   * Refresh a dashboard by clearing cache, reloading data, and re-rendering.
-   * Symmetric with EmbeddedTableView.refreshTable() and EmbeddedChartView.refreshChart().
-   */
-  async refreshDashboard(
+  async render(
     container: HTMLElement,
     params: EmbeddedDashboardParams,
     state: DashboardViewState = {},
+    sourcePath?: string,
   ): Promise<void> {
-    const freshData = await this.loadDashboardData(params);
-    container.empty();
-    if (freshData.length > 0) {
-      await this.createDashboard(container, freshData, params, state);
-    }
+    const logData = (await this.plugin.getWorkoutLogData()) || [];
+    await this.createDashboard(container, logData, params, state, sourcePath);
   }
 
   /**
@@ -103,45 +91,32 @@ export class EmbeddedDashboardView extends BaseView {
     logData: WorkoutLogData[],
     params: EmbeddedDashboardParams,
     state: DashboardViewState = {},
+    sourcePath?: string,
   ): Promise<void> {
+    container.empty();
+    const loadingIndicator = this.showLoadingIndicator(container);
     try {
-      // Clear container
-      container.empty();
-
-      // Show loading indicator
-      const loadingIndicator = this.showLoadingIndicator(container);
-
-      // Handle empty data
-      if (this.handleEmptyData(container, logData)) {
-        return;
-      }
-
-      // Filter data based on parameters
-      const filterResult = this.filterData(logData, params);
-      const filteredData = filterResult.filteredData;
-
-      // Handle no filtered data
-      if (filteredData.length === 0) {
-        loadingIndicator.remove();
-        this.handleNoFilteredData(
-          container,
-          params,
-          params.title || t("general.dashboard"),
-          VIEW_TYPES.DASHBOARD,
-        );
-        return;
-      }
-
-      // Remove loading indicator
+      const filteredData = this.filteredOrExplain(
+        container,
+        logData,
+        params,
+        VIEW_TYPES.DASHBOARD,
+        { sourcePath, title: params.title || t("general.dashboard") },
+      );
+      if (!filteredData) return;
       loadingIndicator.remove();
+
 
       // Create dashboard layout
       // Re-render this dashboard (and only this one) on pie chart clicks
       const onProtocolFilterChange = (protocol: string | null) => {
-        void this.createDashboard(container, logData, params, {
-          ...state,
-          activeProtocolFilter: protocol,
-        });
+        void this.createDashboard(
+          container,
+          logData,
+          params,
+          { ...state, activeProtocolFilter: protocol },
+          sourcePath,
+        );
       };
 
       await this.renderDashboard(
@@ -153,6 +128,8 @@ export class EmbeddedDashboardView extends BaseView {
       );
     } catch (error) {
       this.handleError(container, error);
+    } finally {
+      loadingIndicator.remove();
     }
   }
 

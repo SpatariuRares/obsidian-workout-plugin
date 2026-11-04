@@ -33,10 +33,8 @@ import { EditSetsModal } from "@app/features/tables/modals/EditSetsModal";
 import type { CodeBlockSchema } from "@app/services/codeblocks/CodeBlockSchema";
 import { renderInvalidParams } from "@app/features/common/views/BaseView";
 import { EventAwareRenderChild } from "@app/services/core/EventAwareRenderChild";
-import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 import type {
   MarkdownCodeBlockProcessorPort,
-  WorkoutDataPort,
   WorkoutPluginContext,
 } from "@app/types/PluginPorts";
 import {
@@ -104,7 +102,6 @@ export class CodeBlockProcessorService {
 
   constructor(
     private plugin: CodeBlockProcessorPlugin,
-    private dataService: Pick<WorkoutDataPort, "getWorkoutLogData">,
     private embeddedChartView: EmbeddedChartView,
     private embeddedTableView: EmbeddedTableView,
     private embeddedDashboardView: EmbeddedDashboardView,
@@ -214,21 +211,12 @@ export class CodeBlockProcessorService {
       loadError: (error) =>
         t("codeBlocks.loadError.chart", { error }),
       draw: async (body, params, syncMenu) => {
-        const logData =
-          await this.embeddedChartView.loadChartData(params);
-        if (logData.length === 0) {
-          this.renderNoDataMessage(body, ctx);
-          return;
-        }
-        await this.embeddedChartView.createChart(
-          body,
-          logData,
-          params,
-        );
+        const render = () =>
+          this.embeddedChartView.render(body, params, ctx.sourcePath);
+        await render();
+        // Also on an empty log: the chart fills in with the first set
         this.refreshOnLogChange(ctx, body, params, () =>
-          this.embeddedChartView
-            .refreshChart(body, params)
-            .finally(syncMenu),
+          render().finally(syncMenu),
         );
       },
     });
@@ -252,17 +240,11 @@ export class CodeBlockProcessorService {
         ).open(),
       loadError: (error) => t("codeBlocks.loadError.log", { error }),
       draw: async (body, params, syncMenu) => {
-        const logData = await this.loadLogData();
-        await this.embeddedTableView.createTable(
-          body,
-          logData,
-          params,
-          ctx.sourcePath,
-        );
+        const render = () =>
+          this.embeddedTableView.refreshTable(body, params, ctx.sourcePath);
+        await render();
         this.refreshOnLogChange(ctx, body, params, () =>
-          this.embeddedTableView
-            .refreshTable(body, params, ctx.sourcePath)
-            .finally(syncMenu),
+          render().finally(syncMenu),
         );
       },
     });
@@ -350,30 +332,13 @@ export class CodeBlockProcessorService {
       loadError: (error) =>
         t("codeBlocks.loadError.dashboard", { error }),
       draw: async (body, params, syncMenu) => {
-        const logData =
-          await this.embeddedDashboardView.loadDashboardData(params);
-        if (logData.length === 0) {
-          this.renderNoDataMessage(body, ctx);
-          return;
-        }
-        await this.embeddedDashboardView.createDashboard(
-          body,
-          logData,
-          params,
-          state,
-        );
+        const render = () =>
+          this.embeddedDashboardView.render(body, params, state, ctx.sourcePath);
+        await render();
+        // Every log change, and muscle tags for the heat map
         ctx.addChild(
-          new EventAwareRenderChild(
-            body,
-            this.eventBus,
-            {
-              // Nessun filtro esercizio/workout = sempre refresh
-              muscleTagsAware: true, // Dashboard mostra muscle heat map
-            },
-            () =>
-              this.embeddedDashboardView
-                .refreshDashboard(body, params, state)
-                .finally(syncMenu),
+          new EventAwareRenderChild(body, this.eventBus, { muscleTagsAware: true }, () =>
+            render().finally(syncMenu),
           ),
         );
       },
@@ -391,13 +356,6 @@ export class CodeBlockProcessorService {
     if (params) {
       await this.embeddedDurationView.createDurationEstimator(el, params, ctx.sourcePath);
     }
-  }
-
-  // Load raw workout log data. Filtering is handled inside views via DataFilter.
-  private async loadLogData(): Promise<
-    import("@app/types/WorkoutLogData").WorkoutLogData[]
-  > {
-    return (await this.dataService.getWorkoutLogData()) || [];
   }
 
   /**
@@ -545,19 +503,6 @@ export class CodeBlockProcessorService {
         };
       },
     };
-  }
-
-  // Render "no data" callout with page link from context
-  private renderNoDataMessage(
-    el: HTMLElement,
-    ctx: MarkdownPostProcessorContext,
-  ): void {
-    LogCallouts.renderCsvNoDataMessage(
-      el,
-      this.plugin,
-      undefined,
-      ctx.sourcePath,
-    );
   }
 
   /**

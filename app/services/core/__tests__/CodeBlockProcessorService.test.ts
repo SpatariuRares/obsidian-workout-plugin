@@ -64,10 +64,10 @@ jest.mock("@app/i18n", () => ({
 import { CodeBlockProcessorService } from "../CodeBlockProcessorService";
 import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { Feedback } from "@app/components/atoms/Feedback";
-import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 import { MarkdownPostProcessorContext } from "obsidian";
 import { runAddMissingBlockIds } from "@app/utils/BlockIdMigration";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
+import { EventAwareRenderChild } from "@app/services/core/EventAwareRenderChild";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 
 /** The element a view draws into: the block's second child, after the menu row */
@@ -76,7 +76,6 @@ const blockBody = (el: HTMLElement) => el.children[1];
 describe("CodeBlockProcessorService", () => {
   let service: CodeBlockProcessorService;
   let mockPlugin: any;
-  let mockDataService: any;
   let mockChartView: any;
   let mockTableView: any;
   let mockDashboardView: any;
@@ -100,22 +99,14 @@ describe("CodeBlockProcessorService", () => {
       },
       registerMarkdownCodeBlockProcessor: jest.fn(),
     };
-    mockDataService = {
-      getWorkoutLogData: jest.fn().mockResolvedValue([]),
-    };
     mockChartView = {
-      createChart: jest.fn().mockResolvedValue(undefined),
-      loadChartData: jest.fn().mockResolvedValue([]),
-      refreshChart: jest.fn().mockResolvedValue(undefined),
+      render: jest.fn().mockResolvedValue(undefined),
     };
     mockTableView = {
-      createTable: jest.fn().mockResolvedValue(undefined),
       refreshTable: jest.fn().mockResolvedValue(undefined),
     };
     mockDashboardView = {
-      createDashboard: jest.fn().mockResolvedValue(undefined),
-      loadDashboardData: jest.fn().mockResolvedValue([]),
-      refreshDashboard: jest.fn().mockResolvedValue(undefined),
+      render: jest.fn().mockResolvedValue(undefined),
     };
     mockSessionView = {
       createSession: jest.fn().mockReturnValue({}),
@@ -133,7 +124,6 @@ describe("CodeBlockProcessorService", () => {
 
     service = new CodeBlockProcessorService(
       mockPlugin,
-      mockDataService,
       mockChartView,
       mockTableView,
       mockDashboardView,
@@ -199,16 +189,12 @@ describe("CodeBlockProcessorService", () => {
             call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.CHART,
         );
       const chartCallback = chartCall[1];
-
-      mockChartView.loadChartData.mockResolvedValue([
-        { date: "2023-01-01" },
-      ]);
       const el = createObsidianContainer();
       const ctx = { addChild: jest.fn(), sourcePath: "test.md" };
 
       await chartCallback("type: volume", el, ctx);
 
-      expect(mockChartView.createChart).toHaveBeenCalled();
+      expect(mockChartView.render).toHaveBeenCalled();
     });
 
     it("should invoke table callback when registered processor is called", async () => {
@@ -220,16 +206,12 @@ describe("CodeBlockProcessorService", () => {
             call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TABLE,
         );
       const tableCallback = tableCall[1];
-
-      mockDataService.getWorkoutLogData.mockResolvedValue([
-        { date: "2023-01-01" },
-      ]);
       const el = createObsidianContainer();
       const ctx = { addChild: jest.fn(), sourcePath: "test.md" };
 
       await tableCallback("limit: 10", el, ctx);
 
-      expect(mockTableView.createTable).toHaveBeenCalled();
+      expect(mockTableView.refreshTable).toHaveBeenCalled();
     });
 
     it("should invoke timer callback when registered processor is called", async () => {
@@ -259,16 +241,12 @@ describe("CodeBlockProcessorService", () => {
             call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DASHBOARD,
         );
       const dashboardCallback = dashboardCall[1];
-
-      mockDashboardView.loadDashboardData.mockResolvedValue([
-        { date: "2023-01-01" },
-      ]);
       const el = createObsidianContainer();
       const ctx = { addChild: jest.fn(), sourcePath: "test.md" };
 
       await dashboardCallback("", el, ctx);
 
-      expect(mockDashboardView.createDashboard).toHaveBeenCalled();
+      expect(mockDashboardView.render).toHaveBeenCalled();
     });
 
     it("should invoke duration callback when registered processor is called", async () => {
@@ -300,7 +278,7 @@ describe("CodeBlockProcessorService", () => {
 
   describe("handleWorkoutChart", () => {
     it("should render error if data loading fails", async () => {
-      mockChartView.loadChartData.mockRejectedValue(
+      mockChartView.render.mockRejectedValue(
         new Error("Data Error"),
       );
       const el = createObsidianContainer();
@@ -319,7 +297,7 @@ describe("CodeBlockProcessorService", () => {
     });
 
     it("should handle non-Error exceptions", async () => {
-      mockChartView.loadChartData.mockRejectedValue("string error");
+      mockChartView.render.mockRejectedValue("string error");
       const el = createObsidianContainer();
       const ctx = {
         addChild: jest.fn(),
@@ -335,66 +313,34 @@ describe("CodeBlockProcessorService", () => {
       );
     });
 
-    it("should render no data message if loadChartData returns empty", async () => {
-      mockChartView.loadChartData.mockResolvedValue([]);
+    it("draws the chart with its parameters and note", async () => {
       const el = createObsidianContainer();
       const ctx = {
         addChild: jest.fn(),
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      await (service as any).handleWorkoutChart("source", el, ctx);
+      await (service as any).handleWorkoutChart("exercise: Bench Press", el, ctx);
 
-      expect(LogCallouts.renderCsvNoDataMessage).toHaveBeenCalledWith(
+      expect(mockChartView.render).toHaveBeenCalledWith(
         blockBody(el),
-        mockPlugin,
-        undefined,
+        expect.objectContaining({ exercise: "Bench Press" }),
         "test/path.md",
       );
     });
 
-    it("should create chart when data exists", async () => {
-      mockChartView.loadChartData.mockResolvedValue([
-        { date: "2023-01-01" },
-      ]);
+    it("redraws on log changes, also when the log was empty", async () => {
       const el = createObsidianContainer();
       const ctx = {
         addChild: jest.fn(),
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      await (service as any).handleWorkoutChart(
-        "type: volume",
-        el,
-        ctx,
-      );
+      await (service as any).handleWorkoutChart("type: volume", el, ctx);
 
-      expect(mockChartView.createChart).toHaveBeenCalled();
+      expect(ctx.addChild).toHaveBeenCalledWith(expect.any(EventAwareRenderChild));
     });
 
-    it("should pass params to loadChartData", async () => {
-      mockChartView.loadChartData.mockResolvedValue([
-        { date: "2023-01-01" },
-      ]);
-      const el = createObsidianContainer();
-      const ctx = {
-        addChild: jest.fn(),
-        sourcePath: "test/path.md",
-      } as unknown as MarkdownPostProcessorContext;
-
-      await (service as any).handleWorkoutChart(
-        "exercise: Bench Press",
-        el,
-        ctx,
-      );
-
-      expect(mockChartView.loadChartData).toHaveBeenCalledWith(
-        expect.objectContaining({
-          exercise: "Bench Press",
-        }),
-      );
-    });
-  
     describe("edit menu", () => {
       const ctx = {
         addChild: jest.fn(),
@@ -405,23 +351,19 @@ describe("CodeBlockProcessorService", () => {
         null;
 
       it("is drawn above a chart with data", async () => {
-        mockChartView.loadChartData.mockResolvedValue([
-          { date: "2023-01-01" },
-        ]);
         const el = createObsidianContainer();
         await (service as any).handleWorkoutChart("type: volume", el, ctx);
         expect(hasMenu(el)).toBe(true);
       });
 
       it("is drawn when the log has no data", async () => {
-        mockChartView.loadChartData.mockResolvedValue([]);
         const el = createObsidianContainer();
         await (service as any).handleWorkoutChart("type: volume", el, ctx);
         expect(hasMenu(el)).toBe(true);
       });
 
       it("is drawn when loading fails", async () => {
-        mockChartView.loadChartData.mockRejectedValue(new Error("boom"));
+        mockChartView.render.mockRejectedValue(new Error("boom"));
         const el = createObsidianContainer();
         await (service as any).handleWorkoutChart("type: volume", el, ctx);
         expect(hasMenu(el)).toBe(true);
@@ -430,7 +372,7 @@ describe("CodeBlockProcessorService", () => {
       it("is drawn when the parameters are invalid", async () => {
         const el = createObsidianContainer();
         await (service as any).handleWorkoutChart("dateRange: soon", el, ctx);
-        expect(mockChartView.loadChartData).not.toHaveBeenCalled();
+        expect(mockChartView.render).not.toHaveBeenCalled();
         expect(hasMenu(el)).toBe(true);
       });
     });
@@ -446,7 +388,7 @@ describe("CodeBlockProcessorService", () => {
         .length;
 
     it("is drawn above a table that fails", async () => {
-      mockDataService.getWorkoutLogData.mockRejectedValue(new Error("x"));
+      mockTableView.refreshTable.mockRejectedValue(new Error("x"));
       const el = createObsidianContainer();
       await (service as any).handleWorkoutLog("exercise: Squat", el, ctx);
       expect(menus(el)).toBe(1);
@@ -465,7 +407,7 @@ describe("CodeBlockProcessorService", () => {
     });
 
     it("is left out when the view drew its own menu", async () => {
-      mockTableView.createTable.mockImplementation(
+      mockTableView.refreshTable.mockImplementation(
         async (body: HTMLElement) => {
           body.createDiv({ cls: "workout-icon-dropdown workout-block-menu" });
         },
@@ -476,7 +418,7 @@ describe("CodeBlockProcessorService", () => {
     });
 
     it("is drawn when the view's own menu cannot edit the block", async () => {
-      mockTableView.createTable.mockImplementation(
+      mockTableView.refreshTable.mockImplementation(
         async (body: HTMLElement) => {
           body.createDiv({ cls: "workout-icon-dropdown" });
         },
@@ -488,10 +430,8 @@ describe("CodeBlockProcessorService", () => {
   });
 
   describe("handleWorkoutLog", () => {
-    it("should render error if creation fails", async () => {
-      mockDataService.getWorkoutLogData.mockRejectedValue(
-        new Error("Table Error"),
-      );
+    it("should render error if loading fails", async () => {
+      mockTableView.refreshTable.mockRejectedValue(new Error("Table Error"));
       const el = createObsidianContainer();
       const ctx = {
         addChild: jest.fn(),
@@ -516,235 +456,51 @@ describe("CodeBlockProcessorService", () => {
 
       await (service as any).handleWorkoutLog("sortOrder: up", el, ctx);
 
-      expect(mockTableView.createTable).not.toHaveBeenCalled();
+      expect(mockTableView.refreshTable).not.toHaveBeenCalled();
       expect(Feedback.renderError).toHaveBeenCalledWith(
         blockBody(el),
         expect.stringContaining(t("codeBlocks.validation.title")),
       );
     });
 
-    it("gives the table its parameters with the defaults filled in", async () => {
-      mockDataService.getWorkoutLogData.mockResolvedValue([]);
+    it("draws the table with its parameters, defaults filled in, and its note", async () => {
       const el = createObsidianContainer();
       const ctx = {
         addChild: jest.fn(),
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      await (service as any).handleWorkoutLog(
-        "exercise: Squat\nlimit: 10",
-        el,
-        ctx,
-      );
+      await (service as any).handleWorkoutLog("exercise: Squat\nlimit: 10", el, ctx);
 
-      expect(mockTableView.createTable.mock.calls[0][2]).toEqual({
-        ...tableBlock.defaults,
-        exercise: "Squat",
-        limit: 10,
-      });
-    });
-
-    it("should create table with data", async () => {
-      mockDataService.getWorkoutLogData.mockResolvedValue([
-        { date: "2023-01-01" },
-      ]);
-      const el = createObsidianContainer();
-      const ctx = {
-        addChild: jest.fn(),
-        sourcePath: "test/path.md",
-      } as unknown as MarkdownPostProcessorContext;
-
-      await (service as any).handleWorkoutLog("limit: 10", el, ctx);
-
-      expect(mockTableView.createTable).toHaveBeenCalled();
-    });
-
-    it("should call getWorkoutLogData without params when no exercise/workout filter", async () => {
-      mockDataService.getWorkoutLogData.mockResolvedValue([
-        { date: "2023-01-01" },
-      ]);
-      const el = createObsidianContainer();
-      const ctx = {
-        addChild: jest.fn(),
-        sourcePath: "test/path.md",
-      } as unknown as MarkdownPostProcessorContext;
-
-      // No exercise or workout param - just limit
-      await (service as any).handleWorkoutLog("limit: 10", el, ctx);
-
-      // Should be called without filter params
-      expect(
-        mockDataService.getWorkoutLogData,
-      ).toHaveBeenCalledWith();
-      expect(mockTableView.createTable).toHaveBeenCalled();
-    });
-
-    it("should load raw data and pass exercise params to table view", async () => {
-      mockDataService.getWorkoutLogData.mockResolvedValue([
-        { date: "2023-01-01" },
-      ]);
-      const el = createObsidianContainer();
-      const ctx = {
-        addChild: jest.fn(),
-        sourcePath: "test/path.md",
-      } as unknown as MarkdownPostProcessorContext;
-
-      await (service as any).handleWorkoutLog(
-        "exercise: Squat",
-        el,
-        ctx,
-      );
-
-      expect(
-        mockDataService.getWorkoutLogData,
-      ).toHaveBeenCalledWith();
-      expect(mockTableView.createTable).toHaveBeenCalledWith(
+      expect(mockTableView.refreshTable).toHaveBeenCalledWith(
         blockBody(el),
-        [{ date: "2023-01-01" }],
-        expect.objectContaining({
-          exercise: "Squat",
-        }),
-        expect.any(String),
-      );
-    });
-
-    it("should load raw data and pass workout params to table view", async () => {
-      mockDataService.getWorkoutLogData.mockResolvedValue([
-        { date: "2023-01-01" },
-      ]);
-      const el = createObsidianContainer();
-      const ctx = {
-        addChild: jest.fn(),
-        sourcePath: "test/path.md",
-      } as unknown as MarkdownPostProcessorContext;
-
-      await (service as any).handleWorkoutLog(
-        "workout: Push Day",
-        el,
-        ctx,
-      );
-
-      expect(
-        mockDataService.getWorkoutLogData,
-      ).toHaveBeenCalledWith();
-      expect(mockTableView.createTable).toHaveBeenCalledWith(
-        blockBody(el),
-        [{ date: "2023-01-01" }],
-        expect.objectContaining({
-          workout: "Push Day",
-        }),
-        expect.any(String),
-      );
-    });
-
-    it("should handle non-Error exceptions", async () => {
-      mockDataService.getWorkoutLogData.mockRejectedValue(
-        "string error",
-      );
-      const el = createObsidianContainer();
-      const ctx = {
-        addChild: jest.fn(),
-        sourcePath: "test/path.md",
-      } as unknown as MarkdownPostProcessorContext;
-
-      await (service as any).handleWorkoutLog("source", el, ctx);
-
-      expect(Feedback.renderError).toHaveBeenCalledWith(
-        blockBody(el),
-        expect.stringContaining("string error"),
-        expect.any(Object),
-      );
-    });
-
-    it("should handle null return from getWorkoutLogData with filter", async () => {
-      mockDataService.getWorkoutLogData.mockResolvedValue(null);
-      const el = createObsidianContainer();
-      const ctx = {
-        addChild: jest.fn(),
-        sourcePath: "test/path.md",
-      } as unknown as MarkdownPostProcessorContext;
-
-      await (service as any).handleWorkoutLog(
-        "exercise: Squat",
-        el,
-        ctx,
-      );
-
-      expect(mockTableView.createTable).toHaveBeenCalledWith(
-        expect.any(HTMLElement),
-        [],
-        expect.any(Object),
+        { ...tableBlock.defaults, exercise: "Squat", limit: 10 },
         "test/path.md",
       );
-    });
-
-    it("should handle null return from getWorkoutLogData without filter", async () => {
-      mockDataService.getWorkoutLogData.mockResolvedValue(null);
-      const el = createObsidianContainer();
-      const ctx = {
-        addChild: jest.fn(),
-        sourcePath: "test/path.md",
-      } as unknown as MarkdownPostProcessorContext;
-
-      // No exercise or workout filter - just limit
-      await (service as any).handleWorkoutLog("limit: 10", el, ctx);
-
-      expect(mockTableView.createTable).toHaveBeenCalledWith(
-        expect.any(HTMLElement),
-        [],
-        expect.any(Object),
-        "test/path.md",
-      );
+      expect(ctx.addChild).toHaveBeenCalledWith(expect.any(EventAwareRenderChild));
     });
   });
 
   describe("handleWorkoutDashboard", () => {
-    it("should pass params to loadDashboardData", async () => {
-      mockDashboardView.loadDashboardData.mockResolvedValue([
-        { date: "2023-01-01" },
-      ]);
+    it("draws the dashboard with its parameters, state and note", async () => {
       const el = createObsidianContainer();
       const ctx = {
         addChild: jest.fn(),
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      await (service as any).handleWorkoutDashboard(
-        "dateRange: 30",
-        el,
-        ctx,
-      );
+      await (service as any).handleWorkoutDashboard("dateRange: 30", el, ctx);
 
-      expect(
-        mockDashboardView.loadDashboardData,
-      ).toHaveBeenCalledWith(
+      expect(mockDashboardView.render).toHaveBeenCalledWith(
+        blockBody(el),
         expect.objectContaining({ dateRange: 30 }),
+        expect.objectContaining({ sourcePath: "test/path.md" }),
+        "test/path.md",
       );
-      expect(mockDashboardView.createDashboard).toHaveBeenCalled();
-    });
-
-    it("should show no data message if loadDashboardData returns empty", async () => {
-      mockDashboardView.loadDashboardData.mockResolvedValue([]);
-      const el = createObsidianContainer();
-      const ctx = {
-        addChild: jest.fn(),
-        sourcePath: "test/path.md",
-      } as unknown as MarkdownPostProcessorContext;
-
-      await (service as any).handleWorkoutDashboard(
-        "dateRange: 30",
-        el,
-        ctx,
-      );
-
-      expect(LogCallouts.renderCsvNoDataMessage).toHaveBeenCalled();
-      expect(
-        mockDashboardView.createDashboard,
-      ).not.toHaveBeenCalled();
     });
 
     it("should catch errors", async () => {
-      mockDashboardView.loadDashboardData.mockRejectedValue(
+      mockDashboardView.render.mockRejectedValue(
         new Error("Dashboard Fail"),
       );
       const el = createObsidianContainer();
@@ -759,7 +515,7 @@ describe("CodeBlockProcessorService", () => {
     });
 
     it("should handle non-Error exceptions", async () => {
-      mockDashboardView.loadDashboardData.mockRejectedValue(
+      mockDashboardView.render.mockRejectedValue(
         "string error",
       );
       const el = createObsidianContainer();
@@ -778,9 +534,6 @@ describe("CodeBlockProcessorService", () => {
     });
 
     it("should use EventAwareRenderChild with muscleTagsAware for dashboard", async () => {
-      mockDashboardView.loadDashboardData.mockResolvedValue([
-        { date: "2023-01-01" },
-      ]);
       const el = createObsidianContainer();
       const ctx = {
         addChild: jest.fn(),

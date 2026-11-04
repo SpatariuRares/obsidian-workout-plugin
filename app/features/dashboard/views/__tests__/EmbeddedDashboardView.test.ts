@@ -381,3 +381,30 @@ describe("EmbeddedDashboardView view state", () => {
     expect(widgetOptions().activeFilter).toBe("dropset");
   });
 });
+
+describe("EmbeddedDashboardView render", () => {
+  beforeEach(() => jest.clearAllMocks());
+  const view = (rows: typeof history) =>
+    new EmbeddedDashboardView({
+      settings: { weeklyGoal: 3, csvLogFilePath: "log.csv" },
+      app: { vault: { getAbstractFileByPath: () => null } },
+      getWorkoutLogData: async () => rows,
+    } as unknown as WorkoutChartsPlugin);
+
+  it("explains an empty log instead of drawing widgets, without the loading spinner", async () => {
+    const container = createObsidianContainer();
+    await view([]).render(container, {});
+
+    expect(SummaryWidget.render).not.toHaveBeenCalled();
+    expect(container.querySelector(".loading-spinner")).toBeNull();
+    expect(container.textContent).not.toBe("");
+  });
+
+  it("says no set matches when its filters leave nothing (it used to show 'no data')", async () => {
+    const container = createObsidianContainer();
+    await view(history).render(container, { exercise: "Bench Press" });
+
+    expect(SummaryWidget.render).not.toHaveBeenCalled();
+    expect(container.querySelector(".workout-log-no-match")).not.toBeNull();
+  });
+});

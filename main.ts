@@ -179,7 +179,6 @@ export default class WorkoutChartsPlugin extends Plugin {
     );
     this.codeBlockProcessorService = new CodeBlockProcessorService(
       this,
-      this,
       this.embeddedChartView,
       this.embeddedTableView,
       this.embeddedDashboardView,

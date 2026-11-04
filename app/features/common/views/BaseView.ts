@@ -67,9 +67,26 @@ export abstract class BaseView {
   }
 
   /**
-   * Common pattern for handling no filtered data
+   * The rows a block shows, filtered by its parameters; null once it has
+   * drawn why there are none: an empty log (with the button to log a first
+   * set) or no row matching the filters.
+   * @param title - Names the rows in the no-match message (the filter's own by default)
    */
+  protected filteredOrExplain(
+    container: HTMLElement,
+    logData: WorkoutLogData[],
+    params: EmbeddedViewParams,
+    viewType: VIEW_TYPES,
+    { sourcePath, title }: { sourcePath?: string; title?: string } = {},
+  ): WorkoutLogData[] | null {
+    if (this.handleEmptyData(container, logData, undefined, sourcePath)) return null;
+    const result = this.filterData(logData, params);
+    if (result.filteredData.length > 0) return result.filteredData;
+    this.handleNoFilteredData(container, params, title ?? result.titlePrefix, viewType);
+    return null;
+  }
 
+  /** Explains a block whose filters match no row */
   protected handleNoFilteredData(
     container: HTMLElement,
     params: EmbeddedViewParams,
@@ -100,22 +117,8 @@ export abstract class BaseView {
 
     const isWorkoutView =
       viewType === VIEW_TYPES.CHART
-        ? (() => {
-            type ViewCategory =
-              | CHART_TYPE.EXERCISE
-              | CHART_TYPE.WORKOUT;
-            const effectiveChartCategory: ViewCategory =
-              "chartType" in params &&
-              (params.chartType === CHART_TYPE.EXERCISE ||
-                params.chartType === CHART_TYPE.WORKOUT)
-                ? params.chartType
-                : CHART_TYPE.EXERCISE;
-            return effectiveChartCategory === CHART_TYPE.WORKOUT;
-          })()
-        : !(
-            "exercise" in params &&
-            (params as { exercise?: string }).exercise
-          );
+        ? "chartType" in params && params.chartType === CHART_TYPE.WORKOUT
+        : !("exercise" in params && params.exercise);
 
     if (isWorkoutView) {
       Feedback.renderWarning(

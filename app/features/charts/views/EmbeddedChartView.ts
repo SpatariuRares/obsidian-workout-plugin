@@ -1,10 +1,7 @@
 import { t } from "@app/i18n";
 // Embedded Chart View for workout data visualization
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import {
-  FilterResult,
-  TrendIndicators,
-} from "@app/types/CommonTypes";
+import { TrendIndicators } from "@app/types/CommonTypes";
 import {
   EmbeddedChartParams,
   ChartDataset,
@@ -44,52 +41,36 @@ export class EmbeddedChartView extends BaseView {
   }
 
   /**
-   * Load all log rows; the view filters them with DataFilter afterwards.
+   * Loads the log and draws the chart: on the first render and on every log
+   * change, so a chart drawn on an empty log fills in with the first set.
+   * @param sourcePath - The note the block is written in (its "first log" button)
    */
-  async loadChartData(
-    _params: EmbeddedChartParams,
-  ): Promise<WorkoutLogData[]> {
-    return (await this.plugin.getWorkoutLogData()) || [];
-  }
-
-  /**
-   * Refresh a chart by clearing cache, reloading data, and re-rendering.
-   * Symmetric with EmbeddedTableView.refreshTable().
-   */
-  async refreshChart(
+  async render(
     container: HTMLElement,
     params: EmbeddedChartParams,
+    sourcePath?: string,
   ): Promise<void> {
-    const freshData = await this.loadChartData(params);
+    const logData = (await this.plugin.getWorkoutLogData()) || [];
     container.empty();
-    await this.createChart(container, freshData, params);
+    await this.createChart(container, logData, params, sourcePath);
   }
 
   async createChart(
     container: HTMLElement,
     logData: WorkoutLogData[],
     params: EmbeddedChartParams,
+    sourcePath?: string,
   ): Promise<void> {
+    const loadingDiv = this.showLoadingIndicator(container);
     try {
-      const loadingDiv = this.showLoadingIndicator(container);
-
-      if (this.handleEmptyData(container, logData)) {
-        loadingDiv.remove();
-        return;
-      }
-
-      const filterResult = this.filterData(logData, params);
-
-      if (filterResult.filteredData.length === 0) {
-        loadingDiv.remove();
-        this.handleNoFilteredData(
-          container,
-          params,
-          filterResult.titlePrefix,
-          VIEW_TYPES.CHART,
-        );
-        return;
-      }
+      const filteredData = this.filteredOrExplain(
+        container,
+        logData,
+        params,
+        VIEW_TYPES.CHART,
+        { sourcePath },
+      );
+      if (!filteredData) return;
 
       // Determine chart data type based on exercise type
       const resolvedType = await ChartTypeResolver.resolve(
@@ -104,7 +85,6 @@ export class EmbeddedChartView extends BaseView {
         resolvedType,
       );
       if (!validationResult.isValid) {
-        loadingDiv.remove();
         Feedback.renderError(
           container,
           validationResult.errorMessage,
@@ -112,10 +92,8 @@ export class EmbeddedChartView extends BaseView {
         return;
       }
 
-      loadingDiv.remove();
-
       // Sort data by ascending date
-      const sortedData = [...filterResult.filteredData].sort(
+      const sortedData = [...filteredData].sort(
         (a, b) =>
           new Date(a.date).getTime() - new Date(b.date).getTime(),
       );
@@ -131,7 +109,6 @@ export class EmbeddedChartView extends BaseView {
         resolvedType === CHART_DATA_TYPE.E1RM &&
         chartData.labels.length === 0
       ) {
-        loadingDiv.remove();
         Feedback.renderError(container, t("charts.noEligibleE1rm"));
         return;
       }
@@ -155,11 +132,12 @@ export class EmbeddedChartView extends BaseView {
         datasets,
         volumeData,
         trendIndicators,
-        filterResult,
         params: resolvedParams,
       });
     } catch (error) {
       this.handleError(container, error);
+    } finally {
+      loadingDiv.remove();
     }
   }
 
@@ -170,7 +148,6 @@ export class EmbeddedChartView extends BaseView {
       datasets: ChartDataset[];
       volumeData: number[];
       trendIndicators: TrendIndicators;
-      filterResult: FilterResult;
       params: EmbeddedChartParams;
     },
   ): void {

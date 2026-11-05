@@ -271,7 +271,7 @@ app/features/
 │   ├── components/      # ExerciseAutocomplete
 │   ├── log/             # CreateLogModal, EditLogModal
 │   ├── exercise/        # AddExerciseBlockModal, CreateExercisePageModal,
-│   │                    # CreateExerciseSectionModal, AuditExerciseNamesModal
+│   │                    # AuditExerciseNamesModal
 │   └── muscle/          # MuscleTagManagerModal, components, logic
 │
 ├── settings/

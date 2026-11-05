@@ -325,7 +325,6 @@ Everything. `isDesktopOnly: false`. No Node.js/Electron APIs. No regex lookbehin
 | Insert workout dashboard    | Opens InsertDashboardModal                   |
 | Insert workout duration     | Opens InsertDurationModal                    |
 | Create exercise page        | Creates a new exercise file                  |
-| Create exercise section     | Adds exercise section to current note        |
 | Audit exercise names        | Finds mismatches between files and CSV       |
 | Add exercise block          | Adds a `## exercise` section with its `workout-sets` |
 | Export workout to canvas    | Exports workout structure to Obsidian Canvas |

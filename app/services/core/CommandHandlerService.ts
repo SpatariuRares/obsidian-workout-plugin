@@ -7,7 +7,6 @@ import { InsertSetsModal } from "@app/features/tables/modals/InsertSetsModal";
 import { InsertTimerModal } from "@app/features/timer/modals/InsertTimerModal";
 import { InsertDashboardModal } from "@app/features/dashboard/modals/InsertDashboardModal";
 import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";
-import { CreateExerciseSectionModal } from "@app/features/modals/exercise/CreateExerciseSectionModal";
 import { AuditExerciseNamesModal } from "@app/features/modals/exercise/AuditExerciseNamesModal";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { AddExerciseBlockModal } from "@app/features/modals/exercise/AddExerciseBlockModal";
@@ -145,14 +144,6 @@ export class CommandHandlerService {
       name: t("modal.buttons.createExercise"),
       callback: () => {
         new CreateExercisePageModal(this.app, this.plugin).open();
-      },
-    });
-
-    this.plugin.addCommand({
-      id: "create-exercise-section",
-      name: t("modal.titles.createExerciseSection"),
-      callback: () => {
-        new CreateExerciseSectionModal(this.app, this.plugin).open();
       },
     });
 

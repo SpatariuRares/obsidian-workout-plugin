@@ -46,14 +46,6 @@ jest.mock(
   }),
 );
 jest.mock(
-  "@app/features/modals/exercise/CreateExerciseSectionModal",
-  () => ({
-    CreateExerciseSectionModal: jest
-      .fn()
-      .mockImplementation(() => ({ open: jest.fn() })),
-  }),
-);
-jest.mock(
   "@app/features/modals/exercise/AuditExerciseNamesModal",
   () => ({
     AuditExerciseNamesModal: jest

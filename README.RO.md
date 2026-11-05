@@ -18,7 +18,7 @@ Graficele îți arată tendința, harta de căldură a mușchilor arată ce ai a
 - Înregistrează fiecare serie în kg sau lb, indiferent ce discuri vezi în fața ta
 - Etichetează seriile cu un protocol: drop set, myo-reps, rest-pause, superset, 21s sau propriul protocol
 - Tabele cu seriile tale, grupate pe zile, cu totaluri zilnice, editabile dintr-o singură atingere
-- Seriile de azi ca rânduri de completat pe telefon: bifezi o serie ca s-o înregistrezi, iar cronometrul de pauză pornește (beta)
+- Seriile de azi ca rânduri de completat pe telefon: bifezi o serie ca s-o înregistrezi, iar cronometrul de pauză pornește
 - Grafice pentru greutate, volum, repetări, durată, distanță, ritm și ritm cardiac, plus o tendință care îți spune clar dacă progresezi
 - Un tablou de bord cu serie săptămânală (cu un obiectiv săptămânal), calendar de antrenamente, recorduri personale, volum total, antrenamente recente și statistici pe protocoale
 - O hartă de căldură a mușchilor, față și spate, după volum, serii sau repetări
@@ -113,7 +113,7 @@ Numele exercițiilor se potrivesc aproximativ implicit („squat” găsește �
 
 </details>
 
-## Serii pe telefon (beta)
+## Serii pe telefon
 
 Un bloc `workout-sets` este făcut pentru înregistrarea la sală: seriile de azi ale unui exercițiu, ca rânduri de completat. Fiecare rând arată ce ai făcut în aceeași serie data trecută, așa că scrii doar ce s-a schimbat (un câmp gol înregistrează valoarea afișată) și bifezi rândul. Seria ajunge în jurnal, rândul devine o serie înregistrată, iar cronometrul de pauză din partea de sus pornește singur. Săgeata unei serii înregistrate schimbă protocolul și notele; o bifezi din nou ca s-o scoți, cu **Anulează** timp de câteva secunde.
 
@@ -125,7 +125,7 @@ sets: 4
 rest: 120
 ```
 
-Blocul este o funcționalitate beta: activează-o la **Setări → Funcționalități Beta**, unde **Serii de exerciții** este pornită pe instalările noi. Apoi **Adaugă serii de exerciții** din paleta de comenzi scrie un bloc pentru tine, iar meniul ⋮ îl modifică sau îi modifică cronometrul de pauză.
+**Adaugă serii de exerciții** din paleta de comenzi scrie un bloc pentru tine, iar meniul ⋮ îl modifică sau îi modifică cronometrul de pauză.
 
 <details>
 <summary>Toți parametrii</summary>

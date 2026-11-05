@@ -21,6 +21,8 @@ import {
   openOnboarding,
   shouldShowWelcome,
 } from "@app/services/onboarding/Welcome";
+import { releaseNotesAfterUpdate } from "@app/services/onboarding/WhatsNew";
+import { WhatsNewModal } from "@app/features/modals/common/WhatsNewModal";
 import { WorkoutLogFile } from "@app/services/data/WorkoutLogFile";
 import { VaultLogStorage } from "@app/services/data/LogStorage";
 import { CodeBlockProcessorService } from "@app/services/core/CodeBlockProcessorService";
@@ -200,6 +202,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.app.workspace.onLayoutReady(() => {
       this.commandHandlerService.registerCommands();
       void this.openGettingStartedOnFreshInstall();
+      void this.showWhatsNewAfterUpdate();
     });
 
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
@@ -301,6 +304,16 @@ export default class WorkoutChartsPlugin extends Plugin {
   private async openGettingStartedOnFreshInstall(): Promise<void> {
     if (!(await shouldShowWelcome(this, this.savedDataAtLoad))) return;
     await openOnboarding(this);
+  }
+
+  /** Once after an update: what changed since the version last seen */
+  private async showWhatsNewAfterUpdate(): Promise<void> {
+    const releases = await releaseNotesAfterUpdate(
+      this,
+      this.manifest.version,
+      this.savedDataAtLoad,
+    );
+    if (releases.length > 0) new WhatsNewModal(this.app, releases).open();
   }
 
   async loadSettings() {

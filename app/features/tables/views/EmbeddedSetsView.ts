@@ -59,7 +59,6 @@ import { readNotePlan } from "@app/features/session/business/sessionPlan";
 import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { RestTimer } from "@app/features/timer/views/RestTimer";
 import type { EmbeddedTimerParams } from "@app/features/timer/types";
-import { betaEnabled } from "@app/services/features/BetaFeatures";
 import { t } from "@app/i18n";
 
 /**
@@ -194,15 +193,6 @@ export class SetSheet extends MarkdownRenderChild {
     const render = ++this.renders;
     const exercise = this.params.exercise;
     try {
-      if (!betaEnabled(this.plugin.settings, "setSheet")) {
-        // Drawn again on settings:changed, so turning it on shows the sheet
-        const sheet = this.renderCard(exercise);
-        sheet.createDiv({
-          cls: "workout-sets-message",
-          text: t("settings.beta.disabledBlock", { feature: t("settings.beta.setSheet.name") }),
-        });
-        return;
-      }
       if (!exercise) {
         this.renderCard();
         return;

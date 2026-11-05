@@ -49,7 +49,8 @@
     "createExampleNotes": "Buat catatan contoh",
     "openGettingStartedGuide": "Buka panduan memulai",
     "startTour": "Mulai tur",
-    "importWorkouts": "Impor dari Strong atau Hevy"
+    "importWorkouts": "Impor dari Strong atau Hevy",
+    "showWhatsNew": "Tampilkan yang baru"
   },
   "common": {
     "bpm": "BPM",
@@ -908,8 +909,7 @@
       "savePreset": "Simpan",
       "saveProtocol": "Simpan",
       "showWelcome": "Tampilkan pesan selamat datang",
-      "takeTour": "Ikuti tur",
-      "createExampleNotes": "Buat contoh"
+      "showWhatsNew": "Tampilkan catatan perubahan"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "File CSV untuk tag otot sudah ada. Apakah Anda ingin menimpanya dengan nilai default? Ini akan menghapus semua tag yang telah Anda buat.",
@@ -934,14 +934,13 @@
       "weightIncrement": "Nilai penambahan berat default untuk progressive overload (misalnya, 2,5 untuk penambahan sebesar 2,5 unit)",
       "showRibbonIcon": "Tampilkan ikon dumbel di ribbon yang membuka formulir catatan latihan",
       "weightUnit": "Satuan untuk grafik, total, dan log baru. Setiap log mempertahankan satuan tempat data tersebut dimasukkan.",
-      "takeTour": "Jalani tur singkat tentang pencatatan, grafik, tabel, dan timer pada sebuah catatan.",
       "welcomeWindow": "Tampilkan kembali jendela selamat datang untuk memulai dengan data contoh atau dari awal.",
       "keepScreenAwake": "Usahakan untuk menjaga layar tetap menyala saat ada timer yang berjalan di latar depan. Menggunakan lebih banyak baterai; ketersediaan tergantung pada perangkat dan pengaturan sistem Anda.",
       "vibrateOnCompletion": "Bergetar sebentar saat timer selesai, terlepas dari suara. Membutuhkan sentuhan pada halaman dan perangkat yang didukung (seperti Android). Tidak tersedia di iOS; tidak ada notifikasi latar belakang.",
       "presetRestDesc": "Detik istirahat setelah menyelesaikan setiap putaran (0 untuk tidak ada istirahat).",
       "noCustomProtocols": "Belum ada protokol. Klik 'Tambahkan protokol' untuk membuatnya.",
       "weeklyGoal": "Jumlah hari latihan per minggu agar streak Anda tetap berjalan, di ringkasan dasbor dan kalender latihan.",
-      "createExampleNotes": "Menambahkan catatan contoh dan enam minggu latihan contoh untuk mencoba semua fitur. Catatan yang sudah Anda miliki tidak pernah ditimpa."
+      "showWhatsNew": "Lihat apa yang berubah di setiap versi plugin."
     },
     "labels": {
       "csvPath": "Jalur file log CSV",
@@ -967,7 +966,6 @@
       "weightUnit": "Satuan berat",
       "showRibbonIcon": "Tampilkan ikon catatan cepat",
       "welcomeWindow": "Jendela selamat datang",
-      "takeTour": "Tur berpemandu",
       "keepScreenAwake": "Jaga layar tetap menyala saat timer berjalan",
       "vibrateOnCompletion": "Bergetar saat timer selesai",
       "presetRest": "Istirahat",
@@ -1041,10 +1039,6 @@
     },
     "beta": {
       "intro": "Fitur baru yang bisa Anda coba sebelum siap untuk semua pengguna. Fitur ini nonaktif sampai Anda mengaktifkannya dan masih mungkin berubah.",
-      "setSheet": {
-        "name": "Set latihan",
-        "desc": "Blok `workout-sets`: set hari ini ditampilkan sebagai baris yang dapat Anda isi di ponsel, dengan nilai dari waktu sebelumnya sebagai petunjuk, dan timer istirahat yang dimulai setiap kali."
-      },
       "disabledBlock": "{feature} adalah fitur beta. Aktifkan fitur ini di Pengaturan → Fitur Beta untuk menggunakan blok ini."
     }
   },
@@ -1294,5 +1288,15 @@
     "unlogSet": "Hapus set {set} dari log",
     "setRemoved": "Set {set} dihapus",
     "valueOfSet": "{field}, set {set}: {value}"
+  },
+  "whatsNew": {
+    "title": "Yang baru",
+    "version": "Versi {version}",
+    "close": "Mengerti",
+    "olderReleases": "Versi lama di GitHub",
+    "releases": {
+      "v3_1_0": "**Yang baru di plugin.** Setelah pembaruan, plugin menampilkan apa yang berubah, sekali saja. Buka lagi kapan saja dengan **Tampilkan yang baru** di palet perintah, atau **Tampilkan catatan perubahan** di Pengaturan → Workout Planner → Memulai.\n\n**Set latihan untuk semua orang.** Blok `workout-sets` tidak lagi menjadi fitur beta: blok ini berfungsi tanpa perlu mengaktifkan apa pun, dan **Sisipkan set latihan** selalu ada di palet perintah.",
+      "v3_0_0": "**Tampilan baru untuk setiap blok.** Log latihan, grafik, sesi terpandu, durasi latihan, dan setiap widget dasbor kini berupa kartu dengan tata letak, kontrol, dan menu yang sama, dengan kontras yang lebih jelas dalam tema terang dan gelap. Tidak ada yang berubah di catatan atau log Anda: blok-blok ini hanya tampil dan berperilaku lebih konsisten.\n\n**Set di ponsel Anda (beta).** Blok `workout-sets` baru menampilkan set hari ini dari satu latihan sebagai baris yang harus diisi, dengan nilai terakhir sebagai petunjuk. Centang baris untuk mencatat set dan timer istirahat langsung dimulai; centang lagi untuk membatalkannya, dengan Urungkan selama beberapa detik. Aktifkan di Pengaturan → Workout Planner → Fitur Beta (instalasi baru sudah aktif), lalu gunakan **Sisipkan set latihan** dari palet perintah.\n\n**Sesi terpandu membaca lembar set.** `workout-session` kini juga mengikuti blok `workout-sets` selain blok `workout-log`, mengambil istirahat setiap latihan dari blok masing-masing, dan berbagi satu hitung mundur dengan kartu set.\n\n**Grafik** menampilkan baris statistik di bawah grafik: rata-rata, minimum, maksimum, tren terbaru, dan jumlah sesi.\n\n**Widget dasbor** punya pengaturan sendiri di menu ⋮ (berapa latihan terbaru yang ditampilkan, statistik mana yang ditampilkan, jumlah hari yang dihitung, dan sebagainya).\n\n**Catatan contoh** kini memakai `workout-sets` untuk latihan dalam contoh latihan."
+    }
   }
 }

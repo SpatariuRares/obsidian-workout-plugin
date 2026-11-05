@@ -49,7 +49,8 @@
     "createExampleNotes": "创建示例笔记",
     "openGettingStartedGuide": "打开入门指南",
     "startTour": "开始导览",
-    "importWorkouts": "从 Strong 或 Hevy 导入"
+    "importWorkouts": "从 Strong 或 Hevy 导入",
+    "showWhatsNew": "查看新功能"
   },
   "common": {
     "bpm": "次/分钟",
@@ -908,8 +909,7 @@
       "savePreset": "保存",
       "saveProtocol": "保存",
       "showWelcome": "显示欢迎窗口",
-      "takeTour": "开始导览",
-      "createExampleNotes": "创建示例"
+      "showWhatsNew": "查看更新日志"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "肌肉标签 CSV 文件已存在。是否要用默认值覆盖？这将删除所有自定义标签。",
@@ -934,14 +934,13 @@
       "weightIncrement": "渐进式超负荷的默认重量增量（例如：2.5 表示 2.5 单位增量）",
       "showRibbonIcon": "在功能区中显示用于打开训练记录表单的哑铃图标",
       "weightUnit": "用于图表、总计和新记录的单位。每条记录都保留输入时使用的单位。",
-      "takeTour": "简要介绍：记录、图表、表格和计时器的使用方法。",
       "welcomeWindow": "再次显示欢迎窗口，以便使用示例数据或从头开始。",
       "weeklyGoal": "每周需要训练的天数，用于保持连续训练记录，显示在仪表盘摘要和训练日历中。",
       "keepScreenAwake": "尝试在任何计时器于前台运行时保持屏幕唤醒。这会消耗更多电量；具体可用性取决于您的设备和系统设置。",
       "vibrateOnCompletion": "在计时器结束时，即使没有声音，也会短暂地震动。需要点击页面并使用支持的设备（例如 Android）。在 iOS 上不可用；不支持后台警报。",
       "presetRestDesc": "每轮工作后，休息的时间（0 表示不休息）。",
       "noCustomProtocols": "还没有训练方案。点击“添加方案”即可创建一个。",
-      "createExampleNotes": "添加示例笔记和六周的示例训练，方便体验所有功能。已有的笔记不会被覆盖。"
+      "showWhatsNew": "了解插件每个版本的更改内容。"
     },
     "labels": {
       "csvPath": "CSV 记录文件路径",
@@ -968,7 +967,6 @@
       "showRibbonIcon": "显示快速记录图标",
       "welcomeWindow": "欢迎窗口",
       "weeklyGoal": "每周目标",
-      "takeTour": "导览",
       "keepScreenAwake": "在计时器运行期间，保持屏幕开启",
       "vibrateOnCompletion": "当计时器完成时，振动",
       "presetRest": "休息"
@@ -1041,10 +1039,6 @@
     },
     "beta": {
       "intro": "提供一些新功能，供您在它们正式发布前体验。这些功能目前处于测试阶段，您需要手动开启，并且可能会在后续版本中进行修改。",
-      "setSheet": {
-        "name": "训练组",
-        "desc": "`workout-sets` 代码块：以行的形式在手机上填写今天的组，上次的数值作为提示，每次勾选都会启动休息计时器。"
-      },
       "disabledBlock": "{feature} 是测试版功能。要使用此代码块，请在“设置”→“测试版功能”中启用它。"
     }
   },
@@ -1294,5 +1288,15 @@
     "valueOfSet": "{field}，第 {set} 组：{value}",
     "setRemoved": "已移除第 {set} 组",
     "unlogSet": "从训练记录中移除第 {set} 组"
+  },
+  "whatsNew": {
+    "title": "新功能",
+    "version": "版本 {version}",
+    "close": "知道了",
+    "olderReleases": "GitHub 上的旧版本",
+    "releases": {
+      "v3_1_0": "**插件的新变化。** 更新后，插件会显示一次本次的更改。之后可随时在命令面板中使用**查看新功能**重新打开，或在“设置”→“入门”中点击**查看更新日志**。\n\n**所有人都能使用训练组。** `workout-sets` 代码块不再是测试版功能：无需开启任何选项即可使用，**插入训练组**也始终显示在命令面板中。",
+      "v3_0_0": "**每个代码块都有全新外观。** 训练日志、图表、引导训练、训练时长和每个仪表盘小组件现在都是布局、控件和菜单一致的卡片，并且在浅色和深色主题下对比度更清晰。笔记和日志的内容都不会改变：代码块只是外观和操作更加统一。\n\n**手机上的训练组（测试版）。** 新的 `workout-sets` 代码块以待填写的行显示某个训练动作当天的组，并以上次的数值作为提示。勾选一行即可记录该组，休息计时器会自动开始；再次勾选可撤销，并可在几秒内点击“撤销”。在“设置”→“测试版功能”中开启（新安装默认开启），然后从命令面板使用**插入训练组**。\n\n**引导训练可读取训练组。** `workout-session` 现在同时支持 `workout-sets` 和 `workout-log` 代码块，每个动作的休息时间取自其自身的代码块，并与训练组卡片共用同一个倒计时。\n\n**图表** 在下方显示统计行：平均值、最小值、最大值、近期趋势和训练次数。\n\n**仪表盘小组件** 在其 ⋮ 菜单中有独立设置（列出多少次训练、显示哪些数据、统计的天数等）。\n\n**示例笔记** 现在用 `workout-sets` 展示示例训练的动作。"
+    }
   }
 }

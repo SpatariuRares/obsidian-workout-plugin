@@ -49,7 +49,8 @@
     "createExampleNotes": "Criar notas de exemplo",
     "openGettingStartedGuide": "Abrir o guia Como começar",
     "startTour": "Iniciar a visita guiada",
-    "importWorkouts": "Importar de Strong ou Hevy"
+    "importWorkouts": "Importar de Strong ou Hevy",
+    "showWhatsNew": "Mostrar novidades"
   },
   "common": {
     "bpm": "bpm",
@@ -908,8 +909,7 @@
       "savePreset": "Guardar",
       "saveProtocol": "Guardar",
       "showWelcome": "Mostrar mensagem de boas-vindas",
-      "takeTour": "Iniciar a visita guiada",
-      "createExampleNotes": "Criar exemplos"
+      "showWhatsNew": "Mostrar alterações"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Já existe um ficheiro CSV de tags musculares. Pretende substituí-lo pelos valores predefinidos? Isto removerá todas as tags personalizadas.",
@@ -934,14 +934,13 @@
       "weightIncrement": "Incremento de peso predefinido para a sobrecarga progressiva (por exemplo, 2,5 para incrementos de 2,5 unidades)",
       "showRibbonIcon": "Mostrar na barra lateral o ícone de haltere que abre o formulário de registo de treino",
       "weightUnit": "Unidade para gráficos, totais e novos registos. Cada registo mantém a unidade em que foi introduzido.",
-      "takeTour": "Percorra brevemente o registo, os gráficos, as tabelas e os temporizadores numa nota curta.",
       "welcomeWindow": "Apresente novamente a janela de boas-vindas para começar com dados de exemplo ou do zero.",
       "weeklyGoal": "Dias de treino por semana que mantêm a sua sequência, no resumo do painel e no calendário de treino.",
       "keepScreenAwake": "Tente manter o ecrã ativo enquanto algum temporizador estiver em execução em primeiro plano. Consome mais bateria; a disponibilidade depende do seu dispositivo e das definições do sistema.",
       "vibrateOnCompletion": "Vibre brevemente quando um temporizador terminar, independentemente do som. Requer um toque na página e um dispositivo compatível (como o Android). Não disponível no iOS; sem notificações em segundo plano.",
       "presetRestDesc": "Segundos de descanso após o trabalho de cada ronda (0 para não haver descanso).",
       "noCustomProtocols": "Ainda não existem protocolos definidos. Clique em \"Adicionar protocolo\" para criar um.",
-      "createExampleNotes": "Inclui notas de exemplo e seis semanas de treinos de exemplo para experimentar todas as funcionalidades. As notas que já existem nunca são substituídas."
+      "showWhatsNew": "Veja o que mudou em cada versão do plugin."
     },
     "labels": {
       "csvPath": "Caminho do ficheiro de registo CSV",
@@ -968,7 +967,6 @@
       "showRibbonIcon": "Mostrar ícone de registo rápido",
       "welcomeWindow": "Janela de boas-vindas",
       "weeklyGoal": "Objetivo semanal",
-      "takeTour": "Visita guiada",
       "keepScreenAwake": "Manter o ecrã ativo enquanto o temporizador estiver em execução",
       "vibrateOnCompletion": "Vibrar ao terminar um temporizador",
       "presetRest": "Descanso"
@@ -1041,10 +1039,6 @@
     },
     "beta": {
       "intro": "Novas funcionalidades para experimentar antes de estarem disponíveis para todos. Elas estão desativadas até serem ativadas, e ainda podem ser alteradas.",
-      "setSheet": {
-        "name": "Séries de treino",
-        "desc": "O bloco `workout-sets`: as séries de hoje, em linhas para preencher no telemóvel, com os valores da última vez como sugestões e um temporizador de descanso que arranca a cada registo."
-      },
       "disabledBlock": "{feature} é uma funcionalidade beta. Ative-a em Definições → Funcionalidades beta para utilizar este bloco."
     }
   },
@@ -1294,5 +1288,15 @@
     "unlogSet": "Remover a série {set} do registo",
     "setRemoved": "Série {set} removida",
     "valueOfSet": "{field}, série {set}: {value}"
+  },
+  "whatsNew": {
+    "title": "Novidades",
+    "version": "Versão {version}",
+    "close": "Percebi",
+    "olderReleases": "Versões anteriores no GitHub",
+    "releases": {
+      "v3_1_0": "**Novidades no plugin.** Depois de uma atualização, o plugin mostra uma única vez o que mudou. Pode voltar a abri-las a qualquer momento com **Mostrar novidades** na paleta de comandos, ou com **Mostrar alterações** em Definições → Workout Planner → Como começar.\n\n**Séries no telemóvel para todos.** O bloco `workout-sets` deixou de ser uma funcionalidade beta: funciona sem ativar nada, e **Inserir séries de exercícios** está sempre disponível na paleta de comandos.",
+      "v3_0_0": "**Um visual novo para todos os blocos.** Os registos de treino, os gráficos, a sessão guiada, a duração do treino e todos os widgets do painel são agora cartões com o mesmo layout, os mesmos controlos e os mesmos menus, com mais contraste nos temas claro e escuro. Nada nas suas notas nem no seu registo muda: os blocos apenas se apresentam e comportam de forma mais coerente.\n\n**Séries no telemóvel (beta).** Um novo bloco `workout-sets` mostra as séries de hoje de um exercício como linhas para preencher, com os valores da última vez como sugestão. Marque uma linha para registar a série, e o temporizador de descanso arranca sozinho; volte a marcá-la para a retirar, com Desfazer durante alguns segundos. Ative-o em Definições → Workout Planner → Funcionalidades beta (as novas instalações já o têm ativo) e, depois, use **Inserir séries de exercícios** na paleta de comandos.\n\n**As sessões guiadas leem os blocos de séries.** Um bloco `workout-session` passa a seguir os blocos `workout-sets` tal como os `workout-log`, retira o descanso de cada exercício do seu próprio bloco e partilha uma única contagem decrescente com o cartão de séries.\n\n**Os gráficos** mostram uma linha de estatísticas por baixo: média, mínimo, máximo, tendência recente e número de sessões.\n\n**Os widgets do painel** têm definições próprias no menu ⋮ (quantos treinos listar, que números mostrar, quantos dias contar, e assim por diante).\n\n**As notas de exemplo** usam agora `workout-sets` para os exercícios do treino de exemplo."
+    }
   }
 }

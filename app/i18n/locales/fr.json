@@ -49,6 +49,7 @@
     "createExampleNotes": "Créer des notes d'exemple",
     "openGettingStartedGuide": "Ouvrir le guide de démarrage",
     "startTour": "Commencer la visite",
+    "showWhatsNew": "Afficher les nouveautés",
     "importWorkouts": "Importer depuis Strong ou Hevy"
   },
   "common": {
@@ -908,8 +909,7 @@
       "savePreset": "Enregistrer",
       "saveProtocol": "Enregistrer",
       "showWelcome": "Afficher le message de bienvenue",
-      "takeTour": "Commencer la visite",
-      "createExampleNotes": "Créer les exemples"
+      "showWhatsNew": "Voir le journal des modifications"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fichier CSV de tags musculaires existe déjà. Souhaitez-vous le remplacer par les valeurs par défaut ? Cela supprimera tous les tags personnalisés.",
@@ -934,14 +934,13 @@
       "weightIncrement": "Incrément de poids par défaut pour la surcharge progressive (par exemple, 2,5 pour des incréments de 2,5 unités).",
       "showRibbonIcon": "Afficher dans le ruban l'icône d'haltère qui ouvre le formulaire du journal d'entraînement",
       "weightUnit": "Unité pour les graphiques, les totaux et les nouveaux enregistrements. Chaque enregistrement conserve l'unité dans laquelle il a été créé.",
-      "takeTour": "Parcourez rapidement l'enregistrement, les graphiques, les tableaux et les minuteurs sur une note courte.",
       "welcomeWindow": "Réafficher la fenêtre d'accueil pour démarrer avec des données d'exemple ou à partir de zéro.",
       "keepScreenAwake": "Essayez de garder l'écran allumé pendant qu'un minuteur fonctionne au premier plan. Consomme plus de batterie ; la disponibilité dépend de votre appareil et de vos paramètres système.",
       "vibrateOnCompletion": "Vibre brièvement lorsque le minuteur se termine, indépendamment du son. Nécessite un appui sur la page et un appareil compatible (par exemple, Android). Non disponible sur iOS ; pas d'alertes en arrière-plan.",
       "presetRestDesc": "Nombre de secondes de repos après le travail de chaque tour (0 pour aucun repos).",
       "noCustomProtocols": "Aucun protocole n'est défini pour le moment. Cliquez sur « Ajouter un protocole » pour en créer un.",
       "weeklyGoal": "Jours d'entraînement par semaine qui maintiennent votre série, dans le résumé du tableau de bord et le calendrier d'entraînement.",
-      "createExampleNotes": "Ajoutez des notes d'exemple et six semaines d'entraînements d'exemple pour tester toutes les fonctionnalités. Les notes que vous avez déjà ne sont jamais écrasées."
+      "showWhatsNew": "Voir ce qui a changé dans chaque version du plugin."
     },
     "labels": {
       "csvPath": "Chemin du fichier journal CSV",
@@ -967,7 +966,6 @@
       "weightUnit": "Unité de poids",
       "showRibbonIcon": "Afficher l'icône de saisie rapide",
       "welcomeWindow": "Fenêtre de bienvenue",
-      "takeTour": "Visite guidée",
       "keepScreenAwake": "Maintenir l'écran allumé pendant que le minuteur est en cours",
       "vibrateOnCompletion": "Vibrer à la fin d'un minuteur",
       "presetRest": "Repos",
@@ -1041,10 +1039,6 @@
     },
     "beta": {
       "intro": "Nouvelles fonctionnalités à tester avant leur lancement général. Elles sont temporairement désactivées et peuvent encore être modifiées.",
-      "setSheet": {
-        "name": "Séries d'entraînement",
-        "desc": "Le bloc `workout-sets` : les séries du jour présentées sous forme de lignes à remplir sur votre téléphone, avec les valeurs de la dernière séance comme indication, et un minuteur de repos qui démarre à chaque clic."
-      },
       "disabledBlock": "{feature} est une fonctionnalité en version bêta. Activez-la dans les paramètres → Fonctionnalités bêta pour utiliser cette fonctionnalité."
     }
   },
@@ -1294,5 +1288,15 @@
     "unlogSet": "Retirer la série {set} du journal",
     "setRemoved": "Série {set} supprimée",
     "valueOfSet": "{field}, série {set} : {value}"
+  },
+  "whatsNew": {
+    "title": "Nouveautés",
+    "version": "Version {version}",
+    "close": "Compris",
+    "olderReleases": "Versions précédentes sur GitHub",
+    "releases": {
+      "v3_1_0": "**Les nouveautés du plugin.** Après une mise à jour, le plugin affiche une fois ce qui a changé. Rouvrez-la à tout moment avec **Afficher les nouveautés** dans la palette de commandes, ou **Voir le journal des modifications** sous Paramètres → Workout Planner → Démarrage.\n\n**Les séries sur votre téléphone pour tout le monde.** Le bloc `workout-sets` n'est plus une fonctionnalité bêta : il fonctionne sans rien activer, et **Ajouter des séries d'exercices** est toujours dans la palette de commandes.",
+      "v3_0_0": "**Un nouveau look pour chaque bloc.** Les journaux d'entraînement, les graphiques, la séance guidée, la durée d'entraînement et chaque widget du tableau de bord sont désormais des cartes avec la même mise en page, les mêmes commandes et les mêmes menus, et un contraste plus net en thème clair comme en thème sombre. Rien ne change dans vos notes ni dans votre journal : les blocs sont simplement plus cohérents.\n\n**Les séries sur votre téléphone (bêta).** Un nouveau bloc `workout-sets` affiche les séries du jour d'un exercice sous forme de lignes à remplir, avec les valeurs de la dernière fois comme repères. Cochez une ligne pour enregistrer la série : le minuteur de repos démarre tout seul. Recochez-la pour la reprendre, avec Annuler pendant quelques secondes. Activez-le dans Paramètres → Workout Planner → Fonctionnalités bêta (les nouvelles installations l'ont activé), puis utilisez **Ajouter des séries d'exercices** dans la palette de commandes.\n\n**Les séances guidées lisent les feuilles de séries.** Un `workout-session` suit désormais les blocs `workout-sets` en plus des blocs `workout-log`, prend le repos de chaque exercice dans son propre bloc et partage un seul compte à rebours avec la carte des séries.\n\n**Les graphiques** affichent sous le graphique une ligne de statistiques : moyenne, minimum, maximum, tendance récente et nombre de séances.\n\n**Les widgets du tableau de bord** ont leurs propres réglages dans leur menu ⋮ (nombre d'entraînements à lister, chiffres à afficher, jours comptés, etc.).\n\n**Les notes d'exemple** utilisent désormais `workout-sets` pour les exercices de l'entraînement d'exemple."
+    }
   }
 }

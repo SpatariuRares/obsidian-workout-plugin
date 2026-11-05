@@ -43,6 +43,8 @@ const context = await esbuild.context({
   minify: prod,
   // Translations are bundled; \uXXXX escapes would triple non-Latin text
   charset: "utf8",
+  // Only main.js ships: images are inlined as data: URLs
+  loader: { ".png": "dataurl" },
 });
 
 if (prod) {

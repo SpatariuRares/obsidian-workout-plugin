@@ -18,7 +18,7 @@ Diagramme zeigen deinen Trend, die Muskel-Heatmap zeigt, was du trainiert hast, 
 - Jeden Satz in kg oder lb protokollieren, je nachdem, was die Scheiben vor dir sagen
 - Sätze mit einem Protokoll markieren: Dropset, Myo-Reps, Rest-Pause, Superset, 21er oder eigene
 - Tabellen deiner Sätze, nach Tagen gruppiert mit Tagessummen, mit einem Tipp bearbeitbar
-- Die heutigen Sätze als Zeilen zum Ausfüllen auf dem Handy: abhaken, um einen Satz zu protokollieren, und der Pausen-Timer startet (Beta)
+- Die heutigen Sätze als Zeilen zum Ausfüllen auf dem Handy: abhaken, um einen Satz zu protokollieren, und der Pausen-Timer startet
 - Diagramme für Gewicht, Volumen, Wiederholungen, Dauer, Strecke, Tempo und Herzfrequenz sowie ein Trend, der dir klar sagt, ob du dich verbesserst
 - Ein Dashboard mit wöchentlicher Serie (mit Wochenziel), Trainingskalender, persönlichen Rekorden, Gesamtvolumen, letzten Trainings und Protokollstatistiken
 - Eine Muskel-Heatmap, vorne und hinten, nach Volumen, Sätzen oder Wiederholungen
@@ -113,7 +113,7 @@ Mit `targetWeight` und `targetReps` erscheint über der Tabelle ein Ziel für pr
 
 </details>
 
-## Sätze auf dem Handy (Beta)
+## Sätze auf dem Handy
 
 Ein `workout-sets`-Block ist zum Protokollieren im Fitnessstudio gemacht: die heutigen Sätze einer Übung als Zeilen zum Ausfüllen. Jede Zeile zeigt, was du beim letzten Mal im selben Satz gemacht hast, sodass du nur tippst, was sich geändert hat (ein leeres Feld protokolliert diesen Wert), und die Zeile abhakst. Der Satz landet im Protokoll, die Zeile wird zu einem protokollierten Satz, und der Pausen-Timer oben startet von selbst. Über den Pfeil eines protokollierten Satzes änderst du sein Protokoll und seine Notizen; abhaken nimmt ihn wieder zurück, mit **Rückgängig** für ein paar Sekunden.
 
@@ -125,7 +125,7 @@ sets: 4
 rest: 120
 ```
 
-Der Block ist eine Beta-Funktion: Aktiviere **Trainingssätze** unter **Einstellungen → Beta-Funktionen** (bei neuen Installationen ist sie eingeschaltet). Danach fügt **Trainingssätze einfügen** aus der Befehlspalette einen Block für dich ein, und das ⋮-Menü bearbeitet ihn oder seinen Pausen-Timer.
+**Trainingssätze einfügen** aus der Befehlspalette fügt einen Block für dich ein, und das ⋮-Menü bearbeitet ihn oder seinen Pausen-Timer.
 
 <details>
 <summary>Alle Parameter</summary>

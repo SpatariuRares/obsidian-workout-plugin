@@ -49,7 +49,8 @@
     "createExampleNotes": "Utwórz przykładowe notatki",
     "openGettingStartedGuide": "Otwórz przewodnik dla początkujących",
     "startTour": "Rozpocznij wycieczkę",
-    "importWorkouts": "Importuj z Strong lub Hevy"
+    "importWorkouts": "Importuj z Strong lub Hevy",
+    "showWhatsNew": "Pokaż, co nowego"
   },
   "common": {
     "bpm": "bpm",
@@ -908,8 +909,7 @@
       "savePreset": "Zapisz",
       "saveProtocol": "Zapisz",
       "showWelcome": "Pokaż powitanie",
-      "takeTour": "Rozpocznij wycieczkę",
-      "createExampleNotes": "Utwórz przykłady"
+      "showWhatsNew": "Pokaż listę zmian"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Plik CSV z tagami mięśni już istnieje. Czy chcesz go zastąpić wartościami domyślnymi? To spowoduje usunięcie wszystkich niestandardowych tagów.",
@@ -934,14 +934,13 @@
       "weightIncrement": "Domyślny krok zwiększania wagi dla progresywnego obciążania (np. 2,5 dla kroków o wartości 2,5 jednostki)",
       "showRibbonIcon": "Pokaż ikonę hantli na pasku bocznym, która otwiera formularz dziennika treningowego",
       "weightUnit": "Jednostka dla wykresów, sum i nowych wpisów. Każdy wpis zachowuje jednostkę, w której został wprowadzony.",
-      "takeTour": "Krótkie omówienie rejestrowania, wykresów, tabel i timerów na jednej notatce.",
       "welcomeWindow": "Wyświetl ponownie okno powitalne, aby rozpocząć pracę z przykładowymi danymi lub od zera.",
       "weeklyGoal": "Dni treningowe w tygodniu, które podtrzymują passę, w podsumowaniu panelu kontrolnego i kalendarzu treningów.",
       "keepScreenAwake": "Spróbuj utrzymać ekran włączony, gdy działa jakiś timer w pierwszym planie. Zużywa więcej energii; dostępność zależy od Twojego urządzenia i ustawień systemu.",
       "vibrateOnCompletion": "Wibracja na krótko, gdy timer się skończy, niezależnie od dźwięku. Wymaga naciśnięcia na stronie i obsługującego urządzenia (np. Android). Nie jest dostępne na iOS; brak powiadomień w tle.",
       "presetRestDesc": "Sekundy odpoczynku po pracy w każdej rundzie (0 oznacza brak odpoczynku).",
       "noCustomProtocols": "Obecnie nie zdefiniowano żadnych protokołów. Kliknij przycisk „Dodaj protokół”, aby go utworzyć.",
-      "createExampleNotes": "Dodaje przykładowe notatki i sześć tygodni przykładowych treningów, by wypróbować wszystkie funkcje. Istniejące notatki nigdy nie są nadpisywane."
+      "showWhatsNew": "Zobacz, co zmieniło się w każdej wersji wtyczki."
     },
     "labels": {
       "csvPath": "Ścieżka do pliku dziennika CSV",
@@ -968,7 +967,6 @@
       "showRibbonIcon": "Pokaż ikonę szybkiego zapisu",
       "welcomeWindow": "Okno powitalne",
       "weeklyGoal": "Cel tygodniowy",
-      "takeTour": "Wycieczka z przewodnikiem",
       "keepScreenAwake": "Utrzymaj ekran włączony, gdy działa timer",
       "vibrateOnCompletion": "Wibracja po zakończeniu timera",
       "presetRest": "Odpoczynek"
@@ -1041,10 +1039,6 @@
     },
     "beta": {
       "intro": "Nowe funkcje, które można wypróbować przed ich oficjalnym udostępnieniem. Są one wyłączone domyślnie i mogą ulec zmianie.",
-      "setSheet": {
-        "name": "Serie treningu",
-        "desc": "Blok `workout-sets`: dzisiejsze serie wyświetlane jako wiersze, które można wypełnić na swoim telefonie, z wartościami z poprzedniej sesji jako wskazówkami oraz timera odpoczynku, który rozpoczyna się przy każdym kliknięciu."
-      },
       "disabledBlock": "{feature} to funkcja beta. Włącz ją w ustawieniach → Funkcje beta, aby używać tego bloku."
     }
   },
@@ -1294,5 +1288,15 @@
     "valueOfSet": "{field}, seria {set}: {value}",
     "setRemoved": "Usunięto serię {set}",
     "unlogSet": "Usuń serię {set} z dziennika"
+  },
+  "whatsNew": {
+    "title": "Co nowego",
+    "version": "Wersja {version}",
+    "close": "Rozumiem",
+    "olderReleases": "Starsze wersje na GitHubie",
+    "releases": {
+      "v3_1_0": "**Co nowego we wtyczce.** Po aktualizacji wtyczka raz pokazuje, co się zmieniło. Możesz to otworzyć ponownie w dowolnym momencie poleceniem **Pokaż, co nowego** w palecie poleceń albo przyciskiem **Pokaż listę zmian** w ustawieniach → Jak zacząć.\n\n**Serie dla wszystkich.** Blok `workout-sets` nie jest już funkcją beta: działa bez włączania czegokolwiek, a **Dodaj serie treningu** jest zawsze dostępne w palecie poleceń.",
+      "v3_0_0": "**Nowy wygląd każdego bloku.** Dzienniki treningów, wykresy, sesja z przewodnikiem, czas trwania treningu i każdy widżet panelu są teraz kartami o tym samym układzie, elementach sterujących i menu, z wyraźniejszym kontrastem w jasnym i ciemnym motywie. Nic w Twoich notatkach ani w dzienniku się nie zmienia: bloki po prostu wyglądają i działają spójniej.\n\n**Serie na telefonie (beta).** Nowy blok `workout-sets` pokazuje dzisiejsze serie jednego ćwiczenia jako wiersze do uzupełnienia, z wartościami z ostatniego razu jako podpowiedziami. Zaznacz wiersz, aby zapisać serię, a timer odpoczynku ruszy sam; odznacz go, aby cofnąć, z przyciskiem Cofnij widocznym przez kilka sekund. Włącz to w ustawieniach → Funkcje beta (w nowych instalacjach jest włączone), a następnie użyj **Dodaj serie treningu** z palety poleceń.\n\n**Sesje z przewodnikiem czytają bloki serii.** `workout-session` obsługuje teraz bloki `workout-sets` oraz `workout-log`, pobiera odpoczynek każdego ćwiczenia z jego własnego bloku i współdzieli jedno odliczanie z kartą serii.\n\n**Wykresy** pokazują pod wykresem wiersz statystyk: średnią, minimum, maksimum, ostatni trend i liczbę sesji.\n\n**Widżety panelu** mają własne ustawienia w menu ⋮ (ile treningów wyświetlić, które wartości pokazać, ile dni uwzględnić itd.).\n\n**Przykładowe notatki** używają teraz `workout-sets` dla ćwiczeń w przykładowym treningu."
+    }
   }
 }

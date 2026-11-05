@@ -18,7 +18,7 @@ Diagrammene viser trenden din, muskelvarmekartet viser hva du har trent, og hver
 - Logg hvert sett i kg eller lb, uansett hva skivene foran deg sier
 - Merk sett med en protokoll: dropsett, myo-reps, hvilepause, superset, 21-ere, eller din egen
 - Tabeller over settene dine, gruppert etter dag med dagstotaler, og redigerbare med ett trykk
-- Dagens sett som rader du fyller ut på telefonen: kryss av et sett for å logge det, og hviletimeren starter (beta)
+- Dagens sett som rader du fyller ut på telefonen: kryss av et sett for å logge det, og hviletimeren starter
 - Diagrammer for vekt, volum, repetisjoner, varighet, distanse, tempo og puls, og en trend som tydelig sier fra om du forbedrer deg
 - Et dashbord med ukentlig serie (med ukentlig mål), en treningskalender, personlige rekorder, totalt volum, nylige treningsøkter og protokollstatistikk
 - Et muskelvarmekart, forside og bakside, etter volum, sett eller repetisjoner
@@ -113,7 +113,7 @@ Med `targetWeight` og `targetReps` vises et mål for progressiv overbelastning o
 
 </details>
 
-## Sett på telefonen (beta)
+## Sett på telefonen
 
 En `workout-sets`-blokk er laget for logging på treningsstudioet: dagens sett av én øvelse som rader du fyller ut. Hver rad viser hva du gjorde i samme sett sist, så du skriver bare inn det som er endret (et tomt felt logger den verdien) og krysser av raden. Settet havner i loggen, raden blir et logget sett, og hviletimeren øverst starter av seg selv. Pilen på et logget sett endrer protokollen og merknadene; krysser du av det igjen, tas settet tilbake, med **Angre** i noen sekunder.
 
@@ -125,7 +125,7 @@ sets: 4
 rest: 120
 ```
 
-Blokken er en beta-funksjon: slå på **Treningssett** under **Innstillinger → Funksjoner for beta-versjonen** (nye installasjoner har den på). Deretter skriver **Legg til treningssett** fra kommandopaletten en for deg, og ⋮-menyen redigerer den eller hviletimeren.
+**Legg til treningssett** fra kommandopaletten skriver en for deg, og ⋮-menyen redigerer den eller hviletimeren.
 
 <details>
 <summary>Alle parametere</summary>

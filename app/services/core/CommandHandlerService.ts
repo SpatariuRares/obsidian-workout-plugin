@@ -4,7 +4,6 @@ import { t } from "@app/i18n";
 import { InsertChartModal } from "@app/features/charts/modals/InsertChartModal";
 import { InsertTableModal } from "@app/features/tables/modals/InsertTableModal";
 import { InsertSetsModal } from "@app/features/tables/modals/InsertSetsModal";
-import { betaEnabled } from "@app/services/features/BetaFeatures";
 import { InsertTimerModal } from "@app/features/timer/modals/InsertTimerModal";
 import { InsertDashboardModal } from "@app/features/dashboard/modals/InsertDashboardModal";
 import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";
@@ -31,6 +30,8 @@ import {
   openGettingStartedGuide,
 } from "@app/services/examples/GettingStartedGuide";
 import { startGuidedTour } from "@app/features/tour/startGuidedTour";
+import { allReleaseNotes } from "@app/services/onboarding/WhatsNew";
+import { WhatsNewModal } from "@app/features/modals/common/WhatsNewModal";
 import type { InsertCommandKind } from "@app/services/events/WorkoutEventTypes";
 import { durationBlock } from "@app/features/duration/durationBlock";
 import { sessionBlock } from "@app/features/session/sessionBlock";
@@ -88,6 +89,14 @@ export class CommandHandlerService {
     });
 
     this.plugin.addCommand({
+      id: "show-whats-new",
+      name: t("commands.showWhatsNew"),
+      callback: () => {
+        new WhatsNewModal(this.app, allReleaseNotes()).open();
+      },
+    });
+
+    this.plugin.addCommand({
       id: "open-getting-started-guide",
       name: t("commands.openGettingStartedGuide"),
       callback: async () => {
@@ -116,14 +125,9 @@ export class CommandHandlerService {
     this.plugin.addCommand({
       id: "insert-workout-sets",
       name: t("modal.titles.insertSets"),
-      // Beta: only offered once turned on in Settings → Beta features
-      checkCallback: (checking) => {
-        if (!betaEnabled(this.plugin.settings, "setSheet")) return false;
-        if (!checking) {
-          this.emitInsert("sets");
-          new InsertSetsModal(this.app, this.plugin).open();
-        }
-        return true;
+      callback: () => {
+        this.emitInsert("sets");
+        new InsertSetsModal(this.app, this.plugin).open();
       },
     });
 

@@ -18,7 +18,7 @@ Grafikler trendinizi gösterir, kas ısı haritası neyi çalıştırdığınız
 - Her seti kg ya da lb cinsinden kaydedin; önünüzdeki plakaların ne dediği önemli değil
 - Setleri bir protokolle etiketleyin: drop set, myo-reps, rest-pause, superset, 21s veya kendi protokolünüz
 - Setlerinizin tabloları, günlük toplamlarıyla günlere göre gruplanır ve tek dokunuşla düzenlenebilir
-- Bugünün setleri, telefonunuzda doldurabileceğiniz satırlar olarak: bir seti işaretleyerek kaydedin, dinlenme zamanlayıcısı kendiliğinden başlar (beta)
+- Bugünün setleri, telefonunuzda doldurabileceğiniz satırlar olarak: bir seti işaretleyerek kaydedin, dinlenme zamanlayıcısı kendiliğinden başlar
 - Ağırlık, hacim, tekrar, süre, mesafe, tempo ve nabız grafikleri; ayrıca ilerleyip ilerlemediğinizi açıkça söyleyen bir trend
 - Haftalık seri (haftalık hedefle), antrenman takvimi, kişisel rekorlar, toplam hacim, son antrenmanlar ve protokol istatistikleri içeren bir gösterge paneli
 - Ön ve arka görünümlü, hacme, sete ya da tekrara göre bir kas ısı haritası
@@ -113,7 +113,7 @@ Egzersiz adları varsayılan olarak gevşek eşleşir ("squat" ifadesi "Squat (h
 
 </details>
 
-## Telefonda setler (beta)
+## Telefonda setler
 
 `workout-sets` bloğu salonda kayıt için tasarlandı: bir egzersizin bugünkü setleri, doldurulacak satırlar olarak. Her satır, aynı setin geçen seferki değerini gösterir; bu yüzden yalnızca değişeni yazarsınız (boş bırakılan alan o değeri kaydeder) ve satırı işaretlersiniz. Set kayda girer, satır kaydedilmiş bir sete dönüşür ve üstteki dinlenme zamanlayıcısı kendiliğinden başlar. Kaydedilmiş bir setin okuyla protokolünü ve notlarını değiştirirsiniz; işaretini yeniden tıklamak seti kayıtlardan kaldırır ve birkaç saniye görünen **Geri al** ile geri getirirsiniz.
 
@@ -125,7 +125,7 @@ sets: 4
 rest: 120
 ```
 
-Blok bir beta özelliktir: **Ayarlar → Workout Planner → Beta özellikleri** altında **Egzersiz setleri** seçeneğini açın (yeni kurulumlarda açıktır). Ardından komut paletinden **Egzersiz setlerini ekle** komutu sizin için bir tane yazar; ⋮ menüsü bloğu ya da dinlenme zamanlayıcısını düzenler.
+**Egzersiz setlerini ekle** komutu komut paletinden sizin için bir tane yazar; ⋮ menüsü bloğu ya da dinlenme zamanlayıcısını düzenler.
 
 <details>
 <summary>Tüm parametreler</summary>

@@ -1,5 +1,4 @@
 /** @jest-environment jsdom */
-import { mockSettingNamed } from "obsidian";
 import { BetaFeaturesSettings } from "@app/features/settings/components/BetaFeaturesSettings";
 import { renderSettingDefinitions } from "@app/features/settings/renderSettingDefinitions";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
@@ -24,24 +23,9 @@ function setup(betaFeatures: Record<string, boolean> = {}) {
 }
 
 describe("BetaFeaturesSettings", () => {
-  it("shows each beta feature off until it is turned on", () => {
+  it("shows no section while no feature is in beta", () => {
     const { container } = setup();
-    const toggle = mockSettingNamed(container, t("settings.beta.setSheet.name")).component("toggle");
 
-    expect(toggle.value).toBe(false);
-  });
-
-  it("turns a feature on, saves and tells the blocks to draw again", async () => {
-    const { plugin, container, events } = setup();
-
-    await mockSettingNamed(container, t("settings.beta.setSheet.name"))
-      .component("toggle")
-      .change(true as never);
-
-    expect(plugin.settings.betaFeatures).toEqual({ setSheet: true });
-    expect(plugin.saveSettings).toHaveBeenCalled();
-    expect(events).toEqual([
-      { key: "betaFeatures", previousValue: {}, newValue: { setSheet: true } },
-    ]);
+    expect(container.textContent).not.toContain(t("settings.sections.beta"));
   });
 });

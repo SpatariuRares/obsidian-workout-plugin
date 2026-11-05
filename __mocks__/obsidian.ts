@@ -509,6 +509,19 @@ export class MarkdownRenderChild {
   }
   registerEvent(_ref: EventRef): void {}
 }
+/** Obsidian's Component: what a markdown render adds is unloaded with it */
+export class Component {
+  load(): void {}
+  unload(): void {}
+}
+export const MarkdownRenderer = {
+  render: jest.fn(
+    (_app: App, markdown: string, el: HTMLElement): Promise<void> => {
+      el.textContent = markdown;
+      return Promise.resolve();
+    },
+  ),
+};
 export class TFolder {
   path: string = "";
   name: string = "";

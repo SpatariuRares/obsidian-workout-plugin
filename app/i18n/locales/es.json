@@ -49,6 +49,7 @@
     "createExampleNotes": "Crear notas de ejemplo",
     "openGettingStartedGuide": "Abrir la guía de inicio",
     "startTour": "Iniciar la visita guiada",
+    "showWhatsNew": "Mostrar novedades",
     "importWorkouts": "Importar desde Strong o Hevy"
   },
   "common": {
@@ -908,8 +909,7 @@
       "savePreset": "Guardar",
       "saveProtocol": "Guardar",
       "showWelcome": "Mostrar bienvenida",
-      "takeTour": "Empezar la visita guiada",
-      "createExampleNotes": "Crear ejemplos"
+      "showWhatsNew": "Mostrar registro de cambios"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Ya existe un archivo CSV de etiquetas musculares. ¿Desea sobrescribirlo con los valores predeterminados? Esto eliminará cualquier etiqueta personalizada.",
@@ -934,14 +934,13 @@
       "weightIncrement": "Incremento de peso predeterminado para la sobrecarga progresiva (por ejemplo, 2,5 para incrementos de 2,5 unidades).",
       "showRibbonIcon": "Muestra en la cinta el icono de mancuerna que abre el formulario del registro de entrenamiento",
       "weightUnit": "Unidad para gráficos, totales y nuevos registros. Cada registro mantiene la unidad en la que se introdujo.",
-      "takeTour": "Recorre el registro, los gráficos, las tablas y los temporizadores en una nota corta.",
       "welcomeWindow": "Mostrar nuevamente la ventana de bienvenida para comenzar con datos de ejemplo o desde cero.",
       "weeklyGoal": "Días de entrenamiento a la semana que mantienen tu racha, en el resumen del panel y en el calendario de entrenamiento.",
       "keepScreenAwake": "Intenta mantener la pantalla encendida mientras se ejecute cualquier temporizador en primer plano. Consume más batería; la disponibilidad depende de tu dispositivo y de la configuración del sistema.",
       "vibrateOnCompletion": "Vibrar brevemente cuando un temporizador finalice, independientemente del sonido. Requiere tocar la página y un dispositivo compatible (como Android). No disponible en iOS; sin notificaciones en segundo plano.",
       "presetRestDesc": "Segundos de descanso después del trabajo de cada ronda (0 para no hacer ninguna pausa).",
       "noCustomProtocols": "Aún no hay protocolos. Haz clic en «Añadir protocolo» para crear uno.",
-      "createExampleNotes": "Añade notas de ejemplo y seis semanas de entrenamientos de ejemplo para probar todas las funciones. Las notas que ya tengas nunca se sobrescriben."
+      "showWhatsNew": "Consulta qué ha cambiado en cada versión del plugin."
     },
     "labels": {
       "csvPath": "Ruta del archivo de registro CSV",
@@ -968,7 +967,6 @@
       "showRibbonIcon": "Mostrar icono de registro rápido",
       "welcomeWindow": "Ventana de bienvenida",
       "weeklyGoal": "Objetivo semanal",
-      "takeTour": "Visita guiada",
       "keepScreenAwake": "Mantener la pantalla encendida mientras se ejecuta un temporizador",
       "vibrateOnCompletion": "Vibrar al finalizar un temporizador",
       "presetRest": "Descanso"
@@ -1041,10 +1039,6 @@
     },
     "beta": {
       "intro": "Nuevas funciones para probar antes de que estén disponibles para todos. Están desactivadas hasta que las actives, y aún pueden cambiar.",
-      "setSheet": {
-        "name": "Series de entrenamiento",
-        "desc": "El bloque `workout-sets`: los ejercicios de hoy mostrados en filas para completar en tu teléfono, con los valores de la última vez como indicaciones y un temporizador de descanso que se inicia en cada pulsación."
-      },
       "disabledBlock": "{feature} es una función de prueba. Actívala en la sección \"Configuración\" → Funciones de prueba para utilizar esta función."
     }
   },
@@ -1294,5 +1288,15 @@
     "unlogSet": "Quitar la serie {set} del registro",
     "setRemoved": "Serie {set} eliminada",
     "valueOfSet": "{field}, serie {set}: {value}"
+  },
+  "whatsNew": {
+    "title": "Novedades",
+    "version": "Versión {version}",
+    "close": "Entendido",
+    "olderReleases": "Versiones anteriores en GitHub",
+    "releases": {
+      "v3_1_0": "**Novedades del plugin.** Tras una actualización, el plugin muestra una vez qué ha cambiado. Puedes volver a abrirlo cuando quieras con **Mostrar novedades** en la paleta de comandos, o con **Mostrar registro de cambios** en Configuración → Cómo empezar.\n\n**Series en el móvil para todos.** El bloque `workout-sets` ya no es una función de prueba: funciona sin activar nada, y **Insertar series de entrenamiento** siempre está en la paleta de comandos.",
+      "v3_0_0": "**Un nuevo aspecto para cada bloque.** Los registros de entrenamiento, los gráficos, la sesión guiada, la duración del entrenamiento y cada widget del panel son ahora tarjetas con la misma disposición, los mismos controles y los mismos menús, con más contraste en los temas claro y oscuro. Nada de tus notas ni de tu registro cambia: los bloques simplemente se ven y se comportan de forma más coherente.\n\n**Series en el móvil (beta).** Un nuevo bloque `workout-sets` muestra las series de hoy de un ejercicio como filas que rellenar, con los valores de la última vez como pistas. Marca una fila para registrar la serie y el temporizador de descanso arranca solo; desmárcala para quitarla, con Deshacer durante unos segundos. Actívalo en Configuración → Funciones de prueba (en las instalaciones nuevas está activado) y luego usa **Insertar series de entrenamiento** desde la paleta de comandos.\n\n**Las sesiones guiadas leen los bloques de series.** Un `workout-session` ahora sigue los bloques `workout-sets` además de los `workout-log`, toma el descanso de cada ejercicio de su propio bloque y comparte una cuenta atrás con la tarjeta de series.\n\n**Los gráficos** muestran debajo una fila de estadísticas: media, mínimo, máximo, tendencia reciente y número de sesiones.\n\n**Los widgets del panel** tienen sus propios ajustes en el menú ⋮ (cuántos entrenamientos listar, qué cifras mostrar, los días contados, etc.).\n\n**Las notas de ejemplo** ahora usan `workout-sets` para los ejercicios del entrenamiento de ejemplo."
+    }
   }
 }

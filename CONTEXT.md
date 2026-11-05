@@ -117,8 +117,6 @@ Estimates total workout duration based on exercises, sets, and configurable set 
 
 ### 6. `workout-sets` - Set Sheet (Logging on the Phone)
 
-**Beta**: on for new installs; after an update, off until the user turns on "Workout sets" in Settings → Beta features; until then the block shows how to turn it on and its insert command is hidden.
-
 The V2 of `workout-log`: the same exercise table (columns, values as entered, protocol badges, target with progress and achievement badge, menu), made for logging instead of reading history. One exercise, today's sets as rows with one input per field of the exercise type (kg + reps for strength, duration/distance for cardio):
 
 ```yaml

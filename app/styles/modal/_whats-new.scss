@@ -1,0 +1,36 @@
+/* What's new: the logo above the title */
+.workout-whats-new-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--workout-space-sm);
+  margin-bottom: var(--workout-space-md);
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.workout-whats-new-logo {
+  width: 64px;
+  height: 64px;
+}
+
+.workout-whats-new-release {
+  border-top: var(--workout-border-thin) solid var(--workout-border-color);
+  padding: var(--workout-space-sm) 0;
+
+  summary {
+    cursor: pointer;
+
+    h3 {
+      display: inline;
+      margin: 0;
+    }
+  }
+}
+
+.workout-whats-new-older {
+  margin: var(--workout-space-md) 0 0;
+  font-size: var(--workout-font-sm);
+}

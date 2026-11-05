@@ -49,7 +49,8 @@
     "createExampleNotes": "Krijo nota të shembullore",
     "openGettingStartedGuide": "Hap udhëzuesin e fillimit",
     "startTour": "Fillo turin",
-    "importWorkouts": "Importo nga Strong ose Hevy"
+    "importWorkouts": "Importo nga Strong ose Hevy",
+    "showWhatsNew": "Shfaq çfarë është e re"
   },
   "common": {
     "bpm": "bpm",
@@ -908,8 +909,7 @@
       "savePreset": "Ruaj",
       "saveProtocol": "Ruaj",
       "showWelcome": "Shfaq mirëseardhjen",
-      "takeTour": "Fillo turin",
-      "createExampleNotes": "Krijo shembuj"
+      "showWhatsNew": "Shfaq ndryshimet"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Një skedar CSV me etiketat e muskujve ekziston tashmë. Doni ta mbishkruani me vlerat e paracaktuara? Kjo do të fshijë të gjitha etiketat e personalizuara.",
@@ -934,14 +934,13 @@
       "weightIncrement": "Rritja e parazgjedhur e peshës për mbingarkesën progresive (p.sh., 2.5 për rritje me 2.5 njësi)",
       "showRibbonIcon": "Shfaq ikonën e shtangës në shiritin anësor që hap formularin e regjistrimit të stërvitjes",
       "weightUnit": "Njësia për grafikët, totalet dhe regjistrimet e reja. Çdo regjistrim mban njësinë me të cilën u fut.",
-      "takeTour": "Kaloni përmes regjistrimit, grafikëve, tabelave dhe timerëve në një shënim të shkurtër.",
       "welcomeWindow": "Shfaq përsëri dritaren e mirëseardhjes për të filluar me të dhëna shembull ose nga e para.",
       "weeklyGoal": "Ditët e stërvitjes në javë që e mbajnë seritën aktive, në përmbledhjen e panelit dhe te kalendari i stërvitjes.",
       "keepScreenAwake": "Provo ta mbash ekranin të ndezur ndërsa ndonjë timer punon në plan. Konsumon më shumë bateri; disponueshmëria varet nga pajisja dhe cilësimet e sistemit.",
       "vibrateOnCompletion": "Vibron shkurtimisht kur mbaron një timer, pavarësisht nga zëri. Kërkon një prekje në faqe dhe një pajisje të mbështetur (si Android). Nuk është i disponueshëm në iOS dhe nuk ka njoftime kur aplikacioni është në sfond.",
       "presetRestDesc": "Sekondat e pushimit pas punës së çdo raunde (0 për pa pushim).",
       "noCustomProtocols": "Aktualisht nuk ka protokole. Klikoni 'Shto protokol' për të krijuar një.",
-      "createExampleNotes": "Shton shënime shembull dhe gjashtë javë stërvitje shembull për të provuar çdo veçori. Shënimet që ke tashmë nuk shkruhen kurrë mbi to."
+      "showWhatsNew": "Shihni çfarë ka ndryshuar në çdo version të pluginit."
     },
     "labels": {
       "csvPath": "Shtegu i skedarit të regjistrit CSV",
@@ -968,7 +967,6 @@
       "showRibbonIcon": "Shfaq ikonën e regjistrimit të shpejtë",
       "welcomeWindow": "Dritarja e mirëseardhjes",
       "weeklyGoal": "Objektivi javor",
-      "takeTour": "Tur udhëzues",
       "keepScreenAwake": "Mbaje ekranin aktiv ndërsa punon një timer",
       "vibrateOnCompletion": "Vibrim kur një timer përfundojë",
       "presetRest": "Pushim"
@@ -1041,10 +1039,6 @@
     },
     "beta": {
       "intro": "Funksione të reja për t'i provuar para se të jenë gati për të gjithë. Ato janë të fikura derisa t'i aktivizoni, dhe ende mund të ndryshojnë.",
-      "setSheet": {
-        "name": "Seritë e stërvitjes",
-        "desc": "Bloku `workout-sets`: seritë e sotme si rreshta për t'i plotësuar në telefon, me vlerat e herës së fundit si sugjerim dhe një timer pushimi që fillon në çdo klik."
-      },
       "disabledBlock": "{feature} është një funksion beta. Aktivizojeni te Cilësimet → Funksionet beta për ta përdorur këtë bllok."
     }
   },
@@ -1294,5 +1288,15 @@
     "unlogSet": "Hiq serinë {set} nga regjistri",
     "setRemoved": "Seria {set} u hoq",
     "valueOfSet": "{field}, seria {set}: {value}"
+  },
+  "whatsNew": {
+    "title": "Çfarë është e re",
+    "version": "Versioni {version}",
+    "close": "E kuptova",
+    "olderReleases": "Versionet e mëparshme në GitHub",
+    "releases": {
+      "v3_1_0": "**Çfarë është e re në plugin.** Pas një përditësimi, plugini shfaq një herë atë që ka ndryshuar. Hapeni sërish në çdo kohë me **Shfaq çfarë është e re** në paletën e komandave, ose me **Shfaq ndryshimet** te Cilësimet → Workout Planner → Fillimi.\n\n**Seritë e stërvitjes për të gjithë.** Blloku `workout-sets` nuk është më funksion beta: funksionon pa aktivizuar asgjë, dhe **Shto seritë e stërvitjes** është gjithmonë në paletën e komandave.",
+      "v3_0_0": "**Pamje e re për çdo bllok.** Regjistrat e stërvitjes, grafikët, seanca e udhëzuar, kohëzgjatja e stërvitjes dhe çdo widget i panelit janë tani kartela me të njëjtën paraqitje, kontrolle dhe menu, me kontrast më të qartë në temat e çelët dhe të errët. Asgjë në shënimet ose regjistrin tuaj nuk ndryshon: blloqet thjesht duken dhe sillen më në mënyrë të qëndrueshme.\n\n**Seritë në telefon (beta).** Një bllok i ri `workout-sets` shfaq seritë e sotme të një ushtrimi si rreshta për t'i plotësuar, me vlerat e herës së fundit si sugjerime. Shëno një rresht për të regjistruar serinë dhe timeri i pushimit nis vetvetiu; shëno sërish për ta marrë mbrapsht, me Zhbëj për disa sekonda. Aktivizoje te Cilësimet → Workout Planner → Funksionet beta (instalimet e reja e kanë të aktivizuar), pastaj përdor **Shto seritë e stërvitjes** nga paleta e komandave.\n\n**Seancat e udhëzuara lexojnë fletët e serive.** Një `workout-session` ndjek tani blloqet `workout-sets` dhe `workout-log`, e merr pushimin e çdo ushtrimi nga blloku i vet, dhe ndan një numërim të vetëm me kartelën e serive.\n\n**Grafikët** shfaqin një rresht statistikash nën grafik: mesatarja, minimumi, maksimumi, tendenca e fundit dhe numri i seancave.\n\n**Widgetët e panelit** kanë cilësimet e tyre në menunë ⋮ (sa stërvitje të listohen, cilat shifra të shfaqen, ditët e numëruara, e kështu me radhë).\n\n**Shembujt e shënimeve** përdorin tani `workout-sets` për ushtrimet e stërvitjes shembull."
+    }
   }
 }

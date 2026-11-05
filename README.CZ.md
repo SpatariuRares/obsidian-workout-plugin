@@ -18,7 +18,7 @@ Grafy ukazují váš trend, tepelná mapa svalů ukazuje, co jste trénovali, a 
 - Zapisujte každou sérii v kg nebo lb, podle kotoučů, které máte před sebou
 - Označte série protokolem: drop set, myo-reps, rest-pause, superset, 21s, nebo vlastním
 - Tabulky vašich sérií seskupené podle dne se součty za den, upravitelné jedním klepnutím
-- Dnešní série jako řádky k vyplnění v telefonu: zaškrtněte řádek a série se zapíše a spustí se odpočinkový časovač (beta)
+- Dnešní série jako řádky k vyplnění v telefonu: zaškrtněte řádek a série se zapíše a spustí se odpočinkový časovač
 - Grafy váhy, objemu, opakování, doby, vzdálenosti, tempa a tepové frekvence a trend, který vám jasně řekne, zda se zlepšujete
 - Dashboard s týdenní sérií (s týdenním cílem), kalendářem tréninků, osobními rekordy, celkovým objemem, nedávnými tréninky a statistikami protokolů
 - Tepelná mapa svalů, zepředu i zezadu, podle objemu, sérií nebo opakování
@@ -113,7 +113,7 @@ Názvy cvičení se ve výchozím nastavení hledají volně („squat“ najde 
 
 </details>
 
-## Série na telefonu (beta)
+## Série na telefonu
 
 Blok `workout-sets` je určený k zapisování v posilovně: dnešní série jednoho cviku jako řádky k vyplnění. Každý řádek ukazuje, co jste v téže sérii udělali minule, takže píšete jen to, co se změnilo (prázdné pole zapíše tuto hodnotu), a řádek zaškrtnete. Série se zapíše do záznamu, řádek se promění v zapsanou sérii a odpočinkový časovač nahoře se spustí sám. Šipka u zapsané série mění její protokol a poznámky; opětovným zaškrtnutím ji odeberete, s tlačítkem **Vrátit** na několik sekund.
 
@@ -125,7 +125,7 @@ sets: 4
 rest: 120
 ```
 
-Blok je funkce v beta verzi: zapněte **Série tréninku** v **Nastavení → Workout Planner → Funkce pro testování (beta)** (nové instalace ji mají zapnutou). Potom vám příkaz **Vložit série tréninku** z palety příkazů vloží jeden blok a nabídka ⋮ ho upraví, včetně jeho odpočinkového časovače.
+**Vložit série tréninku** z palety příkazů vloží jeden blok a nabídka ⋮ ho upraví, včetně jeho odpočinkového časovače.
 
 <details>
 <summary>Všechny parametry</summary>

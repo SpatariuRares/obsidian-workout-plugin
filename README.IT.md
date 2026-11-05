@@ -18,7 +18,7 @@ I grafici mostrano il tuo andamento, la mappa di calore muscolare mostra cosa ha
 - Registra ogni serie in kg o lb, qualunque siano i dischi davanti a te
 - Etichetta le serie con un protocollo: drop set, myo-reps, rest-pause, superset, 21s o un tuo protocollo
 - Tabelle delle tue serie, raggruppate per giorno con i totali giornalieri, modificabili con un tocco
-- Le serie di oggi come righe da compilare sul telefono: spunta una serie per registrarla, e parte il timer di riposo (beta)
+- Le serie di oggi come righe da compilare sul telefono: spunta una serie per registrarla, e parte il timer di riposo
 - Grafici di peso, volume, ripetizioni, durata, distanza, passo e frequenza cardiaca, e un andamento che ti dice chiaramente se stai migliorando
 - Una dashboard con la striscia settimanale (con obiettivo settimanale), un calendario degli allenamenti, i record personali, il volume totale, gli allenamenti recenti e le statistiche dei protocolli
 - Una mappa di calore muscolare, fronte e retro, per volume, serie o ripetizioni
@@ -113,7 +113,7 @@ Per impostazione predefinita i nomi degli esercizi combaciano in modo approssima
 
 </details>
 
-## Serie sul telefono (beta)
+## Serie sul telefono
 
 Un blocco `workout-sets` serve a registrare in palestra: le serie di oggi di un esercizio, come righe da compilare. Ogni riga mostra cosa hai fatto nella stessa serie l'ultima volta, così scrivi solo ciò che è cambiato (un campo vuoto registra quel valore) e spunti la riga. La serie entra nel registro, la riga diventa una serie registrata, e il timer di riposo in cima parte da solo. La freccia di una serie registrata cambia il suo protocollo e le note; spuntarla di nuovo la riprende, con **Annulla** per qualche secondo.
 
@@ -125,7 +125,7 @@ sets: 4
 rest: 120
 ```
 
-Il blocco è una funzionalità beta: attiva **Serie di allenamento** in **Impostazioni → Workout Planner → Funzionalità beta** (le nuove installazioni l'hanno attiva). Poi **Inserisci serie di allenamento** dalla palette dei comandi ne scrive uno per te, e il menu ⋮ lo modifica o modifica il suo timer di riposo.
+**Inserisci serie di allenamento** dalla palette dei comandi ne scrive uno per te, e il menu ⋮ lo modifica o modifica il suo timer di riposo.
 
 <details>
 <summary>Tutti i parametri</summary>

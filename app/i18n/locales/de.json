@@ -49,6 +49,7 @@
     "createExampleNotes": "Beispielnotizen erstellen",
     "openGettingStartedGuide": "Anleitung für den Einstieg öffnen",
     "startTour": "Tour starten",
+    "showWhatsNew": "Neuigkeiten anzeigen",
     "importWorkouts": "Import von Strong oder Hevy"
   },
   "common": {
@@ -908,8 +909,7 @@
       "savePreset": "Speichern",
       "saveProtocol": "Speichern",
       "showWelcome": "Willkommensfenster anzeigen",
-      "takeTour": "Tour starten",
-      "createExampleNotes": "Beispiele erstellen"
+      "showWhatsNew": "Änderungsprotokoll anzeigen"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Eine CSV-Datei für Muskel-Tags existiert bereits. Möchtest du sie mit Standardwerten überschreiben? Dadurch werden alle benutzerdefinierten Tags entfernt.",
@@ -934,14 +934,13 @@
       "weightIncrement": "Standard-Gewichtsschritt für progressive Überlastung (z. B. 2,5 für Schritte von 2,5 Einheiten)",
       "showRibbonIcon": "Hantelsymbol in der Seitenleiste anzeigen, das das Formular für das Trainingsprotokoll öffnet",
       "weightUnit": "Einheit für Diagramme, Gesamtsummen und neue Protokolle. Jedes Protokoll behält die Einheit bei, in der es erstellt wurde.",
-      "takeTour": "Gehe auf einer kurzen Notiz durch Protokollieren, Diagramme, Tabellen und Timer.",
       "welcomeWindow": "Zeige das Willkommensfenster erneut, um mit Beispieldaten oder von Grund auf zu beginnen.",
       "weeklyGoal": "Trainingstage pro Woche, die deine Serie am Laufen halten, in der Zusammenfassung des Dashboards und im Trainingskalender.",
       "keepScreenAwake": "Versuche, den Bildschirm aktiv zu halten, während ein Timer im Vordergrund läuft. Verbraucht mehr Akku; die Verfügbarkeit hängt von deinem Gerät und deinen Systemeinstellungen ab.",
       "vibrateOnCompletion": "Kurz vibrieren, wenn ein Timer abläuft, unabhängig von Ton. Benötigt einen Klick auf der Seite und ein kompatibles Gerät (z. B. Android). Nicht verfügbar auf iOS; keine Benachrichtigungen im Hintergrund.",
       "presetRestDesc": "Sekunden Pause nach der Arbeit jeder Runde (0 für keine Pause).",
       "noCustomProtocols": "Noch keine Protokolle vorhanden. Klicke auf „Protokoll hinzufügen“, um eines zu erstellen.",
-      "createExampleNotes": "Fügt Beispielnotizen und sechs Wochen Beispieltrainings hinzu, um alle Funktionen auszuprobieren. Bereits vorhandene Notizen werden nie überschrieben."
+      "showWhatsNew": "Sieh dir an, was sich in jeder Version des Plugins geändert hat."
     },
     "labels": {
       "csvPath": "Pfad der CSV-Protokolldatei",
@@ -968,7 +967,6 @@
       "showRibbonIcon": "Symbol für Schnellprotokoll anzeigen",
       "welcomeWindow": "Willkommensfenster",
       "weeklyGoal": "Wochenziel",
-      "takeTour": "Geführte Tour",
       "keepScreenAwake": "Bildschirm aktiv halten, während ein Timer läuft",
       "vibrateOnCompletion": "Vibration, wenn ein Timer abgelaufen ist",
       "presetRest": "Pause"
@@ -1041,10 +1039,6 @@
     },
     "beta": {
       "intro": "Neue Funktionen, die du ausprobieren kannst, bevor sie für alle verfügbar sind. Sie sind vorerst deaktiviert und können sich noch ändern.",
-      "setSheet": {
-        "name": "Trainingssätze",
-        "desc": "Der Block `workout-sets`: die heutigen Sätze als Zeilen zum Ausfüllen auf dem Handy, mit den Werten vom letzten Mal als Hinweis und einem Pausentimer, der bei jedem Abhaken startet."
-      },
       "disabledBlock": "{feature} ist eine Beta-Funktion. Aktiviere sie unter „Einstellungen → Beta-Funktionen“, um diese Funktion zu nutzen."
     }
   },
@@ -1294,5 +1288,15 @@
     "unlogSet": "Satz {set} aus dem Protokoll entfernen",
     "setRemoved": "Satz {set} entfernt",
     "valueOfSet": "{field}, Satz {set}: {value}"
+  },
+  "whatsNew": {
+    "title": "Neuigkeiten",
+    "version": "Version {version}",
+    "close": "Verstanden",
+    "olderReleases": "Ältere Versionen auf GitHub",
+    "releases": {
+      "v3_1_0": "**Neu im Plugin.** Nach einem Update zeigt das Plugin einmal an, was sich geändert hat. Öffne es jederzeit wieder über **Neuigkeiten anzeigen** in der Befehlspalette oder über **Änderungsprotokoll anzeigen** unter Einstellungen → Erste Schritte.\n\n**Sätze für alle.** Der `workout-sets`-Block ist keine Beta-Funktion mehr: Er funktioniert, ohne dass du etwas aktivierst, und **Trainingssätze einfügen** steht immer in der Befehlspalette.",
+      "v3_0_0": "**Ein neues Design für jeden Block.** Trainingsprotokolle, Diagramme, die geführte Einheit, die Trainingsdauer und jedes Dashboard-Widget sind jetzt Karten mit demselben Aufbau, denselben Bedienelementen und Menüs, mit klarerem Kontrast in hellen und dunklen Designs. An deinen Notizen und deinem Protokoll ändert sich nichts: Die Blöcke sehen nur einheitlicher aus und verhalten sich auch so.\n\n**Sätze auf dem Handy (Beta).** Ein neuer `workout-sets`-Block zeigt die heutigen Sätze einer Übung als Zeilen zum Ausfüllen, mit den Werten vom letzten Mal als Hinweis. Markiere eine Zeile, um den Satz zu protokollieren, dann startet der Pausentimer von selbst; markiere sie erneut, um ihn zurückzunehmen, mit Rückgängig für einige Sekunden. Aktiviere es unter Einstellungen → Beta-Funktionen (bei neuen Installationen ist es an) und nutze dann **Trainingssätze einfügen** aus der Befehlspalette.\n\n**Geführte Einheiten lesen Satzblätter.** Eine `workout-session` folgt jetzt `workout-sets`-Blöcken ebenso wie `workout-log`-Blöcken und übernimmt die Pause jeder Übung aus dem eigenen Block und teilt sich einen Countdown mit der Satzkarte.\n\n**Diagramme** zeigen unter dem Diagramm eine Statistikzeile: Durchschnitt, Minimum, Maximum, aktuellen Trend und Anzahl der Einheiten.\n\n**Dashboard-Widgets** haben eigene Einstellungen im ⋮-Menü (wie viele Trainings aufgelistet werden, welche Kennzahlen angezeigt werden, wie viele Tage gezählt werden usw.).\n\n**Beispielnotizen** verwenden jetzt `workout-sets` für die Übungen des Beispieltrainings."
+    }
   }
 }

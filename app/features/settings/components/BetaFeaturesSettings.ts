@@ -13,6 +13,7 @@ export class BetaFeaturesSettings {
   constructor(private plugin: WorkoutPluginContext & EventBusPort) {}
 
   definitions(): DefinitionItem[] {
+    if (BETA_FEATURES.length === 0) return [];
     return [
       {
         type: "group",

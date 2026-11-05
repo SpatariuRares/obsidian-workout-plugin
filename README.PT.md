@@ -18,7 +18,7 @@ Os gráficos mostram a sua tendência, o mapa de calor muscular mostra o que tre
 - Registe cada série em kg ou lb, conforme o que dizem os discos à sua frente
 - Marque as séries com um protocolo: drop set, myo reps, rest-pause, superset, vinte e um (21s) ou um protocolo seu
 - Tabelas das suas séries, agrupadas por dia com totais diários, editáveis com um toque
-- As séries de hoje como linhas para preencher no telemóvel: marque uma série para a registar e o descanso começa (beta)
+- As séries de hoje como linhas para preencher no telemóvel: marque uma série para a registar e o descanso começa
 - Gráficos de peso, volume, repetições, duração, distância, ritmo e frequência cardíaca, e uma tendência que lhe diz claramente se está a melhorar
 - Um painel com sequência semanal (com objetivo semanal), calendário de treino, recordes pessoais, volume total, treinos recentes e estatísticas de protocolos
 - Um mapa de calor muscular, frente e costas, por volume, séries ou repetições
@@ -113,7 +113,7 @@ Por predefinição, os nomes dos exercícios correspondem de forma aproximada ("
 
 </details>
 
-## Séries no seu telemóvel (beta)
+## Séries no seu telemóvel
 
 Um bloco `workout-sets` serve para registar no ginásio: as séries de hoje de um exercício, em linhas para preencher. Cada linha mostra o que fez nessa mesma série da última vez, por isso escreve apenas o que mudou (um campo vazio regista esse valor) e marca a linha. A série vai para o registo, a linha passa a ser uma série registada e o temporizador de descanso no topo arranca sozinho. A seta de uma série registada altera o seu protocolo e as notas; marcá-la de novo tira-a do registo, com **Desfazer** durante alguns segundos.
 
@@ -125,7 +125,7 @@ sets: 4
 rest: 120
 ```
 
-O bloco é uma funcionalidade beta: ative **Séries de treino** em **Definições → Workout Planner → Funcionalidades beta** (as novas instalações já a têm ativa). Depois, **Inserir séries de exercícios** a partir do painel de comandos escreve um por si, e o menu ⋮ edita o bloco ou o temporizador de descanso.
+**Inserir séries de exercícios** a partir do painel de comandos escreve um por si, e o menu ⋮ edita o bloco ou o temporizador de descanso.
 
 <details>
 <summary>Todos os parâmetros</summary>

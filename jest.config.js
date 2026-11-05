@@ -56,6 +56,7 @@ module.exports = {
   // Module path aliases (if needed)
   moduleNameMapper: {
     "^obsidian$": "<rootDir>/__mocks__/obsidian.ts",
+    "\\.png$": "<rootDir>/__mocks__/image.ts",
     "^@app/(.*)$": "<rootDir>/app/$1",
   },
 };

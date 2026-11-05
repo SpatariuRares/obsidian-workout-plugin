@@ -22,7 +22,6 @@ This skill bumps `manifest.json`, `package.json` and `package-lock.json` to the 
    - `git branch --show-current` is `main`
    - `git status --porcelain` is empty
    - `git fetch origin && git status -sb` shows the branch is not behind `origin/main`. Being **ahead** is fine: step 6 pushes `main` (those commits plus the release commit) before the tag. List the unpushed commits in the changelog preview.
-   - `node scripts/translations-status.mjs` exits 0. If it reports locales missing keys or READMEs out of date, run the `translate` skill with the argument `commit`: it translates on this PC with one Haiku subagent per language and commits only the translation files. Then check again. Don't skip this: the release run never translates, it fails when a locale misses keys, and a hook blocks the release commit until this passes.
 2. **Pick the version**:
    - Latest tag: `git tag --sort=-v:refname | head -1`
    - If `$ARGUMENTS` is an explicit `X.Y.Z`, use it. If it is `patch`/`minor`/`major`, or empty (defaults to `patch`), bump the latest tag.
@@ -31,6 +30,8 @@ This skill bumps `manifest.json`, `package.json` and `package-lock.json` to the 
    - **Release notes**: draft a short user-facing text (English, like the README) from those commits: "What changed" in plain words, and a **"Public API (Dataview)"** section whenever the range touches `app/api/` or the commits mention `getExerciseStats`, `getExercises`, `getWorkoutLogs` (return shapes are a contract; say which values can change). Skip refactor-only commits with no visible effect.
 4. **Local verification**: `npm run typecheck && npm run lint && npm test && npm run build`. Stop on failure.
 5. **Confirm**: show the version, the changelog and the drafted release notes, then ask the user to confirm before anything leaves the machine. Suggest `minor` instead of `patch` when the range has `feat` commits or visible behavior changes.
+   - **Notes in the plugin**: after an update the plugin shows these notes once in its "What's new" modal (`app/services/onboarding/WhatsNew.ts`), translated. Put the approved text (without the Full Changelog link and without the Public API section) in `app/i18n/locales/en.json` as `whatsNew.releases.vX_Y_Z` (dots → underscores, e.g. `v3_1_0`), one markdown string, paragraphs separated by `\n\n`. The plugin keeps the notes of the latest 7 versions (`MAX_RELEASES`; older ones are on GitHub, linked from the modal): when there are more, delete the oldest `whatsNew.releases.v…` key from `en.json` and from every other locale. Commit it: `git add app/i18n/locales/en.json && git commit -m "docs: release notes $V"`.
+   - **Translations**: `node scripts/translations-status.mjs` must exit 0. If it reports locales missing keys or READMEs out of date (it will, for the new notes), run the `translate` skill with the argument `commit`: it translates on this PC with one Haiku subagent per language and commits only the translation files. Then check again. Don't skip this: the release run never translates, it fails when a locale misses keys, and a hook blocks the release commit until this passes. Then run step 4 again (the new commits must pass too).
 6. **Bump, commit, push, tag** (only after the user confirmed):
    - Set the version in the three files (jq keeps the rest of each file as is):
      ```bash

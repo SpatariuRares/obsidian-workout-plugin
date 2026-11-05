@@ -9,17 +9,17 @@ import type {
 } from "@app/types/PluginPorts";
 import { t } from "@app/i18n";
 
-const mockStartTour = jest.fn();
-jest.mock("@app/features/tour/startGuidedTour", () => ({
-  startGuidedTour: (...a: unknown[]) => mockStartTour(...a),
-}));
-
 const mockOpenGuide = jest.fn();
-const mockCreateExamples = jest.fn();
 jest.mock("@app/services/examples/GettingStartedGuide", () => ({
   openGettingStartedGuide: (...args: unknown[]) =>
     mockOpenGuide(...args),
-  createExampleNotes: (...args: unknown[]) => mockCreateExamples(...args),
+}));
+
+const mockOpenWhatsNew = jest.fn();
+jest.mock("@app/features/modals/common/WhatsNewModal", () => ({
+  WhatsNewModal: jest.fn().mockImplementation((...args: unknown[]) => ({
+    open: () => mockOpenWhatsNew(...args),
+  })),
 }));
 
 jest.mock("@app/features/common/suggest/FolderSuggest", () => ({
@@ -121,23 +121,29 @@ describe("GeneralSettings getting started", () => {
       mockSettingNamed(container, name).component("button", 0).buttonEl.click();
       await new Promise((resolve) => setTimeout(resolve, 0));
     };
-    return { plugin, click };
+    return { plugin, click, container };
   };
 
-  it("creates the example notes", async () => {
-    const { plugin, click } = draw();
+  it("has one row for the guide, which also adds the examples", () => {
+    const { container } = draw();
+    const names = [...container.querySelectorAll(".setting-item-name")].map(
+      (el) => el.textContent,
+    );
 
-    await click(t("commands.createExampleNotes"));
-
-    expect(mockCreateExamples).toHaveBeenCalledWith(plugin);
+    expect(names).toContain(t("commands.openGettingStartedGuide"));
+    expect(names).not.toContain(t("commands.createExampleNotes"));
+    expect(names).not.toContain(t("commands.startTour"));
   });
 
-  it("starts the guided tour", async () => {
-    const { plugin, click } = draw();
+  it("shows the changelog of every release", async () => {
+    const { click } = draw();
 
-    await click(t("settings.labels.takeTour"));
+    await click(t("commands.showWhatsNew"));
 
-    expect(mockStartTour).toHaveBeenCalledWith(plugin, { source: "settings" });
+    expect(mockOpenWhatsNew).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.any(Array),
+    );
   });
 
   it("opens the getting-started guide without changing welcomeShown", async () => {

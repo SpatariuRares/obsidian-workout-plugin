@@ -89,7 +89,6 @@ function setup(
       weightIncrement: 2.5,
       achievedTargets: {},
       customProtocols: defaultProtocolEntries(),
-      betaFeatures: { setSheet: true },
     },
     saveSettings: async () => {},
     eventBus,
@@ -579,22 +578,6 @@ describe("EmbeddedSetsView", () => {
     expect(el.querySelector(".workout-sets-rest")).toBeNull();
   });
 
-  it("shows a notice instead of the sheet while the beta feature is off, and the sheet once it is on", async () => {
-    const { el, child } = setup([], { exercise: "Bench Press", sets: 2 });
-    const settings = (child as unknown as { plugin: WorkoutPluginContext }).plugin.settings;
-    settings.betaFeatures = {};
-    await child.render();
-
-    expect(rowsOf(el)).toHaveLength(0);
-    expect(el.textContent).toContain(
-      t("settings.beta.disabledBlock", { feature: t("settings.beta.setSheet.name") }),
-    );
-    expect(el.querySelector(".workout-icon-dropdown")).not.toBeNull();
-
-    settings.betaFeatures = { setSheet: true };
-    await child.render();
-    expect(rowsOf(el)).toHaveLength(2);
-  });
 
   it("asks for an exercise when the block has none", async () => {
     const { el } = setup([], {});

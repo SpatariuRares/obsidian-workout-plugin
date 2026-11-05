@@ -66,6 +66,7 @@ export class LocalizationService {
         t: (key: string) => key, // Return key as fallback
         getCurrentLocale: () => "en",
         hasKey: () => false,
+        keysOf: () => [],
         reload: () => {},
         destroy: () => {},
       } as unknown as LocalizationService;
@@ -216,6 +217,22 @@ export class LocalizationService {
    */
   public hasKey(key: string): boolean {
     return this.getNestedValue(this.translations, key) !== undefined;
+  }
+
+  /**
+   * The keys of a group, as written in English (every locale has them, or
+   * falls back to English)
+   *
+   * @example
+   * keysOf("whatsNew.releases") // ["v3_0_0", ...]
+   */
+  public keysOf(path: string): string[] {
+    const english =
+      this.currentLocale === this.DEFAULT_LOCALE
+        ? this.translations
+        : this.fallbackTranslations;
+    const group = this.getNestedValue(english, path);
+    return group && typeof group === "object" ? Object.keys(group) : [];
   }
 
   /**

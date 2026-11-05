@@ -18,7 +18,7 @@ Charts show your trend, the muscle heat map shows what you trained, and each set
 - Log each set in kg or lb, whatever the plates in front of you say
 - Tag sets with a protocol: drop set, myo-reps, rest-pause, superset, 21s, or your own
 - Tables of your sets, grouped by day with daily totals, editable with one tap
-- Today's sets as rows to fill in on your phone: tick a set to log it, and the rest timer starts (beta)
+- Today's sets as rows to fill in on your phone: tick a set to log it, and the rest timer starts
 - Charts for weight, volume, reps, duration, distance, pace and heart rate, and a trend that tells you plainly if you're improving
 - A dashboard with weekly streak (with a weekly goal), a training calendar, personal records, total volume, recent workouts and protocol stats
 - A muscle heat map, front and back, by volume, sets or reps
@@ -52,9 +52,9 @@ Use **Back** and **Next** to move around, or **Skip** to leave. If the part of t
 
 When the example data is in use, the tour runs on it. Otherwise it runs on your own log, so the chart and dashboard start nearly empty. The note is created once, next to the examples or at the top of your vault. An existing note is never overwritten, and you can edit or delete it. If a note called "Guided tour" already exists and isn't the tour's own, the tour uses "Guided tour 1" (or the next free number) instead.
 
-Want to take the tour again? Select **Take the tour** under **Settings → Workout Planner → Getting started**, or run **Start the tour** from the command palette.
+Want to take the tour again? Run **Start the tour** from the command palette.
 
-Want the examples or the guide again? Select **Create examples** or **Open getting started guide** under **Settings → Workout Planner → Getting started**, or run **Create example notes** or **Open getting started guide** from the command palette (`Ctrl/Cmd + P`). Creating the examples never overwrites anything: running it again only adds the example files that are missing, and files you changed stay as they are. The guide offers to create the examples if they don't exist yet. An empty table, chart or dashboard also has an **Or explore with example data** link. If you already have a workout log, the examples get their own log file and yours stays untouched.
+Want the examples or the guide again? Select **Open getting started guide** under **Settings → Workout Planner → Getting started** (it adds the example notes that are missing first), or run **Create example notes** or **Open getting started guide** from the command palette (`Ctrl/Cmd + P`). Creating the examples never overwrites anything: running it again only adds the example files that are missing, and files you changed stay as they are. The guide offers to create the examples if they don't exist yet. An empty table, chart or dashboard also has an **Or explore with example data** link. If you already have a workout log, the examples get their own log file and yours stays untouched.
 
 To add a table to any note, for example `Push Day`:
 
@@ -113,7 +113,7 @@ Exercise names match loosely by default ("squat" finds "Squat (high bar)"); add 
 
 </details>
 
-## Sets on your phone (beta)
+## Sets on your phone
 
 A `workout-sets` block is made for logging at the gym: today's sets of one exercise as rows to fill in. Each row shows what you did in the same set last time, so you type only what changed (an empty field logs that value) and tick the row. The set goes into the log, the row turns into a logged set, and the rest timer at the top starts on its own. A logged set's chevron changes its protocol and notes; ticking it again takes it back, with **Undo** for a few seconds.
 
@@ -125,7 +125,7 @@ sets: 4
 rest: 120
 ```
 
-The block is a beta feature: turn on **Workout sets** under **Settings → Workout Planner → Beta features** (new installs have it on). Then **Insert workout sets** from the command palette writes one for you, and the ⋮ menu edits it or its rest timer.
+**Insert workout sets** from the command palette writes one for you, and the ⋮ menu edits it or its rest timer.
 
 <details>
 <summary>All parameters</summary>

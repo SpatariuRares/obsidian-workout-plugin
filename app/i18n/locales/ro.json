@@ -49,7 +49,8 @@
     "createExampleNotes": "Creează note de exemplu",
     "openGettingStartedGuide": "Deschide ghidul de pornire",
     "startTour": "Începe turul",
-    "importWorkouts": "Importă din Strong sau Hevy"
+    "importWorkouts": "Importă din Strong sau Hevy",
+    "showWhatsNew": "Afișează ce e nou"
   },
   "common": {
     "bpm": "bpm",
@@ -908,8 +909,7 @@
       "savePreset": "Salvează",
       "saveProtocol": "Salvează",
       "showWelcome": "Afișează mesajul de bun venit",
-      "takeTour": "Începe turul",
-      "createExampleNotes": "Creează exemple"
+      "showWhatsNew": "Afișează modificările"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fișier CSV cu etichete pentru mușchi există deja. Vrei să îl suprascrii cu valorile implicite? Acest lucru va elimina toate etichetele personalizate.",
@@ -934,14 +934,13 @@
       "weightIncrement": "Creșterea implicită a greutății pentru supraîncărcarea progresivă (de exemplu, 2,5 pentru creșteri de 2,5 unități)",
       "showRibbonIcon": "Afișează în bara laterală pictograma cu gantera care deschide formularul jurnalului de antrenament",
       "weightUnit": "Unitate pentru grafice, totaluri și înregistrări noi. Fiecare înregistrare păstrează unitatea în care a fost introdusă.",
-      "takeTour": "Oferă o scurtă prezentare a funcțiilor de înregistrare, grafice, tabele și temporizatoare.",
       "welcomeWindow": "Afișează din nou fereastra de bun venit ca să începi cu date de exemplu sau de la zero.",
       "weeklyGoal": "Zilele de antrenament pe săptămână care mențin seria, în rezumatul tabloului de bord și în calendarul antrenamentelor.",
       "keepScreenAwake": "Încearcă să menții ecranul activ cât timp rulează un temporizator în prim-plan. Consumă mai multă baterie; disponibilitatea depinde de dispozitivul și de setările sistemului tău.",
       "vibrateOnCompletion": "Vibrație scurtă când un temporizator se termină, indiferent de sunet. Necesită un clic pe pagină și un dispozitiv compatibil (cum ar fi Android). Nu este disponibil pe iOS; nu există notificări în fundal.",
       "presetRestDesc": "Secunde de pauză după fiecare rundă de lucru (0 pentru fără pauză).",
       "noCustomProtocols": "Nu există protocoale definite. Apasă pe „Adaugă protocol” ca să creezi unul.",
-      "createExampleNotes": "Adaugă notițe de exemplu și șase săptămâni de antrenamente de exemplu, ca să încerci toate funcțiile. Notițele pe care le ai deja nu sunt niciodată suprascrise."
+      "showWhatsNew": "Vezi ce s-a schimbat în fiecare versiune a pluginului."
     },
     "labels": {
       "csvPath": "Cale către fișierul de jurnal CSV",
@@ -968,7 +967,6 @@
       "showRibbonIcon": "Afișează pictograma de înregistrare rapidă",
       "welcomeWindow": "Fereastra de bun venit",
       "weeklyGoal": "Obiectiv săptămânal",
-      "takeTour": "Tur ghidat",
       "keepScreenAwake": "Păstrează ecranul activ cât timp funcționează un temporizator",
       "vibrateOnCompletion": "Vibrează la finalizarea unui temporizator",
       "presetRest": "Pauză"
@@ -1041,10 +1039,6 @@
     },
     "beta": {
       "intro": "Funcții noi pe care le poți încerca înainte să fie gata pentru toată lumea. Sunt dezactivate până le activezi și se pot schimba încă.",
-      "setSheet": {
-        "name": "Serii de exerciții",
-        "desc": "Blocul `workout-sets`: seriile de azi, afișate ca rânduri pe care le poți completa de pe telefon, cu valorile din ultima sesiune ca sugestii și un cronometru de pauză care pornește la fiecare bifare."
-      },
       "disabledBlock": "{feature} este o funcție beta. Activează-o în Setări → Funcții beta ca să folosești acest bloc."
     }
   },
@@ -1294,5 +1288,15 @@
     "unlogSet": "Scoate seria {set} din jurnal",
     "setRemoved": "Seria {set} a fost ștearsă",
     "valueOfSet": "{field}, seria {set}: {value}"
+  },
+  "whatsNew": {
+    "title": "Ce e nou",
+    "version": "Versiunea {version}",
+    "close": "Am înțeles",
+    "olderReleases": "Versiuni mai vechi pe GitHub",
+    "releases": {
+      "v3_1_0": "**Ce e nou în plugin.** După o actualizare, pluginul arată o singură dată ce s-a schimbat. Deschide-l din nou oricând cu **Afișează ce e nou** din paleta de comenzi sau cu **Afișează modificările** din Setări → Workout Planner → Începe.\n\n**Serii de antrenament pentru toată lumea.** Blocul `workout-sets` nu mai este o funcționalitate beta: funcționează fără să activezi nimic, iar **Adaugă serii de exerciții** este mereu în paleta de comenzi.",
+      "v3_0_0": "**Un aspect nou pentru fiecare bloc.** Jurnalele de antrenament, graficele, sesiunea ghidată, durata antrenamentului și fiecare widget al tabloului de bord sunt acum carduri cu aceleași comenzi și meniuri, cu contrast mai clar în temele deschise și întunecate. Nimic din notițele sau din jurnalul tău nu se schimbă: blocurile arată și se comportă doar mai consecvent.\n\n**Serii pe telefon (beta).** Un bloc nou `workout-sets` arată seriile de azi ale unui exercițiu ca rânduri de completat, cu valorile de data trecută ca sugestii. Bifează un rând ca să înregistrezi seria, iar cronometrul de pauză pornește singur; bifează din nou ca să scoți seria din jurnal, cu butonul Anulează timp de câteva secunde. Activeaz-o din Setări → Workout Planner → Funcționalități Beta (la instalările noi este activată), apoi folosește **Adaugă serii de exerciții** din paleta de comenzi.\n\n**Sesiunile ghidate țin cont și de blocurile de serii.** Un `workout-session` urmărește acum blocurile `workout-sets` pe lângă cele `workout-log`, ia pauza fiecărui exercițiu din blocul lui și împarte același cronometru cu cardul seriilor.\n\n**Graficele** afișează sub grafic un rând de statistici: medie, minim, maxim, tendința recentă și numărul de sesiuni.\n\n**Widgeturile tabloului de bord** au propriile setări în meniul ⋮ (câte antrenamente să listeze, ce cifre să afișeze, câte zile să fie numărate și altele).\n\n**Notițele de exemplu** folosesc acum `workout-sets` pentru exercițiile antrenamentului de exemplu."
+    }
   }
 }

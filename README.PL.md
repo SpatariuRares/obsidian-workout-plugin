@@ -18,7 +18,7 @@ Wykresy pokazują twój trend, mapa cieplna mięśni pokazuje, co trenowałeś, 
 - Zapisuj każdą serię w kg lub lb, zgodnie z tym, co pokazują talerze przed tobą
 - Oznaczaj serie protokołem: drop set, myo-reps, rest-pause, superset, 21s lub własnym
 - Tabele twoich serii, pogrupowane według dnia z sumami dziennymi, edytowalne jednym dotknięciem
-- Dzisiejsze serie jako wiersze do uzupełnienia na telefonie: zaznacz serię, aby ją zapisać, a timer odpoczynku ruszy (beta)
+- Dzisiejsze serie jako wiersze do uzupełnienia na telefonie: zaznacz serię, aby ją zapisać, a timer odpoczynku ruszy
 - Wykresy ciężaru, objętości, powtórzeń, czasu trwania, dystansu, tempa i tętna oraz trend, który jasno pokazuje, czy się poprawiasz
 - Panel kontrolny z tygodniową passą (z tygodniowym celem), kalendarzem treningów, rekordami osobistymi, łączną objętością, ostatnimi treningami i statystykami protokołów
 - Mapa cieplna mięśni, z przodu i z tyłu, według objętości, serii lub powtórzeń
@@ -113,7 +113,7 @@ Nazwy ćwiczeń domyślnie dopasowują się luźno („przysiad” znajdzie „P
 
 </details>
 
-## Serie na telefonie (beta)
+## Serie na telefonie
 
 Blok `workout-sets` jest stworzony do zapisywania serii na siłowni: dzisiejsze serie jednego ćwiczenia jako wiersze do uzupełnienia. Każdy wiersz pokazuje, co zrobiłeś w tej samej serii ostatnim razem, więc wpisujesz tylko to, co się zmieniło (puste pole zapisuje tę wartość), i zaznaczasz wiersz. Seria trafia do dziennika, wiersz staje się zapisaną serią, a timer odpoczynku na górze startuje sam. Strzałka zapisanej serii zmienia jej protokół i notatki; ponowne zaznaczenie cofa ją, z przyciskiem **Cofnij** przez kilka sekund.
 
@@ -125,7 +125,7 @@ sets: 4
 rest: 120
 ```
 
-Blok jest funkcją beta: włącz **Serie treningu** w **Ustawienia → Workout Planner → Funkcje beta** (nowe instalacje mają ją włączoną). Potem polecenie **Wstaw serie treningu** z palety poleceń wstawi go za ciebie, a menu ⋮ edytuje blok albo jego timer odpoczynku.
+**Dodaj serie treningu** z palety poleceń wstawi go za ciebie, a menu ⋮ edytuje blok albo jego timer odpoczynku.
 
 <details>
 <summary>Wszystkie parametry</summary>

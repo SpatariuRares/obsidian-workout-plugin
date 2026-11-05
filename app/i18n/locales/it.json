@@ -49,6 +49,7 @@
     "createExampleNotes": "Crea note di esempio",
     "openGettingStartedGuide": "Apri la guida per iniziare",
     "startTour": "Inizia il tour",
+    "showWhatsNew": "Mostra novità",
     "importWorkouts": "Importa da Strong o Hevy"
   },
   "common": {
@@ -908,8 +909,7 @@
       "savePreset": "Salva",
       "saveProtocol": "Salva",
       "showWelcome": "Mostra la finestra di benvenuto",
-      "takeTour": "Inizia il tour",
-      "createExampleNotes": "Crea esempi"
+      "showWhatsNew": "Mostra changelog"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Esiste già un file CSV tag muscolari. Vuoi sovrascriverlo con i valori predefiniti? Questo rimuoverà eventuali tag personalizzati.",
@@ -934,14 +934,13 @@
       "weightIncrement": "Incremento peso predefinito per sovraccarico progressivo (es. 2.5 per incrementi di 2.5 unità)",
       "showRibbonIcon": "Mostra nella barra laterale l'icona del manubrio che apre il modulo del registro allenamento",
       "weightUnit": "Unità per grafici, totali e nuovi registri. Ogni registro mantiene l'unità in cui è stato inserito.",
-      "takeTour": "Percorri registro, grafici, tabelle e timer in una breve nota.",
       "welcomeWindow": "Mostra nuovamente la finestra di benvenuto per iniziare con dati di esempio o da zero.",
       "weeklyGoal": "Giorni di allenamento a settimana che mantengono attiva la tua striscia, nel riepilogo della dashboard e nel calendario di allenamento.",
       "keepScreenAwake": "Cerca di mantenere lo schermo attivo mentre è in esecuzione un timer in primo piano. Consuma più batteria; la disponibilità dipende dal tuo dispositivo e dalle impostazioni del sistema.",
       "vibrateOnCompletion": "Vibra brevemente quando un timer termina, indipendentemente dall'emissione di suoni. Richiede un tocco sulla pagina e un dispositivo compatibile (come Android). Non disponibile su iOS; nessuna notifica in background.",
       "presetRestDesc": "Secondi di riposo dopo il lavoro di ogni round (0 per nessun riposo).",
       "noCustomProtocols": "Nessun protocollo al momento. Clicca su «Aggiungi protocollo» per crearne uno.",
-      "createExampleNotes": "Aggiunge note di esempio e sei settimane di allenamenti di esempio per provare tutte le funzioni. Le note che hai già non vengono mai sovrascritte."
+      "showWhatsNew": "Scopri cosa è cambiato in ogni versione del plugin."
     },
     "labels": {
       "csvPath": "Percorso file CSV registro",
@@ -968,7 +967,6 @@
       "showRibbonIcon": "Mostra icona di registrazione rapida",
       "welcomeWindow": "Finestra di benvenuto",
       "weeklyGoal": "Obiettivo settimanale",
-      "takeTour": "Tour guidato",
       "keepScreenAwake": "Mantieni lo schermo attivo durante l'esecuzione di un timer",
       "vibrateOnCompletion": "Vibra al completamento del timer",
       "presetRest": "Riposo"
@@ -1041,10 +1039,6 @@
     },
     "beta": {
       "intro": "Nuove funzionalità da provare prima che siano pronte per tutti. Sono disabilitate fino a quando non le attivi, e potrebbero comunque cambiare.",
-      "setSheet": {
-        "name": "Serie di allenamento",
-        "desc": "Il blocco `workout-sets`: le serie di allenamento odierne, visualizzate come righe da compilare sul tuo telefono, con i valori dell'ultima volta come suggerimenti e un timer di riposo che parte a ogni spunta."
-      },
       "disabledBlock": "{feature} è una funzionalità in versione beta. Attivala nelle Impostazioni → Funzionalità beta per usare questo blocco."
     }
   },
@@ -1294,5 +1288,15 @@
     "unlogSet": "Rimuovi la serie {set} dal registro",
     "setRemoved": "Serie {set} rimossa",
     "valueOfSet": "{field}, serie {set}: {value}"
+  },
+  "whatsNew": {
+    "title": "Novità",
+    "version": "Versione {version}",
+    "close": "Ho capito",
+    "olderReleases": "Versioni precedenti su GitHub",
+    "releases": {
+      "v3_1_0": "**Novità nel plugin.** Dopo un aggiornamento il plugin mostra una volta cosa è cambiato. Puoi riaprirla quando vuoi con **Mostra novità** nella palette dei comandi, oppure con **Mostra changelog** in Impostazioni → Per iniziare.\n\n**Serie per tutti.** Il blocco `workout-sets` non è più una funzionalità beta: funziona senza attivare nulla, e **Inserisci serie di allenamento** è sempre disponibile nella palette dei comandi.",
+      "v3_0_0": "**Un nuovo aspetto per ogni blocco.** I registri, i grafici, la sessione guidata, la durata dell'allenamento e ogni widget della dashboard ora sono schede con lo stesso layout, gli stessi controlli e gli stessi menu, con un contrasto più chiaro nei temi chiaro e scuro. Nulla nelle tue note o nel tuo registro cambia: i blocchi si vedono e si comportano in modo più coerente.\n\n**Serie sul telefono (beta).** Un nuovo blocco `workout-sets` mostra le serie di oggi di un esercizio come righe da compilare, con i valori della volta precedente come suggerimenti. Spunta una riga per registrare la serie: il timer di riposo parte da solo. Spuntala di nuovo per annullarla, con Annulla per qualche secondo. Attivalo in Impostazioni → Funzionalità beta (le nuove installazioni lo hanno già attivo), poi usa **Inserisci serie di allenamento** dalla palette dei comandi.\n\n**Le sessioni guidate leggono le schede delle serie.** Un `workout-session` ora segue sia i blocchi `workout-sets` sia quelli `workout-log`, prende il riposo di ogni esercizio dal proprio blocco e condivide un unico conto alla rovescia con la scheda delle serie.\n\n**I grafici** mostrano sotto il grafico una riga di statistiche: media, minimo, massimo, andamento recente e numero di sessioni.\n\n**I widget della dashboard** hanno le proprie impostazioni nel menu ⋮ (quanti allenamenti elencare, quali dati mostrare, i giorni conteggiati e così via).\n\n**Le note di esempio** ora usano `workout-sets` per gli esercizi dell'allenamento di esempio."
+    }
   }
 }

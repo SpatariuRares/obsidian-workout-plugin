@@ -18,7 +18,7 @@ Grafik menampilkan tren Anda, peta panas otot menunjukkan apa yang Anda latih, d
 - Catat setiap set dalam kg atau lb, sesuai dengan cakram beban di depan Anda
 - Beri tag set dengan protokol: drop set, myo-reps, rest-pause, superset, 21s, atau protokol Anda sendiri
 - Tabel set Anda, dikelompokkan per hari dengan total harian, dapat disunting dengan satu ketukan
-- Set hari ini sebagai baris untuk diisi di ponsel: centang set untuk mencatatnya, dan timer istirahat dimulai (beta)
+- Set hari ini sebagai baris untuk diisi di ponsel: centang set untuk mencatatnya, dan timer istirahat dimulai
 - Grafik untuk berat, volume, repetisi, durasi, jarak, pace, dan detak jantung, serta tren yang memberi tahu dengan jelas apakah Anda membaik
 - Dasbor dengan rentetan mingguan (dengan target mingguan), kalender latihan, rekor pribadi, total volume, latihan terbaru, dan statistik protokol
 - Peta panas otot, depan dan belakang, berdasarkan volume, set, atau repetisi
@@ -113,7 +113,7 @@ Nama latihan cocok secara longgar secara default ("squat" menemukan "Squat (high
 
 </details>
 
-## Set di ponsel (beta)
+## Set di ponsel
 
 Blok `workout-sets` dibuat untuk mencatat di gym: set hari ini dari satu latihan sebagai baris yang tinggal Anda isi. Setiap baris menampilkan apa yang Anda lakukan pada set yang sama terakhir kali, jadi Anda cukup mengetik yang berubah (kolom kosong mencatat nilai itu), lalu centang barisnya. Set masuk ke log, baris berubah menjadi set yang tercatat, dan timer istirahat di bagian atas langsung berjalan. Panah (chevron) pada set yang tercatat mengubah protokol dan catatannya; mencentangnya lagi membatalkan set itu, dengan **Urungkan** selama beberapa detik.
 
@@ -125,7 +125,7 @@ sets: 4
 rest: 120
 ```
 
-Blok ini adalah fitur beta: aktifkan **Set latihan** di **Pengaturan → Workout Planner → Fitur Beta** (instalasi baru sudah aktif). Lalu **Sisipkan set latihan** dari palet perintah menulis satu blok untuk Anda, dan menu ⋮ mengedit blok atau timer istirahatnya.
+**Sisipkan set latihan** dari palet perintah menulis satu blok untuk Anda, dan menu ⋮ mengedit blok atau timer istirahatnya.
 
 <details>
 <summary>Semua parameter</summary>

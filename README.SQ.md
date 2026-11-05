@@ -18,7 +18,7 @@ Grafikët tregojnë tendencën tuaj, harta termike e muskujve tregon çfarë ken
 - Regjistro çdo seri në kg ose lb, çfarëdo që tregojnë diskat para teje
 - Shëno serinë me një protokoll: drop set, myo-reps, rest-pause, superset, 21s, ose protokollin tënd
 - Tabela të serive të tua, të grupuara sipas ditës me totalet ditore, të redaktueshme me një prekje
-- Seritë e sotme si rreshta për t'i plotësuar në telefon: shëno një rresht për ta regjistruar, dhe timeri i pushimit nis vetë (beta)
+- Seritë e sotme si rreshta për t'i plotësuar në telefon: shëno një rresht për ta regjistruar, dhe timeri i pushimit nis vetë
 - Grafikë për peshën, volumin, përsëritjet, kohëzgjatjen, distancën, ritmin dhe rrahjet e zemrës, dhe një tendencë që të tregon qartë nëse po përmirësohesh
 - Një panel me serinë javore (me objektiv javor), kalendar stërvitjesh, rekorde personale, volum total, stërvitje të fundit dhe statistika protokollesh
 - Një hartë termike e muskujve, para dhe prapa, sipas volumit, serive ose përsëritjeve
@@ -113,7 +113,7 @@ Emrat e ushtrimeve përputhen me lirshmëri si parazgjedhje ("squat" gjen "Squat
 
 </details>
 
-## Seritë në telefonin tuaj (beta)
+## Seritë në telefonin tuaj
 
 Një bllok `workout-sets` është bërë për regjistrim në palestër: seritë e sotme të një ushtrimi si rreshta për t'i plotësuar. Çdo rresht tregon çfarë bëre në të njëjtën seri herën e fundit, kështu që shkruan vetëm atë që ka ndryshuar (një fushë bosh regjistron vlerën e saj) dhe shënon rreshtin. Seria shkon në regjistër, rreshti bëhet seri e regjistruar, dhe timeri i pushimit në krye nis vetvetiu. Shigjeta e një serie të regjistruar ndryshon protokollin dhe shënimet e saj; shënimi sërish e heq, me **Zhbëj** për disa sekonda.
 
@@ -125,7 +125,7 @@ sets: 4
 rest: 120
 ```
 
-Blloku është një funksion beta: aktivizo **Seritë e stërvitjes** te **Cilësimet → Workout Planner → Funksionet beta** (instalimet e reja e kanë të aktivizuar). Pastaj **Shto seritë e stërvitjes** nga paleta e komandave e shkruan një për ty, dhe menyja ⋮ e redakton ose timerin e tij të pushimit.
+**Shto seritë e stërvitjes** nga paleta e komandave e shkruan një për ty, dhe menyja ⋮ e redakton ose timerin e tij të pushimit.
 
 <details>
 <summary>Të gjitha parametrat</summary>

@@ -18,7 +18,7 @@ Os gráficos mostram sua tendência, o mapa de calor muscular mostra o que você
 - Registre cada série em kg ou lb, do jeito que os discos à sua frente indicarem
 - Marque séries com um protocolo: drop set, myo-reps, rest-pause, superset, 21s ou o seu próprio
 - Tabelas das suas séries, agrupadas por dia com totais diários, editáveis com um toque
-- Séries de hoje como linhas para preencher no celular: marque uma série para registrá-la, e o temporizador de descanso começa (beta)
+- Séries de hoje como linhas para preencher no celular: marque uma série para registrá-la, e o temporizador de descanso começa
 - Gráficos de carga, volume, repetições, duração, distância, ritmo e frequência cardíaca, e uma tendência que mostra com clareza se você está evoluindo
 - Um painel com sequência semanal (com meta semanal), calendário de treinos, recordes pessoais, volume total, treinos recentes e estatísticas de protocolo
 - Um mapa de calor muscular, frente e costas, por volume, séries ou repetições
@@ -113,7 +113,7 @@ Por padrão, os nomes dos exercícios são comparados de forma aproximada ("squa
 
 </details>
 
-## Séries no celular (beta)
+## Séries no celular
 
 Um bloco `workout-sets` serve para registrar na academia: as séries de hoje de um exercício como linhas para preencher. Cada linha mostra o que você fez na mesma série da última vez, então você digita só o que mudou (um campo vazio registra aquele valor) e marca a linha. A série vai para o registro, a linha vira uma série registrada, e o temporizador de descanso no topo começa sozinho. A seta de uma série registrada muda o protocolo e as observações; marcá-la de novo a tira do registro, com **Desfazer** por alguns segundos.
 
@@ -125,7 +125,7 @@ sets: 4
 rest: 120
 ```
 
-O bloco é um recurso beta: ative **Séries de treino** em **Configurações → Workout Planner → Recursos beta** (instalações novas já o têm ativado). Depois, **Inserir séries de treino** na paleta de comandos grava um para você, e o menu ⋮ edita o bloco ou o temporizador de descanso dele.
+**Inserir séries de treino** na paleta de comandos grava um para você, e o menu ⋮ edita o bloco ou o temporizador de descanso dele.
 
 <details>
 <summary>Todos os parâmetros</summary>

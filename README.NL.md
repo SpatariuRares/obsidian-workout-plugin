@@ -18,7 +18,7 @@ Grafieken laten je trend zien, de spierheatmap laat zien wat je hebt getraind, e
 - Log elke serie in kg of lb, wat de schijven voor je ook zeggen
 - Markeer series met een protocol: drop set, myo-reps, rest-pause, superset, 21s, of je eigen protocol
 - Tabellen met je series, gegroepeerd per dag met dagtotalen, met één tik te bewerken
-- De series van vandaag als rijen om op je telefoon in te vullen: tik een serie aan om hem te loggen, en de rusttimer start (bèta)
+- De series van vandaag als rijen om op je telefoon in te vullen: tik een serie aan om hem te loggen, en de rusttimer start
 - Grafieken voor gewicht, volume, herhalingen, duur, afstand, tempo en hartslag, en een trend die duidelijk zegt of je vooruitgaat
 - Een dashboard met wekelijkse reeks (met een wekelijks doel), een trainingskalender, persoonlijke records, totaal volume, recente trainingen en protocolstatistieken
 - Een spierheatmap, voor- en achterkant, op volume, series of herhalingen
@@ -113,7 +113,7 @@ Oefeningsnamen worden standaard losjes vergeleken ("squat" vindt "Squat (high ba
 
 </details>
 
-## Series op je telefoon (bèta)
+## Series op je telefoon
 
 Een `workout-sets`-blok is gemaakt voor het loggen in de sportschool: de series van vandaag van één oefening als rijen om in te vullen. Elke rij toont wat je bij dezelfde serie de vorige keer deed, zodat je alleen typt wat veranderd is (een leeg veld logt die waarde) en daarna de rij aantikt. De serie gaat naar het log, de rij wordt een gelogde serie, en de rusttimer bovenaan start vanzelf. Met het pijltje van een gelogde serie wijzig je het protocol en de notities; nog een keer aantikken haalt hem terug, met **Ongedaan maken** een paar seconden lang.
 
@@ -125,7 +125,7 @@ sets: 4
 rest: 120
 ```
 
-Het blok is een bètafunctie: zet **Trainingsseries** aan onder **Instellingen → Workout Planner → Bètafuncties** (nieuwe installaties hebben het aan staan). Daarna maakt **Trainingsseries invoegen** in het opdrachtenpalet er een voor je, en het ⋮-menu bewerkt het blok of de rusttimer ervan.
+**Trainingsseries invoegen** in het opdrachtenpalet maakt er een voor je, en het ⋮-menu bewerkt het blok of de rusttimer ervan.
 
 <details>
 <summary>Alle parameters</summary>

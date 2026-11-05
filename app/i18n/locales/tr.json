@@ -49,7 +49,8 @@
     "createExampleNotes": "Örnek notlar oluştur",
     "openGettingStartedGuide": "Başlangıç kılavuzunu aç",
     "startTour": "Turu başlat",
-    "importWorkouts": "Strong veya Hevy'den içe aktar"
+    "importWorkouts": "Strong veya Hevy'den içe aktar",
+    "showWhatsNew": "Yenilikleri göster"
   },
   "common": {
     "bpm": "bpm",
@@ -908,8 +909,7 @@
       "savePreset": "Kaydet",
       "saveProtocol": "Kaydet",
       "showWelcome": "Hoş geldiniz ekranını göster",
-      "takeTour": "Turu başlat",
-      "createExampleNotes": "Örnekleri oluştur"
+      "showWhatsNew": "Değişiklik günlüğünü göster"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Kas etiketleri CSV dosyası zaten mevcut. Varsayılan değerlerle üzerine yazmak ister misiniz? Bu, tüm özel etiketleri kaldıracaktır.",
@@ -934,14 +934,13 @@
       "weightIncrement": "Progresif yüklenme için varsayılan ağırlık artışı (örneğin, 2.5 birimlik artışlar için 2.5)",
       "showRibbonIcon": "Şeritte, antrenman kaydı formunu açan dambıl simgesini göster",
       "weightUnit": "Grafikler, toplamlar ve yeni kayıtlar için birim. Her kayıt, girildiği birimi korur.",
-      "takeTour": "Kısa bir notta kayıt, grafikler, tablolar ve zamanlayıcıları adım adım gösterin.",
       "welcomeWindow": "Örnek verilerle veya sıfırdan başlamak için, tekrar \"Hoş geldiniz\" penceresini gösterin.",
       "weeklyGoal": "Serinizi sürdüren haftalık antrenman günü sayısı. Gösterge panelinin özetinde ve antrenman takviminde kullanılır.",
       "keepScreenAwake": "Zamanlayıcı ön planda çalışırken ekranın açık kalmasını sağlamaya çalışır. Daha fazla pil tüketir; kullanılabilirlik cihazınıza ve sistem ayarlarınıza bağlıdır.",
       "vibrateOnCompletion": "Zamanlayıcı bittiğinde, sesten bağımsız olarak kısa bir süre titreşim sağlar. Sayfaya dokunma ve uyumlu bir cihaz (örneğin Android) gerektirir. iOS'ta mevcut değildir; arka planda bildirimler gönderilmez.",
       "presetRestDesc": "Her turun sonunda yapılan dinlenme süresi (0, dinlenme yok anlamına gelir).",
       "noCustomProtocols": "Henüz herhangi bir protokol tanımlanmamış. \"Protokol ekle\" düğmesine tıklayarak bir tane oluşturabilirsiniz.",
-      "createExampleNotes": "Her özelliği denemek için örnek notlar ve altı haftalık örnek antrenman ekler. Zaten sahip olduğunuz notlar asla üzerine yazılmaz."
+      "showWhatsNew": "Eklentinin her sürümünde neyin değiştiğini görün."
     },
     "labels": {
       "csvPath": "CSV kayıt dosyası yolu",
@@ -968,7 +967,6 @@
       "showRibbonIcon": "Hızlı kayıt simgesini göster",
       "welcomeWindow": "Hoş geldiniz penceresi",
       "weeklyGoal": "Haftalık hedef",
-      "takeTour": "Rehberli tur",
       "keepScreenAwake": "Zamanlayıcı çalışırken ekranı açık tut",
       "vibrateOnCompletion": "Zamanlayıcı bittiğinde titreşim",
       "presetRest": "Dinlenme"
@@ -1041,10 +1039,6 @@
     },
     "beta": {
       "intro": "Herkese açılmadan önce denemeniz için yeni özellikler. Siz etkinleştirene kadar kapalıdırlar ve hâlâ değişebilirler.",
-      "setSheet": {
-        "name": "Egzersiz setleri",
-        "desc": "`workout-sets` bloğu: Telefonunuzda doldurabileceğiniz günün antrenman setlerini, son antrenmanda elde ettiğiniz değerleri ipucu olarak ve her tıklama ile başlayan bir dinlenme zamanlayıcısını içerir."
-      },
       "disabledBlock": "{feature}, beta sürümündeki bir özelliktir. Bu özelliği kullanmak için Ayarlar → Beta özellikleri bölümünden etkinleştirin."
     }
   },
@@ -1294,5 +1288,15 @@
     "unlogSet": "Set {set} kaydını kayıtlardan kaldır",
     "setRemoved": "Set {set} kaldırıldı",
     "valueOfSet": "{field}, set {set}: {value}"
+  },
+  "whatsNew": {
+    "title": "Yenilikler",
+    "version": "Sürüm {version}",
+    "close": "Anladım",
+    "olderReleases": "GitHub'daki eski sürümler",
+    "releases": {
+      "v3_1_0": "**Eklentide neler yeni.** Güncellemeden sonra eklenti, neyin değiştiğini bir kez gösterir. Bunu daha sonra komut panelinde **Yenilikleri göster** ile ya da Ayarlar → Workout Planner → Başlangıç bölümündeki **Değişiklik günlüğünü göster** ile tekrar açabilirsiniz.\n\n**Herkes için set sayfaları.** `workout-sets` bloğu artık bir beta özellik değil: hiçbir şeyi açmadan çalışır ve **Egzersiz setlerini ekle** komutu komut panelinde her zaman bulunur.",
+      "v3_0_0": "**Her blok için yeni bir görünüm.** Antrenman kayıtları, grafikler, rehberli oturum, antrenman süresi ve gösterge panelinin her bileşeni artık aynı düzen, kontroller ve menülere sahip kartlar; açık ve koyu temalarda kontrast daha net. Notlarınızda ya da kayıtlarınızda hiçbir şey değişmez: bloklar yalnızca daha tutarlı görünür ve davranır.\n\n**Telefonda setler (beta).** Yeni `workout-sets` bloğu, bir egzersizin bugünkü setlerini doldurulacak satırlar olarak gösterir; geçen seferki değerler ipucu olarak görünür. Bir satırı işaretlemek seti kaydeder ve dinlenme zamanlayıcısı kendiliğinden başlar. İşareti tekrar kaldırırsanız set kayıttan çıkar; birkaç saniye boyunca Geri al seçeneği görünür. Ayarlar → Workout Planner → Beta özellikleri bölümünden açın (yeni kurulumlarda açıktır), sonra komut panelinden **Egzersiz setlerini ekle** komutunu kullanın.\n\n**Rehberli oturumlar set sayfalarını okur.** Bir `workout-session`, artık `workout-sets` bloklarını da `workout-log` blokları gibi izler; her egzersizin dinlenmesini kendi bloğundan alır ve set kartıyla tek bir geri sayımı paylaşır.\n\n**Grafikler** altında bir istatistik satırı gösterir: ortalama, en düşük, en yüksek, son eğilim ve oturum sayısı.\n\n**Gösterge paneli bileşenlerinin** kendi ayarları vardır, ⋮ menüsünden açılır (listelenecek antrenman sayısı, gösterilecek rakamlar, sayılan gün sayısı ve benzeri).\n\n**Örnek notlar** artık örnek antrenmanın egzersizleri için `workout-sets` kullanır."
+    }
   }
 }

@@ -49,6 +49,7 @@
     "createExampleNotes": "Opprett eksempelnotater",
     "openGettingStartedGuide": "Åpne veiledning",
     "startTour": "Start guiden",
+    "showWhatsNew": "Vis hva som er nytt",
     "importWorkouts": "Importer fra Strong eller Hevy"
   },
   "common": {
@@ -908,8 +909,7 @@
       "savePreset": "Lagre",
       "saveProtocol": "Lagre",
       "showWelcome": "Vis velkomst",
-      "takeTour": "Følg guiden",
-      "createExampleNotes": "Opprett eksempler"
+      "showWhatsNew": "Vis endringslogg"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "En CSV-fil med muskeltagger finnes allerede. Vil du overskrive den med standardverdier? Dette fjerner alle egendefinerte tagger.",
@@ -934,14 +934,13 @@
       "weightIncrement": "Standard vektøkning for progressiv overbelastning (f.eks. 2,5 for økninger på 2,5 enheter)",
       "showRibbonIcon": "Vis hantelikonet i båndet som åpner skjemaet for treningsloggen",
       "weightUnit": "Enhet for diagrammer, summer og nye logger. Hver logg beholder enheten den ble opprettet i.",
-      "takeTour": "Gi en kort oversikt over logging, diagrammer, tabeller og tidsmålere.",
       "welcomeWindow": "Vis velkomstvinduet igjen for å starte med eksempeldata eller fra begynnelsen.",
       "weeklyGoal": "Treningsdager per uke som holder serien i gang, i dashbordets oppsummering og treningskalenderen.",
       "keepScreenAwake": "Prøv å holde skjermen aktiv mens en timer kjører i forgrunnen. Bruker mer batteri; tilgjengelighet avhenger av enheten og systeminnstillingene dine.",
       "vibrateOnCompletion": "Vibrer kort når en timer er ferdig, uavhengig av lyd. Krever et trykk på siden og en støttet enhet (f.eks. Android). Ikke tilgjengelig på iOS; ingen varsler i bakgrunnen.",
       "presetRestDesc": "Antall sekunder med hvile etter arbeidsdelen i hver runde (0 for ingen hvile).",
       "noCustomProtocols": "Ingen protokoller er opprettet ennå. Klikk på «Legg til protokoll» for å opprette en.",
-      "createExampleNotes": "Legger til eksempelnotater og seks uker med eksempeltrening for å prøve alle funksjoner. Notater du allerede har, blir aldri overskrevet."
+      "showWhatsNew": "Se hva som er endret i hver versjon av pluginen."
     },
     "labels": {
       "csvPath": "Sti til CSV-loggfil",
@@ -968,7 +967,6 @@
       "showRibbonIcon": "Vis ikon for hurtiglogging",
       "welcomeWindow": "Velkomstvindu",
       "weeklyGoal": "Ukentlig mål",
-      "takeTour": "Veiledet tur",
       "keepScreenAwake": "Hold skjermen aktiv mens en timer kjører",
       "vibrateOnCompletion": "Vibrer når en timer er ferdig",
       "presetRest": "Hvile"
@@ -1041,10 +1039,6 @@
     },
     "beta": {
       "intro": "Nye funksjoner du kan prøve før de er klare for alle. De er midlertidig deaktivert, og kan fortsatt endres.",
-      "setSheet": {
-        "name": "Treningssett",
-        "desc": "`workout-sets`-blokken: dagens treningssett som rader du kan fylle ut på telefonen, med verdiene fra forrige økt som veiledning, og en pausetimer som starter ved hvert klikk."
-      },
       "disabledBlock": "{feature} er en beta-funksjon. Slå den på i Innstillinger → Beta-funksjoner for å bruke denne funksjonen."
     }
   },
@@ -1294,5 +1288,15 @@
     "unlogSet": "Fjern sett {set} fra loggen",
     "setRemoved": "Sett {set} fjernet",
     "valueOfSet": "{field}, sett {set}: {value}"
+  },
+  "whatsNew": {
+    "title": "Hva er nytt",
+    "version": "Versjon {version}",
+    "close": "Forstått",
+    "olderReleases": "Eldre versjoner på GitHub",
+    "releases": {
+      "v3_1_0": "**Hva er nytt i pluginen.** Etter en oppdatering viser pluginen hva som er endret, én gang. Åpne den igjen når som helst med **Vis hva som er nytt** i kommandopaletten, eller **Vis endringslogg** under Innstillinger → Komme i gang.\n\n**Sett på telefonen for alle.** `workout-sets`-blokken er ikke lenger en beta-funksjon: den fungerer uten at du slår på noe, og **Legg til treningssett** står alltid i kommandopaletten.",
+      "v3_0_0": "**Et nytt utseende for hver blokk.** Treningslogger, diagrammer, den veiledede økten, treningsvarigheten og alle dashbord-widgeter er nå kort med samme oppsett, kontroller og menyer, med tydeligere kontrast i lys og mørk modus. Ingenting i notatene eller loggen din endres: blokkene ser bare mer enhetlige ut og oppfører seg mer likt.\n\n**Sett på telefonen (beta).** En ny `workout-sets`-blokk viser dagens sett for én øvelse som rader å fylle inn, med verdiene fra forrige gang som hint. Kryss av en rad for å logge settet, så starter hviletimeren av seg selv; kryss av igjen for å ta det tilbake, med Angre i noen sekunder. Slå den på under Innstillinger → Beta-funksjoner (nye installasjoner har den på), og bruk deretter **Legg til treningssett** fra kommandopaletten.\n\n**Veiledede økter leser settark.** En `workout-session` følger nå `workout-sets`-blokker i tillegg til `workout-log`-blokker, tar hvilen for hver øvelse fra sin egen blokk, og deler én nedtelling med settkortet.\n\n**Diagrammer** viser en statistikkrad under diagrammet: snitt, minimum, maksimum, nylig trend og antall økter.\n\n**Dashbord-widgeter** har egne innstillinger i ⋮-menyen (hvor mange økter som listes, hvilke tall som vises, hvor mange dager som telles, og så videre).\n\n**Eksempelnotatene** bruker nå `workout-sets` for øvelsene i eksempeløkten."
+    }
   }
 }

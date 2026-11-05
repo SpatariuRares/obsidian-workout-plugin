@@ -49,7 +49,8 @@
     "manageMuscleTags": "Manage muscle tags",
     "migrateExerciseTypes": "Migrate exercise types",
     "openGettingStartedGuide": "Open getting started guide",
-    "startTour": "Start the tour"
+    "startTour": "Start the tour",
+    "showWhatsNew": "Show what's new"
   },
   "common": {
     "bpm": "bpm",
@@ -908,8 +909,7 @@
       "savePreset": "Save",
       "saveProtocol": "Save",
       "showWelcome": "Show welcome",
-      "takeTour": "Take the tour",
-      "createExampleNotes": "Create examples"
+      "showWhatsNew": "Show changelog"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "A muscle tags CSV file already exists. Do you want to overwrite it with default values? This will remove any custom tags.",
@@ -936,12 +936,11 @@
       "setDuration": "Used when reps are not specified (fallback). Typical range: 30-60 seconds.",
       "setupCSV": "Create both workout_logs.csv and muscle-tags.csv in the configured folder.",
       "showRibbonIcon": "Show the dumbbell icon in the ribbon that opens the workout log form",
-      "takeTour": "Walk through logging, charts, tables and timers on a short note.",
       "weightIncrement": "Default weight increment for progressive overload (e.g., 2.5 for 2.5 unit increments)",
       "weightUnit": "Unit for charts, totals and new logs. Each log keeps the unit it was entered in.",
       "welcomeWindow": "Show the welcome window again to start with example data or from scratch.",
       "weeklyGoal": "Training days a week that keep your streak going, in the dashboard summary and training calendar.",
-      "createExampleNotes": "Add example notes and six weeks of example workouts to try every feature. Notes you already have are never overwritten."
+      "showWhatsNew": "See what changed in each version of the plugin."
     },
     "labels": {
       "csvPath": "CSV log file path",
@@ -968,7 +967,6 @@
       "setDuration": "Fallback set duration (seconds)",
       "setupCSV": "Setup CSV files",
       "showRibbonIcon": "Show quick log icon",
-      "takeTour": "Guided tour",
       "weightUnit": "Weight unit",
       "welcomeWindow": "Welcome window",
       "weeklyGoal": "Weekly goal"
@@ -1041,10 +1039,6 @@
     },
     "beta": {
       "intro": "New features to try before they are ready for everyone. They are off until you turn them on, and may still change.",
-      "setSheet": {
-        "name": "Workout sets",
-        "desc": "The `workout-sets` block: today's sets as rows to fill in on your phone, with the last time's values as hints and a rest timer that starts on each tick."
-      },
       "disabledBlock": "{feature} is a beta feature. Turn it on in Settings → Beta features to use this block."
     }
   },
@@ -1294,5 +1288,15 @@
     "workoutLabel": "Workout",
     "workoutPlaceholder": "Empty: {note}",
     "restLabel": "Rest after each set (0 = the section's timer)"
+  },
+  "whatsNew": {
+    "title": "What's new",
+    "version": "Version {version}",
+    "close": "Got it",
+    "olderReleases": "Older versions on GitHub",
+    "releases": {
+      "v3_1_0": "**What's new, in the plugin.** After an update the plugin shows what changed, once. Open it again any time with **Show what's new** in the command palette, or **Show changelog** under Settings → Workout Planner → Getting started.\n\n**Workout sets for everyone.** The `workout-sets` block is no longer a beta feature: it works without turning anything on, and **Insert workout sets** is always in the command palette.",
+      "v3_0_0": "**A new look for every block.** Workout logs, charts, the guided session, the workout duration and every dashboard widget are now cards with the same layout, controls and menus, with clearer contrast in light and dark themes. Nothing in your notes or your log changes: the blocks just look and behave more consistently.\n\n**Sets on your phone (beta).** A new `workout-sets` block shows today's sets of one exercise as rows to fill in, with last time's values as hints. Tick a row to log the set and the rest timer starts on its own; tick it again to take it back, with Undo for a few seconds. Turn it on under Settings → Workout Planner → Beta features (new installs have it on), then use **Insert workout sets** from the command palette.\n\n**Guided sessions read set sheets.** A `workout-session` now follows `workout-sets` blocks as well as `workout-log` ones, takes each exercise's rest from its own block, and shares one countdown with the sets card.\n\n**Charts** show a stats row under the chart: average, min, max, recent trend and number of sessions.\n\n**Dashboard widgets** have their own settings in their ⋮ menu (how many workouts to list, which figures to show, the days counted, and so on).\n\n**Example notes** now use `workout-sets` for the exercises of the example workout."
+    }
   }
 }

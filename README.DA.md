@@ -18,7 +18,7 @@ Diagrammer viser din tendens, muskel-heatmappet viser, hvad du har trænet, og h
 - Registrér hvert sæt i kg eller lb, uanset hvad pladerne foran dig siger
 - Markér sæt med en protokol: drop set, myo-reps, hvilepause, supersæt, 21s eller din egen
 - Tabeller over dine sæt, grupperet efter dag med dagens totaler, og redigerbare med ét tryk
-- Dagens sæt som rækker, du udfylder på din telefon: afkryds et sæt for at registrere det, og hviletimeren starter (beta)
+- Dagens sæt som rækker, du udfylder på din telefon: afkryds et sæt for at registrere det, og hviletimeren starter
 - Diagrammer for vægt, volumen, gentagelser, varighed, distance, tempo og puls, samt en tendens, der klart fortæller dig, om du forbedrer dig
 - Et dashboard med ugentlig streak (med et ugentligt mål), en træningskalender, personlige rekorder, samlet volumen, seneste træninger og protokolstatistik
 - Et muskel-heatmap, for og bag, efter volumen, sæt eller gentagelser
@@ -113,7 +113,7 @@ Med `targetWeight` og `targetReps` vises et mål for progressiv overbelastning o
 
 </details>
 
-## Sæt på din telefon (beta)
+## Sæt på din telefon
 
 En `workout-sets`-blok er lavet til at registrere sæt i fitnesscentret: dagens sæt for én øvelse som rækker, du udfylder. Hver række viser, hvad du gjorde i det samme sæt sidst, så du kun skriver det, der har ændret sig (et tomt felt registrerer den værdi), og afkrydser rækken. Sættet går ind i loggen, rækken bliver til et registreret sæt, og hviletimeren øverst starter af sig selv. Et registreret sæts chevron ændrer dets protokol og noter; afkryds det igen for at tage det tilbage, med **Fortryd** i nogle sekunder.
 
@@ -125,7 +125,7 @@ sets: 4
 rest: 120
 ```
 
-Blokken er en beta-funktion: slå **Træningssæt** til under **Indstillinger → Workout Planner → Funktioner i beta** (nye installationer har den til). Så skriver **Indsæt træningssæt** fra kommandopaletten en til dig, og ⋮-menuen redigerer den eller dens hviletimer.
+**Indsæt træningssæt** fra kommandopaletten skriver en til dig, og ⋮-menuen redigerer den eller dens hviletimer.
 
 <details>
 <summary>Alle parametre</summary>

@@ -18,7 +18,7 @@ Les graphiques montrent votre tendance, la carte thermique musculaire montre ce 
 - Enregistrez chaque série en kg ou en lb, quelle que soit la charge affichée sur vos disques
 - Associez un protocole à une série : drop set, myo-reps, rest-pause, superset, 21s, ou le vôtre
 - Tableaux de vos séries, regroupés par jour avec les totaux quotidiens, modifiables d'un seul geste
-- Les séries du jour sous forme de lignes à remplir sur votre téléphone : cochez une série pour l'enregistrer, et le minuteur de repos démarre (bêta)
+- Les séries du jour sous forme de lignes à remplir sur votre téléphone : cochez une série pour l'enregistrer, et le minuteur de repos démarre
 - Graphiques du poids, du volume, des répétitions, de la durée, de la distance, de l'allure et de la fréquence cardiaque, avec une tendance qui vous indique clairement si vous progressez
 - Un tableau de bord avec la série de semaines (avec un objectif hebdomadaire), un calendrier d'entraînement, les records personnels, le volume total, les entraînements récents et les statistiques de protocoles
 - Une carte thermique musculaire, de face et de dos, par volume, séries ou répétitions
@@ -113,7 +113,7 @@ La correspondance des noms d'exercices est souple par défaut (« squat » trouv
 
 </details>
 
-## Séries sur votre téléphone (bêta)
+## Séries sur votre téléphone
 
 Un bloc `workout-sets` sert à enregistrer à la salle : les séries du jour d'un exercice, sous forme de lignes à remplir. Chaque ligne affiche ce que vous avez fait lors de la même série la fois précédente, si bien que vous ne saisissez que ce qui a changé (un champ vide enregistre cette valeur) puis cochez la ligne. La série rejoint le journal, la ligne devient une série enregistrée, et le minuteur de repos en haut démarre tout seul. La flèche d'une série enregistrée modifie son protocole et ses notes ; la décocher la retire du journal, et **Annuler** la remet pendant quelques secondes.
 
@@ -125,7 +125,7 @@ sets: 4
 rest: 120
 ```
 
-Le bloc est une fonctionnalité bêta : activez **Séries d'entraînement** dans **Paramètres → Workout Planner → Fonctionnalités bêta** (les nouvelles installations l'ont activée). Ensuite, **Ajouter des séries d'exercices** dans la palette de commandes en insère un, et le menu ⋮ modifie le bloc ou son minuteur de repos.
+**Ajouter des séries d'exercices** dans la palette de commandes en insère un, et le menu ⋮ modifie le bloc ou son minuteur de repos.
 
 <details>
 <summary>Tous les paramètres</summary>

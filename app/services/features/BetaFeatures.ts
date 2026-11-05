@@ -10,12 +10,11 @@ import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
  * en.json, and a `betaEnabled(settings, id)` check where it shows up (its
  * block, its command). To release it: remove the id and the checks.
  */
-export const BETA_FEATURES = [
-  /** The `workout-sets` block (rows to fill in on the phone, rest timer) */
-  "setSheet",
-] as const;
+// None right now. Write the next one as `["id"] as const` and BetaFeature as
+// `(typeof BETA_FEATURES)[number]`, so a check can only name a listed id
+export const BETA_FEATURES: readonly string[] = [];
 
-export type BetaFeature = (typeof BETA_FEATURES)[number];
+export type BetaFeature = string;
 
 /** Whether the user turned the beta feature on */
 export function betaEnabled(
@@ -29,5 +28,5 @@ export function betaEnabled(
 export function newInstallBetaFeatures(): Record<BetaFeature, boolean> {
   return Object.fromEntries(
     BETA_FEATURES.map((feature) => [feature, true]),
-  ) as Record<BetaFeature, boolean>;
+  );
 }

@@ -49,7 +49,8 @@
     "createExampleNotes": "Voorbeeldnotities maken",
     "openGettingStartedGuide": "Open handleiding",
     "startTour": "Begin de tour",
-    "importWorkouts": "Importeren vanuit Strong of Hevy"
+    "importWorkouts": "Importeren vanuit Strong of Hevy",
+    "showWhatsNew": "Toon wat er nieuw is"
   },
   "common": {
     "bpm": "bpm",
@@ -908,8 +909,7 @@
       "savePreset": "Opslaan",
       "saveProtocol": "Opslaan",
       "showWelcome": "Welkomstscherm tonen",
-      "takeTour": "Begin de tour",
-      "createExampleNotes": "Voorbeelden maken"
+      "showWhatsNew": "Changelog tonen"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Er bestaat al een CSV-bestand met spierlabels. Wil je dit overschrijven met standaardwaarden? Dit verwijdert alle aangepaste labels.",
@@ -934,14 +934,13 @@
       "weightIncrement": "Standaard gewichtstoename voor progressieve overbelasting (bijvoorbeeld 2,5 voor stappen van 2,5 eenheden)",
       "showRibbonIcon": "Toon het halterpictogram in het lint dat het formulier voor het trainingslogboek opent",
       "weightUnit": "Eenheid voor grafieken, totalen en nieuwe logs. Elke log houdt de eenheid bij waarin deze is ingevoerd.",
-      "takeTour": "Loop in een korte notitie stap voor stap door loggen, grafieken, tabellen en timers.",
       "welcomeWindow": "Toon het welkomstscherm opnieuw om te beginnen met voorbeeldgegevens of vanaf nul.",
       "weeklyGoal": "Trainingsdagen per week die je reeks in stand houden, in de samenvatting van het dashboard en de trainingskalender.",
       "keepScreenAwake": "Probeer het scherm actief te houden terwijl een timer op de voorgrond draait. Dit verbruikt meer batterij; de beschikbaarheid hangt af van je apparaat en systeeminstellingen.",
       "vibrateOnCompletion": "Tril kort wanneer een timer afloopt, los van geluid. Vereist een aanraking op de pagina en een ondersteund apparaat (zoals Android). Niet beschikbaar op iOS; geen meldingen op de achtergrond.",
       "presetRestDesc": "Aantal seconden rust na het uitvoeren van elke ronde (0 voor geen rust).",
       "noCustomProtocols": "Er zijn nog geen protocollen. Klik op 'Protocol toevoegen' om er een aan te maken.",
-      "createExampleNotes": "Voegt voorbeeldnotities en zes weken voorbeeldtrainingen toe om elke functie uit te proberen. Notities die je al hebt, worden nooit overschreven."
+      "showWhatsNew": "Bekijk wat er per versie van de plugin is veranderd."
     },
     "labels": {
       "csvPath": "Pad naar het CSV-logbestand",
@@ -968,7 +967,6 @@
       "showRibbonIcon": "Pictogram voor snel loggen tonen",
       "welcomeWindow": "Welkomstscherm",
       "weeklyGoal": "Wekelijks doel",
-      "takeTour": "Begeleide rondleiding",
       "keepScreenAwake": "Houd het scherm actief terwijl een timer loopt",
       "vibrateOnCompletion": "Tril als een timer is voltooid",
       "presetRest": "Rust"
@@ -1041,10 +1039,6 @@
     },
     "beta": {
       "intro": "Nieuwe functies om uit te proberen voordat ze voor iedereen beschikbaar zijn. Ze zijn tijdelijk uitgeschakeld en kunnen nog veranderen.",
-      "setSheet": {
-        "name": "Trainingsseries",
-        "desc": "Het blok `workout-sets`: de series van vandaag als rijen om op je telefoon in te vullen, met de waarden van de vorige keer als suggesties en een rusttimer die begint bij elke tik."
-      },
       "disabledBlock": "{feature} is een bèta-functie. Schakel deze in onder Instellingen → Bètafuncties om dit blok te gebruiken."
     }
   },
@@ -1294,5 +1288,15 @@
     "unlogSet": "Serie {set} uit het logboek verwijderen",
     "setRemoved": "Serie {set} verwijderd",
     "valueOfSet": "{field}, serie {set}: {value}"
+  },
+  "whatsNew": {
+    "title": "Wat is er nieuw",
+    "version": "Versie {version}",
+    "close": "Begrepen",
+    "olderReleases": "Oudere versies op GitHub",
+    "releases": {
+      "v3_1_0": "**Wat er nieuw is in de plugin.** Na een update toont de plugin één keer wat er is veranderd. Open het altijd opnieuw met **Toon wat er nieuw is** in het opdrachtenpalet, of met **Changelog tonen** onder Instellingen → Workout Planner → Beginnen.\n\n**Trainingsseries voor iedereen.** Het `workout-sets`-blok is geen bètafunctie meer: het werkt zonder iets aan te zetten, en **Trainingsseries invoegen** staat altijd in het opdrachtenpalet.",
+      "v3_0_0": "**Een nieuwe look voor elk blok.** Trainingslogboeken, grafieken, de begeleide sessie, de trainingsduur en elke dashboardwidget zijn nu kaarten met dezelfde opmaak, bedieningselementen en menu's, met duidelijker contrast in lichte en donkere thema's. Niets in je notities of je logboek verandert: de blokken zien er alleen consistenter uit en gedragen zich ook zo.\n\n**Series op je telefoon (bèta).** Een nieuw `workout-sets`-blok toont de series van vandaag van één oefening als rijen om in te vullen, met de waarden van de vorige keer als hint. Tik een rij aan om de serie te loggen; de rusttimer start dan vanzelf. Tik nog een keer om hem terug te halen, met Ongedaan maken een paar seconden lang. Zet het aan onder Instellingen → Workout Planner → Bètafuncties (nieuwe installaties hebben het aan staan), en gebruik daarna **Trainingsseries invoegen** in het opdrachtenpalet.\n\n**Begeleide sessies lezen seriekaarten.** Een `workout-session` volgt nu ook `workout-sets`-blokken naast `workout-log`-blokken, haalt de rust van elke oefening uit het eigen blok en deelt één aftelling met de seriekaart.\n\n**Grafieken** tonen onder de grafiek een rij met statistieken: gemiddelde, minimum, maximum, recente trend en aantal sessies.\n\n**Dashboardwidgets** hebben hun eigen instellingen in het ⋮-menu (hoeveel trainingen je ziet, welke cijfers, hoeveel dagen worden meegeteld, enzovoort).\n\n**Voorbeeldnotities** gebruiken nu `workout-sets` voor de oefeningen van de voorbeeldtraining."
+    }
   }
 }

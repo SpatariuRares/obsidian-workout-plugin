@@ -1,8 +1,4 @@
-import {
-  createExampleNotes,
-  openGettingStartedGuide,
-} from "@app/services/examples/GettingStartedGuide";
-import { startGuidedTour } from "@app/features/tour/startGuidedTour";
+import { openGettingStartedGuide } from "@app/services/examples/GettingStartedGuide";
 import {
   App,
   Setting,
@@ -14,6 +10,8 @@ import { t } from "@app/i18n";
 import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
 import { FolderSuggest } from "@app/features/common/suggest/FolderSuggest";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
+import { WhatsNewModal } from "@app/features/modals/common/WhatsNewModal";
+import { allReleaseNotes } from "@app/services/onboarding/WhatsNew";
 import type {
   EventBusPort,
   TourPort,
@@ -85,19 +83,14 @@ export class GeneralSettings {
         heading: t("settings.sections.gettingStarted"),
         items: [
           {
-            name: t("commands.createExampleNotes"),
-            desc: t("settings.descriptions.createExampleNotes"),
-            render: (setting) => this.renderCreateExamples(setting),
-          },
-          {
             name: t("commands.openGettingStartedGuide"),
             desc: t("examples.gettingStarted.openGuideDesc"),
             render: (setting) => this.renderGettingStarted(setting),
           },
           {
-            name: t("settings.labels.takeTour"),
-            desc: t("settings.descriptions.takeTour"),
-            render: (setting) => this.renderTakeTour(setting),
+            name: t("commands.showWhatsNew"),
+            desc: t("settings.descriptions.showWhatsNew"),
+            render: (setting) => this.renderWhatsNew(setting),
           },
         ],
       },
@@ -218,23 +211,13 @@ export class GeneralSettings {
     );
   }
 
-  /** Adds the example notes that are missing; never overwrites one */
-  private renderCreateExamples(setting: Setting): void {
+  /** The release notes the plugin shows once after an update, all of them. */
+  private renderWhatsNew(setting: Setting): void {
     setting.addButton((button) =>
       button
-        .setButtonText(t("settings.buttons.createExampleNotes"))
-        .onClick(async () => {
-          await createExampleNotes(this.plugin);
-        }),
-    );
-  }
-
-  private renderTakeTour(setting: Setting): void {
-    setting.addButton((button) =>
-      button
-        .setButtonText(t("settings.buttons.takeTour"))
-        .onClick(async () => {
-          await startGuidedTour(this.plugin, { source: "settings" });
+        .setButtonText(t("settings.buttons.showWhatsNew"))
+        .onClick(() => {
+          new WhatsNewModal(this.app, allReleaseNotes()).open();
         }),
     );
   }

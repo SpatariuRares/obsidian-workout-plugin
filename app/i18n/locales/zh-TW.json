@@ -49,6 +49,7 @@
     "createExampleNotes": "建立範例筆記",
     "openGettingStartedGuide": "開啟入門指南",
     "startTour": "開始導覽",
+    "showWhatsNew": "顯示更新內容",
     "importWorkouts": "從 Strong 或 Hevy 匯入"
   },
   "common": {
@@ -908,8 +909,7 @@
       "savePreset": "儲存",
       "saveProtocol": "儲存",
       "showWelcome": "顯示歡迎畫面",
-      "takeTour": "開始導覽",
-      "createExampleNotes": "建立範例"
+      "showWhatsNew": "顯示更新紀錄"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "已經存在一個肌肉標籤的 CSV 檔案。您是否要用預設值覆蓋它？這將會移除任何自訂標籤。",
@@ -934,14 +934,13 @@
       "weightIncrement": "漸進式超負荷的預設增重幅度（例如：2.5 表示每次增加 2.5 單位）",
       "showRibbonIcon": "在功能區顯示啞鈴圖示，點擊即可開啟運動紀錄表單",
       "weightUnit": "用於圖表、總計和新紀錄的單位。每筆紀錄都會保留輸入時所用的單位。",
-      "takeTour": "在一則簡短筆記中，逐步介紹紀錄、圖表、表格和計時器。",
       "welcomeWindow": "再次顯示歡迎畫面，以便從範例資料開始，或從頭開始。",
       "weeklyGoal": "每週要維持連續紀錄的訓練天數，顯示在儀表板摘要與訓練日曆中。",
       "keepScreenAwake": "盡可能在任何計時器正在運作時保持螢幕開啟狀態。這會消耗更多電力；其可用性取決於您的裝置和系統設定。",
       "vibrateOnCompletion": "在計時器結束時，會短暫震動，與聲音無關。需要點擊頁面，並使用支援的設備（例如 Android）。在 iOS 系統上不可用；不會發送背景警示。",
       "presetRestDesc": "每輪運動後的休息秒數（0 表示不休息）。",
       "noCustomProtocols": "目前還沒有訓練法。點擊「新增訓練法」即可建立。",
-      "createExampleNotes": "新增範例筆記和六週的範例訓練，方便體驗所有功能。已有的筆記不會被覆寫。"
+      "showWhatsNew": "查看外掛每個版本的變更內容。"
     },
     "labels": {
       "csvPath": "CSV 紀錄檔路徑",
@@ -968,7 +967,6 @@
       "showRibbonIcon": "顯示快速紀錄圖示",
       "welcomeWindow": "歡迎畫面",
       "weeklyGoal": "每週目標",
-      "takeTour": "導覽",
       "keepScreenAwake": "在計時器運作時，保持螢幕開啟",
       "vibrateOnCompletion": "當計時器結束時，產生震動",
       "presetRest": "休息"
@@ -1041,10 +1039,6 @@
     },
     "beta": {
       "intro": "新增功能，可在您準備好之前先嘗試。這些功能目前尚未正式推出，您需要自行開啟，並且可能在之後進行變更。",
-      "setSheet": {
-        "name": "運動組",
-        "desc": "`workout-sets` 區塊：以列的形式在手機上填寫今日的組，並以上次的數值作為提示；每次勾選都會開始休息計時。"
-      },
       "disabledBlock": "{feature} 是 β 版本功能。請在「設定」→「β 版本功能」中開啟後，才能使用此區塊。"
     }
   },
@@ -1294,5 +1288,15 @@
     "unlogSet": "從紀錄中移除第 {set} 組",
     "setRemoved": "第 {set} 組已移除",
     "valueOfSet": "{field}，第 {set} 組：{value}"
+  },
+  "whatsNew": {
+    "title": "更新內容",
+    "version": "版本 {version}",
+    "close": "知道了",
+    "olderReleases": "GitHub 上的舊版本",
+    "releases": {
+      "v3_1_0": "**外掛的新內容。** 更新後，外掛會在首次顯示變更內容。之後隨時可在指令面板中執行 **顯示更新內容**，或在「設定 → Workout Planner → 開始使用」中點擊 **顯示更新紀錄**。\n\n**所有人都能使用運動組。** `workout-sets` 區塊不再是 β 版本功能：無需開啟任何設定即可使用，指令面板中也一律提供 **插入運動組**。",
+      "v3_0_0": "**每個區塊都有全新外觀。** 運動紀錄、圖表、引導式訓練、運動時長，以及每個儀表板小工具，現在都是版面、控制項與選單一致的卡片，並在淺色與深色主題中有更清楚的對比。你的筆記與紀錄內容都不會改變：區塊只是外觀與操作更一致。\n\n**手機上的組（β 版本）。** 新的 `workout-sets` 區塊會以列的形式顯示某個動作今天的組，並以上次的數值作為提示。勾選一列即可紀錄該組，休息計時器會自動開始；再次勾選即可收回，並可在數秒內按「復原」。請在「設定 → Workout Planner → β 版本功能」中開啟（新安裝預設為開啟），然後從指令面板使用 **插入運動組**。\n\n**引導式訓練會讀取組表。** `workout-session` 現在也會追蹤 `workout-sets` 與 `workout-log` 區塊，每個動作的休息時間取自其自己的區塊，並與組卡片共用同一個倒數計時。\n\n**圖表**在圖表下方顯示統計列：平均、最小、最大、近期趨勢與訓練次數。\n\n**儀表板小工具**在其 ⋮ 選單中有自己的設定（要列出幾筆運動、顯示哪些數據、計算的天數等）。\n\n**範例筆記**現在會用 `workout-sets` 呈現範例運動的動作。"
+    }
   }
 }

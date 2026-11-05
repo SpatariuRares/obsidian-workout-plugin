@@ -8,15 +8,15 @@ import {
 } from "@app/features/tables/types";
 import { DateUtils } from "@app/utils/DateUtils";
 import { trainingDay } from "@app/services/history/TrainingHistory";
-import { fieldKey } from "@app/services/exercise/ExerciseFields";
+import {
+  fieldKey,
+  fieldValue,
+  hasFieldValue,
+  type FieldValue,
+} from "@app/services/exercise/ExerciseFields";
 import { t } from "@app/i18n";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
-
-/** A custom field's key compared ignoring case, spaces, "_" and "-" */
-function looseKey(key: string): string {
-  return key.toLowerCase().replace(/[\s_-]+/g, "");
-}
 
 /** Fields every exercise type may record: shown as N/A when a set lacks them */
 const KNOWN_CUSTOM_FIELDS = new Set(["duration", "distance", "heartRate"]);
@@ -139,7 +139,7 @@ export class TableRowProcessor {
     headers: string[],
     formattedDate = "",
   ): string[] {
-    // Values by field key; custom fields by their loose key, so a "heartrate"
+    // Values by field key; custom fields through fieldValue, so a "heartrate"
     // column from an older CSV fills the heart rate column and a "Max load"
     // header finds the "max_load" field
     const values: Record<string, string> = {
@@ -152,15 +152,10 @@ export class TableRowProcessor {
       protocol: protocolId(log.protocol),
       actions: "", // Placeholder for actions
     };
-    const custom = new Map<string, string | number | boolean>();
-    for (const [key, value] of Object.entries(log.customFields ?? {})) {
-      custom.set(looseKey(fieldKey(key)), value);
-    }
-
     return headers.map((header) => {
       const key = fieldKey(header);
       if (key in values) return values[key];
-      const value = custom.get(looseKey(key));
+      const value = fieldValue({ customFields: log.customFields }, key);
       return KNOWN_CUSTOM_FIELDS.has(key)
         ? this.formatCustomFieldValue(value)
         : (value?.toString() ?? "");
@@ -185,22 +180,7 @@ export class TableRowProcessor {
    * @param value - Custom field value
    * @returns Formatted string value
    */
-  static formatCustomFieldValue(
-    value: string | number | boolean | undefined,
-  ): string {
-    if (value === undefined || value === null || value === "") {
-      return t("table.notAvailable");
-    }
-    if (typeof value === "number") {
-      return value === 0 ? t("table.notAvailable") : value.toString();
-    }
-    if (typeof value === "string") {
-      const num = parseFloat(value);
-      if (!isNaN(num) && num === 0) {
-        return t("table.notAvailable");
-      }
-      return value;
-    }
-    return value.toString();
+  static formatCustomFieldValue(value: FieldValue | undefined): string {
+    return hasFieldValue(value) ? String(value) : t("table.notAvailable");
   }
 }

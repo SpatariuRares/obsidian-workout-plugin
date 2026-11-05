@@ -1,0 +1,32 @@
+/* The look of a dashboard table on the desk: no outer border, one subtle line
+   between rows, muted small headers, tabular figures. Include it in a rule
+   qualified to beat Obsidian's note table rules (a border around every
+   cell), e.g. `.workout-dashboard table.workout-card-table`. Emits no CSS on
+   its own. */
+@mixin dashboard-table {
+  width: 100%;
+  margin: 0;
+  border: none;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+
+  th,
+  td {
+    padding: var(--workout-space-sm) var(--workout-space-xs);
+    text-align: start;
+    border: none;
+    border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
+    background: none;
+  }
+
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  thead th {
+    font-weight: normal;
+    color: var(--text-muted);
+    font-size: var(--workout-font-xs);
+  }
+}

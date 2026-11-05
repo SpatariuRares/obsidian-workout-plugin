@@ -8,7 +8,8 @@ import {
 } from "@app/types/WorkoutLogData";
 import { CHART_TYPE } from "@app/types/WorkoutConfigTypes";
 import { FilterResult } from "@app/types/CommonTypes";
-import { StringUtils } from "@app/utils/StringUtils";
+import { workoutMatches } from "@app/services/history/TrainingHistory";
+import { normalizeExercise } from "@app/services/events/WorkoutEventTypes";
 import { DateUtils } from "@app/utils/DateUtils";
 import { t } from "@app/i18n";
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
@@ -188,16 +189,9 @@ export class DataFilter {
       if (workoutName) {
         titlePrefix = workoutName;
 
-        const workoutNameLower = StringUtils.normalize(workoutName);
-        filteredData = logData.filter((log) => {
-          const source = StringUtils.normalize(
-            log.workout || log.origine || "",
-            {
-              stripWikiLinks: true,
-            },
-          );
-          return source.includes(workoutNameLower);
-        });
+        filteredData = logData.filter((log) =>
+          workoutMatches(workoutName, log.workout || log.origine),
+        );
 
         filterMethodUsed = `campo Origine:: "${workoutName}"`;
       }
@@ -223,8 +217,8 @@ export class DataFilter {
     // Protocol param is guaranteed to exist here due to hasProtocolFilter check
     // Normalize protocol values to lowercase array
     const protocols: string[] = Array.isArray(protocolParam)
-      ? protocolParam.map((p) => StringUtils.normalize(p))
-      : [StringUtils.normalize(protocolParam)];
+      ? protocolParam.map((p) => protocolId(p))
+      : [protocolId(protocolParam)];
 
     // Filter data by matching protocol (OR logic within protocols array)
     const filteredData = logData.filter((log) => {
@@ -246,11 +240,8 @@ export class DataFilter {
     params: DataFilterParams,
   ): FilterResult {
     const dateRange = params.dateRange || 0;
-    // Count the whole boundary day ("today and the previous N days")
-    const cutoff = DateUtils.getDaysAgo(dateRange);
-    cutoff.setHours(0, 0, 0, 0);
     return {
-      filteredData: DateUtils.filterByDateRange(logData, cutoff),
+      filteredData: DateUtils.lastDays(logData, dateRange),
       filterMethodUsed: `dateRange: last ${dateRange} days`,
       titlePrefix: t("general.workoutData"),
     };
@@ -272,17 +263,10 @@ export class DataFilter {
       titlePrefix = exerciseName;
 
       if (params.exactMatch) {
-        const exerciseNameLower = exerciseName
-          .toLowerCase()
-          .replace(/\s+/g, " ")
-          .trim();
-        filteredData = logData.filter((log) => {
-          const exerciseField = (log.exercise || "")
-            .toLowerCase()
-            .replace(/\s+/g, " ")
-            .trim();
-          return exerciseField === exerciseNameLower;
-        });
+        const wanted = normalizeExercise(exerciseName);
+        filteredData = logData.filter(
+          (log) => normalizeExercise(log.exercise) === wanted,
+        );
         filterMethodUsed = `exact match on exercise field: "${exerciseName}"`;
       } else {
         const matchesResult = ExerciseMatchUtils.findExerciseMatches(
@@ -293,8 +277,6 @@ export class DataFilter {
         const { bestStrategy, bestPathKey } =
           ExerciseMatchUtils.determineExerciseFilterStrategy(
             matchesResult.allExercisePathsAndScores,
-            false,
-            exerciseName,
           );
 
         filteredData = ExerciseMatchUtils.filterLogDataByExercise(

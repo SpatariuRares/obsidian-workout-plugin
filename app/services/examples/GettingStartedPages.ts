@@ -10,6 +10,7 @@ import { timerBlock } from "@app/features/timer/timerBlock";
 import { durationBlock } from "@app/features/duration/durationBlock";
 import { sessionBlock } from "@app/features/session/sessionBlock";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
+import { PathUtils } from "@app/utils/PathUtils";
 import {
   CHART_DATA_TYPE,
   CHART_TYPE,
@@ -220,9 +221,7 @@ export function gettingStartedPages() {
       ),
     },
   ];
-  const index = examplePaths
-    .gettingStartedGuide()
-    .replace(/\.md$/, "");
+  const index = PathUtils.linkTarget(examplePaths.gettingStartedGuide());
   const pages = sections.map((section) => ({
     ...section,
     path: normalizePath(
@@ -231,7 +230,7 @@ export function gettingStartedPages() {
   }));
   return pages.map((page, i) => {
     const link = (path: string, label: string) =>
-      `[[${path.replace(/\.md$/, "")}|${label}]]`;
+      `[[${PathUtils.linkTarget(path)}|${label}]]`;
     const navigation = [
       link(i > 0 ? pages[i - 1].path : index, t("tour.back")),
       link(index, t("examples.gettingStarted.title")),
@@ -252,7 +251,7 @@ export function gettingStartedIndex(): string {
   return `# ${t("examples.gettingStarted.title")}\n\n${t("examples.gettingStarted.pagesIntro")}\n\n${gettingStartedPages()
     .map(
       (page) =>
-        `- [[${page.path.replace(/\.md$/, "")}|${page.title}]]`,
+        `- [[${PathUtils.linkTarget(page.path)}|${page.title}]]`,
     )
     .join("\n")}\n\n${t("examples.gettingStarted.ownData")}\n`;
 }

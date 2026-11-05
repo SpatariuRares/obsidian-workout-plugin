@@ -164,11 +164,10 @@ export class ExerciseAutocomplete {
       // Fuzzy matching: Handle typos using Levenshtein distance
       // Max distance of 3 allows for reasonable typos (e.g., "squatt" -> "squat")
       const fuzzyMatches: ExerciseMatch[] =
-        StringUtils.findSimilarStrings(
-          query,
-          instance.availableExercises,
-          3,
-        )
+        StringUtils.findSimilar(query, instance.availableExercises, {
+          max: 3,
+        })
+          .map(({ value }) => value)
           .filter((name) => {
             // Exclude if already found in semantic matches
             return !semanticMatches.some((sm) => sm.name === name);

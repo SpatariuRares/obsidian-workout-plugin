@@ -1,22 +1,19 @@
 import {
+  readSectionPlan,
   readSessionPlan,
   sessionProgress,
   type SessionStep,
 } from "@app/features/session/business/sessionPlan";
-import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
+import { readWorkoutNote } from "@app/services/notes/WorkoutNote";
 
 const step = (exercise: string, sets?: number): SessionStep => ({
   exercise,
   sets,
   rest: {},
 });
-const set = (exercise: string): WorkoutLogData => ({
-  date: "2026-11-02T10:00:00.000Z",
-  exercise,
-  reps: 8,
-  weight: 100,
-  volume: 800,
-});
+const set = (exercise: string) =>
+  logRow({ date: "2026-11-02T10:00:00.000Z", exercise, weight: 100 });
 
 const note = [
   "# Lower Body A",
@@ -115,6 +112,36 @@ describe("readSessionPlan", () => {
     expect(row.rest).toEqual({ duration: 90 });
   });
 
+  it("gives no rest to a workout-sets block with rest: 0, even with a section timer", () => {
+    const [bench, row] = readSessionPlan(
+      [
+        "## Bench",
+        "```workout-timer",
+        "duration: 90",
+        "```",
+        "```workout-sets",
+        "exercise: Bench",
+        "rest: 0",
+        "```",
+        "## Row",
+        "```workout-log",
+        "exercise: Row",
+        "```",
+        "```workout-timer",
+        "duration: 60",
+        "```",
+        "```workout-sets",
+        "exercise: Row",
+        "rest: 0",
+        "```",
+      ].join("\n"),
+    );
+
+    expect(bench.rest).toBeUndefined();
+    expect(bench.restBlock).toMatchObject({ type: "workout-sets" });
+    expect(row.rest).toBeUndefined();
+  });
+
   it("edits the rest in the step's workout-sets block, else in the section's timer", () => {
     const [squat, legPress] = readSessionPlan(note);
     expect(squat.restBlock).toMatchObject({
@@ -155,6 +182,15 @@ describe("readSessionPlan", () => {
       { exercise: "Bench", sets: 4, targetWeight: 80 },
       { exercise: "Bench", sets: undefined },
     ]);
+  });
+});
+
+describe("readSectionPlan", () => {
+  it("gives the steps of one section, which together make the note's plan", () => {
+    const sections = readWorkoutNote(note).sections;
+
+    expect(sections.map((section) => readSectionPlan(section).length)).toEqual([0, 1, 1, 0]);
+    expect(sections.flatMap(readSectionPlan)).toEqual(readSessionPlan(note));
   });
 });
 

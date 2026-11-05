@@ -9,6 +9,7 @@ import {
   type MuscleTagsChangedPayload,
   type SettingsChangedPayload,
 } from "@app/services/events/WorkoutEventTypes";
+import { workoutMatches } from "@app/services/history/TrainingHistory";
 
 export interface ViewFilter {
   exercise?: string;
@@ -133,7 +134,7 @@ export class EventAwareRenderChild extends MarkdownRenderChild {
    * - Filtro exercise presente:
    *   - exactMatch=true → confronto esatto normalizzato
    *   - exactMatch=false → confronto parziale normalizzato (substring)
-   * - Filtro workout presente → confronto parziale normalizzato
+   * - Filtro workout presente → workoutMatches (la regola di DataFilter)
    */
   private matchesContext(
     exercise: string,
@@ -162,16 +163,9 @@ export class EventAwareRenderChild extends MarkdownRenderChild {
       }
     }
 
-    // Match workout se specificato
+    // Match workout se specificato (same rule as DataFilter)
     if (this.filter.workout && workout) {
-      const filterNorm = normalizeExercise(this.filter.workout);
-      const evtNorm = normalizeExercise(workout);
-      if (
-        !evtNorm.includes(filterNorm) &&
-        !filterNorm.includes(evtNorm)
-      ) {
-        return false;
-      }
+      if (!workoutMatches(this.filter.workout, workout)) return false;
     }
 
     return true;

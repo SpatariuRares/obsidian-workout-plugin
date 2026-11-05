@@ -1,6 +1,7 @@
 import type { Setting } from "obsidian";
 import { t } from "@app/i18n";
 import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
+import { runWithBusyButton } from "@app/features/settings/runWithBusyButton";
 import type {
   WorkoutPluginContext,
   TemplateGeneratorPort,
@@ -33,65 +34,45 @@ export class TemplatesSettings {
   }
 
   private renderGenerate(setting: Setting): void {
+    const generate = (overwrite: boolean) => () =>
+      this.plugin.templateGeneratorService.generateDefaultTemplates(
+        overwrite,
+      );
     setting
       .addButton((button) => {
         button
           .setButtonText(t("settings.buttons.generateTemplates"))
           .setCta()
-          .onClick(async () => {
-            button.setDisabled(true);
-            button.setButtonText(t("settings.buttons.generating"));
-            try {
-              await this.plugin.templateGeneratorService.generateDefaultTemplates(
-                false,
-              );
-              button.setButtonText(t("settings.buttons.generated"));
-              window.setTimeout(() => {
-                button.setButtonText(
-                  t("settings.buttons.generateTemplates"),
-                );
-                button.setDisabled(false);
-              }, 2000);
-            } catch {
-              button.setButtonText(t("settings.buttons.failed"));
-              window.setTimeout(() => {
-                button.setButtonText(
-                  t("settings.buttons.generateTemplates"),
-                );
-                button.setDisabled(false);
-              }, 2000);
-            }
-          });
+          .onClick(() =>
+            runWithBusyButton(
+              button,
+              {
+                idle: t("settings.buttons.generateTemplates"),
+                busy: t("settings.buttons.generating"),
+                done: t("settings.buttons.generated"),
+                failed: t("settings.buttons.failed"),
+              },
+              generate(false),
+            ),
+          );
       })
       .addButton((button) => {
         // The "warning" style; setWarning() is deprecated, setDestructive() needs Obsidian 1.13
         button.buttonEl.addClass("mod-warning");
         button
           .setButtonText(t("settings.buttons.regenerateOverwrite"))
-          .onClick(async () => {
-            button.setDisabled(true);
-            button.setButtonText(t("settings.buttons.overwriting"));
-            try {
-              await this.plugin.templateGeneratorService.generateDefaultTemplates(
-                true,
-              );
-              button.setButtonText(t("settings.buttons.done"));
-              window.setTimeout(() => {
-                button.setButtonText(
-                  t("settings.buttons.regenerateOverwrite"),
-                );
-                button.setDisabled(false);
-              }, 2000);
-            } catch {
-              button.setButtonText(t("settings.buttons.failed"));
-              window.setTimeout(() => {
-                button.setButtonText(
-                  t("settings.buttons.regenerateOverwrite"),
-                );
-                button.setDisabled(false);
-              }, 2000);
-            }
-          });
+          .onClick(() =>
+            runWithBusyButton(
+              button,
+              {
+                idle: t("settings.buttons.regenerateOverwrite"),
+                busy: t("settings.buttons.overwriting"),
+                done: t("settings.buttons.done"),
+                failed: t("settings.buttons.failed"),
+              },
+              generate(true),
+            ),
+          );
       });
   }
 

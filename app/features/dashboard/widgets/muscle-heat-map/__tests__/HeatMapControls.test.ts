@@ -4,6 +4,35 @@ import { HeatMapControls } from "@app/features/dashboard/widgets/muscle-heat-map
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { t } from "@app/i18n";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
+import { DASHBOARD_WIDGETS } from "@app/features/dashboard/widgets/dashboardWidgets";
+import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
+
+describe("HeatMapControls choices", () => {
+  it("offers the choices the widget's menu offers, starting on the block's defaults", () => {
+    const container = createObsidianContainer();
+    const options = HeatMapControls.create(
+      container,
+      [],
+      document.createElement("div"),
+      document.createElement("div"),
+      {} as WorkoutPluginContext,
+      jest.fn().mockResolvedValue(undefined),
+    );
+
+    const menuChoices = (DASHBOARD_WIDGETS.heatMap.settings ?? []).flatMap(
+      (s) => (s.kind === "choice" ? [s.options.map((o) => o.label())] : []),
+    );
+    const groups = [...container.querySelectorAll(".workout-chip-group")].map(
+      (group) => [...group.querySelectorAll("button")].map((b) => b.textContent),
+    );
+    expect(groups).toEqual(menuChoices);
+    expect(options).toEqual({
+      timeFrame: dashboardBlock.defaults.heatMapTimeFrame,
+      view: dashboardBlock.defaults.heatMapView,
+      metric: dashboardBlock.defaults.heatMapMetric,
+    });
+  });
+});
 
 describe("HeatMapControls metric toggle", () => {
   const setup = () => {

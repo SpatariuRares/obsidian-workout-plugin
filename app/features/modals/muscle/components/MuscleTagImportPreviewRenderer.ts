@@ -104,29 +104,24 @@ export class MuscleTagImportPreviewRenderer {
   }
 
   private renderButtons(options: RenderImportPreviewOptions): void {
-    const buttonContainer = this.container.createDiv({
-      cls: "workout-tag-form-buttons workout-modal-actions",
+    // Merge keeps the tags already there, so it is the primary action;
+    // Replace overwrites them
+    Button.createModalActions(this.container, {
+      className: "workout-tag-form-buttons",
+      primary: {
+        text: t("modal.importMerge"),
+        ariaLabel: t("modal.importMergeAriaLabel"),
+        onClick: options.onMerge,
+      },
+      others: [
+        {
+          text: t("modal.importReplace"),
+          ariaLabel: t("modal.importReplaceAriaLabel"),
+          variant: BUTTONVARIANT.WARNING,
+          onClick: options.onReplace,
+        },
+      ],
+      onCancel: options.onCancel,
     });
-
-    const cancelButton = Button.create(buttonContainer, {
-      text: t("modal.buttons.cancel"),
-      variant: BUTTONVARIANT.SECONDARY,
-      ariaLabel: t("modal.buttons.cancel"),
-    });
-    Button.onClick(cancelButton, options.onCancel);
-
-    const mergeButton = Button.create(buttonContainer, {
-      text: t("modal.importMerge"),
-      variant: BUTTONVARIANT.SECONDARY,
-      ariaLabel: t("modal.importMergeAriaLabel"),
-    });
-    Button.onClick(mergeButton, options.onMerge);
-
-    const replaceButton = Button.create(buttonContainer, {
-      text: t("modal.importReplace"),
-      variant: BUTTONVARIANT.WARNING,
-      ariaLabel: t("modal.importReplaceAriaLabel"),
-    });
-    Button.onClick(replaceButton, options.onReplace);
   }
 }

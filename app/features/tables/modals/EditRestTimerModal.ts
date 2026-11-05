@@ -8,10 +8,7 @@ import {
   setsBlock,
   type EmbeddedSetsParams,
 } from "@app/features/tables/setsBlock";
-import {
-  createEditButtons,
-  type EditTarget,
-} from "@app/features/modals/base/components/createEditButtons";
+import type { EditTarget } from "@app/features/modals/base/components/createEditButtons";
 import { t } from "@app/i18n";
 
 /**
@@ -53,8 +50,7 @@ export class EditRestTimerModal extends EditTimerModal {
   protected createButtons(container: HTMLElement): void {
     const own = blockRest(this.sets) !== undefined;
     const collect = () => restParams(this.collectParams());
-    createEditButtons(this, container, {
-      schema: setsBlock,
+    this.editButtons(container, setsBlock, t("modal.notices.timerUpdateFailed"), {
       target: own
         ? this.where
         : {
@@ -66,9 +62,6 @@ export class EditRestTimerModal extends EditTimerModal {
           },
       id: this.sets.id,
       collectParams: collect,
-      buttonText: this.getButtonText(),
-      successMessage: this.getSuccessMessage(),
-      failureMessage: t("modal.notices.timerUpdateFailed"),
     });
   }
 }

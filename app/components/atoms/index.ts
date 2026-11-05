@@ -8,6 +8,9 @@ export {
   BUTTONVARIANT,
   BUTTONSIZE,
   type ButtonProps,
+  type ModalAction,
+  type ModalActions,
+  type ModalActionsOptions,
 } from "@app/components/atoms/Button";
 export {
   Container,

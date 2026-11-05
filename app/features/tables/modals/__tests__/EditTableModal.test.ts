@@ -128,4 +128,45 @@ describe("EditTableModal", () => {
 
     expect(state.content).toBe(note);
   });
+
+  describe("table type", () => {
+    const chip = (contentEl: HTMLElement, label: string) =>
+      [...contentEl.querySelectorAll<HTMLButtonElement>(".workout-chip-group button")].find(
+        (b) => b.textContent === label,
+      )!;
+    const shown = (el: Element | null) =>
+      !!el && !el.classList.contains("workout-display-none") &&
+      (el as HTMLElement).style.display !== "none";
+
+    it("opens on the block's type: an exercise only shows the exercise field", () => {
+      const { contentEl } = openModal();
+
+      expect(
+        chip(contentEl, t("modal.selectOptions.specificExercise")).getAttribute("aria-pressed"),
+      ).toBe("true");
+      expect(shown(contentEl.querySelector(".workout-target-exercise"))).toBe(true);
+      expect(shown(contentEl.querySelector(".workout-target-workout"))).toBe(false);
+      expect(contentEl.querySelector("select")).toBeNull();
+    });
+
+    it("hides the target and the plan when all logs are picked, and drops the exercise", async () => {
+      const { state, contentEl, update } = openModal();
+
+      chip(contentEl, t("modal.selectOptions.allLogs")).click();
+
+      expect(shown(contentEl.querySelector(".workout-target-exercise")?.closest(".workout-modal-section") ?? null)).toBe(false);
+      update();
+      await flush();
+      expect(state.content).not.toContain("exercise: Squat");
+    });
+
+    it("shows the workout field once the workout is picked", () => {
+      const { contentEl } = openModal();
+
+      chip(contentEl, t("modal.selectOptions.completeWorkout")).click();
+
+      expect(shown(contentEl.querySelector(".workout-target-workout"))).toBe(true);
+      expect(shown(contentEl.querySelector(".workout-target-exercise"))).toBe(false);
+    });
+  });
 });

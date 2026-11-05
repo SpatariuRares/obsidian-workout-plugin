@@ -6,6 +6,7 @@ import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import { localDay } from "@app/services/history/TrainingHistory";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { t } from "@app/i18n";
 import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
@@ -79,14 +80,8 @@ const set = (
   exercise: string,
   weight: number,
   day = today,
-): WorkoutLogData => ({
-  date: `${day}T10:00:00`,
-  exercise,
-  reps: 8,
-  weight,
-  volume: weight * 8,
-  workout: "Lower Body A",
-});
+): WorkoutLogData =>
+  logRow({ date: `${day}T10:00:00`, exercise, weight, workout: "Lower Body A" });
 
 function setup(
   rows: WorkoutLogData[],
@@ -152,13 +147,21 @@ describe("EmbeddedSessionView", () => {
     );
   });
 
-  it("shows the last set of an earlier day", async () => {
-    const { el } = setup([set("Squat", 95, "2020-01-01")]);
+  it("shows last time as the set sheet does: every set of the previous training day", async () => {
+    const { el } = setup([
+      set("Squat", 90, "2019-12-20"),
+      set("Squat", 95, "2020-01-01"),
+      set("Squat", 97.5, "2020-01-01"),
+    ]);
     await flush();
 
     expect(text(el)).toContain(
-      t("logs.lastSet", {
-        set: t("logs.weightedSet", { weight: 95, unit: "kg", reps: 8 }),
+      t("sets.lastTime", {
+        date: "01/01",
+        sets: [
+          t("logs.weightedSet", { weight: 95, unit: "kg", reps: 8 }),
+          t("logs.weightedSet", { weight: 97.5, unit: "kg", reps: 8 }),
+        ].join(" · "),
       }),
     );
   });
@@ -217,6 +220,40 @@ describe("EmbeddedSessionView", () => {
     const timer = timers[timers.length - 1];
     expect(timer.params).toEqual({ duration: 120 });
     expect(timer.started).toBe(1);
+  });
+
+  it("starts no rest after a set of a workout-sets block with rest: 0", async () => {
+    const content = [
+      "```workout-session",
+      "```",
+      "## Squat",
+      "```workout-timer",
+      "duration: 120",
+      "```",
+      "```workout-sets",
+      "exercise: Squat",
+      "sets: 3",
+      "rest: 0",
+      "```",
+    ].join("\n");
+    const rows: WorkoutLogData[] = [];
+    const { el, eventBus } = setup(rows, content);
+    await flush();
+
+    const logged = set("Squat", 100);
+    rows.push(logged);
+    eventBus.emit({
+      type: "log:added",
+      payload: {
+        entry: logged,
+        context: { exercise: "Squat", workout: "Lower Body A" },
+      },
+    });
+    await flush();
+
+    expect(text(el)).toContain("Squat");
+    expect(timers.every((timer) => timer.started === 0)).toBe(true);
+    expect(el.querySelector(".workout-session-rest")).toBeNull();
   });
 
   it("logs the set in this note's workout, not the last set's", async () => {

@@ -3,6 +3,7 @@
  * Provides mock implementations of obsidian functions used in tests
  */
 import { jest } from "@jest/globals";
+import * as YAML from "yaml";
 /**
  * Simple YAML parser mock that handles basic YAML structures
  * Mimics Obsidian's parseYaml function
@@ -94,6 +95,11 @@ export const parseYaml = jest.fn(
 
     return Object.keys(result).length > 0 ? result : null;
   },
+);
+
+/** Obsidian's stringifyYaml: real YAML, so tests can parse what was written */
+export const stringifyYaml = jest.fn((obj: unknown): string =>
+  YAML.stringify(obj),
 );
 
 /** Obsidian's app language (since 1.8.7). Tests set it with mockReturnValue. */
@@ -323,6 +329,7 @@ export function withHelpers<T extends HTMLElement | DocumentFragment>(el: T): T 
   e.setText = (text: string) => {
     el.textContent = text;
   };
+  e.appendText = (text: string) => el.appendChild(el.ownerDocument.createTextNode(text));
   e.addClass = (c: string) => (el as HTMLElement).classList.add(c);
   e.removeClass = (c: string) => (el as HTMLElement).classList.remove(c);
   e.toggleClass = (c: string, on: boolean) => (el as HTMLElement).classList.toggle(c, on);

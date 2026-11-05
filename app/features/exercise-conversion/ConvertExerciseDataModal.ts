@@ -2,21 +2,17 @@ import { App, Notice } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { t } from "@app/i18n";
-import {
-  getExerciseTypeById,
-  EXERCISE_TYPE_IDS,
-} from "@app/constants/exerciseTypes.constants";
+import { getExerciseTypeById } from "@app/constants/exerciseTypes.constants";
 import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import {
   ExerciseConversionService,
   FieldMapping,
 } from "@app/features/exercise-conversion/logic/ExerciseConversionService";
-import { DataFilter } from "@app/services/data/DataFilter";
 import { ConversionTypeSelect } from "@app/features/exercise-conversion/components/ConversionTypeSelect";
 import { FieldMappingList } from "@app/features/exercise-conversion/components/FieldMappingList";
 import { ConversionPreview } from "@app/features/exercise-conversion/components/ConversionPreview";
-import { Button, BUTTONVARIANT } from "@app/components/atoms";
+import { Button } from "@app/components/atoms";
 
 export class ConvertExerciseDataModal extends ModalBase {
   private plugin: WorkoutPluginContext;
@@ -129,25 +125,14 @@ export class ConvertExerciseDataModal extends ModalBase {
   }
 
   private createButtons(parent: HTMLElement): void {
-    const buttonsSection = Button.createModalActions(parent);
-
-    const cancelButton = Button.create(buttonsSection, {
-      text: t("common.cancel"),
-      variant: BUTTONVARIANT.SECONDARY,
-      ariaLabel: t("common.cancel"),
-    });
-    Button.onClick(cancelButton, () => this.close());
-
-    this.convertButton = Button.create(buttonsSection, {
-      text: t("common.convert"),
-      ariaLabel: t("common.convert"),
-      variant: BUTTONVARIANT.PRIMARY,
-    });
-    Button.setDisabled(this.convertButton, true);
-    Button.onClick(
-      this.convertButton,
-      () => void this.handleConvert(),
-    );
+    this.convertButton = Button.createModalActions(parent, {
+      primary: {
+        text: t("common.convert"),
+        disabled: true,
+        onClick: () => this.handleConvert(),
+      },
+      onCancel: () => this.close(),
+    }).primary ?? null;
   }
 
   private async handleExerciseChange(): Promise<void> {
@@ -156,26 +141,17 @@ export class ConvertExerciseDataModal extends ModalBase {
       return;
     }
 
-    const exerciseDefService =
-      this.plugin.getExerciseDefinitionService();
-    const definition = await exerciseDefService.getExerciseDefinition(
-      this.selectedExercise,
-    );
-    const typeId = definition?.typeId || EXERCISE_TYPE_IDS.STRENGTH;
-    this.currentType =
-      getExerciseTypeById(typeId) ||
-      getExerciseTypeById(EXERCISE_TYPE_IDS.STRENGTH)!;
+    this.currentType = await this.plugin
+      .getExerciseDefinitionService()
+      .getExerciseType(this.selectedExercise);
 
     if (this.currentTypeDisplay) {
       this.currentTypeDisplay.textContent = this.currentType.name;
     }
 
-    const rawLogData = await this.plugin.getWorkoutLogData();
-    const logData = DataFilter.filterRows(rawLogData, {
-      exercise: this.selectedExercise,
-      exactMatch: true,
-    });
-    this.entryCount = logData.length;
+    this.entryCount = (
+      await this.conversionService.setsOf(this.selectedExercise)
+    ).length;
 
     // Show Type Select
     this.typeSelect?.setVisible(true);

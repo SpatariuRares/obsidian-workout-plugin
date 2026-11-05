@@ -1,103 +1,115 @@
-import { App, TFile, TFolder } from "obsidian";
+import { App } from "obsidian";
 import { VaultLogStorage } from "@app/services/data/LogStorage";
+import { FakeVault } from "@app/services/exercise/__tests__/FakeVault";
 import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 
-function makeFile(name: string, parent?: TFolder): TFile {
-  const file = new TFile();
-  file.name = name;
-  file.basename = name.replace(/\.csv$/, "");
-  file.extension = "csv";
-  file.path = parent ? `${parent.path}/${name}` : name;
-  (file as TFile & { parent: TFolder | null }).parent = parent ?? null;
-  return file;
-}
-
-function setup(path = "data/workout_logs.csv") {
-  const vault = {
-    getAbstractFileByPath: jest.fn(),
-    create: jest.fn(),
-    createFolder: jest.fn(),
-    read: jest.fn().mockResolvedValue("raw csv"),
-    process: jest.fn(),
-  };
-  const fileManager = { trashFile: jest.fn() };
-  const app = { vault, fileManager } as unknown as App;
+async function setup(
+  path = "data/workout_logs.csv",
+  files: Record<string, string> = {},
+) {
+  const vault = new FakeVault();
+  for (const [file, content] of Object.entries(files)) {
+    await vault.app.vault.create(file, content);
+  }
   const settings = { csvLogFilePath: path } as WorkoutChartsSettings;
-  return { vault, fileManager, settings, storage: new VaultLogStorage(app, settings) };
+  return {
+    vault,
+    settings,
+    storage: new VaultLogStorage(vault.app as unknown as App, settings),
+  };
 }
 
 describe("VaultLogStorage", () => {
-  it("finds the file at the current settings path", () => {
-    const { vault, settings, storage } = setup();
-    const file = makeFile("workout_logs.csv");
-    vault.getAbstractFileByPath.mockReturnValue(file);
+  it("finds the file at the current settings path", async () => {
+    const { vault, settings, storage } = await setup("workout_logs.csv", {
+      "workout_logs.csv": "raw csv",
+    });
 
-    expect(storage.file()).toBe(file);
+    expect(storage.file()).toBe(vault.file("workout_logs.csv"));
 
     settings.csvLogFilePath = "elsewhere.csv";
-    vault.getAbstractFileByPath.mockReturnValue(null);
     expect(storage.file()).toBeNull();
-    expect(vault.getAbstractFileByPath).toHaveBeenLastCalledWith(
-      "elsewhere.csv",
-    );
   });
 
-  it("is missing when the path is a folder", () => {
-    const { vault, storage } = setup();
-    vault.getAbstractFileByPath.mockReturnValue(new TFolder());
+  it("is missing when the path is a folder", async () => {
+    const { storage } = await setup("data", {
+      "data/workout_logs.csv": "raw csv",
+    });
 
     expect(storage.file()).toBeNull();
   });
 
   it("creates the parent folder before the file", async () => {
-    const { vault, storage } = setup("logs/workout_logs.csv");
-    vault.getAbstractFileByPath.mockReturnValue(null);
+    const { vault, storage } = await setup("logs/workout_logs.csv");
+    const order: string[] = [];
+    const { create, createFolder } = vault.app.vault;
+    vault.app.vault.createFolder = async (path) => {
+      order.push(`folder ${path}`);
+      await createFolder(path);
+    };
+    vault.app.vault.create = async (path, content) => {
+      order.push(`file ${path}`);
+      return create(path, content);
+    };
 
     await storage.create("content");
 
-    expect(vault.createFolder).toHaveBeenCalledWith("logs");
-    expect(vault.create).toHaveBeenCalledWith(
-      "logs/workout_logs.csv",
-      "content",
-    );
+    expect(order).toEqual(["folder logs", "file logs/workout_logs.csv"]);
+    expect(vault.content("logs/workout_logs.csv")).toBe("content");
+  });
+
+  it("reads and rewrites the file in place", async () => {
+    const { vault, storage } = await setup("data/workout_logs.csv", {
+      "data/workout_logs.csv": "raw csv",
+    });
+    const file = storage.file()!;
+
+    expect(await storage.read(file)).toBe("raw csv");
+    await storage.process(file, (content) => `${content}\nrow`);
+    expect(vault.content("data/workout_logs.csv")).toBe("raw csv\nrow");
   });
 
   describe("backup", () => {
     it("copies the file next to itself with a timestamped name", async () => {
-      const { vault, storage } = setup();
-      const folder = new TFolder();
-      folder.path = "data";
-      const csvFile = makeFile("workout_logs.csv", folder);
-      folder.children = [csvFile];
+      const { vault, storage } = await setup("data/workout_logs.csv", {
+        "data/workout_logs.csv": "raw csv",
+      });
 
-      await storage.backup(csvFile);
+      await storage.backup(storage.file()!);
 
-      expect(vault.create).toHaveBeenCalledWith(
+      const backups = vault
+        .paths()
+        .filter((path) => path !== "data/workout_logs.csv");
+      expect(backups).toEqual([
         expect.stringMatching(
           /^data\/workout_logs\.backup-[\d-]+T[\d-]+Z\.csv$/,
         ),
-        "raw csv",
-      );
+      ]);
+      expect(vault.content(backups[0])).toBe("raw csv");
     });
 
     it("keeps only the 3 most recent backups", async () => {
-      const { fileManager, storage } = setup();
-      const folder = new TFolder();
-      folder.path = "data";
-      const csvFile = makeFile("workout_logs.csv", folder);
       const old = [
-        "workout_logs.backup-2026-01-01T00-00-00-000Z.csv",
-        "workout_logs.backup-2026-02-01T00-00-00-000Z.csv",
-        "workout_logs.backup-2026-03-01T00-00-00-000Z.csv",
-      ].map((name) => makeFile(name, folder));
-      const unrelated = makeFile("other.backup-2020.csv", folder);
-      folder.children = [csvFile, unrelated, ...old];
+        "data/workout_logs.backup-2026-01-01T00-00-00-000Z.csv",
+        "data/workout_logs.backup-2026-02-01T00-00-00-000Z.csv",
+        "data/workout_logs.backup-2026-03-01T00-00-00-000Z.csv",
+      ];
+      const unrelated = "data/other.backup-2020.csv";
+      const { vault, storage } = await setup("data/workout_logs.csv", {
+        "data/workout_logs.csv": "raw csv",
+        [unrelated]: "",
+        ...Object.fromEntries(old.map((path) => [path, "old"])),
+      });
 
-      await storage.backup(csvFile);
+      await storage.backup(storage.file()!);
 
       // New backup + 2 newest old ones = 3
-      expect(fileManager.trashFile).toHaveBeenCalledTimes(1);
-      expect(fileManager.trashFile).toHaveBeenCalledWith(old[0]);
+      const paths = vault.paths();
+      expect(paths).not.toContain(old[0]);
+      expect(paths).toEqual(expect.arrayContaining([old[1], old[2], unrelated]));
+      expect(
+        paths.filter((path) => path.startsWith("data/workout_logs.backup-")),
+      ).toHaveLength(3);
     });
   });
 });

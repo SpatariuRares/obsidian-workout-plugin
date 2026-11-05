@@ -93,7 +93,7 @@ export class VolumeAnalytics {
     data.forEach(([exercise, volume]) => {
       ListItem.create(listEl, {
         label: exercise,
-        value: `${FormatUtils.formatNumber(volume)} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.VOLUME_SUFFIX}`,
+        value: FormatUtils.formatVolume(volume),
         className: "workout-muscle-group-item",
         labelClassName: "workout-exercise-name",
         valueClassName: "workout-exercise-volume",

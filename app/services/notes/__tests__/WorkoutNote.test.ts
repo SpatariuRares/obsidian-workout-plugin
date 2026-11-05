@@ -1,4 +1,4 @@
-import { readWorkoutNote } from "@app/services/notes/WorkoutNote";
+import { readWorkoutNote, replaceBlockLines } from "@app/services/notes/WorkoutNote";
 
 const note = (...lines: string[]) => lines.join("\n");
 
@@ -111,5 +111,41 @@ describe("readWorkoutNote", () => {
     expect(sections[1].text).toBe("### 4 serie x 8 reps");
     expect(sections[1].blocks.map((b) => b.type)).toEqual(["workout-log"]);
     expect(sections[2].blocks.map((b) => b.body)).toEqual(["duration: 60"]);
+  });
+});
+
+describe("replaceBlockLines", () => {
+  it("should replace the lines between a block's fences", () => {
+    const content = note("# Day", "```workout-log", "exercise: Squat", "limit: 5", "```", "after");
+    const [block] = readWorkoutNote(content).blocks;
+
+    expect(replaceBlockLines(content, block, ["exercise: Lunge"])).toBe(
+      note("# Day", "```workout-log", "exercise: Lunge", "```", "after"),
+    );
+  });
+
+  it("should put the callout's quote and the note's CRLF back on every line", () => {
+    const content = "> [!note]\r\n> ```workout-timer\r\n> preset: rest\r\n> ```\r\n";
+    const [block] = readWorkoutNote(content).blocks;
+
+    expect(replaceBlockLines(content, block, ["id: abc", "preset: rest"])).toBe(
+      "> [!note]\r\n> ```workout-timer\r\n> id: abc\r\n> preset: rest\r\n> ```\r\n",
+    );
+  });
+
+  it("should insert before the body without touching it when count is 0", () => {
+    const content = note("> ```workout-log", ">exercise: Squat", "> ```");
+    const [block] = readWorkoutNote(content).blocks;
+
+    expect(replaceBlockLines(content, block, ["id: abc"], { count: 0 })).toBe(
+      note("> ```workout-log", "> id: abc", ">exercise: Squat", "> ```"),
+    );
+  });
+
+  it("should empty the block when given no lines", () => {
+    const content = note("```workout-log", "exercise: Squat", "```");
+    const [block] = readWorkoutNote(content).blocks;
+
+    expect(replaceBlockLines(content, block, [])).toBe(note("```workout-log", "```"));
   });
 });

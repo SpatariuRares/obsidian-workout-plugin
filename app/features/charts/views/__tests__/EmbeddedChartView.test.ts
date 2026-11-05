@@ -7,6 +7,7 @@ import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { attachObsidianHelpers, createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import type { BlockMenuAction } from "@app/features/common/ui/BlockMenu";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { getDefaultChartTitle } from "@app/features/charts/config/ChartConstants";
 
@@ -46,14 +47,8 @@ jest.mock("@app/features/charts/business/ChartTypeResolver", () => ({
   },
 }));
 
-const set = (date: string, reps: number, weight: number): WorkoutLogData =>
-  ({
-    date,
-    exercise: "Squat",
-    reps,
-    weight,
-    volume: reps * weight,
-  }) as WorkoutLogData;
+const set = (date: string, reps: number, weight: number) =>
+  logRow({ date, exercise: "Squat", reps, weight });
 
 describe("EmbeddedChartView", () => {
   const editAction: BlockMenuAction = {
@@ -117,6 +112,24 @@ describe("EmbeddedChartView", () => {
 
     expect(container.querySelector(".workout-chart-trend")).toBeNull();
     expect(container.querySelector(".workout-charts-stats")).toBeNull();
+  });
+
+  it("charts a set logged on the boundary day of dateRange, as the table keeps it", async () => {
+    jest.useFakeTimers({ doNotFake: ["nextTick", "setImmediate"] });
+    jest.setSystemTime(new Date("2024-02-15T12:00:00"));
+    try {
+      // the view's filter (DataFilter, mocked here) already kept these rows
+      await draw({ exercise: "Squat", dateRange: 7 }, [
+        set("2024-02-08", 5, 100),
+        set("2024-02-08T08:00:00", 5, 100),
+        set("2024-02-15", 5, 110),
+      ]);
+    } finally {
+      jest.useRealTimers();
+    }
+
+    const labels = (ChartRenderer.renderChart as jest.Mock).mock.calls[0][1];
+    expect(labels).toEqual(["08/02/2024", "15/02/2024"]);
   });
 
   it("draws no card when there is nothing to chart", async () => {

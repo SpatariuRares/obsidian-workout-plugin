@@ -73,7 +73,7 @@ export class InsertTimerModal extends BaseInsertModal {
     if (this.selectedPreset) {
       this.applyPresetValues(this.selectedPreset);
     }
-    this.showPresetsFor(timerElements.selectedTimerType);
+    this.showPresetsFor(timerElements.timerType.value());
   }
 
   /** Show only the presets of this type; a selected preset of another type is dropped */

@@ -1,14 +1,16 @@
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
-import { TrainingHistory } from "@app/services/history/TrainingHistory";
+import { TrainingHistory, localDay } from "@app/services/history/TrainingHistory";
 import {
   fieldFor,
   fieldKey,
   formatFieldNumber,
 } from "@app/services/exercise/ExerciseFields";
 import { parametersOrNone } from "@app/services/exercise/ExerciseDefinitionService";
+import { DateUtils } from "@app/utils/DateUtils";
 import { t } from "@app/i18n";
+import { round2 } from "@app/utils/round2";
 
 /** Read-only context next to the exercise, using the full history. */
 export class LogHistory {
@@ -27,17 +29,18 @@ export class LogHistory {
       ]);
       if (container.dataset.exercise !== exercise) return;
       container.empty();
-      const last = history.lastSet(exercise);
       const unit = plugin.settings.weightUnit;
-      if (last) {
-        const set = describeSet(last, parameters, unit);
-        container.createDiv({ text: t("logs.lastSet", { set }) });
+      const previous = history.previousDay(exercise, localDay(new Date()));
+      if (previous) {
+        container.createDiv({
+          text: describeLastTime(previous, parameters, unit),
+        });
       }
       const record = history.personalRecord(exercise);
       if (record)
         container.createDiv({
           text: t("logs.personalRecord", {
-            weight: Number(record.weight.toFixed(2)),
+            weight: round2(record.weight),
             unit,
             reps: record.reps,
           }),
@@ -59,7 +62,7 @@ export function describeSet(
 ): string {
   if (set.weight > 0) {
     return t("logs.weightedSet", {
-      weight: Number(set.weight.toFixed(2)),
+      weight: round2(set.weight),
       unit: weightUnit,
       reps: set.reps,
     });
@@ -73,4 +76,47 @@ export function describeSet(
     return param.unit ? `${number} ${param.unit}` : `${param.label}: ${number}`;
   });
   return parts.join(" · ") || `${set.reps}`;
+}
+
+/**
+ * "Last time" (see CONTEXT.md): the previous training day of the exercise with
+ * all its sets, "Last time (31/10): 80 kg × 8 · 80 kg × 7".
+ */
+export function describeLastTime(
+  previous: { day: string; sets: WorkoutLogData[] },
+  parameters: ParameterDefinition[],
+  weightUnit: string,
+): string {
+  return t("sets.lastTime", {
+    date: DateUtils.toShortDate(previous.sets[0]?.date ?? previous.day),
+    sets: previous.sets
+      .map((set) => describeSet(set, parameters, weightUnit))
+      .join(" · "),
+  });
+}
+
+/** A block's target: "100 kg × 8", "8 reps" or "100 kg"; undefined without one. */
+export function describeTarget(
+  reps: number | undefined,
+  weight: number,
+  weightUnit: string,
+): string;
+export function describeTarget(
+  reps: number | undefined,
+  weight: number | undefined,
+  weightUnit: string,
+): string | undefined;
+export function describeTarget(
+  reps: number | undefined,
+  weight: number | undefined,
+  weightUnit: string,
+): string | undefined {
+  if (reps !== undefined && weight !== undefined) {
+    return t("logs.weightedSet", { weight, unit: weightUnit, reps });
+  }
+  if (reps !== undefined) return t("session.targetReps", { reps });
+  if (weight !== undefined) {
+    return t("session.targetWeight", { weight, unit: weightUnit });
+  }
+  return undefined;
 }

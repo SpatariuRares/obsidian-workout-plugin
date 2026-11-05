@@ -8,6 +8,7 @@
  */
 import { DomUtils } from "@app/utils/DomUtils";
 import { t } from "@app/i18n";
+import { round2 } from "@app/utils/round2";
 
 export interface NumberFieldProps {
   /** Accessible name ("Reps, set 2"); the unit is added to it */
@@ -128,7 +129,7 @@ export class NumberField {
       let next = base + delta;
       if (props.min !== undefined) next = Math.max(props.min, next);
       if (props.max !== undefined) next = Math.min(props.max, next);
-      input.value = props.integer ? String(Math.round(next)) : String(Number(next.toFixed(2)));
+      input.value = props.integer ? String(Math.round(next)) : String(round2(next));
       // As if typed: listeners on the input (a form's preview) hear it too
       input.dispatchEvent(new Event("input", { bubbles: true }));
     };

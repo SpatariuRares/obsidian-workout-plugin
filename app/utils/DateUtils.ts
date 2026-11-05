@@ -1,85 +1,45 @@
-import { CONSTANTS } from "@app/constants";
 import { t } from "@app/i18n";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { trainingDay } from "@app/services/history/TrainingHistory";
+import {
+  localDay,
+  trainingDay,
+} from "@app/services/history/TrainingHistory";
+
+/** Local day, month (both two digits) and year of a date */
+function dateParts(date: string | Date): {
+  day: string;
+  month: string;
+  year: number;
+} {
+  const d = new Date(date);
+  return {
+    day: String(d.getDate()).padStart(2, "0"),
+    month: String(d.getMonth() + 1).padStart(2, "0"),
+    year: d.getFullYear(),
+  };
+}
 
 /**
  * Utility class for date operations and time period calculations
  * Centralizes date manipulation logic used across the application
  */
 export class DateUtils {
-  private static readonly MS_PER_DAY = 24 * 60 * 60 * 1000;
-
   /**
-   * The training day (local YYYY-MM-DD) of a Date
+   * The rows of "the last N days": today and the previous N days, the
+   * boundary day counted whole (cut at local midnight, by training day).
+   * The one rule for `dateRange` and the dashboard periods.
    */
-  static formatDate(date: Date): string {
-    return trainingDay(date.toISOString());
-  }
-
-  /**
-   * Get a date N days ago from today
-   */
-  static getDaysAgo(days: number): Date {
-    const date = new Date();
-    date.setDate(date.getDate() - days);
-    return date;
-  }
-
-  /**
-   * Get cutoff date for a specific time frame
-   */
-  static getTimeFrameDate(
-    timeFrame: "week" | "month" | "year",
-  ): Date {
-    const now = new Date();
-    const daysMap = {
-      week: 7,
-      month: 30,
-      year: 365,
-    };
-    return new Date(
-      now.getTime() - daysMap[timeFrame] * this.MS_PER_DAY,
-    );
-  }
-
-  /**
-   * Filter workout data by date range
-   */
-  static filterByDateRange(
-    data: WorkoutLogData[],
-    cutoffDate: Date,
-  ): WorkoutLogData[] {
-    return data.filter((d) => new Date(d.date) >= cutoffDate);
-  }
-
-  /**
-   * Filter workout data by number of days ago
-   */
-  static filterByDaysAgo(
-    data: WorkoutLogData[],
+  static lastDays<T extends Pick<WorkoutLogData, "date">>(
+    rows: T[],
     days: number,
-  ): WorkoutLogData[] {
-    const cutoffDate = this.getDaysAgo(days);
-    return this.filterByDateRange(data, cutoffDate);
-  }
-
-  /**
-   * Filter workout data by time frame
-   */
-  static filterByTimeFrame(
-    data: WorkoutLogData[],
-    timeFrame: "week" | "month" | "year",
-  ): WorkoutLogData[] {
-    const cutoffDate = this.getTimeFrameDate(timeFrame);
-    return this.filterByDateRange(data, cutoffDate);
-  }
-
-  /**
-   * Check if two dates are on the same day
-   */
-  static isSameDay(date1: Date, date2: Date): boolean {
-    return this.formatDate(date1) === this.formatDate(date2);
+  ): T[] {
+    const start = new Date();
+    start.setDate(start.getDate() - days);
+    const firstDay = localDay(start);
+    return rows.filter((row) => {
+      const day = trainingDay(row.date ?? "");
+      return /^\d{4}-\d{2}-\d{2}$/.test(day) && day >= firstDay;
+    });
   }
 
   /**
@@ -90,7 +50,7 @@ export class DateUtils {
     for (let i = days - 1; i >= 0; i--) {
       const date = new Date();
       date.setDate(date.getDate() - i);
-      labels.push(this.formatDate(date));
+      labels.push(localDay(date));
     }
     return labels;
   }
@@ -115,30 +75,8 @@ export class DateUtils {
    * Used in spacer rows for date headers
    */
   static toShortDate(dateString: string): string {
-    try {
-      const date = new Date(dateString);
-      const day = date.getDate().toString().padStart(2, "0");
-      const month = (date.getMonth() + 1).toString().padStart(2, "0");
-      return `${day}/${month}`;
-    } catch {
-      return CONSTANTS.WORKOUT.TABLE.DATE_KEYS.INVALID;
-    }
-  }
-
-  /**
-   * Format date as full date (DD/MM/YYYY)
-   * Future use for detailed views
-   */
-  static toFullDate(dateString: string): string {
-    try {
-      const date = new Date(dateString);
-      const day = date.getDate().toString().padStart(2, "0");
-      const month = (date.getMonth() + 1).toString().padStart(2, "0");
-      const year = date.getFullYear();
-      return `${day}/${month}/${year}`;
-    } catch {
-      return t("table.invalidDate");
-    }
+    const { day, month } = dateParts(dateString);
+    return `${day}/${month}`;
   }
 
   /**
@@ -150,10 +88,7 @@ export class DateUtils {
     date: string | Date,
     format: string = "DD/MM/YYYY",
   ): string {
-    const d = new Date(date);
-    const day = String(d.getDate()).padStart(2, "0");
-    const month = String(d.getMonth() + 1).padStart(2, "0");
-    const year = d.getFullYear();
+    const { day, month, year } = dateParts(date);
     switch (format) {
       case "YYYY-MM-DD":
         return `${year}-${month}-${day}`;

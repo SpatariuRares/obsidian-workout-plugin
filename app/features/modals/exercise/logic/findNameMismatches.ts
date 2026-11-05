@@ -1,6 +1,5 @@
 import type { TFile } from "obsidian";
 import type { ExercisePage } from "@app/services/exercise/ExerciseLibrary";
-import { ExerciseMatchUtils } from "@app/utils/exercise/ExerciseMatchUtils";
 import { StringUtils } from "@app/utils/StringUtils";
 
 export interface MismatchEntry {
@@ -41,7 +40,7 @@ export function findNameMismatches(
     let closestMatch = "";
     let score = 0;
     for (const original of originals) {
-      const s = ExerciseMatchUtils.getMatchScore(
+      const s = StringUtils.getMatchScore(
         normalized,
         StringUtils.normalize(original),
       );

@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "Anulează",
     "clear": "Șterge",
     "convert": "Convertește",
     "exercise": "Exercițiu",
@@ -98,7 +97,6 @@
       "columnEstimated": "Estimat",
       "columnVariance": "Variație",
       "columnWorkout": "Antrenament",
-      "minutesSuffix": " min",
       "noData": "Nu sunt încă destule sesiuni pentru comparație.",
       "subtitle": "Durata estimată comparativ cu durata reală a antrenamentului",
       "title": "Comparație de durată",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "Estimările se apropie de sesiunile tale reale",
       "varianceTrendStable": "Precizia estimărilor este constantă",
       "varianceTrendTitle": "Precizia estimărilor",
-      "avgVarianceStat": "Varianță medie: ±{value}%",
-      "hoursSuffix": "h"
+      "avgVarianceStat": "Varianță medie: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Toate paginile de exerciții sunt valide",
@@ -201,8 +198,6 @@
       "moveUp": "Mută {widget} în sus",
       "moveDown": "Mută {widget} în jos",
       "allHistory": "Gol: tot istoricul",
-      "recentWorkoutsLimit": "Antrenamente în lista recentă",
-      "volumeTrendDays": "Zile în tendința volumului",
       "layout": "Aranjament",
       "layoutGrid": "Grilă",
       "layoutList": "Listă",
@@ -568,7 +563,6 @@
     "createLogButtonText": "Creează jurnal pentru: {exerciseName}",
     "noDataTitle": "Nu au fost găsite înregistrări pentru {exerciseName}",
     "exploreExampleData": "Sau explorează cu date de exemplu",
-    "lastSet": "Ultima dată: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Record personal: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "Adaugă preset",
       "addProtocol": "Adaugă protocol",
-      "cancel": "Anulează",
       "createFiles": "Creează fișiere",
       "done": "Terminat!",
       "failed": "Eșuat",
@@ -1072,7 +1065,6 @@
     "editTable": "Modifică tabelul",
     "editTitle": "Editează",
     "gotoExercise": "Mergi la exercițiu",
-    "invalidDate": "Dată invalidă",
     "labels": {
       "target": "Țintă:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "Nicio serie la {weight} încă",
       "progress": "Cel mai bun: {best}/{target} repetări",
-      "progressTooltip": "Cel mai bun: {best} repetări / Țintă: {target} repetări",
-      "repsSuffix": "repetări",
-      "separator": " × "
+      "progressTooltip": "Cel mai bun: {best} repetări / Țintă: {target} repetări"
     },
     "trendLine": "Linie de tendință",
     "refreshingTable": "Se reîmprospătează tabelul...",
@@ -1127,7 +1117,6 @@
     "down": "În jos",
     "improving": "În îmbunătățire",
     "increasing": "Creștere",
-    "invariant": "Constant",
     "neutral": "Neutru",
     "stable": "Stabil",
     "stableLower": "Stabil",

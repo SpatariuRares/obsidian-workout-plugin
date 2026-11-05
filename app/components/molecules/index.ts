@@ -26,10 +26,6 @@ export {
   type SearchBoxResult,
 } from "@app/components/molecules/SearchBox";
 export {
-  Badge,
-  type BadgeProps,
-} from "@app/components/molecules/Badge";
-export {
   LoadingSpinner,
   type LoadingSpinnerProps,
 } from "@app/components/molecules/LoadingSpinner";
@@ -51,12 +47,6 @@ export {
   type StatItemProps,
 } from "@app/components/molecules/ListItem";
 export {
-  SelectDropdown,
-  type SelectDropdownProps,
-  type SelectDropdownResult,
-  type SelectOption,
-} from "@app/components/molecules/SelectDropdown";
-export {
   IconDropdown,
   type IconDropdownProps,
   type IconDropdownResult,
@@ -75,6 +65,7 @@ export {
 export {
   ChipGroup,
   type ChipGroupProps,
+  type ChipGroupResult,
   type ChipMultiGroupProps,
   type ChipMultiGroupResult,
   type ChipOption,
@@ -93,6 +84,11 @@ export {
   type BlockCardProps,
   type BlockCardResult,
 } from "@app/components/molecules/BlockCard";
+export {
+  CardTable,
+  type CardTableColumn,
+  type CardTableProps,
+} from "@app/components/molecules/CardTable";
 export {
   UndoNotice,
   UNDO_NOTICE_MS,

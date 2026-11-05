@@ -28,22 +28,6 @@ const RESERVED_PARAMETER_KEYS: readonly string[] = [
   // exercise fields, and a custom exercise may declare them too
 ] as const;
 
-/**
- * Default colors for chart data types.
- * Used when displaying custom parameters in charts.
- */
-const CHART_DATA_TYPE_COLORS: Record<string, string> = {
-  volume: "#4CAF50",
-  weight: "#FF9800",
-  reps: "#FF9800",
-  duration: "#2196F3",
-  distance: "#9C27B0",
-  pace: "#E91E63",
-  heartRate: "#F44336",
-  // Default color for custom parameters
-  default: "#607D8B",
-} as const;
-
 export class ParameterUtils {
   /**
    * Default units for built-in parameter types.
@@ -164,18 +148,6 @@ export class ParameterUtils {
         // Capitalize first letter of each word
         .replace(/\b\w/g, (char) => char.toUpperCase())
         .trim()
-    );
-  }
-
-  /**
-   * Gets the color for a chart data type.
-   * @param dataType The chart data type or custom parameter key
-   * @returns Hex color string
-   */
-  static getColorForDataType(dataType: string): string {
-    return (
-      CHART_DATA_TYPE_COLORS[dataType.toLowerCase()] ||
-      CHART_DATA_TYPE_COLORS.default
     );
   }
 

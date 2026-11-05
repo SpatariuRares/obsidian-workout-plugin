@@ -8,7 +8,7 @@ import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import { describeSet } from "@app/features/modals/log/LogHistory";
 import { DateUtils } from "@app/utils/DateUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
-import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
+import { LogFormData } from "@app/types/ModalTypes";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import {
   fromLog,
@@ -60,16 +60,12 @@ export class EditLogModal extends BaseLogModal {
    * Deleting is rare, so it is a small trash icon at the start of the save
    * bar: always there, out of the way, and it still asks to confirm
    */
-  protected createButtons(
-    container: HTMLElement,
-    formElements: LogFormElements,
-  ): void {
-    DeleteButton.create(container, {
+  protected createStartActions(row: HTMLElement): void {
+    DeleteButton.create(row, {
       label: t("modal.buttons.deleteSet"),
       onClick: () => this.confirmDelete(),
       className: "workout-modal-actions-delete",
     });
-    super.createButtons(container, formElements);
   }
 
   /** Asks to confirm, naming the set as it was logged (not as edited) */

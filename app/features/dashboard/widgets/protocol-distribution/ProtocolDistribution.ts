@@ -1,3 +1,4 @@
+import { Feedback } from "@app/components/atoms/Feedback";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
@@ -12,7 +13,8 @@ import { ChartLegendItem } from "@app/features/charts/ui/ChartLegendItem";
 import { t } from "@app/i18n";
 import {
   ProtocolCatalog,
-  protocolId,
+  groupByProtocol,
+  type ProtocolInfo,
 } from "@app/services/protocols/ProtocolCatalog";
 
 /**
@@ -24,6 +26,7 @@ interface ProtocolStats {
   count: number;
   percentage: number;
   color: string;
+  chartColor: ProtocolInfo["chartColor"];
 }
 
 /**
@@ -70,17 +73,18 @@ export class ProtocolDistribution {
       isWide: true,
     });
 
-    const filteredData = DateUtils.filterByDaysAgo(data, days);
+    const filteredData = DateUtils.lastDays(data, days);
 
     // Calculate protocol statistics
     const stats = this.calculateProtocolStats(filteredData, plugin);
 
     // Check if there's any data
     if (stats.length === 0 || stats.every((s) => s.count === 0)) {
-      widgetEl.createDiv({
-        text: t("dashboard.protocolDistribution.noData", { days }),
-        cls: "workout-protocol-no-data",
-      });
+      Feedback.renderEmpty(
+        widgetEl,
+        t("dashboard.protocolDistribution.noData", { days }),
+        { append: true },
+      );
       return;
     }
 
@@ -150,22 +154,19 @@ export class ProtocolDistribution {
     plugin?: SettingsPort,
   ): ProtocolStats[] {
     const catalog = new ProtocolCatalog(plugin?.settings?.customProtocols);
-    const protocolCounts = new Map<string, number>();
-    for (const entry of data) {
-      const id = protocolId(entry.protocol);
-      protocolCounts.set(id, (protocolCounts.get(id) || 0) + 1);
-    }
 
     const totalSets = data.length;
-    const stats: ProtocolStats[] = [...protocolCounts].map(
-      ([protocol, count]) => {
+    const stats: ProtocolStats[] = [...groupByProtocol(data)].map(
+      ([protocol, sets]) => {
         const info = catalog.resolve(protocol);
+        const count = sets.length;
         return {
           protocol,
           label: info.name,
           count,
           percentage: totalSets > 0 ? (count / totalSets) * 100 : 0,
           color: info.color,
+          chartColor: info.chartColor,
         };
       },
     );
@@ -188,7 +189,7 @@ export class ProtocolDistribution {
     chartId: string,
     onFilterChange: ProtocolFilterCallback,
     activeFilter?: string | null,
-    chartType: "pie" | "doughnut" = "pie",
+    chartType: "pie" | "doughnut" = dashboardBlock.defaults.protocolChartType,
   ): void {
     const canvas = Canvas.create(container, {
       className: "workout-protocol-chart-canvas",
@@ -198,7 +199,7 @@ export class ProtocolDistribution {
     const backgroundColors = stats.map((s) => {
       if (activeFilter && s.protocol !== activeFilter) {
         // Dim non-active slices
-        return s.color.replace("0.7", "0.3");
+        return s.chartColor(0.3);
       }
       return s.color;
     });
@@ -206,9 +207,9 @@ export class ProtocolDistribution {
     const borderColors = stats.map((s) => {
       if (activeFilter && s.protocol === activeFilter) {
         // Highlight active slice border
-        return s.color.replace("0.7", "1");
+        return s.chartColor(1);
       }
-      return s.color.replace("0.7", "0.8");
+      return s.chartColor(0.8);
     });
 
     const borderWidths = stats.map((s) => {

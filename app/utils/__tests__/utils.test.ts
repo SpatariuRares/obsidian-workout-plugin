@@ -1,8 +1,10 @@
 import { ExerciseMatchUtils } from "@app/utils/exercise/ExerciseMatchUtils";
+import { StringUtils } from "@app/utils/StringUtils";
 import { ChartDataUtils } from "@app/features/charts/business/ChartDataUtils";
 import { DateUtils } from "@app/utils/DateUtils";
 import { TFile } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 import {
   CHART_DATA_TYPE,
   CHART_TYPE,
@@ -31,7 +33,7 @@ const createMockLog = (
   filePath: string,
 ): WorkoutLogData => {
   const file = new MockTFile(filePath) as TFile;
-  return {
+  return logRow({
     date,
     exercise,
     reps,
@@ -41,47 +43,47 @@ const createMockLog = (
     workout: "Test Workout",
     timestamp: new Date(date).getTime(),
     file,
-  };
+  });
 };
 
 describe("Utility Classes", () => {
-  describe("ExerciseMatchUtils.getMatchScore", () => {
+  describe("StringUtils.getMatchScore", () => {
     it("should return 100 for exact match", () => {
-      expect(ExerciseMatchUtils.getMatchScore("Squat", "Squat")).toBe(
+      expect(StringUtils.getMatchScore("Squat", "Squat")).toBe(
         100,
       );
-      expect(ExerciseMatchUtils.getMatchScore("squat", "SQUAT")).toBe(
+      expect(StringUtils.getMatchScore("squat", "SQUAT")).toBe(
         100,
       );
     });
 
     it("should return 90 for starts with match", () => {
       expect(
-        ExerciseMatchUtils.getMatchScore("Squat", "Squat Barbell"),
+        StringUtils.getMatchScore("Squat", "Squat Barbell"),
       ).toBe(90);
       expect(
-        ExerciseMatchUtils.getMatchScore("Bench Press", "Bench"),
+        StringUtils.getMatchScore("Bench Press", "Bench"),
       ).toBe(90);
     });
 
     it("should return 80 for ends with match", () => {
       expect(
-        ExerciseMatchUtils.getMatchScore("Barbell Squat", "Squat"),
+        StringUtils.getMatchScore("Barbell Squat", "Squat"),
       ).toBe(80);
       expect(
-        ExerciseMatchUtils.getMatchScore("Press", "Bench Press"),
+        StringUtils.getMatchScore("Press", "Bench Press"),
       ).toBe(80);
     });
 
     it("should return 70 when all words from one string are in the other", () => {
       expect(
-        ExerciseMatchUtils.getMatchScore(
+        StringUtils.getMatchScore(
           "Hip Thrust",
           "Hip Thrust Barbell",
         ),
       ).toBe(90); // startsWith match
       expect(
-        ExerciseMatchUtils.getMatchScore(
+        StringUtils.getMatchScore(
           "Barbell Hip Thrust",
           "Hip Thrust",
         ),
@@ -90,7 +92,7 @@ describe("Utility Classes", () => {
 
     it("should return 60 for partial word matches", () => {
       expect(
-        ExerciseMatchUtils.getMatchScore(
+        StringUtils.getMatchScore(
           "Squat Jump",
           "Squat Barbell",
         ),
@@ -99,27 +101,27 @@ describe("Utility Classes", () => {
 
     it("should return 50 for substring match", () => {
       expect(
-        ExerciseMatchUtils.getMatchScore("Lat", "Lateral Raise"),
+        StringUtils.getMatchScore("Lat", "Lateral Raise"),
       ).toBe(90); // startsWith match
       expect(
-        ExerciseMatchUtils.getMatchScore("Lateral Raise", "Lat"),
+        StringUtils.getMatchScore("Lateral Raise", "Lat"),
       ).toBe(90); // startsWith match
     });
 
     it("should return 0 for no match", () => {
       expect(
-        ExerciseMatchUtils.getMatchScore("Squat", "Bench Press"),
+        StringUtils.getMatchScore("Squat", "Bench Press"),
       ).toBe(0);
     });
 
     it("should handle empty strings", () => {
-      expect(ExerciseMatchUtils.getMatchScore("", "")).toBe(100);
-      expect(ExerciseMatchUtils.getMatchScore("", "Squat")).toBe(90); // empty string startsWith match
+      expect(StringUtils.getMatchScore("", "")).toBe(100);
+      expect(StringUtils.getMatchScore("", "Squat")).toBe(90); // empty string startsWith match
     });
 
     it("should trim whitespace", () => {
       expect(
-        ExerciseMatchUtils.getMatchScore("  Squat  ", "Squat"),
+        StringUtils.getMatchScore("  Squat  ", "Squat"),
       ).toBe(100);
     });
   });
@@ -188,35 +190,10 @@ describe("Utility Classes", () => {
       ["Barbell Squat", 80],
     ]);
 
-    it("should return exercise_field_exact for an exact match in exact mode", () => {
-      const result =
-        ExerciseMatchUtils.determineExerciseFilterStrategy(
-          scores,
-          true,
-          "squat",
-        );
-      expect(result).toEqual({
-        bestStrategy: "exercise_field_exact",
-        bestPathKey: "Squat",
-      });
-    });
-
-    it("should return none in exact mode without an exact match", () => {
-      const result =
-        ExerciseMatchUtils.determineExerciseFilterStrategy(
-          new Map([["Barbell Squat", 80]]),
-          true,
-          "Squat",
-        );
-      expect(result.bestStrategy).toBe("none");
-    });
-
     it("should pick the best scoring field in fuzzy mode", () => {
       const result =
         ExerciseMatchUtils.determineExerciseFilterStrategy(
           scores,
-          false,
-          "Squat",
         );
       expect(result).toEqual({
         bestStrategy: "exercise_field",
@@ -228,8 +205,6 @@ describe("Utility Classes", () => {
       const result =
         ExerciseMatchUtils.determineExerciseFilterStrategy(
           new Map([["Leg Press", 60]]),
-          false,
-          "Bench Press",
         );
       expect(result.bestStrategy).toBe("none");
     });
@@ -263,15 +238,6 @@ describe("Utility Classes", () => {
       ),
     ];
 
-    it("should filter by exercise_field_exact strategy", () => {
-      const result = ExerciseMatchUtils.filterLogDataByExercise(
-        mockData,
-        "exercise_field_exact",
-        "Squat",
-      );
-      expect(result.map((l) => l.exercise)).toEqual(["Squat"]);
-    });
-
     it("should filter by exercise_field strategy", () => {
       const result = ExerciseMatchUtils.filterLogDataByExercise(
         mockData,
@@ -302,8 +268,6 @@ describe("Utility Classes", () => {
             mockData,
             "Workout logs",
           ).allExercisePathsAndScores,
-          false,
-          "Workout logs",
         ).bestStrategy,
         "",
       );
@@ -317,7 +281,16 @@ describe("Utility Classes", () => {
     const date1 = new Date(today.getTime() - 5 * 24 * 60 * 60 * 1000); // 5 days ago
     const date2 = new Date(today.getTime() - 6 * 24 * 60 * 60 * 1000); // 6 days ago
 
+    // In ascending date order, as the chart view hands them over
     const mockData: WorkoutLogData[] = [
+      createMockLog(
+        "Squat",
+        date2.toISOString(),
+        1500,
+        150,
+        10,
+        "Squat.md",
+      ),
       createMockLog(
         "Squat",
         date1.toISOString(),
@@ -334,21 +307,12 @@ describe("Utility Classes", () => {
         10,
         "Squat.md",
       ),
-      createMockLog(
-        "Squat",
-        date2.toISOString(),
-        1500,
-        150,
-        10,
-        "Squat.md",
-      ),
     ];
 
     it("should process volume chart data for exercise", () => {
       const result = ChartDataUtils.processChartData(
         mockData,
         CHART_DATA_TYPE.VOLUME,
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.EXERCISE,
       );
@@ -363,7 +327,6 @@ describe("Utility Classes", () => {
       const result = ChartDataUtils.processChartData(
         mockData,
         CHART_DATA_TYPE.VOLUME,
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.WORKOUT,
       );
@@ -376,7 +339,6 @@ describe("Utility Classes", () => {
       const result = ChartDataUtils.processChartData(
         mockData,
         CHART_DATA_TYPE.WEIGHT,
-        30,
       );
       expect(result.datasets[0].label).toContain(
         CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_WEIGHT,
@@ -387,14 +349,13 @@ describe("Utility Classes", () => {
       const result = ChartDataUtils.processChartData(
         mockData,
         CHART_DATA_TYPE.REPS,
-        30,
       );
       expect(result.datasets[0].label).toContain(
         t("general.avgReps"),
       );
     });
 
-    it("should filter data by date range", () => {
+    it("charts every row it is given (DataFilter applies dateRange)", () => {
       const oldDate = new Date(
         today.getTime() - 60 * 24 * 60 * 60 * 1000,
       ); // 60 days ago
@@ -411,16 +372,14 @@ describe("Utility Classes", () => {
       const result = ChartDataUtils.processChartData(
         oldData,
         CHART_DATA_TYPE.VOLUME,
-        30,
       );
-      expect(result.labels.length).toBe(0);
+      expect(result.labels.length).toBe(1);
     });
 
     it("should group data by date", () => {
       const result = ChartDataUtils.processChartData(
         mockData,
         CHART_DATA_TYPE.VOLUME,
-        30,
       );
       // Two dates in mock data: date1 and date2
       expect(result.labels.length).toBe(2);
@@ -430,11 +389,10 @@ describe("Utility Classes", () => {
       const result = ChartDataUtils.processChartData(
         mockData,
         CHART_DATA_TYPE.VOLUME,
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.EXERCISE,
       );
-      // Data is sorted by date, so date2 (6 days ago) comes first, then date1 (5 days ago)
+      // date2 (6 days ago) comes first, then date1 (5 days ago)
       // date2 has 1 log with volume 1500, average = 1500
       // date1 has 2 logs with volumes 1000 and 1200, average = 1100
       expect(result.datasets[0].data[0]).toBe(1500);
@@ -445,11 +403,10 @@ describe("Utility Classes", () => {
       const result = ChartDataUtils.processChartData(
         mockData,
         CHART_DATA_TYPE.VOLUME,
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.WORKOUT,
       );
-      // Data is sorted by date, so date2 (6 days ago) comes first, then date1 (5 days ago)
+      // date2 (6 days ago) comes first, then date1 (5 days ago)
       // date2 has 1 log with volume 1500, total = 1500
       // date1 has 2 logs with volumes 1000 and 1200, total = 2200
       expect(result.datasets[0].data[0]).toBe(1500);
@@ -460,7 +417,6 @@ describe("Utility Classes", () => {
       const result = ChartDataUtils.processChartData(
         mockData,
         CHART_DATA_TYPE.VOLUME,
-        30,
         "YYYY-MM-DD",
       );
       expect(result.labels[0]).toMatch(/^\d{4}-\d{2}-\d{2}$/);

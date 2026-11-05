@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "取消",
     "clear": "清除",
     "convert": "轉換",
     "exercise": "動作",
@@ -98,7 +97,6 @@
       "columnEstimated": "預估",
       "columnVariance": "差異",
       "columnWorkout": "運動",
-      "minutesSuffix": " 分鐘",
       "noData": "目前的運動次數還不足以比較。",
       "subtitle": "預估與實際運動時間",
       "title": "時間比較",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "預估時間越來越接近實際運動",
       "varianceTrendStable": "預估準確度維持穩定",
       "varianceTrendTitle": "預估準確度",
-      "avgVarianceStat": "平均差異：±{value}%",
-      "hoursSuffix": "小時"
+      "avgVarianceStat": "平均差異：±{value}%"
     },
     "fileErrors": {
       "allValid": "所有動作頁面皆有效",
@@ -201,8 +198,6 @@
       "moveUp": "將 {widget} 上移",
       "moveDown": "將 {widget} 下移",
       "allHistory": "空白：全部歷史紀錄",
-      "recentWorkoutsLimit": "近期運動列表中的筆數",
-      "volumeTrendDays": "訓練量趨勢的天數",
       "layout": "版面配置",
       "layoutGrid": "網格",
       "layoutList": "清單",
@@ -568,7 +563,6 @@
     "createLogButtonText": "建立紀錄：{exerciseName}",
     "noDataTitle": "找不到 {exerciseName} 的紀錄",
     "exploreExampleData": "或使用範例資料探索",
-    "lastSet": "上次：{set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "個人紀錄：{weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "新增預設",
       "addProtocol": "新增訓練法",
-      "cancel": "取消",
       "createFiles": "建立檔案",
       "done": "完成！",
       "failed": "失敗",
@@ -1072,7 +1065,6 @@
     "editTable": "編輯表格",
     "editTitle": "編輯",
     "gotoExercise": "前往動作",
-    "invalidDate": "無效的日期",
     "labels": {
       "target": "目標："
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "尚未有 {weight} 的組",
       "progress": "最佳 {best}/{target} 次",
-      "progressTooltip": "最佳：{best} 次 / 目標：{target} 次",
-      "repsSuffix": "次",
-      "separator": " × "
+      "progressTooltip": "最佳：{best} 次 / 目標：{target} 次"
     },
     "trendLine": "趨勢線",
     "refreshingTable": "正在重新整理表格...",
@@ -1127,7 +1117,6 @@
     "down": "下跌",
     "improving": "提升",
     "increasing": "增加",
-    "invariant": "不變",
     "neutral": "中立",
     "stable": "穩定",
     "stableLower": "穩定",

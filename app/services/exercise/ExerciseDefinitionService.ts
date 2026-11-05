@@ -23,6 +23,7 @@ import type {
   ExercisePage,
 } from "@app/services/exercise/ExerciseLibrary";
 import { StringUtils } from "@app/utils/StringUtils";
+import { exercisePageContent } from "@app/services/exercise/ExercisePageContent";
 
 /**
  * The fields a set of the exercise records, or none when its page can't be
@@ -117,7 +118,7 @@ export class ExerciseDefinitionService {
     );
     await this.app.vault.create(
       filePath,
-      this.generateExerciseFileContent(definition),
+      exercisePageContent(definition),
     );
   }
 
@@ -163,84 +164,6 @@ export class ExerciseDefinitionService {
     return (
       exerciseType || getExerciseTypeById(DEFAULT_EXERCISE_TYPE_ID)!
     );
-  }
-
-  /**
-   * Generate markdown file content for a new exercise definition.
-   */
-  private generateExerciseFileContent(
-    definition: ExerciseDefinition,
-  ): string {
-    const frontmatterLines: string[] = ["---"];
-
-    // Exercise name
-    frontmatterLines.push(`exercise_name: ${definition.name}`);
-
-    // Exercise type
-    frontmatterLines.push(`exercise_type: ${definition.typeId}`);
-
-    // Tags (muscle groups)
-    if (
-      definition.muscleGroups &&
-      definition.muscleGroups.length > 0
-    ) {
-      frontmatterLines.push("tags:");
-      for (const tag of definition.muscleGroups) {
-        frontmatterLines.push(`  - ${tag}`);
-      }
-    }
-
-    // Custom parameters
-    if (
-      definition.customParameters &&
-      definition.customParameters.length > 0
-    ) {
-      frontmatterLines.push("parameters:");
-      for (const param of definition.customParameters) {
-        frontmatterLines.push(`  - key: ${param.key}`);
-        frontmatterLines.push(`    label: ${param.label}`);
-        frontmatterLines.push(`    type: ${param.type}`);
-        if (param.unit) {
-          frontmatterLines.push(`    unit: "${param.unit}"`);
-        }
-        frontmatterLines.push(`    required: ${param.required}`);
-        if (param.default !== undefined) {
-          frontmatterLines.push(`    default: ${param.default}`);
-        }
-        if (param.min !== undefined) {
-          frontmatterLines.push(`    min: ${param.min}`);
-        }
-        if (param.max !== undefined) {
-          frontmatterLines.push(`    max: ${param.max}`);
-        }
-      }
-    }
-
-    frontmatterLines.push("---");
-
-    // Add basic content structure
-    const content = `${frontmatterLines.join("\n")}
-
-# ${definition.name}
-
-## Description
-
-
-
-## Log
-
-\`\`\`workout-log
-exercise: ${definition.name}
-\`\`\`
-
-## Chart
-
-\`\`\`workout-chart
-exercise: ${definition.name}
-\`\`\`
-`;
-
-    return content;
   }
 }
 

@@ -15,6 +15,7 @@ import {
   trainingDay,
   trendOf,
 } from "@app/services/history/TrainingHistory";
+import { round2 } from "@app/utils/round2";
 
 /**
  * Filter options for getWorkoutLogs API
@@ -127,36 +128,25 @@ export class WorkoutPlannerAPI {
   async getWorkoutLogs(
     filter?: WorkoutLogsFilter,
   ): Promise<DataviewWorkoutLog[]> {
-    const rawLogs = await this.dataService.getWorkoutLogData();
-    const logs =
-      filter?.exercise || filter?.workout
-        ? DataFilter.filterRows(rawLogs, {
-            exercise: filter.exercise,
-            workout: filter.workout,
-            exactMatch: filter.exactMatch,
-          })
-        : rawLogs;
+    return this.convertToDataviewFormat(await this.filteredRows(filter));
+  }
 
-    // Apply additional filters and convert to Dataview-compatible format
-    let filteredLogs = this.convertToDataviewFormat(logs);
-
-    // Apply date range filter
-    if (filter?.dateRange) {
-      filteredLogs = this.applyDateRangeFilter(
-        filteredLogs,
-        filter.dateRange,
-      );
-    }
-
-    // Apply protocol filter
-    if (filter?.protocol) {
-      filteredLogs = this.applyProtocolFilter(
-        filteredLogs,
-        filter.protocol,
-      );
-    }
-
-    return filteredLogs;
+  /** The log's rows that match the filter, as WorkoutLogFile reads them. */
+  private async filteredRows(
+    filter?: WorkoutLogsFilter,
+  ): Promise<WorkoutLogData[]> {
+    const rows = DataFilter.filterRows(
+      await this.dataService.getWorkoutLogData(),
+      {
+        exercise: filter?.exercise,
+        workout: filter?.workout,
+        exactMatch: filter?.exactMatch,
+        protocol: filter?.protocol || undefined,
+      },
+    );
+    return filter?.dateRange
+      ? this.applyDateRangeFilter(rows, filter.dateRange)
+      : rows;
   }
 
   /**
@@ -182,50 +172,23 @@ export class WorkoutPlannerAPI {
   }
 
   /**
-   * Filter logs by date range.
+   * Keep the sets whose training day is within the range, both days
+   * included. A boundary that is not a date is ignored; a set whose date
+   * can't be read is left out.
    */
   private applyDateRangeFilter(
-    logs: DataviewWorkoutLog[],
+    logs: WorkoutLogData[],
     dateRange: { start?: string; end?: string },
-  ): DataviewWorkoutLog[] {
+  ): WorkoutLogData[] {
+    const start = dayOf(dateRange.start);
+    const end = dayOf(dateRange.end);
     return logs.filter((log) => {
-      // Parse the log date (expecting ISO format or YYYY-MM-DD)
-      const logDate = new Date(log.date);
-      if (isNaN(logDate.getTime())) {
-        return false;
-      }
-
-      // Check start date
-      if (dateRange.start) {
-        const startDate = new Date(dateRange.start);
-        if (!isNaN(startDate.getTime()) && logDate < startDate) {
-          return false;
-        }
-      }
-
-      // Check end date
-      if (dateRange.end) {
-        const endDate = new Date(dateRange.end);
-        // Set end date to end of day for inclusive filtering
-        endDate.setHours(23, 59, 59, 999);
-        if (!isNaN(endDate.getTime()) && logDate > endDate) {
-          return false;
-        }
-      }
-
+      const day = dayOf(log.date);
+      if (day === undefined) return false;
+      if (start !== undefined && day < start) return false;
+      if (end !== undefined && day > end) return false;
       return true;
     });
-  }
-
-  /**
-   * Filter logs by workout protocol.
-   */
-  private applyProtocolFilter(
-    logs: DataviewWorkoutLog[],
-    protocol: string,
-  ): DataviewWorkoutLog[] {
-    const wanted = protocolId(protocol);
-    return logs.filter((log) => protocolId(log.protocol) === wanted);
   }
 
   /**
@@ -246,11 +209,7 @@ export class WorkoutPlannerAPI {
    * dv.span(`Bench PR: **${(await WorkoutPlannerAPI.getExerciseStats("Bench Press")).prWeight} kg**`);
    */
   async getExerciseStats(exercise: string): Promise<ExerciseStats> {
-    // Get logs for the specific exercise
-    const logs = await this.getWorkoutLogs({
-      exercise,
-      exactMatch: true,
-    });
+    const logs = await this.filteredRows({ exercise, exactMatch: true });
 
     // Default stats for when no logs exist
     if (logs.length === 0) {
@@ -269,55 +228,29 @@ export class WorkoutPlannerAPI {
       };
     }
 
-    // Sort logs by date (most recent first) for trend calculation
-    const sortedLogs = [...logs].sort((a, b) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-      return dateB - dateA;
-    });
-
-    // Calculate basic stats
-    const totalVolume = logs.reduce(
-      (sum, log) => sum + log.volume,
-      0,
-    );
+    const history = new TrainingHistory(logs);
     const totalSets = logs.length;
-    const totalWeight = logs.reduce(
-      (sum, log) => sum + log.weight,
-      0,
-    );
+    const totalWeight = logs.reduce((sum, log) => sum + log.weight, 0);
     const totalReps = logs.reduce((sum, log) => sum + log.reps, 0);
-    const averageWeight = totalSets > 0 ? totalWeight / totalSets : 0;
-    const averageReps = totalSets > 0 ? totalReps / totalSets : 0;
 
-    const pr = new TrainingHistory(logs).personalRecord(exercise);
+    const pr = history.personalRecord(exercise);
     const prWeight = pr?.weight ?? 0;
-    const prReps = pr?.reps ?? 0;
-    const prDate = pr?.day ?? null;
-
-    // Get last workout date
-    const lastWorkoutDate = sortedLogs[0]
-      ? trainingDay(sortedLogs[0].date)
-      : null;
-
-    const trend =
-      trendOf(new TrainingHistory(logs).heaviestPerDay(exercise))
-        ?.direction ?? "stable";
+    const lastSet = history.lastSet(exercise);
 
     return {
-      totalVolume,
+      totalVolume: history.totalVolume(),
       maxWeight: prWeight,
       totalSets,
-      trend,
-      averageWeight: Math.round(averageWeight * 100) / 100,
-      averageReps: Math.round(averageReps * 100) / 100,
-      lastWorkoutDate,
+      trend:
+        trendOf(history.heaviestPerDay(exercise))?.direction ?? "stable",
+      averageWeight: round2(totalWeight / totalSets),
+      averageReps: round2(totalReps / totalSets),
+      lastWorkoutDate: lastSet ? trainingDay(lastSet.date) : null,
       prWeight,
-      prReps,
-      prDate,
+      prReps: pr?.reps ?? 0,
+      prDate: pr?.day ?? null,
       estimatedOneRepMax:
-        new TrainingHistory(logs).bestEstimatedOneRepMax(exercise)
-          ?.value ?? null,
+        history.bestEstimatedOneRepMax(exercise)?.value ?? null,
     };
   }
 
@@ -376,4 +309,11 @@ export class WorkoutPlannerAPI {
     }
     return Array.from(exerciseSet).sort();
   }
+}
+
+/** The training day of a date, or undefined when it isn't one. */
+function dayOf(date: string | undefined): string | undefined {
+  if (!date) return undefined;
+  const day = trainingDay(date);
+  return /^\d{4}-\d{2}-\d{2}$/.test(day) ? day : undefined;
 }

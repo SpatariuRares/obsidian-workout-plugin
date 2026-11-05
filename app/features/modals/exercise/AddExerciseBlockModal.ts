@@ -4,11 +4,14 @@ import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import type { ExerciseAutocompleteElements } from "@app/types/ModalTypes";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
+import { ChipGroup } from "@app/components/molecules";
+import { StringUtils } from "@app/utils/StringUtils";
 
 export class AddExerciseBlockModal extends BaseInsertModal {
   private exerciseElements?: ExerciseAutocompleteElements;
   private durationInput?: HTMLInputElement;
-  private presetSelect?: HTMLSelectElement;
+  /** The picked timer preset; empty = none */
+  private selectedPreset = "";
   private workoutInput?: HTMLInputElement;
 
   constructor(app: App, plugin: WorkoutPluginContext) {
@@ -35,34 +38,39 @@ export class AddExerciseBlockModal extends BaseInsertModal {
     }
 
     // Exercise selection section with autocomplete
-    const exerciseSection = this.createSection(container, "Exercise");
+    const exerciseSection = this.createSection(
+      container,
+      t("modal.sections.exercise"),
+    );
     const { elements: exerciseElements } =
       ExerciseAutocomplete.create(this, exerciseSection, this.plugin, undefined, { showCreateButton: false });
     this.exerciseElements = exerciseElements;
 
     // Timer configuration section
-    const timerSection = this.createSection(container, "Timer");
-
-    // Timer preset dropdown (if presets exist)
-    const presetNames = Object.keys(
-      this.plugin.settings.timerPresets,
+    const timerSection = this.createSection(
+      container,
+      t("modal.sections.timer"),
     );
-    if (presetNames.length > 0) {
-      const presetOptions = [
-        { text: t("settings.options.none"), value: "" },
-        ...presetNames.map((name) => ({ text: name, value: name })),
-      ];
-      this.presetSelect = this.createSelectField(
-        timerSection,
-        t("modal.timerPreset"),
-        presetOptions,
-      );
 
-      // Set default preset if configured
-      if (this.plugin.settings.defaultTimerPreset) {
-        this.presetSelect.value =
-          this.plugin.settings.defaultTimerPreset;
-      }
+    // Saved presets as chips, like the timer insert modal (the default one picked)
+    const presetNames = Object.keys(this.plugin.settings.timerPresets);
+    if (presetNames.length > 0) {
+      const defaultPreset = this.plugin.settings.defaultTimerPreset;
+      this.selectedPreset =
+        defaultPreset && presetNames.includes(defaultPreset)
+          ? defaultPreset
+          : "";
+      ChipGroup.create(timerSection, {
+        label: t("modal.timerPreset"),
+        options: [
+          { id: "", label: t("settings.options.none") },
+          ...presetNames.map((name) => ({ id: name, label: name })),
+        ],
+        selected: this.selectedPreset,
+        onPick: (id) => {
+          this.selectedPreset = id;
+        },
+      });
     }
 
     // Timer duration input
@@ -78,7 +86,10 @@ export class AddExerciseBlockModal extends BaseInsertModal {
     );
 
     // Workout file section
-    const workoutSection = this.createSection(container, "Workout");
+    const workoutSection = this.createSection(
+      container,
+      t("modal.sections.workout"),
+    );
 
     // Workout file input with current file as default
     const currentFileName = this.getCurrentFileName();
@@ -109,17 +120,14 @@ export class AddExerciseBlockModal extends BaseInsertModal {
     const duration = this.durationInput.value || "90";
     const workout =
       this.workoutInput.value.trim() || this.getCurrentFileName();
-    const preset = this.presetSelect?.value || "";
-
-    // Get template from settings
-    let template = this.plugin.settings.exerciseBlockTemplate;
-
-    // Replace placeholders
-    template = template.replace(/\{\{exercise\}\}/g, exerciseName);
-    template = template.replace(/\{\{duration\}\}/g, duration);
-    template = template.replace(/\{\{workout\}\}/g, workout);
-    template = template.replace(/\{\{preset\}\}/g, preset);
-
-    return template;
+    return StringUtils.fillTemplate(
+      this.plugin.settings.exerciseBlockTemplate,
+      {
+        exercise: exerciseName,
+        duration,
+        workout,
+        preset: this.selectedPreset,
+      },
+    );
   }
 }

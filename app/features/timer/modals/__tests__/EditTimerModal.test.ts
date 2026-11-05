@@ -122,4 +122,39 @@ describe("EditTimerModal", () => {
 
     expect(state.content).toBe(interval.replace("duration: 20", "duration: 30"));
   });
+
+  it("opens an interval block on the interval chip, with rest and rounds shown", () => {
+    const interval = [
+      "```workout-timer",
+      "id: t1",
+      "type: interval",
+      "duration: 20",
+      "rest: 10",
+      "rounds: 8",
+      "```",
+    ].join("\n");
+    const { contentEl } = openModal(interval);
+    const pressed = [...contentEl.querySelectorAll(".workout-chip-group button")]
+      .filter((b) => b.getAttribute("aria-pressed") === "true")
+      .map((b) => b.textContent);
+    const hidden = [...contentEl.querySelectorAll(".workout-field-with-adjust")].filter((el) =>
+      el.classList.contains("workout-display-none"),
+    );
+
+    expect(pressed).toEqual([t("timer.interval")]);
+    expect(hidden).toHaveLength(0);
+  });
+
+  it("hides the duration when the stopwatch is picked", () => {
+    const { contentEl } = openModal();
+    const stopwatch = [...contentEl.querySelectorAll<HTMLButtonElement>(".workout-chip-group button")]
+      .find((b) => b.textContent === t("timer.stopwatch"))!;
+
+    stopwatch.click();
+
+    const shown = [...contentEl.querySelectorAll(".workout-field-with-adjust")].filter(
+      (el) => !el.classList.contains("workout-display-none"),
+    );
+    expect(shown).toHaveLength(0);
+  });
 });

@@ -1,9 +1,52 @@
 import {
   isUnchangedDefaultTimerPreset,
   timerPresets,
+  timerPresetSummary,
   withDefaultTimerPresets,
 } from "@app/features/timer/business/timerPresets";
 import { TIMER_TYPE, type TimerPresetConfig } from "@app/features/timer/types";
+import { t } from "@app/i18n";
+
+describe("timerPresetSummary", () => {
+  it("lists a countdown's type, duration and options in the current language", () => {
+    const preset: TimerPresetConfig = {
+      name: "Rest",
+      type: TIMER_TYPE.COUNTDOWN,
+      duration: 90,
+      showControls: true,
+      sound: true,
+    };
+    expect(timerPresetSummary(preset)).toBe(
+      [
+        t("timer.presets.summaryType", { type: t("timer.countdown") }),
+        t("timer.presets.summaryDuration", { seconds: 90 }),
+        t("timer.presets.summaryOptions", {
+          options: [t("timer.presets.detailsControls"), t("timer.presets.detailsSound")].join(", "),
+        }),
+      ].join(" | "),
+    );
+  });
+
+  it("adds rounds and rest for an interval, and no options when none is on", () => {
+    const tabata: TimerPresetConfig = {
+      name: "Tabata",
+      type: TIMER_TYPE.INTERVAL,
+      duration: 20,
+      rest: 10,
+      rounds: 8,
+      showControls: false,
+      sound: false,
+    };
+    expect(timerPresetSummary(tabata)).toBe(
+      [
+        t("timer.presets.summaryType", { type: t("timer.interval") }),
+        t("timer.presets.summaryDuration", { seconds: 20 }),
+        t("timer.presets.summaryRounds", { rounds: 8 }),
+        t("timer.presets.summaryRest", { seconds: 10 }),
+      ].join(" | "),
+    );
+  });
+});
 
 const rest: TimerPresetConfig = {
   name: "Rest",

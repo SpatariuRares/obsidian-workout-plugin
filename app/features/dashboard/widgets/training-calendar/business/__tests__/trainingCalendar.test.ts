@@ -1,11 +1,12 @@
 import { trainingCalendar } from "@app/features/dashboard/widgets/training-calendar/business/trainingCalendar";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 
 // Tests run with TZ=Europe/Rome (jest.config.js)
 
 function set(date: string, volume: number): WorkoutLogData {
-  return { date, exercise: "Squat", reps: 5, weight: 0, volume };
+  return logRow({ date, exercise: "Squat", reps: 5, weight: 0, volume });
 }
 
 // Wednesday 17 January 2024, local time

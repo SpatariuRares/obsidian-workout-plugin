@@ -1,4 +1,5 @@
-import { App, TFile } from "obsidian";
+import { App } from "obsidian";
+import { FakeVault } from "@app/services/exercise/__tests__/FakeVault";
 import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
@@ -9,17 +10,16 @@ function note(...lines: string[]): string {
 
 const PATH = "Leg day.md";
 
+/** A vault holding one note, at PATH; `state.content` is its text */
 function setup(content: string) {
-  const state = { content };
-  const file = Object.assign(new TFile(), { path: PATH });
-  const app = {
-    vault: {
-      getAbstractFileByPath: (path: string) => (path === PATH ? file : null),
-      process: jest.fn(async (_file: unknown, fn: (c: string) => string) => {
-        state.content = fn(state.content);
-      }),
+  const vault = new FakeVault();
+  void vault.app.vault.create(PATH, content);
+  const app = vault.app as unknown as App;
+  const state = {
+    get content() {
+      return vault.content(PATH);
     },
-  } as unknown as App;
+  };
   return { app, state };
 }
 
@@ -124,9 +124,9 @@ describe("CodeBlockEditorService.patchCodeBlock", () => {
     ).toBe(false);
 
     const failing = setup(NOTE);
-    (failing.app.vault.process as jest.Mock).mockRejectedValue(
-      new Error("locked"),
-    );
+    jest
+      .spyOn(failing.app.vault, "process")
+      .mockRejectedValue(new Error("locked"));
     expect(
       await CodeBlockEditorService.patchCodeBlock(
         failing.app,

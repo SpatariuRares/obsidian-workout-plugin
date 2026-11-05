@@ -4,29 +4,48 @@
  * labelled group, the picked chip pressed, one scrolling row so a long list
  * stays short on a phone. A pick presses the new chip at once, so a caller
  * that doesn't redraw (the heat map's period, side and metric) stays right.
+ * `create` returns a handle: a form reads the pick with `value()`, an edit
+ * modal picks from code with `select(id)` and a choice whose options depend
+ * on other fields swaps them with `setOptions`.
  * `createMulti` is the same group where several chips can be pressed.
  */
 import { Chip } from "@app/components/atoms/Chip";
 import { DomUtils } from "@app/utils/DomUtils";
 
-export interface ChipOption {
-  id: string;
+export interface ChipOption<T extends string = string> {
+  id: T;
   label: string;
 }
 
-export interface ChipGroupProps {
+export interface ChipGroupProps<T extends string = string> {
   /** The group's visible label ("Protocol", "Period") */
   label: string;
-  options: ChipOption[];
-  selected: string;
-  /** A different chip was picked */
-  onPick: (id: string) => void;
+  options: ChipOption<T>[];
+  selected: T;
+  /** A different chip was picked (by a click or `select`) */
+  onPick?: (id: T) => void;
   /** Each chip gets `${prefix}-${id}`, to focus it again after a redraw */
   focusKeyPrefix?: string;
   /** The group's own class, for its layout */
   className?: string;
   /** The options name themselves (Week, Month, Year): the label is read, not shown */
   labelHidden?: boolean;
+}
+
+export interface ChipGroupResult<T extends string = string> {
+  container: HTMLElement;
+  /** The picked chip's id */
+  value: () => T;
+  /**
+   * Picks `id` as a click would (onPick runs when it changes the pick);
+   * false, and nothing changes, when `id` is not one of the options
+   */
+  select: (id: string) => boolean;
+  /**
+   * Draws `options` instead. The pick becomes `selected` when offered, else
+   * stays when still offered, else the first option; onPick doesn't run.
+   */
+  setOptions: (options: ChipOption<T>[], selected?: string) => void;
 }
 
 export interface ChipMultiGroupProps {
@@ -48,25 +67,52 @@ export interface ChipMultiGroupResult {
 let nextId = 0;
 
 export class ChipGroup {
-  static create(parent: HTMLElement, props: ChipGroupProps): HTMLElement {
+  static create<T extends string>(
+    parent: HTMLElement,
+    props: ChipGroupProps<T>,
+  ): ChipGroupResult<T> {
     const { container, group } = this.frame(parent, props);
 
+    let options = props.options;
     let selected = props.selected;
-    const chips = props.options.map((option) => {
-      const chip = Chip.create(group, {
-        text: option.label,
-        selected: option.id === selected,
-        onClick: () => {
-          if (option.id === selected) return;
-          selected = option.id;
-          chips.forEach((c, i) => Chip.setSelected(c, props.options[i].id === selected));
-          props.onPick(option.id);
-        },
+    let chips: HTMLButtonElement[] = [];
+    const press = () =>
+      chips.forEach((c, i) => Chip.setSelected(c, options[i].id === selected));
+    const select = (id: string): boolean => {
+      const option = options.find((o) => o.id === id);
+      if (!option) return false;
+      if (option.id === selected) return true;
+      selected = option.id;
+      press();
+      props.onPick?.(option.id);
+      return true;
+    };
+    const draw = () => {
+      group.empty();
+      chips = options.map((option) => {
+        const chip = Chip.create(group, {
+          text: option.label,
+          selected: option.id === selected,
+          onClick: () => select(option.id),
+        });
+        if (props.focusKeyPrefix) DomUtils.setFocusKey(chip, `${props.focusKeyPrefix}-${option.id}`);
+        return chip;
       });
-      if (props.focusKeyPrefix) DomUtils.setFocusKey(chip, `${props.focusKeyPrefix}-${option.id}`);
-      return chip;
-    });
-    return container;
+    };
+    draw();
+
+    return {
+      container,
+      value: () => selected,
+      select,
+      setOptions: (next, wanted) => {
+        options = next;
+        const pick =
+          next.find((o) => o.id === wanted) ?? next.find((o) => o.id === selected) ?? next[0];
+        if (pick) selected = pick.id;
+        draw();
+      },
+    };
   }
 
   static createMulti(parent: HTMLElement, props: ChipMultiGroupProps): ChipMultiGroupResult {

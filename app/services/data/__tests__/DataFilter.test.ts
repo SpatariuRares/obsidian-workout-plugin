@@ -185,6 +185,16 @@ describe("DataFilter", () => {
         );
       });
 
+      it("matches a filter written as a wiki link or in quotes", () => {
+        for (const workout of ["[[Leg Day]]", '"Leg Day"']) {
+          const result = DataFilter.filterData(mockLogData, { workout });
+          expect(result.filteredData).toHaveLength(2);
+          expect(
+            result.filteredData.every((d) => d.workout === "Leg Day"),
+          ).toBe(true);
+        }
+      });
+
       it("should be case-insensitive and trim whitespace for workout filtering", () => {
         const params: Partial<EmbeddedChartParams> = {
           workout: "  full body workout  ",

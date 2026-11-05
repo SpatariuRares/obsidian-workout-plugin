@@ -1,5 +1,5 @@
 import { MuscleDataCalculator } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleDataCalculator";
-import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 
 const muscleTags = {
   musclesForExercise: async (exercise: string) =>
@@ -7,13 +7,7 @@ const muscleTags = {
 };
 
 const log = (exercise: string, reps: number, weight: number) =>
-  ({
-    date: "2026-10-01",
-    exercise,
-    reps,
-    weight,
-    volume: reps * weight,
-  }) as WorkoutLogData;
+  logRow({ date: "2026-10-01", exercise, reps, weight });
 
 // Bench: 2 sets of 10 × 50kg; Crunches: 3 bodyweight sets of 20
 const data = [

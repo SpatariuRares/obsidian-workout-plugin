@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "BPM",
-    "cancel": "Abbrechen",
     "clear": "Leeren",
     "convert": "Konvertieren",
     "exercise": "Übung",
@@ -98,7 +97,6 @@
       "columnEstimated": "Geschätzt",
       "columnVariance": "Varianz",
       "columnWorkout": "Training",
-      "minutesSuffix": " min",
       "noData": "Noch nicht genug Einheiten für einen Vergleich.",
       "subtitle": "Geschätzte vs. tatsächliche Dauer des Trainings",
       "title": "Vergleich der Dauer",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "Die Schätzungen kommen deinen echten Einheiten immer näher",
       "varianceTrendStable": "Die Schätzgenauigkeit ist stabil",
       "varianceTrendTitle": "Schätzgenauigkeit",
-      "avgVarianceStat": "Ø Abweichung: ±{value}%",
-      "hoursSuffix": "h"
+      "avgVarianceStat": "Ø Abweichung: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Alle Übungsseiten sind gültig",
@@ -201,8 +198,6 @@
       "moveUp": "{widget} nach oben verschieben",
       "moveDown": "{widget} nach unten verschieben",
       "allHistory": "Leer: gesamter Verlauf",
-      "recentWorkoutsLimit": "Trainings in der Liste „Letzte Trainings“",
-      "volumeTrendDays": "Tage im Volumentrend",
       "layout": "Layout",
       "layoutGrid": "Raster",
       "layoutList": "Liste",
@@ -568,7 +563,6 @@
     "createLogButtonText": "Protokoll erstellen für: {exerciseName}",
     "noDataTitle": "Keine Protokolle für {exerciseName} gefunden",
     "exploreExampleData": "Oder erkunde es mit Beispieldaten",
-    "lastSet": "Letztes Mal: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Persönliche Bestleistung: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "Voreinstellung hinzufügen",
       "addProtocol": "Protokoll hinzufügen",
-      "cancel": "Abbrechen",
       "createFiles": "Dateien erstellen",
       "done": "Fertig!",
       "failed": "Fehlgeschlagen",
@@ -1072,7 +1065,6 @@
     "editTable": "Tabelle bearbeiten",
     "editTitle": "Bearbeiten",
     "gotoExercise": "Zur Übung",
-    "invalidDate": "Ungültiges Datum",
     "labels": {
       "target": "Ziel:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "Noch keine Sätze mit {weight}",
       "progress": "Bestwert {best}/{target} Wiederholungen",
-      "progressTooltip": "Bestwert: {best} Wiederholungen / Ziel: {target} Wiederholungen",
-      "repsSuffix": "Wiederholungen",
-      "separator": " × "
+      "progressTooltip": "Bestwert: {best} Wiederholungen / Ziel: {target} Wiederholungen"
     },
     "trendLine": "Trendlinie",
     "refreshingTable": "Tabelle wird aktualisiert...",
@@ -1127,7 +1117,6 @@
     "down": "Abwärts",
     "improving": "Verbessert",
     "increasing": "Steigend",
-    "invariant": "Konstant",
     "neutral": "Neutral",
     "stable": "Stabil",
     "stableLower": "Stabil",

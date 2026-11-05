@@ -1,7 +1,9 @@
 import { Setting, App } from "obsidian";
 import { t } from "@app/i18n";
+import { Button } from "@app/components/atoms";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import type { CustomProtocolConfig } from "@app/types/WorkoutLogData";
+import { protocolIdFromName } from "@app/services/protocols/ProtocolCatalog";
 
 /** Form to add or edit a custom protocol */
 export class ProtocolEditorModal extends ModalBase {
@@ -34,10 +36,7 @@ export class ProtocolEditorModal extends ModalBase {
             formState.name = value;
             // Auto-generate ID from name if creating new protocol
             if (!originalId) {
-              formState.id = value
-                .toLowerCase()
-                .replace(/\s+/g, "_")
-                .replace(/[^a-z0-9_]/g, "");
+              formState.id = protocolIdFromName(value);
             }
           }),
       );
@@ -67,21 +66,15 @@ export class ProtocolEditorModal extends ModalBase {
         }),
       );
 
-    new Setting(contentEl)
-      .setClass("workout-modal-actions")
-      .addButton((button) =>
-        button
-          .setButtonText(t("settings.buttons.saveProtocol"))
-          .setCta()
-          .onClick(async () => {
-            if (await this.save()) this.close();
-          }),
-      )
-      .addButton((button) =>
-        button
-          .setButtonText(t("settings.buttons.cancel"))
-          .onClick(() => this.close()),
-      );
+    Button.createModalActions(contentEl, {
+      primary: {
+        text: t("settings.buttons.saveProtocol"),
+        onClick: async () => {
+          if (await this.save()) this.close();
+        },
+      },
+      onCancel: () => this.close(),
+    });
   }
 
   onClose(): void {

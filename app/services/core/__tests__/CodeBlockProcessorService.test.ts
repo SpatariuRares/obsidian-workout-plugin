@@ -69,6 +69,7 @@ import { runAddMissingBlockIds } from "@app/utils/BlockIdMigration";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import { EventAwareRenderChild } from "@app/services/core/EventAwareRenderChild";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
+import { FakeVault } from "@app/services/exercise/__tests__/FakeVault";
 
 /** The element a view draws into: the block's second child, after the menu row */
 const blockBody = (el: HTMLElement) => el.children[1];
@@ -88,11 +89,7 @@ describe("CodeBlockProcessorService", () => {
   beforeEach(() => {
     // Create mocks
     mockPlugin = {
-      app: {
-        vault: {
-          getMarkdownFiles: jest.fn().mockReturnValue([]),
-        },
-      },
+      app: new FakeVault().app,
       settings: {
         timerPresets: {},
         defaultTimerPreset: "",
@@ -582,6 +579,46 @@ describe("CodeBlockProcessorService", () => {
       );
 
       expect(runAddMissingBlockIds).not.toHaveBeenCalled();
+    });
+
+    it("starts on a set of the same workout, written as a wiki link", async () => {
+      const el = createObsidianContainer();
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutTimer(
+        "duration: 60\nexercise: Squat\nworkout: \"[[Leg Day]]\"",
+        el,
+        ctx,
+      );
+      const child = (ctx.addChild as jest.Mock).mock.calls[0][0];
+      const cleanups: Array<() => void> = [];
+      child.register = (fn: () => void) => cleanups.push(fn);
+      child.onload();
+      const timerView = Array.from(activeTimers.values())[0];
+      jest.spyOn(timerView, "reset").mockImplementation(() => {});
+      const start = jest.spyOn(timerView, "start").mockImplementation(() => {});
+
+      eventBus.emit({
+        type: "log:added",
+        payload: {
+          entry: { exercise: "squat", workout: "Leg Day" } as never,
+          context: { exercise: "squat", workout: "Leg Day" },
+        },
+      });
+      expect(start).toHaveBeenCalledTimes(1);
+
+      eventBus.emit({
+        type: "log:added",
+        payload: {
+          entry: { exercise: "Squat", workout: "Leg Day B" } as never,
+          context: { exercise: "Squat", workout: "Leg Day B" },
+        },
+      });
+      expect(start).toHaveBeenCalledTimes(1);
+      cleanups.forEach((fn) => fn());
     });
 
     it("should create timer and register child", async () => {

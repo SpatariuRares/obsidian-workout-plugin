@@ -1,8 +1,8 @@
-import { formatWithUnit } from "@app/features/charts/config/ChartConstants";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { StatCard } from "@app/components/molecules";
 import { FormatUtils } from "@app/utils/FormatUtils";
 import { t } from "@app/i18n";
+import { trendOf } from "@app/services/history/TrainingHistory";
 
 /**
  * The stats row of a `workout-chart` card: average, best and lowest day,
@@ -74,9 +74,11 @@ export class StatsBox {
     const minVolumeDate = labels[volumeData.indexOf(minV)];
 
     // Format values based on data type
-    const avgFormatted = this.formatStatValue(avgValue, dataType);
-    const maxFormatted = this.formatStatValue(maxV, dataType);
-    const minFormatted = this.formatStatValue(minV, dataType);
+    const format = (value: number) =>
+      FormatUtils.formatValue(value, dataType, { decimals: 1 });
+    const avgFormatted = format(avgValue);
+    const maxFormatted = format(maxV);
+    const minFormatted = format(minV);
 
     return {
       avgFormatted,
@@ -88,81 +90,30 @@ export class StatsBox {
   }
 
   /**
-   * Formats a statistical value based on data type.
-   * Uses specialized formatters for duration and pace, generic unit formatting for others.
-   * @param value - The numeric value to format
-   * @param dataType - Type of data being formatted
-   * @returns Formatted string with appropriate unit
-   */
-  private static formatStatValue(
-    value: number,
-    dataType: CHART_DATA_TYPE,
-  ): string {
-    switch (dataType) {
-      case CHART_DATA_TYPE.DURATION:
-        return FormatUtils.formatDuration(value);
-      case CHART_DATA_TYPE.PACE:
-        return FormatUtils.formatPace(value);
-      case CHART_DATA_TYPE.REPS:
-        return Math.round(value).toString();
-      default:
-        return formatWithUnit(value.toFixed(1), dataType);
-    }
-  }
-
-  /**
-   * The change over the last 3 points (the last 2 when there are only 2).
-   * Its direction is the improvement, not the sign: for pace a fall is up.
-   * Within 5% of the first of the last 3 it is stable.
+   * The trend of the last 3 points (the last 2 when there are only 2),
+   * through `trendOf`: the figure is the change along its line, the tone
+   * whether that is an improvement (for pace a fall is up).
    * @returns undefined with fewer than 2 points
    */
   private static calculateRecentTrend(
     volumeData: number[],
     dataType: CHART_DATA_TYPE,
   ): { text: string; detail: string; direction: "up" | "down" | "neutral" } | undefined {
-    if (volumeData.length < 2) return undefined;
     const lastThree = volumeData.length >= 3;
-    const recent = volumeData.slice(lastThree ? -3 : -2);
-    const first = recent[0];
-    const change = recent[recent.length - 1] - first;
+    const trend = trendOf(volumeData.slice(lastThree ? -3 : -2));
+    if (!trend) return undefined;
     const detail = lastThree ? t("charts.stats.last3") : t("charts.stats.vsPrevious");
-    const threshold = lastThree ? 0.05 * first : 0;
-
-    if (Math.abs(change) <= threshold) {
-      return {
-        text: lastThree ? t("trends.stable") : t("trends.invariant"),
-        detail,
-        direction: "neutral",
-      };
+    if (trend.direction === "stable") {
+      return { text: t("trends.stable"), detail, direction: "neutral" };
     }
-    const better = change > 0 !== FormatUtils.isLowerBetter(dataType);
+    const change = trend.end - trend.start;
     return {
-      text: `${change > 0 ? "+" : "-"}${this.formatTrendValue(Math.abs(change), dataType)}`,
+      text: `${change > 0 ? "+" : "-"}${FormatUtils.formatValue(Math.abs(change), dataType, {
+        decimals: dataType === CHART_DATA_TYPE.PACE ? 2 : 1,
+        pace: "decimal",
+      })}`,
       detail,
-      direction: better ? "up" : "down",
+      direction: FormatUtils.improvement(trend.direction, dataType),
     };
-  }
-
-  /**
-   * Formats a trend change value based on data type.
-   * For duration/pace uses specialized formatters, for others adds the unit.
-   * @param value - The absolute change value
-   * @param dataType - Type of data being formatted
-   * @returns Formatted string
-   */
-  private static formatTrendValue(
-    value: number,
-    dataType: CHART_DATA_TYPE,
-  ): string {
-    switch (dataType) {
-      case CHART_DATA_TYPE.DURATION:
-        return FormatUtils.formatDuration(value);
-      case CHART_DATA_TYPE.PACE:
-        return formatWithUnit(value.toFixed(2), dataType);
-      case CHART_DATA_TYPE.REPS:
-        return Math.round(value).toString();
-      default:
-        return formatWithUnit(value.toFixed(1), dataType);
-    }
   }
 }

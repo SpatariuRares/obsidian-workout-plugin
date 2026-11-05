@@ -1,5 +1,9 @@
 import { TFile, type Vault } from "obsidian";
-import { readWorkoutNote, type NoteBlock } from "@app/services/notes/WorkoutNote";
+import {
+  readWorkoutNote,
+  type NoteBlock,
+  type NoteSection,
+} from "@app/services/notes/WorkoutNote";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import {
   blockRest,
@@ -8,7 +12,10 @@ import {
 } from "@app/features/tables/setsBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
 import type { EmbeddedTimerParams } from "@app/features/timer/types";
-import type { CodeBlockMatch } from "@app/services/editor/CodeBlockEditorService";
+import {
+  findBlock,
+  type CodeBlockMatch,
+} from "@app/services/editor/CodeBlockEditorService";
 import {
   WorkoutProtocol,
   type WorkoutLogData,
@@ -24,11 +31,11 @@ export interface SessionStep {
   targetReps?: number;
   targetWeight?: number;
   /**
-   * The rest after each set: the step's `workout-sets` block's own timer,
-   * else the section's `workout-timer` block ({} without one: the default
-   * preset)
+   * The rest after each set (see stepRest): none when its `workout-sets`
+   * block says `rest: 0`, else that block's own timer, else the section's
+   * `workout-timer` block ({} without one: the default preset)
    */
-  rest: EmbeddedTimerParams;
+  rest?: EmbeddedTimerParams;
   /** Where the rest is set, to edit it; none without either block */
   restBlock?: RestBlock;
 }
@@ -49,56 +56,102 @@ export type RestBlock =
  * it lacks taken from the other.
  */
 export function readSessionPlan(content: string): SessionStep[] {
-  const steps: SessionStep[] = [];
-  for (const section of readWorkoutNote(content).sections) {
-    const timer = section.blocks.find((b) => b.type === timerBlock.type);
-    const timerRead = timer ? timerBlock.parse(timer.body) : undefined;
-    const timerOk = timer && timerRead && timerRead.errors.length === 0;
-    const rest = timerOk ? timerRead.params : {};
-    const sectionRestBlock: RestBlock | undefined = timerOk
-      ? { type: "workout-timer", params: timerRead.params, match: matchOf(timer) }
+  return readWorkoutNote(content).sections.flatMap(readSectionPlan);
+}
+
+/**
+ * The steps of one level-2 section of a workout note (see readSessionPlan):
+ * the note's plan is its sections' steps, in order
+ */
+export function readSectionPlan(section: NoteSection): SessionStep[] {
+  const { rest, restBlock: sectionRestBlock } = sectionRest(section);
+
+  const sectionSteps: SessionStep[] = [];
+  for (const block of section.blocks) {
+    const isSets = block.type === setsBlock.type;
+    const read =
+      block.type === tableBlock.type
+        ? tableBlock.parse(block.body)
+        : isSets
+          ? setsBlock.parse(block.body)
+          : undefined;
+    if (!read) continue;
+    const { params, errors } = read;
+    if (errors.length > 0 || !params.exercise) continue;
+    const setsRest: RestBlock | undefined = isSets
+      ? { type: "workout-sets", params, match: matchOf(block) }
       : undefined;
 
-    const sectionSteps: SessionStep[] = [];
-    for (const block of section.blocks) {
-      const isSets = block.type === setsBlock.type;
-      const read =
-        block.type === tableBlock.type
-          ? tableBlock.parse(block.body)
-          : isSets
-            ? setsBlock.parse(block.body)
-            : undefined;
-      if (!read) continue;
-      const { params, errors } = read;
-      if (errors.length > 0 || !params.exercise) continue;
-      const setsRest: RestBlock | undefined = isSets
-        ? { type: "workout-sets", params, match: matchOf(block) }
-        : undefined;
-      const ownRest = isSets ? blockRest(params) : undefined;
-
-      const same = stepOf(sectionSteps, params.exercise);
-      if (same) {
-        same.sets ??= params.sets;
-        same.targetReps ??= params.targetReps;
-        same.targetWeight ??= params.targetWeight;
-        if (setsRest && same.restBlock?.type !== setsBlock.type) {
-          same.restBlock = setsRest;
-          same.rest = ownRest ?? same.rest;
-        }
-        continue;
+    const same = stepOf(sectionSteps, params.exercise);
+    if (same) {
+      same.sets ??= params.sets;
+      same.targetReps ??= params.targetReps;
+      same.targetWeight ??= params.targetWeight;
+      if (setsRest && same.restBlock?.type !== setsBlock.type) {
+        same.restBlock = setsRest;
+        same.rest = stepRest(params, rest);
       }
-      sectionSteps.push({
-        exercise: params.exercise,
-        sets: params.sets,
-        targetReps: params.targetReps,
-        targetWeight: params.targetWeight,
-        rest: ownRest ?? rest,
-        restBlock: setsRest ?? sectionRestBlock,
-      });
+      continue;
     }
-    steps.push(...sectionSteps);
+    sectionSteps.push({
+      exercise: params.exercise,
+      sets: params.sets,
+      targetReps: params.targetReps,
+      targetWeight: params.targetWeight,
+      rest: isSets ? stepRest(params, rest) : rest,
+      restBlock: setsRest ?? sectionRestBlock,
+    });
   }
-  return steps;
+  return sectionSteps;
+}
+
+/**
+ * A section's rest: its `workout-timer` block (the first, when its
+ * parameters are valid), else {} for the default preset
+ */
+function sectionRest(section: NoteSection): {
+  rest: EmbeddedTimerParams;
+  restBlock?: RestBlock;
+} {
+  const timer = section.blocks.find((b) => b.type === timerBlock.type);
+  if (!timer) return { rest: {} };
+  const { params, errors } = timerBlock.parse(timer.body);
+  if (errors.length > 0) return { rest: {} };
+  return {
+    rest: params,
+    restBlock: { type: "workout-timer", params, match: matchOf(timer) },
+  };
+}
+
+/**
+ * The rest of the section a `workout-sets` block is written in (see
+ * sectionRest), the block found with `match`; {} when it is not found
+ */
+export function sectionRestOf(
+  content: string,
+  match: CodeBlockMatch,
+): EmbeddedTimerParams {
+  const { sections } = readWorkoutNote(content);
+  const sets = sections.flatMap((section) =>
+    section.blocks.filter((block) => block.type === setsBlock.type),
+  );
+  const block = findBlock(sets, setsBlock, match);
+  const section = block && sections.find((s) => s.blocks.includes(block));
+  return section ? sectionRest(section).rest : {};
+}
+
+/**
+ * The one rule for the rest after a set of a `workout-sets` block: none with
+ * `rest: 0`, else the block's own timer (`rest` and `timer.*`, see
+ * blockRest), else the section's rest (its `workout-timer`, or {} for the
+ * default preset).
+ */
+export function stepRest(
+  params: EmbeddedSetsParams,
+  sectionRest: EmbeddedTimerParams,
+): EmbeddedTimerParams | undefined {
+  if (params.rest === 0) return undefined;
+  return blockRest(params) ?? sectionRest;
 }
 
 /** How to find a block written without an id */
@@ -106,14 +159,23 @@ function matchOf(block: NoteBlock): CodeBlockMatch {
   return { body: block.body, lines: { start: block.start, end: block.end } };
 }
 
+/** The text of the note at `path`; null when there is no such note */
+export async function readNote(
+  vault: Pick<Vault, "getAbstractFileByPath" | "cachedRead">,
+  path: string,
+): Promise<string | null> {
+  const file = vault.getAbstractFileByPath(path);
+  if (!(file instanceof TFile)) return null;
+  return vault.cachedRead(file);
+}
+
 /** The plan of the note at `path`; null when there is no such note */
 export async function readNotePlan(
   vault: Pick<Vault, "getAbstractFileByPath" | "cachedRead">,
   path: string,
 ): Promise<SessionStep[] | null> {
-  const file = vault.getAbstractFileByPath(path);
-  if (!(file instanceof TFile)) return null;
-  return readSessionPlan(await vault.cachedRead(file));
+  const content = await readNote(vault, path);
+  return content === null ? null : readSessionPlan(content);
 }
 
 /** The step of an exercise (case and spacing ignored), the first if repeated */

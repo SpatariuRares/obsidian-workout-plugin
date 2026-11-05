@@ -41,8 +41,15 @@ export const gridKey = (id: DashboardWidgetId) =>
   // eslint-disable-next-line i18next/no-literal-string -- a block parameter name
   `grid.${id}` as const;
 
-export function minColumnsOf(id: string): number {
-  return DASHBOARD_WIDGETS[id as DashboardWidgetId]?.minColumns ?? 1;
+/**
+ * The fewest columns a widget reads well in (1 for an unknown id), at most
+ * `columns` when the grid is narrower than that
+ */
+export function minColumnsOf(id: string, columns = Infinity): number {
+  return Math.min(
+    DASHBOARD_WIDGETS[id as DashboardWidgetId]?.minColumns ?? 1,
+    columns,
+  );
 }
 
 /** The placed widgets, in reading order */

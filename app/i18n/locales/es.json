@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "Cancelar",
     "clear": "Borrar",
     "convert": "Convertir",
     "exercise": "Ejercicio",
@@ -98,7 +97,6 @@
       "columnEstimated": "Estimado",
       "columnVariance": "Variación",
       "columnWorkout": "Entrenamiento",
-      "minutesSuffix": " min",
       "noData": "Todavía no hay suficientes sesiones para comparar.",
       "subtitle": "Duración estimada frente a la duración real del entrenamiento",
       "title": "Comparación de duraciones",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "Las estimaciones se acercan cada vez más a tus sesiones reales",
       "varianceTrendStable": "La precisión de las estimaciones es estable",
       "varianceTrendTitle": "Precisión de las estimaciones",
-      "avgVarianceStat": "Varianza media: ±{value}%",
-      "hoursSuffix": "h"
+      "avgVarianceStat": "Varianza media: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Todas las páginas de ejercicios son válidas",
@@ -201,8 +198,6 @@
       "moveUp": "Subir {widget}",
       "moveDown": "Bajar {widget}",
       "allHistory": "Vacío: todo el historial",
-      "recentWorkoutsLimit": "Entrenamientos en la lista reciente",
-      "volumeTrendDays": "Días en la tendencia de volumen",
       "layout": "Diseño",
       "layoutGrid": "Cuadrícula",
       "layoutList": "Lista",
@@ -568,7 +563,6 @@
     "createLogButtonText": "Crear registro para: {exerciseName}",
     "noDataTitle": "No se encontraron registros para {exerciseName}",
     "exploreExampleData": "O explora con datos de ejemplo",
-    "lastSet": "Última vez: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Récord personal: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "Añadir preajuste",
       "addProtocol": "Añadir protocolo",
-      "cancel": "Cancelar",
       "createFiles": "Crear archivos",
       "done": "¡Hecho!",
       "failed": "Fallido",
@@ -1072,7 +1065,6 @@
     "editTable": "Editar tabla",
     "editTitle": "Editar",
     "gotoExercise": "Ir al ejercicio",
-    "invalidDate": "Fecha no válida",
     "labels": {
       "target": "Objetivo:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "Aún no hay series con {weight}",
       "progress": "Mejor {best}/{target} repeticiones",
-      "progressTooltip": "Mejor: {best} repeticiones / Objetivo: {target} repeticiones",
-      "repsSuffix": "reps",
-      "separator": " × "
+      "progressTooltip": "Mejor: {best} repeticiones / Objetivo: {target} repeticiones"
     },
     "trendLine": "Línea de tendencia",
     "refreshingTable": "Actualizando tabla...",
@@ -1127,7 +1117,6 @@
     "down": "Bajando",
     "improving": "Mejorando",
     "increasing": "Aumentando",
-    "invariant": "Invariante",
     "neutral": "Neutral",
     "stable": "Estable",
     "stableLower": "Estable",

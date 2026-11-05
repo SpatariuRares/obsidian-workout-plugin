@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "次/分钟",
-    "cancel": "取消",
     "clear": "清除",
     "convert": "转换",
     "exercise": "训练动作",
@@ -98,7 +97,6 @@
       "columnEstimated": "预计",
       "columnVariance": "差异",
       "columnWorkout": "训练",
-      "minutesSuffix": " 分钟",
       "noData": "训练次数还不够，暂时无法比较。",
       "subtitle": "预计时长与实际时长比较",
       "title": "时长比较",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "预估时长越来越接近实际训练",
       "varianceTrendStable": "预估准确度保持稳定",
       "varianceTrendTitle": "预估准确度",
-      "avgVarianceStat": "平均差异：±{value}%",
-      "hoursSuffix": "小时"
+      "avgVarianceStat": "平均差异：±{value}%"
     },
     "fileErrors": {
       "allValid": "所有训练页面均有效",
@@ -201,8 +198,6 @@
       "moveUp": "上移 {widget}",
       "moveDown": "下移 {widget}",
       "allHistory": "留空：全部历史",
-      "volumeTrendDays": "训练量趋势中的天数",
-      "recentWorkoutsLimit": "近期训练列表中的训练数",
       "layout": "布局",
       "layoutGrid": "网格",
       "layoutList": "列表",
@@ -568,7 +563,6 @@
     "createLogButtonText": "创建记录：{exerciseName}",
     "noDataTitle": "未找到与 {exerciseName} 相关的记录",
     "exploreExampleData": "或者，使用示例数据进行探索",
-    "lastSet": "上次：{set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "个人记录：{weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "添加预设",
       "addProtocol": "添加方案",
-      "cancel": "取消",
       "createFiles": "创建文件",
       "done": "完成！",
       "failed": "失败",
@@ -1072,7 +1065,6 @@
     "editTable": "编辑表格",
     "editTitle": "编辑",
     "gotoExercise": "前往训练动作",
-    "invalidDate": "无效日期",
     "labels": {
       "target": "目标："
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "progress": "最佳 {best}/{target} 次",
       "noSetsYet": "{weight} 还没有记录过组",
-      "progressTooltip": "最佳：{best} 次 / 目标：{target} 次",
-      "repsSuffix": "次",
-      "separator": " × "
+      "progressTooltip": "最佳：{best} 次 / 目标：{target} 次"
     },
     "trendLine": "趋势线",
     "refreshingTable": "正在刷新表格...",
@@ -1127,7 +1117,6 @@
     "down": "下降",
     "improving": "改善",
     "increasing": "增加",
-    "invariant": "不变",
     "neutral": "中性",
     "stable": "稳定",
     "stableLower": "稳定",

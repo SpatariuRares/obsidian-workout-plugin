@@ -357,56 +357,6 @@ describe("ParameterUtils", () => {
     });
   });
 
-  describe("getColorForDataType", () => {
-    it("should return correct colors for known data types", () => {
-      expect(ParameterUtils.getColorForDataType("volume")).toBe(
-        "#4CAF50",
-      );
-      expect(ParameterUtils.getColorForDataType("weight")).toBe(
-        "#FF9800",
-      );
-      expect(ParameterUtils.getColorForDataType("reps")).toBe(
-        "#FF9800",
-      );
-      expect(ParameterUtils.getColorForDataType("duration")).toBe(
-        "#2196F3",
-      );
-      expect(ParameterUtils.getColorForDataType("distance")).toBe(
-        "#9C27B0",
-      );
-      expect(ParameterUtils.getColorForDataType("pace")).toBe(
-        "#E91E63",
-      );
-      // Note: heartRate lookup is case-insensitive and returns default for mismatches
-      expect(ParameterUtils.getColorForDataType("heartrate")).toBe(
-        "#607D8B",
-      );
-    });
-
-    it("should be case-insensitive for lowercase keys", () => {
-      expect(ParameterUtils.getColorForDataType("VOLUME")).toBe(
-        "#4CAF50",
-      );
-      expect(ParameterUtils.getColorForDataType("Volume")).toBe(
-        "#4CAF50",
-      );
-      // HEARTRATE lowercased = heartrate, but color key is heartRate (camelCase)
-      // so it falls back to default
-      expect(ParameterUtils.getColorForDataType("HEARTRATE")).toBe(
-        "#607D8B",
-      );
-    });
-
-    it("should return default color for unknown types", () => {
-      expect(ParameterUtils.getColorForDataType("customParam")).toBe(
-        "#607D8B",
-      );
-      expect(ParameterUtils.getColorForDataType("unknown")).toBe(
-        "#607D8B",
-      );
-    });
-  });
-
   describe("validateParam", () => {
     it("should validate a valid parameter", () => {
       const param: ParameterDefinition = {

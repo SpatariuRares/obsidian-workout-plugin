@@ -1,4 +1,19 @@
 @use "../variables";
+@use "table-mixins";
+
+/* CardTable (app/components/molecules/CardTable.ts): on the desk a plain
+   dashboard table, the figure columns right-aligned under their label */
+.workout-card-table-container {
+  overflow-x: auto;
+}
+
+.workout-dashboard table.workout-card-table {
+  @include table-mixins.dashboard-table;
+
+  th:not(:first-child) {
+    text-align: end;
+  }
+}
 
 /* Dashboard tables whose rows are "a title + three values" (protocol
    effectiveness, duration comparison). On phones each row becomes a card:

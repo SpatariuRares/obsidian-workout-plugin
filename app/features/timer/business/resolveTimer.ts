@@ -4,6 +4,7 @@ import type {
 } from "@app/features/timer/types";
 import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import { timerBlock } from "@app/features/timer/timerBlock";
+import { withoutUndefined } from "@app/utils/ObjectUtils";
 import { timerPresets } from "@app/features/timer/business/timerPresets";
 
 /**
@@ -52,10 +53,4 @@ function presetToParams(preset: TimerPresetConfig): Partial<EmbeddedTimerParams>
     rounds: preset.rounds,
     rest: preset.rest,
   };
-}
-
-function withoutUndefined(params: EmbeddedTimerParams): Partial<EmbeddedTimerParams> {
-  return Object.fromEntries(
-    Object.entries(params).filter(([, value]) => value !== undefined),
-  );
 }

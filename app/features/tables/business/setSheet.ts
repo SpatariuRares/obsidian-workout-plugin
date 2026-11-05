@@ -5,13 +5,17 @@ import { WorkoutProtocol } from "@app/types/WorkoutLogData";
 import {
   fieldFor,
   fieldKey,
+  fieldValue,
   formatFieldNumber,
-  type FieldValue,
 } from "@app/services/exercise/ExerciseFields";
-import { protocolId } from "@app/services/protocols/ProtocolCatalog";
-import { stepOf, type SessionStep } from "@app/features/session/business/sessionPlan";
+import { isStandardProtocol, protocolId } from "@app/services/protocols/ProtocolCatalog";
+import {
+  sectionRestOf,
+  stepRest,
+} from "@app/features/session/business/sessionPlan";
+import type { CodeBlockMatch } from "@app/services/editor/CodeBlockEditorService";
 import type { EmbeddedTimerParams } from "@app/features/timer/types";
-import { blockRest, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
+import type { EmbeddedSetsParams } from "@app/features/tables/setsBlock";
 import {
   readSetFields,
   validate,
@@ -38,7 +42,7 @@ export function emptyDraft(): SetDraft {
 export function draftFromSet(set: WorkoutLogData, parameters: ParameterDefinition[]): SetDraft {
   const values: Record<string, string> = {};
   for (const param of parameters) {
-    const value = loggedValue(set, fieldKey(param.key));
+    const value = fieldValue(set, param.key);
     if (param.type === "boolean") values[param.key] = value === true || value === "true" ? "true" : "";
     else if (typeof value === "number") values[param.key] = formatFieldNumber(fieldFor(param), value);
     else if (typeof value === "string" && value !== "") values[param.key] = value;
@@ -90,13 +94,12 @@ export function setRows(input: SheetInput): SetRow[] {
 
   return Array.from({ length: total }, (_, index) => {
     const sameSet = input.previous[index];
-    const suggested = sameSet && protocolId(sameSet.protocol);
     return {
       number: index + 1,
       logged: input.today[index],
       placeholders: placeholdersFor(input, sameSet ?? input.previous[input.previous.length - 1]),
       suggestedProtocol:
-        suggested && suggested !== protocolId(WorkoutProtocol.STANDARD) ? suggested : undefined,
+        sameSet && !isStandardProtocol(sameSet.protocol) ? protocolId(sameSet.protocol) : undefined,
     };
   });
 }
@@ -109,7 +112,8 @@ function placeholdersFor(
   for (const param of input.parameters) {
     const field = fieldFor(param);
     const key = fieldKey(param.key);
-    const value = hint ? loggedValue(hint, key) : targetValue(input, key);
+    // A logged set's weight is in the settings unit
+    const value = hint ? fieldValue(hint, key) : targetValue(input, key);
     if (typeof value === "number") {
       placeholders[param.key] = formatFieldNumber(field, value);
     } else if (typeof value === "string" && value !== "") {
@@ -117,19 +121,6 @@ function placeholdersFor(
     }
   }
   return placeholders;
-}
-
-/** A field's value in a logged set (weight in the settings unit) */
-function loggedValue(
-  set: WorkoutLogData,
-  key: string,
-): FieldValue | undefined {
-  if (key === "reps") return set.reps;
-  if (key === "weight") return set.weight;
-  const custom = Object.entries(set.customFields ?? {}).find(
-    ([name]) => fieldKey(name) === key,
-  );
-  return custom?.[1];
 }
 
 function targetValue(input: SheetInput, key: string): number | undefined {
@@ -181,18 +172,18 @@ export function rowToFormData(
 }
 
 /**
- * The timer a block rests on after each set: its own (`rest` and `timer.*`,
- * see blockRest); without one the rest of its exercise's section (the
- * section's `workout-timer`, or {} for the default preset); none with
- * `rest: 0`.
+ * The timer a block rests on after each set: stepRest (none with `rest: 0`,
+ * else its own timer), else the `workout-timer` of the `##` section the
+ * block is written in ({} for the default preset, also when the note or the
+ * block is not found).
+ * @param note - The text of the note the block is written in
+ * @param match - How to find the block in it
  */
 export function restOf(
   params: EmbeddedSetsParams,
-  plan: SessionStep[],
+  note: string | null,
+  match: CodeBlockMatch | undefined,
 ): EmbeddedTimerParams | undefined {
-  if (params.rest === 0) return undefined;
-  return (
-    blockRest(params) ??
-    ((params.exercise && stepOf(plan, params.exercise)?.rest) || {})
-  );
+  const sectionRest = note !== null && match ? sectionRestOf(note, match) : {};
+  return stepRest(params, sectionRest);
 }

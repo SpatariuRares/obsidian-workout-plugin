@@ -55,9 +55,10 @@ describe("ProtocolDistribution", () => {
       { chartId: "protocol-distribution-a", days: 7 },
     );
 
-    expect(container.textContent).toContain(
-      t("dashboard.protocolDistribution.noData", { days: 7 }),
-    );
+    expect(
+      container.querySelector(".workout-block-card .workout-feedback-info")
+        ?.textContent,
+    ).toBe(t("dashboard.protocolDistribution.noData", { days: 7 }));
     expect(container.textContent).toContain(
       t("dashboard.protocolDistribution.subtitle", { days: 7 }),
     );

@@ -125,4 +125,54 @@ describe("EditChartModal", () => {
     expect(state.content).not.toContain("soon");
     expect(state.content).not.toContain("dateRange");
   });
+
+  describe("chart and data type", () => {
+    const groups = (contentEl: HTMLElement) => [
+      ...contentEl.querySelectorAll<HTMLElement>(".workout-chip-group"),
+    ];
+    const pressedLabels = (group: HTMLElement) =>
+      [...group.querySelectorAll("button")]
+        .filter((b) => b.getAttribute("aria-pressed") === "true")
+        .map((b) => b.textContent);
+
+    it("opens on the block's chart type with one data type pressed, without a select", async () => {
+      const { contentEl } = await openModal();
+      const [chartType, dataType] = groups(contentEl);
+
+      expect(pressedLabels(chartType)).toEqual([t("modal.selectOptions.specificExercise")]);
+      expect(pressedLabels(dataType)).toHaveLength(1);
+      expect(contentEl.querySelector("select")).toBeNull();
+      expect(
+        contentEl.querySelector(".workout-target-exercise")!.classList,
+      ).not.toContain("workout-display-none");
+    });
+
+    it("hides the exercise field once the whole workout is picked", async () => {
+      const { contentEl } = await openModal();
+      const [chartType] = groups(contentEl);
+
+      [...chartType.querySelectorAll("button")]
+        .find((b) => b.textContent === t("modal.selectOptions.completeWorkout"))!
+        .click();
+
+      expect(
+        contentEl.querySelector(".workout-target-exercise")!.classList,
+      ).toContain("workout-display-none");
+    });
+
+    it("writes the data type picked", async () => {
+      const { state, contentEl, update } = await openModal();
+      const [, dataType] = groups(contentEl);
+      const other = [...dataType.querySelectorAll("button")].find(
+        (b) => b.getAttribute("aria-pressed") !== "true",
+      )!;
+
+      other.click();
+      update();
+      await new Promise((resolve) => setTimeout(resolve, 0));
+
+      expect(state.content).not.toContain("type: weight");
+      expect(state.content).toMatch(/^type: \w+$/m);
+    });
+  });
 });

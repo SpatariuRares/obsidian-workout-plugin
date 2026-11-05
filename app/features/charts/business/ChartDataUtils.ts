@@ -4,10 +4,18 @@ import {
   ChartDataset,
   CHART_DATA_TYPE,
   CHART_TYPE,
+  isAggregateChart,
 } from "@app/features/charts/types";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import { DateUtils } from "@app/utils/DateUtils";
 import { ChartDataExtractor } from "@app/features/charts/business/ChartDataExtractor";
+import { fieldNumber } from "@app/services/exercise/ExerciseFields";
+
+/** A training day (YYYY-MM-DD) as a chart label; local noon keeps the day. */
+function dayLabel(day: string, dateFormat: string): string {
+  // eslint-disable-next-line i18next/no-literal-string -- ISO time, not UI text
+  return DateUtils.formatDateWithFormat(`${day}T12:00:00`, dateFormat);
+}
 
 /**
  * Aggregates and processes workout log data for Chart.js visualizations.
@@ -39,32 +47,22 @@ export class ChartDataUtils {
    * Process log data for chart visualization.
    * Extended to support dynamic exercise types (timed, distance, cardio, custom).
    * Custom parameter keys can be passed as chartType for custom exercise types.
+   * `logData` is already filtered (DataFilter applies `dateRange`) and in
+   * ascending date order.
    */
   static processChartData(
     logData: WorkoutLogData[],
     chartType: CHART_DATA_TYPE | string,
-    dateRange?: number,
     dateFormat: string = "DD/MM/YYYY",
     displayType: CHART_TYPE = CHART_TYPE.EXERCISE,
     customParamLabel?: string,
   ): { labels: string[]; datasets: ChartDataset[] } {
-    // Filter by date range
-    const cutoffDate = new Date();
-    cutoffDate.setDate(cutoffDate.getDate() - (dateRange ?? 0));
-
-    const filteredData =
-      dateRange === undefined
-        ? logData
-        : logData.filter((log) => new Date(log.date) >= cutoffDate);
-
     if (chartType === "e1rm") {
       const daily = new TrainingHistory(
-        filteredData,
+        logData,
       ).estimatedOneRepMaxPerDay();
       return {
-        labels: [...daily.keys()].map((day) =>
-          DateUtils.formatDateWithFormat(`${day}T12:00:00`, dateFormat),
-        ),
+        labels: [...daily.keys()].map((day) => dayLabel(day, dateFormat)),
         datasets: daily.size
           ? [
               {
@@ -76,39 +74,14 @@ export class ChartDataUtils {
       };
     }
 
-    // Sort by date
-    filteredData.sort(
-      (a, b) =>
-        new Date(a.date).getTime() - new Date(b.date).getTime(),
-    );
-
     // Check if chartType is a custom parameter key (not a standard type)
     const isCustomParam =
       !ChartDataExtractor.isStandardChartType(chartType);
     const customParamKey = isCustomParam ? chartType : null;
 
-    // Group by date and calculate values
-    const dateGroups = new Map<
-      string,
-      {
-        volume: number;
-        weight: number;
-        maxWeight: number;
-        reps: number;
-        duration: number;
-        distance: number;
-        heartRate: number;
-        custom: number;
-        count: number;
-      }
-    >();
-
-    filteredData.forEach((log) => {
-      const dateKey = DateUtils.formatDateWithFormat(
-        log.date,
-        dateFormat,
-      );
-      const existing = dateGroups.get(dateKey) || {
+    // Totals of each training day
+    const dateGroups = new TrainingHistory(logData).perDay((sets) => {
+      const totals = {
         volume: 0,
         weight: 0,
         maxWeight: 0,
@@ -119,42 +92,25 @@ export class ChartDataUtils {
         custom: 0,
         count: 0,
       };
+      for (const log of sets) {
+        // Standard fields
+        totals.volume += log.volume || 0;
+        totals.weight += log.weight || 0;
+        totals.maxWeight = Math.max(totals.maxWeight, log.weight || 0);
+        totals.reps += log.reps || 0;
 
-      // Standard fields
-      existing.volume += log.volume || 0;
-      existing.weight += log.weight || 0;
-      existing.maxWeight = Math.max(
-        existing.maxWeight,
-        log.weight || 0,
-      );
-      existing.reps += log.reps || 0;
-
-      // Extract from customFields for dynamic exercise types
-      if (log.customFields) {
-        existing.duration += ChartDataExtractor.getCustomFieldNumber(
-          log.customFields,
-          "duration",
-        );
-        existing.distance += ChartDataExtractor.getCustomFieldNumber(
-          log.customFields,
-          "distance",
-        );
-        existing.heartRate += ChartDataExtractor.getCustomFieldNumber(
-          log.customFields,
-          "heartRate",
-        );
-
+        // Fields of dynamic exercise types, however their column is written
+        totals.duration += fieldNumber(log, "duration") ?? 0;
+        totals.distance += fieldNumber(log, "distance") ?? 0;
+        totals.heartRate += fieldNumber(log, "heartRate") ?? 0;
         // Custom parameter value (if chartType is a custom param key)
         if (customParamKey) {
-          existing.custom += ChartDataExtractor.getCustomFieldNumber(
-            log.customFields,
-            customParamKey,
-          );
+          totals.custom += fieldNumber(log, customParamKey) ?? 0;
         }
-      }
 
-      existing.count += 1;
-      dateGroups.set(dateKey, existing);
+        totals.count += 1;
+      }
+      return totals;
     });
 
     // Calculate values based on display type
@@ -168,14 +124,10 @@ export class ChartDataUtils {
     const heartRateData: number[] = [];
     const customData: number[] = [];
 
-    dateGroups.forEach((values, date) => {
-      labels.push(date);
+    dateGroups.forEach((values, day) => {
+      labels.push(dayLabel(day, dateFormat));
 
-      if (
-        displayType === CHART_TYPE.WORKOUT ||
-        displayType === CHART_TYPE.COMBINED ||
-        displayType === CHART_TYPE.ALL
-      ) {
+      if (isAggregateChart(displayType)) {
         // For workout/combined/all: totals, but weight is the heaviest set
         volumeData.push(values.volume);
         weightData.push(values.maxWeight);
@@ -224,7 +176,7 @@ export class ChartDataUtils {
 
     // Build data array and label based on chart type
     const datasets: ChartDataset[] = [];
-    const { data, label, color } =
+    const { data, label } =
       ChartDataExtractor.getChartDataForType(
         chartType,
         displayType,
@@ -242,16 +194,8 @@ export class ChartDataUtils {
       );
 
     if (data.length > 0) {
-      datasets.push({
-        label,
-        data,
-        borderColor: color,
-        backgroundColor: color + "20",
-        tension: 0.4,
-        fill: false,
-        pointRadius: 4,
-        pointHoverRadius: 6,
-      });
+      // ChartConfigBuilder.styleMainDataset styles it before drawing
+      datasets.push({ label, data });
     }
 
     return { labels, datasets };

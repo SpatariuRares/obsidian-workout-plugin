@@ -1,7 +1,9 @@
-import { App, normalizePath, Notice, TFile, TFolder } from "obsidian";
+import { App, normalizePath, Notice, TFile } from "obsidian";
+import { PathUtils } from "@app/utils/PathUtils";
 import { t } from "@app/i18n";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import type { MuscleTagPort } from "@app/types/PluginPorts";
+import { exercisePageTemplate } from "@app/services/exercise/ExercisePageContent";
 
 /**
  * Service for generating and reading template files.
@@ -35,7 +37,7 @@ export class TemplateGeneratorService {
       const templateFolder = this.getTemplateFolderPath();
 
       // Create templates folder if it doesn't exist
-      await this.ensureFolderExists(templateFolder);
+      await PathUtils.ensureFolder(this.app, templateFolder);
 
       // Generate exercise page template
       await this.generateExercisePageTemplate(
@@ -72,7 +74,7 @@ export class TemplateGeneratorService {
     }
 
     // Return default template if file doesn't exist
-    return this.getDefaultExercisePageTemplate();
+    return exercisePageTemplate();
   }
 
   /**
@@ -118,52 +120,13 @@ export class TemplateGeneratorService {
     folderPath: string,
     overwrite: boolean = false,
   ): Promise<void> {
-    const content = this.getDefaultExercisePageTemplate();
+    const content = exercisePageTemplate();
     await this.createOrUpdateFile(
       folderPath,
       "exercise-page.md",
       content,
       overwrite,
     );
-  }
-
-  /**
-   * Get the default exercise page template in English.
-   * This template is a blank structure that users fill in manually.
-   * Note: You can rename 'exercise_name' to 'nome_esercizio' or any field name.
-   * The plugin supports both 'exercise_name' (English) and 'nome_esercizio' (Italian).
-   */
-  private getDefaultExercisePageTemplate(): string {
-    return `---
-exercise_name:
-exercise_type:
-tags:
----
-
-# Description
-
-Type:
-
-# Execution Technique
-
-
-
-# Safety Notes
-
--
-
-# Performance Log
-
-\`\`\`workout-log
-exercise: name
-\`\`\`
-
-### Chart
-
-\`\`\`workout-chart
-exercise: name
-\`\`\`
-`;
   }
 
   /**
@@ -187,18 +150,6 @@ exercise: name
       await this.app.vault.modify(existingFile, content);
     } else {
       await this.app.vault.create(filePath, content);
-    }
-  }
-
-  /**
-   * Ensure a folder exists, creating it if necessary.
-   */
-  private async ensureFolderExists(path: string): Promise<void> {
-    const folder = this.app.vault.getAbstractFileByPath(path);
-    if (!folder) {
-      await this.app.vault.createFolder(path);
-    } else if (!(folder instanceof TFolder)) {
-      throw new Error(`Path '${path}' exists but is not a folder.`);
     }
   }
 }

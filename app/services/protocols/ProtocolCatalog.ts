@@ -13,8 +13,10 @@ export interface ProtocolInfo {
   name: string;
   /** Text of the table badge; empty for standard (no badge) */
   abbreviation: string;
-  /** Chart color */
+  /** Chart color (`chartColor` at the default alpha) */
   color: string;
+  /** The chart color with another alpha (a dimmed or highlighted slice) */
+  chartColor: (alpha: number) => string;
   /** CSS class of the table badge */
   badgeClass: string;
   /** Badge background for custom protocols (their hex color) */
@@ -23,12 +25,13 @@ export interface ProtocolInfo {
 }
 
 const CHART_ALPHA = 0.7;
-const NEUTRAL_CHART_COLOR = "rgba(128, 128, 128, 0.7)";
+const NEUTRAL_CHART_COLOR = "#808080";
 
 const BUILT_IN: ReadonlyArray<{
   id: WorkoutProtocol;
   nameKey: string;
   abbreviation: string;
+  /** Chart color, `#rrggbb` */
   color: string;
   badgeClass: string;
   /** Entry added to the settings list ("Saved protocols"); none for standard */
@@ -56,7 +59,7 @@ const BUILT_IN: ReadonlyArray<{
     id: WorkoutProtocol.DROP_SET,
     nameKey: "modal.selectOptions.dropSet",
     abbreviation: "Drop",
-    color: "rgba(239, 68, 68, 0.7)",
+    color: "#ef4444",
     badgeClass: "workout-protocol-badge-drop",
     defaults: { abbreviation: "DS", color: "#ef4444" },
     helpKey: "settings.protocolHelp.dropSet",
@@ -65,7 +68,7 @@ const BUILT_IN: ReadonlyArray<{
     id: WorkoutProtocol.MYO_REPS,
     nameKey: "modal.selectOptions.myoReps",
     abbreviation: "Myo",
-    color: "rgba(168, 85, 247, 0.7)",
+    color: "#a855f7",
     badgeClass: "workout-protocol-badge-myo",
     defaults: { abbreviation: "MYO", color: "#a855f7" },
     helpKey: "settings.protocolHelp.myoReps",
@@ -74,7 +77,7 @@ const BUILT_IN: ReadonlyArray<{
     id: WorkoutProtocol.REST_PAUSE,
     nameKey: "modal.selectOptions.restPause",
     abbreviation: "RP",
-    color: "rgba(249, 115, 22, 0.7)",
+    color: "#f97316",
     badgeClass: "workout-protocol-badge-rp",
     defaults: { abbreviation: "RP", color: "#f97316" },
     helpKey: "settings.protocolHelp.restPause",
@@ -83,7 +86,7 @@ const BUILT_IN: ReadonlyArray<{
     id: WorkoutProtocol.SUPERSET,
     nameKey: "modal.selectOptions.superset",
     abbreviation: "SS",
-    color: "rgba(59, 130, 246, 0.7)",
+    color: "#3b82f6",
     badgeClass: "workout-protocol-badge-superset",
     defaults: { abbreviation: "SS", color: "#3b82f6" },
     helpKey: "settings.protocolHelp.superset",
@@ -92,7 +95,7 @@ const BUILT_IN: ReadonlyArray<{
     id: WorkoutProtocol.TWENTYONE,
     nameKey: "modal.selectOptions.twentyones",
     abbreviation: "21s",
-    color: "rgba(34, 197, 94, 0.7)",
+    color: "#22c55e",
     badgeClass: "workout-protocol-badge-21",
     defaults: { abbreviation: "21", color: "#22c55e" },
     helpKey: "settings.protocolHelp.twentyone",
@@ -105,6 +108,34 @@ const BUILT_IN: ReadonlyArray<{
  */
 export function protocolId(raw: string | undefined | null): string {
   return StringUtils.normalize(raw) || WorkoutProtocol.STANDARD;
+}
+
+/** Whether a set was logged without a protocol (standard, or none written) */
+export function isStandardProtocol(raw: string | undefined | null): boolean {
+  return protocolId(raw) === (WorkoutProtocol.STANDARD as string);
+}
+
+/** The id a new protocol gets from its name: lower case, `_` for spaces, nothing else but letters and digits */
+export function protocolIdFromName(name: string): string {
+  return name
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "_")
+    .replace(/[^a-z0-9_]/g, "");
+}
+
+/** Sets grouped by protocol id (`protocolId`), groups in the order first seen */
+export function groupByProtocol<T extends { protocol?: string | null }>(
+  rows: readonly T[],
+): Map<string, T[]> {
+  const groups = new Map<string, T[]>();
+  for (const row of rows) {
+    const id = protocolId(row.protocol);
+    const group = groups.get(id);
+    if (group) group.push(row);
+    else groups.set(id, [row]);
+  }
+  return groups;
 }
 
 /** What a built-in protocol is for, in the current language; undefined for others */
@@ -188,7 +219,7 @@ export class ProtocolCatalog {
         id,
         name: custom.name,
         abbreviation: custom.abbreviation,
-        color: hexToRgba(custom.color, CHART_ALPHA),
+        ...chartColors(custom.color),
         badgeColor: custom.color,
         badgeClass: "workout-protocol-badge-custom",
         builtIn: false,
@@ -204,7 +235,7 @@ export class ProtocolCatalog {
       id,
       name: id,
       abbreviation: id.slice(0, 3).toUpperCase(),
-      color: BUILT_IN[0].color,
+      ...chartColors(NEUTRAL_CHART_COLOR),
       badgeClass: "workout-protocol-badge-custom",
       builtIn: false,
     };
@@ -221,6 +252,25 @@ export class ProtocolCatalog {
     }
     return [...byId.values()];
   }
+
+  /**
+   * `all()`, plus the protocol a set already has when it is no longer in the
+   * settings (e.g. a deleted drop set), so picking from the list keeps it
+   * instead of turning it into standard
+   */
+  optionsIncluding(raw: string | undefined | null): ProtocolInfo[] {
+    const options = this.all();
+    const id = protocolId(raw);
+    if (!options.some((p) => p.id === id)) options.push(this.resolve(id));
+    return options;
+  }
+}
+
+function chartColors(hex: string): Pick<ProtocolInfo, "color" | "chartColor"> {
+  return {
+    color: hexToRgba(hex, CHART_ALPHA),
+    chartColor: (alpha) => hexToRgba(hex, alpha),
+  };
 }
 
 function toInfo(p: (typeof BUILT_IN)[number]): ProtocolInfo {
@@ -228,7 +278,7 @@ function toInfo(p: (typeof BUILT_IN)[number]): ProtocolInfo {
     id: p.id,
     name: t(p.nameKey),
     abbreviation: p.abbreviation,
-    color: p.color,
+    ...chartColors(p.color),
     badgeClass: p.badgeClass,
     builtIn: true,
   };

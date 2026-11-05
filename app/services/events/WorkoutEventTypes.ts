@@ -2,6 +2,7 @@ import type {
   WorkoutLogData,
   WorkoutChartsSettings,
 } from "@app/types/WorkoutLogData";
+import { StringUtils } from "@app/utils/StringUtils";
 
 // ---- Normalizzazione ----
 
@@ -10,8 +11,8 @@ import type {
  * "Squat " → "squat"
  * "bench  press" → "bench press"
  */
-export function normalizeExercise(name: string): string {
-  return name.toLowerCase().trim().replace(/\s+/g, " ");
+export function normalizeExercise(name: string | undefined | null): string {
+  return StringUtils.normalize(name);
 }
 
 // ---- Context e Payload ----

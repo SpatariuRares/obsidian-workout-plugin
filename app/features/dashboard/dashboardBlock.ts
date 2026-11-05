@@ -47,16 +47,16 @@ export const dashboardBlock = defineCodeBlock("workout-dashboard", {
   quickStatsPeriods: { kind: "list", values: QUICK_STATS_PERIOD_IDS },
   quickStatsMetrics: { kind: "list", values: QUICK_STATS_METRIC_IDS },
   /** heatMap: what its toggles start on */
-  heatMapTimeFrame: { kind: "enum", values: HEAT_MAP_TIME_FRAMES },
-  heatMapMetric: { kind: "enum", values: HEAT_MAP_METRICS },
-  heatMapView: { kind: "enum", values: HEAT_MAP_VIEWS },
+  heatMapTimeFrame: { kind: "enum", values: HEAT_MAP_TIME_FRAMES, default: "week" },
+  heatMapMetric: { kind: "enum", values: HEAT_MAP_METRICS, default: "volume" },
+  heatMapView: { kind: "enum", values: HEAT_MAP_VIEWS, default: "front" },
   heatMapShowImbalance: { kind: "boolean", default: true },
   /** protocolDistribution: days counted */
   protocolDays: { kind: "number", min: 1, default: 30 },
-  protocolChartType: { kind: "enum", values: PROTOCOL_CHART_TYPES },
+  protocolChartType: { kind: "enum", values: PROTOCOL_CHART_TYPES, default: "pie" },
   /** protocolEffectiveness: sets a protocol needs to be compared */
   protocolMinEntries: { kind: "number", min: 1, default: 5 },
-  protocolSortBy: { kind: "enum", values: PROTOCOL_SORTS },
+  protocolSortBy: { kind: "enum", values: PROTOCOL_SORTS, default: "progressionRate" },
   /** duration: workouts compared, and the rest between sets in the estimate */
   durationRecentCount: { kind: "number", min: 1, default: 5 },
   durationRestSeconds: { kind: "number", min: 0, default: 90 },

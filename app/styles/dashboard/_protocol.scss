@@ -7,10 +7,6 @@
   min-height: 280px;
 }
 
-.workout-protocol-no-data {
-  color: var(--text-muted);
-}
-
 .workout-protocol-chart-container {
   display: flex;
   justify-content: center;
@@ -150,52 +146,10 @@
   min-height: 0;
 }
 
-.workout-protocol-effectiveness-no-data {
-  color: var(--text-muted);
-}
-
 /* What the figures can't say, as meta under the table */
 .workout-protocol-effectiveness-disclaimer {
   font-size: var(--workout-font-sm);
   color: var(--text-muted);
-}
-
-.workout-protocol-effectiveness-table-container {
-  overflow-x: auto;
-}
-
-/* Qualified to beat Obsidian's note table rules (a border around every cell) */
-.workout-dashboard table.workout-protocol-effectiveness-table {
-  width: 100%;
-  margin: 0;
-  border: none;
-  border-collapse: collapse;
-  font-variant-numeric: tabular-nums;
-
-  th,
-  td {
-    padding: var(--workout-space-sm) var(--workout-space-xs);
-    text-align: start;
-    border: none;
-    border-bottom: var(--workout-border-thin) solid
-      var(--workout-border-subtle);
-    background: none;
-  }
-
-  tbody tr:last-child td {
-    border-bottom: none;
-  }
-
-  th {
-    font-weight: normal;
-    color: var(--text-muted);
-    font-size: var(--workout-font-xs);
-  }
-
-  // Figure columns: the label over the right-aligned figures
-  th:not(:first-child) {
-    text-align: end;
-  }
 }
 
 .workout-dashboard .workout-protocol-effectiveness-table {

@@ -7,6 +7,18 @@ import {
 
 export { CHART_DATA_TYPE, CHART_TYPE };
 
+/**
+ * Whether a chart shows each day's total (workout, combined, all) rather
+ * than the daily average of one exercise.
+ */
+export function isAggregateChart(displayType: CHART_TYPE): boolean {
+  return (
+    displayType === CHART_TYPE.WORKOUT ||
+    displayType === CHART_TYPE.COMBINED ||
+    displayType === CHART_TYPE.ALL
+  );
+}
+
 /** Parameters of a `workout-chart` block; the schema is in chartBlock.ts */
 export type EmbeddedChartParams = BlockParams<typeof chartBlock>;
 

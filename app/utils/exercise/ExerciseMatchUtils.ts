@@ -4,10 +4,7 @@ import { StringUtils } from "@app/utils/StringUtils";
 // Constants
 const PATH_MATCH_THRESHOLD = 70; // Minimum score for path matching
 
-export type ExerciseFilterStrategy =
-  | "exercise_field_exact"
-  | "exercise_field"
-  | "none";
+export type ExerciseFilterStrategy = "exercise_field" | "none";
 
 export interface MatchResult {
   /** Score of every distinct exercise name in the logs against the query */
@@ -23,18 +20,10 @@ export class ExerciseMatchUtils {
   static readonly PATH_MATCH_THRESHOLD = PATH_MATCH_THRESHOLD;
 
   /**
-   * Calculate match score between two strings
-   * Delegates to StringUtils.getMatchScore for centralized string matching logic
-   */
-  static getMatchScore(str1: string, str2: string): number {
-    return StringUtils.getMatchScore(str1, str2);
-  }
-
-  /**
    * Whether a log's exercise passes the fuzzy threshold for the query.
    */
   static isFuzzyMatch(exercise: string, query: string): boolean {
-    return this.getMatchScore(exercise, query) >= PATH_MATCH_THRESHOLD;
+    return StringUtils.getMatchScore(exercise, query) >= PATH_MATCH_THRESHOLD;
   }
 
   /**
@@ -48,7 +37,7 @@ export class ExerciseMatchUtils {
 
     for (const log of logData) {
       const exerciseField = log.exercise || "";
-      const exerciseScore = this.getMatchScore(
+      const exerciseScore = StringUtils.getMatchScore(
         exerciseField,
         exerciseName,
       );
@@ -62,31 +51,15 @@ export class ExerciseMatchUtils {
   }
 
   /**
-   * Determine the best filtering strategy
+   * Pick the best-scoring exercise name (fuzzy matching; `exactMatch` is
+   * handled by DataFilter before it gets here).
    */
   static determineExerciseFilterStrategy(
     allExercisePathsAndScores: Map<string, number>,
-    exactMatch: boolean = false,
-    exerciseName: string = "",
   ): {
     bestStrategy: ExerciseFilterStrategy;
     bestPathKey: string;
   } {
-    if (exactMatch && exerciseName) {
-      for (const exerciseField of allExercisePathsAndScores.keys()) {
-        if (
-          StringUtils.normalize(exerciseField) ===
-          StringUtils.normalize(exerciseName)
-        ) {
-          return {
-            bestStrategy: "exercise_field_exact",
-            bestPathKey: exerciseField,
-          };
-        }
-      }
-      return { bestStrategy: "none", bestPathKey: "" };
-    }
-
     if (allExercisePathsAndScores.size > 0) {
       const [bestPath, bestScore] = Array.from(
         allExercisePathsAndScores.entries(),
@@ -108,13 +81,6 @@ export class ExerciseMatchUtils {
     strategy: ExerciseFilterStrategy,
     pathKey: string,
   ): WorkoutLogData[] {
-    if (strategy === "exercise_field_exact") {
-      return logData.filter(
-        (log) =>
-          StringUtils.normalize(log.exercise || "") ===
-          StringUtils.normalize(pathKey),
-      );
-    }
     if (strategy === "exercise_field") {
       return logData.filter((log) =>
         this.isFuzzyMatch(log.exercise || "", pathKey),

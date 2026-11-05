@@ -2,6 +2,7 @@ import { App, TFile } from "obsidian";
 import {
   NoteBlock,
   readWorkoutNote,
+  replaceBlockLines,
 } from "@app/services/notes/WorkoutNote";
 import type { CodeBlockSchema } from "@app/services/codeblocks/CodeBlockSchema";
 
@@ -77,22 +78,19 @@ function patchBlockInNote<P>(
   const block = findBlock(blocks, schema, match);
   if (!block) return null;
 
-  const crlf = content.includes("\r\n");
   const patched = schema.patch(block.body, changes);
-  const lines = content.split("\n");
-  lines.splice(
-    block.start + 1,
-    block.end - block.start - 1,
-    ...(patched === ""
-      ? []
-      : patched
-          .split("\n")
-          .map((line) => `${block.quote}${line}${crlf ? "\r" : ""}`)),
+  return replaceBlockLines(
+    content,
+    block,
+    patched === "" ? [] : patched.split("\n"),
   );
-  return lines.join("\n");
 }
 
-function findBlock<P>(
+/**
+ * The block of the schema's type that `match` names: by id, by exercise (the
+ * first), or by body (within `lines` when given; only when it is the only one)
+ */
+export function findBlock<P>(
   blocks: NoteBlock[],
   schema: CodeBlockSchema<P>,
   match: CodeBlockMatch,

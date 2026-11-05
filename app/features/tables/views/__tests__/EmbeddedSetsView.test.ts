@@ -8,6 +8,7 @@ import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMo
 import type { EmbeddedSetsParams } from "@app/features/tables/setsBlock";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import type { LogEntryInput, WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { defaultProtocolEntries } from "@app/services/protocols/ProtocolCatalog";
 import { t } from "@app/i18n";
@@ -62,15 +63,8 @@ const set = (
   reps: number,
   day = today,
   extra: Partial<WorkoutLogData> = {},
-): WorkoutLogData => ({
-  date: `${day}T10:00:00`,
-  exercise: "Bench Press",
-  reps,
-  weight,
-  volume: weight * reps,
-  workout: "Push Day",
-  ...extra,
-});
+): WorkoutLogData =>
+  logRow({ date: `${day}T10:00:00`, reps, weight, workout: "Push Day", ...extra });
 
 function setup(
   rows: WorkoutLogData[],
@@ -148,7 +142,7 @@ function setup(
   new EventAwareRenderChild(el, eventBus, { exercise: params.exercise, exactMatch: true }, () =>
     child.render(),
   ).load();
-  return { el, view, child, added, updated, deleted, eventBus, reads };
+  return { el, view, child, plugin, added, updated, deleted, eventBus, reads };
 }
 
 const flush = async () => {
@@ -241,6 +235,36 @@ describe("EmbeddedSetsView", () => {
 
     expect(added[0]).toMatchObject({ reps: 8, weight: 85 });
     expect(inputsOf(rowsOf(el)[1]).map((i) => i.value)).toEqual(["6", "90"]);
+  });
+
+  it("keeps every row as typed when a set can't be saved", async () => {
+    const { el, plugin } = setup([], { exercise: "Bench Press", sets: 3, targetReps: 8 });
+    plugin.addWorkoutLogEntry = () => Promise.reject(new Error("disk full"));
+    await flush();
+
+    type(inputsOf(rowsOf(el)[0])[1], "85");
+    type(inputsOf(rowsOf(el)[1])[1], "90");
+    check(rowsOf(el)[0]).click();
+    await flush();
+
+    expect(rowsOf(el).filter((row) => row.classList.contains("is-logged"))).toHaveLength(0);
+    expect(inputsOf(rowsOf(el)[0]).map((i) => i.value)).toEqual(["", "85"]);
+    expect(inputsOf(rowsOf(el)[1]).map((i) => i.value)).toEqual(["", "90"]);
+  });
+
+  it("keeps a set logged, and the rows as typed, when it can't be taken back", async () => {
+    const logged = set(80, 8);
+    const { el, plugin } = setup([logged], { exercise: "Bench Press", sets: 3 });
+    plugin.deleteWorkoutLogEntry = () => Promise.reject(new Error("disk full"));
+    await flush();
+
+    type(inputsOf(rowsOf(el)[1])[1], "90");
+    check(rowsOf(el)[0]).click();
+    await flush();
+
+    expect(rowsOf(el)[0].classList.contains("is-logged")).toBe(true);
+    expect(rowsOf(el)).toHaveLength(3);
+    expect(inputsOf(rowsOf(el)[1]).map((i) => i.value)).toEqual(["", "90"]);
   });
 
   it("shows why a row can't be logged and logs nothing", async () => {

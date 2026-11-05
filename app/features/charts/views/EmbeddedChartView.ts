@@ -109,7 +109,6 @@ export class EmbeddedChartView extends BaseView {
       const chartData = ChartDataUtils.processChartData(
         sortedData,
         resolvedType,
-        params.dateRange,
         "DD/MM/YYYY",
         params.chartType || CHART_TYPE.EXERCISE,
       );

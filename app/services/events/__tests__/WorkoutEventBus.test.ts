@@ -1,15 +1,10 @@
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 
 // Mock entry helper
 function makeEntry(exercise: string): WorkoutLogData {
-  return {
-    exercise,
-    workout: "Test",
-    date: "2025-01-01",
-    reps: 10,
-    weight: 50,
-  } as WorkoutLogData;
+  return logRow({ exercise, workout: "Test", date: "2025-01-01", reps: 10, weight: 50 });
 }
 
 describe("WorkoutEventBus", () => {

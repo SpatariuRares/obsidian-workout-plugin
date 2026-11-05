@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "Avbryt",
     "clear": "Tøm",
     "convert": "Konverter",
     "exercise": "Øvelse",
@@ -98,7 +97,6 @@
       "columnEstimated": "Estimert",
       "columnVariance": "Variasjon",
       "columnWorkout": "Trening",
-      "minutesSuffix": " min",
       "noData": "Ikke nok økter å sammenligne ennå.",
       "subtitle": "Estimert vs. faktisk treningsvarighet",
       "title": "Sammenligning av varighet",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "Estimatene kommer stadig nærmere de faktiske øktene dine",
       "varianceTrendStable": "Estimatenes nøyaktighet er stabil",
       "varianceTrendTitle": "Estimatenes nøyaktighet",
-      "avgVarianceStat": "Gj.sn. varians: ±{value}%",
-      "hoursSuffix": "h"
+      "avgVarianceStat": "Gj.sn. varians: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Alle øvelsessider er gyldige",
@@ -201,8 +198,6 @@
       "moveUp": "Flytt {widget} opp",
       "moveDown": "Flytt {widget} ned",
       "allHistory": "Tom: hele historikken",
-      "recentWorkoutsLimit": "Treninger i listen over nylige",
-      "volumeTrendDays": "Dager i volumtrenden",
       "layout": "Oppsett",
       "layoutGrid": "Rutenett",
       "layoutList": "Liste",
@@ -568,7 +563,6 @@
     "createLogButtonText": "Opprett logg for: {exerciseName}",
     "noDataTitle": "Ingen logger funnet for {exerciseName}",
     "exploreExampleData": "Eller utforsk med eksempeldata",
-    "lastSet": "Siste gang: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Personlig rekord: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "Legg til forhåndsinnstilling",
       "addProtocol": "Legg til protokoll",
-      "cancel": "Avbryt",
       "createFiles": "Opprett filer",
       "done": "Ferdig!",
       "failed": "Mislykket",
@@ -1072,7 +1065,6 @@
     "editTable": "Rediger tabell",
     "editTitle": "Rediger",
     "gotoExercise": "Gå til øvelse",
-    "invalidDate": "Ugyldig dato",
     "labels": {
       "target": "Mål:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "Ingen sett på {weight} ennå",
       "progress": "Beste {best}/{target} repetisjoner",
-      "progressTooltip": "Beste: {best} repetisjoner / Mål: {target} repetisjoner",
-      "repsSuffix": "repetisjoner",
-      "separator": " × "
+      "progressTooltip": "Beste: {best} repetisjoner / Mål: {target} repetisjoner"
     },
     "trendLine": "Trendlinje",
     "refreshingTable": "Oppdaterer tabell...",
@@ -1127,7 +1117,6 @@
     "down": "Ned",
     "improving": "Forbedres",
     "increasing": "Økende",
-    "invariant": "Uendret",
     "neutral": "Nøytral",
     "stable": "Stabil",
     "stableLower": "Stabil",

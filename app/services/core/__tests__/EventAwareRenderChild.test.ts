@@ -7,6 +7,7 @@ import {
 } from "@app/services/core/EventAwareRenderChild";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 
 // Override the obsidian mock for this test file to include register()
 jest.mock(
@@ -33,13 +34,7 @@ function makeEntry(
   exercise: string,
   workout = "Test",
 ): WorkoutLogData {
-  return {
-    exercise,
-    workout,
-    date: "2025-01-01",
-    reps: 10,
-    weight: 50,
-  } as WorkoutLogData;
+  return logRow({ exercise, workout, date: "2025-01-01", reps: 10, weight: 50 });
 }
 
 describe("EventAwareRenderChild", () => {
@@ -71,6 +66,42 @@ describe("EventAwareRenderChild", () => {
   // ---- log:added ----
 
   describe("log:added", () => {
+    it("refreshes a block filtered on [[Push Day]] for a set of Push Day", () => {
+      makeChild({ workout: "[[Push Day]]" });
+      bus.emit({
+        type: "log:added",
+        payload: {
+          entry: makeEntry("Bench Press", "Push Day"),
+          context: { exercise: "Bench Press", workout: "Push Day" },
+        },
+      });
+      expect(renderFn).toHaveBeenCalledTimes(1);
+    });
+
+    it("refreshes a block filtered on Push Day for a set of [[Push Day]]", () => {
+      makeChild({ workout: "Push Day" });
+      bus.emit({
+        type: "log:added",
+        payload: {
+          entry: makeEntry("Bench Press", "[[Push Day]]"),
+          context: { exercise: "Bench Press", workout: "[[Push Day]]" },
+        },
+      });
+      expect(renderFn).toHaveBeenCalledTimes(1);
+    });
+
+    it("does not refresh a block filtered on one workout for a set of another", () => {
+      makeChild({ workout: "Push Day" });
+      bus.emit({
+        type: "log:added",
+        payload: {
+          entry: makeEntry("Bench Press", "Pull Day"),
+          context: { exercise: "Bench Press", workout: "Pull Day" },
+        },
+      });
+      expect(renderFn).not.toHaveBeenCalled();
+    });
+
     it("should refresh when no filter (global view)", () => {
       makeChild({});
       bus.emit({

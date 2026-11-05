@@ -141,6 +141,54 @@ describe("InsertDashboardModal", () => {
     ]);
     expect(params.widgets).not.toContain("quickStats");
   });
+
+  const settingField = (contentEl: HTMLElement, label: string) =>
+    [...contentEl.querySelectorAll<HTMLElement>(".workout-charts-form-group")]
+      .find((group) => group.textContent?.includes(label))!
+      .querySelector<HTMLInputElement>(".workout-number-field-input")!;
+
+  it("shows a widget's setting as its own menu does, and writes it once changed", () => {
+    const { app, state } = fakeApp();
+    const f = form(
+      new InsertDashboardModal(app),
+      t("modal.buttons.insertDashboard"),
+    );
+
+    const limit = settingField(
+      f.contentEl,
+      t("dashboard.widgetModal.recentWorkoutsLimit"),
+    );
+    expect(limit.value).toBe("5");
+    limit.value = "8";
+    f.submit();
+
+    expect(state.inserted).toBe(
+      note("```workout-dashboard", "id: d1", "recentWorkoutsLimit: 8", "```", "", ""),
+    );
+  });
+
+  it("inserts nothing while a setting is out of its limits, saying why under it", () => {
+    const { app, state } = fakeApp();
+    const f = form(
+      new InsertDashboardModal(app),
+      t("modal.buttons.insertDashboard"),
+    );
+
+    const days = settingField(
+      f.contentEl,
+      t("dashboard.widgetModal.volumeTrendDays"),
+    );
+    days.value = "0";
+    f.submit();
+
+    expect(state.inserted).toBe("");
+    expect(days.getAttribute("aria-invalid")).toBe("true");
+    expect(
+      days
+        .closest(".workout-charts-form-group")
+        ?.querySelector(".workout-number-field-error")?.textContent,
+    ).toBe(t("dashboard.widgetModal.numberRange", { min: 1, max: 365 }));
+  });
 });
 
 describe("dragging a widget by its grip", () => {

@@ -32,7 +32,7 @@ import { getElementScopedId } from "@app/utils/IdUtils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { DomUtils } from "@app/utils/DomUtils";
 import { t } from "@app/i18n";
-import { protocolId } from "@app/services/protocols/ProtocolCatalog";
+import { groupByProtocol, protocolId } from "@app/services/protocols/ProtocolCatalog";
 import {
   TOUR_TARGETS,
   markTourTarget,
@@ -137,10 +137,7 @@ export class EmbeddedDashboardView extends BaseView {
     data: WorkoutLogData[],
     protocol: string,
   ): WorkoutLogData[] {
-    const wanted = protocolId(protocol);
-    return data.filter(
-      (entry) => protocolId(entry.protocol) === wanted,
-    );
+    return groupByProtocol(data).get(protocolId(protocol)) ?? [];
   }
 
   /**

@@ -1,5 +1,21 @@
 import { StringUtils } from "@app/utils/StringUtils";
 
+describe("StringUtils.fillTemplate", () => {
+  it("replaces every {{name}} with its value", () => {
+    expect(
+      StringUtils.fillTemplate("{{a}} and {{b}}, {{a}} again", { a: "1", b: "2" }),
+    ).toBe("1 and 2, 1 again");
+  });
+
+  it("leaves placeholders it has no value for", () => {
+    expect(StringUtils.fillTemplate("{{a}} {{other}}", { a: "x" })).toBe("x {{other}}");
+  });
+
+  it("writes values literally, even with $ patterns", () => {
+    expect(StringUtils.fillTemplate("{{a}}", { a: "$& $1" })).toBe("$& $1");
+  });
+});
+
 describe("StringUtils", () => {
   describe("getMatchScore", () => {
     it("should return 100 for exact match", () => {
@@ -152,169 +168,52 @@ describe("StringUtils", () => {
     });
   });
 
-  describe("findSimilarStrings", () => {
-    const muscleGroups = [
-      "chest",
-      "back",
-      "shoulders",
-      "biceps",
-      "triceps",
-      "quads",
-      "hamstrings",
-      "glutes",
-      "calves",
-      "abs",
-      "core",
-      "forearms",
-      "traps",
-      "rear_delts",
-    ];
+  describe("findSimilar", () => {
+    const muscleGroups = ["chest", "back", "biceps", "quads", "rear_delts"];
 
-    it("should find exact matches (distance 0)", () => {
-      const result = StringUtils.findSimilarStrings(
-        "chest",
-        muscleGroups,
-        0,
-      );
-      expect(result).toEqual(["chest"]);
+    it("gives each match with its distance, closest first, then alphabetically", () => {
+      expect(
+        StringUtils.findSimilar("rat", ["mat", "rat", "cat", "rabbit"], { max: 1 }),
+      ).toEqual([
+        { value: "rat", distance: 0 },
+        { value: "cat", distance: 1 },
+        { value: "mat", distance: 1 },
+      ]);
     });
 
-    it("should find exact matches case insensitively", () => {
-      const result = StringUtils.findSimilarStrings(
-        "CHEST",
-        muscleGroups,
-        0,
-      );
-      expect(result).toEqual(["chest"]);
+    it("ignores case", () => {
+      expect(
+        StringUtils.findSimilar("CHEST", ["chest", "Chest", "chests"], { max: 0 }),
+      ).toEqual([
+        { value: "chest", distance: 0 },
+        { value: "Chest", distance: 0 },
+      ]);
     });
 
-    it("should return empty array when no matches within distance", () => {
-      const result = StringUtils.findSimilarStrings(
-        "xyz",
-        muscleGroups,
-        1,
-      );
-      expect(result).toEqual([]);
+    it("leaves out values closer than min (min: 1 skips the needle itself)", () => {
+      expect(
+        StringUtils.findSimilar("quad", ["quad", "quads", "squad"], { max: 1, min: 1 }),
+      ).toEqual([
+        { value: "quads", distance: 1 },
+        { value: "squad", distance: 1 },
+      ]);
     });
 
-    it("should find matches within maxDistance", () => {
-      // "bicep" is 1 edit away from "biceps" (missing 's')
-      const result = StringUtils.findSimilarStrings(
-        "bicep",
-        muscleGroups,
-        1,
-      );
-      expect(result).toContain("biceps");
+    it("finds typos and nothing beyond max", () => {
+      expect(StringUtils.findSimilar("bicep", muscleGroups, { max: 1 })).toEqual([
+        { value: "biceps", distance: 1 },
+      ]);
+      expect(StringUtils.findSimilar("xyz", muscleGroups, { max: 1 })).toEqual([]);
+      expect(StringUtils.findSimilar("chest", [], { max: 2 })).toEqual([]);
     });
+  });
 
-    it("should sort results by distance (closest first)", () => {
-      const haystack = ["chest", "chests", "crest", "test"];
-      const result = StringUtils.findSimilarStrings(
-        "chest",
-        haystack,
-        2,
-      );
-
-      // "chest" is distance 0, "chests" is distance 1, "crest" is distance 2
-      expect(result[0]).toBe("chest");
-      expect(result).toContain("chests");
-      expect(result).toContain("crest");
-    });
-
-    it("should sort alphabetically for equal distances", () => {
-      const haystack = ["bat", "cat", "hat", "mat"];
-      const result = StringUtils.findSimilarStrings(
-        "rat",
-        haystack,
-        1,
-      );
-
-      // All are distance 1 from "rat"
-      expect(result).toEqual(["bat", "cat", "hat", "mat"]);
-    });
-
-    it("should handle empty needle", () => {
-      const haystack = ["a", "ab", "abc"];
-      const result = StringUtils.findSimilarStrings("", haystack, 2);
-
-      // "a" is distance 1, "ab" is distance 2
-      expect(result).toContain("a");
-      expect(result).toContain("ab");
-      expect(result).not.toContain("abc");
-    });
-
-    it("should handle empty haystack", () => {
-      const result = StringUtils.findSimilarStrings("chest", [], 2);
-      expect(result).toEqual([]);
-    });
-
-    it("should find multiple matches at same distance", () => {
-      const haystack = ["quad", "quads", "squad"];
-      const result = StringUtils.findSimilarStrings(
-        "quad",
-        haystack,
-        1,
-      );
-
-      // "quad" = 0, "quads" = 1 (append s), "squad" = 1 (prepend s)
-      expect(result).toContain("quad");
-      expect(result).toContain("quads");
-      expect(result).toContain("squad");
-      expect(result).toHaveLength(3);
-    });
-
-    it("should not include matches beyond maxDistance", () => {
-      const result = StringUtils.findSimilarStrings(
-        "chest",
-        muscleGroups,
-        1,
-      );
-
-      // Only "chest" itself should match at distance 0-1
-      expect(result).toContain("chest");
-      expect(result).not.toContain("back"); // too different
-    });
-
-    it("should handle practical muscle tag typos", () => {
-      const existingTags = ["chest", "petto", "pectoral"];
-
-      // User types "peto" (typo for "petto")
-      const result = StringUtils.findSimilarStrings(
-        "peto",
-        existingTags,
-        2,
-      );
-      expect(result).toContain("petto");
-    });
-
-    it("should find similar tags for duplicate detection", () => {
-      const existingTags = [
-        "bench press",
-        "incline bench",
-        "dumbbell press",
-      ];
-
-      // User is adding "bench pres" (typo)
-      const result = StringUtils.findSimilarStrings(
-        "bench pres",
-        existingTags,
-        2,
-      );
-      expect(result).toContain("bench press");
-    });
-
-    it("should handle maxDistance of 0 (exact matches only)", () => {
-      const haystack = ["chest", "chests", "Chest"];
-      const result = StringUtils.findSimilarStrings(
-        "chest",
-        haystack,
-        0,
-      );
-
-      // Both "chest" and "Chest" match due to case insensitivity
-      expect(result).toHaveLength(2);
-      expect(result).toContain("chest");
-      expect(result).toContain("Chest");
+  describe("humanize", () => {
+    it("turns snake_case into Title Case", () => {
+      expect(StringUtils.humanize("rear_delts")).toBe("Rear Delts");
+      expect(StringUtils.humanize("lower_back_upper")).toBe("Lower Back Upper");
+      expect(StringUtils.humanize("chest")).toBe("Chest");
+      expect(StringUtils.humanize("")).toBe("");
     });
   });
 });

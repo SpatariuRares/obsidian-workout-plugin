@@ -9,6 +9,7 @@ import {
 } from "@app/features/tables/business/setSheet";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 
 const STRENGTH: ParameterDefinition[] = [
   { key: "reps", label: "Reps", type: "number", required: true, min: 0 },
@@ -16,14 +17,7 @@ const STRENGTH: ParameterDefinition[] = [
 ];
 
 function set(weight: number, reps: number, extra: Partial<WorkoutLogData> = {}): WorkoutLogData {
-  return {
-    date: "2026-10-31T10:00:00.000Z",
-    exercise: "Bench Press",
-    reps,
-    weight,
-    volume: reps * weight,
-    ...extra,
-  };
+  return logRow({ date: "2026-10-31T10:00:00.000Z", reps, weight, ...extra });
 }
 
 function input(overrides: Partial<SheetInput> = {}): SheetInput {
@@ -138,30 +132,85 @@ describe("rowToFormData", () => {
 });
 
 describe("restOf", () => {
-  const plan = [
-    { exercise: "Bench Press", rest: { id: "benchRest", duration: 120 } },
-  ];
+  const fence = (type: string, ...lines: string[]) =>
+    ["```" + type, ...lines, "```"].join("\n");
+  const note = (...parts: string[]) => parts.join("\n\n");
+
+  const benchNote = note(
+    "## Bench",
+    fence("workout-timer", "id: benchRest", "duration: 120"),
+    fence("workout-sets", "exercise: Bench Press"),
+  );
+  const bench = { body: "exercise: Bench Press" };
 
   it("counts down the block's own rest", () => {
-    expect(restOf({ exercise: "Bench Press", rest: 90 }, plan)).toEqual({
+    expect(restOf({ exercise: "Bench Press", rest: 90 }, benchNote, bench)).toEqual({
       type: "countdown",
       duration: 90,
     });
   });
 
-  it("rests on the exercise's section timer without one, else the default preset", () => {
-    expect(restOf({ exercise: "bench  press" }, plan)).toEqual({ id: "benchRest", duration: 120 });
-    expect(restOf({ exercise: "Squat" }, plan)).toEqual({});
+  it("rests on its section's timer without one, else the default preset", () => {
+    expect(restOf({ exercise: "Bench Press" }, benchNote, bench)).toEqual(
+      expect.objectContaining({ id: "benchRest", duration: 120 }),
+    );
+    const noTimer = note("## Squat", fence("workout-sets", "exercise: Squat"));
+    expect(restOf({ exercise: "Squat" }, noTimer, { body: "exercise: Squat" })).toEqual({});
+    expect(restOf({ exercise: "Squat" }, null, undefined)).toEqual({});
+  });
+
+  it("rests on the timer of the section it is written in, not another block's of the exercise", () => {
+    const twoSections = note(
+      "## Heavy",
+      fence("workout-timer", "id: heavyRest", "duration: 180"),
+      fence("workout-sets", "id: heavySets", "exercise: Bench Press", "rest: 150"),
+      "## Light",
+      fence("workout-timer", "id: lightRest", "duration: 60"),
+      fence("workout-sets", "id: lightSets", "exercise: Bench Press"),
+    );
+
+    expect(
+      restOf({ id: "lightSets", exercise: "Bench Press" }, twoSections, { id: "lightSets" }),
+    ).toEqual(expect.objectContaining({ id: "lightRest", duration: 60 }));
+    expect(
+      restOf({ id: "heavySets", exercise: "Bench Press", rest: 150 }, twoSections, {
+        id: "heavySets",
+      }),
+    ).toEqual({ type: "countdown", duration: 150 });
+  });
+
+  it("is not stopped by another block of the exercise saying rest: 0", () => {
+    const twoSections = note(
+      "## Warm-up",
+      fence("workout-sets", "exercise: Bench Press", "sets: 2", "rest: 0"),
+      "## Work",
+      fence("workout-timer", "id: workRest", "duration: 90"),
+      fence("workout-sets", "exercise: Bench Press", "sets: 4"),
+    );
+
+    expect(
+      restOf({ exercise: "Bench Press", sets: 4 }, twoSections, {
+        body: "exercise: Bench Press\nsets: 4",
+      }),
+    ).toEqual(expect.objectContaining({ id: "workRest", duration: 90 }));
+    expect(
+      restOf({ exercise: "Bench Press", sets: 2, rest: 0 }, twoSections, {
+        body: "exercise: Bench Press\nsets: 2\nrest: 0",
+      }),
+    ).toBeUndefined();
   });
 
   it("runs the block's own timer options, which win over the section's", () => {
     expect(
       restOf(
         { exercise: "Bench Press", "timer.preset": "Tabata", "timer.sound": false },
-        plan,
+        benchNote,
+        bench,
       ),
     ).toEqual({ preset: "Tabata", sound: false });
-    expect(restOf({ exercise: "Bench Press", rest: 60, "timer.showControls": false }, plan)).toEqual({
+    expect(
+      restOf({ exercise: "Bench Press", rest: 60, "timer.showControls": false }, benchNote, bench),
+    ).toEqual({
       type: "countdown",
       duration: 60,
       showControls: false,
@@ -169,7 +218,7 @@ describe("restOf", () => {
   });
 
   it("has no rest with rest: 0", () => {
-    expect(restOf({ exercise: "Bench Press", rest: 0 }, plan)).toBeUndefined();
+    expect(restOf({ exercise: "Bench Press", rest: 0 }, benchNote, bench)).toBeUndefined();
   });
 });
 

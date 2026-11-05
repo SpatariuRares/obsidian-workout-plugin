@@ -965,38 +965,6 @@ button.workout-chip.workout-chip-selected:hover {
   border: var(--workout-border-thin) solid var(--workout-border-color);
 }
 
-.workout-select-dropdown {
-  flex-shrink: 0;
-  font-size: var(--workout-font-xl);
-  padding: var(--workout-space-xs);
-  cursor: pointer;
-  max-width: 140px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  height: auto;
-  min-height: 30px;
-  /* Icon-only appearance when closed */
-  background-color: transparent;
-  color: var(--text-normal);
-  border: var(--workout-border-thin) solid transparent;
-  border-radius: var(--workout-radius-sm);
-  transition: var(--workout-transition);
-  /* Hide the native dropdown arrow */
-  appearance: none;
-  -webkit-appearance: none;
-}
-.workout-select-dropdown:hover {
-  background-color: var(--background-modifier-hover);
-  border-color: var(--background-modifier-border-hover);
-}
-.workout-select-dropdown:focus {
-  outline: none;
-  background-color: var(--background-primary);
-  border-color: var(--interactive-accent);
-  box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
-}
-
 .workout-icon-dropdown {
   position: relative;
   display: inline-flex;
@@ -1318,7 +1286,8 @@ button.workout-icon-dropdown-item[aria-checked=true]::before {
   flex: none;
 }
 
-.workout-widget-setting-chips .workout-chip-group-chips {
+.workout-widget-setting-chips .workout-chip-group-chips,
+.workout-modal-type-chips .workout-chip-group-chips {
   flex-wrap: wrap;
   overflow-x: visible;
 }
@@ -2139,11 +2108,7 @@ tr.workout-table-row-tappable:active {
     border: var(--workout-border-thin) solid var(--workout-border-color);
     padding: var(--workout-space-sm);
   }
-  .workout-charts-container .workout-log-table {
-    border-collapse: collapse;
-    width: 100%;
-    font-size: var(--workout-font-sm);
-  }
+  .workout-charts-container .workout-log-table,
   .workout-embedded-chart-table-fallback .workout-log-table {
     border-collapse: collapse;
     width: 100%;
@@ -3529,13 +3494,6 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
    This stylesheet uses a modular approach with component-based CSS files.
    All components follow Obsidian's theming system for consistent appearance.
    ============================================================================ */
-/* Timer modal type chips */
-.workout-timer-type-chips {
-  display: flex;
-  gap: var(--workout-space-sm);
-  flex-wrap: wrap;
-}
-
 /* Timer preset chips - horizontal scrollable */
 .workout-timer-preset-chips {
   display: flex;
@@ -3568,13 +3526,6 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
    This stylesheet uses a modular approach with component-based CSS files.
    All components follow Obsidian's theming system for consistent appearance.
    ============================================================================ */
-/* Table modal type chips */
-.workout-table-type-chips {
-  display: flex;
-  gap: var(--workout-space-sm);
-  flex-wrap: wrap;
-}
-
 /* Table advanced options row - compact flex layout */
 .workout-table-options-row {
   display: flex;
@@ -3795,6 +3746,11 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
    This stylesheet uses a modular approach with component-based CSS files.
    All components follow Obsidian's theming system for consistent appearance.
    ============================================================================ */
+/* The look of a dashboard table on the desk: no outer border, one subtle line
+   between rows, muted small headers, tabular figures. Include it in a rule
+   qualified to beat Obsidian's note table rules (a border around every
+   cell), e.g. `.workout-dashboard table.workout-card-table`. Emits no CSS on
+   its own. */
 /* ============================================================================
    DASHBOARD SUMMARY & STATS
    ============================================================================ */
@@ -3817,6 +3773,7 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
 .workout-dashboard table.workout-quick-stats-table th,
 .workout-dashboard table.workout-quick-stats-table td {
   padding: var(--workout-space-sm) var(--workout-space-xs);
+  text-align: start;
   border: none;
   border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
   background: none;
@@ -3826,10 +3783,12 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
   border-bottom: none;
 }
 .workout-dashboard table.workout-quick-stats-table thead th {
-  text-align: end;
-  font-size: var(--workout-font-xs);
   font-weight: normal;
   color: var(--text-muted);
+  font-size: var(--workout-font-xs);
+}
+.workout-dashboard table.workout-quick-stats-table thead th {
+  text-align: end;
 }
 .workout-dashboard table.workout-quick-stats-table tbody th {
   text-align: start;
@@ -4158,10 +4117,6 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
   min-height: 280px;
 }
 
-.workout-protocol-no-data {
-  color: var(--text-muted);
-}
-
 .workout-protocol-chart-container {
   display: flex;
   justify-content: center;
@@ -4289,46 +4244,10 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
   min-height: 0;
 }
 
-.workout-protocol-effectiveness-no-data {
-  color: var(--text-muted);
-}
-
 /* What the figures can't say, as meta under the table */
 .workout-protocol-effectiveness-disclaimer {
   font-size: var(--workout-font-sm);
   color: var(--text-muted);
-}
-
-.workout-protocol-effectiveness-table-container {
-  overflow-x: auto;
-}
-
-/* Qualified to beat Obsidian's note table rules (a border around every cell) */
-.workout-dashboard table.workout-protocol-effectiveness-table {
-  width: 100%;
-  margin: 0;
-  border: none;
-  border-collapse: collapse;
-  font-variant-numeric: tabular-nums;
-}
-.workout-dashboard table.workout-protocol-effectiveness-table th,
-.workout-dashboard table.workout-protocol-effectiveness-table td {
-  padding: var(--workout-space-sm) var(--workout-space-xs);
-  text-align: start;
-  border: none;
-  border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
-  background: none;
-}
-.workout-dashboard table.workout-protocol-effectiveness-table tbody tr:last-child td {
-  border-bottom: none;
-}
-.workout-dashboard table.workout-protocol-effectiveness-table th {
-  font-weight: normal;
-  color: var(--text-muted);
-  font-size: var(--workout-font-xs);
-}
-.workout-dashboard table.workout-protocol-effectiveness-table th:not(:first-child) {
-  text-align: end;
 }
 
 .workout-dashboard .workout-protocol-effectiveness-table .workout-protocol-effectiveness-entries-cell,
@@ -4357,42 +4276,6 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
    ============================================================================ */
 .workout-duration-comparison {
   min-height: 0;
-}
-
-.workout-duration-comparison-no-data {
-  color: var(--text-muted);
-}
-
-.workout-duration-comparison-table-container {
-  overflow-x: auto;
-}
-
-/* Qualified to beat Obsidian's note table rules (a border around every cell) */
-.workout-dashboard table.workout-duration-comparison-table {
-  width: 100%;
-  margin: 0;
-  border: none;
-  border-collapse: collapse;
-  font-variant-numeric: tabular-nums;
-}
-.workout-dashboard table.workout-duration-comparison-table th,
-.workout-dashboard table.workout-duration-comparison-table td {
-  padding: var(--workout-space-sm) var(--workout-space-xs);
-  text-align: start;
-  border: none;
-  border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
-  background: none;
-}
-.workout-dashboard table.workout-duration-comparison-table tbody tr:last-child td {
-  border-bottom: none;
-}
-.workout-dashboard table.workout-duration-comparison-table th {
-  font-weight: normal;
-  color: var(--text-muted);
-  font-size: var(--workout-font-xs);
-}
-.workout-dashboard table.workout-duration-comparison-table th:not(:first-child) {
-  text-align: end;
 }
 
 .workout-duration-comparison-workout-name {
@@ -4527,6 +4410,40 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
    This stylesheet uses a modular approach with component-based CSS files.
    All components follow Obsidian's theming system for consistent appearance.
    ============================================================================ */
+/* CardTable (app/components/molecules/CardTable.ts): on the desk a plain
+   dashboard table, the figure columns right-aligned under their label */
+.workout-card-table-container {
+  overflow-x: auto;
+}
+
+.workout-dashboard table.workout-card-table {
+  width: 100%;
+  margin: 0;
+  border: none;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.workout-dashboard table.workout-card-table th,
+.workout-dashboard table.workout-card-table td {
+  padding: var(--workout-space-sm) var(--workout-space-xs);
+  text-align: start;
+  border: none;
+  border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
+  background: none;
+}
+.workout-dashboard table.workout-card-table tbody tr:last-child th,
+.workout-dashboard table.workout-card-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.workout-dashboard table.workout-card-table thead th {
+  font-weight: normal;
+  color: var(--text-muted);
+  font-size: var(--workout-font-xs);
+}
+.workout-dashboard table.workout-card-table th:not(:first-child) {
+  text-align: end;
+}
+
 /* Dashboard tables whose rows are "a title + three values" (protocol
    effectiveness, duration comparison). On phones each row becomes a card:
    the first cell as its title, the values side by side under their column

@@ -36,6 +36,37 @@ export function fromLog(log: WorkoutLogData): Partial<LogFormData> {
   };
 }
 
+/** What goes on top of the last set when the form starts from it */
+export interface PrefillOptions {
+  exercise?: string;
+  /** The workout the new set belongs to, not the last set's */
+  workout?: string;
+  targetReps?: number;
+  /** In the settings unit */
+  targetWeight?: number;
+}
+
+/**
+ * The form values for a new set that starts from the last one (on a new
+ * day: its date is left out), with the given exercise, workout and targets
+ * on top. Empty without a last set, but for those.
+ */
+export function prefillFromLast(
+  last: WorkoutLogData | undefined,
+  options: PrefillOptions = {},
+): Partial<LogFormData> {
+  const prefill: Partial<LogFormData> = last ? { ...fromLog(last), date: undefined } : {};
+  if (options.exercise !== undefined) prefill.exercise = options.exercise;
+  if (options.workout !== undefined) prefill.workout = options.workout;
+  if (options.targetReps !== undefined) prefill.reps = options.targetReps;
+  if (options.targetWeight !== undefined) {
+    prefill.weight = options.targetWeight;
+    // Targets are in the settings unit
+    prefill.weightUnit = undefined;
+  }
+  return prefill;
+}
+
 /** What a set's fields hold, read: for `validate`, and the set's values */
 export interface SetFields {
   /** What each field holds as typed (text, or a checkbox's state) */

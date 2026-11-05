@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "уд/мин",
-    "cancel": "Отменить",
     "clear": "Очистить",
     "convert": "Преобразовать",
     "exercise": "Упражнение",
@@ -98,7 +97,6 @@
       "columnEstimated": "Оценка",
       "columnVariance": "Отклонение",
       "columnWorkout": "Тренировка",
-      "minutesSuffix": " мин",
       "noData": "Пока недостаточно тренировок для сравнения.",
       "subtitle": "Ожидаемая и фактическая продолжительность тренировки",
       "title": "Сравнение по продолжительности",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "Оценки всё ближе к реальным тренировкам",
       "varianceTrendStable": "Точность оценок стабильна",
       "varianceTrendTitle": "Точность оценок",
-      "avgVarianceStat": "Сред. отклонение: ±{value}%",
-      "hoursSuffix": "ч"
+      "avgVarianceStat": "Сред. отклонение: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Все страницы упражнений корректны",
@@ -201,8 +198,6 @@
       "moveUp": "Переместить {widget} вверх",
       "moveDown": "Переместить {widget} вниз",
       "allHistory": "Пусто: вся история",
-      "recentWorkoutsLimit": "Тренировок в списке последних",
-      "volumeTrendDays": "Дней в тренде объёма",
       "layout": "Макет",
       "layoutGrid": "Сетка",
       "layoutList": "Список",
@@ -568,7 +563,6 @@
     "createLogButtonText": "Создать запись для: {exerciseName}",
     "noDataTitle": "Не найдено записей для {exerciseName}",
     "exploreExampleData": "Или изучите примеры данных",
-    "lastSet": "Последний раз: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Личный рекорд: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "Добавить предустановку",
       "addProtocol": "Добавить протокол",
-      "cancel": "Отменить",
       "createFiles": "Создать файлы",
       "done": "Готово!",
       "failed": "Не удалось",
@@ -1072,7 +1065,6 @@
     "editTable": "Редактировать таблицу",
     "editTitle": "Редактировать",
     "gotoExercise": "Перейти к упражнению",
-    "invalidDate": "Неверная дата",
     "labels": {
       "target": "Цель:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "Подходов с {weight} пока нет",
       "progress": "Лучший результат {best}/{target} повт.",
-      "progressTooltip": "Лучшее: {best} повт. / Цель: {target} повт.",
-      "repsSuffix": "повт.",
-      "separator": " × "
+      "progressTooltip": "Лучшее: {best} повт. / Цель: {target} повт."
     },
     "trendLine": "Линия тренда",
     "refreshingTable": "Обновление таблицы...",
@@ -1127,7 +1117,6 @@
     "down": "Вниз",
     "improving": "Улучшение",
     "increasing": "Увеличение",
-    "invariant": "Без изменений",
     "neutral": "Нейтральный",
     "stable": "Стабильный",
     "stableLower": "Стабильно",

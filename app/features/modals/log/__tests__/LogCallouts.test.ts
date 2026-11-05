@@ -36,7 +36,11 @@ const createMockPlugin = (activeFile?: {
       workspace: {
         getActiveViewOfType: jest
           .fn()
-          .mockReturnValue(activeFile ? { file: activeFile } : null),
+          .mockReturnValue(
+            activeFile
+              ? { file: { ...activeFile, path: `${activeFile.basename}.md` } }
+              : null,
+          ),
       },
     },
     triggerWorkoutLogRefresh: jest.fn(),

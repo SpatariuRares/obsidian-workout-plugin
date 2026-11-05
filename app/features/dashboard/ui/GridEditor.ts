@@ -115,7 +115,7 @@ export class GridEditor {
       "--workout-grid-columns": String(columns),
     });
     for (const id of stashed) {
-      const min = Math.min(minColumnsOf(id), columns);
+      const min = minColumnsOf(id, columns);
       const item = itemsEl.createEl("button", {
         cls: "workout-grid-stash-item",
         attr: { type: "button", "data-widget": id },
@@ -324,7 +324,7 @@ export class GridEditor {
       cell.column - drag.grab.column,
       cell.row - drag.grab.row,
       columns,
-      { width: Math.min(minColumnsOf(drag.id), columns), height: 1 },
+      { width: minColumnsOf(drag.id, columns), height: 1 },
     );
   }
 

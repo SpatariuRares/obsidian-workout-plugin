@@ -188,3 +188,47 @@ describe("TimerCore interval phases", () => {
     expect(audioInstance().play).toHaveBeenLastCalledWith("end");
   });
 });
+
+describe("TimerCore configure", () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(1_000_000);
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it("stops a running timer and puts it back at the start with the new settings", () => {
+    const core = new TimerCore("t1");
+    core.setState({ timerType: TIMER_TYPE.INTERVAL, duration: 20, rest: 10, totalRounds: 8 });
+    core.addSurface(surface());
+    core.start();
+    jest.advanceTimersByTime(45_000);
+
+    core.configure({ timerType: TIMER_TYPE.COUNTDOWN, duration: 90, rest: 0, totalRounds: 1 });
+
+    expect(core.getState()).toMatchObject({
+      timerType: TIMER_TYPE.COUNTDOWN,
+      duration: 90,
+      rest: 0,
+      totalRounds: 1,
+      isRunning: false,
+      elapsedTime: 0,
+      currentRound: 1,
+      phase: "work",
+      startTime: undefined,
+    });
+  });
+
+  it("starts a finished countdown over", () => {
+    const core = new TimerCore("t1");
+    runCountdown(core, 3);
+
+    core.start();
+    jest.advanceTimersByTime(1_000);
+
+    expect(core.isRunning()).toBe(true);
+    expect(core.getState().elapsedTime).toBeLessThan(1_500);
+  });
+});

@@ -7,7 +7,10 @@ import {
 } from "@app/features/dashboard/widgets/muscle-heat-map/body/Body";
 import { MuscleDataCalculator } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleDataCalculator";
 import { MuscleBalanceAnalyzer } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleBalanceAnalyzer";
-import { HeatMapControls } from "@app/features/dashboard/widgets/muscle-heat-map/HeatMapControls";
+import {
+  HEAT_MAP_DEFAULT_OPTIONS,
+  HeatMapControls,
+} from "@app/features/dashboard/widgets/muscle-heat-map/HeatMapControls";
 import type { MuscleHeatMapOptions } from "@app/features/dashboard/widgets/muscle-heat-map/types";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
@@ -76,9 +79,9 @@ export class MuscleHeatMap {
       plugin,
       renderHeatMap,
       {
-        timeFrame: params.heatMapTimeFrame ?? "week",
-        view: params.heatMapView ?? "front",
-        metric: params.heatMapMetric ?? "volume",
+        timeFrame: params.heatMapTimeFrame ?? HEAT_MAP_DEFAULT_OPTIONS.timeFrame,
+        view: params.heatMapView ?? HEAT_MAP_DEFAULT_OPTIONS.view,
+        metric: params.heatMapMetric ?? HEAT_MAP_DEFAULT_OPTIONS.metric,
       },
     );
 

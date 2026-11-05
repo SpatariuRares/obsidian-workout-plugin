@@ -3,10 +3,7 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { InsertSetsModal } from "@app/features/tables/modals/InsertSetsModal";
 import { PlanFields } from "@app/features/tables/modals/components/PlanFields";
 import { setsBlock, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
-import {
-  createEditButtons,
-  type EditTarget,
-} from "@app/features/modals/base/components/createEditButtons";
+import type { EditTarget } from "@app/features/modals/base/components/createEditButtons";
 import { t } from "@app/i18n";
 
 /**
@@ -46,14 +43,10 @@ export class EditSetsModal extends InsertSetsModal {
   }
 
   protected createButtons(container: HTMLElement): void {
-    createEditButtons(this, container, {
-      schema: setsBlock,
+    this.editButtons(container, setsBlock, t("sets.blockUpdateFailed"), {
       target: this.where,
       id: this.initialParams.id,
       collectParams: () => this.collectParams(),
-      buttonText: this.getButtonText(),
-      successMessage: this.getSuccessMessage(),
-      failureMessage: t("sets.blockUpdateFailed"),
     });
   }
 }

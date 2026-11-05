@@ -1,15 +1,17 @@
 import { TableRowProcessor } from "@app/features/tables/business/TableRowProcessor";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 
-const log = (overrides: Partial<WorkoutLogData>): WorkoutLogData => ({
-  date: "2024-01-24T10:00:00.000Z",
-  exercise: "Squat",
-  reps: 5,
-  weight: 100,
-  volume: 500,
-  ...overrides,
-});
+const log = (overrides: Partial<WorkoutLogData>) =>
+  logRow({
+    date: "2024-01-24T10:00:00.000Z",
+    exercise: "Squat",
+    reps: 5,
+    weight: 100,
+    volume: 500,
+    ...overrides,
+  });
 
 const weightCell = (entry: WorkoutLogData) =>
   TableRowProcessor.processRows([entry], ["weight"])[0].displayRow[0];

@@ -257,7 +257,7 @@ export class MuscleTagService {
       await this.app.vault.modify(abstractFile, content);
     } else {
       // File doesn't exist, create it
-      await PathUtils.ensureFolderExists(this.app, csvPath);
+      await PathUtils.ensureParentFolder(this.app, csvPath);
       await this.app.vault.create(csvPath, content);
     }
 
@@ -352,7 +352,7 @@ export class MuscleTagService {
     const content = lines.join("\n");
 
     // Create file (with parent folder if needed)
-    await PathUtils.ensureFolderExists(this.app, csvPath);
+    await PathUtils.ensureParentFolder(this.app, csvPath);
 
     await this.app.vault.create(csvPath, content);
 

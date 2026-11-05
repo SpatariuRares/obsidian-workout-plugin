@@ -2,20 +2,9 @@
 
 import { TargetHeader } from "@app/features/tables/ui/TargetHeader";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
-import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 
 import { t } from "@app/i18n";
-
-const createLog = (
-  overrides: Partial<WorkoutLogData> = {},
-): WorkoutLogData => ({
-  date: "2024-01-15",
-  exercise: "Bench Press",
-  reps: 8,
-  weight: 80,
-  volume: 640,
-  ...overrides,
-});
 
 describe("TargetHeader", () => {
   it("returns null when no targets set", () => {
@@ -42,7 +31,9 @@ describe("TargetHeader", () => {
     expect(result!.classList.contains("workout-target-header")).toBe(
       true,
     );
-    expect(result!.textContent).toContain("100kg");
+    expect(result!.querySelector(".workout-target-text")!.textContent).toBe(
+      t("session.targetWeight", { weight: 100, unit: "kg" }),
+    );
   });
 
   it("renders target text with reps only", () => {
@@ -54,9 +45,10 @@ describe("TargetHeader", () => {
       weightUnit: "kg",
     });
 
-    const repsSuffix = t("table.target.repsSuffix");
     expect(result).not.toBeNull();
-    expect(result!.textContent).toContain(`10 ${repsSuffix}`);
+    expect(result!.querySelector(".workout-target-text")!.textContent).toBe(
+      t("session.targetReps", { reps: 10 }),
+    );
   });
 
   it("renders target text with both weight and reps", () => {
@@ -69,15 +61,15 @@ describe("TargetHeader", () => {
       weightUnit: "kg",
     });
 
-    const repsSuffix = t("table.target.repsSuffix");
     expect(result).not.toBeNull();
-    expect(result!.textContent).toContain("100kg");
-    expect(result!.textContent).toContain(`10 ${repsSuffix}`);
+    expect(result!.querySelector(".workout-target-text")!.textContent).toBe(
+      t("logs.weightedSet", { weight: 100, unit: "kg", reps: 10 }),
+    );
   });
 
   it("renders the best reps and a progress meter when both targets and matching data exist", () => {
     const container = createObsidianContainer();
-    const data = [createLog({ weight: 100, reps: 7 })];
+    const data = [logRow({ weight: 100, reps: 7 })];
 
     const result = TargetHeader.render(container, {
       targetWeight: 100,
@@ -95,7 +87,7 @@ describe("TargetHeader", () => {
 
   it("says no set was done at the target weight yet, over an empty meter", () => {
     const container = createObsidianContainer();
-    const data = [createLog({ weight: 60, reps: 10 })];
+    const data = [logRow({ weight: 60, reps: 10 })];
 
     const result = TargetHeader.render(container, {
       targetWeight: 100,
@@ -110,12 +102,14 @@ describe("TargetHeader", () => {
     ).toBe("0");
     expect(
       result!.querySelector(".workout-target-progress")!.textContent,
-    ).toBe(t("table.target.noSetsYet", { weight: "100kg" }));
+    ).toBe(t("table.target.noSetsYet", {
+        weight: t("session.targetWeight", { weight: 100, unit: "kg" }),
+      }));
   });
 
   it("does not render progress bar when only weight is set", () => {
     const container = createObsidianContainer();
-    const data = [createLog({ weight: 100, reps: 7 })];
+    const data = [logRow({ weight: 100, reps: 7 })];
 
     const result = TargetHeader.render(container, {
       targetWeight: 100,
@@ -130,7 +124,7 @@ describe("TargetHeader", () => {
 
   it("marks the meter done once the target reps are reached", () => {
     const container = createObsidianContainer();
-    const data = [createLog({ weight: 100, reps: 10 })];
+    const data = [logRow({ weight: 100, reps: 10 })];
 
     const result = TargetHeader.render(container, {
       targetWeight: 100,
@@ -145,7 +139,7 @@ describe("TargetHeader", () => {
 
   it("fills the meter in proportion to the best reps", () => {
     const container = createObsidianContainer();
-    const data = [createLog({ weight: 100, reps: 5 })];
+    const data = [logRow({ weight: 100, reps: 5 })];
 
     const result = TargetHeader.render(container, {
       targetWeight: 100,
@@ -162,7 +156,7 @@ describe("TargetHeader", () => {
 
   it("names the meter for screen readers", () => {
     const container = createObsidianContainer();
-    const data = [createLog({ weight: 100, reps: 8 })];
+    const data = [logRow({ weight: 100, reps: 8 })];
 
     const result = TargetHeader.render(container, {
       targetWeight: 100,
@@ -188,6 +182,8 @@ describe("TargetHeader", () => {
     });
 
     expect(result).not.toBeNull();
-    expect(result!.textContent).toContain("100lb");
+    expect(result!.textContent).toContain(
+      t("session.targetWeight", { weight: 100, unit: "lb" }),
+    );
   });
 });

@@ -130,23 +130,16 @@ export class ImportWorkoutsModal extends ModalBase {
     }
 
     el.createEl("p", { text: t("import.backupNote") });
-    const buttons = Button.createModalActions(el);
-    const cancelBtn = Button.create(buttons, {
-      text: t("modal.buttons.cancel"),
-      ariaLabel: t("modal.buttons.cancel"),
-      variant: BUTTONVARIANT.SECONDARY,
-    });
-    Button.onClick(cancelBtn, () => this.close());
-    const importBtn = Button.create(buttons, {
-      text: t("import.importButton"),
-      ariaLabel: t("import.importButton"),
-      variant: BUTTONVARIANT.PRIMARY,
-    });
-    Button.onClick(importBtn, () => {
-      Button.setDisabled(importBtn, true);
-      void this.write(plan).then((done) => {
-        if (!done) Button.setDisabled(importBtn, false);
-      });
+    const { primary: importBtn } = Button.createModalActions(el, {
+      primary: {
+        text: t("import.importButton"),
+        onClick: async () => {
+          if (importBtn) Button.setDisabled(importBtn, true);
+          const done = await this.write(plan);
+          if (!done && importBtn) Button.setDisabled(importBtn, false);
+        },
+      },
+      onCancel: () => this.close(),
     });
   }
 

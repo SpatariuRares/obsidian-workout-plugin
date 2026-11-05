@@ -4,62 +4,35 @@ import { FakeVault } from "@app/services/exercise/__tests__/FakeVault";
 import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import { MUSCLE_TAG_ENTRIES } from "@app/constants/muscles.constants";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
+import { App, getLanguage } from "obsidian";
 
-// Mock Obsidian module
-
-// Import after mocking
-import { TFile, TAbstractFile, getLanguage } from "obsidian";
-
-// Define mock types
-interface MockEventCallback {
-  (file: TAbstractFile): void;
-}
-
-interface MockVault {
-  getAbstractFileByPath: jest.Mock;
-  read: jest.Mock;
-  modify: jest.Mock;
-  create: jest.Mock;
-  createFolder: jest.Mock;
-  on: jest.Mock;
-  offref: jest.Mock;
-}
-
-interface MockApp {
-  vault: MockVault;
-}
+/** Where the service keeps the tags: next to the workout log */
+const CSV = "workout-data/muscle-tags.csv";
 
 describe("MuscleTagService", () => {
   let service: MuscleTagService;
-  let mockApp: MockApp;
+  let vault: FakeVault;
   let mockSettings: WorkoutChartsSettings;
-  let mockVault: MockVault;
-  let fileModifyCallback: MockEventCallback | null;
+
+  /** A service on `vault`, its exercise pages read from the same vault */
+  const createService = (settings = mockSettings) =>
+    new MuscleTagService(
+      vault.app as unknown as App,
+      settings,
+      new ExerciseLibrary(vault.app as never, settings),
+    );
+
+  /** Puts the tag file in the vault with this text */
+  const withCsv = (content: string) => vault.app.vault.create(CSV, content);
+
+  const readSpy = () => jest.spyOn(vault.app.vault, "read");
 
   beforeEach(() => {
     jest.clearAllMocks();
-    fileModifyCallback = null;
 
     (getLanguage as jest.Mock).mockReturnValue("en");
 
-    mockVault = {
-      getAbstractFileByPath: jest.fn(),
-      read: jest.fn(),
-      modify: jest.fn(),
-      create: jest.fn(),
-      createFolder: jest.fn(),
-      on: jest.fn((event: string, callback: MockEventCallback) => {
-        if (event === "modify") {
-          fileModifyCallback = callback;
-        }
-        return {}; // Return mock EventRef
-      }),
-      offref: jest.fn(),
-    };
-
-    mockApp = {
-      vault: mockVault,
-    };
+    vault = new FakeVault();
 
     mockSettings = {
       csvLogFilePath: "workout-data/workout_logs.csv",
@@ -82,9 +55,9 @@ describe("MuscleTagService", () => {
       quickWeightIncrement: 2.5,
       repDuration: 5,
       defaultRepsPerSet: 0,
-    };
+    } as unknown as WorkoutChartsSettings;
 
-    service = new MuscleTagService(mockApp as any, mockSettings);
+    service = createService();
   });
 
   afterEach(() => {
@@ -93,20 +66,14 @@ describe("MuscleTagService", () => {
 
   describe("constructor", () => {
     it("should compute CSV path based on settings", () => {
-      expect(service.getCsvPath()).toBe(
-        "workout-data/muscle-tags.csv",
-      );
+      expect(service.getCsvPath()).toBe(CSV);
     });
 
     it("should handle root-level csvLogFilePath", () => {
-      const rootSettings = {
+      const rootService = createService({
         ...mockSettings,
         csvLogFilePath: "logs.csv",
-      };
-      const rootService = new MuscleTagService(
-        mockApp as any,
-        rootSettings,
-      );
+      });
       expect(rootService.getCsvPath()).toBe("muscle-tags.csv");
       rootService.destroy();
     });
@@ -114,16 +81,11 @@ describe("MuscleTagService", () => {
 
   describe("loadTags", () => {
     it("should parse valid CSV correctly with English tags", async () => {
-      const csvContent = `tag,muscleGroup,language
+      await withCsv(`tag,muscleGroup,language
 petto,chest,en
 schiena,back,en
 spalle,shoulders,en
-bicipiti,biceps,en`;
-
-      const mockFile = new TFile();
-      (mockFile as any).path = "workout-data/muscle-tags.csv";
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
+bicipiti,biceps,en`);
 
       const tags = await service.loadTags();
 
@@ -135,16 +97,11 @@ bicipiti,biceps,en`;
     });
 
     it("should filter tags by user language", async () => {
-      const csvContent = `tag,muscleGroup,language
+      await withCsv(`tag,muscleGroup,language
 petto,chest,it
 chest,chest,en
 schiena,back,it
-back,back,en`;
-
-      const mockFile = new TFile();
-      (mockFile as any).path = "workout-data/muscle-tags.csv";
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
+back,back,en`);
 
       const tags = await service.loadTags();
 
@@ -157,20 +114,13 @@ back,back,en`;
     });
 
     it("should include both user language and English tags", async () => {
-      // Change user language to Italian
       (getLanguage as jest.Mock).mockReturnValue("it");
-
-      const csvContent = `tag,muscleGroup,language
+      await withCsv(`tag,muscleGroup,language
 petto,chest,it
 chest,chest,en
 schiena,back,it
 back,back,en
-spalle,shoulders,it`;
-
-      const mockFile = new TFile();
-      (mockFile as any).path = "workout-data/muscle-tags.csv";
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
+spalle,shoulders,it`);
 
       const tags = await service.loadTags();
 
@@ -184,28 +134,22 @@ spalle,shoulders,it`;
     });
 
     it("should return default tags when CSV does not exist", async () => {
-      mockVault.getAbstractFileByPath.mockReturnValue(null);
-
       const tags = await service.loadTags();
 
-      // Should return filtered defaults (only English tags since mock language is 'en')
+      // Only English defaults, since the language is 'en'
       expect(tags.size).toBeGreaterThan(0);
       expect(tags.get("chest")).toBe("chest");
       expect(tags.get("back")).toBe("back");
       expect(tags.get("biceps")).toBe("biceps");
-      // Italian tags should not be included
       expect(tags.has("petto")).toBe(false);
       expect(tags.has("schiena")).toBe(false);
     });
 
     it("should return default tags when CSV is empty", async () => {
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue("");
+      await withCsv("");
 
       const tags = await service.loadTags();
 
-      // Should return filtered defaults (only English since mock language is 'en')
       const expectedEnglishTags = MUSCLE_TAG_ENTRIES.filter(
         (e) => e.language === "en",
       );
@@ -213,30 +157,18 @@ spalle,shoulders,it`;
     });
 
     it("should automatically migrate old CSV format to new format", async () => {
-      const oldCsvContent = `tag,muscleGroup
+      await withCsv(`tag,muscleGroup
 petto,chest
 schiena,back
-spalle,shoulders`;
-
-      const mockFile = new TFile();
-      (mockFile as any).path = "workout-data/muscle-tags.csv";
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValueOnce(oldCsvContent);
-
-      // After migration, return the new format
-      const newCsvContent = `tag,muscleGroup,language
-petto,chest,en
-schiena,back,en
-spalle,shoulders,en`;
-      mockVault.modify.mockResolvedValue(undefined);
-      mockVault.read.mockResolvedValueOnce(newCsvContent);
+spalle,shoulders`);
 
       const tags = await service.loadTags();
 
-      // Should have called modify to migrate the CSV
-      expect(mockVault.modify).toHaveBeenCalled();
-
-      // Should return migrated tags (all with language 'en')
+      // The file now has the language column (all 'en')
+      expect(vault.content(CSV)).toBe(`tag,muscleGroup,language
+petto,chest,en
+schiena,back,en
+spalle,shoulders,en`);
       expect(tags.size).toBe(3);
       expect(tags.get("petto")).toBe("chest");
       expect(tags.get("schiena")).toBe("back");
@@ -244,44 +176,27 @@ spalle,shoulders,en`;
     });
 
     it("should migrate old CSV without header", async () => {
-      const oldCsvContent = `petto,chest
-schiena,back`;
-
-      const mockFile = new TFile();
-      (mockFile as any).path = "workout-data/muscle-tags.csv";
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValueOnce(oldCsvContent);
-
-      const newCsvContent = `tag,muscleGroup,language
-petto,chest,en
-schiena,back,en`;
-      mockVault.modify.mockResolvedValue(undefined);
-      mockVault.read.mockResolvedValueOnce(newCsvContent);
+      await withCsv(`petto,chest
+schiena,back`);
 
       await service.loadTags();
 
-      expect(mockVault.modify).toHaveBeenCalled();
-      const migratedContent = mockVault.modify.mock.calls[0][1];
+      const migratedContent = vault.content(CSV);
       expect(migratedContent).toContain("tag,muscleGroup,language");
       expect(migratedContent).toContain("petto,chest,en");
       expect(migratedContent).toContain("schiena,back,en");
     });
 
     it("should handle malformed CSV rows gracefully", async () => {
-      const csvContent = `tag,muscleGroup,language
+      await withCsv(`tag,muscleGroup,language
 petto,chest,en
 invalidrow
 ,emptyTag,en
 emptyGroup,,en
-good,biceps,en`;
-
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
+good,biceps,en`);
 
       const tags = await service.loadTags();
 
-      // Should only have the valid rows (petto,chest and good,biceps)
       // Rows with empty tag, empty group, or not enough columns are skipped
       expect(tags.size).toBe(2);
       expect(tags.get("petto")).toBe("chest");
@@ -289,42 +204,29 @@ good,biceps,en`;
     });
 
     it("should accept rows with extra columns (ignoring extras)", async () => {
-      const csvContent = `tag,muscleGroup,language
-petto,chest,en,extraColumn,anotherExtra`;
-
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
+      await withCsv(`tag,muscleGroup,language
+petto,chest,en,extraColumn,anotherExtra`);
 
       const tags = await service.loadTags();
 
-      // Should parse the first three columns and ignore the rest
       expect(tags.size).toBe(1);
       expect(tags.get("petto")).toBe("chest");
     });
 
     it("should skip header line when present", async () => {
-      const csvContent = `tag,muscleGroup,language
-petto,chest,en`;
-
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
+      await withCsv(`tag,muscleGroup,language
+petto,chest,en`);
 
       const tags = await service.loadTags();
 
       expect(tags.size).toBe(1);
-      expect(tags.has("tag")).toBe(false); // Should not include header as a tag
+      expect(tags.has("tag")).toBe(false);
       expect(tags.get("petto")).toBe("chest");
     });
 
     it("should handle CSV without header line", async () => {
-      const csvContent = `petto,chest,en
-schiena,back,en`;
-
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
+      await withCsv(`petto,chest,en
+schiena,back,en`);
 
       const tags = await service.loadTags();
 
@@ -334,13 +236,9 @@ schiena,back,en`;
     });
 
     it("should convert tags and groups to lowercase", async () => {
-      const csvContent = `tag,muscleGroup,language
+      await withCsv(`tag,muscleGroup,language
 PETTO,CHEST,EN
-Schiena,Back,EN`;
-
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
+Schiena,Back,EN`);
 
       const tags = await service.loadTags();
 
@@ -349,13 +247,9 @@ Schiena,Back,EN`;
     });
 
     it("should handle quoted CSV values", async () => {
-      const csvContent = `tag,muscleGroup,language
+      await withCsv(`tag,muscleGroup,language
 "petto, alto",chest,en
-"back ""upper""",back,en`;
-
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
+"back ""upper""",back,en`);
 
       const tags = await service.loadTags();
 
@@ -364,13 +258,11 @@ Schiena,Back,EN`;
     });
 
     it("should handle read errors gracefully", async () => {
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockRejectedValue(new Error("Read error"));
+      await withCsv("tag,muscleGroup,language\npetto,chest,en");
+      readSpy().mockRejectedValue(new Error("Read error"));
 
       const tags = await service.loadTags();
 
-      // Should return filtered defaults on error (only English since mock language is 'en')
       const expectedEnglishTags = MUSCLE_TAG_ENTRIES.filter(
         (e) => e.language === "en",
       );
@@ -378,146 +270,102 @@ Schiena,Back,EN`;
     });
 
     it("should deduplicate concurrent load requests", async () => {
-      const csvContent = `tag,muscleGroup,language
-petto,chest,en`;
+      await withCsv(`tag,muscleGroup,language
+petto,chest,en`);
+      const read = readSpy();
 
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
-
-      // Call loadTags multiple times concurrently
       const [result1, result2, result3] = await Promise.all([
         service.loadTags(),
         service.loadTags(),
         service.loadTags(),
       ]);
 
-      // All should get the same result
       expect(result1).toBe(result2);
       expect(result2).toBe(result3);
-
-      // Read should only be called once
-      expect(mockVault.read).toHaveBeenCalledTimes(1);
+      expect(read).toHaveBeenCalledTimes(1);
     });
   });
 
   describe("saveTags", () => {
     it("should write correct CSV format with language column", async () => {
-      mockVault.getAbstractFileByPath.mockReturnValue(null);
-      mockVault.create.mockResolvedValue(new TFile());
-
-      const tags = new Map([
-        ["petto", "chest"],
-        ["schiena", "back"],
-        ["spalle", "shoulders"],
-      ]);
-
-      await service.saveTags(tags);
-
-      expect(mockVault.create).toHaveBeenCalledWith(
-        "workout-data/muscle-tags.csv",
-        expect.stringContaining("tag,muscleGroup,language"),
+      await service.saveTags(
+        new Map([
+          ["petto", "chest"],
+          ["schiena", "back"],
+          ["spalle", "shoulders"],
+        ]),
       );
 
-      const writtenContent = mockVault.create.mock.calls[0][1];
+      const writtenContent = vault.content(CSV);
+      expect(writtenContent).toContain("tag,muscleGroup,language");
       expect(writtenContent).toContain("petto,chest,en");
       expect(writtenContent).toContain("schiena,back,en");
       expect(writtenContent).toContain("spalle,shoulders,en");
     });
 
     it("should allow custom language code", async () => {
-      mockVault.getAbstractFileByPath.mockReturnValue(null);
-      mockVault.create.mockResolvedValue(new TFile());
+      await service.saveTags(new Map([["petto", "chest"]]), "it");
 
-      const tags = new Map([["petto", "chest"]]);
-
-      await service.saveTags(tags, "it");
-
-      const writtenContent = mockVault.create.mock.calls[0][1];
-      expect(writtenContent).toContain("petto,chest,it");
+      expect(vault.content(CSV)).toContain("petto,chest,it");
     });
 
     it("should modify existing file when it exists", async () => {
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.modify.mockResolvedValue(undefined);
+      await withCsv("tag,muscleGroup,language\nold,back,en");
+      const file = vault.file(CSV);
+      const create = jest.spyOn(vault.app.vault, "create");
 
-      const tags = new Map([["petto", "chest"]]);
+      await service.saveTags(new Map([["petto", "chest"]]));
 
-      await service.saveTags(tags);
-
-      expect(mockVault.modify).toHaveBeenCalledWith(
-        mockFile,
-        expect.stringContaining("petto,chest,en"),
-      );
-      expect(mockVault.create).not.toHaveBeenCalled();
+      expect(vault.file(CSV)).toBe(file);
+      expect(vault.content(CSV)).toBe("tag,muscleGroup,language\npetto,chest,en");
+      expect(create).not.toHaveBeenCalled();
     });
 
     it("should create parent folder if it does not exist", async () => {
-      mockVault.getAbstractFileByPath.mockReturnValue(null);
-      mockVault.create.mockResolvedValue(new TFile());
+      await service.saveTags(new Map([["petto", "chest"]]));
 
-      const tags = new Map([["petto", "chest"]]);
-
-      await service.saveTags(tags);
-
-      // Should check for folder and potentially create it
-      expect(mockVault.getAbstractFileByPath).toHaveBeenCalledWith(
-        "workout-data",
-      );
+      expect(vault.app.vault.getFolderByPath("workout-data")).not.toBeNull();
+      expect(vault.paths()).toEqual([CSV]);
     });
 
     it("should escape CSV values containing special characters", async () => {
-      mockVault.getAbstractFileByPath.mockReturnValue(null);
-      mockVault.create.mockResolvedValue(new TFile());
+      await service.saveTags(
+        new Map([
+          ["petto, alto", "chest"],
+          ['back "upper"', "back"],
+          ["tag\nwith\nnewlines", "shoulders"],
+        ]),
+      );
 
-      const tags = new Map([
-        ["petto, alto", "chest"],
-        ['back "upper"', "back"],
-        ["tag\nwith\nnewlines", "shoulders"],
-      ]);
-
-      await service.saveTags(tags);
-
-      const writtenContent = mockVault.create.mock.calls[0][1];
-      // Values with special chars should be quoted
+      const writtenContent = vault.content(CSV);
       expect(writtenContent).toContain('"petto, alto",chest');
       expect(writtenContent).toContain('"back ""upper""",back');
-      expect(writtenContent).toMatch(
-        /"tag\nwith\nnewlines",shoulders/,
-      );
+      expect(writtenContent).toMatch(/"tag\nwith\nnewlines",shoulders/);
     });
 
     it("should update cache after saving", async () => {
-      mockVault.getAbstractFileByPath.mockReturnValue(null);
-      mockVault.create.mockResolvedValue(new TFile());
+      await service.saveTags(new Map([["petto", "chest"]]));
+      const read = readSpy();
 
-      const tags = new Map([["petto", "chest"]]);
-
-      await service.saveTags(tags);
-
-      // tagMap should now return the saved tags
       const cachedTags = await service.tagMap();
       expect(cachedTags.get("petto")).toBe("chest");
+      expect(read).not.toHaveBeenCalled();
     });
 
     it("should throw error on save failure", async () => {
-      mockVault.getAbstractFileByPath.mockReturnValue(null);
-      mockVault.create.mockRejectedValue(new Error("Write failed"));
+      jest
+        .spyOn(vault.app.vault, "create")
+        .mockRejectedValue(new Error("Write failed"));
 
-      const tags = new Map([["petto", "chest"]]);
-
-      await expect(service.saveTags(tags)).rejects.toThrow(
-        "Write failed",
-      );
+      await expect(
+        service.saveTags(new Map([["petto", "chest"]])),
+      ).rejects.toThrow("Write failed");
     });
   });
 
   describe("tagMap", () => {
     it("returns the user's tags on the very first call, not the defaults", async () => {
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue("tag,muscleGroup,language\npetto,chest,en");
+      await withCsv("tag,muscleGroup,language\npetto,chest,en");
 
       const tags = await service.tagMap();
 
@@ -525,27 +373,24 @@ petto,chest,en`;
     });
 
     it("reads the file once and then serves the cache", async () => {
-      mockVault.getAbstractFileByPath.mockReturnValue(new TFile());
-      mockVault.read.mockResolvedValue("tag,muscleGroup,language\npetto,chest,en");
+      await withCsv("tag,muscleGroup,language\npetto,chest,en");
+      const read = readSpy();
 
       await service.tagMap();
       await service.tagMap();
 
-      expect(mockVault.read).toHaveBeenCalledTimes(1);
+      expect(read).toHaveBeenCalledTimes(1);
     });
 
     it("uses the defaults when there is no tag file", async () => {
-      mockVault.getAbstractFileByPath.mockReturnValue(null);
-
       expect((await service.tagMap()).get("chest")).toBe("chest");
     });
   });
 
   describe("musclesForTags", () => {
-    beforeEach(() => {
-      mockVault.getAbstractFileByPath.mockReturnValue(new TFile());
+    beforeEach(async () => {
       // A user tag file from before specific muscles existed
-      mockVault.read.mockResolvedValue("tag,muscleGroup,language\npetto,chest,en");
+      await withCsv("tag,muscleGroup,language\npetto,chest,en");
     });
 
     it("maps tags through the user's tag map, ignoring case", async () => {
@@ -566,12 +411,11 @@ petto,chest,en`;
   });
 
   describe("musclesForExercise", () => {
-    /** Exercise pages in the "exercises" folder: path → frontmatter */
+    /** Exercise pages in the "exercises" folder: path → frontmatter (default tags) */
     function withNotes(notes: Record<string, Record<string, unknown>>) {
-      const vault = new FakeVault(notes);
-      const library = new ExerciseLibrary(vault.app as never, mockSettings);
-      mockVault.getAbstractFileByPath.mockReturnValue(null); // default tags
-      service = new MuscleTagService(mockApp as any, mockSettings, library);
+      for (const [path, frontmatter] of Object.entries(notes)) {
+        vault.write(path, frontmatter);
+      }
     }
 
     it("reads the muscles from the tags of the exercise's note", async () => {
@@ -616,199 +460,119 @@ petto,chest,en`;
   });
 
   describe("cache invalidation", () => {
-    it("should clear cache when file is modified", async () => {
-      const csvContent = `tag,muscleGroup,language
-chest,chest,en`;
-
-      const mockFile = new TFile();
-      (mockFile as any).path = "workout-data/muscle-tags.csv";
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
-
-      // Load and cache
+    it("should read the file again when it is loaded after a change", async () => {
+      await withCsv(`tag,muscleGroup,language
+chest,chest,en`);
       await service.loadTags();
+      const read = readSpy();
 
-      // Clear read mock and verify cache is used
-      mockVault.read.mockClear();
-      mockVault.getAbstractFileByPath.mockClear();
+      // tagMap returns the cached data without reading the file
+      expect((await service.tagMap()).get("chest")).toBe("chest");
+      expect(read).not.toHaveBeenCalled();
 
-      // tagMap should return cached data without reading file
-      const cachedMap = await service.tagMap();
-      expect(cachedMap.get("chest")).toBe("chest");
-      expect(mockVault.getAbstractFileByPath).not.toHaveBeenCalled();
+      await vault.app.vault.modify(
+        vault.file(CSV),
+        `tag,muscleGroup,language
+chest,back,en`,
+      );
 
-      // Simulate file modification
-      if (fileModifyCallback) {
-        fileModifyCallback(mockFile);
-      }
-
-      // Setup for next read
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(`tag,muscleGroup,language
-chest,back,en`);
-
-      // Now loading should read from file again
       const newTags = await service.loadTags();
-      expect(mockVault.read).toHaveBeenCalled();
+      expect(read).toHaveBeenCalled();
       expect(newTags.get("chest")).toBe("back");
     });
 
     it("should not clear cache when different file is modified", async () => {
-      const csvContent = `tag,muscleGroup,language
-chest,chest,en`;
-
-      const mockFile = new TFile();
-      (mockFile as any).path = "workout-data/muscle-tags.csv";
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
-
-      // Load and cache
+      await withCsv(`tag,muscleGroup,language
+chest,chest,en`);
       await service.loadTags();
 
-      // Simulate modification of different file
-      const differentFile = new TFile();
-      (differentFile as any).path = "some/other/file.csv";
-      if (fileModifyCallback) {
-        fileModifyCallback(differentFile);
-      }
+      await vault.app.vault.create("some/other/file.csv", "x");
+      await vault.app.vault.modify(vault.file("some/other/file.csv"), "y");
+      const read = readSpy();
 
-      // Cache should still be valid
-      mockVault.read.mockClear();
-      mockVault.getAbstractFileByPath.mockClear();
-
-      const cachedMap = await service.tagMap();
-      expect(cachedMap.get("chest")).toBe("chest");
-      expect(mockVault.getAbstractFileByPath).not.toHaveBeenCalled();
+      expect((await service.tagMap()).get("chest")).toBe("chest");
+      expect(read).not.toHaveBeenCalled();
     });
 
     it("should allow manual cache clearing", async () => {
-      const csvContent = `tag,muscleGroup,language
-petto,chest,en`;
-
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
-
-      // Load and cache
+      await withCsv(`tag,muscleGroup,language
+petto,chest,en`);
       await service.loadTags();
-      mockVault.read.mockClear();
+      const read = readSpy();
 
-      // Manually clear cache
       service.clearCache();
+      await service.tagMap();
 
-      // Next load should read from file
-      await service.loadTags();
-      expect(mockVault.read).toHaveBeenCalled();
+      expect(read).toHaveBeenCalled();
     });
   });
 
   describe("csvExists", () => {
     it("should return true when CSV file exists", async () => {
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      await withCsv("");
 
-      const exists = await service.csvExists();
-
-      expect(exists).toBe(true);
+      expect(await service.csvExists()).toBe(true);
     });
 
     it("should return false when CSV file does not exist", async () => {
-      mockVault.getAbstractFileByPath.mockReturnValue(null);
-
-      const exists = await service.csvExists();
-
-      expect(exists).toBe(false);
+      expect(await service.csvExists()).toBe(false);
     });
 
     it("should return false when path points to folder not file", async () => {
-      // Return something that's not a TFile
-      mockVault.getAbstractFileByPath.mockReturnValue({});
+      await vault.app.vault.create(`${CSV}/inside.md`, "");
 
-      const exists = await service.csvExists();
-
-      expect(exists).toBe(false);
+      expect(await service.csvExists()).toBe(false);
     });
   });
 
   describe("createDefaultCsv", () => {
     it("should create CSV with ALL default tags and their languages", async () => {
-      mockVault.getAbstractFileByPath.mockReturnValue(null);
-      mockVault.create.mockResolvedValue(new TFile());
-
       const created = await service.createDefaultCsv();
 
       expect(created).toBe(true);
-      expect(mockVault.create).toHaveBeenCalled();
-
-      const writtenContent = mockVault.create.mock.calls[0][1];
+      const writtenContent = vault.content(CSV);
       expect(writtenContent).toContain("tag,muscleGroup,language");
-      // Should contain English tags
+      // English tags
       expect(writtenContent).toContain("chest,chest,en");
       expect(writtenContent).toContain("back,back,en");
-      // Should contain Italian tags with correct language
+      // Italian tags with their language
       expect(writtenContent).toContain("petto,chest,it");
       expect(writtenContent).toContain("schiena,back,it");
     });
 
     it("should return false when CSV already exists", async () => {
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      await withCsv("tag,muscleGroup,language\npetto,chest,en");
 
       const created = await service.createDefaultCsv();
 
       expect(created).toBe(false);
-      expect(mockVault.create).not.toHaveBeenCalled();
+      expect(vault.content(CSV)).toBe("tag,muscleGroup,language\npetto,chest,en");
     });
   });
 
   describe("destroy", () => {
     it("should clear cache on destroy", async () => {
-      const service2 = new MuscleTagService(
-        mockApp as any,
-        mockSettings,
-      );
+      await withCsv(`tag,muscleGroup,language
+petto,chest,en`);
+      await service.loadTags();
+      const read = readSpy();
 
-      const csvContent = `tag,muscleGroup,language\nchest,chest,en`;
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
+      service.destroy();
+      await service.tagMap();
 
-      // Load to populate cache
-      await service2.loadTags();
-      mockVault.read.mockClear();
-
-      // Verify cache is populated
-      const cached = await service2.tagMap();
-      expect(cached.get("chest")).toBe("chest");
-
-      // Destroy should clear the cache
-      service2.destroy();
+      expect(read).toHaveBeenCalled();
     });
 
-    it("should clear cache on destroy", async () => {
-      const csvContent = `tag,muscleGroup,language
-petto,chest,en`;
-
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
-
-      // Load and cache
+    it("should not share its cache with a new service", async () => {
+      await withCsv(`tag,muscleGroup,language
+petto,chest,en`);
       await service.loadTags();
-
-      // Destroy
       service.destroy();
 
-      // Re-create service for testing
-      const newService = new MuscleTagService(
-        mockApp as any,
-        mockSettings,
-      );
-
-      // Should load fresh (not use old cache)
-      mockVault.read.mockClear();
+      const newService = createService();
+      const read = readSpy();
       await newService.loadTags();
-      expect(mockVault.read).toHaveBeenCalled();
+      expect(read).toHaveBeenCalled();
 
       newService.destroy();
     });
@@ -816,9 +580,7 @@ petto,chest,en`;
 
   describe("getCsvPath", () => {
     it("should return the computed CSV path", () => {
-      expect(service.getCsvPath()).toBe(
-        "workout-data/muscle-tags.csv",
-      );
+      expect(service.getCsvPath()).toBe(CSV);
     });
   });
 });

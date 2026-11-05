@@ -7,10 +7,7 @@ import {
 } from "@app/features/tables/types";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { PlanFields } from "@app/features/tables/modals/components/PlanFields";
-import {
-  createEditButtons,
-  type EditTarget,
-} from "@app/features/modals/base/components/createEditButtons";
+import type { EditTarget } from "@app/features/modals/base/components/createEditButtons";
 import { t } from "@app/i18n";
 
 /**
@@ -60,8 +57,7 @@ export class EditTableModal extends InsertTableModal {
     const params = this.initialParams;
 
     // Determine and set table type
-    const tableType = this.inferTableType(params);
-    this.onTableTypeChipClick(tableType);
+    this.tableType?.select(this.inferTableType(params));
 
     // Pre-fill exercise and workout inputs
     if (this.targetElements) {
@@ -109,16 +105,12 @@ export class EditTableModal extends InsertTableModal {
 
   protected createButtons(container: HTMLElement): void {
     const { id } = this.initialParams;
-    createEditButtons(this, container, {
-      schema: tableBlock,
+    this.editButtons(container, tableBlock, t("modal.notices.tableUpdateFailed"), {
       target: this.where,
       id,
       collectParams: () => this.collectParams(),
       // The rows now follow the planned sets (tableRowLimit)
       retiredParams: ["limit"],
-      buttonText: this.getButtonText(),
-      successMessage: this.getSuccessMessage(),
-      failureMessage: t("modal.notices.tableUpdateFailed"),
     });
   }
 }

@@ -9,7 +9,7 @@ import { ModalBase } from "@app/features/modals/base/ModalBase";
 
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
-import { Button, BUTTONVARIANT } from "@app/components/atoms";
+import { Button } from "@app/components/atoms";
 import type {
   CanvasExportOptions,
   CanvasLayoutType,
@@ -138,25 +138,13 @@ export class CanvasExportModal extends ModalBase {
    * Create action buttons
    */
   private createButtons(container: HTMLElement): void {
-    const buttonsSection = Button.createModalActions(container);
-
-    // Cancel button
-    const cancelButton = Button.create(buttonsSection, {
-      text: t("modal.buttons.cancel"),
-      variant: BUTTONVARIANT.SECONDARY,
-      className: "workout-charts-button",
-      ariaLabel: t("modal.buttons.cancel"),
+    Button.createModalActions(container, {
+      primary: {
+        text: t("modal.buttons.export"),
+        onClick: () => this.handleExport(),
+      },
+      onCancel: () => this.close(),
     });
-    Button.onClick(cancelButton, () => this.close());
-
-    // Export button
-    const exportButton = Button.create(buttonsSection, {
-      text: t("modal.buttons.export"),
-      variant: BUTTONVARIANT.SECONDARY,
-      className: "workout-charts-button mod-cta",
-      ariaLabel: t("modal.buttons.export"),
-    });
-    Button.onClick(exportButton, () => this.handleExport());
   }
 
   /**

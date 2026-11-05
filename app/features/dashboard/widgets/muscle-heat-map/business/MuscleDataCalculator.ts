@@ -2,6 +2,7 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { MuscleTagService } from "@app/services/exercise/MuscleTagService";
 import { CANONICAL_MUSCLE_GROUPS } from "@app/constants/muscles.constants";
 import { DateUtils } from "@app/utils/DateUtils";
+import { PERIOD_DAYS, type Period } from "@app/features/dashboard/types";
 import {
   calculateZoneValues,
   type ZoneValues,
@@ -25,14 +26,13 @@ export class MuscleDataCalculator {
   ) {}
 
   /**
-   * Filter workout data by time frame
+   * The sets of the time frame's last N days (PERIOD_DAYS)
    */
   static filterDataByTimeFrame(
     data: WorkoutLogData[],
-    timeFrame: "week" | "month" | "year",
+    timeFrame: Period,
   ): WorkoutLogData[] {
-    // Use DateUtils to filter by time frame
-    return DateUtils.filterByTimeFrame(data, timeFrame);
+    return DateUtils.lastDays(data, PERIOD_DAYS[timeFrame]);
   }
 
   /**

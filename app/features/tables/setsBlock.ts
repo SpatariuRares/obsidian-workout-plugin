@@ -5,6 +5,7 @@ import {
   PLAN_FIELDS,
 } from "@app/features/tables/exerciseBlockFields";
 import { TIMER_TYPE } from "@app/types/WorkoutConfigTypes";
+import { withoutUndefined } from "@app/utils/ObjectUtils";
 import type { EmbeddedTimerParams } from "@app/features/timer/types";
 
 /**
@@ -78,10 +79,4 @@ export function restParams(timer: EmbeddedTimerParams): EmbeddedSetsParams {
     "timer.showControls": timer.showControls,
     "timer.sound": timer.sound,
   };
-}
-
-function withoutUndefined<T extends object>(value: T): T {
-  return Object.fromEntries(
-    Object.entries(value).filter(([, v]) => v !== undefined),
-  ) as T;
 }

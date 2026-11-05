@@ -44,6 +44,7 @@ import {
 } from "obsidian";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import { normalizeExercise } from "@app/services/events/WorkoutEventTypes";
+import { sameWorkout } from "@app/services/history/TrainingHistory";
 
 type CodeBlockProcessorPlugin = WorkoutPluginContext &
   MarkdownCodeBlockProcessorPort;
@@ -65,7 +66,7 @@ class TimerRenderChild extends MarkdownRenderChild {
     if (!this.exercise || !this.workout || !this.eventBus) return;
 
     const exerciseNorm = normalizeExercise(this.exercise);
-    const workoutNorm = normalizeExercise(this.workout);
+    const workout = this.workout;
 
     // Only auto-start on log:added, not on edit/delete
     this.register(
@@ -73,7 +74,7 @@ class TimerRenderChild extends MarkdownRenderChild {
         if (
           normalizeExercise(context.exercise) === exerciseNorm &&
           context.workout &&
-          normalizeExercise(context.workout) === workoutNorm &&
+          sameWorkout(context.workout, workout) &&
           !this.timerView.isTimerRunning()
         ) {
           this.timerView.reset();

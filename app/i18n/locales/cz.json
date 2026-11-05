@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "Zrušit",
     "clear": "Vymazat",
     "convert": "Převést",
     "exercise": "Cvičení",
@@ -98,7 +97,6 @@
       "columnEstimated": "Odhadované",
       "columnVariance": "Rozptyl",
       "columnWorkout": "Trénink",
-      "minutesSuffix": " min",
       "noData": "Zatím není dost tréninků k porovnání.",
       "subtitle": "Odhadovaná vs. skutečná délka tréninku",
       "title": "Srovnání trvání",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "Odhady se blíží vašim skutečným tréninkům",
       "varianceTrendStable": "Přesnost odhadů je stabilní",
       "varianceTrendTitle": "Přesnost odhadů",
-      "avgVarianceStat": "Průměr. odchylka: ±{value}%",
-      "hoursSuffix": "h"
+      "avgVarianceStat": "Průměr. odchylka: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Všechny stránky cvičení jsou v pořádku",
@@ -201,8 +198,6 @@
       "moveUp": "Posunout {widget} nahoru",
       "moveDown": "Posunout {widget} dolů",
       "allHistory": "Prázdné: celá historie",
-      "recentWorkoutsLimit": "Tréninky v seznamu nedávných",
-      "volumeTrendDays": "Dny v trendu objemu",
       "layout": "Rozvržení",
       "layoutGrid": "Mřížka",
       "layoutList": "Seznam",
@@ -568,7 +563,6 @@
     "createLogButtonText": "Vytvořit záznam pro: {exerciseName}",
     "noDataTitle": "Pro {exerciseName} nebyly nalezeny žádné záznamy",
     "exploreExampleData": "Nebo prozkoumejte s ukázkovými daty",
-    "lastSet": "Minule: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Osobní rekord: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "Přidat předvolbu",
       "addProtocol": "Přidat protokol",
-      "cancel": "Zrušit",
       "createFiles": "Vytvořit soubory",
       "done": "Hotovo!",
       "failed": "Selhalo",
@@ -1072,7 +1065,6 @@
     "editTable": "Upravit tabulku",
     "editTitle": "Upravit",
     "gotoExercise": "Přejít na cvičení",
-    "invalidDate": "Neplatné datum",
     "labels": {
       "target": "Cíl:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "Zatím žádné série s {weight}",
       "progress": "Nejlepší {best}/{target} opakování",
-      "progressTooltip": "Nejlepší: {best} opakování / Cíl: {target} opakování",
-      "repsSuffix": "opakování",
-      "separator": " × "
+      "progressTooltip": "Nejlepší: {best} opakování / Cíl: {target} opakování"
     },
     "trendLine": "Spojnice trendu",
     "refreshingTable": "Obnovování tabulky...",
@@ -1127,7 +1117,6 @@
     "down": "Dolů",
     "improving": "Zlepšující se",
     "increasing": "Rostoucí",
-    "invariant": "Nezměněno",
     "neutral": "Neutrální",
     "stable": "Stabilní",
     "stableLower": "Stabilní",

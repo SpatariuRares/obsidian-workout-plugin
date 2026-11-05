@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "बीपीएम",
-    "cancel": "रद्द करें",
     "clear": "साफ़ करें",
     "convert": "रूपांतरित करें",
     "exercise": "व्यायाम",
@@ -98,7 +97,6 @@
       "columnEstimated": "अनुमानित",
       "columnVariance": "विचलन",
       "columnWorkout": "वर्कआउट",
-      "minutesSuffix": " मिनट",
       "noData": "तुलना के लिए अभी पर्याप्त सत्र नहीं हैं।",
       "subtitle": "अनुमानित बनाम वास्तविक वर्कआउट अवधि",
       "title": "अवधि की तुलना",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "अनुमान आपके असली सत्रों के और करीब आ रहे हैं",
       "varianceTrendStable": "अनुमान की सटीकता स्थिर है",
       "varianceTrendTitle": "अनुमान की सटीकता",
-      "avgVarianceStat": "औसत विचरण: ±{value}%",
-      "hoursSuffix": " घंटे"
+      "avgVarianceStat": "औसत विचरण: ±{value}%"
     },
     "fileErrors": {
       "allValid": "सभी व्यायाम पृष्ठ मान्य हैं",
@@ -201,8 +198,6 @@
       "moveUp": "{widget} को ऊपर ले जाएँ",
       "moveDown": "{widget} को नीचे ले जाएँ",
       "allHistory": "खाली: पूरा इतिहास",
-      "recentWorkoutsLimit": "हाल की सूची में वर्कआउट",
-      "volumeTrendDays": "मात्रा ट्रेंड में दिन",
       "layout": "लेआउट",
       "layoutGrid": "ग्रिड",
       "layoutList": "सूची",
@@ -568,7 +563,6 @@
     "createLogButtonText": "इसके लिए लॉग बनाएं: {exerciseName}",
     "noDataTitle": "{exerciseName} के लिए कोई लॉग नहीं मिला",
     "exploreExampleData": "या उदाहरण डेटा के साथ आज़माएँ।",
-    "lastSet": "पिछली बार: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "व्यक्तिगत रिकॉर्ड: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "प्रीसेट जोड़ें",
       "addProtocol": "प्रोटोकॉल जोड़ें",
-      "cancel": "रद्द करें",
       "createFiles": "फ़ाइलें बनाएँ",
       "done": "पूर्ण!",
       "failed": "असफल",
@@ -1072,7 +1065,6 @@
     "editTable": "तालिका संपादित करें",
     "editTitle": "संपादित करें",
     "gotoExercise": "व्यायाम पर जाएँ",
-    "invalidDate": "अमान्य तारीख",
     "labels": {
       "target": "लक्ष्य:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "{weight} पर अभी कोई सेट नहीं",
       "progress": "सर्वश्रेष्ठ {best}/{target} रेप्स",
-      "progressTooltip": "सर्वश्रेष्ठ: {best} रेप्स / लक्ष्य: {target} रेप्स",
-      "repsSuffix": "रेप्स",
-      "separator": " × "
+      "progressTooltip": "सर्वश्रेष्ठ: {best} रेप्स / लक्ष्य: {target} रेप्स"
     },
     "trendLine": "ट्रेंड लाइन",
     "refreshingTable": "तालिका रीफ़्रेश हो रही है...",
@@ -1127,7 +1117,6 @@
     "down": "नीचे",
     "improving": "सुधार",
     "increasing": "बढ़ रहा",
-    "invariant": "स्थिर",
     "neutral": "तटस्थ",
     "stable": "स्थिर",
     "stableLower": "स्थिर",

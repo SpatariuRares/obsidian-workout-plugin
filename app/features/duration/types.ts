@@ -17,7 +17,7 @@ export interface DurationAnalysisResult {
   totalRestTime: number;
   /** Number of rest periods found */
   restPeriodCount: number;
-  /** Number of sets found in workout-log blocks */
+  /** Planned sets of the note (see WorkoutFileAnalyzer) */
   setCount: number;
   /** Total set time in seconds (setCount * setDuration setting) */
   totalSetTime: number;

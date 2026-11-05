@@ -30,7 +30,7 @@ export class TrendHeader {
   ): void {
     const { firstValue, lastValue, percentChange, direction: lineDirection } =
       this.calculateVariation(volumeData);
-    const direction = this.improvement(lineDirection, dataType);
+    const direction = FormatUtils.improvement(lineDirection, dataType);
 
     const row = container.createDiv({
       cls: `workout-chart-trend is-${direction}`,
@@ -65,17 +65,6 @@ export class TrendHeader {
     if (range) {
       row.createSpan({ cls: "workout-chart-trend-range", text: range });
     }
-  }
-
-  /** Whether the line moves the good way: for pace a falling line is up */
-  private static improvement(
-    lineDirection: "up" | "down" | "stable",
-    dataType?: CHART_DATA_TYPE,
-  ): "up" | "down" | "neutral" {
-    if (lineDirection === "stable") return "neutral";
-    const isLowerBetter = dataType ? FormatUtils.isLowerBetter(dataType) : false;
-    if (!isLowerBetter) return lineDirection;
-    return lineDirection === "down" ? "up" : "down";
   }
 
   /** "from 491.3 kg to 646.5 kg", or the only value */

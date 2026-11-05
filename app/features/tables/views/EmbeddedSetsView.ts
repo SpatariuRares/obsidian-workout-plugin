@@ -1,12 +1,15 @@
 import { MarkdownRenderChild, Notice } from "obsidian";
 import { BaseView } from "@app/features/common/views/BaseView";
-import { describeSet } from "@app/features/modals/log/LogHistory";
+import { describeLastTime } from "@app/features/modals/log/LogHistory";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 import { TableRowProcessor } from "@app/features/tables/business/TableRowProcessor";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import type { BlockMenuAction } from "@app/features/common/ui/BlockMenu";
-import type { BlockLocation } from "@app/services/editor/CodeBlockEditorService";
-import { EditRestTimerModal } from "@app/features/tables/modals/EditRestTimerModal";
+import type {
+  BlockLocation,
+  CodeBlockMatch,
+} from "@app/services/editor/CodeBlockEditorService";
+import { restBlockAction } from "@app/features/tables/modals/restBlockAction";
 import { renderTargetSection } from "@app/features/tables/ui/TargetSection";
 import { toEntry } from "@app/features/modals/base/logic/LogEntryDraft";
 import { toLogEntryInput } from "@app/services/data/WorkoutLogCodec";
@@ -29,6 +32,7 @@ import {
 import { fieldFor } from "@app/services/exercise/ExerciseFields";
 import {
   ProtocolCatalog,
+  isStandardProtocol,
   protocolId,
 } from "@app/services/protocols/ProtocolCatalog";
 import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
@@ -43,19 +47,14 @@ import { NotesField } from "@app/components/molecules/NotesField";
 import { UndoNotice } from "@app/components/molecules/UndoNotice";
 import { BlockCard } from "@app/components/molecules/BlockCard";
 import { ICONS, mapColumnIdentifiersToLabels } from "@app/constants";
-import { DateUtils } from "@app/utils/DateUtils";
 import { DomUtils } from "@app/utils/DomUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { PathUtils } from "@app/utils/PathUtils";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
-import {
-  WorkoutProtocol,
-  type LogEntryInput,
-  type WorkoutLogData,
-} from "@app/types/WorkoutLogData";
+import type { LogEntryInput, WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { parametersOrNone } from "@app/services/exercise/ExerciseDefinitionService";
-import { readNotePlan } from "@app/features/session/business/sessionPlan";
+import { readNote } from "@app/features/session/business/sessionPlan";
 import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { RestTimer } from "@app/features/timer/views/RestTimer";
 import type { EmbeddedTimerParams } from "@app/features/timer/types";
@@ -132,6 +131,10 @@ const FOCUS = {
   protocol: (row: number) => `row-${row}-protocol`,
 };
 
+/** A row to fill in's place among the drafts: they come after today's sets */
+const draftIndex = (row: SetRow, drawn: Pick<Drawn, "todayCount">): number =>
+  row.number - 1 - drawn.todayCount;
+
 /** A row's field to fill in, and how to show its error */
 interface RowField {
   input: HTMLInputElement;
@@ -177,6 +180,11 @@ export class SetSheet extends MarkdownRenderChild {
     this.restTimer.destroy();
   }
 
+  /** How to find this block in its note: its id, else where it is written */
+  private blockMatch(): CodeBlockMatch | undefined {
+    return this.params.id ? { id: this.params.id } : this.location?.matchWithoutId();
+  }
+
   /** The emptied element to draw into, next to the block's live region */
   private body(): HTMLElement {
     // Made once; again only if something emptied the block (an error message)
@@ -198,10 +206,10 @@ export class SetSheet extends MarkdownRenderChild {
         return;
       }
 
-      const [logs, parameters, plan] = await Promise.all([
+      const [logs, parameters, note] = await Promise.all([
         this.plugin.getWorkoutLogData(),
         parametersOrNone(this.plugin, exercise),
-        readNotePlan(this.plugin.app.vault, this.sourcePath),
+        readNote(this.plugin.app.vault, this.sourcePath),
       ]);
       if (render !== this.renders) return;
 
@@ -226,7 +234,7 @@ export class SetSheet extends MarkdownRenderChild {
         columns,
         labels: mapColumnIdentifiersToLabels(columns),
         protocols: new ProtocolCatalog(this.plugin.settings.customProtocols),
-        rest: restOf(this.params, plan ?? []),
+        rest: restOf(this.params, note, this.blockMatch()),
         todayCount: todaysSets.length,
         planned: plannedSets(input),
       };
@@ -247,7 +255,12 @@ export class SetSheet extends MarkdownRenderChild {
           return this.render();
         },
       });
-      if (previous) this.renderLastTime(sheet, previous.sets, parameters);
+      if (previous) {
+        sheet.createDiv({
+          cls: "workout-sets-meta",
+          text: describeLastTime(previous, parameters, this.plugin.settings.weightUnit),
+        });
+      }
 
       const table = sheet.createDiv({ cls: "workout-sets-rows" });
       DomUtils.setCssProps(table, {
@@ -302,39 +315,19 @@ export class SetSheet extends MarkdownRenderChild {
       exerciseName: exercise ?? "",
       plugin: this.plugin,
       edit: this.editAction,
-      more: rest ? [this.restTimerAction(rest)] : [],
+      // Every option of the rest timer, written into this block
+      more: rest
+        ? [
+            restBlockAction(
+              this.plugin,
+              this.sourcePath,
+              { type: "workout-sets", params: this.params, match: () => this.location?.matchWithoutId() },
+              rest,
+            ),
+          ]
+        : [],
     });
     return el;
-  }
-
-  /** Every option of the rest timer, written into this block */
-  private restTimerAction(rest: EmbeddedTimerParams): BlockMenuAction {
-    return {
-      label: t("sets.editRestTimer"),
-      icon: ICONS.TIMER.DURATION,
-      run: () => {
-        new EditRestTimerModal(this.plugin.app, this.plugin, this.params, rest, {
-          sourcePath: this.sourcePath,
-          matchWithoutId: this.location?.matchWithoutId(),
-        }).open();
-      },
-    };
-  }
-
-  /** "Last time (31/10): 80 kg × 8 · 80 kg × 7" */
-  private renderLastTime(
-    sheet: HTMLElement,
-    sets: WorkoutLogData[],
-    parameters: ParameterDefinition[],
-  ): void {
-    const unit = this.plugin.settings.weightUnit;
-    sheet.createDiv({
-      cls: "workout-sets-meta",
-      text: t("sets.lastTime", {
-        date: DateUtils.toShortDate(sets[0].date),
-        sets: sets.map((set) => describeSet(set, parameters, unit)).join(" · "),
-      }),
-    });
   }
 
   private renderColumns(table: HTMLElement, labels: string[]): void {
@@ -366,7 +359,7 @@ export class SetSheet extends MarkdownRenderChild {
       main,
       row.number,
       open,
-      rowProtocol(row, draft) !== protocolId(WorkoutProtocol.STANDARD) || !!draft.notes.trim(),
+      !isStandardProtocol(rowProtocol(row, draft)) || !!draft.notes.trim(),
     );
     CheckToggle.create(main, {
       done: false,
@@ -423,7 +416,7 @@ export class SetSheet extends MarkdownRenderChild {
       main,
       row.number,
       open,
-      protocolId(set.protocol) !== protocolId(WorkoutProtocol.STANDARD) || !!set.notes?.trim(),
+      !isStandardProtocol(set.protocol) || !!set.notes?.trim(),
     );
     CheckToggle.create(main, {
       done: true,
@@ -551,9 +544,8 @@ export class SetSheet extends MarkdownRenderChild {
     },
   ): void {
     const details = el.createDiv({ cls: "workout-sets-details" });
-    const protocols = catalog.all();
     // A suggestion no longer in the settings list still shows (and stays)
-    if (!protocols.some((p) => p.id === current)) protocols.push(catalog.resolve(current));
+    const protocols = catalog.optionsIncluding(current);
     ProtocolPicker.create(details, {
       label: t("sets.protocol"),
       options: protocols,
@@ -582,7 +574,7 @@ export class SetSheet extends MarkdownRenderChild {
    * rows after it keep their drafts. Nothing is logged, so nothing to undo.
    */
   private removeRow(row: SetRow, drawn: Drawn): void {
-    this.drafts.splice(row.number - 1 - drawn.todayCount, 1);
+    this.drafts.splice(draftIndex(row, drawn), 1);
     this.extraRows = Math.max(this.extraRows - 1, 0);
     this.openRow = undefined;
     this.focusAfterRender = [FOCUS.addSet];
@@ -619,8 +611,8 @@ export class SetSheet extends MarkdownRenderChild {
 
     // Out of the drafts before the set is added: the log:added redraw
     // already shows it as logged, and the rows after it keep their drafts
-    const before = { drafts: [...this.drafts], extraRows: this.extraRows, openRow: this.openRow };
-    this.drafts.splice(row.number - 1 - drawn.todayCount, 1);
+    const restore = this.snapshot();
+    this.drafts.splice(draftIndex(row, drawn), 1);
     if (drawn.todayCount >= drawn.planned) this.extraRows = Math.max(this.extraRows - 1, 0);
     if (this.openRow === row.number) this.openRow = undefined;
     else if (this.openRow !== undefined && this.openRow > row.number) this.openRow--;
@@ -640,11 +632,7 @@ export class SetSheet extends MarkdownRenderChild {
       const rowsLeft = drawn.rows.filter((r) => !r.logged).length - 1;
       if (drawn.rest && rowsLeft > 0) this.restTimer.restart(drawn.rest);
     } catch (error) {
-      Object.assign(this, before);
-      this.focusAfterRender = [];
-      this.announceAfterRender = false;
-      this.notifyError(error);
-      await this.render();
+      await this.rollBack(restore, error);
     } finally {
       this.saving = undefined;
     }
@@ -660,7 +648,7 @@ export class SetSheet extends MarkdownRenderChild {
     if (this.saving !== undefined) return;
     // The inverse of logRow: the draft is in place before the log:deleted
     // redraw, and a set beyond the plan keeps its row
-    const before = { drafts: [...this.drafts], extraRows: this.extraRows, openRow: this.openRow };
+    const restore = this.snapshot();
     const draft = draftFromSet(set, drawn.parameters);
     const keepsRow = drawn.todayCount > drawn.planned;
     this.drafts.unshift(draft);
@@ -677,11 +665,7 @@ export class SetSheet extends MarkdownRenderChild {
     try {
       await this.plugin.deleteWorkoutLogEntry(set);
     } catch (error) {
-      Object.assign(this, before);
-      this.focusAfterRender = [];
-      this.announceAfterRender = false;
-      this.notifyError(error);
-      await this.render();
+      await this.rollBack(restore, error);
       return;
     } finally {
       this.saving = undefined;
@@ -734,13 +718,36 @@ export class SetSheet extends MarkdownRenderChild {
     });
   }
 
+  /**
+   * The rows as they are now (drafts, added rows, open details), to put back
+   * when a log change made ahead of the save fails
+   */
+  private snapshot(): () => void {
+    const drafts = [...this.drafts];
+    const { extraRows, openRow } = this;
+    return () => {
+      this.drafts = drafts;
+      this.extraRows = extraRows;
+      this.openRow = openRow;
+    };
+  }
+
+  /** The save failed: the rows as they were, the error said, nothing moved */
+  private async rollBack(restore: () => void, error: unknown): Promise<void> {
+    restore();
+    this.focusAfterRender = [];
+    this.announceAfterRender = false;
+    this.notifyError(error);
+    await this.render();
+  }
+
   private notifyError(error: unknown): void {
     new Notice(t("modal.notices.genericError", { error: ErrorUtils.getErrorMessage(error) }));
   }
 
   /** The draft of a row to fill in, kept across redraws */
   private draftOf(row: SetRow, drawn: Drawn): SetDraft {
-    const index = row.number - 1 - drawn.todayCount;
+    const index = draftIndex(row, drawn);
     while (this.drafts.length <= index) this.drafts.push(emptyDraft());
     return this.drafts[index];
   }

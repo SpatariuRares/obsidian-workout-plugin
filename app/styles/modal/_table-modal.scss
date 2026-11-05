@@ -1,12 +1,5 @@
 @use "../variables";
 
-/* Table modal type chips */
-.workout-table-type-chips {
-  display: flex;
-  gap: var(--workout-space-sm);
-  flex-wrap: wrap;
-}
-
 /* Table advanced options row - compact flex layout */
 .workout-table-options-row {
   display: flex;

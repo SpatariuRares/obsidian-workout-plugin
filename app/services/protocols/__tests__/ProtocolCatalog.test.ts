@@ -1,8 +1,11 @@
 import {
   ProtocolCatalog,
   defaultProtocolEntries,
+  groupByProtocol,
+  isStandardProtocol,
   isUnchangedDefaultProtocol,
   protocolId,
+  protocolIdFromName,
   withDefaultProtocols,
 } from "@app/services/protocols/ProtocolCatalog";
 import { WorkoutProtocol } from "@app/types/WorkoutLogData";
@@ -23,7 +26,7 @@ describe("ProtocolCatalog", () => {
   const catalog = new ProtocolCatalog([cluster]);
 
   it("describes a built-in protocol missing from the list with its translated name, badge and chart color", () => {
-    expect(catalog.resolve("drop_set")).toEqual({
+    expect(catalog.resolve("drop_set")).toMatchObject({
       id: "drop_set",
       name: t("modal.selectOptions.dropSet"),
       abbreviation: "Drop",
@@ -34,7 +37,7 @@ describe("ProtocolCatalog", () => {
   });
 
   it("describes a custom protocol from the settings", () => {
-    expect(catalog.resolve("Cluster")).toEqual({
+    expect(catalog.resolve("Cluster")).toMatchObject({
       id: "cluster",
       name: "Cluster set",
       abbreviation: "CL",
@@ -158,5 +161,73 @@ describe("default protocol entries", () => {
     expect(isUnchangedDefaultProtocol({ ...warmup, color: warmup.color.toUpperCase() })).toBe(true);
     expect(isUnchangedDefaultProtocol({ ...warmup, name: "Ramp-up" })).toBe(false);
     expect(isUnchangedDefaultProtocol(cluster)).toBe(false);
+  });
+});
+
+describe("protocolIdFromName", () => {
+  it("turns a name into a lower-case id with underscores and no other symbols", () => {
+    expect(protocolIdFromName("Cluster Set")).toBe("cluster_set");
+    expect(protocolIdFromName("  Pyramid  up! ")).toBe("pyramid_up");
+    expect(protocolIdFromName("5x5 (heavy)")).toBe("5x5_heavy");
+  });
+});
+
+describe("isStandardProtocol", () => {
+  it("is true for standard and for a missing protocol, whatever the case", () => {
+    expect(isStandardProtocol(undefined)).toBe(true);
+    expect(isStandardProtocol("")).toBe(true);
+    expect(isStandardProtocol(" Standard ")).toBe(true);
+    expect(isStandardProtocol("drop_set")).toBe(false);
+    expect(isStandardProtocol("cluster")).toBe(false);
+  });
+});
+
+describe("ProtocolCatalog.optionsIncluding", () => {
+  const catalog = new ProtocolCatalog([cluster]);
+
+  it("is the list of protocols when the id is in it", () => {
+    expect(catalog.optionsIncluding("Cluster").map((p) => p.id)).toEqual([
+      "standard",
+      "cluster",
+    ]);
+  });
+
+  it("adds a protocol no longer in the settings at the end, so it stays picked", () => {
+    const options = catalog.optionsIncluding("drop_set");
+    expect(options.map((p) => p.id)).toEqual(["standard", "cluster", "drop_set"]);
+    expect(options[2].name).toBe(t("modal.selectOptions.dropSet"));
+  });
+});
+
+describe("ProtocolInfo.chartColor", () => {
+  const catalog = new ProtocolCatalog([cluster]);
+
+  it("gives the protocol's chart color with the alpha asked for", () => {
+    expect(catalog.resolve("cluster").chartColor(0.3)).toBe("rgba(255, 87, 51, 0.3)");
+    expect(catalog.resolve("drop_set").chartColor(1)).toBe("rgba(239, 68, 68, 1)");
+    expect(catalog.resolve("standard").chartColor(0.8)).toBe("rgba(128, 128, 128, 0.8)");
+    expect(catalog.resolve("deleted_one").chartColor(0.3)).toBe("rgba(128, 128, 128, 0.3)");
+  });
+
+  it("matches the default chart color at 0.7", () => {
+    for (const id of ["cluster", "drop_set", "myo_reps", "standard"]) {
+      const info = catalog.resolve(id);
+      expect(info.chartColor(0.7)).toBe(info.color);
+    }
+  });
+});
+
+describe("groupByProtocol", () => {
+  it("groups sets by protocol id, a missing protocol counted as standard, in first-seen order", () => {
+    const rows = [
+      { protocol: "Drop_Set", n: 1 },
+      { protocol: undefined, n: 2 },
+      { protocol: "standard", n: 3 },
+      { protocol: "drop_set", n: 4 },
+    ];
+    const groups = groupByProtocol(rows);
+    expect([...groups.keys()]).toEqual(["drop_set", "standard"]);
+    expect(groups.get("drop_set")?.map((r) => r.n)).toEqual([1, 4]);
+    expect(groups.get("standard")?.map((r) => r.n)).toEqual([2, 3]);
   });
 });

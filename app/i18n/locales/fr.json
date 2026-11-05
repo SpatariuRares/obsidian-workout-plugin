@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "Annuler",
     "clear": "Effacer",
     "convert": "Convertir",
     "exercise": "Exercice",
@@ -98,7 +97,6 @@
       "columnEstimated": "Estimée",
       "columnVariance": "Écart",
       "columnWorkout": "Entraînement",
-      "minutesSuffix": " min",
       "noData": "Pas encore assez de séances pour comparer.",
       "subtitle": "Durée estimée par rapport à la durée réelle de l'entraînement",
       "title": "Comparaison de durée",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "Les estimations se rapprochent de vos séances réelles",
       "varianceTrendStable": "La précision des estimations est stable",
       "varianceTrendTitle": "Précision des estimations",
-      "avgVarianceStat": "Variance moy. : ±{value}%",
-      "hoursSuffix": "h"
+      "avgVarianceStat": "Variance moy. : ±{value}%"
     },
     "fileErrors": {
       "allValid": "Toutes les pages d'exercices sont valides",
@@ -201,8 +198,6 @@
       "moveUp": "Monter {widget}",
       "moveDown": "Descendre {widget}",
       "allHistory": "Vide : tout l'historique",
-      "recentWorkoutsLimit": "Entraînements dans la liste récente",
-      "volumeTrendDays": "Jours dans la tendance du volume",
       "layout": "Disposition",
       "layoutGrid": "Grille",
       "layoutList": "Liste",
@@ -568,7 +563,6 @@
     "createLogButtonText": "Créer un journal pour : {exerciseName}",
     "noDataTitle": "Aucun enregistrement trouvé pour {exerciseName}",
     "exploreExampleData": "Ou explorez avec des données d'exemple.",
-    "lastSet": "Dernière fois : {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Record personnel : {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "Ajouter un préréglage",
       "addProtocol": "Ajouter un protocole",
-      "cancel": "Annuler",
       "createFiles": "Créer les fichiers",
       "done": "Terminé !",
       "failed": "Échec",
@@ -1072,7 +1065,6 @@
     "editTable": "Modifier le tableau",
     "editTitle": "Modifier",
     "gotoExercise": "Aller à l'exercice",
-    "invalidDate": "Date invalide",
     "labels": {
       "target": "Cible :"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "Aucune série à {weight} pour l'instant",
       "progress": "Meilleur : {best}/{target} répétitions",
-      "progressTooltip": "Meilleur résultat : {best} répétitions / Objectif : {target} répétitions",
-      "repsSuffix": "répétitions",
-      "separator": " × "
+      "progressTooltip": "Meilleur résultat : {best} répétitions / Objectif : {target} répétitions"
     },
     "trendLine": "Ligne de tendance",
     "refreshingTable": "Actualisation du tableau...",
@@ -1127,7 +1117,6 @@
     "down": "Baisse",
     "improving": "En amélioration",
     "increasing": "En hausse",
-    "invariant": "Invariant",
     "neutral": "Neutre",
     "stable": "Stable",
     "stableLower": "Stable",

@@ -1,4 +1,3 @@
-import { getUnitsMap } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import {
   EmbeddedDashboardParams,
@@ -60,7 +59,7 @@ export class SummaryWidget {
       this.createSummaryCard(
         summaryEl,
         t("dashboard.summary.totalVolume"),
-        `${FormatUtils.formatNumber(metrics.totalVolume)} ${getUnitsMap()["volume"]}`,
+        FormatUtils.formatVolume(metrics.totalVolume),
         ICONS.METRICS.TOTAL_VOLUME,
       );
     }

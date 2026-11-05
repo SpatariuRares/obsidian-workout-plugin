@@ -291,6 +291,69 @@ describe("timer presets list", () => {
     expect(plugin.settings.defaultTimerPreset).toBe("long rest");
     expect(refresh).toHaveBeenCalled();
   });
+
+  it("refuses a new preset named like one in the list", async () => {
+    const { plugin, refresh, definitions } = setup();
+    const modal = captureModal(() =>
+      listOf(definitions).addItem!.action(document.body),
+    );
+
+    await mockSettingNamed(modal.contentEl, t("settings.labels.presetName"))
+      .component("text")
+      .change(" rest " as never);
+    Array.from(modal.contentEl.querySelectorAll("button"))
+      .find((b) => b.textContent === t("settings.buttons.savePreset"))!
+      .click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(
+      (plugin.settings.timerPresets.rest as { duration: number }).duration,
+    ).toBe(90);
+    expect(refresh).not.toHaveBeenCalled();
+  });
+
+  it("shows an error for an invalid duration and keeps the form open", async () => {
+    const { plugin, refresh, definitions } = setup();
+    const list = listOf(definitions);
+    const modal = captureModal(() => list.items![0].action!(document.body));
+    const close = jest.spyOn(modal, "close");
+    const row = mockSettingNamed(
+      modal.contentEl,
+      t("settings.labels.presetDuration"),
+    );
+    const error = row.controlEl.querySelector(".workout-setting-error")!;
+
+    expect(error.classList.contains("is-visible")).toBe(false);
+    await row.component("text").change("abc" as never);
+    expect(error.classList.contains("is-visible")).toBe(true);
+
+    Array.from(modal.contentEl.querySelectorAll("button"))
+      .find((b) => b.textContent === t("settings.buttons.savePreset"))!
+      .click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(close).not.toHaveBeenCalled();
+    expect(refresh).not.toHaveBeenCalled();
+    expect(plugin.saveSettings).not.toHaveBeenCalled();
+  });
+
+  it("saves a valid duration typed in the form", async () => {
+    const { plugin, definitions } = setup();
+    const list = listOf(definitions);
+    const modal = captureModal(() => list.items![0].action!(document.body));
+
+    await mockSettingNamed(modal.contentEl, t("settings.labels.presetDuration"))
+      .component("text")
+      .change("120" as never);
+    Array.from(modal.contentEl.querySelectorAll("button"))
+      .find((b) => b.textContent === t("settings.buttons.savePreset"))!
+      .click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(
+      (plugin.settings.timerPresets.rest as { duration: number }).duration,
+    ).toBe(120);
+  });
 });
 
 describe("training parameters", () => {

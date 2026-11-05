@@ -7,6 +7,7 @@ import {
   MUSCLE_GROUP_EMOJI,
   OTHER_MUSCLE_EMOJI,
 } from "@app/constants/muscles.constants";
+import { StringUtils } from "@app/utils/StringUtils";
 
 function getMuscleGroupEmoji(muscleGroup: string): string {
   return MUSCLE_GROUP_EMOJI[muscleGroup] ?? OTHER_MUSCLE_EMOJI;
@@ -56,7 +57,7 @@ export class MuscleTagsWidget {
           cls: "workout-muscle-group-card",
         });
         cardEl.createEl("h4", {
-          text: `${getMuscleGroupEmoji(muscleGroup)} ${this.formatMuscleName(muscleGroup)}`,
+          text: `${getMuscleGroupEmoji(muscleGroup)} ${StringUtils.humanize(muscleGroup)}`,
           cls: "workout-muscle-group-title",
         });
         const tagsEl = cardEl.createDiv({
@@ -98,22 +99,11 @@ export class MuscleTagsWidget {
   ): void {
     CopyableBadge.create(container, {
       icon: getMuscleGroupEmoji(muscleGroup),
-      text: this.formatMuscleName(tag),
+      text: StringUtils.humanize(tag),
       copyValue: tag,
       tooltip: t("dashboard.muscleTags.tooltip", { tag }),
       className: "workout-muscle-tag-badge",
       dataAttributes: { muscle: tag },
     });
-  }
-
-  /**
-   * Format muscle name for display (capitalize first letter)
-   */
-  private static formatMuscleName(name: string): string {
-    // Convert snake_case to space-separated words
-    const words = name.replace(/_/g, " ").split(" ");
-    return words
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
   }
 }

@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "Cancelar",
     "clear": "Limpar",
     "convert": "Converter",
     "exercise": "Exercício",
@@ -98,7 +97,6 @@
       "columnEstimated": "Estimado",
       "columnVariance": "Variação",
       "columnWorkout": "Treino",
-      "minutesSuffix": " min",
       "noData": "Ainda não há sessões suficientes para comparar.",
       "subtitle": "Duração estimada vs. duração real do treino",
       "title": "Comparação de duração",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "As estimativas estão se aproximando das suas sessões reais",
       "varianceTrendStable": "A precisão das estimativas está estável",
       "varianceTrendTitle": "Precisão das estimativas",
-      "avgVarianceStat": "Variação média: ±{value}%",
-      "hoursSuffix": "h"
+      "avgVarianceStat": "Variação média: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Todas as páginas de exercício são válidas",
@@ -201,8 +198,6 @@
       "moveUp": "Mover {widget} para cima",
       "moveDown": "Mover {widget} para baixo",
       "allHistory": "Vazio: todo o histórico",
-      "recentWorkoutsLimit": "Treinos na lista recente",
-      "volumeTrendDays": "Dias na tendência de volume",
       "layout": "Layout",
       "layoutGrid": "Grade",
       "layoutList": "Lista",
@@ -568,7 +563,6 @@
     "createLogButtonText": "Criar registro para: {exerciseName}",
     "noDataTitle": "Nenhum registro encontrado para {exerciseName}",
     "exploreExampleData": "Ou explore com dados de exemplo",
-    "lastSet": "Última vez: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Recorde pessoal: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "Adicionar predefinição",
       "addProtocol": "Adicionar protocolo",
-      "cancel": "Cancelar",
       "createFiles": "Criar arquivos",
       "done": "Concluído!",
       "failed": "Falhou",
@@ -1072,7 +1065,6 @@
     "editTable": "Editar tabela",
     "editTitle": "Editar",
     "gotoExercise": "Ir para o exercício",
-    "invalidDate": "Data inválida",
     "labels": {
       "target": "Meta:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "Nenhuma série com {weight} ainda",
       "progress": "Melhor {best}/{target} repetições",
-      "progressTooltip": "Melhor: {best} repetições / Meta: {target} repetições",
-      "repsSuffix": "repetições",
-      "separator": " × "
+      "progressTooltip": "Melhor: {best} repetições / Meta: {target} repetições"
     },
     "trendLine": "Linha de tendência",
     "refreshingTable": "Atualizando tabela...",
@@ -1127,7 +1117,6 @@
     "down": "Para baixo",
     "improving": "Melhorando",
     "increasing": "Aumentando",
-    "invariant": "Invariável",
     "neutral": "Neutro",
     "stable": "Estável",
     "stableLower": "Estável",

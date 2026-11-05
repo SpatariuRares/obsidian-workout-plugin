@@ -7,6 +7,7 @@ import {
 import {
   durationSeconds,
   fieldKey,
+  fieldNumber,
 } from "@app/services/exercise/ExerciseFields";
 import type { ExerciseDefinitionPort } from "@app/types/PluginPorts";
 import { TableDataCheckers } from "@app/features/tables/business/TableDataCheckers";
@@ -118,8 +119,8 @@ export class TableDataProcessor {
     const units = new Map<string, string | undefined>();
     for (const row of rows) {
       const log = row.originalLog;
-      const duration = log?.customFields?.duration;
-      if (!log || typeof duration !== "number") continue;
+      const duration = log && fieldNumber(log, "duration");
+      if (!log || duration === undefined) continue;
       if (!units.has(log.exercise)) {
         const params = await plugin
           ?.getExerciseDefinitionService()

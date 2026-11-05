@@ -3,10 +3,7 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { InsertTimerModal } from "@app/features/timer/modals/InsertTimerModal";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
 import { timerBlock } from "@app/features/timer/timerBlock";
-import {
-  createEditButtons,
-  type EditTarget,
-} from "@app/features/modals/base/components/createEditButtons";
+import type { EditTarget } from "@app/features/modals/base/components/createEditButtons";
 import { Chip } from "@app/components/atoms/Chip";
 import { t } from "@app/i18n";
 
@@ -114,14 +111,10 @@ export class EditTimerModal extends InsertTimerModal {
 
   protected createButtons(container: HTMLElement): void {
     const { id } = this.initialParams;
-    createEditButtons(this, container, {
-      schema: timerBlock,
+    this.editButtons(container, timerBlock, t("modal.notices.timerUpdateFailed"), {
       target: this.where,
       id,
       collectParams: () => this.collectParams(),
-      buttonText: this.getButtonText(),
-      successMessage: this.getSuccessMessage(),
-      failureMessage: t("modal.notices.timerUpdateFailed"),
     });
   }
 }

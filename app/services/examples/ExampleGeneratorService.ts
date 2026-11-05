@@ -1,5 +1,6 @@
 import { gettingStartedPages } from "@app/services/examples/GettingStartedPages";
-import { normalizePath, Notice, TFile, TFolder } from "obsidian";
+import { normalizePath, Notice, TFile } from "obsidian";
+import { PathUtils } from "@app/utils/PathUtils";
 import type {
   AppPort,
   EventBusPort,
@@ -99,12 +100,13 @@ export class ExampleGeneratorService {
 
     try {
       // Create directories
-      await this.createFolderIfNotExists(basePath);
-      await this.createFolderIfNotExists(exercisesPath);
-      await this.createFolderIfNotExists(workoutsPath);
-      await this.createFolderIfNotExists(logPath);
+      await PathUtils.ensureFolder(this.app, basePath);
+      await PathUtils.ensureFolder(this.app, exercisesPath);
+      await PathUtils.ensureFolder(this.app, workoutsPath);
+      await PathUtils.ensureFolder(this.app, logPath);
 
-      await this.createFolderIfNotExists(
+      await PathUtils.ensureFolder(
+        this.app,
         examplePaths.gettingStartedFolder(),
       );
       for (const page of gettingStartedPages()) {
@@ -254,15 +256,6 @@ export class ExampleGeneratorService {
     } catch {
       new Notice(t("examples.folderCreatedError"));
       return false;
-    }
-  }
-
-  private async createFolderIfNotExists(path: string): Promise<void> {
-    const folder = this.app.vault.getAbstractFileByPath(path);
-    if (!folder) {
-      await this.app.vault.createFolder(path);
-    } else if (!(folder instanceof TFolder)) {
-      throw new Error(`Path '${path}' exists but is not a folder.`);
     }
   }
 

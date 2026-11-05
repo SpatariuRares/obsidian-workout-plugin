@@ -54,9 +54,13 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "Cancel",
     "clear": "Clear",
     "convert": "Convert",
+    "duration": {
+      "hours": "{count}h",
+      "minutes": "{count}m",
+      "seconds": "{count}s"
+    },
     "exercise": "Exercise",
     "km": "km",
     "minPerKm": "min/km",
@@ -99,15 +103,13 @@
       "columnEstimated": "Estimated",
       "columnVariance": "Variance",
       "columnWorkout": "Workout",
-      "minutesSuffix": " min",
       "noData": "Not enough sessions to compare yet.",
       "subtitle": "Estimated vs actual workout duration",
       "title": "Duration comparison",
       "varianceTrendDeclining": "Estimates are drifting further from your real sessions",
       "varianceTrendImproving": "Estimates are getting closer to your real sessions",
       "varianceTrendStable": "Estimate accuracy is steady",
-      "varianceTrendTitle": "Estimate accuracy",
-      "hoursSuffix": "h"
+      "varianceTrendTitle": "Estimate accuracy"
     },
     "fileErrors": {
       "allValid": "All exercise pages are valid",
@@ -201,8 +203,6 @@
       "moveUp": "Move {widget} up",
       "moveDown": "Move {widget} down",
       "allHistory": "Empty: all history",
-      "recentWorkoutsLimit": "Workouts in the recent list",
-      "volumeTrendDays": "Days in the volume trend",
       "layout": "Layout",
       "layoutList": "List",
       "layoutGrid": "Grid",
@@ -560,7 +560,6 @@
     "workoutLog": "Workout log"
   },
   "logs": {
-    "lastSet": "Last time: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Personal record: {weight} {unit} × {reps}",
     "addLogButtonAria": "Add log for {exerciseName}",
@@ -826,6 +825,7 @@
       "chartType": "Chart type",
       "configuration": "Configuration",
       "displayOptions": "Display options",
+      "exercise": "Exercise",
       "exerciseConfiguration": "Exercise configuration",
       "mobileOptions": "Recent exercises and workout",
       "options": "Options",
@@ -833,6 +833,7 @@
       "progressiveOverload": "Progressive overload",
       "tableType": "Table type",
       "target": "Target",
+      "timer": "Timer",
       "workout": "Workout"
     },
     "selectOptions": {
@@ -896,7 +897,6 @@
     "buttons": {
       "addPreset": "Add preset",
       "addProtocol": "Add protocol",
-      "cancel": "Cancel",
       "createFiles": "Create files",
       "done": "Done!",
       "failed": "Failed",
@@ -1074,7 +1074,6 @@
     "editTable": "Edit table",
     "editTitle": "Edit",
     "gotoExercise": "Go to exercise",
-    "invalidDate": "Invalid date",
     "labels": {
       "target": "Target:"
     },
@@ -1086,9 +1085,7 @@
     "target": {
       "noSetsYet": "No sets at {weight} yet",
       "progress": "Best {best}/{target} reps",
-      "progressTooltip": "Best: {best} reps / Target: {target} reps",
-      "repsSuffix": "reps",
-      "separator": " × "
+      "progressTooltip": "Best: {best} reps / Target: {target} reps"
     },
     "trendLine": "Trend line"
   },
@@ -1112,7 +1109,12 @@
     },
     "presets": {
       "detailsControls": "Controls",
-      "detailsSound": "Sound"
+      "detailsSound": "Sound",
+      "summaryType": "Type: {type}",
+      "summaryDuration": "Duration: {seconds}s",
+      "summaryRounds": "Rounds: {rounds}",
+      "summaryRest": "Rest: {seconds}s",
+      "summaryOptions": "Options: {options}"
     },
     "round": "Round {current} of {total}",
     "status": {
@@ -1127,7 +1129,6 @@
     "down": "Down",
     "improving": "Improving",
     "increasing": "Increasing",
-    "invariant": "Invariant",
     "neutral": "Neutral",
     "stable": "Stable",
     "stableLower": "Stable",

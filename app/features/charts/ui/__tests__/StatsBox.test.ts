@@ -51,7 +51,7 @@ describe("StatsBox", () => {
   it("counts a falling pace as an improvement", () => {
     const recent = cards(render([6, 5.5, 5], CHART_DATA_TYPE.PACE))[4];
 
-    expect(recent.value?.startsWith("-")).toBe(true);
+    expect(recent.value).toBe(`-1.00 ${t("common.minPerKm")}`);
     expect(recent.className).toContain("is-up");
   });
 
@@ -66,6 +66,42 @@ describe("StatsBox", () => {
     const recent = cards(render([80, 70]))[4];
 
     expect(recent).toMatchObject({ value: "-10.0 kg", detail: t("charts.stats.vsPrevious") });
+    expect(recent.className).toContain("is-down");
+  });
+
+  it("calls two equal days stable", () => {
+    const recent = cards(render([80, 80]))[4];
+
+    expect(recent).toMatchObject({ value: t("trends.stable"), detail: t("charts.stats.vsPrevious") });
+    expect(recent.className).toContain("is-neutral");
+  });
+
+  it("calls two days within 5% of their mean stable", () => {
+    const recent = cards(render([100, 103]))[4];
+
+    expect(recent.value).toBe(t("trends.stable"));
+    expect(recent.className).toContain("is-neutral");
+  });
+
+  it("measures stable against the mean of the last 3, not the first", () => {
+    // +1.5 is over 5% of 20 but within 5% of the mean (30.5)
+    const recent = cards(render([20, 50, 21.5]))[4];
+
+    expect(recent.value).toBe(t("trends.stable"));
+    expect(recent.className).toContain("is-neutral");
+  });
+
+  it("only looks at the last 3 days", () => {
+    const recent = cards(render([500, 60, 70, 80]))[4];
+
+    expect(recent.value).toBe("+20.0 kg");
+    expect(recent.className).toContain("is-up");
+  });
+
+  it("counts a rising pace as a decline", () => {
+    const recent = cards(render([5, 6], CHART_DATA_TYPE.PACE))[4];
+
+    expect(recent.value).toBe(`+1.00 ${t("common.minPerKm")}`);
     expect(recent.className).toContain("is-down");
   });
 

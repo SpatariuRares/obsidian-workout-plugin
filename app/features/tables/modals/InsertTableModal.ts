@@ -8,6 +8,7 @@ import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import {
   TargetSectionWithAutocomplete,
   TargetSectionWithAutocompleteElements,
+  type TargetSectionWithAutocompleteHandlers,
 } from "@app/features/modals/components/TargetSectionWithAutocomplete";
 import {
   AdvancedOptionsSection,
@@ -22,17 +23,19 @@ import {
   PlanFields,
   type PlanFieldsElements,
 } from "@app/features/tables/modals/components/PlanFields";
-import { Chip } from "@app/components/atoms/Chip";
+import {
+  ChipGroup,
+  type ChipGroupResult,
+} from "@app/components/molecules/ChipGroup";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { t } from "@app/i18n";
 
 const DATE_RANGE_INCREMENT = 7;
 
 export class InsertTableModal extends BaseInsertModal {
-  protected tableTypeSelect?: HTMLSelectElement;
-  protected tableTypeChips: Map<string, HTMLButtonElement> =
-    new Map();
+  protected tableType?: ChipGroupResult<TABLE_TYPE>;
   protected targetElements?: TargetSectionWithAutocompleteElements;
+  private targetHandlers?: TargetSectionWithAutocompleteHandlers;
   protected dateRangeInput?: HTMLInputElement;
   protected advancedElements?: AdvancedOptionsElements;
   protected planFields?: PlanFieldsElements;
@@ -65,66 +68,32 @@ export class InsertTableModal extends BaseInsertModal {
       t("modal.sections.tableType"),
     );
 
-    // Hidden select as backing store for TargetSectionWithAutocomplete
-    this.tableTypeSelect = tableTypeSection.createEl("select", {
-      cls: "workout-charts-select",
-    });
-    DomUtils.setCssProps(this.tableTypeSelect, { display: "none" });
-
-    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS
-      .TABLE_TYPE) {
-      this.tableTypeSelect.createEl("option", {
-        text: option.label,
-        value: option.value,
-      });
-    }
-
-    // Chips for table type selection
-    const chipContainer = tableTypeSection.createDiv({
-      cls: "workout-table-type-chips",
-    });
-
-    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS
-      .TABLE_TYPE) {
-      const isDefault =
-        (option.value as TABLE_TYPE) === TABLE_TYPE.COMBINED;
-      const chip = Chip.create(chipContainer, {
-        text: option.label,
-        selected: isDefault,
-        onClick: () => this.onTableTypeChipClick(option.value),
-      });
-      this.tableTypeChips.set(option.value, chip);
-    }
-
-    // Set initial select value
-    this.tableTypeSelect.value = TABLE_TYPE.COMBINED;
-
-    // Target Section using reusable component with autocomplete
     if (!this.plugin) {
       throw new Error("Plugin is required for InsertTableModal");
     }
 
-    const { elements: targetElements, handlers: targetHandlers } =
-      TargetSectionWithAutocomplete.create(
-        this,
-        container,
-        this.tableTypeSelect,
-        this.currentFileName,
-        this.plugin,
-      );
-
-    this.targetElements = targetElements;
-
-    // Ensure visibility is updated based on initial selection
-    targetHandlers.updateVisibility();
-
-    // Event listener for display toggle
-    this.tableTypeSelect.addEventListener("change", () => {
-      this.updateSectionsVisibility(targetHandlers);
+    // The table type picks which target fields and sections show
+    this.tableType = ChipGroup.create<TABLE_TYPE>(tableTypeSection, {
+      label: t("modal.sections.tableType"),
+      labelHidden: true,
+      options: CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.TABLE_TYPE.map(
+        (option) => ({ id: option.value, label: option.label }),
+      ),
+      selected: TABLE_TYPE.COMBINED,
+      className: "workout-modal-type-chips",
+      onPick: () => this.updateSectionsVisibility(),
     });
 
-    // Apply visibility for initial state
-    this.updateSectionsVisibility(targetHandlers);
+    const tableType = this.tableType;
+    const target = TargetSectionWithAutocomplete.create(
+      this,
+      container,
+      () => tableType.value(),
+      this.currentFileName,
+      this.plugin,
+    );
+    this.targetElements = target.elements;
+    this.targetHandlers = target.handlers;
 
     // Configuration Section
     const configSection = this.createSection(
@@ -154,6 +123,7 @@ export class InsertTableModal extends BaseInsertModal {
     );
 
     this.planFields = PlanFields.create(this.progressiveSection);
+    this.updateSectionsVisibility();
 
     // Advanced Options Section using reusable component
     this.advancedElements = AdvancedOptionsSection.create(
@@ -170,25 +140,10 @@ export class InsertTableModal extends BaseInsertModal {
       this.plugin.settings.defaultExactMatch;
   }
 
-  protected onTableTypeChipClick(value: string): void {
-    if (!this.tableTypeSelect) return;
+  protected updateSectionsVisibility(): void {
+    if (!this.tableType || !this.targetElements || !this.targetHandlers) return;
 
-    // Update chips
-    for (const [chipValue, chip] of this.tableTypeChips) {
-      Chip.setSelected(chip, chipValue === value);
-    }
-
-    // Update hidden select and dispatch change event
-    this.tableTypeSelect.value = value;
-    this.tableTypeSelect.dispatchEvent(new Event("change"));
-  }
-
-  protected updateSectionsVisibility(targetHandlers: {
-    updateVisibility: () => void;
-  }): void {
-    if (!this.tableTypeSelect || !this.targetElements) return;
-
-    const type = this.tableTypeSelect.value as TABLE_TYPE;
+    const type = this.tableType.value();
     const targetContainer = this.targetElements.container;
     const showTarget = type !== TABLE_TYPE.ALL;
     const showProgressive =
@@ -205,7 +160,7 @@ export class InsertTableModal extends BaseInsertModal {
     }
 
     if (showTarget) {
-      targetHandlers.updateVisibility();
+      this.targetHandlers.updateVisibility();
     }
   }
 
@@ -219,17 +174,17 @@ export class InsertTableModal extends BaseInsertModal {
    */
   protected collectParams(): EmbeddedTableParams {
     if (
-      !this.tableTypeSelect ||
+      !this.tableType ||
       !this.targetElements ||
       !this.advancedElements
     ) {
       throw new Error(t("modal.errors.missingElements"));
     }
 
-    const tableType = this.tableTypeSelect.value as TABLE_TYPE;
+    const tableType = this.tableType.value();
     const target = TargetSectionWithAutocomplete.getTargetValue(
       this.targetElements,
-      this.tableTypeSelect,
+      tableType,
       this.currentFileName,
     );
     const dateRange = this.dateRangeInput

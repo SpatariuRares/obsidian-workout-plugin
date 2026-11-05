@@ -4,7 +4,7 @@
  */
 import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
 import { getUnitsMap } from "@app/constants/ui.constants";
-import { LocalizationService } from "@app/i18n";
+import { LocalizationService, t } from "@app/i18n";
 
 export class FormatUtils {
   /**
@@ -13,7 +13,34 @@ export class FormatUtils {
    * `maxFractionDigits` decimals
    */
   static formatNumber(value: number, maxFractionDigits = 0): string {
-    const options = { maximumFractionDigits: maxFractionDigits };
+    return FormatUtils.localNumber(value, {
+      maximumFractionDigits: maxFractionDigits,
+    });
+  }
+
+  /**
+   * A change in percent with its sign, in the plugin's language: "+12.3%",
+   * "-5%"; zero (also once rounded) has no sign: "0.0%".
+   * @param value - Already in percent (12.3 means 12.3%)
+   */
+  static formatSignedPercent(value: number, digits: number): string {
+    const text = FormatUtils.localNumber(value, {
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits,
+      signDisplay: "exceptZero",
+    });
+    return `${text}%`;
+  }
+
+  /** A volume in the settings weight unit, grouped, no decimals: "63,814 kg" */
+  static formatVolume(volume: number): string {
+    return `${FormatUtils.formatNumber(volume)} ${getUnitsMap()[CHART_DATA_TYPE.VOLUME]}`;
+  }
+
+  private static localNumber(
+    value: number,
+    options: Intl.NumberFormatOptions,
+  ): string {
     try {
       return new Intl.NumberFormat(
         LocalizationService.getInstance().getCurrentLocale(),
@@ -26,24 +53,27 @@ export class FormatUtils {
   }
 
   /**
-   * Format duration in seconds to human-readable string
-   * @param seconds Duration in seconds
-   * @returns Formatted string: '30s', '5m 30s', or '1h 30m'
+   * A duration in the plugin's language, its two largest units: "30s",
+   * "5m 30s", "1h 30m". `precision: "m"` rounds to whole minutes first
+   * ("45m", "1h 15m"), for totals where seconds are noise.
    */
-  static formatDuration(seconds: number): string {
-    if (seconds < 0) seconds = 0;
+  static formatDuration(
+    seconds: number,
+    { precision = "s" }: { precision?: "s" | "m" } = {},
+  ): string {
+    const unit = precision === "m" ? 60 : 1;
+    const total = Math.max(0, Math.round(seconds / unit)) * unit;
 
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const secs = Math.floor(seconds % 60);
+    const hours = Math.floor(total / 3600);
+    const minutes = Math.floor((total % 3600) / 60);
+    const secs = total % 60;
+    const h = t("common.duration.hours", { count: hours });
+    const m = t("common.duration.minutes", { count: minutes });
 
-    if (hours > 0) {
-      return minutes > 0 ? `${hours}h ${minutes}m` : `${hours}h`;
-    }
-    if (minutes > 0) {
-      return secs > 0 ? `${minutes}m ${secs}s` : `${minutes}m`;
-    }
-    return `${secs}s`;
+    if (hours > 0) return minutes > 0 ? `${h} ${m}` : h;
+    if (precision === "m" || (minutes > 0 && secs === 0)) return m;
+    const s = t("common.duration.seconds", { count: secs });
+    return minutes > 0 ? `${m} ${s}` : s;
   }
 
   /**
@@ -70,34 +100,49 @@ export class FormatUtils {
   }
 
   /**
-   * Format a numeric value based on data type with appropriate formatting
-   * @param value The numeric value to format
-   * @param dataType The type of data being formatted
-   * @returns Formatted string with appropriate formatting for the data type
+   * Whether a line's direction is an improvement: for a data type where
+   * lower is better (pace) a falling line is "up". A stable line is neutral.
+   * @param dataType - unset: higher is better
+   */
+  static improvement(
+    lineDirection: "up" | "down" | "stable",
+    dataType?: CHART_DATA_TYPE,
+  ): "up" | "down" | "neutral" {
+    if (lineDirection === "stable") return "neutral";
+    if (!dataType || !FormatUtils.isLowerBetter(dataType)) return lineDirection;
+    return lineDirection === "down" ? "up" : "down";
+  }
+
+  /**
+   * A value of a chart data type with its unit, in the plugin's language
+   * (decimal separator, no thousands grouping): durations as "1m 30s",
+   * pace as "5:30", reps rounded, the rest as a number with its unit.
+   * @param options.decimals - Exactly this many decimals, whole numbers too
+   *   ("100.0 kg"); unset: whole numbers as they are, others with 2
+   * @param options.pace - "decimal" writes a pace as a number with its unit
+   *   (a change in pace: "0.50 min/km") instead of a clock time
    */
   static formatValue(
     value: number,
     dataType: CHART_DATA_TYPE,
+    { decimals, pace = "clock" }: { decimals?: number; pace?: "clock" | "decimal" } = {},
   ): string {
-    switch (dataType) {
-      case CHART_DATA_TYPE.DURATION:
-        return FormatUtils.formatDuration(value);
-      case CHART_DATA_TYPE.PACE:
-        return FormatUtils.formatPace(value);
-      case CHART_DATA_TYPE.REPS:
-        return Math.round(value).toString();
-      case CHART_DATA_TYPE.VOLUME:
-      case CHART_DATA_TYPE.WEIGHT:
-      case CHART_DATA_TYPE.DISTANCE:
-      case CHART_DATA_TYPE.HEART_RATE:
-      default: {
-        const unitsMap = getUnitsMap();
-        const unit = unitsMap[dataType] || "";
-        const formattedNumber = Number.isInteger(value)
-          ? value.toString()
-          : value.toFixed(2);
-        return unit ? `${formattedNumber} ${unit}` : formattedNumber;
-      }
+    if (dataType === CHART_DATA_TYPE.DURATION) {
+      return FormatUtils.formatDuration(value);
     }
+    if (dataType === CHART_DATA_TYPE.PACE && pace === "clock") {
+      return FormatUtils.formatPace(value);
+    }
+    if (dataType === CHART_DATA_TYPE.REPS) {
+      return Math.round(value).toString();
+    }
+    const digits = decimals ?? (Number.isInteger(value) ? 0 : 2);
+    const number = FormatUtils.localNumber(value, {
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits,
+      useGrouping: false,
+    });
+    const unit = getUnitsMap()[dataType] || "";
+    return unit ? `${number} ${unit}` : number;
   }
 }

@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "BPM",
-    "cancel": "Batalkan",
     "clear": "Hapus",
     "convert": "Konversi",
     "exercise": "Latihan",
@@ -98,7 +97,6 @@
       "columnEstimated": "Perkiraan",
       "columnVariance": "Variansi",
       "columnWorkout": "Latihan",
-      "minutesSuffix": " menit",
       "noData": "Belum cukup sesi untuk dibandingkan.",
       "subtitle": "Perbandingan perkiraan vs durasi latihan yang sebenarnya",
       "title": "Perbandingan durasi",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "Perkiraan makin mendekati sesi Anda yang sebenarnya",
       "varianceTrendStable": "Akurasi perkiraan stabil",
       "varianceTrendTitle": "Akurasi perkiraan",
-      "avgVarianceStat": "Var. rata-rata: ±{value}%",
-      "hoursSuffix": " jam"
+      "avgVarianceStat": "Var. rata-rata: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Semua halaman latihan valid",
@@ -201,8 +198,6 @@
       "moveUp": "Pindahkan {widget} ke atas",
       "moveDown": "Pindahkan {widget} ke bawah",
       "allHistory": "Kosong: semua riwayat",
-      "recentWorkoutsLimit": "Latihan dalam daftar terbaru",
-      "volumeTrendDays": "Hari dalam tren volume",
       "layout": "Tata letak",
       "layoutGrid": "Kisi",
       "layoutList": "Daftar",
@@ -568,7 +563,6 @@
     "createLogButtonText": "Buat log untuk: {exerciseName}",
     "noDataTitle": "Tidak ditemukan log untuk {exerciseName}",
     "exploreExampleData": "Atau jelajahi dengan data contoh",
-    "lastSet": "Terakhir: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Rekor pribadi: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "Tambahkan preset",
       "addProtocol": "Tambahkan protokol",
-      "cancel": "Batal",
       "createFiles": "Buat file",
       "done": "Selesai!",
       "failed": "Gagal",
@@ -1072,7 +1065,6 @@
     "editTable": "Sunting tabel",
     "editTitle": "Sunting",
     "gotoExercise": "Buka latihan",
-    "invalidDate": "Tanggal tidak valid",
     "labels": {
       "target": "Target:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "Belum ada set di {weight}",
       "progress": "Terbaik {best}/{target} repetisi",
-      "progressTooltip": "Terbaik: {best} repetisi / Target: {target} repetisi",
-      "repsSuffix": "repetisi",
-      "separator": " × "
+      "progressTooltip": "Terbaik: {best} repetisi / Target: {target} repetisi"
     },
     "trendLine": "Garis tren",
     "refreshingTable": "Menyegarkan tabel...",
@@ -1127,7 +1117,6 @@
     "down": "Turun",
     "improving": "Membaik",
     "increasing": "Meningkat",
-    "invariant": "Tidak berubah",
     "neutral": "Netral",
     "stable": "Stabil",
     "stableLower": "Stabil",

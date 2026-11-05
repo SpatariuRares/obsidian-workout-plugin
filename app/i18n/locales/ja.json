@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "キャンセル",
     "clear": "クリア",
     "convert": "変換",
     "exercise": "エクササイズ",
@@ -98,7 +97,6 @@
       "columnEstimated": "推定",
       "columnVariance": "変動",
       "columnWorkout": "ワークアウト",
-      "minutesSuffix": " 分",
       "noData": "比較するためのセッションがまだ足りません。",
       "subtitle": "推定時間と実際のワークアウト時間",
       "title": "所要時間の比較",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "推定時間が実際のセッションに近づいています",
       "varianceTrendStable": "推定の精度は安定しています",
       "varianceTrendTitle": "推定の精度",
-      "avgVarianceStat": "平均変動: ±{value}%",
-      "hoursSuffix": "時間"
+      "avgVarianceStat": "平均変動: ±{value}%"
     },
     "fileErrors": {
       "allValid": "すべてのエクササイズページは有効です",
@@ -201,8 +198,6 @@
       "moveUp": "{widget} を上に移動",
       "moveDown": "{widget} を下に移動",
       "allHistory": "空欄: すべての履歴",
-      "recentWorkoutsLimit": "最近の一覧に表示するワークアウト数",
-      "volumeTrendDays": "ボリュームの推移に含める日数",
       "layout": "レイアウト",
       "layoutGrid": "グリッド",
       "layoutList": "リスト",
@@ -568,7 +563,6 @@
     "createLogButtonText": "{exerciseName} のログを作成する",
     "noDataTitle": "{exerciseName} のログが見つかりません",
     "exploreExampleData": "またはサンプルデータで試す",
-    "lastSet": "前回: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "自己ベスト: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "プリセットを追加",
       "addProtocol": "プロトコルを追加",
-      "cancel": "キャンセル",
       "createFiles": "ファイルを作成",
       "done": "完了！",
       "failed": "失敗",
@@ -1072,7 +1065,6 @@
     "editTable": "テーブルの編集",
     "editTitle": "編集",
     "gotoExercise": "エクササイズへ移動",
-    "invalidDate": "無効な日付",
     "labels": {
       "target": "目標:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "{weight} でのセットはまだありません",
       "progress": "ベスト {best}/{target} レップ",
-      "progressTooltip": "ベスト: {best} レップ / 目標: {target} レップ",
-      "repsSuffix": "レップ",
-      "separator": " × "
+      "progressTooltip": "ベスト: {best} レップ / 目標: {target} レップ"
     },
     "trendLine": "トレンドライン",
     "refreshingTable": "テーブルを更新中...",
@@ -1127,7 +1117,6 @@
     "down": "下降",
     "improving": "改善",
     "increasing": "増加",
-    "invariant": "不変",
     "neutral": "中立",
     "stable": "安定",
     "stableLower": "安定",

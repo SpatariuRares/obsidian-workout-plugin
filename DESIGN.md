@@ -279,6 +279,10 @@ A block (`workout-log`, `workout-sets`, `workout-session`, `workout-chart`, `wor
 
 One figure of a summary: its label above (label type, muted), the figure (figure type, tabular numerals, ink), an optional detail under it (meta, muted: the day it happened, "last 3"). No box of its own: a row of them (`StatCard.row`, `.stat-card-row`) sits on the card under a subtle border, in a grid of `minmax(min(7.5rem, 100%), 1fr)` tracks. A change is toned by whether it is an improvement, not by its sign (for pace a fall is better): `is-up` in success text, `is-neutral` muted, a decline stays ink. Never red: a worse week is not an error.
 
+### CardTable (molecule)
+
+A table of "a title + a few values" (protocol effectiveness, duration comparison): `CardTable.create(parent, { className, columns, rows })`, each column a `label`, a cell `className` and a `render(cell, row)`. On the desk a plain dashboard table (no outer border, a subtle line between rows, column labels in label type, figure columns right-aligned, tabular). On phones each row is a panel inset into the card (page color, control border, lg radius): the first cell as its title, every other value under its column name. That name is the header's own label (`data-label`), so the two never drift apart. Styles: `_card-table.scss`, its desk look from the `dashboard-table` mixin (`_table-mixins.scss`), which quick stats uses too.
+
 ### ProgressMeter (atom)
 
 How far something is from done: a 6px pill bar, the theme's border color as track. The fill is muted ink on the way and accent fill once done (`is-done`); no red/amber/green, being short of a target is not an error. A `progressbar` with `aria-label`, and the number beside it in words (never only in a tooltip, which a phone can't show).
@@ -323,12 +327,13 @@ The desk's overview: a grid of widgets, each one a BlockCard.
 - **Widget card** (`WidgetContainer`): title in the top row with the widget's ⋮ menu, the subtitle under it as meta, then the content. Flat: no shadow, no hover lift, no accent border on hover.
 - **Figures:** the summary and the calendar's streaks are a `StatCard.row` (as the first row under the title it has no border above it; two tiles a row on phones). "This week" reached is `is-up`.
 - **Lists** (recent workouts, top exercises by volume): the name in ink with its day under it (meta), the figure at the right end in figure type, ink. No accent: nothing in a list is done or picked.
-- **Tables** (quick stats, protocol effectiveness, duration comparison): column labels in label type, figures right-aligned, semibold, tabular. On phones each row of the last two is a panel inset into the card (page color, control border, lg radius) with its values under their column names.
+- **Tables** (quick stats, protocol effectiveness, duration comparison): column labels in label type, figures right-aligned, semibold, tabular. The last two are a `CardTable`: on phones each row is a panel inset into the card (page color, control border, lg radius) with its values under their column names.
+- **Empty:** a widget with nothing to show says so with `Feedback.renderEmpty(card, message, { append: true })` (muted, italic), under its title and subtitle.
 - **Tones:** like StatCard. An improvement in success text (volume up, progression ≥ 70%, an estimate within 10%, estimates getting closer), stable muted, anything worse stays ink. No red or amber for a worse figure; amber stays for real problems (an exercise page's errors, an imbalance alert).
 - **Heat map:** Period, Side and Measure are three ChipGroups with hidden labels in one row that wraps a whole group at a time: one row on the desk, two on phones (period and side, then measure; narrower chips, still 44px high, filling the width). The body and its analysis are inset into the card.
 - **Muscle tags:** copyable tags inset into the card, an accent border on hover and focus, no lift.
 - **Phones:** one column, Quick actions first; the volume chart is left out, its top list stays.
-- **Widget settings** (`EditWidgetModal`, from each widget's ⋮): "Edit {widget}" as title, one kit control per entry of the widget's `settings`: a number is an `AdjustField` with the schema's lower limit, a sensible upper one (the form's only), a step and its unit (an optional limit opens empty on "All"), a choice a `ChipGroup` (in the order the widget shows it), a list a `ChipGroup.createMulti`, a toggle a checkbox. Remove is the trash at the start of the bar; when the widget is the only one, a muted line says why it can't go.
+- **Widget settings** (`EditWidgetModal`, from each widget's ⋮): "Edit {widget}" as title, one kit control per entry of the widget's `settings`: a number is an `AdjustField` with the schema's lower limit, a sensible upper one (the form's only), a step and its unit (an optional limit opens empty on "All"), a choice a `ChipGroup` (in the order the widget shows it), a list a `ChipGroup.createMulti`, a toggle a checkbox, each opened on the block's value or the schema default (`createSettingControl`). The dashboard form draws its widget settings (recent workouts, volume trend days) with the same controls, each only while its widget is on the dashboard. Remove is the trash at the start of the bar; when the widget is the only one, a muted line says why it can't go.
 
 ### Modal forms (insert, edit, log)
 
@@ -337,7 +342,7 @@ A modal is a form on the page color; it uses the same kit as the blocks.
 - **Fields:** label above the field, in label type (muted, 0.8em); a checkbox's label is body text, tied to its box (`label[for]`), and the whole 44px row ticks it. Numbers are a `NumberField` (`AdjustField` is the labelled one for forms: whole numbers, − / +, unit at the end of the field), never a number input between red and green buttons.
 - **Choices:** one of a few options is a row of `Chip`s (picked: accent fill, `aria-pressed`); a set's protocol is the `ProtocolPicker`, any other one-of-a-few choice with a label a `ChipGroup`, some of a few a `ChipGroup.createMulti` (never zero: say so under it); notes are a `NotesField`. In a settings form the chips wrap, so every option is in sight.
 - **Sections:** `ModalBase.createSection` is a card on the modal (card color, control border, xl radius, 12px padding), its heading in title type with no rule under it.
-- **Actions:** save and cancel in `Button.createModalActions`, at the right end, one size (44px high), primary first.
+- **Actions:** every modal's buttons come from `Button.createModalActions(parent, { primary, others, onCancel, start })`, never built by hand: at the right end, one size (44px high), in one order: `start` (a rare action such as the delete icon), the primary action (save, insert, update, confirm; `variant: DANGER` for a destructive confirm), `others` (a further choice, e.g. Replace next to Merge), Cancel last. Settings editors use it too, not a `Setting` row of buttons.
 - **Errors:** under the field to fix (under a NumberField's whole box, which turns error color), never only a notice. A value the form can't write keeps Update from saving (`createEditButtons`' `validate`); it is never dropped quietly.
 
 ## Do's and Don'ts

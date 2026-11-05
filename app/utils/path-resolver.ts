@@ -3,6 +3,7 @@
  */
 import { normalizePath } from "obsidian";
 import type { MetadataCache } from "obsidian";
+import { PathUtils } from "@app/utils/PathUtils";
 
 /**
  * Finds the workout note a `workout:` parameter points to, the way Obsidian
@@ -43,10 +44,7 @@ export function resolveFilePath(
     : `${path}.md`;
 
   // Resolve relative to current file's directory
-  const currentDir = currentFilePath.substring(
-    0,
-    currentFilePath.lastIndexOf("/"),
-  );
+  const currentDir = PathUtils.getFolderPath(currentFilePath);
   if (currentDir) {
     return normalizePath(`${currentDir}/${pathWithExtension}`);
   }

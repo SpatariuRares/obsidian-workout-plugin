@@ -1,6 +1,9 @@
 import { App } from "obsidian";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
-import { readWorkoutNote } from "@app/services/notes/WorkoutNote";
+import {
+  readWorkoutNote,
+  replaceBlockLines,
+} from "@app/services/notes/WorkoutNote";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
 import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
@@ -20,17 +23,16 @@ export function addMissingBlockIds(content: string): {
   });
   if (missing.length === 0) return { content, modified: false, added: 0 };
 
-  const crlf = content.includes("\r\n");
-  const lines = content.split("\n");
-  const ids = missing.map((block) => ({
-    block,
-    id: `${block.quote}id: ${generateCodeBlockId()}`,
-  }));
+  const ids = missing.map((block) => ({ block, id: generateCodeBlockId() }));
   // Insert bottom-up, so earlier line numbers stay valid
-  for (const { block, id } of ids.reverse()) {
-    lines.splice(block.start + 1, 0, crlf ? `${id}\r` : id);
-  }
-  return { content: lines.join("\n"), modified: true, added: missing.length };
+  const patched = ids
+    .reverse()
+    .reduce(
+      (note, { block, id }) =>
+        replaceBlockLines(note, block, [`id: ${id}`], { count: 0 }),
+      content,
+    );
+  return { content: patched, modified: true, added: missing.length };
 }
 
 export interface BlockIdMigrationResult {

@@ -3,8 +3,11 @@ import {
   sameWorkout,
   trainingDay,
   trendOf,
+  workoutKey,
+  workoutMatches,
 } from "@app/services/history/TrainingHistory";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 
 // Tests run with TZ=Europe/Rome (jest.config.js): UTC+1 in winter.
 
@@ -14,7 +17,7 @@ function set(
   workout?: string,
   overrides: Partial<WorkoutLogData> = {},
 ): WorkoutLogData {
-  return {
+  return logRow({
     date: iso,
     exercise: "Squat",
     reps: 5,
@@ -23,7 +26,7 @@ function set(
     workout,
     timestamp: Date.parse(iso),
     ...overrides,
-  };
+  });
 }
 
 const minutesLater = (iso: string, minutes: number) =>
@@ -121,6 +124,70 @@ describe("TrainingHistory.sessions", () => {
     const sessions = history.sessions({ workout: "push" });
 
     expect(sessions.map((s) => s.workout)).toEqual(["Push"]);
+  });
+});
+
+describe("TrainingHistory.latestSessions", () => {
+  it("should give the n most recent sessions, most recent first", () => {
+    const history = new TrainingHistory([
+      set("2024-01-15T17:00:00.000Z", "Push"),
+      set("2024-01-17T17:00:00.000Z", "Legs"),
+      set("2024-01-16T17:00:00.000Z", "Pull"),
+    ]);
+
+    expect(history.latestSessions(2).map((s) => s.workout)).toEqual([
+      "Legs",
+      "Pull",
+    ]);
+  });
+
+  it("should order sessions of the same day by their first set", () => {
+    const history = new TrainingHistory([
+      set("2024-01-16T09:00:00.000Z", "Morning"),
+      set("2024-01-16T17:00:00.000Z", "Evening"),
+    ]);
+
+    expect(history.latestSessions(5).map((s) => s.workout)).toEqual([
+      "Evening",
+      "Morning",
+    ]);
+  });
+
+  it("should put a session whose date was edited on its new day", () => {
+    // Moved to the 30th in the CSV, but it keeps the timestamp of the 20th
+    const moved = set("2026-10-30T13:00:00Z", "Moved", {
+      timestamp: Date.parse("2026-10-20T13:00:00Z"),
+    });
+    const history = new TrainingHistory([
+      set("2026-10-29T13:00:00Z", "Before"),
+      moved,
+    ]);
+
+    expect(history.latestSessions(1).map((s) => s.workout)).toEqual(["Moved"]);
+    expect(history.sessions().map((s) => s.workout)).toEqual([
+      "Before",
+      "Moved",
+    ]);
+  });
+
+  it("should take the latest of the sessions a filter keeps", () => {
+    const history = new TrainingHistory([
+      set("2024-01-15T17:00:00.000Z", "Push"),
+      set("2024-01-16T17:00:00.000Z", undefined),
+    ]);
+
+    expect(
+      history
+        .latestSessions(1, (s) => s.workout !== undefined)
+        .map((s) => s.workout),
+    ).toEqual(["Push"]);
+  });
+
+  it("should give every session when there are fewer than n", () => {
+    const history = new TrainingHistory([set("2024-01-15T17:00:00.000Z", "Push")]);
+
+    expect(history.latestSessions(10)).toHaveLength(1);
+    expect(history.latestSessions(0)).toEqual([]);
   });
 });
 
@@ -286,6 +353,30 @@ describe("TrainingHistory.heaviestPerDay", () => {
     ]);
 
     expect(history.heaviestPerDay("Bench")).toEqual([80, 90]);
+  });
+});
+
+describe("TrainingHistory.perDay", () => {
+  it("aggregates each training day's sets, days in the order they first appear", () => {
+    const lift = (iso: string, volume: number) =>
+      set(iso, "Push", { volume });
+    const history = new TrainingHistory([
+      lift("2024-01-08T17:00:00.000Z", 100),
+      lift("2024-01-01T17:00:00.000Z", 10),
+      // 23:30 UTC is 00:30 on the 9th in Rome
+      lift("2024-01-08T23:30:00.000Z", 1000),
+      lift("2024-01-08T18:00:00.000Z", 200),
+    ]);
+
+    const total = history.perDay((sets) =>
+      sets.reduce((sum, s) => sum + s.volume, 0),
+    );
+
+    expect([...total]).toEqual([
+      ["2024-01-08", 300],
+      ["2024-01-01", 10],
+      ["2024-01-09", 1000],
+    ]);
   });
 });
 
@@ -479,6 +570,36 @@ describe("sameWorkout", () => {
   it("ignores case, spacing and surrounding quotes", () => {
     expect(sameWorkout('"Leg  Day"', "leg day")).toBe(true);
     expect(sameWorkout("Leg Day", "Push Day")).toBe(false);
+  });
+
+  it("ignores wiki-link brackets", () => {
+    expect(sameWorkout("[[Push Day]]", "Push Day")).toBe(true);
+  });
+});
+
+describe("workoutKey", () => {
+  it("strips wiki-link brackets, quotes, case and spacing", () => {
+    expect(workoutKey(' "[[Push   Day]]" ')).toBe("push day");
+    expect(workoutKey("'Leg Day'")).toBe("leg day");
+    expect(workoutKey(undefined)).toBe("");
+  });
+});
+
+describe("workoutMatches", () => {
+  it("matches a set whose workout contains the filter", () => {
+    expect(workoutMatches("[[Push Day]]", "Push Day")).toBe(true);
+    expect(workoutMatches("push", "[[Push Day A]]")).toBe(true);
+    expect(workoutMatches("Push Day A", "Push Day")).toBe(false);
+    expect(workoutMatches("Push Day", "Pull Day")).toBe(false);
+  });
+
+  it("matches everything when the filter is empty", () => {
+    expect(workoutMatches("", "Push Day")).toBe(true);
+    expect(workoutMatches(undefined, undefined)).toBe(true);
+  });
+
+  it("never matches a set without a workout when the filter names one", () => {
+    expect(workoutMatches("Push Day", undefined)).toBe(false);
   });
 });
 

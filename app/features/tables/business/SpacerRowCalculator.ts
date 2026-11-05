@@ -1,7 +1,10 @@
 import { TableRow } from "@app/features/tables/types";
 import { t } from "@app/i18n";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
-import { ICONS } from "@app/constants/ui.constants";
+import { ICONS, getUnitsMap } from "@app/constants/ui.constants";
+import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
+import { FormatUtils } from "@app/utils/FormatUtils";
+import { fieldNumber } from "@app/services/exercise/ExerciseFields";
 
 export interface SpacerStatData {
   icon?: string;
@@ -47,33 +50,29 @@ export class SpacerRowCalculator {
         totalReps += log.reps || 0;
       }
 
-      if (log.customFields) {
-        // In seconds; without a known unit the stored value counts as seconds
-        const duration =
-          r.durationSeconds ?? log.customFields["duration"];
-        if (typeof duration === "number" && duration > 0) {
-          hasDuration = true;
-          totalDuration += duration;
-        }
+      // In seconds; without a known unit the stored value counts as seconds
+      const duration = r.durationSeconds ?? fieldNumber(log, "duration");
+      if (duration !== undefined && duration > 0) {
+        hasDuration = true;
+        totalDuration += duration;
+      }
 
-        const distance = log.customFields["distance"];
-        if (typeof distance === "number" && distance > 0) {
-          hasDistance = true;
-          totalDistance += distance;
-        }
+      const distance = fieldNumber(log, "distance");
+      if (distance !== undefined && distance > 0) {
+        hasDistance = true;
+        totalDistance += distance;
+      }
 
-        const heartRate =
-          log.customFields["heartrate"] ||
-          log.customFields["heartRate"];
-        if (typeof heartRate === "number" && heartRate > 0) {
-          hasHeartRate = true;
-          totalHeartRate += heartRate;
-          heartRateCount++;
-        }
+      const heartRate = fieldNumber(log, "heartRate");
+      if (heartRate !== undefined && heartRate > 0) {
+        hasHeartRate = true;
+        totalHeartRate += heartRate;
+        heartRateCount++;
       }
     });
 
     const stats: SpacerStatData[] = [];
+    const units = getUnitsMap();
 
     if (hasStrengthData) {
       stats.push({
@@ -90,20 +89,16 @@ export class SpacerRowCalculator {
       });
     } else {
       if (hasDuration) {
-        const durationDisplay =
-          totalDuration >= 60
-            ? `${Math.floor(totalDuration / 60)}m${Math.round(totalDuration % 60)}s`
-            : `${Math.round(totalDuration)}s`;
         stats.push({
           icon: ICONS.METRICS.DURATION,
-          value: durationDisplay,
+          value: FormatUtils.formatDuration(totalDuration),
         });
       }
 
       if (hasDistance) {
         stats.push({
           icon: ICONS.METRICS.DISTANCE,
-          value: `${totalDistance.toFixed(2)}km`,
+          value: `${totalDistance.toFixed(2)}${units[CHART_DATA_TYPE.DISTANCE]}`,
         });
       }
 
@@ -113,7 +108,7 @@ export class SpacerRowCalculator {
         );
         stats.push({
           icon: ICONS.METRICS.HEART_RATE,
-          value: `${avgHeartRate}bpm`,
+          value: `${avgHeartRate}${units[CHART_DATA_TYPE.HEART_RATE]}`,
         });
       }
 

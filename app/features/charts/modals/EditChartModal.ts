@@ -3,10 +3,7 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { InsertChartModal } from "@app/features/charts/modals/InsertChartModal";
 import { chartBlock } from "@app/features/charts/chartBlock";
 import type { EmbeddedChartParams } from "@app/features/charts/types";
-import {
-  createEditButtons,
-  type EditTarget,
-} from "@app/features/modals/base/components/createEditButtons";
+import type { EditTarget } from "@app/features/modals/base/components/createEditButtons";
 import { t } from "@app/i18n";
 
 /**
@@ -57,9 +54,7 @@ export class EditChartModal extends InsertChartModal {
     }
 
     // Only the types the form offers; others keep the form's default
-    if (params.chartType && this.chartTypeChips.has(params.chartType)) {
-      this.onChartTypeChipClick(params.chartType);
-    }
+    if (params.chartType) this.chartType?.select(params.chartType);
     this.targetElements.exerciseInput.value = params.exercise ?? "";
     this.targetElements.workoutInput.value = params.workout ?? "";
 
@@ -83,15 +78,11 @@ export class EditChartModal extends InsertChartModal {
   protected createButtons(container: HTMLElement): void {
     const { type, exercise, id } = this.initialParams;
     void this.updateDataTypeOptions(exercise ?? "").then(() => {
-      if (type) this.onDataTypeChipClick(type);
-      createEditButtons(this, container, {
-        schema: chartBlock,
+      if (type) this.dataType?.select(type);
+      this.editButtons(container, chartBlock, t("modal.notices.chartUpdateFailed"), {
         target: this.where,
         id,
         collectParams: () => this.collectParams(),
-        buttonText: this.getButtonText(),
-        successMessage: this.getSuccessMessage(),
-        failureMessage: t("modal.notices.chartUpdateFailed"),
       });
     });
   }

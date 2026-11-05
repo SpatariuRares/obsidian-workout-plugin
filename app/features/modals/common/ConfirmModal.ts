@@ -47,38 +47,25 @@ export class ConfirmModal extends ModalBase {
     // Message
     contentEl.createEl("p", { text: this.message });
 
-    // Button container
-    const buttonContainer = Button.createModalActions(contentEl);
-
-    // Cancel button using Button atom
-    const cancelBtn = Button.create(buttonContainer, {
-      text: t("modal.buttons.cancel"),
-      ariaLabel: t("modal.buttons.cancel"),
-      variant: BUTTONVARIANT.SECONDARY,
-    });
-    Button.onClick(cancelBtn, () => {
-      if (this.onCancel) {
-        this.onCancel();
-      }
-      this.close();
-    });
-
-    // Confirm button using Button atom
-    const confirmText = this.options.confirmText ?? t("modal.buttons.confirm");
-    const confirmBtn = Button.create(buttonContainer, {
-      text: confirmText,
-      ariaLabel: confirmText,
-      variant: this.options.destructive
-        ? BUTTONVARIANT.DANGER
-        : BUTTONVARIANT.PRIMARY,
-    });
-    Button.onClick(confirmBtn, () => {
-      void this.onConfirm();
-      this.close();
+    const { cancel } = Button.createModalActions(contentEl, {
+      primary: {
+        text: this.options.confirmText ?? t("modal.buttons.confirm"),
+        variant: this.options.destructive
+          ? BUTTONVARIANT.DANGER
+          : BUTTONVARIANT.PRIMARY,
+        onClick: () => {
+          void this.onConfirm();
+          this.close();
+        },
+      },
+      onCancel: () => {
+        this.onCancel?.();
+        this.close();
+      },
     });
 
     // Focus on cancel button by default (safer)
-    cancelBtn.focus();
+    cancel?.focus();
   }
 
   onClose() {

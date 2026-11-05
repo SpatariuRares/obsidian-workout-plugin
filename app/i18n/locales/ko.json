@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "취소",
     "clear": "지우기",
     "convert": "변환",
     "exercise": "운동 종목",
@@ -98,7 +97,6 @@
       "columnEstimated": "예상",
       "columnVariance": "변동",
       "columnWorkout": "운동 루틴",
-      "minutesSuffix": " 분",
       "noData": "아직 비교할 세션이 충분하지 않습니다.",
       "subtitle": "예상 시간 대비 실제 운동 시간",
       "title": "운동 시간 비교",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "예상 시간이 실제 세션에 점점 가까워지고 있습니다",
       "varianceTrendStable": "예상 정확도가 안정적입니다",
       "varianceTrendTitle": "예상 정확도",
-      "avgVarianceStat": "평균 변동: ±{value}%",
-      "hoursSuffix": "h"
+      "avgVarianceStat": "평균 변동: ±{value}%"
     },
     "fileErrors": {
       "allValid": "모든 운동 페이지가 유효합니다",
@@ -201,8 +198,6 @@
       "moveUp": "{widget}을(를) 위로 이동",
       "moveDown": "{widget}을(를) 아래로 이동",
       "allHistory": "비어 있음: 전체 기록",
-      "recentWorkoutsLimit": "최근 목록의 운동 루틴 수",
-      "volumeTrendDays": "볼륨 추이의 일수",
       "layout": "레이아웃",
       "layoutGrid": "그리드",
       "layoutList": "목록",
@@ -568,7 +563,6 @@
     "createLogButtonText": "{exerciseName}에 대한 로그 생성",
     "noDataTitle": "{exerciseName}에 대한 로그가 없습니다",
     "exploreExampleData": "예제 데이터로 둘러보기",
-    "lastSet": "지난번: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "개인 최고 기록: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "프리셋 추가",
       "addProtocol": "프로토콜 추가",
-      "cancel": "취소",
       "createFiles": "파일 생성",
       "done": "완료!",
       "failed": "실패",
@@ -1072,7 +1065,6 @@
     "editTable": "테이블 편집",
     "editTitle": "편집",
     "gotoExercise": "운동 종목으로 이동",
-    "invalidDate": "잘못된 날짜",
     "labels": {
       "target": "목표:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "{weight}에서의 세트가 아직 없습니다",
       "progress": "최고 {best}/{target}회",
-      "progressTooltip": "최고: {best}회 / 목표: {target}회",
-      "repsSuffix": "회",
-      "separator": " × "
+      "progressTooltip": "최고: {best}회 / 목표: {target}회"
     },
     "trendLine": "추세선",
     "refreshingTable": "테이블 새로 고치는 중...",
@@ -1127,7 +1117,6 @@
     "down": "하락",
     "improving": "개선 중",
     "increasing": "증가",
-    "invariant": "불변",
     "neutral": "중립",
     "stable": "안정적",
     "stableLower": "안정적",

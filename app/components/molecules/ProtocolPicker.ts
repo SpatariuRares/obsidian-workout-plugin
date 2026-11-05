@@ -30,6 +30,6 @@ export class ProtocolPicker {
       onPick: props.onPick,
       focusKeyPrefix: props.focusKeyPrefix,
       className: "workout-protocol-picker",
-    });
+    }).container;
   }
 }

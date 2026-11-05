@@ -18,7 +18,7 @@
  * The plugin automatically detects the user's language from Obsidian settings.
  */
 
-import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
+import { CHART_DATA_TYPE, CHART_TYPE } from "@app/types/WorkoutConfigTypes";
 import { t } from "@app/i18n";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 
@@ -140,13 +140,13 @@ export const MODAL_UI = {
         get label() {
           return t("modal.selectOptions.completeWorkout");
         },
-        value: "workout",
+        value: CHART_TYPE.WORKOUT,
       },
       {
         get label() {
           return t("modal.selectOptions.specificExercise");
         },
-        value: "exercise",
+        value: CHART_TYPE.EXERCISE,
       },
     ],
     get DATA_TYPE() {
@@ -157,25 +157,25 @@ export const MODAL_UI = {
         get label() {
           return t("modal.selectOptions.exerciseWorkout");
         },
-        value: "combined",
+        value: CHART_TYPE.COMBINED,
       },
       {
         get label() {
           return t("modal.selectOptions.specificExercise");
         },
-        value: "exercise",
+        value: CHART_TYPE.EXERCISE,
       },
       {
         get label() {
           return t("modal.selectOptions.completeWorkout");
         },
-        value: "workout",
+        value: CHART_TYPE.WORKOUT,
       },
       {
         get label() {
           return t("modal.selectOptions.allLogs");
         },
-        value: "all",
+        value: CHART_TYPE.ALL,
       },
     ],
     PROTOCOL: [
@@ -493,17 +493,10 @@ export function getDynamicDashboardLabels() {
         }),
       },
     },
-    RECENT_WORKOUTS: {
-      VOLUME_SUFFIX: weightUnit,
-    },
-    SUMMARY: {
-      TOTAL_VOLUME_SUFFIX: weightUnit,
-    },
     VOLUME_ANALYTICS: {
       DATASET_LABEL: t("general.labels.dailyVolume", {
         unit: weightUnit,
       }),
-      VOLUME_SUFFIX: weightUnit,
     },
   };
 }
@@ -524,25 +517,10 @@ export const DASHBOARD_UI = {
       },
     },
   },
-  RECENT_WORKOUTS: {
-    get VOLUME_SUFFIX() {
-      return getDynamicDashboardLabels().RECENT_WORKOUTS
-        .VOLUME_SUFFIX;
-    },
-  },
-  SUMMARY: {
-    get TOTAL_VOLUME_SUFFIX() {
-      return getDynamicDashboardLabels().SUMMARY.TOTAL_VOLUME_SUFFIX;
-    },
-  },
   VOLUME_ANALYTICS: {
     get DATASET_LABEL() {
       return getDynamicDashboardLabels().VOLUME_ANALYTICS
         .DATASET_LABEL;
-    },
-    get VOLUME_SUFFIX() {
-      return getDynamicDashboardLabels().VOLUME_ANALYTICS
-        .VOLUME_SUFFIX;
     },
   },
 } as const;

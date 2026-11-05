@@ -2,6 +2,7 @@ import { App, Notice } from "obsidian";
 import type { Setting } from "obsidian";
 import { t } from "@app/i18n";
 import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
+import { runWithBusyButton } from "@app/features/settings/runWithBusyButton";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { runAddMissingBlockIds } from "@app/utils/BlockIdMigration";
 import { ExerciseTypeMigration } from "@app/compatibility/migration/ExerciseTypeMigration";
@@ -40,49 +41,54 @@ export class MaintenanceSettings {
       button
         .setButtonText(t("settings.buttons.runAllMaintenance"))
         .setCta()
-        .onClick(async () => {
-          button.setDisabled(true);
-          try {
-            const { totalAdded, modifiedFiles } =
-              await runAddMissingBlockIds(this.app);
-
-            if (totalAdded === 0) {
-              new Notice(t("messages.success.noBlockIdsNeeded"));
-            } else {
-              new Notice(
-                t("messages.success.blockIdsAdded", {
-                  count: totalAdded,
-                  files: modifiedFiles,
-                }),
-              );
-            }
-
-            await new ExerciseTypeMigration(
-              this.plugin,
-            ).migrateExerciseTypes();
-
-            // Older logs have no weight unit: freeze them in the current one
-            const stamped = await this.plugin.stampMissingWeightUnits(
-              this.plugin.settings.weightUnit,
-            );
-            if (stamped > 0) {
-              new Notice(
-                t("messages.success.weightUnitsStamped", {
-                  count: stamped,
-                }),
-              );
-            }
-          } catch (error) {
-            const errorMessage = ErrorUtils.getErrorMessage(error);
-            new Notice(
-              t("modal.notices.genericError", {
-                error: errorMessage,
-              }),
-            );
-          } finally {
-            button.setDisabled(false);
-          }
-        }),
+        .onClick(() =>
+          runWithBusyButton(
+            button,
+            { idle: t("settings.buttons.runAllMaintenance") },
+            () => this.runAll(),
+          ),
+        ),
     );
+  }
+
+  private async runAll(): Promise<void> {
+    try {
+      const { totalAdded, modifiedFiles } =
+        await runAddMissingBlockIds(this.app);
+
+      if (totalAdded === 0) {
+        new Notice(t("messages.success.noBlockIdsNeeded"));
+      } else {
+        new Notice(
+          t("messages.success.blockIdsAdded", {
+            count: totalAdded,
+            files: modifiedFiles,
+          }),
+        );
+      }
+
+      await new ExerciseTypeMigration(
+        this.plugin,
+      ).migrateExerciseTypes();
+
+      // Older logs have no weight unit: freeze them in the current one
+      const stamped = await this.plugin.stampMissingWeightUnits(
+        this.plugin.settings.weightUnit,
+      );
+      if (stamped > 0) {
+        new Notice(
+          t("messages.success.weightUnitsStamped", {
+            count: stamped,
+          }),
+        );
+      }
+    } catch (error) {
+      const errorMessage = ErrorUtils.getErrorMessage(error);
+      new Notice(
+        t("modal.notices.genericError", {
+          error: errorMessage,
+        }),
+      );
+    }
   }
 }

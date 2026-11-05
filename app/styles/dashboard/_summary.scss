@@ -1,4 +1,5 @@
 @use "../variables";
+@use "table-mixins";
 
 /* ============================================================================
    DASHBOARD SUMMARY & STATS
@@ -15,30 +16,10 @@
    digits aligned so the periods compare at a glance. Qualified to beat
    Obsidian's note table rules (a border around every cell) */
 .workout-dashboard table.workout-quick-stats-table {
-  width: 100%;
-  margin: 0;
-  border: none;
-  border-collapse: collapse;
-  font-variant-numeric: tabular-nums;
-
-  th,
-  td {
-    padding: var(--workout-space-sm) var(--workout-space-xs);
-    border: none;
-    border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
-    background: none;
-  }
-
-  tbody tr:last-child th,
-  tbody tr:last-child td {
-    border-bottom: none;
-  }
+  @include table-mixins.dashboard-table;
 
   thead th {
     text-align: end;
-    font-size: var(--workout-font-xs);
-    font-weight: normal;
-    color: var(--text-muted);
   }
 
   tbody th {

@@ -1,17 +1,11 @@
 import { calculateSummaryMetrics } from "@app/features/dashboard/widgets/summary/business/calculateSummaryMetrics";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 
 let clock = 0;
 function set(day: string, exercise: string, weight: number): WorkoutLogData {
   clock += 1;
-  return {
-    date: `2026-${day}T10:00:00.000Z`,
-    exercise,
-    reps: 5,
-    weight,
-    volume: weight * 5,
-    timestamp: clock,
-  };
+  return logRow({ date: `2026-${day}T10:00:00.000Z`, exercise, reps: 5, weight, timestamp: clock });
 }
 
 /** Personal records in `period`, judged against everything in `history` */

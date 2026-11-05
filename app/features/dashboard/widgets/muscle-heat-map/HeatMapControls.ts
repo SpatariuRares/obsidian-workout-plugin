@@ -1,9 +1,12 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import type {
-  HeatMapMetric,
-  MuscleHeatMapOptions,
-} from "@app/features/dashboard/widgets/muscle-heat-map/types";
+import type { MuscleHeatMapOptions } from "@app/features/dashboard/widgets/muscle-heat-map/types";
+import {
+  HEAT_MAP_METRIC_SETTING,
+  HEAT_MAP_TIME_FRAME_SETTING,
+  HEAT_MAP_VIEW_SETTING,
+} from "@app/features/dashboard/widgets/muscle-heat-map/heatMapSettings";
+import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { ChipGroup } from "@app/components/molecules";
 import { t } from "@app/i18n";
 
@@ -14,6 +17,32 @@ type RenderCallback = (
   _infoPanel: HTMLElement,
   _plugin: WorkoutPluginContext,
 ) => Promise<void>;
+
+/** The toggles, in order: the widget menu's choices, each with its own label */
+const CONTROLS = [
+  {
+    option: "timeFrame",
+    setting: HEAT_MAP_TIME_FRAME_SETTING,
+    label: () => t("dashboard.muscleHeatMap.controls.period"),
+  },
+  {
+    option: "view",
+    setting: HEAT_MAP_VIEW_SETTING,
+    label: () => t("dashboard.muscleHeatMap.controls.side"),
+  },
+  {
+    option: "metric",
+    setting: HEAT_MAP_METRIC_SETTING,
+    label: () => t("dashboard.muscleHeatMap.controls.metric"),
+  },
+] as const;
+
+/** What the toggles start on when the block doesn't say */
+export const HEAT_MAP_DEFAULT_OPTIONS: MuscleHeatMapOptions = {
+  timeFrame: dashboardBlock.defaults.heatMapTimeFrame,
+  view: dashboardBlock.defaults.heatMapView,
+  metric: dashboardBlock.defaults.heatMapMetric,
+};
 
 /**
  * Manages UI controls for the muscle heat map
@@ -30,11 +59,7 @@ export class HeatMapControls {
     plugin: WorkoutPluginContext,
     renderCallback: RenderCallback,
     /** What the toggles start on */
-    initial: MuscleHeatMapOptions = {
-      timeFrame: "week",
-      view: "front",
-      metric: "volume",
-    },
+    initial: MuscleHeatMapOptions = HEAT_MAP_DEFAULT_OPTIONS,
   ): MuscleHeatMapOptions {
     const controlsEl = container.createDiv({
       cls: "workout-heatmap-controls",
@@ -50,45 +75,19 @@ export class HeatMapControls {
         plugin,
       );
 
-    const timeFrames: MuscleHeatMapOptions["timeFrame"][] = ["week", "month", "year"];
-    ChipGroup.create(controlsEl, {
-      label: t("dashboard.muscleHeatMap.controls.period"),
-      options: timeFrames.map((id) => ({ id, label: t(`timeperiods.${id}`) })),
-      selected: initial.timeFrame,
-      labelHidden: true,
-      onPick: (id) => {
-        currentOptions.timeFrame = id as MuscleHeatMapOptions["timeFrame"];
-        redraw();
-      },
-    });
-
-    const views: MuscleHeatMapOptions["view"][] = ["front", "back"];
-    ChipGroup.create(controlsEl, {
-      label: t("dashboard.muscleHeatMap.controls.side"),
-      options: views.map((id) => ({ id, label: t(`general.${id}`) })),
-      selected: initial.view,
-      labelHidden: true,
-      onPick: (id) => {
-        currentOptions.view = id as MuscleHeatMapOptions["view"];
-        redraw();
-      },
-    });
-
-    // Sets/reps make bodyweight and timed work visible
-    const metrics: HeatMapMetric[] = ["volume", "sets", "reps"];
-    ChipGroup.create(controlsEl, {
-      label: t("dashboard.muscleHeatMap.controls.metric"),
-      options: metrics.map((id) => ({
-        id,
-        label: t(`dashboard.muscleHeatMap.metrics.${id}`),
-      })),
-      selected: initial.metric,
-      labelHidden: true,
-      onPick: (id) => {
-        currentOptions.metric = id as HeatMapMetric;
-        redraw();
-      },
-    });
+    for (const { option, setting, label } of CONTROLS) {
+      ChipGroup.create(controlsEl, {
+        label: label(),
+        options: setting.options.map((o) => ({ id: o.value, label: o.label() })),
+        selected: initial[option],
+        labelHidden: true,
+        onPick: (id) => {
+          // The ids are the setting's values, the schema's enum
+          (currentOptions as unknown as Record<string, string>)[option] = id;
+          redraw();
+        },
+      });
+    }
 
     return currentOptions;
   }

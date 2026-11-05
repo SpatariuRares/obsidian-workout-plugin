@@ -1,5 +1,4 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { MarkdownView } from "obsidian";
 import { TableRenderer } from "@app/features/tables/components/TableRenderer";
 import { TableDataProcessor } from "@app/features/tables/business/TableDataProcessor";
 import { tableBlock } from "@app/features/tables/tableBlock";
@@ -224,7 +223,8 @@ export class EmbeddedTableView extends BaseView {
     firstLog = false,
   ): void {
     const currentPageLink =
-      PathUtils.toWikiLink(where.sourcePath) || this.getActivePageLink();
+      PathUtils.toWikiLink(where.sourcePath) ||
+      PathUtils.activeNoteLink(this.plugin.app);
     const latestEntry = params.exercise
       ? new TrainingHistory(sets).lastSet(params.exercise)
       : undefined;
@@ -254,13 +254,6 @@ export class EmbeddedTableView extends BaseView {
     } catch (error) {
       this.handleError(container, error);
     }
-  }
-
-  // Fallback for callers that don't know the source note
-  private getActivePageLink(): string {
-    const activeView =
-      this.plugin.app.workspace.getActiveViewOfType(MarkdownView);
-    return activeView?.file ? `[[${activeView.file.basename}]]` : "";
   }
 
   /**

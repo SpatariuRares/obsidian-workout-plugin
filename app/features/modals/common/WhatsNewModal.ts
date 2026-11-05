@@ -1,6 +1,6 @@
 import { App, Component, MarkdownRenderer } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { Button, BUTTONVARIANT } from "@app/components/atoms";
+import { Button } from "@app/components/atoms";
 import { t } from "@app/i18n";
 import {
   RELEASES_URL,
@@ -58,13 +58,9 @@ export class WhatsNewModal extends ModalBase {
       href: RELEASES_URL,
     });
 
-    const actions = Button.createModalActions(contentEl);
-    const closeBtn = Button.create(actions, {
-      text: t("whatsNew.close"),
-      ariaLabel: t("whatsNew.close"),
-      variant: BUTTONVARIANT.PRIMARY,
+    Button.createModalActions(contentEl, {
+      primary: { text: t("whatsNew.close"), onClick: () => this.close() },
     });
-    Button.onClick(closeBtn, () => this.close());
   }
 
   onClose() {

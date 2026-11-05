@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "Скасувати",
     "clear": "Очистити",
     "convert": "Перетворити",
     "exercise": "Вправа",
@@ -98,7 +97,6 @@
       "columnEstimated": "Оцінка",
       "columnVariance": "Різниця",
       "columnWorkout": "Тренування",
-      "minutesSuffix": " хв",
       "noData": "Поки недостатньо тренувань для порівняння.",
       "subtitle": "Орієнтовна тривалість тренування проти фактичної",
       "title": "Порівняння тривалості",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "Оцінки дедалі ближчі до реальних тренувань",
       "varianceTrendStable": "Точність оцінок стабільна",
       "varianceTrendTitle": "Точність оцінок",
-      "avgVarianceStat": "Сер. відхилення: ±{value}%",
-      "hoursSuffix": " год"
+      "avgVarianceStat": "Сер. відхилення: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Усі сторінки вправ коректні",
@@ -201,8 +198,6 @@
       "moveUp": "Перемістити {widget} вгору",
       "moveDown": "Перемістити {widget} вниз",
       "allHistory": "Порожньо: вся історія",
-      "recentWorkoutsLimit": "Тренувань у списку останніх",
-      "volumeTrendDays": "Днів у тренді об'єму",
       "layout": "Макет",
       "layoutGrid": "Сітка",
       "layoutList": "Список",
@@ -568,7 +563,6 @@
     "createLogButtonText": "Створити запис для: {exerciseName}",
     "noDataTitle": "Не знайдено записів для {exerciseName}",
     "exploreExampleData": "Або ознайомтеся з прикладами даних",
-    "lastSet": "Останній раз: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Особистий рекорд: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "Додати пресет",
       "addProtocol": "Додати протокол",
-      "cancel": "Скасувати",
       "createFiles": "Створити файли",
       "done": "Готово!",
       "failed": "Не вдалося",
@@ -1072,7 +1065,6 @@
     "editTable": "Редагувати таблицю",
     "editTitle": "Редагувати",
     "gotoExercise": "Перейти до вправи",
-    "invalidDate": "Недійсна дата",
     "labels": {
       "target": "Ціль:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "Ще немає підходів з вагою {weight}",
       "progress": "Найкраще {best}/{target} повторень",
-      "progressTooltip": "Найкраще: {best} повторень / Ціль: {target} повторень",
-      "repsSuffix": "повт.",
-      "separator": " × "
+      "progressTooltip": "Найкраще: {best} повторень / Ціль: {target} повторень"
     },
     "trendLine": "Лінія тренду",
     "refreshingTable": "Оновлення таблиці...",
@@ -1127,7 +1117,6 @@
     "down": "Вниз",
     "improving": "Покращення",
     "increasing": "Зростання",
-    "invariant": "Без змін",
     "neutral": "Нейтральний",
     "stable": "Стабільний",
     "stableLower": "Стабільно",

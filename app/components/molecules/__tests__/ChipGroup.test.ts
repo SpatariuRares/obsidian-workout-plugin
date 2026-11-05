@@ -14,7 +14,7 @@ const pressed = (group: HTMLElement) =>
 
 describe("ChipGroup molecule", () => {
   it("is a group of chips labelled by its visible label", () => {
-    const group = ChipGroup.create(createObsidianContainer(), {
+    const { container: group } = ChipGroup.create(createObsidianContainer(), {
       label: "Period",
       options,
       selected: "week",
@@ -33,7 +33,7 @@ describe("ChipGroup molecule", () => {
 
   it("presses the picked chip at once, without a redraw", () => {
     const onPick = jest.fn();
-    const group = ChipGroup.create(createObsidianContainer(), {
+    const { container: group } = ChipGroup.create(createObsidianContainer(), {
       label: "Period",
       options,
       selected: "week",
@@ -51,9 +51,71 @@ describe("ChipGroup molecule", () => {
   });
 });
 
+describe("ChipGroup handle", () => {
+  it("reads the picked chip", () => {
+    const { container, value } = ChipGroup.create(createObsidianContainer(), {
+      label: "Period",
+      options,
+      selected: "month",
+    });
+
+    expect(value()).toBe("month");
+    container.querySelectorAll<HTMLButtonElement>("button")[2].click();
+    expect(value()).toBe("year");
+  });
+
+  it("picks from code as a click would, ignoring ids it doesn't offer", () => {
+    const onPick = jest.fn();
+    const { container, value, select } = ChipGroup.create(createObsidianContainer(), {
+      label: "Period",
+      options,
+      selected: "week",
+      onPick,
+    });
+
+    expect(select("year")).toBe(true);
+    expect(select("year")).toBe(true);
+    expect(select("decade")).toBe(false);
+
+    expect(value()).toBe("year");
+    expect(onPick).toHaveBeenCalledTimes(1);
+    expect(onPick).toHaveBeenCalledWith("year");
+    expect(pressed(container)).toEqual(["false", "false", "true"]);
+  });
+
+  it("swaps its options, keeping the pick when still offered", () => {
+    const onPick = jest.fn();
+    const group = ChipGroup.create(createObsidianContainer(), {
+      label: "Data",
+      options,
+      selected: "month",
+      onPick,
+    });
+
+    group.setOptions([
+      { id: "day", label: "Day" },
+      { id: "month", label: "Month" },
+    ]);
+    expect(group.value()).toBe("month");
+    expect(pressed(group.container)).toEqual(["false", "true"]);
+
+    group.setOptions([{ id: "day", label: "Day" }, { id: "hour", label: "Hour" }]);
+    expect(group.value()).toBe("day");
+
+    group.setOptions(options, "year");
+    expect(group.value()).toBe("year");
+    expect(pressed(group.container)).toEqual(["false", "false", "true"]);
+    expect(onPick).not.toHaveBeenCalled();
+
+    group.container.querySelectorAll<HTMLButtonElement>("button")[0].click();
+    expect(group.value()).toBe("week");
+    expect(onPick).toHaveBeenCalledWith("week");
+  });
+});
+
 describe("ChipGroup labelHidden", () => {
   it("keeps the label for screen readers only", () => {
-    const group = ChipGroup.create(createObsidianContainer(), {
+    const { container: group } = ChipGroup.create(createObsidianContainer(), {
       label: "Period",
       options,
       selected: "week",

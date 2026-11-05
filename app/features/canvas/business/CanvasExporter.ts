@@ -7,6 +7,9 @@
 import { App, TFile } from "obsidian";
 import { readWorkoutNote } from "@app/services/notes/WorkoutNote";
 import { timerBlock } from "@app/features/timer/timerBlock";
+import { timerRunSeconds } from "@app/features/timer/business/timerRunSeconds";
+import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
+import { generateCodeBlockId } from "@app/utils/IdUtils";
 import {
   WorkoutPlannerAPI,
   ExerciseStats,
@@ -18,6 +21,7 @@ import type {
   CanvasLayoutType,
 } from "@app/features/canvas/types";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
+import { FormatUtils } from "@app/utils/FormatUtils";
 import { t } from "@app/i18n";
 
 /**
@@ -130,6 +134,7 @@ export class CanvasExporter {
     api: WorkoutPlannerAPI,
     muscleTags: Pick<MuscleTagService, "musclesForExercise">,
     private exercises: Pick<ExerciseLibrary, "find">,
+    private settings: Pick<WorkoutChartsSettings, "timerPresets" | "defaultTimerPreset">,
   ) {
     this.api = api;
     this.muscleTags = muscleTags;
@@ -208,21 +213,28 @@ export class CanvasExporter {
     workoutFile: TFile,
   ): Promise<ExerciseInfo[]> {
     const content = await this.app.vault.read(workoutFile);
+    const note = readWorkoutNote(content);
     const exercises: ExerciseInfo[] = [];
     const exerciseSet = new Set<string>(); // Avoid duplicates
 
     // Pattern 1: exercises named in workout-timer blocks
     let match: RegExpExecArray | null;
-    const timers = readWorkoutNote(content).blocks.filter(
+    const timers = note.blocks.filter(
       (block) => block.type === timerBlock.type,
     );
     for (const block of timers) {
-      const { exercise, duration, superset } = timerBlock.parse(block.body).params;
+      const parsed = timerBlock.parse(block.body);
+      const { exercise, superset } = parsed.params;
       const exerciseName = exercise?.trim();
       if (exerciseName && !exerciseSet.has(exerciseName.toLowerCase())) {
         exerciseSet.add(exerciseName.toLowerCase());
         const muscleGroups =
           await this.muscleTags.musclesForExercise(exerciseName);
+        // A block with invalid values shows an error instead of a timer
+        const duration =
+          parsed.errors.length > 0
+            ? 0
+            : timerRunSeconds(parsed.params, this.settings);
         exercises.push({
           name: exerciseName,
           muscleGroups,
@@ -232,12 +244,12 @@ export class CanvasExporter {
       }
     }
 
-    // Pattern 2: Extract exercises from H2 headers (## Exercise Name)
-    const h2Regex = /^##\s+(.+)$/gm;
-    while ((match = h2Regex.exec(content)) !== null) {
-      const headerText = match[1].trim();
+    // Pattern 2: level-2 headings (## Exercise Name), outside fenced examples
+    for (const section of note.sections) {
+      const headerText = section.heading?.trim();
       // Skip common non-exercise headers
       if (
+        headerText &&
         this.isLikelyExerciseName(headerText) &&
         !exerciseSet.has(headerText.toLowerCase())
       ) {
@@ -332,7 +344,7 @@ export class CanvasExporter {
       const stats = exerciseStats.get(exercise.name);
 
       const node: CanvasNode = {
-        id: this.generateNodeId(index),
+        id: this.generateId("node", index),
         type: "text",
         x,
         y,
@@ -367,60 +379,36 @@ export class CanvasExporter {
     nodeHeight: number,
   ): Array<{ x: number; y: number }> {
     switch (layout) {
-      case "horizontal":
-        return this.calculateHorizontalLayout(
-          exercises.length,
-          nodeHeight,
-        );
       case "vertical":
-        return this.calculateVerticalLayout(
-          exercises.length,
-          nodeHeight,
-        );
+        return this.calculateFlowLayout(exercises.length, nodeHeight, 1);
       case "grouped":
         return this.calculateGroupedLayout(exercises, nodeHeight);
       default:
-        return this.calculateHorizontalLayout(
+        return this.calculateFlowLayout(
           exercises.length,
           nodeHeight,
+          NODES_PER_ROW,
         );
     }
   }
 
   /**
-   * Calculate horizontal flow layout (left to right, wrapping)
+   * Flow layout: left to right, wrapping after `perRow` nodes (1 = a single
+   * column, top to bottom)
    */
-  private calculateHorizontalLayout(
+  private calculateFlowLayout(
     count: number,
     nodeHeight: number,
+    perRow: number,
   ): Array<{ x: number; y: number }> {
     const positions: Array<{ x: number; y: number }> = [];
 
     for (let i = 0; i < count; i++) {
-      const row = Math.floor(i / NODES_PER_ROW);
-      const col = i % NODES_PER_ROW;
+      const row = Math.floor(i / perRow);
+      const col = i % perRow;
       positions.push({
         x: col * (NODE_WIDTH + HORIZONTAL_SPACING),
         y: row * (nodeHeight + VERTICAL_SPACING),
-      });
-    }
-
-    return positions;
-  }
-
-  /**
-   * Calculate vertical flow layout (top to bottom, single column)
-   */
-  private calculateVerticalLayout(
-    count: number,
-    nodeHeight: number,
-  ): Array<{ x: number; y: number }> {
-    const positions: Array<{ x: number; y: number }> = [];
-
-    for (let i = 0; i < count; i++) {
-      positions.push({
-        x: 0,
-        y: i * (nodeHeight + VERTICAL_SPACING),
       });
     }
 
@@ -498,7 +486,7 @@ export class CanvasExporter {
         const toSide = layout === "vertical" ? "top" : "left";
 
         edges.push({
-          id: this.generateEdgeId(i),
+          id: this.generateId("edge", i),
           fromNode: nodes[i].id,
           toNode: nodes[i + 1].id,
           fromSide: fromSide,
@@ -547,11 +535,11 @@ export class CanvasExporter {
 
     // Add duration if available and enabled
     if (options.includeDurations && exercise.duration) {
-      const minutes = Math.floor(exercise.duration / 60);
-      const seconds = exercise.duration % 60;
-      const durationText =
-        minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
-      sections.push(t("canvas.duration", { duration: durationText }));
+      sections.push(
+        t("canvas.duration", {
+          duration: FormatUtils.formatDuration(exercise.duration),
+        }),
+      );
     }
 
     // Add stats if available and enabled
@@ -571,22 +559,8 @@ export class CanvasExporter {
     return sections.join("\n\n");
   }
 
-  /**
-   * Generate a unique node ID
-   */
-  private generateNodeId(index: number): string {
-    // Generate UUID-like ID as per canvas spec
-    const timestamp = Date.now().toString(36);
-    const random = Math.random().toString(36).substring(2, 8);
-    return `node-${index}-${timestamp}${random}`;
-  }
-
-  /**
-   * Generate a unique edge ID
-   */
-  private generateEdgeId(index: number): string {
-    const timestamp = Date.now().toString(36);
-    const random = Math.random().toString(36).substring(2, 8);
-    return `edge-${index}-${timestamp}${random}`;
+  /** A unique canvas node or edge id, e.g. `node-0-m1abc2xyz` */
+  private generateId(prefix: "node" | "edge", index: number): string {
+    return generateCodeBlockId(`${prefix}-${index}`);
   }
 }

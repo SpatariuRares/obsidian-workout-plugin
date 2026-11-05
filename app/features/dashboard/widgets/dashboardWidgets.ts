@@ -18,6 +18,12 @@ import { QuickActions } from "@app/features/dashboard/widgets/quick-actions/Quic
 import { WidgetsFileError } from "@app/features/dashboard/widgets/file-errors/WidgetsFileError";
 import { MuscleTagsWidget } from "@app/features/dashboard/widgets/muscle-tags/MuscleTagsWidget";
 import { TrainingCalendarWidget } from "@app/features/dashboard/widgets/training-calendar/TrainingCalendarWidget";
+import type { WidgetSetting } from "@app/features/dashboard/widgets/widgetSettings";
+import {
+  HEAT_MAP_METRIC_SETTING,
+  HEAT_MAP_TIME_FRAME_SETTING,
+  HEAT_MAP_VIEW_SETTING,
+} from "@app/features/dashboard/widgets/muscle-heat-map/heatMapSettings";
 import { CONSTANTS } from "@app/constants";
 import { t } from "@app/i18n";
 
@@ -38,79 +44,6 @@ export interface DashboardWidgetContext {
   /** Every logged set */
   history(): Promise<WorkoutLogData[]>;
 }
-
-/** A choice offered by an enum or list setting */
-export interface WidgetSettingOption {
-  value: string;
-  label(): string;
-}
-
-/**
- * A block parameter that only one widget reads, edited from its own menu.
- * A number shows its schema default when unset; a choice needs its own
- * `default` (what the widget does when the parameter is absent) and a
- * multi setting starts as "every option".
- */
-export type WidgetSetting =
-  | {
-      kind: "number";
-      key:
-        | "recentWorkoutsLimit"
-        | "volumeTrendDays"
-        | "volumeTopLimit"
-        | "calendarWeeks"
-        | "protocolDays"
-        | "protocolMinEntries"
-        | "durationRecentCount"
-        | "durationRestSeconds"
-        | "fileErrorsMaxItems"
-        | "fileErrorsMaxTags";
-      label(): string;
-      /**
-       * What the form accepts. `min` is the schema's; `max` only keeps the
-       * form sensible, so a block already holding more still reads
-       */
-      min: number;
-      max: number;
-      /** What − and + add or take away */
-      step: number;
-      /** Shown at the end of the field ("days") */
-      unit?(): string;
-    }
-  | {
-      kind: "choice";
-      key:
-        | "heatMapTimeFrame"
-        | "heatMapMetric"
-        | "heatMapView"
-        | "protocolChartType"
-        | "protocolSortBy";
-      label(): string;
-      options: WidgetSettingOption[];
-      default: string;
-    }
-  | {
-      kind: "multi";
-      key:
-        | "quickStatsPeriods"
-        | "quickStatsMetrics"
-        | "summaryMetrics"
-        | "quickActionsShown";
-      label(): string;
-      options: WidgetSettingOption[];
-    }
-  | {
-      kind: "toggle";
-      key:
-        | "volumeShowBreakdown"
-        | "calendarShowStats"
-        | "heatMapShowImbalance"
-        | "durationShowTrend"
-        | "fileErrorsCheckSharedNames"
-        | "muscleTagsGroupByMuscle";
-      label(): string;
-      default: boolean;
-    };
 
 interface DashboardWidget {
   /** Shown in the dashboard modal */
@@ -181,7 +114,6 @@ export const DASHBOARD_WIDGETS: Record<
         kind: "toggle",
         key: "calendarShowStats",
         label: () => t("dashboard.widgetModal.calendarShowStats"),
-        default: true,
       },
     ],
     minColumns: 2,
@@ -238,42 +170,13 @@ export const DASHBOARD_WIDGETS: Record<
   heatMap: {
     label: () => t("general.muscleHeatMap"),
     settings: [
-      {
-        kind: "choice",
-        key: "heatMapTimeFrame",
-        label: () => t("dashboard.widgetModal.heatMapTimeFrame"),
-        options: [
-          { value: "week", label: () => t("timeperiods.week") },
-          { value: "month", label: () => t("timeperiods.month") },
-          { value: "year", label: () => t("timeperiods.year") },
-        ],
-        default: "week",
-      },
-      {
-        kind: "choice",
-        key: "heatMapView",
-        label: () => t("dashboard.widgetModal.heatMapView"),
-        options: [
-          { value: "front", label: () => t("general.front") },
-          { value: "back", label: () => t("general.back") },
-        ],
-        default: "front",
-      },
-      {
-        kind: "choice",
-        key: "heatMapMetric",
-        label: () => t("dashboard.widgetModal.heatMapMetric"),
-        options: ["volume", "sets", "reps"].map((metric) => ({
-          value: metric,
-          label: () => t(`dashboard.muscleHeatMap.metrics.${metric}`),
-        })),
-        default: "volume",
-      },
+      HEAT_MAP_TIME_FRAME_SETTING,
+      HEAT_MAP_VIEW_SETTING,
+      HEAT_MAP_METRIC_SETTING,
       {
         kind: "toggle",
         key: "heatMapShowImbalance",
         label: () => t("dashboard.widgetModal.heatMapShowImbalance"),
-        default: true,
       },
     ],
     minColumns: 2,
@@ -301,7 +204,6 @@ export const DASHBOARD_WIDGETS: Record<
         kind: "toggle",
         key: "volumeShowBreakdown",
         label: () => t("dashboard.widgetModal.volumeShowBreakdown"),
-        default: true,
       },
       {
         kind: "number",
@@ -357,7 +259,6 @@ export const DASHBOARD_WIDGETS: Record<
             label: () => t("dashboard.widgetModal.chartDoughnut"),
           },
         ],
-        default: "pie",
       },
     ],
     minColumns: 2,
@@ -404,7 +305,6 @@ export const DASHBOARD_WIDGETS: Record<
             label: () => t("dashboard.widgetModal.sortMostSets"),
           },
         ],
-        default: "progressionRate",
       },
     ],
     minColumns: 2,
@@ -440,7 +340,6 @@ export const DASHBOARD_WIDGETS: Record<
         kind: "toggle",
         key: "durationShowTrend",
         label: () => t("dashboard.widgetModal.durationShowTrend"),
-        default: true,
       },
     ],
     minColumns: 2,
@@ -484,7 +383,6 @@ export const DASHBOARD_WIDGETS: Record<
         kind: "toggle",
         key: "fileErrorsCheckSharedNames",
         label: () => t("dashboard.widgetModal.fileErrorsCheckSharedNames"),
-        default: true,
       },
       {
         kind: "number",
@@ -514,7 +412,6 @@ export const DASHBOARD_WIDGETS: Record<
         kind: "toggle",
         key: "muscleTagsGroupByMuscle",
         label: () => t("dashboard.widgetModal.muscleTagsGroupByMuscle"),
-        default: false,
       },
     ],
     minColumns: 2,

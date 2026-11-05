@@ -1,3 +1,5 @@
+import { round2 } from "@app/utils/round2";
+
 export const WEIGHT_UNITS = ["kg", "lb"] as const;
 
 export type WeightUnit = (typeof WEIGHT_UNITS)[number];
@@ -21,7 +23,7 @@ export function convertWeight(
   if (from === to) return value;
   const converted =
     from === "lb" ? value * KG_PER_LB : value / KG_PER_LB;
-  return Math.round(converted * 100) / 100;
+  return round2(converted);
 }
 
 /**
@@ -43,7 +45,7 @@ export function convertWeightAndVolume(
   return {
     weight: convertedWeight,
     volume: volumeIsRepsTimesWeight
-      ? Math.round(reps * convertedWeight * 100) / 100
+      ? round2(reps * convertedWeight)
       : convertWeight(volume, from, to),
   };
 }

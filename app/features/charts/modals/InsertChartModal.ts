@@ -2,13 +2,13 @@
 
 import { AdjustField } from "@app/components/molecules/AdjustField";
 import { getYAxisLabel } from "@app/features/charts/config/ChartConstants";
-import { DomUtils } from "@app/utils/DomUtils";
 import { App } from "obsidian";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import {
   TargetSectionWithAutocomplete,
   TargetSectionWithAutocompleteElements,
+  type TargetSectionWithAutocompleteHandlers,
 } from "@app/features/modals/components/TargetSectionWithAutocomplete";
 import {
   AdvancedOptionsSection,
@@ -18,6 +18,7 @@ import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { chartBlock } from "@app/features/charts/chartBlock";
 import {
   CHART_DATA_TYPE,
+  CHART_TYPE,
   type EmbeddedChartParams,
 } from "@app/features/charts/types";
 import {
@@ -26,7 +27,11 @@ import {
   isValidChartDataType,
 } from "@app/features/charts/config/ChartConstants";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
-import { Chip } from "@app/components/atoms/Chip";
+import {
+  ChipGroup,
+  type ChipGroupResult,
+  type ChipOption,
+} from "@app/components/molecules/ChipGroup";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
 
@@ -34,13 +39,10 @@ const DATE_RANGE_INCREMENT = 7;
 const LIMIT_INCREMENT = 10;
 
 export class InsertChartModal extends BaseInsertModal {
-  protected chartTypeSelect?: HTMLSelectElement;
-  protected chartTypeChips: Map<string, HTMLButtonElement> =
-    new Map();
-  protected dataTypeSelect?: HTMLSelectElement;
-  protected dataTypeChips: Map<string, HTMLButtonElement> = new Map();
-  private dataTypeChipContainer?: HTMLElement;
+  protected chartType?: ChipGroupResult<CHART_TYPE>;
+  protected dataType?: ChipGroupResult;
   protected targetElements?: TargetSectionWithAutocompleteElements;
+  private targetHandlers?: TargetSectionWithAutocompleteHandlers;
   protected dateRangeInput?: HTMLInputElement;
   protected limitInput?: HTMLInputElement;
   protected trendLineToggle?: HTMLInputElement;
@@ -75,84 +77,45 @@ export class InsertChartModal extends BaseInsertModal {
       t("modal.sections.chartType"),
     );
 
-    // Hidden select as backing store for TargetSectionWithAutocomplete
-    this.chartTypeSelect = chartTypeSection.createEl("select", {
-      cls: "workout-charts-select",
+    this.chartType = ChipGroup.create<CHART_TYPE>(chartTypeSection, {
+      label: t("modal.sections.chartType"),
+      labelHidden: true,
+      options: CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.CHART_TYPE.map(
+        (option) => ({ id: option.value, label: option.label }),
+      ),
+      selected: CHART_TYPE.WORKOUT,
+      className: "workout-modal-type-chips",
+      onPick: () => this.targetHandlers?.updateVisibility(),
     });
-    DomUtils.setCssProps(this.chartTypeSelect, { display: "none" });
-
-    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS
-      .CHART_TYPE) {
-      this.chartTypeSelect.createEl("option", {
-        text: option.label,
-        value: option.value,
-      });
-    }
-
-    // Chips for chart type selection (workout vs exercise)
-    const chartTypeChipContainer = chartTypeSection.createDiv({
-      cls: "workout-table-type-chips",
-    });
-
-    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS
-      .CHART_TYPE) {
-      const isDefault = option.value === "workout";
-      const chip = Chip.create(chartTypeChipContainer, {
-        text: option.label,
-        selected: isDefault,
-        onClick: () => this.onChartTypeChipClick(option.value),
-      });
-      this.chartTypeChips.set(option.value, chip);
-    }
-
-    // Set initial select value
-    this.chartTypeSelect.value = "workout";
 
     // Data Type chips section
     const dataTypeSection = this.createSection(
       container,
       t("modal.dataType"),
     );
-
-    // Hidden select as backing store for data type
-    this.dataTypeSelect = dataTypeSection.createEl("select", {
-      cls: "workout-charts-select",
+    this.dataType = ChipGroup.create(dataTypeSection, {
+      label: t("modal.dataType"),
+      labelHidden: true,
+      options: InsertChartModal.standardDataTypes(),
+      selected: CHART_DATA_TYPE.VOLUME,
+      className: "workout-modal-type-chips",
     });
-    DomUtils.setCssProps(this.dataTypeSelect, { display: "none" });
-
-    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS
-      .DATA_TYPE) {
-      this.dataTypeSelect.createEl("option", {
-        text: option.text,
-        value: option.value,
-      });
-    }
-
-    // Chips for data type selection
-    this.dataTypeChipContainer = dataTypeSection.createDiv({
-      cls: "workout-table-type-chips",
-    });
-
-    this.buildDataTypeChips(
-      CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE.map((o) => ({
-        text: o.text,
-        value: o.value,
-      })),
-    );
 
     // Target Section using reusable component with autocomplete
     if (!this.plugin) {
       throw new Error("Plugin is required for InsertChartModal");
     }
 
-    const { elements: targetElements, handlers: targetHandlers } =
+    const chartType = this.chartType;
+    const { elements: targetElements, handlers } =
       TargetSectionWithAutocomplete.create(
         this,
         container,
-        this.chartTypeSelect,
+        () => chartType.value(),
         this.currentFileName,
         this.plugin,
       );
+    this.targetHandlers = handlers;
 
     this.targetElements = targetElements;
 
@@ -172,14 +135,6 @@ export class InsertChartModal extends BaseInsertModal {
         this.targetElements.exerciseInput.value,
       );
     }
-
-    // Ensure visibility is updated based on initial selection
-    targetHandlers.updateVisibility();
-
-    // Event listener for chart type change
-    this.chartTypeSelect.addEventListener("change", () => {
-      targetHandlers.updateVisibility();
-    });
 
     // Configuration Section
     const configSection = this.createSection(
@@ -262,66 +217,12 @@ export class InsertChartModal extends BaseInsertModal {
       this.plugin.settings.defaultExactMatch;
   }
 
-  protected onChartTypeChipClick(value: string): void {
-    if (!this.chartTypeSelect) return;
-
-    // Update chips
-    for (const [chipValue, chip] of this.chartTypeChips) {
-      Chip.setSelected(chip, chipValue === value);
-    }
-
-    // Update hidden select and dispatch change event
-    this.chartTypeSelect.value = value;
-    this.chartTypeSelect.dispatchEvent(new Event("change"));
-  }
-
-  protected onDataTypeChipClick(value: string): void {
-    if (!this.dataTypeSelect) return;
-
-    // Update chips
-    for (const [chipValue, chip] of this.dataTypeChips) {
-      Chip.setSelected(chip, chipValue === value);
-    }
-
-    // Update hidden select
-    this.dataTypeSelect.value = value;
-  }
-
-  /**
-   * Builds data type chips from a list of options
-   */
-  private buildDataTypeChips(
-    options: Array<{ text: string; value: string }>,
-  ): void {
-    if (!this.dataTypeChipContainer || !this.dataTypeSelect) return;
-
-    // Clear existing chips
-    this.dataTypeChipContainer.empty();
-    this.dataTypeChips.clear();
-
-    // Determine default selected value
-    const currentValue = this.dataTypeSelect.value;
-    const hasCurrentValue = options.some(
-      (o) => o.value === currentValue,
-    );
-    const defaultValue = hasCurrentValue
-      ? currentValue
-      : options[0]?.value || "";
-
-    for (const option of options) {
-      const isSelected = option.value === defaultValue;
-      const chip = Chip.create(this.dataTypeChipContainer, {
-        text: option.text,
-        selected: isSelected,
-        onClick: () => this.onDataTypeChipClick(option.value),
-      });
-      this.dataTypeChips.set(option.value, chip);
-    }
-
-    // Update hidden select value
-    if (defaultValue) {
-      this.dataTypeSelect.value = defaultValue;
-    }
+  /** The data types of an exercise without a definition */
+  private static standardDataTypes(): ChipOption[] {
+    return CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE.map((o) => ({
+      id: o.value,
+      label: o.text,
+    }));
   }
 
   protected generateCode(): string {
@@ -331,8 +232,8 @@ export class InsertChartModal extends BaseInsertModal {
   /** The form as block parameters */
   protected collectParams(): EmbeddedChartParams {
     if (
-      !this.chartTypeSelect ||
-      !this.dataTypeSelect ||
+      !this.chartType ||
+      !this.dataType ||
       !this.targetElements ||
       !this.dateRangeInput ||
       !this.limitInput ||
@@ -344,11 +245,11 @@ export class InsertChartModal extends BaseInsertModal {
       throw new Error("Chart elements not initialized");
     }
 
-    const chartType = this.chartTypeSelect.value;
-    const dataType = this.dataTypeSelect.value;
+    const chartType = this.chartType.value();
+    const dataType = this.dataType.value();
     const target = TargetSectionWithAutocomplete.getTargetValue(
       this.targetElements,
-      this.chartTypeSelect,
+      chartType,
       this.currentFileName,
     );
     const dateRange = parseInt(this.dateRangeInput.value) || 0;
@@ -381,34 +282,11 @@ export class InsertChartModal extends BaseInsertModal {
   protected async updateDataTypeOptions(
     exerciseName: string,
   ): Promise<void> {
-    if (!this.dataTypeSelect || !this.plugin) return;
+    if (!this.dataType || !this.plugin) return;
 
-    // If no exercise selected, reset to standard options
+    // No exercise: the standard options
     if (!exerciseName) {
-      // Rebuild standard options
-      const currentValue = this.dataTypeSelect.value;
-      this.dataTypeSelect.empty();
-      const standardOptions =
-        CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE.map(
-          (opt) => ({
-            text: opt.text,
-            value: opt.value,
-          }),
-        );
-      standardOptions.forEach((opt) => {
-        this.dataTypeSelect?.createEl("option", {
-          text: opt.text,
-          attr: { value: opt.value },
-        });
-      });
-      if (
-        standardOptions.some(
-          (option) => option.value === currentValue,
-        )
-      ) {
-        this.dataTypeSelect.value = currentValue;
-      }
-      this.buildDataTypeChips(standardOptions);
+      this.dataType.setOptions(InsertChartModal.standardDataTypes());
       return;
     }
 
@@ -425,46 +303,27 @@ export class InsertChartModal extends BaseInsertModal {
         )
       : undefined;
 
-    const availableTypes = getAvailableChartDataTypes(
-      typeId,
-      customParams,
+    const options = getAvailableChartDataTypes(typeId, customParams).map(
+      (type): ChipOption => {
+        const customParam = definition?.customParameters?.find(
+          (p) => p.key === type,
+        );
+        const label = customParam
+          ? ParameterUtils.formatParamWithUnit(customParam)
+          : type === "e1rm"
+            ? getYAxisLabel(type)
+            : ParameterUtils.formatKeyWithUnit(type);
+        return { id: type, label };
+      },
     );
 
-    // Clear existing options
-    const currentVal = this.dataTypeSelect.value;
-    this.dataTypeSelect.empty();
-
-    // Build new options
-    const newOptions: Array<{ text: string; value: string }> = [];
-
-    availableTypes.forEach((type) => {
-      // Determine display text using ParameterUtils
-      const customParam = definition?.customParameters?.find(
-        (p) => p.key === type,
-      );
-      const displayText = customParam
-        ? ParameterUtils.formatParamWithUnit(customParam)
-        : type === "e1rm"
-          ? getYAxisLabel(type)
-          : ParameterUtils.formatKeyWithUnit(type);
-
-      this.dataTypeSelect?.createEl("option", {
-        text: displayText,
-        attr: { value: type },
-      });
-      newOptions.push({ text: displayText, value: type });
-    });
-
-    // Update selected value to default if current is invalid
-    this.dataTypeSelect.value = isValidChartDataType(
-      typeId,
-      currentVal,
-      customParams,
-    )
-      ? currentVal
-      : getDefaultChartDataType(typeId, customParams);
-
-    // Rebuild data type chips
-    this.buildDataTypeChips(newOptions);
+    // The current type stays when valid, else the exercise's default
+    const current = this.dataType.value();
+    this.dataType.setOptions(
+      options,
+      isValidChartDataType(typeId, current, customParams)
+        ? current
+        : getDefaultChartDataType(typeId, customParams),
+    );
   }
 }

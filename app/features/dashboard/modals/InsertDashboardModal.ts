@@ -32,15 +32,27 @@ import {
 } from "@app/features/dashboard/layout/gridLayout";
 import { ICONS } from "@app/constants/ui.constants";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
+import {
+  createSettingControl,
+  type SettingControl,
+} from "@app/features/dashboard/modals/widgetSettingControl";
 import { t } from "@app/i18n";
 
-/** Widgets whose own setting the form shows only while they are ticked */
-const WIDGET_SETTINGS = {
-  recentWorkoutsLimit: "recentWorkouts",
-  volumeTrendDays: "volume",
-} as const satisfies Partial<
-  Record<keyof EmbeddedDashboardParams, DashboardWidgetId>
->;
+/**
+ * Widget settings the dashboard form shows too (as the widget's menu draws
+ * them), each only while its widget is on the dashboard
+ */
+const FORM_SETTINGS = [
+  ["recentWorkouts", "recentWorkoutsLimit"],
+  ["volume", "volumeTrendDays"],
+] as const;
+
+interface FormSetting {
+  widget: DashboardWidgetId;
+  key: string;
+  group: HTMLElement;
+  control: SettingControl;
+}
 
 /**
  * The dashboard form: title, period, and the widgets, either as a list
@@ -53,10 +65,7 @@ export class InsertDashboardModal extends BaseInsertModal {
   private shown: Set<DashboardWidgetId>;
   private titleInput!: HTMLInputElement;
   private dateRangeInput!: HTMLInputElement;
-  private settingInputs = {} as Record<
-    keyof typeof WIDGET_SETTINGS,
-    HTMLInputElement
-  >;
+  private formSettings: FormSetting[] = [];
   private listEl!: HTMLElement;
   private gridAreaEl!: HTMLElement;
   private widgetsHintEl!: HTMLElement;
@@ -167,27 +176,37 @@ export class InsertDashboardModal extends BaseInsertModal {
     });
     this.setUpGrid(params);
 
-    this.settingInputs = {
-      recentWorkoutsLimit: this.createNumberInput(
-        this.createFormGroup(widgets),
-        t("dashboard.modal.recentWorkoutsLimit"),
-        String(
-          params.recentWorkoutsLimit ??
-            dashboardBlock.defaults.recentWorkoutsLimit,
-        ),
-        1,
-      ),
-      volumeTrendDays: this.createNumberInput(
-        this.createFormGroup(widgets),
-        t("dashboard.modal.volumeTrendDays"),
-        String(
-          params.volumeTrendDays ??
-            dashboardBlock.defaults.volumeTrendDays,
-        ),
-        1,
-      ),
-    };
+    this.formSettings = [];
+    for (const [widget, key] of FORM_SETTINGS) {
+      const setting = DASHBOARD_WIDGETS[widget].settings?.find(
+        (s) => s.key === key,
+      );
+      if (!setting) continue;
+      const group = this.createFormGroup(widgets);
+      this.formSettings.push({
+        widget,
+        key,
+        group,
+        control: createSettingControl(this, group, setting, params[key]),
+      });
+    }
     this.renderWidgets();
+  }
+
+  protected canInsert(): boolean {
+    return this.validateSettings();
+  }
+
+  /**
+   * Each shown setting's check, all run so each shows its own error; false
+   * keeps the form from writing
+   */
+  protected validateSettings(): boolean {
+    let valid = true;
+    for (const { group, control } of this.formSettings) {
+      if (!group.hidden && control.check && !control.check()) valid = false;
+    }
+    return valid;
   }
 
   protected generateCode(): string {
@@ -215,12 +234,9 @@ export class InsertDashboardModal extends BaseInsertModal {
       layout: grid ? "grid" : undefined,
       ...this.gridLines(grid),
     };
-    for (const key of Object.keys(
-      WIDGET_SETTINGS,
-    ) as (keyof typeof WIDGET_SETTINGS)[]) {
-      const value = readNumber(this.settingInputs[key], 1);
-      params[key] =
-        value === dashboardBlock.defaults[key] ? undefined : value;
+    const settings = params as Record<string, unknown>;
+    for (const { key, control } of this.formSettings) {
+      settings[key] = control.read();
     }
     return params;
   }
@@ -474,11 +490,7 @@ export class InsertDashboardModal extends BaseInsertModal {
 
   /** A widget's setting shows only while that widget is on the dashboard */
   private updateWidgetSettings(): void {
-    for (const [key, widget] of Object.entries(WIDGET_SETTINGS)) {
-      const group = this.settingInputs[
-        key as keyof typeof WIDGET_SETTINGS
-      ]?.closest<HTMLElement>(".workout-charts-form-group");
-      if (!group) continue;
+    for (const { widget, group } of this.formSettings) {
       group.hidden =
         this.layout === "grid"
           ? !this.placements.some((p) => p.id === widget)

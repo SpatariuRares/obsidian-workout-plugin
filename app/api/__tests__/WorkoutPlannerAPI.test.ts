@@ -53,6 +53,57 @@ describe("WorkoutPlannerAPI", () => {
     expect(logs[0].timestamp).toBe(123);
   });
 
+  describe("dateRange counts whole training days (local time)", () => {
+    const set = (date: string, exercise: string) => ({
+      date, exercise, reps: 5, weight: 100, volume: 500,
+    });
+    const apiWith = (rows: object[]) =>
+      new WorkoutPlannerAPI({
+        getWorkoutLogData: jest.fn().mockResolvedValue(rows),
+      } as any);
+    const january = { start: "2026-01-01", end: "2026-01-31" };
+
+    it("includes a set logged at 00:30 local time on the end day", async () => {
+      // 00:30 in Rome on 31 Jan
+      const api = apiWith([set("2026-01-30T23:30:00.000Z", "Squat")]);
+
+      const logs = await api.getWorkoutLogs({ dateRange: january });
+
+      expect(logs.map((l) => l.exercise)).toEqual(["Squat"]);
+    });
+
+    it("includes a set logged at 00:30 local time on the start day", async () => {
+      // 00:30 in Rome on 1 Jan, still 31 Dec in UTC
+      const api = apiWith([set("2025-12-31T23:30:00.000Z", "Squat")]);
+
+      const logs = await api.getWorkoutLogs({ dateRange: january });
+
+      expect(logs.map((l) => l.exercise)).toEqual(["Squat"]);
+    });
+
+    it("leaves out sets of the local days just outside the range", async () => {
+      const api = apiWith([
+        set("2025-12-31T22:30:00.000Z", "Before"), // 23:30 on 31 Dec in Rome
+        set("2026-01-31T23:30:00.000Z", "After"), // 00:30 on 1 Feb in Rome
+        set("2026-01-15", "Inside"),
+      ]);
+
+      const logs = await api.getWorkoutLogs({ dateRange: january });
+
+      expect(logs.map((l) => l.exercise)).toEqual(["Inside"]);
+    });
+
+    it("ignores a boundary that is not a date", async () => {
+      const api = apiWith([set("2026-01-15", "Squat")]);
+
+      const logs = await api.getWorkoutLogs({
+        dateRange: { start: "soon", end: "2026-01-31" },
+      });
+
+      expect(logs.map((l) => l.exercise)).toEqual(["Squat"]);
+    });
+  });
+
   it("keeps weight in the settings unit and adds what was entered", async () => {
     const dataService = {
       getWorkoutLogData: jest.fn().mockResolvedValue([

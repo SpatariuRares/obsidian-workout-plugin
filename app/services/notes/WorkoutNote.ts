@@ -107,6 +107,28 @@ export function readWorkoutNote(content: string): {
 }
 
 /**
+ * The note with the first `count` lines between a block's fences (all of
+ * them by default; 0 inserts) replaced by `lines`, written without the
+ * block's quote: each gets `block.quote` back, and `\r` when the note uses
+ * CRLF. Lines outside the replaced ones stay as typed.
+ */
+export function replaceBlockLines(
+  content: string,
+  block: NoteBlock,
+  lines: string[],
+  { count = block.end - block.start - 1 }: { count?: number } = {},
+): string {
+  const eol = content.includes("\r\n") ? "\r" : "";
+  const noteLines = content.split("\n");
+  noteLines.splice(
+    block.start + 1,
+    count,
+    ...lines.map((line) => `${block.quote}${line}${eol}`),
+  );
+  return noteLines.join("\n");
+}
+
+/**
  * Index of the line closing a fence opened with `marks` inside `depth`
  * blockquote levels, or -1 when the note or the callout ends first
  */

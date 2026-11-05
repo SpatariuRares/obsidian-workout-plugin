@@ -1,9 +1,8 @@
-import { MarkdownView } from "obsidian";
 import { Button, BUTTONVARIANT, Text } from "@app/components/atoms";
 import { Feedback } from "@app/components/atoms/Feedback";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
-import { fromLog } from "@app/features/modals/base/logic/LogEntryDraft";
+import { prefillFromLast } from "@app/features/modals/base/logic/LogEntryDraft";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import type { BlockMenuAction } from "@app/features/common/ui/BlockMenu";
@@ -21,11 +20,7 @@ export class LogCallouts {
     plugin: WorkoutPluginContext,
     exerciseName?: string,
   ): void {
-    const activeView =
-      plugin.app.workspace.getActiveViewOfType(MarkdownView);
-    const currentPageLink = activeView?.file
-      ? `[[${activeView.file.basename}]]`
-      : "";
+    const currentPageLink = PathUtils.activeNoteLink(plugin.app);
 
     new CreateLogModal(
       plugin.app,
@@ -77,14 +72,9 @@ export class LogCallouts {
     markTourTarget(createButton, TOUR_TARGETS.tableAddButton);
 
     Button.onClick(createButton, () => {
-      let link = sourcePath ? PathUtils.toWikiLink(sourcePath) : "";
-      if (!link) {
-        const activeView =
-          plugin.app.workspace.getActiveViewOfType(MarkdownView);
-        link = activeView?.file
-          ? `[[${activeView.file.basename}]]`
-          : "";
-      }
+      const link =
+        (sourcePath && PathUtils.toWikiLink(sourcePath)) ||
+        PathUtils.activeNoteLink(plugin.app);
 
       new CreateLogModal(
         plugin.app,
@@ -137,8 +127,8 @@ export class LogCallouts {
     Button.onClick(
       button,
       () => {
-        const prefillData = latestEntry ? fromLog(latestEntry) : undefined;
-        if (prefillData) prefillData.date = undefined;
+        // Without a last set the form fills itself in (CreateLogModal)
+        const prefillData = latestEntry ? prefillFromLast(latestEntry) : undefined;
 
         new CreateLogModal(
           plugin.app,

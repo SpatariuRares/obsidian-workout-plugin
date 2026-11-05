@@ -47,7 +47,7 @@ export class VaultLogStorage implements LogStorage {
   }
 
   async create(content: string): Promise<void> {
-    await PathUtils.ensureFolderExists(
+    await PathUtils.ensureParentFolder(
       this.app,
       this.settings.csvLogFilePath,
     );

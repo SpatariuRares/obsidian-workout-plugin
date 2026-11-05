@@ -9,13 +9,16 @@ import {
   TimerAudio,
   type TimerCue,
 } from "@app/features/timer/components/TimerAudio";
-import {
-  intervalAt,
-  intervalPlan,
-} from "@app/features/timer/business/intervalSchedule";
+import { timerPoint } from "@app/features/timer/business/timerPoint";
 import { TimerDisplay } from "@app/features/timer/components/TimerDisplay";
 import { TimerControls } from "@app/features/timer/components/TimerControls";
 import { t } from "@app/i18n";
+
+/** What a timer runs: its type, length, rest and rounds */
+export type TimerConfig = Pick<TimerState, "timerType" | "duration" | "rest" | "totalRounds">;
+
+/** A timer at its start: nothing elapsed, the first round's work */
+const AT_START = { elapsedTime: 0, currentRound: 1, phase: "work" } as const;
 
 export class TimerCore {
   private state: TimerState;
@@ -33,14 +36,12 @@ export class TimerCore {
     this.state = {
       timerInterval: undefined,
       startTime: undefined,
-      elapsedTime: 0,
       isRunning: false,
-      currentRound: 1,
       totalRounds: 1,
       timerType: TIMER_TYPE.COUNTDOWN,
       duration: 30,
       rest: 0,
-      phase: "work",
+      ...AT_START,
       surfaces: [],
     };
   }
@@ -80,6 +81,15 @@ export class TimerCore {
     this.callbacks.onStateChange?.(this.state);
   }
 
+  /**
+   * Sets what the timer runs (unchanged without a config) and puts it back
+   * at its start, stopped
+   */
+  configure(config: Partial<TimerConfig> = {}): void {
+    this.stop();
+    this.setState({ ...config, ...AT_START, startTime: undefined });
+  }
+
   start(): void {
     if (this.state.isRunning) return;
 
@@ -89,20 +99,9 @@ export class TimerCore {
       return;
     }
 
-    if (this.state.timerType === TIMER_TYPE.COUNTDOWN) {
-      const remaining =
-        this.state.duration * 1000 - this.state.elapsedTime;
-      if (remaining <= 0) {
-        this.setState({
-          elapsedTime: 0,
-          currentRound: 1,
-        });
-      }
-    } else if (
-      this.state.timerType === TIMER_TYPE.INTERVAL &&
-      this.state.phase === "done"
-    ) {
-      this.setState({ elapsedTime: 0, currentRound: 1, phase: "work" });
+    // A finished timer starts over
+    if (timerPoint(this.state).done) {
+      this.setState(AT_START);
     }
 
     // Resume audio while still inside the user's tap (required on mobile)
@@ -142,11 +141,7 @@ export class TimerCore {
     this.stop();
     this.earlySoundPlayed = false;
     TimerDisplay.cleanupOverlay(this.timerId);
-    this.setState({
-      elapsedTime: 0,
-      currentRound: 1,
-      phase: "work",
-    });
+    this.configure();
     this.updateDisplay();
   }
 
@@ -158,11 +153,9 @@ export class TimerCore {
     const now = Date.now();
     this.setState({ elapsedTime: now - this.state.startTime });
 
+    const point = timerPoint(this.state);
     if (this.state.timerType === TIMER_TYPE.COUNTDOWN) {
-      const remaining = Math.max(
-        0,
-        this.state.duration * 1000 - this.state.elapsedTime,
-      );
+      const remaining = point.remainingMs ?? 0;
       if (
         !this.earlySoundPlayed &&
         remaining <= 2000 &&
@@ -171,19 +164,11 @@ export class TimerCore {
         this.earlySoundPlayed = true;
         this.playSound();
       }
-      if (remaining <= 0) {
+      if (point.done) {
         this.handleTimerComplete();
         return;
       }
     } else if (this.state.timerType === TIMER_TYPE.INTERVAL) {
-      const point = intervalAt(
-        intervalPlan({
-          duration: this.state.duration,
-          rest: this.state.rest,
-          rounds: this.state.totalRounds,
-        }),
-        this.state.elapsedTime,
-      );
       if (point.phase === "done") {
         this.setState({ phase: "done" });
         this.handleTimerComplete();

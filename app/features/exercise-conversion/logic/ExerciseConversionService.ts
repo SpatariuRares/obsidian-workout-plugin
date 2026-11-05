@@ -4,8 +4,13 @@ import {
 } from "@app/constants/exerciseTypes.constants";
 import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
+import type { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { DataFilter } from "@app/services/data/DataFilter";
 import { toLogEntryInput } from "@app/services/data/WorkoutLogCodec";
+import {
+  fieldValue,
+  setFieldValue,
+} from "@app/services/exercise/ExerciseFields";
 
 export interface FieldMapping {
   fromField: string;
@@ -46,6 +51,17 @@ export class ExerciseConversionService {
   }
 
   /**
+   * The sets a conversion of this exercise rewrites: exact name only, so a
+   * similar exercise is never converted
+   */
+  public async setsOf(exerciseName: string): Promise<WorkoutLogData[]> {
+    return DataFilter.filterRows(await this.plugin.getWorkoutLogData(), {
+      exercise: exerciseName,
+      exactMatch: true,
+    });
+  }
+
+  /**
    * Converts all exercise data entries
    */
   public async convertExerciseData(
@@ -53,34 +69,25 @@ export class ExerciseConversionService {
     targetTypeId: string,
     fieldMappings: FieldMapping[],
   ): Promise<number> {
-    const rawLogData = await this.plugin.getWorkoutLogData();
-    const logData = DataFilter.filterRows(rawLogData, {
-      exercise: exerciseName,
-      exactMatch: true,
-    });
+    const logData = await this.setsOf(exerciseName);
 
     let convertedCount = 0;
 
     await this.plugin.batchOperation("other", async () => {
       for (const log of logData) {
-        // Start from the set as entered (its own weight unit), not the
-        // weight converted to the settings unit
+        // Read and write the set as entered (its own weight unit), not the
+        // weight converted to the settings unit, so weight and weightUnit
+        // stay consistent
+        const source = toLogEntryInput(log);
         const updatedEntry = toLogEntryInput(log);
         updatedEntry.customFields = { ...log.customFields };
 
         // Apply field mappings
         for (const mapping of fieldMappings) {
-          const sourceValue = this.getFieldValue(
-            log,
-            mapping.fromField,
-          );
+          const sourceValue = fieldValue(source, mapping.fromField);
 
           if (sourceValue !== undefined && sourceValue !== null) {
-            this.setFieldValue(
-              updatedEntry,
-              mapping.toField,
-              sourceValue,
-            );
+            setFieldValue(updatedEntry, mapping.toField, sourceValue);
           }
         }
 
@@ -140,59 +147,5 @@ export class ExerciseConversionService {
         .getExerciseDefinitionService()
         .saveExerciseDefinition(definition);
     }
-  }
-
-  /**
-   * Gets a field value from a log entry
-   */
-  private getFieldValue(
-    log: {
-      reps: number;
-      weight: number;
-      customFields?: Record<string, string | number | boolean>;
-    },
-    fieldKey: string,
-  ): number | string | boolean | undefined {
-    // Standard fields
-    if (fieldKey === "reps") return log.reps;
-    if (fieldKey === "weight") return log.weight;
-
-    // Custom fields
-    return log.customFields?.[fieldKey];
-  }
-
-  /**
-   * Sets a field value on an entry
-   */
-  private setFieldValue(
-    entry: {
-      reps: number;
-      weight: number;
-      customFields?: Record<string, string | number | boolean>;
-    },
-    fieldKey: string,
-    value: number | string | boolean,
-  ): void {
-    // Standard fields
-    if (fieldKey === "reps") {
-      entry.reps =
-        typeof value === "number"
-          ? value
-          : parseInt(String(value)) || 0;
-      return;
-    }
-    if (fieldKey === "weight") {
-      entry.weight =
-        typeof value === "number"
-          ? value
-          : parseFloat(String(value)) || 0;
-      return;
-    }
-
-    // Custom fields
-    if (!entry.customFields) {
-      entry.customFields = {};
-    }
-    entry.customFields[fieldKey] = value;
   }
 }

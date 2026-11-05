@@ -3,6 +3,7 @@ import { getRecentWorkouts } from "@app/features/dashboard/widgets/recent-workou
 import { calculateSummaryMetrics } from "@app/features/dashboard/widgets/summary/business/calculateSummaryMetrics";
 import { prepareVolumeTrendData } from "@app/features/dashboard/widgets/volume-analytics/business/volumeAnalyticsData";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 
 // The dashboard counts sessions and days the way CONTEXT.md defines them:
 // local training days, sessions keyed by day + workout name.
@@ -10,15 +11,14 @@ import type { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 function set(date: Date | string, workout?: string): WorkoutLogData {
   const d = new Date(date);
-  return {
+  return logRow({
     date: d.toISOString(),
     exercise: "Squat",
     reps: 5,
     weight: 100,
-    volume: 500,
     workout,
     timestamp: d.getTime(),
-  };
+  });
 }
 
 const ALL_TIME = 100_000;

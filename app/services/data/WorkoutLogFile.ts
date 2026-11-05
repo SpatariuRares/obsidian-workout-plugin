@@ -18,6 +18,7 @@ import { StringUtils } from "@app/utils/StringUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import { t } from "@app/i18n";
+import { round2 } from "@app/utils/round2";
 
 const CACHE_DURATION_MS = 5000;
 /**
@@ -172,8 +173,8 @@ export class WorkoutLogFile {
     if (recordIncrease !== undefined) {
       new Notice(
         t("modal.notices.newRecord", {
-          weight: Number(this.toLog(added, file).weight.toFixed(2)),
-          increase: Number(recordIncrease.toFixed(2)),
+          weight: round2(this.toLog(added, file).weight),
+          increase: round2(recordIncrease),
           unit: this.settings.weightUnit,
         }),
       );

@@ -5,14 +5,17 @@ import {
   TIMER_TYPE,
 } from "@app/features/timer/types";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
-import { Chip } from "@app/components/atoms/Chip";
+import {
+  ChipGroup,
+  type ChipGroupResult,
+} from "@app/components/molecules/ChipGroup";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
 
 export interface TimerConfigurationElements {
-  timerTypeChips: Map<TIMER_TYPE, HTMLButtonElement>;
-  selectedTimerType: TIMER_TYPE;
+  /** The timer type chips; `value()` is the picked TIMER_TYPE */
+  timerType: ChipGroupResult<TIMER_TYPE>;
   /** Row under the timer type for the presets of that type (filled by the modal) */
   presetGroup: HTMLElement;
   presetChipsContainer: HTMLElement;
@@ -52,44 +55,21 @@ export class TimerConfigurationSection {
     handlers: TimerConfigurationHandlers;
   } {
     // The modal is already about the timer, so its fields need no card
-    // Timer Type - chips instead of select
     const typeGroup = modal.createFormGroup(container);
-    typeGroup.createEl("label", {
-      text: t("modal.timerType"),
+    const timerType = ChipGroup.create<TIMER_TYPE>(typeGroup, {
+      label: t("modal.timerType"),
+      options: [
+        { id: TIMER_TYPE.COUNTDOWN, label: t("timer.countdown") },
+        { id: TIMER_TYPE.INTERVAL, label: t("timer.interval") },
+        { id: TIMER_TYPE.STOPWATCH, label: t("timer.stopwatch") },
+      ],
+      selected: TIMER_TYPE.COUNTDOWN,
+      className: "workout-modal-type-chips",
+      onPick: (type) => {
+        updateVisibility();
+        onTypeChange?.(type);
+      },
     });
-
-    const chipContainer = typeGroup.createDiv({
-      cls: "workout-timer-type-chips",
-    });
-
-    const selectedTimerType = TIMER_TYPE.COUNTDOWN;
-    const timerTypeChips = new Map<TIMER_TYPE, HTMLButtonElement>();
-
-    const timerTypes: Array<{ type: TIMER_TYPE; label: string }> = [
-      {
-        type: TIMER_TYPE.COUNTDOWN,
-        label: t("timer.countdown"),
-      },
-      {
-        type: TIMER_TYPE.INTERVAL,
-        label: t("timer.interval"),
-      },
-      {
-        type: TIMER_TYPE.STOPWATCH,
-        label: t("timer.stopwatch"),
-      },
-    ];
-
-    for (const { type, label } of timerTypes) {
-      const chip = Chip.create(chipContainer, {
-        text: label,
-        selected: type === selectedTimerType,
-        onClick: () => {
-          setTimerType(type);
-        },
-      });
-      timerTypeChips.set(type, chip);
-    }
 
     // Presets of the selected type, between the type and its values
     const presetGroup = modal.createFormGroup(container);
@@ -181,8 +161,7 @@ export class TimerConfigurationSection {
     );
 
     const elements: TimerConfigurationElements = {
-      timerTypeChips,
-      selectedTimerType,
+      timerType,
       presetGroup,
       presetChipsContainer,
       durationInput,
@@ -198,10 +177,8 @@ export class TimerConfigurationSection {
 
     // Visibility handler
     const updateVisibility = () => {
-      const isInterval =
-        elements.selectedTimerType === TIMER_TYPE.INTERVAL;
-      const isStopwatch =
-        elements.selectedTimerType === TIMER_TYPE.STOPWATCH;
+      const isInterval = timerType.value() === TIMER_TYPE.INTERVAL;
+      const isStopwatch = timerType.value() === TIMER_TYPE.STOPWATCH;
       // For intervals the duration is the work phase of each round
       const durationLabel = durationContainer.querySelector(
         ".workout-field-label",
@@ -225,14 +202,9 @@ export class TimerConfigurationSection {
       }
     };
 
-    // Timer type selection handler
+    // Picks the type from code, as a click on its chip would
     const setTimerType = (type: TIMER_TYPE) => {
-      elements.selectedTimerType = type;
-      for (const [t, chip] of timerTypeChips) {
-        Chip.setSelected(chip, t === type);
-      }
-      updateVisibility();
-      onTypeChange?.(type);
+      timerType.select(type);
     };
 
     const handlers: TimerConfigurationHandlers = {
@@ -252,7 +224,7 @@ export class TimerConfigurationSection {
   static getValues(
     elements: TimerConfigurationElements,
   ): EmbeddedTimerParams {
-    const timerType = elements.selectedTimerType;
+    const timerType = elements.timerType.value();
 
     const values: EmbeddedTimerParams = {
       type: timerType,

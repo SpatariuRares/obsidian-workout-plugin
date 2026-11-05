@@ -1,14 +1,15 @@
-import { Notice, App } from "obsidian";
+import type { App } from "obsidian";
 import { t } from "@app/i18n";
 import { ProtocolEditorModal } from "@app/features/settings/modals/ProtocolEditorModal";
 import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
 import { CustomProtocolConfig } from "@app/types/WorkoutLogData";
 import { ProtocolBadge } from "@app/components/atoms";
-import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
+import { settingsListEditor } from "@app/features/settings/settingsListEditor";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import {
   isUnchangedDefaultProtocol,
   protocolHelp,
+  protocolIdFromName,
 } from "@app/services/protocols/ProtocolCatalog";
 
 export class CustomProtocolsSettings {
@@ -20,40 +21,106 @@ export class CustomProtocolsSettings {
   ) {}
 
   definitions(): DefinitionItem[] {
-    const protocols = this.plugin.settings.customProtocols || [];
-
     // One list: the built-in protocols are entries of it, so a separate
     // "custom protocols" header would read as a second, empty list
     return [
-      {
-        type: "list",
+      settingsListEditor<CustomProtocolConfig>({
+        app: this.app,
         heading: t("settings.sections.customProtocols"),
         emptyState: t("settings.descriptions.noCustomProtocols"),
-        addItem: {
-          name: t("settings.buttons.addProtocol"),
-          action: () => this.showProtocolEditor(null),
-        },
-        onDelete: (index) => this.confirmDelete(protocols[index]?.id),
+        addLabel: t("settings.buttons.addProtocol"),
+        editTooltip: t("settings.tooltips.editProtocol"),
         deleteTooltip: t("settings.tooltips.deleteProtocol"),
-        items: protocols.map((protocol) => ({
+        items: this.protocols(),
+        keyOf: (protocol) => protocol.id,
+        describe: (protocol) => ({
           name: protocol.name,
           desc: this.formatProtocolDetails(protocol),
-          tooltip: t("settings.tooltips.editProtocol"),
-          action: () => this.showProtocolEditor(protocol),
-        })),
-      },
+        }),
+        blank: () => ({
+          id: "",
+          name: "",
+          abbreviation: "",
+          color: "#6366f1", // Default indigo color
+        }),
+        open: (draft, original, save) =>
+          new ProtocolEditorModal(
+            this.app,
+            draft,
+            original?.id || null,
+            save,
+          ).open(),
+        normalize: (protocol) => {
+          protocol.name = protocol.name.trim();
+          protocol.abbreviation = protocol.abbreviation
+            .trim()
+            .toUpperCase();
+          if (!protocol.id)
+            protocol.id = protocolIdFromName(protocol.name);
+        },
+        validate: (protocol, originalId) =>
+          this.problemWith(protocol, originalId),
+        upsert: (protocol, originalId) => {
+          const list = this.protocols();
+          const at = list.findIndex(
+            (p) => p.id === (originalId ?? protocol.id),
+          );
+          if (at !== -1 && list[at].id === protocol.id) {
+            list[at] = protocol;
+            return;
+          }
+          // New, or its id changed: the old entry goes, it comes last
+          if (at !== -1) list.splice(at, 1);
+          list.push(protocol);
+        },
+        remove: (id) => {
+          const list = this.protocols();
+          const at = list.findIndex((p) => p.id === id);
+          if (at !== -1) list.splice(at, 1);
+        },
+        persist: () => this.plugin.saveSettings(),
+        refresh: this.refresh,
+        messages: {
+          confirmDelete: t("settings.messages.confirmDeleteProtocol"),
+          saved: t("settings.messages.protocolSaved"),
+          deleted: t("settings.messages.protocolDeleted"),
+        },
+      }),
     ];
   }
 
-  private confirmDelete(id: string | undefined): void {
-    if (id === undefined) return;
-    new ConfirmModal(
-      this.app,
-      t("settings.messages.confirmDeleteProtocol"),
-      async () => {
-        await this.deleteProtocol(id);
-      },
-    ).open();
+  /** The settings list, created on first use */
+  private protocols(): CustomProtocolConfig[] {
+    this.plugin.settings.customProtocols ??= [];
+    return this.plugin.settings.customProtocols;
+  }
+
+  /** Why the typed protocol cannot be saved, or null */
+  private problemWith(
+    protocol: CustomProtocolConfig,
+    originalId: string | null,
+  ): string | null {
+    if (!protocol.name)
+      return t("settings.messages.protocolNameRequired");
+    if (!protocol.abbreviation || protocol.abbreviation.length > 3) {
+      return t("settings.messages.protocolAbbreviationRequired");
+    }
+    if (!/^#[0-9A-Fa-f]{6}$/.test(protocol.color)) {
+      return t("settings.messages.protocolColorRequired");
+    }
+    const list = this.protocols();
+    const sameName = list.some(
+      (p) =>
+        p.name.toLowerCase() === protocol.name.toLowerCase() &&
+        p.id !== protocol.id,
+    );
+    // A new protocol whose name gives an id already in the list (e.g.
+    // "Superset") would silently replace that entry
+    const sameNewId =
+      !originalId && list.some((p) => p.id === protocol.id);
+    return sameName || sameNewId
+      ? t("settings.messages.protocolNameExists")
+      : null;
   }
 
   private formatProtocolDetails(
@@ -83,131 +150,5 @@ export class CustomProtocolsSettings {
     }
 
     return fragment;
-  }
-
-  private showProtocolEditor(
-    existingProtocol: CustomProtocolConfig | null,
-  ): void {
-    const formState: CustomProtocolConfig = existingProtocol
-      ? { ...existingProtocol }
-      : {
-          id: "",
-          name: "",
-          abbreviation: "",
-          color: "#6366f1", // Default indigo color
-        };
-    const originalId = existingProtocol?.id || null;
-
-    new ProtocolEditorModal(this.app, formState, originalId, () =>
-      this.saveProtocol(formState, originalId),
-    ).open();
-  }
-
-  private async saveProtocol(
-    protocol: CustomProtocolConfig,
-    originalId: string | null,
-  ): Promise<boolean> {
-    // Validate name
-    if (!protocol.name.trim()) {
-      new Notice(t("settings.messages.protocolNameRequired"));
-      return false;
-    }
-
-    // Validate abbreviation
-    if (
-      !protocol.abbreviation.trim() ||
-      protocol.abbreviation.length > 3
-    ) {
-      new Notice(t("settings.messages.protocolAbbreviationRequired"));
-      return false;
-    }
-
-    // Validate color
-    if (
-      !protocol.color.trim() ||
-      !/^#[0-9A-Fa-f]{6}$/.test(protocol.color)
-    ) {
-      new Notice(t("settings.messages.protocolColorRequired"));
-      return false;
-    }
-
-    const trimmedName = protocol.name.trim();
-    protocol.name = trimmedName;
-    protocol.abbreviation = protocol.abbreviation
-      .trim()
-      .toUpperCase();
-
-    // Ensure ID is valid
-    if (!protocol.id) {
-      protocol.id = trimmedName
-        .toLowerCase()
-        .replace(/\s+/g, "_")
-        .replace(/[^a-z0-9_]/g, "");
-    }
-
-    // Initialize customProtocols array if needed
-    if (!this.plugin.settings.customProtocols) {
-      this.plugin.settings.customProtocols = [];
-    }
-
-    // Check for duplicate names (unless editing the same protocol)
-    const existingIndex =
-      this.plugin.settings.customProtocols.findIndex(
-        (p) => p.id === protocol.id,
-      );
-    const existingNameIndex =
-      this.plugin.settings.customProtocols.findIndex(
-        (p) =>
-          p.name.toLowerCase() === trimmedName.toLowerCase() &&
-          p.id !== protocol.id,
-      );
-
-    // A new protocol whose name gives an id already in the list (e.g.
-    // "Superset") would silently replace that entry
-    if (existingNameIndex !== -1 || (!originalId && existingIndex !== -1)) {
-      new Notice(t("settings.messages.protocolNameExists"));
-      return false;
-    }
-
-    if (originalId && originalId !== protocol.id) {
-      // Renaming: remove old and add new
-      const oldIndex = this.plugin.settings.customProtocols.findIndex(
-        (p) => p.id === originalId,
-      );
-      if (oldIndex !== -1) {
-        this.plugin.settings.customProtocols.splice(oldIndex, 1);
-      }
-      this.plugin.settings.customProtocols.push(protocol);
-    } else if (existingIndex !== -1) {
-      // Updating existing
-      this.plugin.settings.customProtocols[existingIndex] = protocol;
-    } else {
-      // Adding new
-      this.plugin.settings.customProtocols.push(protocol);
-    }
-
-    await this.plugin.saveSettings();
-    new Notice(t("settings.messages.protocolSaved"));
-
-    this.refresh();
-    return true;
-  }
-
-  private async deleteProtocol(id: string): Promise<void> {
-    if (!this.plugin.settings.customProtocols) {
-      return;
-    }
-
-    const index = this.plugin.settings.customProtocols.findIndex(
-      (p) => p.id === id,
-    );
-    if (index !== -1) {
-      this.plugin.settings.customProtocols.splice(index, 1);
-    }
-
-    await this.plugin.saveSettings();
-    new Notice(t("settings.messages.protocolDeleted"));
-
-    this.refresh();
   }
 }

@@ -6,48 +6,6 @@
   min-height: 0;
 }
 
-.workout-duration-comparison-no-data {
-  color: var(--text-muted);
-}
-
-.workout-duration-comparison-table-container {
-  overflow-x: auto;
-}
-
-/* Qualified to beat Obsidian's note table rules (a border around every cell) */
-.workout-dashboard table.workout-duration-comparison-table {
-  width: 100%;
-  margin: 0;
-  border: none;
-  border-collapse: collapse;
-  font-variant-numeric: tabular-nums;
-
-  th,
-  td {
-    padding: var(--workout-space-sm) var(--workout-space-xs);
-    text-align: start;
-    border: none;
-    border-bottom: var(--workout-border-thin) solid
-      var(--workout-border-subtle);
-    background: none;
-  }
-
-  tbody tr:last-child td {
-    border-bottom: none;
-  }
-
-  th {
-    font-weight: normal;
-    color: var(--text-muted);
-    font-size: var(--workout-font-xs);
-  }
-
-  // Figure columns: the label over the right-aligned figures
-  th:not(:first-child) {
-    text-align: end;
-  }
-}
-
 .workout-duration-comparison-workout-name {
   color: var(--text-normal);
 }

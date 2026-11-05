@@ -50,36 +50,34 @@ describe("ChartDataUtils", () => {
       expect(result.datasets).toEqual([]);
     });
 
-    it("should filter data by date range", () => {
+    it("charts every row it is given: DataFilter already applied dateRange", () => {
       const logData: WorkoutLogData[] = [
-        createLogEntry(getRecentDate(5), "Squat", 10, 100, 1000),
-        createLogEntry(getRecentDate(50), "Squat", 10, 100, 1000), // Outside 30-day range
+        createLogEntry("2024-01-01", "Squat", 10, 100, 1000),
+        createLogEntry("2024-03-01", "Squat", 10, 100, 1000),
       ];
 
       const result = ChartDataUtils.processChartData(
         logData,
         CHART_DATA_TYPE.VOLUME,
-        30,
       );
 
-      expect(result.labels).toHaveLength(1);
+      expect(result.labels).toEqual(["01/01/2024", "01/03/2024"]);
     });
 
-    it("should sort data by date", () => {
+    it("draws the days in the order of the rows (the view sorts them)", () => {
       const logData: WorkoutLogData[] = [
-        createLogEntry(getRecentDate(1), "Squat", 10, 100, 1000),
-        createLogEntry(getRecentDate(5), "Squat", 8, 90, 720),
-        createLogEntry(getRecentDate(3), "Squat", 12, 110, 1320),
+        createLogEntry("2024-02-01", "Squat", 8, 90, 720),
+        createLogEntry("2024-02-03", "Squat", 12, 110, 1320),
+        createLogEntry("2024-02-05", "Squat", 10, 100, 1000),
       ];
 
       const result = ChartDataUtils.processChartData(
         logData,
         CHART_DATA_TYPE.VOLUME,
-        30,
       );
 
-      // Labels should be in chronological order (oldest first)
-      expect(result.labels).toHaveLength(3);
+      expect(result.labels).toEqual(["01/02/2024", "03/02/2024", "05/02/2024"]);
+      expect(result.datasets[0].data).toEqual([720, 1320, 1000]);
     });
 
     it("should group entries by date", () => {
@@ -92,7 +90,6 @@ describe("ChartDataUtils", () => {
       const result = ChartDataUtils.processChartData(
         logData,
         CHART_DATA_TYPE.VOLUME,
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.EXERCISE,
       );
@@ -114,7 +111,7 @@ describe("ChartDataUtils", () => {
       );
 
       expect(result.datasets).toHaveLength(1);
-      expect(result.datasets[0].borderColor).toBe("#4CAF50");
+      expect(result.datasets[0].label).toContain("avgVolume");
     });
 
     it("should handle weight chart type", () => {
@@ -124,7 +121,7 @@ describe("ChartDataUtils", () => {
       );
 
       expect(result.datasets).toHaveLength(1);
-      expect(result.datasets[0].borderColor).toBe("#FF9800");
+      expect(result.datasets[0].label).toContain("avgWeight");
     });
 
     it("should handle reps chart type", () => {
@@ -134,7 +131,7 @@ describe("ChartDataUtils", () => {
       );
 
       expect(result.datasets).toHaveLength(1);
-      expect(result.datasets[0].borderColor).toBe("#FF9800");
+      expect(result.datasets[0].label).toBe("general.avgReps");
     });
   });
 
@@ -149,7 +146,6 @@ describe("ChartDataUtils", () => {
       const result = ChartDataUtils.processChartData(
         logData,
         CHART_DATA_TYPE.VOLUME,
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.EXERCISE,
       );
@@ -165,7 +161,6 @@ describe("ChartDataUtils", () => {
       const result = ChartDataUtils.processChartData(
         logData,
         CHART_DATA_TYPE.VOLUME,
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.WORKOUT,
       );
@@ -185,7 +180,6 @@ describe("ChartDataUtils", () => {
           createLogEntry(date, "Curl", 10, 20, 200),
         ],
         CHART_DATA_TYPE.WEIGHT,
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.WORKOUT,
       );
@@ -197,7 +191,6 @@ describe("ChartDataUtils", () => {
       const result = ChartDataUtils.processChartData(
         logData,
         CHART_DATA_TYPE.VOLUME,
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.COMBINED,
       );
@@ -209,7 +202,6 @@ describe("ChartDataUtils", () => {
       const result = ChartDataUtils.processChartData(
         logData,
         CHART_DATA_TYPE.VOLUME,
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.ALL,
       );
@@ -229,7 +221,6 @@ describe("ChartDataUtils", () => {
       const result = ChartDataUtils.processChartData(
         logData,
         "duration",
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.WORKOUT,
       );
@@ -247,7 +238,6 @@ describe("ChartDataUtils", () => {
       const result = ChartDataUtils.processChartData(
         logData,
         "distance",
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.WORKOUT,
       );
@@ -266,7 +256,6 @@ describe("ChartDataUtils", () => {
       const result = ChartDataUtils.processChartData(
         logData,
         "pace",
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.EXERCISE,
       );
@@ -286,7 +275,6 @@ describe("ChartDataUtils", () => {
       const result = ChartDataUtils.processChartData(
         logData,
         "pace",
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.EXERCISE,
       );
@@ -305,13 +293,38 @@ describe("ChartDataUtils", () => {
       const result = ChartDataUtils.processChartData(
         logData,
         "heartRate",
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.WORKOUT,
       );
 
       // Heart rate is always averaged: (150 + 160) / 2 = 155
       expect(result.datasets[0].data[0]).toBe(155);
+    });
+
+    it("should chart a heart rate logged under an HR column", () => {
+      const date = getRecentDate(1);
+      const result = ChartDataUtils.processChartData(
+        [createLogEntry(date, "Running", 0, 0, 0, { HR: 150 })],
+        "heartRate",
+        30,
+        "DD/MM/YYYY",
+        CHART_TYPE.EXERCISE,
+      );
+
+      expect(result.datasets[0].data[0]).toBe(150);
+    });
+
+    it("should chart a duration logged under a Duration (s) column", () => {
+      const date = getRecentDate(1);
+      const result = ChartDataUtils.processChartData(
+        [createLogEntry(date, "Plank", 0, 0, 0, { "Duration (s)": 60 })],
+        "duration",
+        30,
+        "DD/MM/YYYY",
+        CHART_TYPE.WORKOUT,
+      );
+
+      expect(result.datasets[0].data[0]).toBe(60);
     });
   });
 
@@ -326,7 +339,6 @@ describe("ChartDataUtils", () => {
       const result = ChartDataUtils.processChartData(
         logData,
         "mindfulness",
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.EXERCISE,
       );
@@ -346,7 +358,6 @@ describe("ChartDataUtils", () => {
       const result = ChartDataUtils.processChartData(
         logData,
         "mindfulness",
-        30,
         "DD/MM/YYYY",
         CHART_TYPE.EXERCISE,
         "Focus Score",
@@ -357,7 +368,7 @@ describe("ChartDataUtils", () => {
   });
 
   describe("processChartData - dataset properties", () => {
-    it("should create dataset with correct styling properties", () => {
+    it("should leave styling to ChartConfigBuilder", () => {
       const logData: WorkoutLogData[] = [
         createLogEntry(getRecentDate(1), "Squat", 10, 100, 1000),
       ];
@@ -367,12 +378,10 @@ describe("ChartDataUtils", () => {
         CHART_DATA_TYPE.VOLUME,
       );
 
-      const dataset = result.datasets[0];
-      expect(dataset.tension).toBe(0.4);
-      expect(dataset.fill).toBe(false);
-      expect(dataset.pointRadius).toBe(4);
-      expect(dataset.pointHoverRadius).toBe(6);
-      expect(dataset.backgroundColor).toBe("#4CAF5020");
+      expect(Object.keys(result.datasets[0]).sort()).toEqual([
+        "data",
+        "label",
+      ]);
     });
   });
 });
@@ -407,6 +416,83 @@ describe("ChartDataUtils.limitToLatest", () => {
     ChartDataUtils.limitToLatest(labels, datasets, 1);
 
     expect(datasets[0].data).toEqual([1, 2, 3, 4]);
+  });
+});
+
+describe("ChartDataUtils - points by training day", () => {
+  const set = (date: string, volume: number): WorkoutLogData => ({
+    date,
+    exercise: "Squat",
+    reps: 5,
+    weight: volume / 5,
+    volume,
+  });
+
+  // Jest runs in Europe/Rome; read local fields as in New York (UTC-5).
+  const inNewYork = (run: () => void) => {
+    const shifted = (d: Date) => new Date(d.getTime() - 5 * 60 * 60 * 1000);
+    const spies = [
+      jest
+        .spyOn(Date.prototype, "getDate")
+        .mockImplementation(function (this: Date) {
+          return shifted(this).getUTCDate();
+        }),
+      jest
+        .spyOn(Date.prototype, "getMonth")
+        .mockImplementation(function (this: Date) {
+          return shifted(this).getUTCMonth();
+        }),
+      jest
+        .spyOn(Date.prototype, "getFullYear")
+        .mockImplementation(function (this: Date) {
+          return shifted(this).getUTCFullYear();
+        }),
+    ];
+    try {
+      run();
+    } finally {
+      spies.forEach((spy) => spy.mockRestore());
+    }
+  };
+
+  it.each([
+    CHART_DATA_TYPE.VOLUME,
+    CHART_DATA_TYPE.WEIGHT,
+    CHART_DATA_TYPE.REPS,
+  ])("keeps a date-only set on its day west of UTC (%s)", (type) => {
+    inNewYork(() => {
+      const result = ChartDataUtils.processChartData(
+        [set("2024-01-15", 500), set("2024-01-16", 600)],
+        type,
+      );
+
+      expect(result.labels).toEqual(["15/01/2024", "16/01/2024"]);
+    });
+  });
+
+  it("puts a set logged just after local midnight on that day", () => {
+    const result = ChartDataUtils.processChartData(
+      [set("2024-01-15", 500), set("2024-01-15T23:30:00.000Z", 600)],
+      CHART_DATA_TYPE.VOLUME,
+      "YYYY-MM-DD",
+      CHART_TYPE.WORKOUT,
+    );
+
+    // 23:30 UTC is 00:30 on the 16th in Rome
+    expect(result.labels).toEqual(["2024-01-15", "2024-01-16"]);
+    expect(result.datasets[0].data).toEqual([500, 600]);
+  });
+
+  it("makes one point of a day whatever form its dates take", () => {
+    const result = ChartDataUtils.processChartData(
+      [set("2024-01-16", 500), set("2024-01-15T23:30:00.000Z", 600)],
+      CHART_DATA_TYPE.VOLUME,
+      "YYYY-MM-DD",
+      CHART_TYPE.WORKOUT,
+    );
+
+    expect(result.labels).toEqual(["2024-01-16"]);
+    expect(result.datasets[0].data).toEqual([1100]);
   });
 });
 

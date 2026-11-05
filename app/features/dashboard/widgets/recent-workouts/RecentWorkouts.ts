@@ -5,7 +5,6 @@ import { getRecentWorkouts } from "@app/features/dashboard/widgets/recent-workou
 import { ListItem } from "@app/components/molecules";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
-import { CONSTANTS } from "@app/constants";
 import { FormatUtils } from "@app/utils/FormatUtils";
 
 export class RecentWorkouts {
@@ -34,7 +33,7 @@ export class RecentWorkouts {
         label:
           workout.workout ||
           t("dashboard.recentWorkouts.fallbackName"),
-        value: `${FormatUtils.formatNumber(workout.totalVolume)} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.RECENT_WORKOUTS.VOLUME_SUFFIX}`,
+        value: FormatUtils.formatVolume(workout.totalVolume),
         className: "workout-recent-workout-item",
         labelClassName: "workout-recent-name",
         valueClassName: "workout-recent-volume",

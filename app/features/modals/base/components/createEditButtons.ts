@@ -8,8 +8,7 @@ import {
   CodeBlockSchema,
 } from "@app/services/codeblocks/CodeBlockSchema";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
-import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
-import { t } from "@app/i18n";
+import { Button } from "@app/components/atoms/Button";
 
 /** Where an edit modal finds its block */
 export interface EditTarget {
@@ -51,33 +50,29 @@ export interface EditButtonsOptions<P> {
  */
 export function createEditButtons<P extends { id?: string }>(
   modal: Modal,
-  container: HTMLElement,
+  parent: HTMLElement,
   options: EditButtonsOptions<P>,
+  /** Rare actions (a remove icon) at the start of the row */
+  start?: (row: HTMLElement) => void,
 ): void {
   const formAtOpen = options.collectParams();
 
-  const updateBtn = Button.create(container, {
-    text: options.buttonText,
-    variant: BUTTONVARIANT.PRIMARY,
-    ariaLabel: options.buttonText,
-  });
-  const cancelBtn = Button.create(container, {
-    text: t("modal.buttons.cancel"),
-    variant: BUTTONVARIANT.SECONDARY,
-    ariaLabel: t("modal.buttons.cancel"),
-  });
-
-  Button.onClick(cancelBtn, () => modal.close());
-
-  Button.onClick(updateBtn, () => {
-    if (options.validate && !options.validate()) return;
-    const formNow = options.collectParams();
-    const changes = changedParams(formAtOpen, formNow);
-    for (const key of options.target.invalidKeys ?? []) {
-      changes[key as keyof P] = formNow[key as keyof P];
-    }
-    for (const key of options.retiredParams ?? []) changes[key] = undefined as P[keyof P];
-    applyBlockEdit(modal, options, changes);
+  Button.createModalActions(parent, {
+    start,
+    primary: {
+      text: options.buttonText,
+      onClick: () => {
+        if (options.validate && !options.validate()) return;
+        const formNow = options.collectParams();
+        const changes = changedParams(formAtOpen, formNow);
+        for (const key of options.target.invalidKeys ?? []) {
+          changes[key as keyof P] = formNow[key as keyof P];
+        }
+        for (const key of options.retiredParams ?? []) changes[key] = undefined as P[keyof P];
+        applyBlockEdit(modal, options, changes);
+      },
+    },
+    onCancel: () => modal.close(),
   });
 }
 

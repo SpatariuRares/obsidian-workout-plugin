@@ -2,7 +2,7 @@
 
 import { Platform } from "obsidian";
 import { TableActions } from "@app/features/tables/components/TableActions";
-import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 import { attachObsidianHelpers } from "@app/components/__tests__/obsidianDomMocks";
 
 // Mock EditLogModal
@@ -13,13 +13,7 @@ jest.mock("@app/features/modals/log/EditLogModal", () => ({
   })),
 }));
 
-const createLog = (): WorkoutLogData => ({
-  date: "2024-01-15T10:00:00.000Z",
-  exercise: "Bench Press",
-  reps: 8,
-  weight: 80,
-  volume: 640,
-});
+const createLog = () => logRow({ date: "2024-01-15T10:00:00.000Z" });
 
 const createMockPlugin = () => ({ app: {} });
 

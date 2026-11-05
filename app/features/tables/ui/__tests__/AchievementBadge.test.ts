@@ -3,6 +3,7 @@
 import { AchievementBadge } from "@app/features/tables/ui/AchievementBadge";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 import { Button } from "@app/components/atoms";
 import { Notice } from "obsidian";
 import { t } from "@app/i18n";
@@ -61,17 +62,8 @@ jest.mock("@app/components/atoms", () => ({
   },
 }));
 
-const createLog = (
-  overrides: Partial<WorkoutLogData> = {},
-): WorkoutLogData => ({
-  date: "2024-01-15",
-  exercise: "Bench Press",
-  reps: 10,
-  weight: 80,
-  volume: 800,
-  timestamp: 1705315200000,
-  ...overrides,
-});
+const createLog = (overrides: Partial<WorkoutLogData> = {}) =>
+  logRow({ reps: 10, timestamp: 1705315200000, ...overrides });
 
 describe("AchievementBadge", () => {
   const defaultCallbacks = {

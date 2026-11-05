@@ -1,5 +1,6 @@
 import { gettingStartedIndex } from "@app/services/examples/GettingStartedPages";
 import { t } from "@app/i18n";
+import { exercisePageContent } from "@app/services/exercise/ExercisePageContent";
 import {
   getChartSectionsForExerciseType,
   generateWorkoutChartBlock,
@@ -41,20 +42,11 @@ export function generateExerciseContent(
   type: string,
   tags: string[],
 ): string {
-  const tagsYaml =
-    tags.length > 0
-      ? `tags:\n${tags.map((tag) => `  - ${tag}`).join("\n")}`
-      : "";
-
   const chartSections = getChartSectionsForExerciseType(name, type);
 
-  return `---
-exercise_name: ${name}
-exercise_type: ${type}
-${tagsYaml}
----
-
-# ${name}
+  return exercisePageContent(
+    { name, typeId: type, muscleGroups: tags },
+    `# ${name}
 
 ## ${t("examples.exercise.descriptionTitle")}
 
@@ -65,7 +57,8 @@ ${t("examples.exercise.descriptionTemplate", { name })}
 ${generateExerciseOnlyLogBlock(name, 15)}
 
 ${chartSections}
-`;
+`,
+  );
 }
 
 /**

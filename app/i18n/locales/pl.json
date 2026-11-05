@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "Anuluj",
     "clear": "Wyczyść",
     "convert": "Konwertuj",
     "exercise": "Ćwiczenie",
@@ -98,7 +97,6 @@
       "columnEstimated": "Szacowany",
       "columnVariance": "Wariancja",
       "columnWorkout": "Trening",
-      "minutesSuffix": " min",
       "noData": "Za mało sesji, by je porównać.",
       "subtitle": "Szacowany czas trwania treningu w porównaniu z rzeczywistym",
       "title": "Porównanie czasów",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "Szacunki są coraz bliższe Twoim rzeczywistym sesjom",
       "varianceTrendStable": "Dokładność szacunków jest stała",
       "varianceTrendTitle": "Dokładność szacunków",
-      "avgVarianceStat": "Śred. wariancja: ±{value}%",
-      "hoursSuffix": "h"
+      "avgVarianceStat": "Śred. wariancja: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Wszystkie strony ćwiczeń są poprawne",
@@ -201,8 +198,6 @@
       "moveUp": "Przesuń {widget} w górę",
       "moveDown": "Przesuń {widget} w dół",
       "allHistory": "Pusto: cała historia",
-      "volumeTrendDays": "Dni w trendzie objętości",
-      "recentWorkoutsLimit": "Treningi na liście ostatnich",
       "layout": "Układ",
       "layoutGrid": "Siatka",
       "layoutList": "Lista",
@@ -568,7 +563,6 @@
     "createLogButtonText": "Utwórz wpis dla: {exerciseName}",
     "noDataTitle": "Nie znaleziono żadnych wpisów dotyczących {exerciseName}",
     "exploreExampleData": "Albo zapoznaj się z przykładowymi danymi.",
-    "lastSet": "Ostatnio: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Rekord osobisty: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "Dodaj ustawienie",
       "addProtocol": "Dodaj protokół",
-      "cancel": "Anuluj",
       "createFiles": "Utwórz pliki",
       "done": "Zakończono!",
       "failed": "Nie udało się",
@@ -1072,7 +1065,6 @@
     "editTable": "Edytuj tabelę",
     "editTitle": "Edytuj",
     "gotoExercise": "Przejdź do ćwiczenia",
-    "invalidDate": "Nieprawidłowa data",
     "labels": {
       "target": "Cel:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "progress": "Najlepiej {best}/{target} powtórzeń",
       "noSetsYet": "Jeszcze nie ma serii z {weight}",
-      "progressTooltip": "Najlepsze: {best} powtórzeń / Cel: {target} powtórzeń",
-      "repsSuffix": "powt.",
-      "separator": " × "
+      "progressTooltip": "Najlepsze: {best} powtórzeń / Cel: {target} powtórzeń"
     },
     "trendLine": "Linia trendu",
     "refreshingTable": "Odświeżanie tabeli...",
@@ -1127,7 +1117,6 @@
     "down": "W dół",
     "improving": "Poprawa",
     "increasing": "Rosnący",
-    "invariant": "Stały",
     "neutral": "Neutralny",
     "stable": "Stabilny",
     "stableLower": "Stabilny",

@@ -4,6 +4,7 @@
 
 import {
   fromLog,
+  prefillFromLast,
   readSetFields,
   toEntry,
   validate,
@@ -12,12 +13,13 @@ import {
   WorkoutProtocol,
   type WorkoutLogData,
 } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import type { LogFormData } from "@app/types/ModalTypes";
 import { t } from "@app/i18n";
 
 function log(overrides: Partial<WorkoutLogData> = {}): WorkoutLogData {
-  return {
+  return logRow({
     date: "2026-03-10T09:00:00.000Z",
     exercise: "Squat",
     reps: 5,
@@ -32,7 +34,7 @@ function log(overrides: Partial<WorkoutLogData> = {}): WorkoutLogData {
     origine: "[[Leg day]]",
     customFields: { rpe: 8 },
     ...overrides,
-  };
+  });
 }
 
 /** What the edit form submits when the user changes nothing */
@@ -229,5 +231,46 @@ describe("readSetFields", () => {
       weight: 0,
       customFields: undefined,
     });
+  });
+});
+
+describe("prefillFromLast", () => {
+  it("starts from the last set as entered, without its day", () => {
+    expect(prefillFromLast(log())).toEqual({
+      exercise: "Squat",
+      reps: 5,
+      weight: 100,
+      weightUnit: "lb",
+      workout: "Leg day",
+      notes: "felt good",
+      date: undefined,
+      protocol: WorkoutProtocol.DROP_SET,
+      customFields: { rpe: 8 },
+    });
+  });
+
+  it("is empty without a last set", () => {
+    expect(prefillFromLast(undefined)).toEqual({});
+  });
+
+  it("puts the exercise and workout given on top", () => {
+    expect(prefillFromLast(log(), { exercise: "Front squat", workout: "Lower A" })).toMatchObject({
+      exercise: "Front squat",
+      workout: "Lower A",
+    });
+  });
+
+  it("puts the target reps and weight on top, the weight in the settings unit", () => {
+    expect(prefillFromLast(log(), { targetReps: 8, targetWeight: 60 })).toMatchObject({
+      reps: 8,
+      weight: 60,
+      weightUnit: undefined,
+    });
+  });
+
+  it("fills in the targets with no last set", () => {
+    expect(
+      prefillFromLast(undefined, { exercise: "Squat", workout: "Lower A", targetReps: 8 }),
+    ).toEqual({ exercise: "Squat", workout: "Lower A", reps: 8 });
   });
 });

@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "إلغاء",
     "clear": "مسح",
     "convert": "تحويل",
     "exercise": "تمرين",
@@ -98,7 +97,6 @@
       "columnEstimated": "المقدر",
       "columnVariance": "التباين",
       "columnWorkout": "التدريب",
-      "minutesSuffix": " دقيقة",
       "noData": "لا توجد جلسات كافية للمقارنة بعد.",
       "subtitle": "المدة المقدرة مقابل المدة الفعلية للتدريب",
       "title": "مقارنة المدة",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "التقديرات تقترب أكثر من جلساتك الفعلية",
       "varianceTrendStable": "دقة التقدير ثابتة",
       "varianceTrendTitle": "دقة التقدير",
-      "avgVarianceStat": "متوسط التباين: ±{value}%",
-      "hoursSuffix": " ساعة"
+      "avgVarianceStat": "متوسط التباين: ±{value}%"
     },
     "fileErrors": {
       "allValid": "جميع صفحات التمارين صالحة",
@@ -201,8 +198,6 @@
       "moveUp": "نقل {widget} لأعلى",
       "moveDown": "نقل {widget} لأسفل",
       "allHistory": "فارغ: كل السجل",
-      "recentWorkoutsLimit": "التدريبات في القائمة الأخيرة",
-      "volumeTrendDays": "أيام اتجاه الحجم",
       "layout": "التخطيط",
       "layoutGrid": "شبكة",
       "layoutList": "قائمة",
@@ -568,7 +563,6 @@
     "createLogButtonText": "إنشاء سجل لـ: {exerciseName}",
     "noDataTitle": "لم يتم العثور على أي سجلات لـ {exerciseName}",
     "exploreExampleData": "أو استكشف ببيانات نموذجية",
-    "lastSet": "آخر مرة: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "رقم قياسي شخصي: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "إضافة إعداد مسبق",
       "addProtocol": "إضافة بروتوكول",
-      "cancel": "إلغاء",
       "createFiles": "إنشاء ملفات",
       "done": "تم!",
       "failed": "فشل",
@@ -1072,7 +1065,6 @@
     "editTable": "تحرير الجدول",
     "editTitle": "تعديل",
     "gotoExercise": "الانتقال إلى التمرين",
-    "invalidDate": "تاريخ غير صالح",
     "labels": {
       "target": "الهدف:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "لا توجد مجموعات بوزن {weight} بعد",
       "progress": "الأفضل {best}/{target} تكرار",
-      "progressTooltip": "أفضل: {best} تكرار / الهدف: {target} تكرار",
-      "repsSuffix": "تكرار",
-      "separator": " × "
+      "progressTooltip": "أفضل: {best} تكرار / الهدف: {target} تكرار"
     },
     "trendLine": "خط الاتجاه",
     "refreshingTable": "جارٍ تحديث الجدول...",
@@ -1127,7 +1117,6 @@
     "down": "انخفاض",
     "improving": "يتحسن",
     "increasing": "متزايد",
-    "invariant": "ثابت",
     "neutral": "محايد",
     "stable": "مستقر",
     "stableLower": "مستقر",

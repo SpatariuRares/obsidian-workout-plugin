@@ -1,6 +1,8 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import {
   EmbeddedDashboardParams,
+  PERIOD_DAYS,
+  type Period,
   QUICK_STATS_METRIC_IDS,
   QUICK_STATS_PERIOD_IDS,
 } from "@app/features/dashboard/types";
@@ -33,21 +35,17 @@ export class QuickStatsCards {
 
     const shownPeriods = params.quickStatsPeriods ?? QUICK_STATS_PERIOD_IDS;
     const shownMetrics = params.quickStatsMetrics ?? QUICK_STATS_METRIC_IDS;
-    const allPeriods: {
-      id: (typeof QUICK_STATS_PERIOD_IDS)[number];
-      label: string;
-      days: number;
-    }[] = [
-      { id: "week", label: t("dashboard.quickStats.week"), days: 7 },
-      { id: "month", label: t("dashboard.quickStats.month"), days: 30 },
-      { id: "year", label: t("dashboard.quickStats.year"), days: 365 },
-    ];
-    const periods = allPeriods
-      .filter((period) => shownPeriods.includes(period.id))
-      .map(({ label, days }) => ({
-        label,
-        stats: calculatePeriodStats(data, days),
-      }));
+    const labels: Record<Period, string> = {
+      week: t("dashboard.quickStats.week"),
+      month: t("dashboard.quickStats.month"),
+      year: t("dashboard.quickStats.year"),
+    };
+    const periods = QUICK_STATS_PERIOD_IDS.filter((id) =>
+      shownPeriods.includes(id),
+    ).map((id) => ({
+      label: labels[id],
+      stats: calculatePeriodStats(data, PERIOD_DAYS[id]),
+    }));
     const allMetrics: {
       id: (typeof QUICK_STATS_METRIC_IDS)[number];
       icon: string;

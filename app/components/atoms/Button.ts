@@ -3,6 +3,7 @@
  * Basic button component - indivisible UI primitive
  */
 import { Icon } from "@app/components/atoms/Icon";
+import { t } from "@app/i18n";
 
 export enum BUTTONSIZE {
   SMALL = "small",
@@ -31,6 +32,36 @@ export interface ButtonProps {
   size?: BUTTONSIZE;
 }
 
+/** One labelled button of a modal's action row */
+export interface ModalAction {
+  text: string;
+  onClick: () => void | Promise<void>;
+  /** Primary for the primary action, secondary for `others` */
+  variant?: BUTTONVARIANT;
+  /** Defaults to the text */
+  ariaLabel?: string;
+  disabled?: boolean;
+}
+
+export interface ModalActionsOptions {
+  /** Save, insert, update, confirm, ...: drawn first */
+  primary?: ModalAction;
+  /** Further choices, after the primary action */
+  others?: ModalAction[];
+  /** Draws Cancel at the end, calling this when it is clicked */
+  onCancel?: () => void;
+  /** Draws rare actions (a delete icon) at the start of the row */
+  start?: (row: HTMLElement) => void;
+  /** An extra class on the row */
+  className?: string;
+}
+
+export interface ModalActions {
+  row: HTMLElement;
+  primary?: HTMLButtonElement;
+  cancel?: HTMLButtonElement;
+}
+
 /**
  * Creates button elements
  * This is an atom - it has no dependencies on other UI components
@@ -52,13 +83,53 @@ export class Button {
   }
 
   /**
-   * The row of a modal's main buttons (save, cancel, ...): it stays at the
-   * bottom of the modal while the form scrolls under it
+   * The row of a modal's main buttons: it stays at the bottom of the modal
+   * while the form scrolls under it. One order for every modal: `start`
+   * (rare actions such as delete), the primary action, `others`, Cancel.
    */
-  static createModalActions(parent: HTMLElement): HTMLElement {
-    const actions = Button.createContainer(parent);
-    actions.addClass("workout-modal-actions");
-    return actions;
+  static createModalActions(
+    parent: HTMLElement,
+    options: ModalActionsOptions,
+  ): ModalActions {
+    const row = Button.createContainer(parent);
+    row.addClass("workout-modal-actions");
+    if (options.className) row.addClass(options.className);
+
+    options.start?.(row);
+    const primary = options.primary
+      ? Button.createAction(row, options.primary, BUTTONVARIANT.PRIMARY)
+      : undefined;
+    for (const other of options.others ?? []) {
+      Button.createAction(row, other, BUTTONVARIANT.SECONDARY);
+    }
+
+    let cancel: HTMLButtonElement | undefined;
+    const onCancel = options.onCancel;
+    if (onCancel) {
+      cancel = Button.create(row, {
+        text: t("modal.buttons.cancel"),
+        ariaLabel: t("modal.buttons.cancel"),
+        variant: BUTTONVARIANT.SECONDARY,
+      });
+      Button.onClick(cancel, () => onCancel());
+    }
+
+    return { row, primary, cancel };
+  }
+
+  private static createAction(
+    row: HTMLElement,
+    action: ModalAction,
+    defaultVariant: BUTTONVARIANT,
+  ): HTMLButtonElement {
+    const btn = Button.create(row, {
+      text: action.text,
+      ariaLabel: action.ariaLabel ?? action.text,
+      variant: action.variant ?? defaultVariant,
+      disabled: action.disabled,
+    });
+    Button.onClick(btn, () => void action.onClick());
+    return btn;
   }
 
   static create(

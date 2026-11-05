@@ -3,24 +3,21 @@ import { BaseView } from "@app/features/common/views/BaseView";
 import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { RestTimer } from "@app/features/timer/views/RestTimer";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
-import { describeSet } from "@app/features/modals/log/LogHistory";
-import { fromLog } from "@app/features/modals/base/logic/LogEntryDraft";
+import { describeLastTime, describeTarget } from "@app/features/modals/log/LogHistory";
+import { prefillFromLast } from "@app/features/modals/base/logic/LogEntryDraft";
 import {
   readNotePlan,
   stepOf,
   sessionProgress,
-  type RestBlock,
   type SessionStep,
 } from "@app/features/session/business/sessionPlan";
-import { BlockMenu, type BlockMenuAction } from "@app/features/common/ui/BlockMenu";
-import { EditRestTimerModal } from "@app/features/tables/modals/EditRestTimerModal";
-import { EditTimerModal } from "@app/features/timer/modals/EditTimerModal";
+import { BlockMenu } from "@app/features/common/ui/BlockMenu";
+import { restBlockAction } from "@app/features/tables/modals/restBlockAction";
 import {
   TrainingHistory,
   localDay,
   sameWorkout,
 } from "@app/services/history/TrainingHistory";
-import type { LogFormData } from "@app/types/ModalTypes";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
@@ -124,7 +121,7 @@ class SessionRenderChild extends MarkdownRenderChild {
     const step = plan ? stepOf(plan, context.exercise) : undefined;
     if (step) this.restingStep = step;
     const restShown = await this.render(step !== undefined);
-    if (step && restShown) this.restTimer.restart(step.rest);
+    if (step?.rest && restShown) this.restTimer.restart(step.rest);
   }
 
   /** The note was saved: redraw only if its plan is not the one shown */
@@ -141,7 +138,7 @@ class SessionRenderChild extends MarkdownRenderChild {
 
   /**
    * @param resting - A rest is about to start: show it even if not running yet
-   * @returns Whether the card shows the rest timer (an exercise is current)
+   * @returns Whether an exercise is current (its card shows the rest timer, if the step rests)
    */
   private async render(resting = false): Promise<boolean> {
     const render = ++this.renders;
@@ -194,17 +191,15 @@ class SessionRenderChild extends MarkdownRenderChild {
             : t("session.setNumber", { set: setsDone + 1 }),
       });
 
-      const target = this.targetText(step);
+      const target = describeTarget(step.targetReps, step.targetWeight, this.plugin.settings.weightUnit);
       if (target) {
         card.createDiv({ cls: "workout-session-meta", text: t("session.target", { target }) });
       }
-      const lastTime = history.lastSet(step.exercise, { before: today });
+      const lastTime = history.previousDay(step.exercise, today);
       if (lastTime) {
         card.createDiv({
           cls: "workout-session-meta",
-          text: t("logs.lastSet", {
-            set: describeSet(lastTime, parameters, this.plugin.settings.weightUnit),
-          }),
+          text: describeLastTime(lastTime, parameters, this.plugin.settings.weightUnit),
         });
       }
 
@@ -212,39 +207,28 @@ class SessionRenderChild extends MarkdownRenderChild {
         this.openLogForm(step, done[index], history),
       );
 
-      const restEl = card.createDiv({ cls: "workout-session-rest" });
-      restEl.createDiv({ cls: "workout-session-meta", text: t("session.rest") });
+      const restingTimer = this.restingStep?.rest;
       const restStep =
-        this.restingStep &&
-        (resting || this.restTimer.isRunning(this.restingStep.rest))
+        this.restingStep && restingTimer && (resting || this.restTimer.isRunning(restingTimer))
           ? this.restingStep
           : step;
-      this.restTimer.draw(restEl.createDiv(), restStep.rest);
+      // A step with `rest: 0` rests on nothing (see stepRest)
+      if (restStep.rest) {
+        const restEl = card.createDiv({ cls: "workout-session-rest" });
+        restEl.createDiv({ cls: "workout-session-meta", text: t("session.rest") });
+        this.restTimer.draw(restEl.createDiv(), restStep.rest);
+      }
       if (restStep.restBlock) {
-        BlockMenu.render(header, [this.restTimerAction(restStep, restStep.restBlock)]);
+        // Edits the rest where it is written (see RestBlock)
+        BlockMenu.render(header, [
+          restBlockAction(this.plugin, this.sourcePath, restStep.restBlock, restStep.rest ?? {}),
+        ]);
       }
       return true;
     } catch (error) {
       this.onError(error);
       return false;
     }
-  }
-
-  /** Edits the rest shown where it is written (see RestBlock) */
-  private restTimerAction(step: SessionStep, block: RestBlock): BlockMenuAction {
-    const where = { sourcePath: this.sourcePath, matchWithoutId: block.match };
-    return {
-      label: t("sets.editRestTimer"),
-      icon: ICONS.TIMER.DURATION,
-      run: () => {
-        const { app } = this.plugin;
-        if (block.type === "workout-sets") {
-          new EditRestTimerModal(app, this.plugin, block.params, step.rest, where).open();
-        } else {
-          new EditTimerModal(app, this.plugin, block.params, where).open();
-        }
-      },
-    };
   }
 
   /** Every planned set is logged; Previous goes back to the last exercise */
@@ -308,19 +292,14 @@ class SessionRenderChild extends MarkdownRenderChild {
     history: TrainingHistory,
   ): void {
     const last = doneToday[doneToday.length - 1] ?? history.lastSet(step.exercise);
-    let prefill: Partial<LogFormData> = last
-      ? { ...fromLog(last), date: undefined }
-      : {};
-    prefill.exercise = step.exercise;
-    // The set belongs to this note's workout, not to the last set's
-    prefill.workout = this.workout;
-    if (doneToday.length === 0) {
-      if (step.targetReps !== undefined) prefill.reps = step.targetReps;
-      if (step.targetWeight !== undefined) {
-        // Targets are in the settings unit
-        prefill = { ...prefill, weight: step.targetWeight, weightUnit: undefined };
-      }
-    }
+    const first = doneToday.length === 0;
+    const prefill = prefillFromLast(last, {
+      exercise: step.exercise,
+      // The set belongs to this note's workout, not to the last set's
+      workout: this.workout,
+      targetReps: first ? step.targetReps : undefined,
+      targetWeight: first ? step.targetWeight : undefined,
+    });
     new CreateLogModal(
       this.plugin.app,
       this.plugin,
@@ -328,16 +307,5 @@ class SessionRenderChild extends MarkdownRenderChild {
       PathUtils.toWikiLink(this.sourcePath),
       prefill,
     ).open();
-  }
-
-  private targetText(step: SessionStep): string | undefined {
-    const unit = this.plugin.settings.weightUnit;
-    const { targetReps: reps, targetWeight: weight } = step;
-    if (reps !== undefined && weight !== undefined) {
-      return t("logs.weightedSet", { weight, unit, reps });
-    }
-    if (reps !== undefined) return t("session.targetReps", { reps });
-    if (weight !== undefined) return t("session.targetWeight", { weight, unit });
-    return undefined;
   }
 }

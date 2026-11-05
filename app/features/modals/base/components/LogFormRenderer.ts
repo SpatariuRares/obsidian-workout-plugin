@@ -227,7 +227,7 @@ export class LogFormRenderer {
    */
   private createProtocolChoice(parent: HTMLElement): ProtocolChoice {
     const catalog = new ProtocolCatalog(this.plugin.settings.customProtocols);
-    const options = catalog.all().map((p) => ({ id: p.id, name: p.name }));
+    let options = catalog.all().map((p) => ({ id: p.id, name: p.name }));
     const holder = parent.createDiv({ cls: "workout-log-protocol" });
     let selected: string = WorkoutProtocol.STANDARD;
 
@@ -256,9 +256,9 @@ export class LogFormRenderer {
         const id = protocolId(raw);
         // A set logged with a protocol no longer in the settings (e.g. a
         // deleted drop set) keeps it: otherwise saving would make it standard
-        if (!options.some((o) => o.id === id)) {
-          options.push({ id, name: catalog.resolve(id).name });
-        }
+        options = catalog
+          .optionsIncluding(id)
+          .map((p) => ({ id: p.id, name: p.name }));
         selected = id;
         draw(false);
       },

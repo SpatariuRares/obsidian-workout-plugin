@@ -7,7 +7,15 @@ import {
   getExerciseTypeById,
 } from "@app/constants/exerciseTypes.constants";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import type {
+  WorkoutChartsSettings,
+  WorkoutLogData,
+} from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
+import { WorkoutLogFile } from "@app/services/data/WorkoutLogFile";
+import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
+import { InMemoryLogStorage } from "@app/services/data/__tests__/InMemoryLogStorage";
+import { parseCsv } from "@app/utils/data/CsvCodec";
 
 const type = (id: string) => getExerciseTypeById(id)!;
 
@@ -18,16 +26,15 @@ const mapping = (from: string, to: string): FieldMapping => ({
   toLabel: to,
 });
 
-const makeLog = (
-  overrides: Partial<WorkoutLogData> = {},
-): WorkoutLogData => ({
-  date: "2024-01-01",
-  exercise: "Plank",
-  reps: 0,
-  weight: 0,
-  volume: 0,
-  ...overrides,
-});
+const makeLog = (overrides: Partial<WorkoutLogData> = {}) =>
+  logRow({
+    date: "2024-01-01",
+    exercise: "Plank",
+    reps: 0,
+    weight: 0,
+    volume: 0,
+    ...overrides,
+  });
 
 describe("ExerciseConversionService", () => {
   let logs: WorkoutLogData[];
@@ -96,6 +103,20 @@ describe("ExerciseConversionService", () => {
           type(EXERCISE_TYPE_IDS.STRENGTH),
         ),
       ).toEqual([]);
+    });
+  });
+
+  describe("setsOf", () => {
+    it("returns the sets of exactly that exercise, ignoring case and spacing", async () => {
+      logs = [
+        makeLog({ exercise: "Bench Press", reps: 1 }),
+        makeLog({ exercise: "bench  press", reps: 2 }),
+        makeLog({ exercise: "Incline Bench Press", reps: 3 }),
+      ];
+
+      const sets = await service.setsOf("Bench Press");
+
+      expect(sets.map((s) => s.reps)).toEqual([1, 2]);
     });
   });
 
@@ -472,6 +493,84 @@ describe("ExerciseConversionService", () => {
           [],
         ),
       ).rejects.toThrow("write failed");
+    });
+  });
+
+  describe("convertExerciseData on the log file", () => {
+    const HEADER =
+      "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,weightUnit";
+
+    function onLogFile(content: string) {
+      const storage = new InMemoryLogStorage(content);
+      const logFile = new WorkoutLogFile(
+        storage,
+        {
+          csvLogFilePath: "workout_logs.csv",
+          weightUnit: "kg",
+        } as WorkoutChartsSettings,
+        new WorkoutEventBus(),
+        { retryDelayMs: 0 },
+      );
+      const context = {
+        getWorkoutLogData: () => logFile.read(),
+        updateWorkoutLogEntry: (
+          log: WorkoutLogData,
+          entry: Parameters<WorkoutLogFile["update"]>[1],
+        ) => logFile.update(log, entry),
+        batchOperation: async (_op: string, fn: () => Promise<void>) =>
+          fn(),
+      };
+      return {
+        storage,
+        service: new ExerciseConversionService(
+          context as unknown as WorkoutPluginContext,
+        ),
+      };
+    }
+
+    function firstRow(storage: InMemoryLogStorage): Record<string, string> {
+      const [header, row] = parseCsv(storage.content ?? "");
+      return Object.fromEntries(header.map((name, i) => [name, row[i]]));
+    }
+
+    it("keeps a set logged in lb in lb when the weight is mapped, with settings in kg", async () => {
+      const { storage, service } = onLogFile(
+        [
+          HEADER,
+          "2026-01-01,Farmer Walk,40,100,4000,,Carry,1000,,standard,lb",
+        ].join("\n"),
+      );
+
+      await service.convertExerciseData(
+        "Farmer Walk",
+        EXERCISE_TYPE_IDS.TIMED,
+        [mapping("reps", "duration"), mapping("weight", "weight")],
+      );
+
+      const cells = firstRow(storage);
+      expect(cells).toMatchObject({
+        weight: "100",
+        weightUnit: "lb",
+        duration: "40",
+      });
+    });
+
+    it("copies the weight as entered when it is mapped to another field", async () => {
+      const { storage, service } = onLogFile(
+        [
+          HEADER,
+          "2026-01-01,Farmer Walk,40,100,4000,,Carry,1000,,standard,lb",
+        ].join("\n"),
+      );
+
+      await service.convertExerciseData(
+        "Farmer Walk",
+        EXERCISE_TYPE_IDS.TIMED,
+        [mapping("weight", "duration")],
+      );
+
+      const cells = firstRow(storage);
+      expect(cells.duration).toBe("100");
     });
   });
 

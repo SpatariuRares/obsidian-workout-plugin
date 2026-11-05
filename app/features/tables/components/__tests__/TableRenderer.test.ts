@@ -8,6 +8,7 @@ import {
   WorkoutLogData,
   WorkoutProtocol,
 } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 import { TableRow } from "@app/features/tables/types";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { t } from "@app/i18n";
@@ -104,13 +105,7 @@ const createRow = (overrides: Partial<TableRow> = {}): TableRow => ({
   displayRow: ["10:00", "8", "80", "640", ""],
   originalDate: "2024-01-15T10:00:00",
   dateKey: "2024-01-15",
-  originalLog: {
-    date: "2024-01-15T10:00:00",
-    exercise: "Bench Press",
-    reps: 8,
-    weight: 80,
-    volume: 640,
-  },
+  originalLog: logRow({ date: "2024-01-15T10:00:00" }),
   ...overrides,
 });
 

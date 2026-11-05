@@ -6,6 +6,7 @@ import {
 } from "@app/features/dashboard/widgets/volume-analytics/business/volumeAnalyticsData";
 import { getRecentWorkouts } from "@app/features/dashboard/widgets/recent-workouts/business/getRecentWorkouts";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 
 // Helper to create mock workout data
 const createMockLog = (
@@ -15,17 +16,18 @@ const createMockLog = (
   weight: number,
   workout?: string,
   timestamp?: number,
-): WorkoutLogData => ({
-  date,
-  exercise,
-  reps: 10,
-  weight,
-  volume,
-  origine: "test",
-  workout: workout || "Test Workout",
-  notes: "",
-  timestamp,
-});
+): WorkoutLogData =>
+  logRow({
+    date,
+    exercise,
+    reps: 10,
+    weight,
+    volume,
+    origine: "test",
+    workout: workout || "Test Workout",
+    notes: "",
+    timestamp,
+  });
 
 describe("dashboard calculations", () => {
   describe("calculateSummaryMetrics", () => {

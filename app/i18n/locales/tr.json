@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "İptal et",
     "clear": "Temizle",
     "convert": "Çevir",
     "exercise": "Egzersiz",
@@ -98,7 +97,6 @@
       "columnEstimated": "Tahmini",
       "columnVariance": "Değişim",
       "columnWorkout": "Antrenman",
-      "minutesSuffix": " dk",
       "noData": "Karşılaştırmak için henüz yeterli antrenman yok.",
       "subtitle": "Tahmini ve gerçek antrenman süresi",
       "title": "Süre karşılaştırması",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "Tahminler gerçek antrenmanlarınıza giderek yaklaşıyor",
       "varianceTrendStable": "Tahmin doğruluğu sabit",
       "varianceTrendTitle": "Tahmin doğruluğu",
-      "avgVarianceStat": "Ort. varyans: ±{value}%",
-      "hoursSuffix": "sa"
+      "avgVarianceStat": "Ort. varyans: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Tüm egzersiz sayfaları geçerli",
@@ -201,8 +198,6 @@
       "moveUp": "{widget} öğesini yukarı taşı",
       "moveDown": "{widget} öğesini aşağı taşı",
       "allHistory": "Boş: tüm geçmiş",
-      "recentWorkoutsLimit": "Son antrenmanlar listesindeki antrenman sayısı",
-      "volumeTrendDays": "Hacim eğilimindeki gün sayısı",
       "layout": "Düzen",
       "layoutGrid": "Izgara",
       "layoutList": "Liste",
@@ -568,7 +563,6 @@
     "createLogButtonText": "Kayıt oluştur: {exerciseName}",
     "noDataTitle": "{exerciseName} için kayıt bulunamadı",
     "exploreExampleData": "Veya örnek veriyle keşfet",
-    "lastSet": "Son set: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Kişisel rekor: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "Ön ayar ekle",
       "addProtocol": "Protokol ekle",
-      "cancel": "İptal et",
       "createFiles": "Dosyaları oluştur",
       "done": "Tamam!",
       "failed": "Başarısız",
@@ -1072,7 +1065,6 @@
     "editTable": "Tabloyu düzenle",
     "editTitle": "Düzenle",
     "gotoExercise": "Egzersize git",
-    "invalidDate": "Geçersiz tarih",
     "labels": {
       "target": "Hedef:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "{weight} ile henüz set yok",
       "progress": "En iyi {best}/{target} tekrar",
-      "progressTooltip": "En iyi: {best} tekrar / Hedef: {target} tekrar",
-      "repsSuffix": "tekrar",
-      "separator": " × "
+      "progressTooltip": "En iyi: {best} tekrar / Hedef: {target} tekrar"
     },
     "trendLine": "Trend çizgisi",
     "refreshingTable": "Tablo yenileniyor...",
@@ -1127,7 +1117,6 @@
     "down": "Aşağı",
     "improving": "İyileşiyor",
     "increasing": "Artan",
-    "invariant": "Sabit",
     "neutral": "Nötr",
     "stable": "Kararlı",
     "stableLower": "Sabit",

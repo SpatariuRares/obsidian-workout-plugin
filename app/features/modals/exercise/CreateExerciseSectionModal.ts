@@ -1,197 +1,168 @@
-// Refactored CreateExerciseSectionModal using reusable components
-
-import { App } from "obsidian";
+import { App, Notice } from "obsidian";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import { ModalBase } from "@app/features/modals/base/ModalBase";
+import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
+import {
+  TargetSectionWithAutocomplete,
+  type WorkoutFieldElements,
+} from "@app/features/modals/components/TargetSectionWithAutocomplete";
+import type { ExerciseAutocompleteElements } from "@app/types/ModalTypes";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
 import { TIMER_TYPE } from "@app/features/timer/types";
-import { Button, BUTTONVARIANT } from "@app/components/atoms";
-import { setupWorkoutToggle } from "@app/utils/form/FormUtils";
 import { t } from "@app/i18n";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 
-export class CreateExerciseSectionModal extends ModalBase {
-  private plugin: WorkoutPluginContext;
+interface SectionFormElements {
+  exercise: ExerciseAutocompleteElements;
+  workout: WorkoutFieldElements;
+  sets: HTMLInputElement;
+  reps: HTMLInputElement;
+  restTime: HTMLInputElement;
+  note: HTMLInputElement;
+  showTimer: HTMLInputElement;
+  timerSound: HTMLInputElement;
+  showLog: HTMLInputElement;
+}
+
+/** Writes an exercise section: heading with the plan, rest timer and log */
+export class CreateExerciseSectionModal extends BaseInsertModal {
+  private form?: SectionFormElements;
+  private currentFileName = "";
 
   constructor(app: App, plugin: WorkoutPluginContext) {
-    super(app);
-    this.plugin = plugin;
+    super(app, plugin);
   }
 
-  onOpen() {
-    const { contentEl } = this;
-    contentEl.createEl("h2", {
-      text: t("modal.titles.createExerciseSection"),
-    });
+  protected getModalTitle(): string {
+    return t("modal.titles.createExerciseSection");
+  }
 
-    // Create main container with better styling
-    const mainContainer = this.createStyledMainContainer(contentEl);
+  protected getButtonText(): string {
+    return t("modal.buttons.createSection");
+  }
 
-    // Exercise Configuration Section
+  protected getSuccessMessage(): string {
+    return t("modal.notices.exerciseSectionCreated");
+  }
+
+  protected createConfigurationSections(container: HTMLElement): void {
+    if (!this.plugin) throw new Error(t("modal.errors.missingElements"));
+    this.currentFileName = this.getCurrentFileName();
+
     const exerciseSection = this.createSection(
-      mainContainer,
+      container,
       t("modal.sections.exerciseConfiguration"),
     );
 
-    // Exercise autocomplete using reusable component
-    const { elements: exerciseElements } =
-      ExerciseAutocomplete.create(this, exerciseSection, this.plugin, undefined, { showCreateButton: false });
-
-    // Workout input for combined filtering
-    const workoutInput = this.createTextField(
+    const { elements: exercise } = ExerciseAutocomplete.create(
+      this,
       exerciseSection,
+      this.plugin,
+      undefined,
+      { showCreateButton: false },
+    );
+
+    // Workout for combined filtering of the log
+    const workout = TargetSectionWithAutocomplete.createWorkoutFields(
+      this,
+      exerciseSection,
+      this.currentFileName,
       t("modal.workoutNameOptional"),
-      t("modal.placeholders.workout"),
     );
 
-    // Current Workout checkbox
-    const currentWorkoutToggle = this.createCheckboxField(
-      exerciseSection,
-      t("modal.checkboxes.useCurrentWorkoutFile"),
-      false,
-      "currentWorkout",
-    );
-
-    // Sets input
-    const setsInput = this.createNumberField(
+    const sets = this.createNumberField(
       exerciseSection,
       t("modal.sets"),
       parseInt(t("modal.placeholders.sets")),
-      {
-        min: 1,
-        max: 20,
-      },
+      { min: 1, max: 20 },
     );
 
-    // Reps input
-    const repsInput = this.createTextField(
+    const reps = this.createTextField(
       exerciseSection,
       t("modal.labels.reps"),
       t("modal.placeholders.repsRange"),
       t("modal.placeholders.repsRange"),
     );
 
-    // Rest time input
-    const restTimeInput = this.createNumberField(
+    const restTime = this.createNumberField(
       exerciseSection,
       t("modal.restTime"),
       parseInt(t("modal.placeholders.restTime")),
-      {
-        min: 30,
-        max: 600,
-      },
+      { min: 30, max: 600 },
     );
 
-    // Note input
-    const noteInput = this.createTextField(
+    const note = this.createTextField(
       exerciseSection,
       t("modal.note"),
       t("modal.placeholders.note"),
     );
 
-    // Options Section
     const optionsSection = this.createSection(
-      mainContainer,
+      container,
       t("modal.sections.options"),
     );
 
-    // Show timer toggle
-    const showTimerToggle = this.createCheckboxField(
+    const showTimer = this.createCheckboxField(
       optionsSection,
       t("modal.checkboxes.includeTimer"),
       true,
       "showTimer",
     );
 
-    const timerSoundToggle = this.createCheckboxField(
+    const timerSound = this.createCheckboxField(
       optionsSection,
       t("modal.checkboxes.timerSound"),
       true,
       "timerSound",
     );
 
-    // Show log toggle
-    const showLogToggle = this.createCheckboxField(
+    const showLog = this.createCheckboxField(
       optionsSection,
       t("modal.checkboxes.includeLog"),
       true,
       "showLog",
     );
 
-    // Buttons Section
-    const buttonsSection = Button.createModalActions(mainContainer);
-
-    // Cancel button using Button atom
-    const cancelBtn = Button.create(buttonsSection, {
-      text: t("modal.buttons.cancel"),
-      ariaLabel: t("modal.buttons.cancel"),
-      variant: BUTTONVARIANT.SECONDARY,
-    });
-
-    // Create button using Button atom
-    const createBtn = Button.create(buttonsSection, {
-      text: t("modal.buttons.createSection"),
-      variant: BUTTONVARIANT.PRIMARY,
-      ariaLabel: t("modal.buttons.createSection"),
-    });
-
-    // Event listeners using Button helper
-    Button.onClick(cancelBtn, () => this.close());
-
-    // Handle current workout toggle
-    setupWorkoutToggle(currentWorkoutToggle, workoutInput, () =>
-      this.getCurrentFileName(),
-    );
-
-    Button.onClick(createBtn, () => {
-      const exerciseName =
-        exerciseElements.exerciseInput.value.trim();
-      const useCurrentWorkout = currentWorkoutToggle.checked;
-      const currentFileName = this.getCurrentFileName();
-      const workoutName = useCurrentWorkout
-        ? currentFileName
-        : workoutInput.value.trim();
-      const sets = parseInt(setsInput.value) || 4;
-      const reps = repsInput.value.trim();
-      const restTime = parseInt(restTimeInput.value) || 180;
-      const note = noteInput.value.trim();
-      const showTimer = showTimerToggle.checked;
-      const timerSound = timerSoundToggle.checked;
-      const showLog = showLogToggle.checked;
-
-      if (!exerciseName) {
-        this.insertIntoEditor(
-          "",
-          t("modal.notices.exerciseNameRequired"),
-        );
-        return;
-      }
-
-      const sectionCode = this.generateExerciseSectionCode({
-        exerciseName,
-        workoutName,
-        sets,
-        reps,
-        restTime,
-        note,
-        showTimer,
-        timerSound,
-        showLog,
-      });
-
-      this.insertIntoEditor(
-        sectionCode,
-        t("modal.notices.exerciseSectionCreated"),
-      );
-      this.close();
-    });
+    this.form = {
+      exercise,
+      workout,
+      sets,
+      reps,
+      restTime,
+      note,
+      showTimer,
+      timerSound,
+      showLog,
+    };
   }
 
-  onClose() {
-    const { contentEl } = this;
-    contentEl.empty();
+  protected canInsert(): boolean {
+    if (this.form?.exercise.exerciseInput.value.trim()) return true;
+    new Notice(t("modal.notices.exerciseNameRequired"));
+    return false;
+  }
+
+  protected generateCode(): string {
+    const form = this.form;
+    if (!form) throw new Error(t("modal.errors.missingElements"));
+
+    const exerciseName = form.exercise.exerciseInput.value.trim();
+
+    return this.generateExerciseSectionCode({
+      exerciseName,
+      workoutName: TargetSectionWithAutocomplete.workoutValue(
+        form.workout,
+        this.currentFileName,
+      ),
+      sets: parseInt(form.sets.value) || 4,
+      reps: form.reps.value.trim(),
+      restTime: parseInt(form.restTime.value) || 180,
+      note: form.note.value.trim(),
+      showTimer: form.showTimer.checked,
+      timerSound: form.timerSound.checked,
+      showLog: form.showLog.checked,
+    });
   }
 
   private generateExerciseSectionCode(params: {
@@ -218,6 +189,7 @@ export class CreateExerciseSectionModal extends ModalBase {
     }
     if (params.showTimer) {
       const timerCode = timerBlock.serialize({
+        id: generateCodeBlockId(),
         type: TIMER_TYPE.COUNTDOWN,
         duration: params.restTime || undefined,
         exercise: params.exerciseName,

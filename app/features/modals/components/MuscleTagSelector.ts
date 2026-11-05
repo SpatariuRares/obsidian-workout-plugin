@@ -8,6 +8,7 @@ import { Input, Chip } from "@app/components/atoms";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { t } from "@app/i18n";
+import { StringUtils } from "@app/utils/StringUtils";
 
 export interface MuscleTagSelectorElements {
   container: HTMLElement;
@@ -143,7 +144,7 @@ export class MuscleTagSelector {
       const isSelected = this.selectedTags.has(tag);
 
       Chip.create(container, {
-        text: this.formatTagName(tag),
+        text: StringUtils.humanize(tag),
         selected: isSelected,
         onClick: () => {
           if (this.selectedTags.has(tag)) {
@@ -200,7 +201,7 @@ export class MuscleTagSelector {
 
     selectedArray.forEach((tag) => {
       Chip.create(container, {
-        text: this.formatTagName(tag),
+        text: StringUtils.humanize(tag),
         selected: true,
         className: "workout-selected-tag-chip",
         onClick: () => {
@@ -231,25 +232,5 @@ export class MuscleTagSelector {
         },
       });
     });
-  }
-
-  /**
-   * Format tag name for display (capitalize words, replace underscores)
-   */
-  private formatTagName(tag: string): string {
-    return tag
-      .split("_")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  }
-
-  /**
-   * Format muscle group for display (capitalize words, replace underscores)
-   */
-  private formatMuscleGroup(group: string): string {
-    return group
-      .split("_")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
   }
 }

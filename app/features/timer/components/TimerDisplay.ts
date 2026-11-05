@@ -3,12 +3,8 @@ import {
   TimerSurface,
   TIMER_TYPE,
 } from "@app/features/timer/types";
-import {
-  intervalAt,
-  intervalPlan,
-  intervalSeconds,
-  type IntervalPhase,
-} from "@app/features/timer/business/intervalSchedule";
+import type { IntervalPhase } from "@app/features/timer/business/intervalSchedule";
+import { timerPoint } from "@app/features/timer/business/timerPoint";
 import { Icon } from "@app/components/atoms";
 import { ICONS } from "@app/constants/ui.constants";
 import { t } from "@app/i18n";
@@ -25,36 +21,6 @@ export class TimerDisplay {
     return `${minutes.toString().padStart(2, "0")}:${seconds
       .toString()
       .padStart(2, "0")}`;
-  }
-
-  private static plan(state: TimerState) {
-    return intervalPlan({
-      duration: state.duration,
-      rest: state.rest,
-      rounds: state.totalRounds,
-    });
-  }
-
-  /** Time left in the countdown, or in the current interval phase */
-  private static getRemaining(state: TimerState): number | null {
-    if (state.timerType === TIMER_TYPE.COUNTDOWN) {
-      return Math.max(0, state.duration * 1000 - state.elapsedTime);
-    }
-    if (state.timerType === TIMER_TYPE.INTERVAL) {
-      return intervalAt(this.plan(state), state.elapsedTime).remainingMs;
-    }
-    return null;
-  }
-
-  /** Time left until the whole timer ends (drives the last-seconds overlay) */
-  private static getRemainingToEnd(state: TimerState): number | null {
-    if (state.timerType === TIMER_TYPE.INTERVAL) {
-      return Math.max(
-        0,
-        intervalSeconds(this.plan(state)) * 1000 - state.elapsedTime,
-      );
-    }
-    return this.getRemaining(state);
   }
 
   private static showUrgentOverlay(
@@ -92,13 +58,11 @@ export class TimerDisplay {
       return;
     }
 
-    const remaining = this.getRemaining(state);
-    const remainingToEnd = this.getRemainingToEnd(state);
-    const isCompleted =
-      !state.isRunning &&
-      ((state.timerType === TIMER_TYPE.COUNTDOWN &&
-        state.elapsedTime >= state.duration * 1000) ||
-        (state.timerType === TIMER_TYPE.INTERVAL && state.phase === "done"));
+    const point = timerPoint(state);
+    const remaining = point.remainingMs;
+    // Time left until the whole timer ends drives the last-seconds overlay
+    const remainingToEnd = point.remainingToEndMs;
+    const isCompleted = !state.isRunning && point.done;
     const isUrgent =
       state.isRunning &&
       remainingToEnd !== null &&

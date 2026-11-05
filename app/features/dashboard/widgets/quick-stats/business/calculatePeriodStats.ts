@@ -12,7 +12,7 @@ export function calculatePeriodStats(
   data: WorkoutLogData[],
   days: number,
 ): PeriodStats {
-  const periodData = DateUtils.filterByDaysAgo(data, days);
+  const periodData = DateUtils.lastDays(data, days);
 
   const period = new TrainingHistory(periodData);
   const uniqueWorkouts = period.sessions().length;

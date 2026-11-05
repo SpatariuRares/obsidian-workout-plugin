@@ -1,6 +1,7 @@
 import { Icon, ProgressMeter } from "@app/components/atoms";
 import { ICONS } from "@app/constants/ui.constants";
 import { TargetCalculator } from "@app/features/tables/business/TargetCalculator";
+import { describeTarget } from "@app/features/modals/log/LogHistory";
 import { t } from "@app/i18n";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
@@ -51,21 +52,9 @@ export class TargetHeader {
       text: t("table.labels.target"),
     });
 
-    // Build the target text
-    const parts: string[] = [];
-    if (targetWeight !== undefined) {
-      parts.push(`${targetWeight}${weightUnit}`);
-    }
-    if (targetReps !== undefined) {
-      const separator =
-        targetWeight !== undefined ? t("table.target.separator") : "";
-      parts.push(
-        `${separator}${targetReps} ${t("table.target.repsSuffix")}`,
-      );
-    }
     targetDiv.createDiv({
       cls: "workout-target-text",
-      text: parts.join(""),
+      text: describeTarget(targetReps, targetWeight, weightUnit),
     });
 
     // Progress only when both targets are set
@@ -108,7 +97,7 @@ export class TargetHeader {
       text:
         bestReps === 0
           ? t("table.target.noSetsYet", {
-              weight: `${targetWeight}${weightUnit}`,
+              weight: describeTarget(undefined, targetWeight, weightUnit),
             })
           : t("table.target.progress", counts),
     });

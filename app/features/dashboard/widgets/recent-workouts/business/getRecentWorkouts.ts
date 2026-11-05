@@ -13,9 +13,7 @@ export function getRecentWorkouts(
   limit: number,
 ): RecentWorkout[] {
   return new TrainingHistory(data)
-    .sessions()
-    .reverse()
-    .slice(0, limit)
+    .latestSessions(limit)
     .map((session) => ({
       date: session.day,
       workout: session.workout,

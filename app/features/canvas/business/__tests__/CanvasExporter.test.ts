@@ -2,8 +2,10 @@ import { TFile, TFolder } from "obsidian";
 import { CanvasExporter } from "@app/features/canvas/business/CanvasExporter";
 import type { CanvasExportOptions } from "@app/features/canvas/types";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
+import { FormatUtils } from "@app/utils/FormatUtils";
 import { ExerciseLibrary } from "@app/services/exercise/ExerciseLibrary";
 import { FakeVault } from "@app/services/exercise/__tests__/FakeVault";
+import { withDefaultTimerPresets } from "@app/features/timer/business/timerPresets";
 
 const mockFindGroups = jest.fn();
 // t() echoes key and params, so tests can check the formatted values
@@ -79,6 +81,7 @@ describe("CanvasExporter.exportToCanvas", () => {
       api as any,
       { musclesForExercise: (name: string) => mockFindGroups(name) },
       new ExerciseLibrary(pages.app as never, { exerciseFolderPath: "Exercises" }),
+      { timerPresets: withDefaultTimerPresets({}), defaultTimerPreset: null },
     );
   });
 
@@ -194,7 +197,7 @@ describe("CanvasExporter.exportToCanvas", () => {
 
       const node = written().nodes[0];
       expect(node.text).toContain("## Bench Press");
-      expect(node.text).toContain("canvas.duration(duration=1m 30s)");
+      expect(node.text).toContain(`canvas.duration(duration=${FormatUtils.formatDuration(90)})`);
     });
 
     it("should extract exercises from H2 headers", async () => {
@@ -291,6 +294,50 @@ describe("CanvasExporter.exportToCanvas", () => {
       expect(written().nodes.map((n) => n.text.split("\n")[0])).toEqual(["## Squat"]);
     });
 
+    it("should ignore headings shown as examples inside a longer fence", async () => {
+      setContent("## Squat\n\n````markdown\n## Fake\n````\n");
+
+      await exporter.exportToCanvas(makeFile("W"), baseOptions);
+
+      expect(written().nodes.map((n) => n.text.split("\n")[0])).toEqual(["## Squat"]);
+    });
+
+    it("should export the length of the timer's preset", async () => {
+      // Tabata: 8 rounds of 20 s work + 10 s rest = 4 minutes
+      setContent(timerBlock(["exercise: Burpee", "preset: Tabata"]));
+
+      await exporter.exportToCanvas(makeFile("W"), {
+        ...baseOptions,
+        includeDurations: true,
+      });
+
+      expect(written().nodes[0].text).toContain(`canvas.duration(duration=${FormatUtils.formatDuration(240)})`);
+    });
+
+    it("should export the whole length of an interval timer", async () => {
+      setContent(
+        timerBlock(["exercise: Bike", "type: interval", "work: 30", "rest: 30", "rounds: 3"]),
+      );
+
+      await exporter.exportToCanvas(makeFile("W"), {
+        ...baseOptions,
+        includeDurations: true,
+      });
+
+      expect(written().nodes[0].text).toContain(`canvas.duration(duration=${FormatUtils.formatDuration(180)})`);
+    });
+
+    it("should export no length for a timer with invalid values", async () => {
+      setContent(timerBlock(["exercise: Plank", "duration: soon"]));
+
+      await exporter.exportToCanvas(makeFile("W"), {
+        ...baseOptions,
+        includeDurations: true,
+      });
+
+      expect(written().nodes[0].text).not.toContain("canvas.duration");
+    });
+
     it("should read timer blocks written with Windows line endings", async () => {
       setContent("```workout-timer\r\nexercise: Plank\r\nduration: 60\r\n```\r\n");
 
@@ -352,7 +399,20 @@ describe("CanvasExporter.exportToCanvas", () => {
         includeDurations: true,
       });
 
-      expect(written().nodes[0].text).toContain("canvas.duration(duration=45s)");
+      expect(written().nodes[0].text).toContain(`canvas.duration(duration=${FormatUtils.formatDuration(45)})`);
+    });
+
+    it("should show hours for durations of an hour or more", async () => {
+      setContent(timerBlock(["exercise: Run", "duration: 5400"]));
+
+      await exporter.exportToCanvas(makeFile("W"), {
+        ...baseOptions,
+        includeDurations: true,
+      });
+
+      const text = written().nodes[0].text;
+      expect(text).toContain("common.duration.hours(count=1)");
+      expect(text).toContain(`canvas.duration(duration=${FormatUtils.formatDuration(5400)})`);
     });
 
     it("should not include durations unless enabled", async () => {

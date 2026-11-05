@@ -153,14 +153,9 @@
         var(--workout-border-color);
       padding: var(--workout-space-sm);
     }
-
-    .workout-log-table {
-      border-collapse: collapse;
-      width: 100%;
-      font-size: var(--workout-font-sm);
-    }
   }
 
+  .workout-charts-container,
   .workout-embedded-chart-table-fallback {
     .workout-log-table {
       border-collapse: collapse;

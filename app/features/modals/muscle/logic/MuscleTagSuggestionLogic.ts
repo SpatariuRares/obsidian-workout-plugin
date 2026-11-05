@@ -1,8 +1,5 @@
 import { StringUtils } from "@app/utils/StringUtils";
-import type {
-  MuscleTagSimilarityMatch,
-  MuscleTagSuggestionItem,
-} from "@app/features/modals/muscle/types";
+import type { MuscleTagSuggestionItem } from "@app/features/modals/muscle/types";
 
 const FUZZY_MAX_DISTANCE = 2;
 const FUZZY_WARNING_DISTANCE = 1;
@@ -17,10 +14,10 @@ export class MuscleTagSuggestionLogic {
     }
 
     const existingTags = Array.from(allTags.keys());
-    const similarTags = this.findSimilarTagsWithDistance(
-      needle,
-      existingTags,
-    );
+    const similarTags = StringUtils.findSimilar(needle, existingTags, {
+      max: FUZZY_MAX_DISTANCE,
+      min: 1,
+    }).map(({ value, distance }) => ({ tag: value, distance }));
 
     return similarTags
       .filter((item) => item.tag.toLowerCase() !== needle)
@@ -29,28 +26,5 @@ export class MuscleTagSuggestionLogic {
         muscleGroup: allTags.get(item.tag) || "",
         isVeryClose: item.distance <= FUZZY_WARNING_DISTANCE,
       }));
-  }
-
-  private static findSimilarTagsWithDistance(
-    needle: string,
-    haystack: string[],
-  ): MuscleTagSimilarityMatch[] {
-    const matches: MuscleTagSimilarityMatch[] = [];
-
-    for (const tag of haystack) {
-      const distance = StringUtils.levenshteinDistance(needle, tag);
-      if (distance <= FUZZY_MAX_DISTANCE && distance > 0) {
-        matches.push({ tag, distance });
-      }
-    }
-
-    matches.sort((a, b) => {
-      if (a.distance !== b.distance) {
-        return a.distance - b.distance;
-      }
-      return a.tag.localeCompare(b.tag);
-    });
-
-    return matches;
   }
 }

@@ -1,9 +1,11 @@
 import { parseCsv } from "@app/utils/data/CsvCodec";
+import { withoutUndefined } from "@app/utils/ObjectUtils";
 import {
   WorkoutProtocol,
   type TimedLogEntryInput,
 } from "@app/types/WorkoutLogData";
 import type { WeightUnit } from "@app/utils/WeightUnitUtils";
+import { round2 } from "@app/utils/round2";
 
 /** The phone apps whose "export workout data" CSV can be imported */
 export type ExportSource = "strong" | "hevy";
@@ -229,12 +231,7 @@ function toLogRows(
     });
   }
   // Optional keys left undefined are dropped, so rows compare cleanly
-  return rows.map(
-    (row) =>
-      Object.fromEntries(
-        Object.entries(row).filter(([, value]) => value !== undefined),
-      ) as TimedLogEntryInput,
-  );
+  return rows.map(withoutUndefined);
 }
 
 /** The workout's start, plus the share of its length this set is into it */
@@ -311,10 +308,6 @@ function parseHevyDate(raw: string): Date | undefined {
   const month = MONTHS.indexOf(mon.toLowerCase());
   if (month === -1) return undefined;
   return new Date(+y, month, +d, +h, +mi);
-}
-
-function round2(value: number): number {
-  return Math.round(value * 100) / 100;
 }
 
 function count(text: string, char: string): number {

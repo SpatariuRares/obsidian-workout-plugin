@@ -8,6 +8,7 @@ import {
   WorkoutLogData,
   WorkoutProtocol,
 } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 import type { SettingsPort } from "@app/types/PluginPorts";
 
 const log = (
@@ -16,15 +17,16 @@ const log = (
   weight: number,
   volume: number,
   protocol?: string,
-): WorkoutLogData => ({
-  date: "2024-01-01",
-  exercise,
-  reps: 5,
-  weight,
-  volume,
-  timestamp,
-  protocol: protocol as WorkoutProtocol | undefined,
-});
+): WorkoutLogData =>
+  logRow({
+    date: "2024-01-01",
+    exercise,
+    reps: 5,
+    weight,
+    volume,
+    timestamp,
+    protocol: protocol as WorkoutProtocol | undefined,
+  });
 
 /** Builds a series of entries for one exercise, all with the given protocol. */
 const series = (
@@ -79,8 +81,9 @@ describe("ProtocolEffectiveness", () => {
       expect(c.querySelector(".workout-widget-title")?.textContent).toBe(
         t("dashboard.protocolEffectiveness.title"),
       );
+      // The kit's empty state, inside the widget card
       expect(
-        c.querySelector(".workout-protocol-effectiveness-no-data")
+        c.querySelector(".workout-block-card .workout-feedback-info")
           ?.textContent,
       ).toBe(t("dashboard.protocolEffectiveness.noData"));
       expect(c.querySelector("table")).toBeNull();
@@ -90,9 +93,9 @@ describe("ProtocolEffectiveness", () => {
       const c = render(
         series("Squat", [100, 100, 100, 100], [1, 1, 1, 1], "drop_set"),
       );
-      expect(
-        c.querySelector(".workout-protocol-effectiveness-no-data"),
-      ).not.toBeNull();
+      expect(c.querySelector(".workout-feedback-info")?.textContent).toBe(
+        t("dashboard.protocolEffectiveness.noData"),
+      );
     });
 
     it("compares a protocol with fewer sets when the block lowers the minimum", () => {
@@ -220,7 +223,7 @@ describe("ProtocolEffectiveness", () => {
       const c = render(
         series("Squat", [100, 100, 100, 100, 100], [100, 100, 100, 100, 100], "drop_set"),
       );
-      expect(volume(rows(c)[0]).textContent).toBe("+0.0%");
+      expect(volume(rows(c)[0]).textContent).toBe("0.0%");
       expect(volume(rows(c)[0]).className).toBe(NEU);
     });
 
@@ -238,7 +241,7 @@ describe("ProtocolEffectiveness", () => {
         log(e, i + 1, 100, 100, "drop_set"),
       );
       const [r] = rows(render(data));
-      expect(volume(r).textContent).toBe("+0.0%");
+      expect(volume(r).textContent).toBe("0.0%");
       expect(progression(r).textContent).toBe("0.0%");
     });
 
@@ -247,10 +250,10 @@ describe("ProtocolEffectiveness", () => {
         series("Squat", [100, 100, 100, 100, 100], [0, 0, 0, 100, 100], "drop_set"),
       );
       // i1: before [0] -> skipped; i2 before [0,0] -> skipped; i3 before [0,0,0] -> skipped
-      expect(volume(rows(c)[0]).textContent).toBe("+0.0%");
+      expect(volume(rows(c)[0]).textContent).toBe("0.0%");
     });
 
-    it("should skip entries without a matching timestamp", () => {
+    it("compares sets without a timestamp in the order they were logged", () => {
       const data = series(
         "Squat",
         [100, 100, 100, 100, 100],
@@ -258,8 +261,45 @@ describe("ProtocolEffectiveness", () => {
         "drop_set",
       ).map((e) => ({ ...e, timestamp: undefined }));
       const [r] = rows(render(data));
-      expect(progression(r).textContent).toBe("0.0%");
-      expect(volume(r).textContent).toBe("+0.0%");
+      expect(progression(r).textContent).toBe("100.0%");
+      expect(volume(r).textContent).toBe("0.0%");
+    });
+
+    describe("in set order (training day, then timestamp)", () => {
+      const renderMin1 = (data: WorkoutLogData[]) => {
+        const container = createObsidianContainer();
+        ProtocolEffectiveness.render(
+          container,
+          data,
+          { protocolMinEntries: 1 },
+        );
+        return container;
+      };
+      const dropSetRow = (c: HTMLElement) =>
+        rows(c).find((r) => entries(r) === "1") as HTMLElement;
+
+      it("puts a set whose date was edited (old timestamp) on its new day", () => {
+        const c = renderMin1([
+          { ...log("Squat", 1, 100, 100), date: "2024-01-01" },
+          // Logged first, then its date was moved to the 3rd: it comes after
+          { ...log("Squat", 5, 110, 200), date: "2024-01-03" },
+          { ...log("Squat", 10, 100, 100, "drop_set"), date: "2024-01-02" },
+        ]);
+        const r = dropSetRow(c);
+        expect(volume(r).textContent).toBe("+100.0%");
+        expect(progression(r).textContent).toBe("100.0%");
+      });
+
+      it("matches the exercise ignoring case and spacing", () => {
+        const c = renderMin1([
+          log("bench press", 1, 100, 100),
+          log("Bench  Press", 2, 100, 100, "drop_set"),
+          log("bench press ", 3, 100, 150),
+        ]);
+        const r = dropSetRow(c);
+        expect(volume(r).textContent).toBe("+50.0%");
+        expect(progression(r).textContent).toBe("100.0%");
+      });
     });
   });
 

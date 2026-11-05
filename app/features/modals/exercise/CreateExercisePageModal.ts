@@ -1,7 +1,6 @@
 // Refactored CreateExercisePageModal using reusable components
 
 import {
-  BUILT_IN_EXERCISE_TYPES,
   EXERCISE_TYPE_IDS,
   DEFAULT_EXERCISE_TYPE_ID,
 } from "@app/constants/exerciseTypes.constants";
@@ -22,6 +21,7 @@ import type {
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import { DomUtils } from "@app/utils/DomUtils";
 import { t } from "@app/i18n";
+import { fillExercisePageTemplate } from "@app/services/exercise/ExercisePageContent";
 import { CONSTANTS } from "@app/constants";
 import {
   BUTTONSIZE,
@@ -145,66 +145,50 @@ export class CreateExercisePageModal extends ModalBase {
       this.plugin.settings.exerciseFolderPath,
     );
 
-    // Buttons container
-    const buttonsContainer = Button.createModalActions(formContainer);
+    Button.createModalActions(formContainer, {
+      primary: {
+        text: t("modal.buttons.createExercise"),
+        onClick: async () => {
+          const exerciseName =
+            exerciseElements.exerciseInput.value.trim();
+          const exerciseType = exerciseTypeSelect.value;
+          const selectedTags = this.getSelectedTags
+            ? this.getSelectedTags()
+            : [];
+          const folderPath = folderInput.value.trim();
 
-    // Create button using Button atom
-    const createBtn = Button.create(buttonsContainer, {
-      text: t("modal.buttons.createExercise"),
-      variant: BUTTONVARIANT.PRIMARY,
-      ariaLabel: t("modal.buttons.createExercise"),
-    });
+          if (!exerciseName) {
+            new Notice(t("modal.notices.exercisePageNameRequired"));
+            return;
+          }
 
-    // Cancel button using Button atom
-    const cancelBtn = Button.create(buttonsContainer, {
-      text: t("modal.buttons.cancel"),
-      variant: BUTTONVARIANT.SECONDARY,
-      ariaLabel: t("modal.buttons.cancel"),
-    });
+          // Collect custom parameters if custom type is selected
+          let customParameters: ParameterDefinition[] | undefined;
+          if (exerciseType === EXERCISE_TYPE_IDS.CUSTOM) {
+            customParameters = this.collectCustomParameters();
+          }
 
-    // Event listeners using Button helper
-    Button.onClick(cancelBtn, () => this.close());
-
-    Button.onClick(createBtn, () => {
-      void (async () => {
-        const exerciseName =
-          exerciseElements.exerciseInput.value.trim();
-        const exerciseType = exerciseTypeSelect.value;
-        const selectedTags = this.getSelectedTags
-          ? this.getSelectedTags()
-          : [];
-        const folderPath = folderInput.value.trim();
-
-        if (!exerciseName) {
-          new Notice(t("modal.notices.exercisePageNameRequired"));
-          return;
-        }
-
-        // Collect custom parameters if custom type is selected
-        let customParameters: ParameterDefinition[] | undefined;
-        if (exerciseType === EXERCISE_TYPE_IDS.CUSTOM) {
-          customParameters = this.collectCustomParameters();
-        }
-
-        try {
-          await this.createExercisePage(
-            exerciseName,
-            exerciseType,
-            selectedTags,
-            folderPath,
-            customParameters,
-          );
-          this.close();
-          new Notice(t("modal.notices.exercisePageCreated"));
-        } catch (error) {
-          const errorMessage = ErrorUtils.getErrorMessage(error);
-          new Notice(
-            t("modal.notices.exercisePageError", {
-              error: errorMessage,
-            }),
-          );
-        }
-      })();
+          try {
+            await this.createExercisePage(
+              exerciseName,
+              exerciseType,
+              selectedTags,
+              folderPath,
+              customParameters,
+            );
+            this.close();
+            new Notice(t("modal.notices.exercisePageCreated"));
+          } catch (error) {
+            const errorMessage = ErrorUtils.getErrorMessage(error);
+            new Notice(
+              t("modal.notices.exercisePageError", {
+                error: errorMessage,
+              }),
+            );
+          }
+        },
+      },
+      onCancel: () => this.close(),
     });
 
     // Focus on exercise input
@@ -357,78 +341,15 @@ export class CreateExercisePageModal extends ModalBase {
     const template =
       await this.plugin.templateGeneratorService.getExercisePageTemplate();
 
-    const exerciseTypeDef = BUILT_IN_EXERCISE_TYPES.find(
-      (t) => t.id === exerciseType,
-    );
-    const exerciseTypeName = exerciseTypeDef?.name || exerciseType;
-
-    // Build tags YAML
-    let tagsYaml = "";
-    if (tags.length > 0) {
-      tagsYaml = tags.map((tag) => `  - ${tag}`).join("\n");
-    }
-
-    // Build custom parameters YAML
-    let customParametersYaml = "";
-    if (
-      exerciseType === EXERCISE_TYPE_IDS.CUSTOM &&
-      customParameters &&
-      customParameters.length > 0
-    ) {
-      // eslint-disable-next-line i18next/no-literal-string -- YAML frontmatter
-      customParametersYaml = "\nparameters:";
-      for (const param of customParameters) {
-        // eslint-disable-next-line i18next/no-literal-string -- YAML frontmatter
-        customParametersYaml += `
-  - key: ${param.key}
-    label: ${param.label}
-    type: ${param.type}
-    required: ${param.required}`;
-        if (param.unit) {
-          // eslint-disable-next-line i18next/no-literal-string -- YAML frontmatter
-          customParametersYaml += `
-    unit: ${param.unit}`;
-        }
-      }
-    }
-
-    // Fill in the blank template with actual values
-    let content = template;
-
-    // Replace frontmatter fields
-    content = content
-      .replace(
-        /^exercise_name:\s*$/m,
-        `exercise_name: ${exerciseName}`,
-      )
-      .replace(
-        /^exercise_type:\s*$/m,
-        `exercise_type: ${exerciseType}`,
-      )
-      .replace(
-        /^tags:\s*$/m,
-        tagsYaml ? `tags:\n${tagsYaml}` : "tags: []",
-      );
-
-    // Add custom parameters if present (insert after tags in frontmatter)
-    if (customParametersYaml) {
-      content = content.replace(
-        /(tags:.*?\n)/s,
-        `$1${customParametersYaml}\n`,
-      );
-    }
-
-    // Replace "Type:" placeholder
-    content = content.replace(
-      /^Type:\s*$/m,
-      `Type: ${exerciseTypeName}`,
-    );
-
-    // Replace "name" placeholder in code blocks with actual exercise name
-    content = content.replace(
-      /exercise: name/g,
-      `exercise: ${exerciseName}`,
-    );
+    const content = fillExercisePageTemplate(template, {
+      name: exerciseName,
+      typeId: exerciseType,
+      muscleGroups: tags,
+      customParameters:
+        exerciseType === EXERCISE_TYPE_IDS.CUSTOM
+          ? customParameters
+          : undefined,
+    });
 
     const safeExerciseName = exerciseName.replace(
       /[\\/:"*?<>|]/g,

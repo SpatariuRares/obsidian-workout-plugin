@@ -1,6 +1,16 @@
 /** @jest-environment jsdom */
 
-import { getElementScopedId } from "@app/utils/IdUtils";
+import { generateCodeBlockId, getElementScopedId } from "@app/utils/IdUtils";
+
+describe("generateCodeBlockId", () => {
+  it("is a short base36 id", () => {
+    expect(generateCodeBlockId()).toMatch(/^[0-9a-z]{8,}$/);
+  });
+
+  it("starts with the prefix when given one", () => {
+    expect(generateCodeBlockId("timer")).toMatch(/^timer-[0-9a-z]{8,}$/);
+  });
+});
 
 describe("getElementScopedId", () => {
   it("returns the same id for the same element", () => {

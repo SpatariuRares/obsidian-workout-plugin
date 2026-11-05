@@ -4,10 +4,11 @@ import { DurationComparison } from "@app/features/dashboard/widgets/duration-com
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { LocalizationService, t } from "@app/i18n";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 import { ICONS } from "@app/constants/ui.constants";
 
 const BASE = 1_700_000_000_000;
-const SUFFIX = () => t("dashboard.durationComparison.minutesSuffix");
+const MIN = (count: number) => t("common.duration.minutes", { count });
 
 /**
  * Builds a six-set session lasting `actualSec`. Estimated duration is
@@ -28,15 +29,7 @@ function entry(
   date: string,
   timestamp: number | undefined,
 ): WorkoutLogData {
-  return {
-    date,
-    exercise: "Squat",
-    reps: 5,
-    weight: 100,
-    volume: 500,
-    workout,
-    timestamp,
-  };
+  return logRow({ date, exercise: "Squat", reps: 5, weight: 100, workout, timestamp });
 }
 
 const render = (data: WorkoutLogData[], setDuration = 45) => {
@@ -61,7 +54,8 @@ describe("DurationComparison", () => {
     it("should show the no data message when there are no logs", () => {
       const c = render([]);
       expect(
-        c.querySelector(".workout-duration-comparison-no-data")?.textContent,
+        c.querySelector(".workout-block-card .workout-feedback-info")
+          ?.textContent,
       ).toBe(t("dashboard.durationComparison.noData"));
       expect(c.querySelector("table")).toBeNull();
     });
@@ -111,8 +105,8 @@ describe("DurationComparison", () => {
       const [r] = rows(c);
       expect(r.querySelector(".workout-duration-comparison-workout-name")?.textContent).toBe("Push");
       expect(r.querySelector(".workout-duration-comparison-workout-date")?.textContent).toBe("2024-01-01");
-      expect(cell(r, 1).textContent).toBe(`5${SUFFIX()}`);
-      expect(cell(r, 2).textContent).toBe(`10${SUFFIX()}`);
+      expect(cell(r, 1).textContent).toBe(MIN(5));
+      expect(cell(r, 2).textContent).toBe(MIN(10));
       // (600-315)/315 = 90.48%
       expect(cell(r, 3).textContent).toBe("+90%");
     });
@@ -125,7 +119,7 @@ describe("DurationComparison", () => {
       };
       const c = render([at(0), at(10), at(20)]);
       expect(rows(c)).toHaveLength(1);
-      expect(cell(rows(c)[0], 2).textContent).toBe(`20${SUFFIX()}`);
+      expect(cell(rows(c)[0], 2).textContent).toBe(MIN(20));
       expect(
         rows(c)[0].querySelector(".workout-duration-comparison-workout-date")
           ?.textContent,
@@ -135,8 +129,8 @@ describe("DurationComparison", () => {
     it("should estimate each set with the set duration from settings", () => {
       // 6 sets at 30s + 5 rests of 90s = 630s, shown as 11 min
       const c = render(session("Push", "2024-01-01", BASE, 630), 30);
-      expect(cell(rows(c)[0], 1).textContent).toBe(`11${SUFFIX()}`);
-      expect(cell(rows(c)[0], 3).textContent).toBe("+0%");
+      expect(cell(rows(c)[0], 1).textContent).toBe(MIN(11));
+      expect(cell(rows(c)[0], 3).textContent).toBe("0%");
     });
 
     it("should use first-to-last timestamp regardless of input order", () => {
@@ -144,7 +138,7 @@ describe("DurationComparison", () => {
         entry("Push", "2024-01-01", BASE + 600_000),
         entry("Push", "2024-01-01", BASE),
       ]);
-      expect(cell(rows(c)[0], 2).textContent).toBe(`10${SUFFIX()}`);
+      expect(cell(rows(c)[0], 2).textContent).toBe(MIN(10));
     });
 
     it("should keep different dates and workouts as separate sessions", () => {
@@ -170,6 +164,21 @@ describe("DurationComparison", () => {
       );
       expect(names).toEqual(["W6", "W5", "W4", "W3", "W2"]);
     });
+
+    it("should place a session whose date was edited on its new day", () => {
+      // Moved to a later day in the CSV, it keeps its older timestamps
+      const names = rows(
+        render([
+          ...session("Moved", "2024-01-05", BASE, 720),
+          ...session("Kept", "2024-01-02", BASE + 50_000_000, 720),
+        ]),
+      ).map(
+        (r) =>
+          r.querySelector(".workout-duration-comparison-workout-name")
+            ?.textContent,
+      );
+      expect(names).toEqual(["Moved", "Kept"]);
+    });
   });
 
   describe("duration formatting", () => {
@@ -177,8 +186,7 @@ describe("DurationComparison", () => {
       // actual 4500s = 75 min
       const c = render(session("Push", "2024-01-01", BASE, 4500));
       const text = cell(rows(c)[0], 2).textContent as string;
-      expect(text.startsWith("1h 15")).toBe(true);
-      expect(text).toContain(SUFFIX().trim());
+      expect(text).toBe(`${t("common.duration.hours", { count: 1 })} ${MIN(15)}`);
     });
 
     it("should omit minutes when the duration is whole hours", () => {
@@ -218,8 +226,8 @@ describe("DurationComparison", () => {
       expect(span.textContent).toBe("-50%");
     });
 
-    it("should treat exact estimate as 0% with a plus sign", () => {
-      expect(cls(720).textContent).toBe("+0%");
+    it("should treat exact estimate as 0% without a sign", () => {
+      expect(cls(720).textContent).toBe("0%");
     });
   });
 
@@ -236,8 +244,8 @@ describe("DurationComparison", () => {
       expect(c.querySelector(".workout-duration-comparison-trend")).toBeNull();
     });
 
-    it("should report improving when recent variance dropped more than 5 points", () => {
-      const c = twoSessions(720, 1440);
+    it("should report improving when the variance line falls", () => {
+      const c = twoSessions(720, 1440); // 100% -> 0%
       expect(trendText(c)).toBe(
         t("dashboard.durationComparison.varianceTrendImproving"),
       );
@@ -250,8 +258,8 @@ describe("DurationComparison", () => {
       ).toBe(ICONS.TREND.UP);
     });
 
-    it("should report declining when recent variance grew more than 5 points", () => {
-      const c = twoSessions(1440, 720);
+    it("should report declining when the variance line rises", () => {
+      const c = twoSessions(1440, 720); // 0% -> 100%
       expect(trendText(c)).toBe(
         t("dashboard.durationComparison.varianceTrendDeclining"),
       );
@@ -261,8 +269,8 @@ describe("DurationComparison", () => {
       ).toBe(ICONS.TREND.DOWN);
     });
 
-    it("should report stable for small changes", () => {
-      const c = twoSessions(748, 720); // ~3.9 points
+    it("should report stable while the line moves less than 5% of the mean", () => {
+      const c = twoSessions(2224, 2160); // 200% -> ~209%: 9 points of a ~204 mean
       expect(trendText(c)).toBe(
         t("dashboard.durationComparison.varianceTrendStable"),
       );
@@ -270,6 +278,20 @@ describe("DurationComparison", () => {
         (c.querySelector(".workout-duration-comparison-trend-icon") as HTMLElement | null)
           ?.dataset.icon,
       ).toBe(ICONS.TREND.FLAT);
+    });
+
+    it("should report a small rise as declining when it is more than 5% of the mean", () => {
+      const c = twoSessions(749, 720); // 0% -> ~4%
+      expect(trendText(c)).toBe(
+        t("dashboard.durationComparison.varianceTrendDeclining"),
+      );
+    });
+
+    it("should report stable when every session matches its estimate", () => {
+      const c = twoSessions(720, 720);
+      expect(trendText(c)).toBe(
+        t("dashboard.durationComparison.varianceTrendStable"),
+      );
     });
 
     it("should show the average absolute variance", () => {
@@ -287,8 +309,8 @@ describe("DurationComparison", () => {
       ).toBe(t("dashboard.durationComparison.avgVarianceStat", { value: "75" }));
     });
 
-    it("should split odd session counts with the larger half as older", () => {
-      // recent=[0%], older=[100%,100%] -> improving, avg 66.67 -> 67
+    it("should read the trend from the line through every session, oldest first", () => {
+      // 100%, 100%, 0% (oldest first): the line falls -> improving, avg 66.67 -> 67
       const c = render([
         ...session("Push", "2024-01-03", BASE + 20_000_000, 720),
         ...session("Push", "2024-01-02", BASE + 10_000_000, 1440),

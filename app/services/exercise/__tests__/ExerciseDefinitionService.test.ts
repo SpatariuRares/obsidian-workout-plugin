@@ -1,3 +1,4 @@
+import * as YAML from "yaml";
 import { ExerciseDefinitionService } from "@app/services/exercise/ExerciseDefinitionService";
 import { ExerciseLibrary } from "@app/services/exercise/ExerciseLibrary";
 import { FakeVault } from "@app/services/exercise/__tests__/FakeVault";
@@ -206,14 +207,15 @@ describe("ExerciseDefinitionService", () => {
 
       expect(vault.paths()).toEqual(["Exercises/Leg_Press_ 45.md"]);
       const content = vault.content("Exercises/Leg_Press_ 45.md")!;
-      expect(content).toContain("exercise_name: Leg/Press: 45");
-      expect(content).toContain("exercise_type: cardio");
-      expect(content).toContain("  - legs");
-      expect(content).toContain("  - key: incline");
-      expect(content).toContain('    unit: "%"');
-      expect(content).toContain("    default: 1");
-      expect(content).toContain("    min: 0");
-      expect(content).toContain("    max: 15");
+      const yaml = /^---\n([\s\S]*?)\n---\n/.exec(content)![1];
+      expect(YAML.parse(yaml)).toEqual({
+        exercise_name: "Leg/Press: 45",
+        exercise_type: "cardio",
+        tags: ["legs"],
+        parameters: [
+          { key: "incline", label: "Incline", type: "number", unit: "%", required: false, default: 1, min: 0, max: 15 },
+        ],
+      });
     });
   });
 });

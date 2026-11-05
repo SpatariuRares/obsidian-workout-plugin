@@ -1,9 +1,9 @@
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { isStandardProtocol } from "@app/services/protocols/ProtocolCatalog";
 import {
-  WorkoutLogData,
-  WorkoutProtocol,
-} from "@app/types/WorkoutLogData";
-import { protocolId } from "@app/services/protocols/ProtocolCatalog";
-import { fieldKey } from "@app/services/exercise/ExerciseFields";
+  fieldValue,
+  hasFieldValue,
+} from "@app/services/exercise/ExerciseFields";
 
 /**
  * Utility functions to check for presence of specific data fields in workout logs.
@@ -17,7 +17,7 @@ export class TableDataCheckers {
    */
   static hasNonStandardProtocol(logData: WorkoutLogData[]): boolean {
     return logData.some(
-      (log) => protocolId(log.protocol) !== (WorkoutProtocol.STANDARD as string),
+      (log) => !isStandardProtocol(log.protocol),
     );
   }
 
@@ -43,20 +43,6 @@ export class TableDataCheckers {
     logData: WorkoutLogData[],
     fieldName: string,
   ): boolean {
-    const wanted = fieldKey(fieldName);
-    return logData.some((log) => {
-      const entry = Object.entries(log.customFields ?? {}).find(
-        ([key]) => fieldKey(key) === wanted,
-      );
-      const value = entry?.[1];
-      if (value === undefined || value === null || value === "")
-        return false;
-      if (typeof value === "number") return value !== 0;
-      if (typeof value === "string") {
-        const num = parseFloat(value);
-        return !isNaN(num) && num !== 0;
-      }
-      return false;
-    });
+    return logData.some((log) => hasFieldValue(fieldValue(log, fieldName)));
   }
 }

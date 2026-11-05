@@ -87,3 +87,36 @@ export function timerPresets(
 ): Record<string, TimerPresetConfig> {
   return { ...BUILT_IN_TIMER_PRESETS, ...settings.timerPresets };
 }
+
+const TIMER_TYPE_LABEL: Record<TIMER_TYPE, () => string> = {
+  [TIMER_TYPE.COUNTDOWN]: () => t("timer.countdown"),
+  [TIMER_TYPE.INTERVAL]: () => t("timer.interval"),
+  [TIMER_TYPE.STOPWATCH]: () => t("timer.stopwatch"),
+};
+
+/** One line about a preset, for its row in Settings → Timer presets */
+export function timerPresetSummary(preset: TimerPresetConfig): string {
+  const typeLabel = TIMER_TYPE_LABEL[preset.type];
+  const parts = [
+    t("timer.presets.summaryType", {
+      type: typeLabel ? typeLabel() : preset.type,
+    }),
+    t("timer.presets.summaryDuration", { seconds: preset.duration }),
+  ];
+  if (preset.type === TIMER_TYPE.INTERVAL && preset.rounds) {
+    parts.push(t("timer.presets.summaryRounds", { rounds: preset.rounds }));
+  }
+  if (preset.type === TIMER_TYPE.INTERVAL && preset.rest) {
+    parts.push(t("timer.presets.summaryRest", { seconds: preset.rest }));
+  }
+
+  const options: string[] = [];
+  if (preset.showControls) options.push(t("timer.presets.detailsControls"));
+  if (preset.sound) options.push(t("timer.presets.detailsSound"));
+  if (options.length > 0) {
+    parts.push(
+      t("timer.presets.summaryOptions", { options: options.join(", ") }),
+    );
+  }
+  return parts.join(" | ");
+}

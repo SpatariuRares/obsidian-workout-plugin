@@ -1,6 +1,7 @@
 import type { BlockParams } from "@app/services/codeblocks/CodeBlockSchema";
 import type { tableBlock } from "@app/features/tables/tableBlock";
 import { FilterResult } from "@app/types/CommonTypes";
+import { CHART_TYPE } from "@app/types/WorkoutConfigTypes";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 export const TABLE_SORT_FIELDS = [
@@ -34,12 +35,13 @@ export interface TableData {
 }
 
 /**
- * Table type for filtering
+ * Table type for filtering: the chart types a table can have (all but none)
  */
-export enum TABLE_TYPE {
-  EXERCISE = "exercise",
-  WORKOUT = "workout",
-  COMBINED = "combined",
-  ALL = "all",
-}
+export const TABLE_TYPE = {
+  EXERCISE: CHART_TYPE.EXERCISE,
+  WORKOUT: CHART_TYPE.WORKOUT,
+  COMBINED: CHART_TYPE.COMBINED,
+  ALL: CHART_TYPE.ALL,
+} as const;
+export type TABLE_TYPE = Exclude<CHART_TYPE, CHART_TYPE.NONE>;
 

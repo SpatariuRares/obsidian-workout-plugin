@@ -28,6 +28,20 @@ export class StringUtils {
   }
 
   /**
+   * Fill a user template's `{{name}}` placeholders (the exercise block
+   * template). Values are written as typed; a placeholder without a value
+   * stays in the text.
+   */
+  static fillTemplate(
+    template: string,
+    vars: Record<string, string>,
+  ): string {
+    return template.replace(/\{\{(\w+)\}\}/g, (match: string, name: string) =>
+      Object.prototype.hasOwnProperty.call(vars, name) ? vars[name] : match,
+    );
+  }
+
+  /**
    * Capitalize the first letter of each word (Title Case).
    *
    * @param str - String to capitalize
@@ -39,6 +53,15 @@ export class StringUtils {
       .trim()
       .replace(/\s+/g, " ")
       .replace(/\b\w/g, (c) => c.toUpperCase());
+  }
+
+  /**
+   * An identifier in snake_case as Title Case words ("rear_delts" →
+   * "Rear Delts"). `capitalize` alone would keep "Rear_delts": `_` is a
+   * word character for `\b\w`.
+   */
+  static humanize(str: string | undefined | null): string {
+    return this.capitalize(str?.replace(/_/g, " "));
   }
 
   /**
@@ -121,36 +144,24 @@ export class StringUtils {
   }
 
   /**
-   * Find strings in a haystack that are similar to a needle string
-   * Uses Levenshtein distance for fuzzy matching with case-insensitive comparison
-   *
-   * @param needle The string to search for
-   * @param haystack Array of strings to search in
-   * @param maxDistance Maximum edit distance to consider a match (inclusive)
-   * @returns Array of strings from haystack within maxDistance, sorted by distance (closest first)
+   * The values of a haystack within `max` edits of the needle (Levenshtein,
+   * case-insensitive), with their distance, closest first, then
+   * alphabetically. `min` leaves out closer values (min: 1 skips the needle
+   * itself).
    */
-  static findSimilarStrings(
+  static findSimilar(
     needle: string,
     haystack: string[],
-    maxDistance: number,
-  ): string[] {
-    const matches: Array<{ str: string; distance: number }> = [];
-
-    for (const str of haystack) {
-      const distance = this.levenshteinDistance(needle, str);
-      if (distance <= maxDistance) {
-        matches.push({ str, distance });
-      }
-    }
-
-    // Sort by distance (closest first), then alphabetically for ties
-    matches.sort((a, b) => {
-      if (a.distance !== b.distance) {
-        return a.distance - b.distance;
-      }
-      return a.str.localeCompare(b.str);
-    });
-
-    return matches.map((m) => m.str);
+    { max, min = 0 }: { max: number; min?: number },
+  ): Array<{ value: string; distance: number }> {
+    return haystack
+      .map((value) => ({
+        value,
+        distance: this.levenshteinDistance(needle, value),
+      }))
+      .filter(({ distance }) => distance >= min && distance <= max)
+      .sort(
+        (a, b) => a.distance - b.distance || a.value.localeCompare(b.value),
+      );
   }
 }

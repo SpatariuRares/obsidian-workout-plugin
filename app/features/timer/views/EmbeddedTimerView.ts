@@ -15,6 +15,7 @@ import { BlockMenu, type BlockMenuAction } from "@app/features/common/ui/BlockMe
 import { resolveTimer } from "@app/features/timer/business/resolveTimer";
 import { intervalPlan } from "@app/features/timer/business/intervalSchedule";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
+import { generateCodeBlockId } from "@app/utils/IdUtils";
 
 export class EmbeddedTimerView extends BaseView {
   private timerId: string;
@@ -23,9 +24,7 @@ export class EmbeddedTimerView extends BaseView {
 
   constructor(plugin: WorkoutPluginContext, id?: string) {
     super(plugin);
-    this.timerId =
-      id ||
-      `timer-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+    this.timerId = id || generateCodeBlockId("timer");
 
     // Initialize timer core with callbacks
     this.timerCore = new TimerCore(this.timerId, {
@@ -69,18 +68,7 @@ export class EmbeddedTimerView extends BaseView {
         currentState.totalRounds !== totalRounds;
 
       if (needsReset) {
-        this.timerCore.stop();
-        this.timerCore.setState({
-          timerType,
-          duration,
-          rest,
-          totalRounds,
-          elapsedTime: 0,
-          currentRound: 1,
-          phase: "work",
-          isRunning: false,
-          startTime: undefined,
-        });
+        this.timerCore.configure({ timerType, duration, rest, totalRounds });
       }
 
       this.timerCore.setSoundEnabled(resolvedParams.sound !== false);

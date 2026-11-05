@@ -3,15 +3,10 @@
 import { TrainingCalendarWidget } from "@app/features/dashboard/widgets/training-calendar/TrainingCalendarWidget";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 import { t } from "@app/i18n";
 
-const set = (date: string): WorkoutLogData => ({
-  date,
-  exercise: "Squat",
-  reps: 5,
-  weight: 100,
-  volume: 500,
-});
+const set = (date: string) => logRow({ date, exercise: "Squat", reps: 5, weight: 100 });
 
 // Wednesday 17 January 2024, local time
 const today = new Date(2024, 0, 17, 12, 0);

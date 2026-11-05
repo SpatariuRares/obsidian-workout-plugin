@@ -19,8 +19,13 @@ export const DASHBOARD_WIDGET_IDS = [
 ] as const;
 export type DashboardWidgetId = (typeof DASHBOARD_WIDGET_IDS)[number];
 
+/** The dashboard's periods, shortest first: the last N days (DateUtils.lastDays) */
+export const PERIOD_DAYS = { week: 7, month: 30, year: 365 } as const;
+export type Period = keyof typeof PERIOD_DAYS;
+const PERIOD_IDS = ["week", "month", "year"] as const satisfies readonly Period[];
+
 /** The periods the quick stats table can show, shortest first */
-export const QUICK_STATS_PERIOD_IDS = ["week", "month", "year"] as const;
+export const QUICK_STATS_PERIOD_IDS = PERIOD_IDS;
 /** The rows the quick stats table can show */
 export const QUICK_STATS_METRIC_IDS = [
   "workouts",
@@ -45,7 +50,7 @@ export const PROTOCOL_SORTS = [
   "entryCount",
 ] as const;
 /** What the heat map's toggles can start on */
-export const HEAT_MAP_TIME_FRAMES = ["week", "month", "year"] as const;
+export const HEAT_MAP_TIME_FRAMES = PERIOD_IDS;
 export const HEAT_MAP_METRICS = ["volume", "sets", "reps"] as const;
 export const HEAT_MAP_VIEWS = ["front", "back"] as const;
 

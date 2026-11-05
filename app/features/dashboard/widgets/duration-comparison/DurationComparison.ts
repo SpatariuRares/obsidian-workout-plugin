@@ -3,15 +3,11 @@ import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
-import { TrainingHistory } from "@app/services/history/TrainingHistory";
-import { Icon } from "@app/components/atoms";
+import { TrainingHistory, trendOf, type Trend } from "@app/services/history/TrainingHistory";
+import { Feedback, Icon } from "@app/components/atoms";
+import { CardTable } from "@app/components/molecules";
 import { ICONS } from "@app/constants/ui.constants";
-
-/** Threshold (% points) below which variance trend is considered improving */
-const VARIANCE_IMPROVEMENT_THRESHOLD = 5;
-
-/** Threshold (% points) above which variance trend is considered declining */
-const VARIANCE_DECLINE_THRESHOLD = 5;
+import { FormatUtils } from "@app/utils/FormatUtils";
 
 /**
  * Represents a workout session with duration data
@@ -27,10 +23,6 @@ interface WorkoutSession {
   estimatedDuration: number;
   /** Variance percentage: ((actual - estimated) / estimated) * 100 */
   variancePercent: number;
-  /** First timestamp in the session */
-  startTimestamp: number;
-  /** Last timestamp in the session */
-  endTimestamp: number;
   /** Number of sets in the session */
   setCount: number;
 }
@@ -43,9 +35,16 @@ interface VarianceTrend {
   direction: "improving" | "declining" | "stable";
   /** Average absolute variance (percentage) */
   averageVariance: number;
-  /** Change in variance over time (negative = improving) */
+  /** Change of the variance line from the oldest to the newest session (negative = improving) */
   varianceChange: number;
 }
+
+/** Less variance is better: a falling line is improving */
+const VARIANCE_DIRECTION: Record<Trend["direction"], VarianceTrend["direction"]> = {
+  down: "improving",
+  up: "declining",
+  stable: "stable",
+};
 
 /**
  * Widget for displaying actual vs estimated workout duration comparison.
@@ -83,9 +82,8 @@ export class DurationComparison {
 
     // Check if there's enough data
     if (sessions.length === 0) {
-      widgetEl.createDiv({
-        text: t("dashboard.durationComparison.noData"),
-        cls: "workout-duration-comparison-no-data",
+      Feedback.renderEmpty(widgetEl, t("dashboard.durationComparison.noData"), {
+        append: true,
       });
       return;
     }
@@ -114,126 +112,57 @@ export class DurationComparison {
     restSeconds: number,
     recentCount: number,
   ): WorkoutSession[] {
-    const sessions: WorkoutSession[] = [];
+    return new TrainingHistory(data)
+      .latestSessions(
+        recentCount,
+        (session) => !!session.workout && session.duration !== undefined,
+      )
+      .map((session) => {
+        const actualDuration = session.duration ?? 0;
+        // Estimate: setCount * setDuration + (setCount - 1) * rest between sets
+        const setCount = session.sets.length;
+        const estimatedDuration =
+          setCount * setDuration + Math.max(0, setCount - 1) * restSeconds;
+        const variancePercent =
+          estimatedDuration > 0
+            ? ((actualDuration - estimatedDuration) / estimatedDuration) * 100
+            : 0;
 
-    new TrainingHistory(data).sessions().forEach((session) => {
-      if (!session.workout || session.duration === undefined) {
-        return;
-      }
-
-      const actualDuration = session.duration;
-
-      // Calculate estimated duration
-      // Estimate: setCount * setDuration + (setCount - 1) * rest between sets
-      const setCount = session.sets.length;
-      const estimatedDuration =
-        setCount * setDuration +
-        Math.max(0, setCount - 1) * restSeconds;
-
-      // Calculate variance percentage
-      const variancePercent =
-        estimatedDuration > 0
-          ? ((actualDuration - estimatedDuration) /
-              estimatedDuration) *
-            100
-          : 0;
-
-      sessions.push({
-        workout: session.workout,
-        date: session.day,
-        actualDuration,
-        estimatedDuration,
-        variancePercent,
-        startTimestamp: session.start ?? 0,
-        endTimestamp: session.end ?? 0,
-        setCount,
+        return {
+          workout: session.workout ?? "",
+          date: session.day,
+          actualDuration,
+          estimatedDuration,
+          variancePercent,
+          setCount,
+        };
       });
-    });
-
-    // Sort by start timestamp descending (most recent first) and take top N
-    return sessions
-      .sort((a, b) => b.startTimestamp - a.startTimestamp)
-      .slice(0, recentCount);
   }
 
   /**
-   * Calculates the variance trend over recent workouts
+   * The trend of the sessions' absolute variance, read from its regression
+   * line (see "Trend" in CONTEXT.md): a falling line is improving.
    * @param sessions - Array of workout sessions (most recent first)
-   * @returns Variance trend data
+   * @returns Variance trend data; stable with fewer than two sessions
    */
   private static calculateVarianceTrend(
     sessions: WorkoutSession[],
   ): VarianceTrend {
-    if (sessions.length < 2) {
-      return {
-        direction: "stable",
-        averageVariance: 0,
-        varianceChange: 0,
-      };
+    const variances = sessions
+      .map((s) => Math.abs(s.variancePercent))
+      .reverse();
+    const trend = trendOf(variances);
+    if (!trend) {
+      return { direction: "stable", averageVariance: 0, varianceChange: 0 };
     }
 
-    // Calculate average absolute variance
-    const totalVariance = sessions.reduce(
-      (sum, s) => sum + Math.abs(s.variancePercent),
-      0,
-    );
-    const averageVariance = totalVariance / sessions.length;
-
-    // Calculate variance change (compare older half vs newer half)
-    // Sessions are ordered most recent first
-    const midpoint = Math.floor(sessions.length / 2);
-    const recentSessions = sessions.slice(0, midpoint);
-    const olderSessions = sessions.slice(midpoint);
-
-    const recentAvg =
-      recentSessions.reduce(
-        (sum, s) => sum + Math.abs(s.variancePercent),
-        0,
-      ) / recentSessions.length;
-    const olderAvg =
-      olderSessions.reduce(
-        (sum, s) => sum + Math.abs(s.variancePercent),
-        0,
-      ) / olderSessions.length;
-
-    // Positive change means variance increased (getting worse)
-    // Negative change means variance decreased (getting better)
-    const varianceChange = recentAvg - olderAvg;
-
-    let direction: "improving" | "declining" | "stable";
-    if (varianceChange < -VARIANCE_IMPROVEMENT_THRESHOLD) {
-      direction = "improving";
-    } else if (varianceChange > VARIANCE_DECLINE_THRESHOLD) {
-      direction = "declining";
-    } else {
-      direction = "stable";
-    }
-
+    const averageVariance =
+      variances.reduce((sum, v) => sum + v, 0) / variances.length;
     return {
-      direction,
+      direction: VARIANCE_DIRECTION[trend.direction],
       averageVariance,
-      varianceChange,
+      varianceChange: trend.end - trend.start,
     };
-  }
-
-  /**
-   * Formats duration in seconds to a human-readable string
-   * @param seconds - Duration in seconds
-   * @returns Formatted string (e.g., "45m" or "1h 15m")
-   */
-  private static formatDuration(seconds: number): string {
-    const minutes = Math.round(seconds / 60);
-    if (minutes < 60) {
-      return `${minutes}${t("dashboard.durationComparison.minutesSuffix")}`;
-    }
-    const hours = Math.floor(minutes / 60);
-    const remainingMinutes = minutes % 60;
-    const hoursText = `${hours}${t("dashboard.durationComparison.hoursSuffix")}`;
-    if (remainingMinutes === 0) {
-      return hoursText;
-    }
-    // minutesSuffix carries its own leading space (" min")
-    return `${hoursText} ${remainingMinutes}${t("dashboard.durationComparison.minutesSuffix")}`;
   }
 
   /**
@@ -245,83 +174,55 @@ export class DurationComparison {
     container: HTMLElement,
     sessions: WorkoutSession[],
   ): void {
-    const tableContainer = container.createDiv({
-      cls: "workout-duration-comparison-table-container",
-    });
-
-    const table = tableContainer.createEl("table", {
-      // On phones each row becomes a card (CSS reads each cell's data-label)
-      cls: "workout-duration-comparison-table workout-card-table",
-    });
-
-    // Header
-    const thead = table.createEl("thead");
-    const headerRow = thead.createEl("tr");
-
-    headerRow.createEl("th", {
-      text: t("dashboard.durationComparison.columnWorkout"),
-    });
-    headerRow.createEl("th", {
-      text: t("dashboard.durationComparison.columnEstimated"),
-    });
-    headerRow.createEl("th", {
-      text: t("dashboard.durationComparison.columnActual"),
-    });
-    headerRow.createEl("th", {
-      text: t("dashboard.durationComparison.columnVariance"),
-    });
-
-    // Body
-    const tbody = table.createEl("tbody");
-
-    sessions.forEach((session) => {
-      const row = tbody.createEl("tr");
-
-      // Workout name and date
-      const workoutCell = row.createEl("td", {
-        cls: "workout-duration-comparison-workout-cell",
-      });
-      workoutCell.createDiv({
-        text: session.workout,
-        cls: "workout-duration-comparison-workout-name",
-      });
-      workoutCell.createDiv({
-        text: session.date,
-        cls: "workout-duration-comparison-workout-date",
-      });
-
-      // Estimated duration
-      row.createEl("td", {
-        text: this.formatDuration(session.estimatedDuration),
-        cls: "workout-duration-comparison-duration-cell",
-        attr: { "data-label": t("dashboard.durationComparison.columnEstimated") },
-      });
-
-      // Actual duration
-      row.createEl("td", {
-        text: this.formatDuration(session.actualDuration),
-        cls: "workout-duration-comparison-duration-cell",
-        attr: { "data-label": t("dashboard.durationComparison.columnActual") },
-      });
-
-      // Variance
-      const varianceCell = row.createEl("td", {
-        cls: "workout-duration-comparison-variance-cell",
-        attr: { "data-label": t("dashboard.durationComparison.columnVariance") },
-      });
-
-      const varianceSign = session.variancePercent >= 0 ? "+" : "";
-      const varianceClass =
-        Math.abs(session.variancePercent) <= 10
-          ? "workout-duration-comparison-variance-good"
-          : Math.abs(session.variancePercent) <= 25
-            ? "workout-duration-comparison-variance-moderate"
-            : "workout-duration-comparison-variance-poor";
-
-      varianceCell.createSpan({
-        text: `${varianceSign}${session.variancePercent.toFixed(0)}%`,
-        cls: varianceClass,
-      });
+    const minutes = (seconds: number) =>
+      FormatUtils.formatDuration(seconds, { precision: "m" });
+    CardTable.create(container, {
+      className: "workout-duration-comparison-table",
+      rows: sessions,
+      columns: [
+        {
+          label: t("dashboard.durationComparison.columnWorkout"),
+          className: "workout-duration-comparison-workout-cell",
+          render: (cell, session) => {
+            cell.createDiv({
+              text: session.workout,
+              cls: "workout-duration-comparison-workout-name",
+            });
+            cell.createDiv({
+              text: session.date,
+              cls: "workout-duration-comparison-workout-date",
+            });
+          },
+        },
+        {
+          label: t("dashboard.durationComparison.columnEstimated"),
+          className: "workout-duration-comparison-duration-cell",
+          render: (cell, session) =>
+            cell.setText(minutes(session.estimatedDuration)),
+        },
+        {
+          label: t("dashboard.durationComparison.columnActual"),
+          className: "workout-duration-comparison-duration-cell",
+          render: (cell, session) =>
+            cell.setText(minutes(session.actualDuration)),
+        },
+        {
+          label: t("dashboard.durationComparison.columnVariance"),
+          className: "workout-duration-comparison-variance-cell",
+          render: (cell, session) => {
+            const off = Math.abs(session.variancePercent);
+            cell.createSpan({
+              text: FormatUtils.formatSignedPercent(session.variancePercent, 0),
+              cls:
+                off <= 10
+                  ? "workout-duration-comparison-variance-good"
+                  : off <= 25
+                    ? "workout-duration-comparison-variance-moderate"
+                    : "workout-duration-comparison-variance-poor",
+            });
+          },
+        },
+      ],
     });
   }
 

@@ -1,8 +1,11 @@
 import {
   fieldFor,
   fieldKey,
+  fieldValue,
   formatFieldNumber,
+  hasFieldValue,
   readField,
+  setFieldValue,
 } from "@app/services/exercise/ExerciseFields";
 import { getExerciseTypeById } from "@app/constants/exerciseTypes.constants";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
@@ -137,5 +140,84 @@ describe("formatFieldNumber", () => {
     expect(formatFieldNumber(fieldFor(param("weight")), 81.25)).toBe("81.25");
     expect(formatFieldNumber(fieldFor(param("weight")), 80)).toBe("80");
     expect(formatFieldNumber(fieldFor(param("distance", "distance")), 5.5)).toBe("5.5");
+  });
+});
+
+describe("setFieldValue", () => {
+  const set = () => ({
+    reps: 0,
+    weight: 0,
+    customFields: {} as Record<string, string | number | boolean>,
+  });
+
+  it("should write reps and weight on the set itself, however the field is written", () => {
+    const entry = set();
+    setFieldValue(entry, "Rep", 8);
+    setFieldValue(entry, "Wgt (kg)", 82.5);
+    expect(entry).toEqual({ reps: 8, weight: 82.5, customFields: {} });
+  });
+
+  it("should read reps and weight written as text, whole reps", () => {
+    const entry = set();
+    setFieldValue(entry, "reps", "8.5");
+    setFieldValue(entry, "weight", "82.5");
+    expect(entry).toMatchObject({ reps: 8, weight: 82.5 });
+    setFieldValue(entry, "reps", "none");
+    expect(entry.reps).toBe(0);
+  });
+
+  it("should write any other field under its key", () => {
+    const entry: { reps: number; weight: number; customFields?: Record<string, number> } = {
+      reps: 0,
+      weight: 0,
+    };
+    setFieldValue(entry, "duration", 90);
+    expect(entry.customFields).toEqual({ duration: 90 });
+  });
+});
+
+describe("fieldValue", () => {
+  const set = (customFields: Record<string, string | number | boolean>) => ({
+    reps: 8,
+    weight: 80,
+    customFields,
+  });
+
+  it("should read reps and weight from the set itself", () => {
+    expect(fieldValue(set({}), "Rep")).toBe(8);
+    expect(fieldValue(set({}), "Wgt (kg)")).toBe(80);
+  });
+
+  it.each([
+    ["HR", "heartRate"],
+    ["heart rate", "heartRate"],
+    ["heartrate", "heartRate"],
+    ["Duration (s)", "duration"],
+    ["Max load", "max_load"],
+  ])("should find a %p column when asked for %p", (column, key) => {
+    expect(fieldValue(set({ [column]: 42 }), key)).toBe(42);
+  });
+
+  it("should read a number written as text as a number", () => {
+    expect(fieldValue(set({ duration: "82,5" }), "duration")).toBe(82.5);
+    expect(fieldValue(set({ notes2: "easy" }), "notes2")).toBe("easy");
+  });
+
+  it("should give nothing for a field the set doesn't record", () => {
+    expect(fieldValue(set({ distance: 5 }), "heartRate")).toBeUndefined();
+    expect(fieldValue({}, "reps")).toBeUndefined();
+  });
+});
+
+describe("hasFieldValue", () => {
+  it.each([
+    [undefined, false],
+    ["", false],
+    [0, false],
+    [12, true],
+    ["easy", true],
+    [true, true],
+  ])("should say %p is filled in: %p", (value, filled) => {
+    expect(hasFieldValue(value)).toBe(filled);
   });
 });

@@ -148,7 +148,7 @@ export interface PersonalRecord {
 export class TrainingHistory {
   constructor(private readonly logs: WorkoutLogData[]) {}
 
-  /** Sessions in the order they started, optionally only one workout's. */
+  /** Sessions in set order (training day, then first set), optionally only one workout's. */
   sessions(filter: { workout?: string } = {}): Session[] {
     const wanted =
       filter.workout === undefined
@@ -168,7 +168,19 @@ export class TrainingHistory {
 
     return Array.from(groups.values())
       .map(toSession)
-      .sort((a, b) => sortTime(a) - sortTime(b));
+      .sort(sessionOrder);
+  }
+
+  /**
+   * The `n` most recent sessions, most recent first, in set order: a session
+   * whose date was edited in the CSV counts on its new day, whatever its
+   * timestamps. `keep` picks the sessions to count (default: every one).
+   */
+  latestSessions(
+    n: number,
+    keep: (session: Session) => boolean = () => true,
+  ): Session[] {
+    return this.sessions().filter(keep).reverse().slice(0, Math.max(0, n));
   }
 
   /**
@@ -406,6 +418,23 @@ export class TrainingHistory {
     return this.logs.reduce((sum, log) => sum + (log.volume || 0), 0);
   }
 
+  /**
+   * `aggregate` of each training day's sets, keyed by day (YYYY-MM-DD).
+   * Days keep the order they first appear in the rows; sets keep row order.
+   */
+  perDay<T>(aggregate: (sets: WorkoutLogData[]) => T): Map<string, T> {
+    const byDay = new Map<string, WorkoutLogData[]>();
+    for (const log of this.logs) {
+      const day = trainingDay(log.date);
+      const sets = byDay.get(day);
+      if (sets) sets.push(log);
+      else byDay.set(day, [log]);
+    }
+    return new Map(
+      [...byDay].map(([day, sets]) => [day, aggregate(sets)]),
+    );
+  }
+
   /** Total volume of each training day */
   volumeByDay(): Map<string, number> {
     const byDay = new Map<string, number>();
@@ -460,7 +489,11 @@ function weeklyGoalOf(weeklyGoal: number): number {
   return Math.max(1, Math.floor(weeklyGoal) || 1);
 }
 
-/** Whether two workout names are the same workout (case, spacing, quotes ignored) */
+/**
+ * Whether two workout names are the same workout (wiki-link brackets, case,
+ * spacing and quotes ignored). The rule for a session, a timer or anything
+ * else that asks "is this set from this workout?".
+ */
 export function sameWorkout(
   a: string | undefined,
   b: string | undefined,
@@ -468,10 +501,29 @@ export function sameWorkout(
   return workoutKey(a) === workoutKey(b);
 }
 
-function workoutKey(workout: string | undefined): string {
+/**
+ * Whether a set's workout falls under a block's `workout:` filter: its key
+ * contains the filter's key ("Push" shows "Push Day A"). An empty filter
+ * matches every set; a set without a workout never matches a named filter.
+ */
+export function workoutMatches(
+  filter: string | undefined,
+  workout: string | undefined,
+): boolean {
+  const wanted = workoutKey(filter);
+  if (!wanted) return true;
+  return workoutKey(workout).includes(wanted);
+}
+
+/**
+ * A workout name as compared everywhere: `[[ ]]`, surrounding quotes,
+ * case and extra spacing removed. "" for no workout.
+ */
+export function workoutKey(workout: string | undefined): string {
   return (workout ?? "")
     .trim()
     .replace(/^["']+|["']+$/g, "")
+    .replace(/\[\[|\]\]/g, "")
     .trim()
     .replace(/\s+/g, " ")
     .toLowerCase();
@@ -520,6 +572,12 @@ function setTime(log: WorkoutLogData): number {
   if (log.timestamp && log.timestamp > 0) return log.timestamp;
   const parsed = Date.parse(log.date);
   return Number.isNaN(parsed) ? 0 : parsed;
+}
+
+/** Set order for sessions: the training day, then the first set's time */
+function sessionOrder(a: Session, b: Session): number {
+  if (a.day !== b.day) return a.day < b.day ? -1 : 1;
+  return sortTime(a) - sortTime(b);
 }
 
 function sortTime(session: Session): number {

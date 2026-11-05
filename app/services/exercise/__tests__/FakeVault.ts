@@ -14,6 +14,8 @@ export class FakeVault {
     { file: TFile; frontmatter: Frontmatter; content?: string }
   >();
   private readonly listeners: Listener[] = [];
+  /** Folders made with `createFolder`; others exist through their notes */
+  private readonly folders = new Set<string>();
 
   readonly app = {
     vault: {
@@ -32,18 +34,30 @@ export class FakeVault {
       /** Stores the text; its frontmatter is not parsed (read it with `content`) */
       create: async (path: string, content: string): Promise<TFile> => {
         if (this.notes.has(path)) throw new Error(`File already exists: ${path}`);
-        const file = makeFile(path);
+        const file = this.makeFile(path);
         this.notes.set(path, { file, frontmatter: undefined, content });
         this.emit("vault", "create", file);
         return file;
       },
-      /** Folders only exist through the notes inside them */
-      createFolder: async (): Promise<void> => undefined,
+      createFolder: async (path: string): Promise<void> => {
+        this.folders.add(path);
+      },
       modify: async (file: TFile, content: string): Promise<void> => {
         const note = this.notes.get(file.path);
         if (!note) throw new Error(`No note at ${file.path}`);
         note.content = content;
         this.emit("vault", "modify", file);
+      },
+      /** Atomic read-modify-write of the note's text */
+      process: async (
+        file: TFile,
+        fn: (content: string) => string,
+      ): Promise<string> => {
+        const note = this.notes.get(file.path);
+        if (!note) throw new Error(`No note at ${file.path}`);
+        note.content = fn(note.content ?? "");
+        this.emit("vault", "modify", file);
+        return note.content;
       },
     },
     fileManager: {
@@ -58,6 +72,7 @@ export class FakeVault {
         note.frontmatter = frontmatter;
         this.emit("metadataCache", "changed", file);
       },
+      trashFile: async (file: TFile): Promise<void> => this.remove(file.path),
     },
     metadataCache: {
       getFileCache: (file: TFile) => {
@@ -71,14 +86,14 @@ export class FakeVault {
 
   constructor(notes: Record<string, Frontmatter> = {}) {
     for (const [path, frontmatter] of Object.entries(notes)) {
-      this.notes.set(path, { file: makeFile(path), frontmatter });
+      this.notes.set(path, { file: this.makeFile(path), frontmatter });
     }
   }
 
   /** Creates the note, or replaces its frontmatter */
   write(path: string, frontmatter?: Frontmatter): TFile {
     const existing = this.notes.get(path);
-    const file = existing?.file ?? makeFile(path);
+    const file = existing?.file ?? this.makeFile(path);
     this.notes.set(path, { file, frontmatter });
     if (!existing) this.emit("vault", "create", file);
     this.emit("metadataCache", "changed", file);
@@ -110,7 +125,7 @@ export class FakeVault {
     return this.notes.get(path)?.frontmatter;
   }
 
-  /** Text given to `vault.create` */
+  /** The note's text (from `vault.create`, `modify` or `process`) */
   content(path: string): string | undefined {
     return this.notes.get(path)?.content;
   }
@@ -126,7 +141,7 @@ export class FakeVault {
     const inside = Array.from(this.notes.values()).filter((n) =>
       n.file.path.startsWith(prefix),
     );
-    if (inside.length === 0) return null;
+    if (inside.length === 0 && !this.folders.has(path)) return null;
     const folder = Object.assign(new TFolder(), {
       path,
       name: path.split("/").pop() ?? path,
@@ -143,6 +158,18 @@ export class FakeVault {
       if (sub) folder.children.push(sub);
     }
     return folder;
+  }
+
+  /** A file whose `parent` is the folder its path is in (null at the root) */
+  private makeFile(path: string): TFile {
+    const file = Object.assign(new TFile(), describe(path));
+    Object.defineProperty(file, "parent", {
+      get: (): TFolder | null => {
+        const slash = file.path.lastIndexOf("/");
+        return slash > 0 ? this.folder(file.path.slice(0, slash)) : null;
+      },
+    });
+    return file;
   }
 
   private listen(source: Listener["source"], name: string, cb: Listener["cb"]) {
@@ -167,8 +194,4 @@ function describe(path: string) {
     basename: dot > 0 ? name.slice(0, dot) : name,
     extension: dot > 0 ? name.slice(dot + 1) : "",
   };
-}
-
-function makeFile(path: string): TFile {
-  return Object.assign(new TFile(), describe(path));
 }

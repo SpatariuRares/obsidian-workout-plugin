@@ -29,8 +29,10 @@
   }
 }
 
-// A widget's settings: a few options, all of them in sight, wrapping
-.workout-widget-setting-chips .workout-chip-group-chips {
+// A widget's settings and a modal's type choices: a few options, all of
+// them in sight, wrapping
+.workout-widget-setting-chips .workout-chip-group-chips,
+.workout-modal-type-chips .workout-chip-group-chips {
   flex-wrap: wrap;
   overflow-x: visible;
 }

@@ -2,10 +2,7 @@ import { App } from "obsidian";
 import { InsertDashboardModal } from "@app/features/dashboard/modals/InsertDashboardModal";
 import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
-import {
-  createEditButtons,
-  type EditTarget,
-} from "@app/features/modals/base/components/createEditButtons";
+import type { EditTarget } from "@app/features/modals/base/components/createEditButtons";
 import { t } from "@app/i18n";
 
 /**
@@ -44,14 +41,11 @@ export class EditDashboardModal extends InsertDashboardModal {
 
   protected createButtons(container: HTMLElement): void {
     const { id } = this.initialParams;
-    createEditButtons(this, container, {
-      schema: dashboardBlock,
+    this.editButtons(container, dashboardBlock, t("modal.notices.dashboardUpdateFailed"), {
       target: this.target,
       id,
       collectParams: () => this.collectParams(),
-      buttonText: this.getButtonText(),
-      successMessage: this.getSuccessMessage(),
-      failureMessage: t("modal.notices.dashboardUpdateFailed"),
+      validate: () => this.validateSettings(),
     });
   }
 }

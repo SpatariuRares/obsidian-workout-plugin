@@ -1,14 +1,18 @@
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
-import { ProtocolBadge } from "@app/components/atoms";
+import { Feedback, ProtocolBadge } from "@app/components/atoms";
+import { CardTable } from "@app/components/molecules";
 import type { SettingsPort } from "@app/types/PluginPorts";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
 import {
   ProtocolCatalog,
-  protocolId,
+  groupByProtocol,
 } from "@app/services/protocols/ProtocolCatalog";
+import { TrainingHistory } from "@app/services/history/TrainingHistory";
+import { StringUtils } from "@app/utils/StringUtils";
+import { FormatUtils } from "@app/utils/FormatUtils";
 
 /**
  * Protocol effectiveness statistics
@@ -54,15 +58,16 @@ export class ProtocolEffectiveness {
       data,
       plugin,
       params.protocolMinEntries ?? dashboardBlock.defaults.protocolMinEntries,
-      params.protocolSortBy ?? "progressionRate",
+      params.protocolSortBy ?? dashboardBlock.defaults.protocolSortBy,
     );
 
     // Check if there's enough data
     if (stats.length === 0) {
-      widgetEl.createDiv({
-        text: t("dashboard.protocolEffectiveness.noData"),
-        cls: "workout-protocol-effectiveness-no-data",
-      });
+      Feedback.renderEmpty(
+        widgetEl,
+        t("dashboard.protocolEffectiveness.noData"),
+        { append: true },
+      );
       return;
     }
 
@@ -91,16 +96,9 @@ export class ProtocolEffectiveness {
     sortBy: "progressionRate" | "avgVolumeChange" | "entryCount",
   ): ProtocolEffectivenessStats[] {
     const catalog = new ProtocolCatalog(plugin?.settings?.customProtocols);
+    const history = new TrainingHistory(data);
 
-    // Group entries by protocol
-    const protocolGroups = new Map<string, WorkoutLogData[]>();
-
-    data.forEach((entry) => {
-      const protocol = protocolId(entry.protocol);
-      const group = protocolGroups.get(protocol) || [];
-      group.push(entry);
-      protocolGroups.set(protocol, group);
-    });
+    const protocolGroups = groupByProtocol(data);
 
     const stats: ProtocolEffectivenessStats[] = [];
 
@@ -115,7 +113,7 @@ export class ProtocolEffectiveness {
 
       // Calculate average volume change and progression rate
       const { avgVolumeChange, progressionRate } =
-        this.calculateProgressionMetrics(entries, data);
+        this.calculateProgressionMetrics(entries, history);
 
       stats.push({
         protocol,
@@ -132,87 +130,61 @@ export class ProtocolEffectiveness {
   }
 
   /**
-   * Calculates progression metrics for a set of entries
-   * Compares volume before and after using a protocol for each exercise
+   * Calculates progression metrics for a set of entries: for each protocol
+   * set, the average volume of up to 3 sets of the exercise before and after
+   * it, and whether the next set is at the same or a higher weight. Sets are
+   * in TrainingHistory's set order (training day, then timestamp), exercise
+   * names matched ignoring case and spacing.
    * @param protocolEntries - Entries for a specific protocol
-   * @param allData - All workout data for comparison
+   * @param history - All logged sets
    * @returns Volume change percentage and progression rate
    */
   private static calculateProgressionMetrics(
     protocolEntries: WorkoutLogData[],
-    allData: WorkoutLogData[],
+    history: TrainingHistory,
   ): { avgVolumeChange: number; progressionRate: number } {
-    // Group entries by exercise
-    const exerciseGroups = new Map<string, WorkoutLogData[]>();
-    protocolEntries.forEach((entry) => {
-      const group = exerciseGroups.get(entry.exercise) || [];
-      group.push(entry);
-      exerciseGroups.set(entry.exercise, group);
-    });
+    const setsByExercise = new Map<string, WorkoutLogData[]>();
+    const setsOf = (exercise: string): WorkoutLogData[] => {
+      const key = StringUtils.normalize(exercise);
+      let sets = setsByExercise.get(key);
+      if (!sets) {
+        sets = history.setsOf(exercise);
+        setsByExercise.set(key, sets);
+      }
+      return sets;
+    };
 
     let totalVolumeChange = 0;
     let volumeChangeCount = 0;
     let progressionCount = 0;
     let comparisonCount = 0;
 
-    // For each exercise, compare protocol entries with surrounding entries
-    exerciseGroups.forEach((entries, exercise) => {
-      // Get all entries for this exercise, sorted by timestamp
-      const allExerciseEntries = allData
-        .filter((e) => e.exercise === exercise)
-        .sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+    protocolEntries.forEach((protocolEntry) => {
+      const sets = setsOf(protocolEntry.exercise);
+      const index = sets.indexOf(protocolEntry);
+      if (index === -1) return;
 
-      if (allExerciseEntries.length < 2) {
-        return;
+      const before = sets.slice(Math.max(0, index - 3), index);
+      const after = sets.slice(index + 1, index + 4);
+
+      if (before.length > 0 && after.length > 0) {
+        const avgVolumeBefore = this.averageVolume(before);
+        const avgVolumeAfter = this.averageVolume(after);
+        if (avgVolumeBefore > 0) {
+          totalVolumeChange +=
+            ((avgVolumeAfter - avgVolumeBefore) / avgVolumeBefore) * 100;
+          volumeChangeCount++;
+        }
       }
 
-      // For each protocol entry, find entries before and after
-      entries.forEach((protocolEntry) => {
-        const protocolTimestamp = protocolEntry.timestamp || 0;
-        const protocolIndex = allExerciseEntries.findIndex(
-          (e) => e.timestamp === protocolTimestamp,
-        );
-
-        if (protocolIndex === -1) {
-          return;
+      // Weight progression: next set at the same or a higher weight
+      const next = sets[index + 1];
+      if (next) {
+        comparisonCount++;
+        if (next.weight >= protocolEntry.weight) {
+          progressionCount++;
         }
-
-        // Get average volume of entries before this one (up to 3 previous)
-        const beforeEntries = allExerciseEntries.slice(
-          Math.max(0, protocolIndex - 3),
-          protocolIndex,
-        );
-
-        // Get average volume of entries after this one (up to 3 next)
-        const afterEntries = allExerciseEntries.slice(
-          protocolIndex + 1,
-          Math.min(allExerciseEntries.length, protocolIndex + 4),
-        );
-
-        if (beforeEntries.length > 0 && afterEntries.length > 0) {
-          const avgVolumeBefore =
-            this.calculateAverageVolume(beforeEntries);
-          const avgVolumeAfter =
-            this.calculateAverageVolume(afterEntries);
-
-          if (avgVolumeBefore > 0) {
-            const volumeChange =
-              ((avgVolumeAfter - avgVolumeBefore) / avgVolumeBefore) *
-              100;
-            totalVolumeChange += volumeChange;
-            volumeChangeCount++;
-          }
-        }
-
-        // Check for weight progression (next entry at same or higher weight)
-        if (protocolIndex < allExerciseEntries.length - 1) {
-          const nextEntry = allExerciseEntries[protocolIndex + 1];
-          comparisonCount++;
-          if (nextEntry.weight >= protocolEntry.weight) {
-            progressionCount++;
-          }
-        }
-      });
+      }
     });
 
     const avgVolumeChange =
@@ -227,20 +199,9 @@ export class ProtocolEffectiveness {
     return { avgVolumeChange, progressionRate };
   }
 
-  /**
-   * Calculates average volume from entries
-   * @param entries - Workout entries
-   * @returns Average volume
-   */
-  private static calculateAverageVolume(
-    entries: WorkoutLogData[],
-  ): number {
-    if (entries.length === 0) return 0;
-    const totalVolume = entries.reduce(
-      (sum, e) => sum + (e.volume || 0),
-      0,
-    );
-    return totalVolume / entries.length;
+  /** Average volume of some sets (never empty) */
+  private static averageVolume(sets: WorkoutLogData[]): number {
+    return new TrainingHistory(sets).totalVolume() / sets.length;
   }
 
   /**
@@ -252,91 +213,56 @@ export class ProtocolEffectiveness {
     container: HTMLElement,
     stats: ProtocolEffectivenessStats[],
   ): void {
-    const tableContainer = container.createDiv({
-      cls: "workout-protocol-effectiveness-table-container",
-    });
-
-    const table = tableContainer.createEl("table", {
-      // On phones each row becomes a card (CSS reads each cell's data-label)
-      cls: "workout-protocol-effectiveness-table workout-card-table",
-    });
-
-    // Header
-    const thead = table.createEl("thead");
-    const headerRow = thead.createEl("tr");
-
-    headerRow.createEl("th", {
-      text: t("dashboard.protocolEffectiveness.columnProtocol"),
-    });
-    headerRow.createEl("th", {
-      text: t("dashboard.protocolEffectiveness.columnEntries"),
-    });
-    headerRow.createEl("th", {
-      text: t("dashboard.protocolEffectiveness.columnVolumeChange"),
-    });
-    headerRow.createEl("th", {
-      text: t("dashboard.protocolEffectiveness.columnProgression"),
-    });
-
-    // Body
-    const tbody = table.createEl("tbody");
-
-    stats.forEach((stat) => {
-      const row = tbody.createEl("tr");
-
-      // Protocol badge
-      const protocolCell = row.createEl("td", {
-        cls: "workout-protocol-effectiveness-protocol-cell",
-      });
-      ProtocolBadge.create(protocolCell, {
-        text: stat.label,
-        className: "workout-protocol-badge workout-protocol-effectiveness-badge",
-        color: stat.color,
-      });
-
-      // Entry count
-      row.createEl("td", {
-        text: stat.entryCount.toString(),
-        cls: "workout-protocol-effectiveness-entries-cell",
-        attr: { "data-label": t("dashboard.protocolEffectiveness.columnEntries") },
-      });
-
-      // Volume change with indicator
-      const volumeCell = row.createEl("td", {
-        cls: "workout-protocol-effectiveness-volume-cell",
-        attr: {
-          "data-label": t("dashboard.protocolEffectiveness.columnVolumeChange"),
+    CardTable.create(container, {
+      className: "workout-protocol-effectiveness-table",
+      rows: stats,
+      columns: [
+        {
+          label: t("dashboard.protocolEffectiveness.columnProtocol"),
+          className: "workout-protocol-effectiveness-protocol-cell",
+          render: (cell, stat) =>
+            ProtocolBadge.create(cell, {
+              text: stat.label,
+              className:
+                "workout-protocol-badge workout-protocol-effectiveness-badge",
+              color: stat.color,
+            }),
         },
-      });
-      const volumeSign = stat.avgVolumeChange >= 0 ? "+" : "";
-      const volumeClass =
-        stat.avgVolumeChange > 0
-          ? "workout-protocol-effectiveness-positive"
-          : stat.avgVolumeChange < 0
-            ? "workout-protocol-effectiveness-negative"
-            : "workout-protocol-effectiveness-neutral";
-      volumeCell.createSpan({
-        text: `${volumeSign}${stat.avgVolumeChange.toFixed(1)}%`,
-        cls: volumeClass,
-      });
-
-      // Progression rate with indicator
-      const progressionCell = row.createEl("td", {
-        cls: "workout-protocol-effectiveness-progression-cell",
-        attr: {
-          "data-label": t("dashboard.protocolEffectiveness.columnProgression"),
+        {
+          label: t("dashboard.protocolEffectiveness.columnEntries"),
+          className: "workout-protocol-effectiveness-entries-cell",
+          render: (cell, stat) => cell.setText(stat.entryCount.toString()),
         },
-      });
-      const progressionClass =
-        stat.progressionRate >= 70
-          ? "workout-protocol-effectiveness-positive"
-          : stat.progressionRate >= 50
-            ? "workout-protocol-effectiveness-neutral"
-            : "workout-protocol-effectiveness-negative";
-      progressionCell.createSpan({
-        text: `${stat.progressionRate.toFixed(1)}%`,
-        cls: progressionClass,
-      });
+        {
+          label: t("dashboard.protocolEffectiveness.columnVolumeChange"),
+          className: "workout-protocol-effectiveness-volume-cell",
+          render: (cell, stat) => {
+            cell.createSpan({
+              text: FormatUtils.formatSignedPercent(stat.avgVolumeChange, 1),
+              cls:
+                stat.avgVolumeChange > 0
+                  ? "workout-protocol-effectiveness-positive"
+                  : stat.avgVolumeChange < 0
+                    ? "workout-protocol-effectiveness-negative"
+                    : "workout-protocol-effectiveness-neutral",
+            });
+          },
+        },
+        {
+          label: t("dashboard.protocolEffectiveness.columnProgression"),
+          className: "workout-protocol-effectiveness-progression-cell",
+          render: (cell, stat) =>
+            cell.createSpan({
+              text: `${stat.progressionRate.toFixed(1)}%`,
+              cls:
+                stat.progressionRate >= 70
+                  ? "workout-protocol-effectiveness-positive"
+                  : stat.progressionRate >= 50
+                    ? "workout-protocol-effectiveness-neutral"
+                    : "workout-protocol-effectiveness-negative",
+            }),
+        },
+      ],
     });
   }
 }

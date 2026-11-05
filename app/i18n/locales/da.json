@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "Annuller",
     "clear": "Ryd",
     "convert": "Konvertér",
     "exercise": "Øvelse",
@@ -98,7 +97,6 @@
       "columnEstimated": "Estimeret",
       "columnVariance": "Varians",
       "columnWorkout": "Træning",
-      "minutesSuffix": " min",
       "noData": "Der er endnu ikke nok træningspas at sammenligne.",
       "subtitle": "Estimeret vs. faktisk træningstid",
       "title": "Sammenligning af varighed",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "Estimaterne kommer tættere på dine faktiske træningspas",
       "varianceTrendStable": "Estimaternes nøjagtighed er stabil",
       "varianceTrendTitle": "Estimaternes nøjagtighed",
-      "avgVarianceStat": "Gns. varians: ±{value}%",
-      "hoursSuffix": "h"
+      "avgVarianceStat": "Gns. varians: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Alle øvelsessider er gyldige",
@@ -201,8 +198,6 @@
       "moveUp": "Flyt {widget} op",
       "moveDown": "Flyt {widget} ned",
       "allHistory": "Tom: hele historikken",
-      "recentWorkoutsLimit": "Træninger på den seneste liste",
-      "volumeTrendDays": "Dage i volumentendensen",
       "layout": "Layout",
       "layoutGrid": "Gitter",
       "layoutList": "Liste",
@@ -568,7 +563,6 @@
     "createLogButtonText": "Opret log for: {exerciseName}",
     "noDataTitle": "Ingen logs fundet for {exerciseName}",
     "exploreExampleData": "Eller udforsk med eksempeldata",
-    "lastSet": "Sidste gang: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Personlig rekord: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "Tilføj forudindstilling",
       "addProtocol": "Tilføj protokol",
-      "cancel": "Annuller",
       "createFiles": "Opret filer",
       "done": "Færdig!",
       "failed": "Mislykket",
@@ -1072,7 +1065,6 @@
     "editTable": "Rediger tabel",
     "editTitle": "Rediger",
     "gotoExercise": "Gå til øvelse",
-    "invalidDate": "Ugyldig dato",
     "labels": {
       "target": "Mål:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "Ingen sæt med {weight} endnu",
       "progress": "Bedst {best}/{target} gentagelser",
-      "progressTooltip": "Bedste: {best} gentagelser / Mål: {target} gentagelser",
-      "repsSuffix": "gentagelser",
-      "separator": " × "
+      "progressTooltip": "Bedste: {best} gentagelser / Mål: {target} gentagelser"
     },
     "trendLine": "Tendenslinje",
     "refreshingTable": "Opdaterer tabel...",
@@ -1127,7 +1117,6 @@
     "down": "Ned",
     "improving": "Forbedret",
     "increasing": "Stigende",
-    "invariant": "Uændret",
     "neutral": "Neutral",
     "stable": "Stabil",
     "stableLower": "Stabil",

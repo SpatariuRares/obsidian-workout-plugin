@@ -1,5 +1,5 @@
 import { CANONICAL_MUSCLE_GROUPS } from "@app/constants/muscles.constants";
-import { Button, BUTTONVARIANT, Input } from "@app/components/atoms";
+import { Button, Input } from "@app/components/atoms";
 import { DomUtils } from "@app/utils/DomUtils";
 import type { MuscleTagSuggestionItem } from "@app/features/modals/muscle/types";
 import { t } from "@app/i18n";
@@ -96,25 +96,14 @@ export class MuscleTagFormRenderer {
       }
     }
 
-    const buttonContainer = this.formContainer.createDiv({
-      cls: "workout-tag-form-buttons workout-modal-actions",
+    Button.createModalActions(this.formContainer, {
+      className: "workout-tag-form-buttons",
+      primary: {
+        text: t("modal.save"),
+        onClick: () => options.onSave(tagInput, groupSelect),
+      },
+      onCancel: options.onCancel,
     });
-
-    const cancelButton = Button.create(buttonContainer, {
-      text: t("modal.buttons.cancel"),
-      ariaLabel: t("modal.buttons.cancel"),
-      variant: BUTTONVARIANT.SECONDARY,
-    });
-    Button.onClick(cancelButton, options.onCancel);
-
-    const saveButton = Button.create(buttonContainer, {
-      text: t("modal.save"),
-      variant: BUTTONVARIANT.PRIMARY,
-      ariaLabel: t("modal.save"),
-    });
-    Button.onClick(saveButton, () =>
-      options.onSave(tagInput, groupSelect),
-    );
 
     if (options.isEditing) {
       groupSelect.focus();

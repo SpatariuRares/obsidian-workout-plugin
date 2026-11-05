@@ -1,5 +1,6 @@
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { t } from "@app/i18n";
+import { round2 } from "@app/utils/round2";
 
 export type FieldValue = number | string | boolean;
 
@@ -93,9 +94,8 @@ export function readField(
   }
   if (field.type === "string") return { value: text };
 
-  // A phone's decimal pad types the locale's separator ("82,5")
-  const num = Number(text.replace(",", "."));
-  if (!Number.isFinite(num)) {
+  const num = readNumber(text);
+  if (num === undefined) {
     return { error: t("modal.notices.validMustBeNumber", { field: field.label }) };
   }
   if (field.integer && !Number.isInteger(num)) {
@@ -116,10 +116,82 @@ export function readField(
   return { value: num };
 }
 
+/** A number as typed; a phone's decimal pad types the locale's separator ("82,5") */
+function readNumber(text: string): number | undefined {
+  const trimmed = text.trim();
+  const num = Number(trimmed.replace(",", "."));
+  return trimmed !== "" && Number.isFinite(num) ? num : undefined;
+}
+
+/** What a logged set records, as the log gives it */
+export interface SetFields {
+  reps?: number;
+  weight?: number;
+  customFields?: Record<string, FieldValue>;
+}
+
+/** A field's key compared ignoring case, spaces, "_" and "-" ("Max load" = "max_load") */
+function looseKey(name: string): string {
+  return fieldKey(name).toLowerCase().replace(/[\s_-]+/g, "");
+}
+
+/**
+ * A set's value of a field, however its column is written ("HR",
+ * "heart rate", "Duration (s)"…). Reps and weight come from the set itself
+ * (a `WorkoutLogData`'s weight is in the settings unit); a number written as
+ * text is read as a number, as `readField` reads it.
+ */
+export function fieldValue(set: SetFields, key: string): FieldValue | undefined {
+  const wanted = fieldKey(key);
+  if (wanted === "reps") return set.reps;
+  if (wanted === "weight") return set.weight;
+  const loose = looseKey(wanted);
+  const column = Object.keys(set.customFields ?? {}).find(
+    (name) => looseKey(name) === loose,
+  );
+  const value = column === undefined ? undefined : set.customFields?.[column];
+  if (typeof value !== "string") return value;
+  return readNumber(value) ?? value;
+}
+
+/**
+ * Writes a field's value on a set (the other way of fieldValue): reps and
+ * weight on the set itself, however the field is written (reps whole, text
+ * read as a number, 0 when it holds none), any other field in
+ * `customFields` under `key`
+ */
+export function setFieldValue(
+  set: { reps: number; weight: number; customFields?: Record<string, FieldValue> },
+  key: string,
+  value: FieldValue,
+): void {
+  const wanted = fieldKey(key);
+  if (wanted === "reps") {
+    set.reps = typeof value === "number" ? value : parseInt(String(value)) || 0;
+  } else if (wanted === "weight") {
+    set.weight = typeof value === "number" ? value : parseFloat(String(value)) || 0;
+  } else {
+    set.customFields ??= {};
+    set.customFields[key] = value;
+  }
+}
+
+/** A set's value of a numeric field, or nothing when it holds no number */
+export function fieldNumber(set: SetFields, key: string): number | undefined {
+  const value = fieldValue(set, key);
+  return typeof value === "number" ? value : undefined;
+}
+
+/** Whether a field was filled in: empty and 0 count as missing */
+export function hasFieldValue(value: FieldValue | undefined | null): boolean {
+  if (value === undefined || value === null || value === "") return false;
+  return value !== 0;
+}
+
 /** A number as a field shows it: rounded for whole-number fields, else ≤2 decimals */
 export function formatFieldNumber(field: Field, value: number): string {
   if (field.integer) return String(Math.round(value));
-  return String(Math.round(value * 100) / 100);
+  return String(round2(value));
 }
 
 /** A duration in seconds, from a value in the field's unit ("sec", "min", "h") */

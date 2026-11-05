@@ -1,7 +1,17 @@
 import { Setting, App } from "obsidian";
 import { t } from "@app/i18n";
+import { Button } from "@app/components/atoms";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { TIMER_TYPE, TimerPresetConfig } from "@app/features/timer/types";
+import {
+  TIMER_TYPE,
+  TimerPresetConfig,
+} from "@app/features/timer/types";
+import {
+  isNonNegative,
+  isPositive,
+  parseWholeNumber,
+  renderNumberField,
+} from "@app/features/settings/renderNumberField";
 
 /** Form to add or edit a timer preset */
 export class TimerPresetEditorModal extends ModalBase {
@@ -26,6 +36,34 @@ export class TimerPresetEditorModal extends ModalBase {
 
   onClose(): void {
     this.contentEl.empty();
+  }
+
+  /** Number fields whose typed value is not valid (they block Save) */
+  private invalid = new Set<Setting>();
+
+  /** A whole-number box with its error line; an invalid value blocks Save */
+  private wholeNumberField(
+    setting: Setting,
+    value: number,
+    isValid: (value: number) => boolean,
+    error: string,
+    set: (value: number) => void,
+  ): void {
+    renderNumberField(setting, {
+      value,
+      parse: parseWholeNumber,
+      isValid: (parsed) => {
+        const valid = isValid(parsed);
+        if (valid) this.invalid.delete(setting);
+        else this.invalid.add(setting);
+        return valid;
+      },
+      error,
+      save: (parsed) => {
+        set(parsed);
+        return Promise.resolve();
+      },
+    });
   }
 
   private renderForm(): void {
@@ -64,48 +102,37 @@ export class TimerPresetEditorModal extends ModalBase {
         });
       });
 
-    new Setting(contentEl)
-      .setName(t("settings.labels.presetDuration"))
-      .setDesc(t("settings.descriptions.presetDurationDesc"))
-      .addText((text) =>
-        text
-          .setValue(String(formState.duration))
-          .onChange((value) => {
-            const num = parseInt(value);
-            if (!isNaN(num) && num > 0) {
-              formState.duration = num;
-            }
-          }),
-      );
+    this.invalid.clear();
+    this.wholeNumberField(
+      new Setting(contentEl)
+        .setName(t("settings.labels.presetDuration"))
+        .setDesc(t("settings.descriptions.presetDurationDesc")),
+      formState.duration,
+      isPositive,
+      t("settings.validation.mustBePositive"),
+      (value) => (formState.duration = value),
+    );
 
     if (formState.type === TIMER_TYPE.INTERVAL) {
-      new Setting(contentEl)
-        .setName(t("settings.labels.presetRounds"))
-        .setDesc(t("settings.descriptions.presetRoundsDesc"))
-        .addText((text) =>
-          text
-            .setValue(String(formState.rounds || 5))
-            .onChange((value) => {
-              const num = parseInt(value);
-              if (!isNaN(num) && num > 0) {
-                formState.rounds = num;
-              }
-            }),
-        );
+      this.wholeNumberField(
+        new Setting(contentEl)
+          .setName(t("settings.labels.presetRounds"))
+          .setDesc(t("settings.descriptions.presetRoundsDesc")),
+        formState.rounds || 5,
+        isPositive,
+        t("settings.validation.mustBePositive"),
+        (value) => (formState.rounds = value),
+      );
 
-      new Setting(contentEl)
-        .setName(t("settings.labels.presetRest"))
-        .setDesc(t("settings.descriptions.presetRestDesc"))
-        .addText((text) =>
-          text
-            .setValue(String(formState.rest ?? 0))
-            .onChange((value) => {
-              const num = parseInt(value);
-              if (!isNaN(num) && num >= 0) {
-                formState.rest = num;
-              }
-            }),
-        );
+      this.wholeNumberField(
+        new Setting(contentEl)
+          .setName(t("settings.labels.presetRest"))
+          .setDesc(t("settings.descriptions.presetRestDesc")),
+        formState.rest ?? 0,
+        isNonNegative,
+        t("settings.validation.mustBeNonNegative"),
+        (value) => (formState.rest = value),
+      );
     }
 
     new Setting(contentEl)
@@ -124,20 +151,16 @@ export class TimerPresetEditorModal extends ModalBase {
         }),
       );
 
-    new Setting(contentEl)
-      .setClass("workout-modal-actions")
-      .addButton((button) =>
-        button
-          .setButtonText(t("settings.buttons.savePreset"))
-          .setCta()
-          .onClick(async () => {
-            if (await this.save()) this.close();
-          }),
-      )
-      .addButton((button) =>
-        button
-          .setButtonText(t("settings.buttons.cancel"))
-          .onClick(() => this.close()),
-      );
+    Button.createModalActions(contentEl, {
+      primary: {
+        text: t("settings.buttons.savePreset"),
+        onClick: async () => {
+          // A field showing its error would otherwise be saved as it was
+          if (this.invalid.size > 0) return;
+          if (await this.save()) this.close();
+        },
+      },
+      onCancel: () => this.close(),
+    });
   }
 }

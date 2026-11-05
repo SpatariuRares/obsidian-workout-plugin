@@ -1,4 +1,4 @@
-import { Notice, App } from "obsidian";
+import type { App } from "obsidian";
 import { t } from "@app/i18n";
 import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
 import {
@@ -9,8 +9,9 @@ import { TimerPresetEditorModal } from "@app/features/timer/modals/TimerPresetEd
 import {
   isUnchangedDefaultTimerPreset,
   timerPresetHelp,
+  timerPresetSummary,
 } from "@app/features/timer/business/timerPresets";
-import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
+import { settingsListEditor } from "@app/features/settings/settingsListEditor";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 export class TimerPresetsSettings {
@@ -60,23 +61,56 @@ export class TimerPresetsSettings {
           },
         ],
       },
-      {
-        type: "list",
+      settingsListEditor<TimerPresetConfig>({
+        app: this.app,
         heading: t("settings.sections.timerPresets"),
         emptyState: t("settings.descriptions.noPresets"),
-        addItem: {
-          name: t("settings.buttons.addPreset"),
-          action: () => this.showPresetEditor(null),
-        },
-        onDelete: (index) => this.confirmDelete(presetNames[index]),
+        addLabel: t("settings.buttons.addPreset"),
+        editTooltip: t("settings.tooltips.editPreset"),
         deleteTooltip: t("settings.tooltips.deletePreset"),
-        items: presetNames.map((name) => ({
-          name: presets[name].name,
-          desc: this.formatPresetDetails(presets[name]),
-          tooltip: t("settings.tooltips.editPreset"),
-          action: () => this.showPresetEditor(presets[name]),
-        })),
-      },
+        items: presetNames.map((name) => presets[name]),
+        keyOf: (preset) => preset.name,
+        describe: (preset) => ({
+          name: preset.name,
+          desc: this.formatPresetDetails(preset),
+        }),
+        blank: () => ({
+          name: "",
+          type: TIMER_TYPE.COUNTDOWN,
+          duration: 30,
+          showControls: true,
+          sound: true,
+          rounds: 5,
+        }),
+        open: (draft, original, save) =>
+          new TimerPresetEditorModal(
+            this.app,
+            draft,
+            !original,
+            save,
+          ).open(),
+        normalize: (preset) => {
+          preset.name = preset.name.trim();
+        },
+        validate: (preset, originalName) => {
+          if (!preset.name)
+            return t("settings.messages.presetNameRequired");
+          return originalName !== preset.name &&
+            this.plugin.settings.timerPresets[preset.name]
+            ? t("settings.messages.presetNameExists")
+            : null;
+        },
+        upsert: (preset, originalName) =>
+          this.upsert(preset, originalName),
+        remove: (name) => this.remove(name),
+        persist: () => this.plugin.saveSettings(),
+        refresh: this.refresh,
+        messages: {
+          confirmDelete: t("settings.messages.confirmDeletePreset"),
+          saved: t("settings.messages.presetSaved"),
+          deleted: t("settings.messages.presetDeleted"),
+        },
+      }),
       // The presets first, under one heading, then which one new timers use
       {
         type: "group",
@@ -106,23 +140,13 @@ export class TimerPresetsSettings {
     ];
   }
 
-  private confirmDelete(name: string | undefined): void {
-    if (name === undefined) return;
-    new ConfirmModal(
-      this.app,
-      t("settings.messages.confirmDeletePreset"),
-      async () => {
-        await this.deletePreset(name);
-      },
-    ).open();
-  }
-
   private formatPresetDetails(
     preset: TimerPresetConfig,
   ): string | DocumentFragment {
-    const details = this.formatPresetSummary(preset);
+    const details = timerPresetSummary(preset);
     const help = timerPresetHelp(preset.name);
-    if (!help || !isUnchangedDefaultTimerPreset(preset)) return details;
+    if (!help || !isUnchangedDefaultTimerPreset(preset))
+      return details;
 
     // What a built-in preset is for, so the default entries explain themselves
     const fragment = createFragment();
@@ -131,102 +155,27 @@ export class TimerPresetsSettings {
     return fragment;
   }
 
-  private formatPresetSummary(preset: TimerPresetConfig): string {
-    const parts: string[] = [];
-    parts.push(`Type: ${preset.type}`);
-    parts.push(`Duration: ${preset.duration}s`);
-
-    if (preset.type === TIMER_TYPE.INTERVAL && preset.rounds) {
-      parts.push(`Rounds: ${preset.rounds}`);
-    }
-    if (preset.type === TIMER_TYPE.INTERVAL && preset.rest) {
-      parts.push(`${t("settings.labels.presetRest")}: ${preset.rest}s`);
-    }
-
-    const options: string[] = [];
-    if (preset.showControls)
-      options.push(t("timer.presets.detailsControls"));
-    if (preset.sound) options.push(t("timer.presets.detailsSound"));
-
-    if (options.length > 0) {
-      parts.push(`Options: ${options.join(", ")}`);
-    }
-
-    return parts.join(" | ");
-  }
-
-  private showPresetEditor(
-    existingPreset: TimerPresetConfig | null,
-  ): void {
-    const formState: TimerPresetConfig = existingPreset
-      ? { ...existingPreset }
-      : {
-          name: "",
-          type: TIMER_TYPE.COUNTDOWN,
-          duration: 30,
-          showControls: true,
-          sound: true,
-          rounds: 5,
-        };
-    const originalName = existingPreset?.name || null;
-
-    new TimerPresetEditorModal(this.app, formState, !existingPreset, async () => {
-      return this.savePreset(formState, originalName);
-    }).open();
-  }
-
-  private async savePreset(
+  /** Writes `preset`; a rename moves the default preset along with it */
+  private upsert(
     preset: TimerPresetConfig,
     originalName: string | null,
-  ): Promise<boolean> {
-    // Validate name
-    if (!preset.name.trim()) {
-      new Notice(t("settings.messages.presetNameRequired"));
-      return false;
-    }
-
-    const trimmedName = preset.name.trim();
-    preset.name = trimmedName;
-
-    // Check for duplicate names (unless editing the same preset)
-    if (
-      originalName !== trimmedName &&
-      this.plugin.settings.timerPresets[trimmedName]
-    ) {
-      new Notice(t("settings.messages.presetNameExists"));
-      return false;
-    }
-
-    // If renaming, delete the old preset
-    if (originalName && originalName !== trimmedName) {
-      delete this.plugin.settings.timerPresets[originalName];
-
-      // Update default preset reference if needed
-      if (this.plugin.settings.defaultTimerPreset === originalName) {
-        this.plugin.settings.defaultTimerPreset = trimmedName;
+  ): void {
+    const settings = this.plugin.settings;
+    if (originalName && originalName !== preset.name) {
+      delete settings.timerPresets[originalName];
+      if (settings.defaultTimerPreset === originalName) {
+        settings.defaultTimerPreset = preset.name;
       }
     }
-
-    // Save the preset
-    this.plugin.settings.timerPresets[trimmedName] = preset;
-    await this.plugin.saveSettings();
-
-    new Notice(t("settings.messages.presetSaved"));
-    this.refresh();
-    return true;
+    settings.timerPresets[preset.name] = preset;
   }
 
-  private async deletePreset(name: string): Promise<void> {
-    delete this.plugin.settings.timerPresets[name];
-
-    // Clear default if it was this preset
-    if (this.plugin.settings.defaultTimerPreset === name) {
-      this.plugin.settings.defaultTimerPreset = null;
+  /** Deletes the preset, and the default when it was this one */
+  private remove(name: string): void {
+    const settings = this.plugin.settings;
+    delete settings.timerPresets[name];
+    if (settings.defaultTimerPreset === name) {
+      settings.defaultTimerPreset = null;
     }
-
-    await this.plugin.saveSettings();
-    new Notice(t("settings.messages.presetDeleted"));
-
-    this.refresh();
   }
 }

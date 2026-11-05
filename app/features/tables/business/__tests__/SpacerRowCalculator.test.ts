@@ -1,7 +1,8 @@
 import { SpacerRowCalculator } from "@app/features/tables/business/SpacerRowCalculator";
 import { TableRow } from "@app/features/tables/types";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { t } from "@app/i18n";
+import { logRow } from "@app/types/__tests__/logRow";
+import { LocalizationService, t } from "@app/i18n";
 
 const createRow = (
   logOverrides: Partial<WorkoutLogData> = {},
@@ -9,17 +10,12 @@ const createRow = (
   displayRow: [],
   originalDate: "2024-01-15",
   dateKey: "2024-01-15",
-  originalLog: {
-    date: "2024-01-15",
-    exercise: "Bench Press",
-    reps: 8,
-    weight: 80,
-    volume: 640,
-    ...logOverrides,
-  },
+  originalLog: logRow(logOverrides),
 });
 
 describe("SpacerRowCalculator", () => {
+  beforeAll(() => LocalizationService.initialize({} as never));
+
   describe("strength data", () => {
     it("aggregates reps, weight, and volume for strength rows", () => {
       const rows = [
@@ -72,7 +68,7 @@ describe("SpacerRowCalculator", () => {
       const result = SpacerRowCalculator.calculate(rows);
 
       expect(result.stats).toHaveLength(1);
-      expect(result.stats[0].value).toBe("2m0s");
+      expect(result.stats[0].value).toBe("2m");
     });
 
     it("adds durations in each exercise's own unit", () => {
@@ -84,7 +80,7 @@ describe("SpacerRowCalculator", () => {
 
       const result = SpacerRowCalculator.calculate(rows);
 
-      expect(result.stats[0].value).toBe("31m30s");
+      expect(result.stats[0].value).toBe("31m 30s");
     });
 
     it("formats duration under 60s without minutes", () => {
@@ -114,7 +110,7 @@ describe("SpacerRowCalculator", () => {
 
       const result = SpacerRowCalculator.calculate(rows);
 
-      expect(result.stats[0].value).toBe("5.50km");
+      expect(result.stats[0].value).toBe(`5.50${t("common.km")}`);
     });
 
     it("shows average heart rate when present", () => {
@@ -135,7 +131,24 @@ describe("SpacerRowCalculator", () => {
 
       const result = SpacerRowCalculator.calculate(rows);
 
-      expect(result.stats[0].value).toBe("150bpm");
+      expect(result.stats[0].value).toBe(`150${t("common.bpm")}`);
+    });
+
+    it("shows the heart rate of a log whose column is HR", () => {
+      const rows = [
+        createRow({ reps: 0, weight: 0, volume: 0, customFields: { HR: 130 } }),
+      ];
+
+      expect(SpacerRowCalculator.calculate(rows).stats[0].value).toBe("130bpm");
+    });
+
+    it("totals a duration logged under a Duration (s) column", () => {
+      const rows = [
+        createRow({ reps: 0, weight: 0, volume: 0, customFields: { "Duration (s)": 40 } }),
+        createRow({ reps: 0, weight: 0, volume: 0, customFields: { "Duration (s)": 50 } }),
+      ];
+
+      expect(SpacerRowCalculator.calculate(rows).stats[0].value).toBe("1m 30s");
     });
 
     it("supports heartRate camelCase field name", () => {
@@ -150,7 +163,7 @@ describe("SpacerRowCalculator", () => {
 
       const result = SpacerRowCalculator.calculate(rows);
 
-      expect(result.stats[0].value).toBe("130bpm");
+      expect(result.stats[0].value).toBe(`130${t("common.bpm")}`);
     });
 
     it("shows multiple cardio metrics together", () => {

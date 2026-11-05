@@ -4,20 +4,13 @@ import {
   WorkoutLogData,
   WorkoutProtocol,
 } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 import { EmbeddedTableParams } from "@app/features/tables/types";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
 
-const createLog = (
-  overrides: Partial<WorkoutLogData> = {},
-): WorkoutLogData => ({
-  date: "2024-01-15T10:00:00",
-  exercise: "Bench Press",
-  reps: 8,
-  weight: 80,
-  volume: 640,
-  ...overrides,
-});
+const createLog = (overrides: Partial<WorkoutLogData> = {}) =>
+  logRow({ date: "2024-01-15T10:00:00", ...overrides });
 
 describe("TableDataProcessor", () => {
   describe("processTableData", () => {
@@ -782,6 +775,25 @@ describe("TableDataProcessor", () => {
         result.rows.map((r) => [r.originalLog!.exercise, r.durationSeconds]),
       );
       expect(seconds).toEqual({ Run: 1800, Plank: 90 });
+    });
+
+    it("knows the duration of a set logged under a Duration (s) column", async () => {
+      const plugin = {
+        getExerciseDefinitionService: () => ({
+          getParametersForExercise: async () => [
+            { key: "duration", label: "Duration", type: "number", unit: "min", required: true },
+          ],
+        }),
+      } as never;
+
+      const result = await TableDataProcessor.processTableData(
+        [createLog({ exercise: "Run", customFields: { "Duration (s)": 20 } })],
+        {},
+        plugin,
+      );
+
+      expect(result.rows[0].durationSeconds).toBe(1200);
+      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value);
     });
 
     it("reads a heart rate stored under a lowercase column", async () => {

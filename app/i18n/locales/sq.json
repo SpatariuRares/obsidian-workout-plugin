@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "Anullo",
     "clear": "Pastro",
     "convert": "Konverto",
     "exercise": "Ushtrim",
@@ -98,7 +97,6 @@
       "columnEstimated": "E vlerësuar",
       "columnVariance": "Varianca",
       "columnWorkout": "Stërvitja",
-      "minutesSuffix": " min",
       "noData": "Ende nuk ka mjaftueshëm seanca për krahasim.",
       "subtitle": "Kohëzgjatja e vlerësuar kundrejt asaj reale të stërvitjes",
       "title": "Krahasimi i kohëzgjatjes",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "Vlerësimet po u afrohen seancave tuaja reale",
       "varianceTrendStable": "Saktësia e vlerësimeve është e qëndrueshme",
       "varianceTrendTitle": "Saktësia e vlerësimeve",
-      "avgVarianceStat": "Variancë mesatare: ±{value}%",
-      "hoursSuffix": "h"
+      "avgVarianceStat": "Variancë mesatare: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Të gjitha faqet e ushtrimeve janë të vlefshme",
@@ -201,8 +198,6 @@
       "moveUp": "Lëviz {widget} lart",
       "moveDown": "Lëviz {widget} poshtë",
       "allHistory": "Bosh: e gjithë historia",
-      "recentWorkoutsLimit": "Stërvitjet në listën e fundit",
-      "volumeTrendDays": "Ditët në tendencën e volumit",
       "layout": "Paraqitja",
       "layoutGrid": "Rrjetë",
       "layoutList": "Listë",
@@ -568,7 +563,6 @@
     "createLogButtonText": "Krijo regjistrim për: {exerciseName}",
     "noDataTitle": "Nuk u gjetën regjistrime për {exerciseName}",
     "exploreExampleData": "Ose eksploroni me të dhëna shembull",
-    "lastSet": "Herën e fundit: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Rekordi personal: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "Shto paracaktim",
       "addProtocol": "Shto protokol",
-      "cancel": "Anullo",
       "createFiles": "Krijo skedarët",
       "done": "U krye!",
       "failed": "Dështoi",
@@ -1072,7 +1065,6 @@
     "editTable": "Redakto tabelën",
     "editTitle": "Redakto",
     "gotoExercise": "Shko te ushtrimi",
-    "invalidDate": "Datë e pavlefshme",
     "labels": {
       "target": "Objektivi:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "Asnjë seri me {weight} ende",
       "progress": "Më i miri {best}/{target} përsëritje",
-      "progressTooltip": "Më i miri: {best} përsëritje / Objektivi: {target} përsëritje",
-      "repsSuffix": "përsëritje",
-      "separator": " × "
+      "progressTooltip": "Më i miri: {best} përsëritje / Objektivi: {target} përsëritje"
     },
     "trendLine": "Vija e tendencës",
     "refreshingTable": "Po rifreskohet tabela...",
@@ -1127,7 +1117,6 @@
     "down": "Poshtë",
     "improving": "Në përmirësim",
     "increasing": "Në rritje",
-    "invariant": "Konstant",
     "neutral": "Neutral",
     "stable": "Stabil",
     "stableLower": "E qëndrueshme",

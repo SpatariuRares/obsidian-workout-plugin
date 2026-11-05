@@ -4,18 +4,13 @@
 import { QuickStatsCards } from "@app/features/dashboard/widgets/quick-stats/QuickStatsCards";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 import { t } from "@app/i18n";
 
 const daysAgo = (days: number) => new Date(Date.now() - days * 86_400_000).toISOString();
 
-const set = (days: number, volume: number, workout: string): WorkoutLogData => ({
-  date: daysAgo(days),
-  exercise: "Squat",
-  reps: 10,
-  weight: volume / 10,
-  volume,
-  workout,
-});
+const set = (days: number, volume: number, workout: string): WorkoutLogData =>
+  logRow({ date: daysAgo(days), exercise: "Squat", reps: 10, weight: volume / 10, workout });
 
 describe("QuickStatsCards", () => {
   it("compares week, month and year in one table, metrics as rows", () => {

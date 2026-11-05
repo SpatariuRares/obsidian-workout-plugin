@@ -54,7 +54,6 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "Annuleren",
     "clear": "Wissen",
     "convert": "Converteren",
     "exercise": "Oefening",
@@ -98,7 +97,6 @@
       "columnEstimated": "Geschat",
       "columnVariance": "Variantie",
       "columnWorkout": "Training",
-      "minutesSuffix": " min",
       "noData": "Nog niet genoeg sessies om te vergelijken.",
       "subtitle": "Geschatte vs. daadwerkelijke duur van de training",
       "title": "Vergelijking van duur",
@@ -106,8 +104,7 @@
       "varianceTrendImproving": "Schattingen komen steeds dichter bij je echte sessies",
       "varianceTrendStable": "De nauwkeurigheid van de schattingen is stabiel",
       "varianceTrendTitle": "Nauwkeurigheid van schattingen",
-      "avgVarianceStat": "Gem. variantie: ±{value}%",
-      "hoursSuffix": "h"
+      "avgVarianceStat": "Gem. variantie: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Alle oefenpagina's zijn geldig",
@@ -201,8 +198,6 @@
       "moveUp": "{widget} omhoog verplaatsen",
       "moveDown": "{widget} omlaag verplaatsen",
       "allHistory": "Leeg: volledige geschiedenis",
-      "recentWorkoutsLimit": "Trainingen in de recente lijst",
-      "volumeTrendDays": "Dagen in de volumetrend",
       "layout": "Indeling",
       "layoutGrid": "Raster",
       "layoutList": "Lijst",
@@ -568,7 +563,6 @@
     "createLogButtonText": "Log aanmaken voor: {exerciseName}",
     "noDataTitle": "Geen logs gevonden voor {exerciseName}",
     "exploreExampleData": "Of bekijk voorbeeldgegevens",
-    "lastSet": "Laatste keer: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Persoonlijk record: {weight} {unit} × {reps}"
   },
@@ -896,7 +890,6 @@
     "buttons": {
       "addPreset": "Voorinstelling toevoegen",
       "addProtocol": "Protocol toevoegen",
-      "cancel": "Annuleren",
       "createFiles": "Bestanden aanmaken",
       "done": "Klaar!",
       "failed": "Mislukt",
@@ -1072,7 +1065,6 @@
     "editTable": "Tabel bewerken",
     "editTitle": "Bewerken",
     "gotoExercise": "Naar oefening",
-    "invalidDate": "Ongeldige datum",
     "labels": {
       "target": "Doel:"
     },
@@ -1082,9 +1074,7 @@
     "target": {
       "noSetsYet": "Nog geen series met {weight}",
       "progress": "Beste {best}/{target} herhalingen",
-      "progressTooltip": "Beste: {best} herhalingen / Doel: {target} herhalingen",
-      "repsSuffix": "herhalingen",
-      "separator": " × "
+      "progressTooltip": "Beste: {best} herhalingen / Doel: {target} herhalingen"
     },
     "trendLine": "Trendlijn",
     "refreshingTable": "Tabel vernieuwen...",
@@ -1127,7 +1117,6 @@
     "down": "Omlaag",
     "improving": "Verbeterend",
     "increasing": "Stijgend",
-    "invariant": "Onveranderlijk",
     "neutral": "Neutraal",
     "stable": "Stabiel",
     "stableLower": "Stabiel",

@@ -1,6 +1,7 @@
 /** @jest-environment jsdom */
 
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { logRow } from "@app/types/__tests__/logRow";
 
 // Mock obsidian
 jest.mock("obsidian", () => ({
@@ -145,16 +146,8 @@ import { TargetHeader } from "@app/features/tables/ui/TargetHeader";
 import { AchievementBadge } from "@app/features/tables/ui/AchievementBadge";
 import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 
-const createLog = (
-  overrides: Partial<WorkoutLogData> = {},
-): WorkoutLogData => ({
-  date: "2024-01-15T10:00:00",
-  exercise: "Bench Press",
-  reps: 8,
-  weight: 80,
-  volume: 640,
-  ...overrides,
-});
+const createLog = (overrides: Partial<WorkoutLogData> = {}) =>
+  logRow({ date: "2024-01-15T10:00:00", ...overrides });
 
 const createMockPlugin = () => ({
   app: {
@@ -699,7 +692,7 @@ describe("EmbeddedTableView", () => {
   describe("source note link", () => {
     it("uses the code block's source note, not the active view", async () => {
       plugin.app.workspace.getActiveViewOfType.mockReturnValue({
-        file: { basename: "Other Note" },
+        file: { path: "Other Note.md", basename: "Other Note" },
       });
       const container = document.createElement("div");
 
@@ -723,9 +716,9 @@ describe("EmbeddedTableView", () => {
   });
 
   describe("active view integration", () => {
-    it("uses current file basename for page link", async () => {
+    it("links the active note when the block's note is unknown", async () => {
       plugin.app.workspace.getActiveViewOfType.mockReturnValue({
-        file: { basename: "My Workout" },
+        file: { path: "My Workout.md", basename: "My Workout" },
       });
 
       const container = document.createElement("div");

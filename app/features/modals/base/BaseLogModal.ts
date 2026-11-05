@@ -5,7 +5,7 @@ import { App, Notice, Platform } from "obsidian";
 import type { WorkoutPluginContext, TemplateGeneratorPort } from "@app/types/PluginPorts";
 import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { Button, BUTTONVARIANT } from "@app/components/atoms";
+import { Button } from "@app/components/atoms";
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { DomUtils } from "@app/utils/DomUtils";
@@ -131,9 +131,7 @@ export abstract class BaseLogModal extends ModalBase {
     // Create buttons
     // Saving the prefilled set shouldn't need a scroll past protocol, notes
     // and workout
-    const buttonsContainer = Button.createModalActions(formContainer);
-    buttonsContainer.addClass("workout-log-actions");
-    this.createButtons(buttonsContainer, this.formElements);
+    this.createButtons(formContainer, this.formElements);
 
     // Set focus
     this.setInitialFocus(this.formElements);
@@ -207,31 +205,28 @@ export abstract class BaseLogModal extends ModalBase {
   }
 
   /**
-   * Creates submit and cancel buttons
+   * The action row at the end of `parent`: submit, then Cancel
    */
   protected createButtons(
-    container: HTMLElement,
+    parent: HTMLElement,
     formElements: LogFormElements,
   ): void {
-    const submitBtn = Button.create(container, {
-      text: this.getButtonText(),
-      variant: BUTTONVARIANT.PRIMARY,
-      ariaLabel: this.getButtonText(),
-    });
-
-    const cancelBtn = Button.create(container, {
-      text: t("modal.buttons.cancel"),
-      ariaLabel: t("modal.buttons.cancel"),
-      variant: BUTTONVARIANT.SECONDARY,
-    });
-
-    Button.onClick(cancelBtn, () => this.close());
-    Button.onClick(submitBtn, () => {
-      void (async () => {
-        await this.handleFormSubmit(formElements);
-      })();
+    Button.createModalActions(parent, {
+      className: "workout-log-actions",
+      start: (row) => this.createStartActions(row),
+      primary: {
+        text: this.getButtonText(),
+        onClick: () => this.handleFormSubmit(formElements),
+      },
+      onCancel: () => this.close(),
     });
   }
+
+  /**
+   * Rare actions at the start of the action row (the edit form's delete):
+   * none by default
+   */
+  protected createStartActions(_row: HTMLElement): void {}
 
   /**
    * Reads and validates the form, then hands the data to handleSubmit

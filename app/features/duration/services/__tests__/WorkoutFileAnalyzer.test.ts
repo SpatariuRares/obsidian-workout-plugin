@@ -5,6 +5,11 @@ import { WorkoutLogFile } from "@app/services/data/WorkoutLogFile";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import { InMemoryLogStorage } from "@app/services/data/__tests__/InMemoryLogStorage";
 import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
+import {
+  generateHIITContent,
+  generateWorkoutContent,
+  generateYogaContent,
+} from "@app/services/examples/exampleContentGenerator";
 
 type Settings = {
   csvLogFilePath?: string;
@@ -132,11 +137,11 @@ describe("WorkoutFileAnalyzer", () => {
       expect(r.totalSetTime).toBe(60);
     });
 
-    it("should fall back to the log limit when no set header exists", async () => {
+    it("should not take the planned sets from a workout-log limit", async () => {
       const md = "## A\n```workout-log\nlimit: 4\n```";
       const r = await analyze(md);
-      expect(r.setCount).toBe(4);
-      expect(r.totalSetTime).toBe(4 * 60);
+      expect(r.setCount).toBe(1);
+      expect(r.totalSetTime).toBe(60);
     });
 
     it("should default to one set when nothing indicates the count", async () => {
@@ -220,7 +225,7 @@ describe("WorkoutFileAnalyzer", () => {
     it("should not read reps out of a code block", async () => {
       const md = "## A\n```workout-log\nid: ax5bc\nlimit: 3\n```";
       const r = await analyze(md, { setDuration: 40 });
-      expect(r.totalSetTime).toBe(3 * 40);
+      expect(r.totalSetTime).toBe(40);
     });
 
     it("should ignore blocks shown inside an example fence", async () => {
@@ -252,6 +257,105 @@ describe("WorkoutFileAnalyzer", () => {
       ].join("\n");
       const r = await analyze(md);
       expect(r.setCount).toBe(5);
+    });
+  });
+
+  describe("the note's plan", () => {
+    it("should estimate a step from its sets, target reps and rest", async () => {
+      const md =
+        "## A\n```workout-sets\nexercise: Squat\nsets: 3\ntargetReps: 6\nrest: 120\n```";
+      const r = await analyze(md);
+      expect(r.setCount).toBe(3);
+      expect(r.totalSetTime).toBe(3 * 6 * 5);
+      expect(r.totalRestTime).toBe(3 * 120);
+      expect(r.restPeriodCount).toBe(3);
+    });
+
+    it("should count a workout-log's planned sets, not its limit", async () => {
+      const md = "## A\n```workout-log\nexercise: Squat\nsets: 3\nlimit: 10\n```";
+      const r = await analyze(md);
+      expect(r.setCount).toBe(3);
+    });
+
+    it("should prefer the target reps to the reps written in the heading", async () => {
+      const md =
+        "## A\n### 2 sets x 12 reps\n```workout-log\nexercise: Squat\ntargetReps: 4\n```";
+      const r = await analyze(md);
+      expect(r.setCount).toBe(2);
+      expect(r.totalSetTime).toBe(2 * 4 * 5);
+    });
+
+    it("should read sets and reps from the heading when the blocks don't plan them", async () => {
+      const md = "## A\n### 3 sets x 10 reps\n```workout-log\nexercise: Squat\n```";
+      const r = await analyze(md);
+      expect(r.setCount).toBe(3);
+      expect(r.totalSetTime).toBe(3 * 10 * 5);
+    });
+
+    it("should rest on the section's first timer, not on the sum of its timers", async () => {
+      const md = [
+        "## A",
+        "```workout-timer",
+        "duration: 30",
+        "```",
+        "```workout-timer",
+        "duration: 60",
+        "```",
+        "```workout-log",
+        "exercise: Squat",
+        "sets: 2",
+        "```",
+      ].join("\n");
+      const r = await analyze(md);
+      expect(r.totalRestTime).toBe(2 * 30);
+      expect(r.restPeriodCount).toBe(2);
+    });
+
+    it("should rest a table without a timer on the default preset, as the session does", async () => {
+      const md = "## A\n```workout-log\nexercise: Squat\nsets: 2\n```";
+      expect((await analyze(md)).totalRestTime).toBe(2 * 30);
+      const withPreset = await analyze(md, {
+        defaultTimerPreset: "rest",
+        timerPresets: { rest: { name: "rest", type: "countdown", duration: 90, showControls: true, sound: true } },
+      });
+      expect(withPreset.totalRestTime).toBe(2 * 90);
+    });
+
+    it("should estimate each step of a section and each section", async () => {
+      const two = await analyze(
+        "## A\n```workout-sets\nexercise: Squat\nsets: 2\nrest: 0\n```\n```workout-sets\nexercise: Lunge\nsets: 3\nrest: 0\n```\n## B\n```workout-sets\nexercise: Curl\nsets: 4\nrest: 0\n```",
+      );
+      expect(two.setCount).toBe(9);
+      expect(two.totalRestTime).toBe(0);
+    });
+
+    it("should leave out a block with invalid parameters", async () => {
+      const md = "## A\n```workout-log\nexercise: Squat\nlimit: 4\nsortBy: nope\n```";
+      const r = await analyze(md);
+      expect(r.setCount).toBe(1);
+    });
+
+    it("should estimate the example notes from their plan", async () => {
+      const estimate = async (md: string) => {
+        const r = await analyze(md);
+        return { sets: r.setCount, rest: r.totalRestTime, work: r.totalSetTime };
+      };
+      expect(await estimate(generateWorkoutContent())).toEqual({
+        sets: 19,
+        rest: 4 * 180 + 4 * 180 + 4 * 120 + 3 * 90 + 4 * 60,
+        // Tests load no locale, so the headings hold keys, not "4 sets x 8-10 reps"
+        work: 19 * 60,
+      });
+      expect(await estimate(generateYogaContent())).toEqual({
+        sets: 9,
+        rest: 9 * 20,
+        work: 9 * 60,
+      });
+      expect(await estimate(generateHIITContent())).toEqual({
+        sets: 5,
+        rest: 300 + 8 * 60 + 240 + 30 + 30,
+        work: 5 * 60,
+      });
     });
   });
 

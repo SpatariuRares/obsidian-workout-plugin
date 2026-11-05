@@ -1,4 +1,4 @@
-import { App } from "obsidian";
+import { App, MarkdownView, TFolder } from "obsidian";
 
 /**
  * Utility for path computation and folder management related to CSV files.
@@ -19,7 +19,7 @@ export class PathUtils {
    * which is also the workout name of the sets logged from it.
    */
   static noteName(notePath: string): string {
-    return notePath.split("/").pop()?.replace(/\.md$/i, "") || "";
+    return PathUtils.linkTarget(notePath.split("/").pop() ?? "");
   }
 
   /**
@@ -47,20 +47,44 @@ export class PathUtils {
   }
 
   /**
-   * Ensures the parent folder of a file path exists, creating it if necessary.
-   * @param app - Obsidian App instance
-   * @param filePath - File path whose parent folder should exist
+   * Ensures a folder exists, creating it if necessary.
+   * @throws when a file already holds the path
    */
-  static async ensureFolderExists(
+  static async ensureFolder(app: App, path: string): Promise<void> {
+    const existing = app.vault.getAbstractFileByPath(path);
+    if (!existing) {
+      await app.vault.createFolder(path);
+    } else if (!(existing instanceof TFolder)) {
+      throw new Error(`Path '${path}' exists but is not a folder.`);
+    }
+  }
+
+  /**
+   * Ensures the folder a file goes in exists (nothing to do at the vault root).
+   * @throws when a file already holds the folder's path
+   */
+  static async ensureParentFolder(
     app: App,
     filePath: string,
   ): Promise<void> {
     const folder = this.getFolderPath(filePath);
-    if (folder) {
-      const folderExists = app.vault.getAbstractFileByPath(folder);
-      if (!folderExists) {
-        await app.vault.createFolder(folder);
-      }
-    }
+    if (folder) await this.ensureFolder(app, folder);
+  }
+
+  /**
+   * A note's path as a wiki link names it, without `.md`
+   * ("Workouts/Leg Day.md" → "Workouts/Leg Day").
+   */
+  static linkTarget(notePath: string): string {
+    return notePath.replace(/\.md$/i, "");
+  }
+
+  /**
+   * A wiki link to the note open in the active editor, "" without one.
+   * Prefer the block's own note (`ctx.sourcePath`) when it is known.
+   */
+  static activeNoteLink(app: App): string {
+    const file = app.workspace.getActiveViewOfType(MarkdownView)?.file;
+    return file ? this.toWikiLink(file.path) : "";
   }
 }

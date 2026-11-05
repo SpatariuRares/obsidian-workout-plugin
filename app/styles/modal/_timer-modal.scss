@@ -1,12 +1,5 @@
 @use "../variables";
 
-/* Timer modal type chips */
-.workout-timer-type-chips {
-  display: flex;
-  gap: var(--workout-space-sm);
-  flex-wrap: wrap;
-}
-
 /* Timer preset chips - horizontal scrollable */
 .workout-timer-preset-chips {
   display: flex;

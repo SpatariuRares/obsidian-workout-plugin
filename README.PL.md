@@ -34,26 +34,6 @@ Wykresy pokazują twój trend, mapa cieplna mięśni pokazuje, co trenowałeś, 
 
 Przy pierwszej instalacji wtyczka dodaje przykładowe notatki (przykładowe ćwiczenia, dwa treningi z sześciotygodniowym dziennikiem, panel kontrolny i prezentację funkcji), kieruje wtyczkę na nie i otwiera **Przewodnik dla początkujących**: krótką stronę na każdą funkcję, z działającymi przykładami do wypróbowania. Nie musisz otwierać ustawień. Rozejrzyj się, zanim skonfigurujesz własne.
 
-### Wycieczka z przewodnikiem
-
-Wycieczka otwiera notatkę „Wycieczka z przewodnikiem” z tabelą, wykresem, panelem kontrolnym i timerem i pokazuje po kolei każdy z nich. Ma dziewięć krótkich kroków:
-
-1. Zapisz pierwszą serię przyciskiem **+**. Krok kończy się po zapisaniu.
-2. Edytuj lub usuń serię przyciskami przy każdym wierszu.
-3. Zobacz swoje postępy na wykresie.
-4. Zobacz sumy i trendy w panelu kontrolnym.
-5. Zobacz, które mięśnie trenowałeś, na mapie cieplnej mięśni.
-6. Uruchom timer odpoczynku. Krok kończy się po naciśnięciu przycisku Start.
-7. Znajdź ikonę hantli na pasku narzędzi, która otwiera formularz zapisu z dowolnej notatki. Na telefonie użyj palety poleceń.
-8. Uruchom dowolne polecenie zaczynające się od **Wstaw** (np. **Wstaw tabelę treningu**) z palety poleceń. Krok kończy się, gdy to zrobisz.
-9. Gotowe.
-
-Używaj **Wstecz** i **Dalej**, aby się poruszać, lub **Pomiń**, aby wyjść. Jeśli część notatki, na którą wskazuje wycieczka, jest poza ekranem, **Pokaż mi** przewinie do niej. W każdej chwili naciśnij `Esc`, aby zakończyć. Wycieczka kończy się też, gdy zamkniesz jej notatkę lub przełączysz się na inny plik. Nic nie przepada: twoje serie zostają w dzienniku.
-
-Gdy używane są przykładowe dane, wycieczka działa na nich. W przeciwnym razie działa na twoim dzienniku, więc wykres i panel kontrolny będą prawie puste. Notatka powstaje raz, obok przykładów lub na górze skarbca. Istniejąca notatka nigdy nie jest nadpisywana, a ty możesz ją edytować lub usunąć. Jeśli notatka o nazwie „Wycieczka z przewodnikiem” już istnieje i nie należy do wycieczki, wycieczka używa „Wycieczka z przewodnikiem 1” (lub kolejnego wolnego numeru).
-
-Chcesz znowu odbyć wycieczkę? Wybierz **Rozpocznij wycieczkę** w **Ustawienia → Workout Planner → Jak zacząć** albo uruchom **Rozpocznij wycieczkę** z palety poleceń.
-
 Chcesz ponownie przykłady lub przewodnik? Wybierz **Utwórz przykłady** lub **Otwórz przewodnik dla początkujących** w **Ustawienia → Workout Planner → Jak zacząć** albo uruchom **Utwórz przykładowe notatki** lub **Otwórz przewodnik dla początkujących** z palety poleceń (`Ctrl/Cmd + P`). Tworzenie przykładów nigdy niczego nie nadpisuje: ponowne uruchomienie dodaje tylko brakujące pliki przykładów, a pliki, które zmieniłeś, zostają bez zmian. Przewodnik proponuje utworzenie przykładów, jeśli jeszcze nie istnieją. Pusta tabela, wykres lub panel kontrolny ma też link **Albo poznaj na przykładowych danych**. Jeśli masz już dziennik treningów, przykłady dostają własny plik dziennika, a twój pozostaje nietknięty.
 
 Aby dodać tabelę do dowolnej notatki, na przykład `Push Day`:
@@ -64,7 +44,7 @@ exercise: Bench Press
 ```
 ````
 
-Naciśnij **+** pod tabelą, wpisz powtórzenia i ciężar, a następnie zapisz. Tabela aktualizuje się sama. Nie musisz też pisać bloków ręcznie: polecenia **Wstaw wykres treningu / tabelę treningu / timer / panel kontrolny / czas treningu** otwierają formularz i wstawiają blok za ciebie.
+Naciśnij **+** pod tabelą, wpisz powtórzenia i ciężar, a następnie zapisz. Tabela aktualizuje się sama. Nie musisz też pisać bloków ręcznie: polecenia **Wstaw wykres treningu / tabelę treningu / serie treningu / timer / panel kontrolny / czas treningu** oraz **Wstaw sesję z przewodnikiem** otwierają formularz (albo wpisują blok) za ciebie.
 
 ## Zapisywanie serii
 
@@ -167,19 +147,20 @@ showTrendLine: true
 <details>
 <summary>Wszystkie parametry</summary>
 
-| Parametr        | Domyślnie      | Co robi                                                                   |
-| --------------- | -------------- | ------------------------------------------------------------------------- |
-| `exercise`      | —              | Tylko to ćwiczenie                                                        |
-| `workout`       | —              | Tylko ten trening                                                         |
-| `type`          | `volume`       | `volume`, `weight`, `reps`, `duration`, `distance`, `pace` lub `heartRate` |
-| `chartType`     | `exercise`     | Jak budowany jest punkt każdego dnia (poniżej)                            |
-| `dateRange`     | `30`           | Dni do uwzględnienia                                                      |
-| `limit`         | —              | Tylko ostatnie N punktów                                                  |
-| `showTrendLine` | `false`        | Narysuj linię trendu                                                      |
-| `showStats`     | `true`         | Pokaż pod wykresem średnią, najlepszą i najniższą wartość                 |
-| `title`         | `Trend <type>` | Tytuł wykresu                                                             |
-| `height`        | 4:3            | `300` (piksele) lub dowolna długość CSS, np. `50vh`                       |
-| `exactMatch`    | `false`        | Dopasuj nazwę ćwiczenia dokładnie                                         |
+| Parametr        | Domyślnie      | Co robi                                                                            |
+| --------------- | -------------- | ---------------------------------------------------------------------------------- |
+| `exercise`      | —              | Tylko to ćwiczenie                                                                 |
+| `workout`       | —              | Tylko ten trening                                                                  |
+| `type`          | `volume`       | `volume`, `weight`, `reps`, `e1rm`, `duration`, `distance`, `pace` lub `heartRate` |
+| `chartType`     | `exercise`     | Jak budowany jest punkt każdego dnia (poniżej)                                     |
+| `dateRange`     | `30`           | Dni do uwzględnienia                                                               |
+| `limit`         | —              | Tylko ostatnie N punktów                                                           |
+| `showTrendLine` | `false`        | Narysuj linię trendu                                                               |
+| `showTrend`     | `true`         | Pokaż nagłówek trendu nad wykresem                                                 |
+| `showStats`     | `true`         | Pokaż pod wykresem średnią, najlepszą i najniższą wartość                          |
+| `title`         | `Trend <type>` | Tytuł wykresu                                                                      |
+| `height`        | 4:3            | `300` (piksele) lub dowolna długość CSS, np. `50vh`                                |
+| `exactMatch`    | `false`        | Dopasuj nazwę ćwiczenia dokładnie                                                  |
 
 | `chartType` | Użyte serie                         | Punkt każdego dnia |
 | ----------- | ----------------------------------- | ------------------ |
@@ -316,6 +297,7 @@ Blok `workout-session` na górze notatki treningowej (polecenie **Wstaw sesję z
 
 ````markdown
 ```workout-session
+
 ```
 
 ## Squat
@@ -473,24 +455,24 @@ Zmiana jednostki wagi nie zmienia etykiet starych serii: każda seria zachowuje 
 
 Otwórz paletę poleceń (`Ctrl/Cmd + P`) i wpisz nazwę.
 
-| Polecenie                                                   | Co robi                                                            |
-| ----------------------------------------------------------- | ------------------------------------------------------------------ |
-| Utwórz wpis treningowy                                      | Zapisz serię                                                       |
-| Rozpocznij wycieczkę                                        | Przejdź wycieczkę z przewodnikiem                                  |
-| Utwórz przykładowe notatki                                  | Dodaj przykładowe ćwiczenia, treningi, dzienniki i panel kontrolny |
-| Otwórz przewodnik dla początkujących                        | Otwórz przewodnik wśród przykładów                                 |
-| Wstaw wykres treningu / tabelę treningu / timer / panel kontrolny / czas treningu | Wstaw blok przez formularz                    |
-| Utwórz stronę ćwiczenia                                     | Nowa strona ćwiczenia z typem i tagami                             |
-| Utwórz sekcję ćwiczenia                                     | Dodaj nagłówek, timer i tabelę ćwiczenia do bieżącej notatki       |
-| Dodaj blok ćwiczeń                                          | Wstaw blok ćwiczenia z podpowiedziami nazwy                        |
-| Konwertuj ćwiczenie                                         | Przenieś serie ćwiczenia do innego typu ćwiczenia                  |
-| Zarządzaj tagami mięśni                                     | Edytuj `muscle-tags.csv`                                           |
-| Wygeneruj spis tagów                                        | Utwórz notatkę z listą wszystkich tagów mięśni                     |
-| Sprawdź nazwy ćwiczeń                                       | Znajdź to samo ćwiczenie zapisane różną pisownią                   |
-| Eksportuj trening do canvasu                                | Ułóż bieżący trening na canvasie Obsidiana                         |
-| Utwórz plik dziennika w formacie CSV                        | Utwórz pusty dziennik                                              |
-| Importuj z Strong lub Hevy                                  | Dodaj serie z eksportu CSV ze Strong lub Hevy do dziennika         |
-| Migruj typy ćwiczeń, Dodaj brakujące identyfikatory do bloków kodu | Konserwacja po aktualizacji ze starszych wersji             |
+| Polecenie                                                                                          | Co robi                                                            |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| Utwórz wpis treningowy                                                                             | Zapisz serię                                                       |
+| Utwórz przykładowe notatki                                                                         | Dodaj przykładowe ćwiczenia, treningi, dzienniki i panel kontrolny |
+| Otwórz przewodnik „Jak zacząć”, Rozpocznij wycieczkę                                               | Otwórz przewodnik wśród przykładów                                 |
+| Pokaż, co nowego                                                                                   | Pokaż, co się zmieniło w każdej wersji                             |
+| Wstaw wykres treningu / tabelę treningu / serie treningu / timer / panel kontrolny / czas treningu | Wstaw blok przez formularz                                         |
+| Wstaw sesję z przewodnikiem                                                                        | Wstaw blok `workout-session` w miejscu kursora                     |
+| Utwórz stronę ćwiczenia                                                                            | Nowa strona ćwiczenia z typem i tagami                             |
+| Dodaj blok ćwiczeń                                                                                 | Dodaj sekcję ćwiczenia z jego blokiem serii, z podpowiedziami nazw |
+| Konwertuj ćwiczenie                                                                                | Przenieś serie ćwiczenia do innego typu ćwiczenia                  |
+| Zarządzaj tagami mięśni                                                                            | Edytuj `muscle-tags.csv`                                           |
+| Wygeneruj spis tagów                                                                               | Utwórz notatkę z listą wszystkich tagów mięśni                     |
+| Sprawdź nazwy ćwiczeń                                                                              | Znajdź to samo ćwiczenie zapisane różną pisownią                   |
+| Eksportuj trening do canvasu                                                                       | Ułóż bieżący trening na canvasie Obsidiana                         |
+| Utwórz plik dziennika w formacie CSV                                                               | Utwórz pusty dziennik                                              |
+| Importuj z Strong lub Hevy                                                                         | Dodaj serie z eksportu CSV ze Strong lub Hevy do dziennika         |
+| Migruj typy ćwiczeń, Dodaj brakujące identyfikatory do bloków kodu                                 | Konserwacja po aktualizacji ze starszych wersji                    |
 
 </details>
 

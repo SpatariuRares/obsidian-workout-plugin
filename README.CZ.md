@@ -34,26 +34,6 @@ Grafy ukazují váš trend, tepelná mapa svalů ukazuje, co jste trénovali, a 
 
 Při prvním nainstalování pluginu se přidají ukázkové poznámky (ukázková cvičení, dva tréninky se šestitýdenními záznamy, dashboard a přehled funkcí), plugin se na ně nasměruje a otevře se návod **Návod pro začátek**: krátká stránka ke každé funkci s funkčními příklady, které si můžete vyzkoušet. Nastavení otevírat nemusíte. Než si nastavíte vlastní, pořádně si to projděte.
 
-### Prohlídka s průvodcem
-
-Prohlídka otevře poznámku „Prohlídka s průvodcem“ s tabulkou, grafem, dashboardem a časovačem a postupně ukáže na každou z nich. Má devět krátkých kroků:
-
-1. Zaznamenejte první sérii tlačítkem **+**. Krok se dokončí, až ji uložíte.
-2. Upravte nebo smažte sérii tlačítky na jejím řádku.
-3. Podívejte se na svůj pokrok v grafu.
-4. Podívejte se na součty a trendy v dashboardu.
-5. Podívejte se, které svaly jste trénovali, v tepelné mapě svalů.
-6. Spusťte časovač odpočinku. Krok se dokončí, až stisknete **Start**.
-7. Najděte ikonu činky na liště, která z jakékoli poznámky otevře formulář záznamu. Na telefonu použijte paletu příkazů.
-8. Z palety příkazů spusťte libovolný příkaz **Vložit** (například **Vložit tabulku tréninku**). Krok se dokončí, až to uděláte.
-9. Hotovo.
-
-Pohybujte se pomocí **Zpět** a **Další**, nebo odejděte tlačítkem **Přeskočit**. Pokud je část poznámky, na kterou prohlídka ukazuje, mimo zorné pole, **Ukaž mi** se na ni posune. Prohlídku kdykoli ukončíte klávesou `Esc`. Skončí také, když zavřete její poznámku nebo přepnete na jiný soubor. Nic se neztratí: vaše série zůstanou v záznamu.
-
-Když používáte ukázková data, prohlídka běží na nich. Jinak běží na vašem vlastním záznamu, takže graf a dashboard budou zpočátku téměř prázdné. Poznámka se vytvoří jednou, vedle ukázek nebo v kořenu trezoru. Existující poznámka se nikdy nepřepíše a můžete ji upravit nebo smazat. Pokud poznámka s názvem „Prohlídka s průvodcem“ už existuje a není to poznámka prohlídky, prohlídka místo ní použije „Prohlídka s průvodcem 1“ (nebo nejbližší volné číslo).
-
-Chcete prohlídku projít znovu? Vyberte **Projít prohlídku** v **Nastavení → Workout Planner → Začít**, nebo spusťte **Spustit prohlídku** z palety příkazů.
-
 Chcete znovu ukázky nebo návod? Vyberte **Vytvořit ukázky** nebo **Zobrazit návod pro začátek** v **Nastavení → Workout Planner → Začít**, nebo spusťte **Vytvořit ukázkové poznámky** či **Zobrazit návod pro začátek** z palety příkazů (`Ctrl/Cmd + P`). Vytvoření ukázek nikdy nic nepřepíše: opakované spuštění přidá jen chybějící ukázkové soubory a soubory, které jste změnili, zůstanou beze změny. Návod nabídne vytvoření ukázek, pokud ještě neexistují. Prázdná tabulka, graf nebo dashboard má také odkaz **Nebo prozkoumejte s ukázkovými daty**. Pokud už máte záznam tréninků, ukázky dostanou vlastní soubor záznamů a ten váš zůstane nedotčený.
 
 Chcete-li přidat tabulku do libovolné poznámky, například `Push Day`:
@@ -64,7 +44,7 @@ exercise: Bench Press
 ```
 ````
 
-Klepněte na **+** pod tabulkou, zadejte opakování a váhu a uložte. Tabulka se aktualizuje sama. Bloky ani nemusíte psát ručně: příkazy **Vložit graf tréninku / tabulku tréninku / časovač tréninku / přehled tréninku / dobu tréninku** otevřou formulář a blok vloží za vás.
+Klepněte na **+** pod tabulkou, zadejte opakování a váhu a uložte. Tabulka se aktualizuje sama. Bloky ani nemusíte psát ručně: příkazy **Vložit graf tréninku / tabulku tréninku / série tréninku / časovač tréninku / přehled tréninku / dobu tréninku** a **Vložit vedenou relaci** otevřou formulář, nebo blok vloží rovnou za vás.
 
 ## Zaznamenávání sérií
 
@@ -171,11 +151,12 @@ showTrendLine: true
 | --------------- | -------------- | ------------------------------------------------------------------------- |
 | `exercise`      | —              | Jen toto cvičení                                                          |
 | `workout`       | —              | Jen tento trénink                                                         |
-| `type`          | `volume`       | `volume`, `weight`, `reps`, `duration`, `distance`, `pace` nebo `heartRate` |
+| `type`          | `volume`       | `volume`, `weight`, `reps`, `e1rm`, `duration`, `distance`, `pace` nebo `heartRate` |
 | `chartType`     | `exercise`     | Jak se sestaví bod každého dne (níže)                                     |
 | `dateRange`     | `30`           | Počet dní, které se zahrnou                                               |
 | `limit`         | —              | Jen posledních N bodů                                                     |
 | `showTrendLine` | `false`        | Vykreslit spojnici trendu                                                 |
+| `showTrend`     | `true`         | Zobrazit záhlaví trendu nad grafem |
 | `showStats`     | `true`         | Zobrazit pod grafem průměr, nejlepší a nejnižší hodnotu                   |
 | `title`         | `Trend <type>` | Název grafu                                                               |
 | `height`        | 4:3            | `300` (pixely) nebo libovolná délka CSS, např. `50vh`                     |
@@ -316,6 +297,7 @@ Blok `workout-session` na začátku poznámky tréninku (příkaz **Vložit vede
 
 ````markdown
 ```workout-session
+
 ```
 
 ## Squat
@@ -473,24 +455,24 @@ Změna jednotky váhy nepřepíše popisky starých sérií: každá série si z
 
 Otevřete paletu příkazů (`Ctrl/Cmd + P`) a napište název.
 
-| Příkaz                                                      | Co dělá                                                            |
-| ----------------------------------------------------------- | ------------------------------------------------------------------ |
-| Vytvořit záznam tréninku                                    | Zapsat sérii                                                       |
-| Spustit prohlídku                                           | Projít prohlídku s průvodcem                                       |
-| Vytvořit ukázkové poznámky                                  | Přidat ukázková cvičení, tréninky, záznamy a dashboard             |
-| Zobrazit návod pro začátek                                  | Otevřít návod mezi ukázkami                                        |
-| Vložit graf tréninku / tabulku tréninku / časovač tréninku / přehled tréninku / dobu tréninku | Vložit blok přes formulář |
-| Vytvořit stránku cvičení                                    | Nová stránka cvičení s typem a štítky                              |
-| Vytvořit sekci cvičení                                      | Přidat do aktuální poznámky nadpis, časovač a tabulku pro cvičení  |
-| Přidat blok cvičení                                         | Vložit blok cvičení s automatickým doplňováním názvu               |
-| Převést cvičení                                             | Přesunout série cvičení do jiného typu cvičení                     |
-| Spravovat štítky svalů                                      | Upravit `muscle-tags.csv`                                          |
-| Vygenerovat přehled štítků                                  | Vytvořit poznámku s výpisem všech štítků svalů                     |
-| Zkontrolovat názvy cviků                                    | Najít stejné cvičení zapsané různými pravopisy                     |
-| Exportovat trénink na plátno                                | Rozvrhnout aktuální trénink na plátno Obsidianu                    |
-| Vytvořit soubor záznamů CSV                                 | Vytvořit prázdný záznam                                            |
-| Import z Strong nebo Hevy                                   | Přidat série z exportu CSV aplikace Strong nebo Hevy do záznamu    |
-| Migrovat typy cvičení, Přidat chybějící ID do bloků kódu    | Údržba po aktualizaci ze starších verzí                            |
+| Příkaz                                                                                                         | Co dělá                                                                      |
+| -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Vytvořit záznam tréninku                                                                                       | Zapsat sérii                                                                 |
+| Vytvořit ukázkové poznámky                                                                                     | Přidat ukázková cvičení, tréninky, záznamy a dashboard                       |
+| Zobrazit návod pro začátek, Spustit prohlídku                                                                  | Otevřít návod mezi ukázkami                                                  |
+| Zobrazit novinky                                                                                               | Zobrazit, co se změnilo v jednotlivých verzích                               |
+| Vložit graf tréninku / tabulku tréninku / série tréninku / časovač tréninku / přehled tréninku / dobu tréninku | Vložit blok přes formulář                                                    |
+| Vložit vedenou relaci                                                                                          | Vložit blok `workout-session` na kurzor                                      |
+| Vytvořit stránku cvičení                                                                                       | Nová stránka cvičení s typem a štítky                                        |
+| Přidat blok cvičení                                                                                            | Přidat sekci pro cvik s jejím blokem sérií, s automatickým doplňováním názvu |
+| Převést cvičení                                                                                                | Přesunout série cvičení do jiného typu cvičení                               |
+| Spravovat štítky svalů                                                                                         | Upravit `muscle-tags.csv`                                                    |
+| Vygenerovat přehled štítků                                                                                     | Vytvořit poznámku s výpisem všech štítků svalů                               |
+| Zkontrolovat názvy cviků                                                                                       | Najít stejné cvičení zapsané různými pravopisy                               |
+| Exportovat trénink na plátno                                                                                   | Rozvrhnout aktuální trénink na plátno Obsidianu                              |
+| Vytvořit soubor záznamů CSV                                                                                    | Vytvořit prázdný záznam                                                      |
+| Import z Strong nebo Hevy                                                                                      | Přidat série z exportu CSV aplikace Strong nebo Hevy do záznamu              |
+| Migrovat typy cvičení, Přidat chybějící ID do bloků kódu                                                       | Údržba po aktualizaci ze starších verzí                                      |
 
 </details>
 

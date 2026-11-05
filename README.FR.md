@@ -34,26 +34,6 @@ Les graphiques montrent votre tendance, la carte thermique musculaire montre ce 
 
 La première fois que vous installez le plugin, il ajoute des notes d'exemple (exercices types, deux entraînements avec six semaines de journaux, un tableau de bord et une présentation des fonctionnalités), le configure pour les utiliser et ouvre le guide **Premiers pas** : une courte page par fonctionnalité, avec des exemples fonctionnels à essayer. Vous n'avez pas besoin d'ouvrir les paramètres. Explorez avant de configurer le vôtre.
 
-### La visite guidée
-
-La visite ouvre une note « Visite guidée » avec un tableau, un graphique, un tableau de bord et un minuteur, et pointe chacun d'eux à tour de rôle. Elle comporte neuf étapes courtes :
-
-1. Enregistrez votre première série avec le bouton **+**. L'étape se termine quand vous l'enregistrez.
-2. Modifiez ou supprimez une série avec les boutons de chaque ligne.
-3. Visualisez votre progression dans le graphique.
-4. Consultez les totaux et les tendances dans le tableau de bord.
-5. Voyez quels muscles vous avez travaillés dans la carte thermique musculaire.
-6. Lancez le minuteur de repos. L'étape se termine quand vous appuyez sur **Démarrer**.
-7. Repérez l'icône d'haltère dans le ruban, qui ouvre le formulaire d'enregistrement depuis n'importe quelle note. Sur téléphone, utilisez plutôt la palette de commandes.
-8. Lancez depuis la palette de commandes une commande **Insérer** (graphique, tableau, minuteur, tableau de bord ou durée d'entraînement). L'étape se termine quand vous le faites.
-9. Terminé.
-
-Utilisez **Retour** et **Suivant** pour vous déplacer, ou **Passer la visite** pour quitter. Si la partie de la note visée par la visite est hors de l'écran, **Montrez-moi** fait défiler jusqu'à elle. Appuyez sur `Esc` à tout moment pour la terminer. La visite se termine aussi quand vous fermez sa note ou passez à un autre fichier. Rien n'est perdu : vos séries restent dans le journal.
-
-Quand les données d'exemple sont utilisées, la visite s'appuie sur elles. Sinon, elle utilise votre propre journal, si bien que le graphique et le tableau de bord sont presque vides au départ. La note n'est créée qu'une fois, à côté des exemples ou en haut de votre coffre. Une note existante n'est jamais écrasée, et vous pouvez la modifier ou la supprimer. Si une note nommée « Visite guidée » existe déjà et n'appartient pas à la visite, la visite utilise « Visite guidée 1 » (ou le prochain numéro libre) à la place.
-
-Vous voulez refaire la visite ? Sélectionnez **Commencer la visite** sous **Paramètres → Workout Planner → Premiers pas**, ou lancez **Commencer la visite** depuis la palette de commandes.
-
 Vous voulez de nouveau les exemples ou le guide ? Sélectionnez **Créer les exemples** ou **Ouvrir le guide de démarrage** sous **Paramètres → Workout Planner → Premiers pas**, ou lancez **Créer des notes d'exemple** ou **Ouvrir le guide de démarrage** depuis la palette de commandes (`Ctrl/Cmd + P`). Créer les exemples n'écrase jamais rien : le relancer ajoute seulement les fichiers d'exemple manquants, et les fichiers que vous avez modifiés restent tels quels. Le guide propose de créer les exemples s'ils n'existent pas encore. Un tableau, un graphique ou un tableau de bord vide affiche aussi un lien **Ou explorez avec des données d'exemple.** Si vous avez déjà un journal d'entraînement, les exemples obtiennent leur propre fichier de journal, et le vôtre reste intact.
 
 Pour ajouter un tableau à n'importe quelle note, par exemple `Push Day` :
@@ -64,7 +44,7 @@ exercise: Bench Press
 ```
 ````
 
-Appuyez sur **+** sous le tableau, saisissez les répétitions et le poids, puis enregistrez. Le tableau se met à jour tout seul. Vous n'avez pas non plus à écrire les blocs à la main : les commandes **Insérer un graphique / un tableau / un minuteur / un tableau de bord / une durée d'entraînement** ouvrent un formulaire et insèrent le bloc pour vous.
+Appuyez sur **+** sous le tableau, saisissez les répétitions et le poids, puis enregistrez. Le tableau se met à jour tout seul. Vous n'avez pas non plus à écrire les blocs à la main : les commandes **Insérer un graphique / un tableau / des séries / un minuteur / un tableau de bord / une durée d'entraînement** et **Insérer une séance guidée** ouvrent un formulaire (ou écrivent le bloc) pour vous.
 
 ## Enregistrer des séries
 
@@ -167,19 +147,20 @@ showTrendLine: true
 <details>
 <summary>Tous les paramètres</summary>
 
-| Paramètre       | Défaut         | Rôle                                                                      |
-| --------------- | -------------- | ------------------------------------------------------------------------- |
-| `exercise`      | —              | Seulement cet exercice                                                    |
-| `workout`       | —              | Seulement cet entraînement                                                |
-| `type`          | `volume`       | `volume`, `weight`, `reps`, `duration`, `distance`, `pace` ou `heartRate` |
-| `chartType`     | `exercise`     | Comment le point de chaque jour est construit (ci-dessous)                |
-| `dateRange`     | `30`           | Jours à inclure                                                           |
-| `limit`         | —              | Seulement les N derniers points                                           |
-| `showTrendLine` | `false`        | Trace une ligne de tendance                                               |
-| `showStats`     | `true`         | Affiche la moyenne, le meilleur et le plus bas sous le graphique          |
-| `title`         | `Évolution <type>` | Titre du graphique                                                    |
-| `height`        | 4:3            | `300` (pixels) ou toute longueur CSS comme `50vh`                         |
-| `exactMatch`    | `false`        | Correspondance exacte du nom de l'exercice                                |
+| Paramètre       | Défaut             | Rôle                                                                              |
+| --------------- | ------------------ | --------------------------------------------------------------------------------- |
+| `exercise`      | —                  | Seulement cet exercice                                                            |
+| `workout`       | —                  | Seulement cet entraînement                                                        |
+| `type`          | `volume`           | `volume`, `weight`, `reps`, `e1rm`, `duration`, `distance`, `pace` ou `heartRate` |
+| `chartType`     | `exercise`         | Comment le point de chaque jour est construit (ci-dessous)                        |
+| `dateRange`     | `30`               | Jours à inclure                                                                   |
+| `limit`         | —                  | Seulement les N derniers points                                                   |
+| `showTrendLine` | `false`            | Trace une ligne de tendance                                                       |
+| `showTrend`     | `true`             | Affiche l'en-tête de tendance au-dessus du graphique                              |
+| `showStats`     | `true`             | Affiche la moyenne, le meilleur et le plus bas sous le graphique                  |
+| `title`         | `Évolution <type>` | Titre du graphique                                                                |
+| `height`        | 4:3                | `300` (pixels) ou toute longueur CSS comme `50vh`                                 |
+| `exactMatch`    | `false`            | Correspondance exacte du nom de l'exercice                                        |
 
 | `chartType` | Séries utilisées                    | Point de chaque jour |
 | ----------- | ----------------------------------- | -------------------- |
@@ -316,6 +297,7 @@ Un bloc `workout-session` en haut d'une note d'entraînement (commande **Insére
 
 ````markdown
 ```workout-session
+
 ```
 
 ## Squat
@@ -473,24 +455,24 @@ Changer l'unité de poids ne modifie pas les anciennes séries : chacune conserv
 
 Ouvrez la palette de commandes (`Ctrl/Cmd + P`) et tapez le nom.
 
-| Commande                                                    | Ce qu'elle fait                                                    |
-| ----------------------------------------------------------- | ------------------------------------------------------------------ |
-| Créer un journal d'entraînement                             | Enregistrer une série                                              |
-| Commencer la visite                                         | Suivre la visite guidée                                            |
-| Créer des notes d'exemple                                   | Ajouter des exercices, entraînements, journaux et un tableau de bord d'exemple |
-| Ouvrir le guide de démarrage                                | Ouvrir le guide dans les exemples                                  |
-| Insérer un graphique / un tableau / un minuteur / un tableau de bord / une durée d'entraînement | Insérer un bloc via un formulaire                |
-| Créer une page d'exercice                                   | Nouvelle page d'exercice avec son type et ses tags                 |
-| Créer une section d'exercice                                | Ajouter un titre, un minuteur et un tableau pour un exercice dans la note actuelle |
-| Ajouter un bloc d'exercice                                  | Insérer un bloc d'exercice, avec autocomplétion du nom             |
-| Convertir un exercice                                       | Déplacer les séries d'un exercice vers un autre type d'exercice    |
-| Gérer les tags musculaires                                  | Modifier `muscle-tags.csv`                                         |
-| Générer la référence des tags                               | Créer une note listant chaque tag musculaire                       |
-| Vérifier les noms d'exercices                               | Repérer le même exercice enregistré sous différentes orthographes  |
-| Exporter l'entraînement vers un canvas                      | Disposer l'entraînement actuel sur un canvas Obsidian              |
-| Créer un fichier de journal CSV                             | Créer un journal vide                                              |
-| Importer depuis Strong ou Hevy                              | Ajouter les séries d'un export CSV de Strong ou Hevy au journal    |
-| Migrer les types d'exercices, Ajouter les ID manquants aux blocs de code | Maintenance après une mise à jour depuis d'anciennes versions |
+| Commande                                                                                                     | Ce qu'elle fait                                                                          |
+| ------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| Créer un journal d'entraînement                                                                              | Enregistrer une série                                                                    |
+| Créer des notes d'exemple                                                                                    | Ajouter des exercices, entraînements, journaux et un tableau de bord d'exemple           |
+| Ouvrir le guide de démarrage, Commencer la visite                                                            | Ouvrir le guide dans les exemples                                                        |
+| Afficher les nouveautés                                                                                      | Afficher les changements de chaque version                                               |
+| Insérer un graphique / un tableau / des séries / un minuteur / un tableau de bord / une durée d'entraînement | Insérer un bloc via un formulaire                                                        |
+| Insérer une séance guidée                                                                                    | Insérer un bloc `workout-session` au curseur                                             |
+| Créer une page d'exercice                                                                                    | Nouvelle page d'exercice avec son type et ses tags                                       |
+| Ajouter un bloc d'exercice                                                                                   | Ajouter une section pour un exercice avec son bloc de séries, avec autocomplétion du nom |
+| Convertir un exercice                                                                                        | Déplacer les séries d'un exercice vers un autre type d'exercice                          |
+| Gérer les tags musculaires                                                                                   | Modifier `muscle-tags.csv`                                                               |
+| Générer la référence des tags                                                                                | Créer une note listant chaque tag musculaire                                             |
+| Vérifier les noms d'exercices                                                                                | Repérer le même exercice enregistré sous différentes orthographes                        |
+| Exporter l'entraînement vers un canvas                                                                       | Disposer l'entraînement actuel sur un canvas Obsidian                                    |
+| Créer un fichier de journal CSV                                                                              | Créer un journal vide                                                                    |
+| Importer depuis Strong ou Hevy                                                                               | Ajouter les séries d'un export CSV de Strong ou Hevy au journal                          |
+| Migrer les types d'exercices, Ajouter les ID manquants aux blocs de code                                     | Maintenance après une mise à jour depuis d'anciennes versions                            |
 
 </details>
 

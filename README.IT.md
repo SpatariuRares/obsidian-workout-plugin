@@ -34,26 +34,6 @@ I grafici mostrano il tuo andamento, la mappa di calore muscolare mostra cosa ha
 
 La prima volta che installi il plugin, aggiunge delle note di esempio (esercizi di prova, due allenamenti con sei settimane di registri, una dashboard e una vetrina delle funzionalità), punta il plugin verso di esse e apre la **Guida per iniziare**: una pagina breve per ogni funzionalità, con esempi funzionanti da provare. Non serve aprire le impostazioni. Esplora pure prima di configurare i tuoi.
 
-### Il tour guidato
-
-Il tour apre una nota "Visita guidata" con una tabella, un grafico, una dashboard e un timer, e indica ciascuno a turno. Ha nove passaggi brevi:
-
-1. Registra la tua prima serie con il pulsante **+**. Il passaggio si completa quando la salvi.
-2. Modifica o elimina una serie con i pulsanti su ogni riga.
-3. Vedi i tuoi progressi nel grafico.
-4. Vedi i totali e le tendenze nella dashboard.
-5. Scopri quali muscoli hai allenato nella mappa di calore muscolare.
-6. Avvia il timer di riposo. Il passaggio si completa quando premi avvia.
-7. Trova l'icona del manubrio nella barra laterale, che apre il modulo di registrazione da qualsiasi nota. Sul telefono, usa invece la palette dei comandi.
-8. Esegui un comando **Inserisci** qualsiasi dalla palette dei comandi. Il passaggio si completa quando lo fai.
-9. Fatto.
-
-Usa **Indietro** e **Avanti** per muoverti, oppure **Salta** per uscire. Se la parte della nota che il tour indica è fuori dalla vista, **Mostrami** scorre fino a quel punto. Premi `Esc` in qualsiasi momento per terminare. Il tour finisce anche quando chiudi la sua nota o passi a un altro file. Non si perde nulla: le tue serie restano nel registro.
-
-Quando sono in uso i dati di esempio, il tour gira su di essi. Altrimenti gira sul tuo registro, quindi grafico e dashboard partono quasi vuoti. La nota viene creata una sola volta, accanto agli esempi o in cima al vault. Una nota esistente non viene mai sovrascritta, e puoi modificarla o eliminarla. Se esiste già una nota chiamata "Visita guidata" che non è quella del tour, il tour usa "Visita guidata 1" (o il numero libero successivo).
-
-Vuoi rifare il tour? Seleziona **Inizia il tour** in **Impostazioni → Workout Planner → Per iniziare**, oppure esegui **Inizia il tour** dalla palette dei comandi.
-
 Vuoi di nuovo gli esempi o la guida? Seleziona **Crea esempi** o **Apri la guida per iniziare** in **Impostazioni → Workout Planner → Per iniziare**, oppure esegui **Crea note di esempio** o **Apri la guida per iniziare** dalla palette dei comandi (`Ctrl/Cmd + P`). Creare gli esempi non sovrascrive mai nulla: rieseguirlo aggiunge solo i file di esempio mancanti, e i file che hai modificato restano come sono. La guida propone di creare gli esempi se non esistono ancora. Una tabella, un grafico o una dashboard vuoti hanno anche un link **Oppure esplora con dati di esempio**. Se hai già un registro allenamenti, gli esempi ottengono un file di registro proprio e il tuo resta intatto.
 
 Per aggiungere una tabella a una nota qualsiasi, per esempio `Push Day`:
@@ -64,7 +44,7 @@ exercise: Bench Press
 ```
 ````
 
-Tocca **+** sotto la tabella, inserisci ripetizioni e peso, e salva. La tabella si aggiorna da sola. Non devi nemmeno scrivere i blocchi a mano: i comandi **Inserisci grafico allenamento**, **Inserisci tabella allenamento**, **Inserisci timer allenamento**, **Inserisci dashboard allenamento** e **Inserisci durata allenamento** aprono un modulo e inseriscono il blocco al posto tuo.
+Tocca **+** sotto la tabella, inserisci ripetizioni e peso, e salva. La tabella si aggiorna da sola. Non devi nemmeno scrivere i blocchi a mano: i comandi **Inserisci grafico allenamento**, **Inserisci tabella allenamento**, **Inserisci serie di allenamento**, **Inserisci timer allenamento**, **Inserisci dashboard allenamento** e **Inserisci durata allenamento**, e **Inserisci sessione guidata**, aprono un modulo o inseriscono il blocco al posto tuo.
 
 ## Registrare le serie
 
@@ -167,19 +147,20 @@ showTrendLine: true
 <details>
 <summary>Tutti i parametri</summary>
 
-| Parametro       | Predefinito    | Cosa fa                                                                   |
-| --------------- | -------------- | ------------------------------------------------------------------------- |
-| `exercise`      | —              | Solo questo esercizio                                                     |
-| `workout`       | —              | Solo questo allenamento                                                   |
-| `type`          | `volume`       | `volume`, `weight`, `reps`, `duration`, `distance`, `pace` o `heartRate`  |
-| `chartType`     | `exercise`     | Come viene costruito il punto di ogni giorno (sotto)                      |
-| `dateRange`     | `30`           | Giorni da includere                                                       |
-| `limit`         | —              | Solo gli ultimi N punti                                                   |
-| `showTrendLine` | `false`        | Disegna una linea di tendenza                                             |
-| `showStats`     | `true`         | Mostra media, migliore e peggiore sotto il grafico                        |
-| `title`         | `Trend <type>` | Titolo del grafico                                                        |
-| `height`        | 4:3            | `300` (pixel) o una lunghezza CSS come `50vh`                             |
-| `exactMatch`    | `false`        | Confronta il nome dell'esercizio in modo esatto                           |
+| Parametro       | Predefinito    | Cosa fa                                                                          |
+| --------------- | -------------- | -------------------------------------------------------------------------------- |
+| `exercise`      | —              | Solo questo esercizio                                                            |
+| `workout`       | —              | Solo questo allenamento                                                          |
+| `type`          | `volume`       | `volume`, `weight`, `reps`, `e1rm`, `duration`, `distance`, `pace` o `heartRate` |
+| `chartType`     | `exercise`     | Come viene costruito il punto di ogni giorno (sotto)                             |
+| `dateRange`     | `30`           | Giorni da includere                                                              |
+| `limit`         | —              | Solo gli ultimi N punti                                                          |
+| `showTrendLine` | `false`        | Disegna una linea di tendenza                                                    |
+| `showTrend`     | `true`         | Mostra l'intestazione dell'andamento sopra il grafico                            |
+| `showStats`     | `true`         | Mostra media, migliore e peggiore sotto il grafico                               |
+| `title`         | `Trend <type>` | Titolo del grafico                                                               |
+| `height`        | 4:3            | `300` (pixel) o una lunghezza CSS come `50vh`                                    |
+| `exactMatch`    | `false`        | Confronta il nome dell'esercizio in modo esatto                                  |
 
 | `chartType` | Serie usate                          | Punto di ogni giorno |
 | ----------- | ------------------------------------ | -------------------- |
@@ -316,6 +297,7 @@ Un blocco `workout-session` in cima a una nota di allenamento (comando **Inseris
 
 ````markdown
 ```workout-session
+
 ```
 
 ## Squat
@@ -473,24 +455,24 @@ Cambiare l'unità di peso non rietichetta le serie vecchie: ogni serie conserva 
 
 Apri la palette dei comandi (`Ctrl/Cmd + P`) e digita il nome.
 
-| Comando                                                     | Cosa fa                                                            |
-| ----------------------------------------------------------- | ------------------------------------------------------------------ |
-| Crea registro allenamento                                   | Registra una serie                                                 |
-| Inizia il tour                                              | Fai il tour guidato                                                |
-| Crea note di esempio                                        | Aggiungi esercizi, allenamenti, registri e una dashboard di esempio |
-| Apri la guida per iniziare                                  | Apri la guida negli esempi                                         |
-| Inserisci grafico allenamento / tabella allenamento / timer allenamento / dashboard allenamento / durata allenamento | Inserisci un blocco tramite un modulo |
-| Crea pagina esercizio                                       | Nuova pagina esercizio con tipo e tag                              |
-| Crea sezione esercizio                                      | Aggiungi titolo, timer e tabella per un esercizio alla nota corrente |
-| Aggiungi blocco esercizio                                   | Inserisci un blocco esercizio, con completamento automatico del nome |
-| Converti esercizio                                          | Sposta le serie di un esercizio a un altro tipo di esercizio      |
-| Gestisci tag muscolari                                      | Modifica `muscle-tags.csv`                                         |
-| Genera riferimento dei tag                                  | Crea una nota che elenca ogni tag muscolare                        |
-| Verifica nomi degli esercizi                                | Trova lo stesso esercizio registrato con grafie diverse            |
-| Esporta allenamento su canvas                               | Disponi l'allenamento corrente su un canvas di Obsidian            |
-| Crea file CSV del registro                                  | Crea un registro vuoto                                             |
-| Importa da Strong o Hevy                                    | Aggiungi le serie di un export CSV di Strong o Hevy al registro    |
-| Migra tipi di esercizio, Aggiungi gli ID mancanti ai blocchi di codice | Manutenzione dopo l'aggiornamento da versioni precedenti |
+| Comando                                                                                                                                     | Cosa fa                                                                                              |
+| ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Crea registro allenamento                                                                                                                   | Registra una serie                                                                                   |
+| Crea note di esempio                                                                                                                        | Aggiungi esercizi, allenamenti, registri e una dashboard di esempio                                  |
+| Apri la guida per iniziare, Inizia il tour                                                                                                  | Apri la guida negli esempi                                                                           |
+| Mostra novità                                                                                                                               | Mostra cosa è cambiato in ogni versione                                                              |
+| Inserisci grafico allenamento / tabella allenamento / serie di allenamento / timer allenamento / dashboard allenamento / durata allenamento | Inserisci un blocco tramite un modulo                                                                |
+| Inserisci sessione guidata                                                                                                                  | Inserisci un blocco `workout-session` alla posizione del cursore                                     |
+| Crea pagina esercizio                                                                                                                       | Nuova pagina esercizio con tipo e tag                                                                |
+| Aggiungi blocco esercizio                                                                                                                   | Aggiungi una sezione per un esercizio con il suo blocco serie, con completamento automatico del nome |
+| Converti esercizio                                                                                                                          | Sposta le serie di un esercizio a un altro tipo di esercizio                                         |
+| Gestisci tag muscolari                                                                                                                      | Modifica `muscle-tags.csv`                                                                           |
+| Genera riferimento dei tag                                                                                                                  | Crea una nota che elenca ogni tag muscolare                                                          |
+| Verifica nomi degli esercizi                                                                                                                | Trova lo stesso esercizio registrato con grafie diverse                                              |
+| Esporta allenamento su canvas                                                                                                               | Disponi l'allenamento corrente su un canvas di Obsidian                                              |
+| Crea file CSV del registro                                                                                                                  | Crea un registro vuoto                                                                               |
+| Importa da Strong o Hevy                                                                                                                    | Aggiungi le serie di un export CSV di Strong o Hevy al registro                                      |
+| Migra tipi di esercizio, Aggiungi gli ID mancanti ai blocchi di codice                                                                      | Manutenzione dopo l'aggiornamento da versioni precedenti                                             |
 
 </details>
 

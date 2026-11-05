@@ -34,26 +34,6 @@ Charts show your trend, the muscle heat map shows what you trained, and each set
 
 The first time you install the plugin, it adds example notes (sample exercises, two workouts with six weeks of logs, a dashboard and a feature showcase), points the plugin at them and opens the **Getting started** guide: one short page per feature, with working examples you can try. You don't need to open settings. Poke around before setting up your own.
 
-### The guided tour
-
-The tour opens a "Guided tour" note with a table, a chart, a dashboard and a timer, and points at each one in turn. It has nine short steps:
-
-1. Log your first set with the **+** button. The step finishes when you save it.
-2. Edit or delete a set with the buttons on each row.
-3. See your progress in the chart.
-4. See totals and trends in the dashboard.
-5. See which muscles you trained in the muscle heat map.
-6. Start the rest timer. The step finishes when you press start.
-7. Find the dumbbell icon in the ribbon, which opens the log form from any note. On a phone, use the command palette instead.
-8. Run any **Insert workout** command from the command palette. The step finishes when you do.
-9. Done.
-
-Use **Back** and **Next** to move around, or **Skip** to leave. If the part of the note the tour points at is out of view, **Show me** scrolls to it. Press `Esc` at any time to end it. The tour also ends when you close its note or switch to another file. Nothing is lost: your sets stay in the log.
-
-When the example data is in use, the tour runs on it. Otherwise it runs on your own log, so the chart and dashboard start nearly empty. The note is created once, next to the examples or at the top of your vault. An existing note is never overwritten, and you can edit or delete it. If a note called "Guided tour" already exists and isn't the tour's own, the tour uses "Guided tour 1" (or the next free number) instead.
-
-Want to take the tour again? Run **Start the tour** from the command palette.
-
 Want the examples or the guide again? Select **Open getting started guide** under **Settings → Workout Planner → Getting started** (it adds the example notes that are missing first), or run **Create example notes** or **Open getting started guide** from the command palette (`Ctrl/Cmd + P`). Creating the examples never overwrites anything: running it again only adds the example files that are missing, and files you changed stay as they are. The guide offers to create the examples if they don't exist yet. An empty table, chart or dashboard also has an **Or explore with example data** link. If you already have a workout log, the examples get their own log file and yours stays untouched.
 
 To add a table to any note, for example `Push Day`:
@@ -64,7 +44,7 @@ exercise: Bench Press
 ```
 ````
 
-Tap **+** under the table, enter reps and weight, and save. The table updates on its own. You don't have to write blocks by hand either: the **Insert workout chart / table / timer / dashboard / duration** commands open a form and insert the block for you.
+Tap **+** under the table, enter reps and weight, and save. The table updates on its own. You don't have to write blocks by hand either: the **Insert workout chart / table / sets / timer / dashboard / duration** and **Insert guided session** commands open a form (or write the block) for you.
 
 ## Logging sets
 
@@ -94,20 +74,20 @@ With `targetWeight` and `targetReps`, a progressive-overload target appears abov
 <details>
 <summary>All parameters</summary>
 
-| Parameter                    | Default | What it does                                       |
-| ---------------------------- | ------- | -------------------------------------------------- |
-| `exercise`                   | —       | Only this exercise                                 |
-| `workout`                    | —       | Only this workout (note name)                      |
-| `exactMatch`                 | `false` | Match the exercise name exactly                    |
-| `dateRange`                  | all     | Today and the previous N days                      |
+| Parameter                    | Default | What it does                                         |
+| ---------------------------- | ------- | ---------------------------------------------------- |
+| `exercise`                   | —       | Only this exercise                                   |
+| `workout`                    | —       | Only this workout (note name)                        |
+| `exactMatch`                 | `false` | Match the exercise name exactly                      |
+| `dateRange`                  | all     | Today and the previous N days                        |
 | `limit`                      | `50`    | Maximum rows; with `sets`, `sets × 2` (two workouts) |
-| `sortBy`                     | `date`  | `date`, `exercise`, `weight`, `reps` or `volume`   |
-| `sortOrder`                  | `desc`  | `asc` or `desc`                                    |
-| `columns`                    | all     | Columns to show, e.g. `["date", "reps", "weight"]` |
-| `showProtocol`               | `true`  | Show the protocol badge column                     |
-| `showAddButton`              | `true`  | Show the **+** button                              |
-| `targetWeight`, `targetReps` | —       | Show a progressive-overload target above the table |
-| `sets`                       | —       | Sets planned, counted by a `workout-session` block |
+| `sortBy`                     | `date`  | `date`, `exercise`, `weight`, `reps` or `volume`     |
+| `sortOrder`                  | `desc`  | `asc` or `desc`                                      |
+| `columns`                    | all     | Columns to show, e.g. `["date", "reps", "weight"]`   |
+| `showProtocol`               | `true`  | Show the protocol badge column                       |
+| `showAddButton`              | `true`  | Show the **+** button                                |
+| `targetWeight`, `targetReps` | —       | Show a progressive-overload target above the table   |
+| `sets`                       | —       | Sets planned, counted by a `workout-session` block   |
 
 Exercise names match loosely by default ("squat" finds "Squat (high bar)"); add `exactMatch: true` for only that exact name.
 
@@ -130,13 +110,13 @@ rest: 120
 <details>
 <summary>All parameters</summary>
 
-| Parameter                    | Default       | What it does                                                                                     |
-| ---------------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
-| `exercise`                   | —             | The exercise (exact name)                                                                        |
-| `workout`                    | the note name | The workout the sets are logged under                                                            |
-| `sets`                       | as last time  | Rows to fill in (at least one); **Add set** adds more                                            |
-| `targetWeight`, `targetReps` | —             | Hints when the exercise was never done, and a progressive-overload target                        |
-| `rest`                       | —             | Seconds of rest after each set; `0` for no timer. Unset: the `workout-timer` of the same section |
+| Parameter                    | Default       | What it does                                                                                                                    |
+| ---------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `exercise`                   | —             | The exercise (exact name)                                                                                                       |
+| `workout`                    | the note name | The workout the sets are logged under                                                                                           |
+| `sets`                       | as last time  | Rows to fill in (at least one); **Add set** adds more                                                                           |
+| `targetWeight`, `targetReps` | —             | Hints when the exercise was never done, and a progressive-overload target                                                       |
+| `rest`                       | —             | Seconds of rest after each set; `0` for no timer. Unset: the `workout-timer` of the same section                                |
 | `timer.*`                    | —             | The rest timer's other options: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
 
 </details>
@@ -167,19 +147,20 @@ showTrendLine: true
 <details>
 <summary>All parameters</summary>
 
-| Parameter       | Default        | What it does                                                              |
-| --------------- | -------------- | ------------------------------------------------------------------------- |
-| `exercise`      | —              | Only this exercise                                                        |
-| `workout`       | —              | Only this workout                                                         |
-| `type`          | `volume`       | `volume`, `weight`, `reps`, `duration`, `distance`, `pace` or `heartRate` |
-| `chartType`     | `exercise`     | How each day's point is built (below)                                     |
-| `dateRange`     | `30`           | Days to include                                                           |
-| `limit`         | —              | Only the latest N points                                                  |
-| `showTrendLine` | `false`        | Draw a trend line                                                         |
-| `showStats`     | `true`         | Show average, best and lowest under the chart                             |
-| `title`         | `Trend <type>` | Chart title                                                               |
-| `height`        | 4:3            | `300` (pixels) or any CSS length such as `50vh`                           |
-| `exactMatch`    | `false`        | Match the exercise name exactly                                           |
+| Parameter       | Default        | What it does                                                                      |
+| --------------- | -------------- | --------------------------------------------------------------------------------- |
+| `exercise`      | —              | Only this exercise                                                                |
+| `workout`       | —              | Only this workout                                                                 |
+| `type`          | `volume`       | `volume`, `weight`, `reps`, `e1rm`, `duration`, `distance`, `pace` or `heartRate` |
+| `chartType`     | `exercise`     | How each day's point is built (below)                                             |
+| `dateRange`     | `30`           | Days to include                                                                   |
+| `limit`         | —              | Only the latest N points                                                          |
+| `showTrendLine` | `false`        | Draw a trend line                                                                 |
+| `showTrend`     | `true`         | Show the trend header above the chart                                             |
+| `showStats`     | `true`         | Show average, best and lowest under the chart                                     |
+| `title`         | `Trend <type>` | Chart title                                                                       |
+| `height`        | 4:3            | `300` (pixels) or any CSS length such as `50vh`                                   |
+| `exactMatch`    | `false`        | Match the exercise name exactly                                                   |
 
 | `chartType` | Sets used                           | Each day's point |
 | ----------- | ----------------------------------- | ---------------- |
@@ -221,16 +202,16 @@ The heat map shows which muscles you trained over the last week, month or year, 
 <details>
 <summary>All parameters</summary>
 
-| Parameter             | Default | What it does                                                                                                                                                                                                |
-| --------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`               | —       | Heading above the dashboard                                                                                                                                                                                 |
-| `dateRange`           | all     | Only sets from the last N days                                                                                                                                                                              |
+| Parameter             | Default | What it does                                                                                                                                                                                                                    |
+| --------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`               | —       | Heading above the dashboard                                                                                                                                                                                                     |
+| `dateRange`           | all     | Only sets from the last N days                                                                                                                                                                                                  |
 | `widgets`             | all     | The widgets to show, in this order: `summary`, `quickStats`, `heatMap`, `volume`, `recentWorkouts`, `protocolDistribution`, `protocolEffectiveness`, `duration`, `quickActions`, `fileErrors`, `muscleTags`, `trainingCalendar` |
-| `layout`              | `list`  | `grid` places each widget in its cells (see above)                                                                                                                                                          |
-| `columns`             | —       | Grid: the columns the grid was made for                                                                                                                                                                     |
-| `grid.<widget>`       | —       | Grid: column, row, width and height of that widget                                                                                                                                                          |
-| `recentWorkoutsLimit` | `5`     | Workouts in the recent list                                                                                                                                                                                 |
-| `volumeTrendDays`     | `30`    | Days in the volume trend chart                                                                                                                                                                              |
+| `layout`              | `list`  | `grid` places each widget in its cells (see above)                                                                                                                                                                              |
+| `columns`             | —       | Grid: the columns the grid was made for                                                                                                                                                                                         |
+| `grid.<widget>`       | —       | Grid: column, row, width and height of that widget                                                                                                                                                                              |
+| `recentWorkoutsLimit` | `5`     | Workouts in the recent list                                                                                                                                                                                                     |
+| `volumeTrendDays`     | `30`    | Days in the volume trend chart                                                                                                                                                                                                  |
 
 </details>
 
@@ -292,19 +273,19 @@ rounds: 8
 <details>
 <summary>All parameters</summary>
 
-| Parameter             | Default     | What it does                                                          |
-| --------------------- | ----------- | --------------------------------------------------------------------- |
-| `type`                | `countdown` | `countdown`, `interval` or `stopwatch`                                |
-| `duration`            | `30`        | Seconds (countdown; for interval the work of each round)              |
-| `work`                | —           | Interval: seconds of work per round (replaces `duration`)             |
-| `rest`                | `0`         | Interval: seconds of rest after each round's work                     |
-| `rounds`              | `1`         | Rounds (interval)                                                     |
-| `sound`               | `true`      | Beep when time is up                                                  |
-| `autoStart`           | `false`     | Start as soon as the note opens                                       |
-| `showControls`        | `true`      | Show start, pause and reset                                           |
+| Parameter             | Default     | What it does                                                            |
+| --------------------- | ----------- | ----------------------------------------------------------------------- |
+| `type`                | `countdown` | `countdown`, `interval` or `stopwatch`                                  |
+| `duration`            | `30`        | Seconds (countdown; for interval the work of each round)                |
+| `work`                | —           | Interval: seconds of work per round (replaces `duration`)               |
+| `rest`                | `0`         | Interval: seconds of rest after each round's work                       |
+| `rounds`              | `1`         | Rounds (interval)                                                       |
+| `sound`               | `true`      | Beep when time is up                                                    |
+| `autoStart`           | `false`     | Start as soon as the note opens                                         |
+| `showControls`        | `true`      | Show start, pause and reset                                             |
 | `preset`              | —           | Start from a preset (saved, `Tabata` or `EMOM`); parameters override it |
-| `exercise`, `workout` | —           | Restart the timer when you log a set for this exercise or workout     |
-| `superset`            | `false`     | Canvas export only: draw this exercise and the next one as a superset |
+| `exercise`, `workout` | —           | Restart the timer when you log a set for this exercise or workout       |
+| `superset`            | `false`     | Canvas export only: draw this exercise and the next one as a superset   |
 
 </details>
 
@@ -316,6 +297,7 @@ A `workout-session` block at the top of a workout note (command **Insert guided 
 
 ````markdown
 ```workout-session
+
 ```
 
 ## Squat
@@ -473,24 +455,24 @@ Changing the weight unit doesn't relabel old sets: each set keeps the unit it wa
 
 Open the command palette (`Ctrl/Cmd + P`) and type the name.
 
-| Command                                                     | What it does                                                       |
-| ----------------------------------------------------------- | ------------------------------------------------------------------ |
-| Create workout log                                          | Log a set                                                          |
-| Start the tour                                              | Take the guided tour                                               |
-| Create example notes                                        | Add sample exercises, workouts, logs and a dashboard               |
-| Open getting started guide                                  | Open the guide in the examples                                     |
-| Insert workout chart / table / timer / dashboard / duration | Insert a block through a form                                      |
-| Create exercise page                                        | New exercise page with type and tags                               |
-| Create exercise section                                     | Add a heading, timer and table for an exercise to the current note |
-| Add exercise block                                          | Insert an exercise block, with name autocomplete                   |
-| Convert exercise                                            | Move an exercise's sets to another exercise type                   |
-| Manage muscle tags                                          | Edit `muscle-tags.csv`                                             |
-| Generate tag reference                                      | Create a note listing every muscle tag                             |
-| Audit exercise names                                        | Find the same exercise logged under different spellings            |
-| Export workout to canvas                                    | Lay out the current workout on an Obsidian canvas                  |
-| Create CSV log file                                         | Create an empty log                                                |
-| Import from Strong or Hevy                                  | Add the sets of a Strong or Hevy CSV export to the log             |
-| Migrate exercise types, Add missing IDs to code blocks      | Maintenance after upgrading from older versions                    |
+| Command                                                            | What it does                                                              |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------- |
+| Create workout log                                                 | Log a set                                                                 |
+| Create example notes                                               | Add sample exercises, workouts, logs and a dashboard                      |
+| Open getting started guide, Start the tour                         | Open the guide in the examples                                            |
+| Show what's new                                                    | Show what changed in each version                                         |
+| Insert workout chart / table / sets / timer / dashboard / duration | Insert a block through a form                                             |
+| Insert guided session                                              | Insert a `workout-session` block at the cursor                            |
+| Create exercise page                                               | New exercise page with type and tags                                      |
+| Add exercise block                                                 | Add a section for an exercise with its sets block, with name autocomplete |
+| Convert exercise                                                   | Move an exercise's sets to another exercise type                          |
+| Manage muscle tags                                                 | Edit `muscle-tags.csv`                                                    |
+| Generate tag reference                                             | Create a note listing every muscle tag                                    |
+| Audit exercise names                                               | Find the same exercise logged under different spellings                   |
+| Export workout to canvas                                           | Lay out the current workout on an Obsidian canvas                         |
+| Create CSV log file                                                | Create an empty log                                                       |
+| Import from Strong or Hevy                                         | Add the sets of a Strong or Hevy CSV export to the log                    |
+| Migrate exercise types, Add missing IDs to code blocks             | Maintenance after upgrading from older versions                           |
 
 </details>
 

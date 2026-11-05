@@ -34,26 +34,6 @@ Graficele îți arată tendința, harta de căldură a mușchilor arată ce ai a
 
 La prima instalare a pluginului, acesta adaugă note de exemplu (exerciții de probă, două antrenamente cu șase săptămâni de jurnal, un tablou de bord și o prezentare a funcțiilor), le setează ca sursă și deschide ghidul de pornire: o pagină scurtă pentru fiecare funcție, cu exemple funcționale pe care le poți încerca. Nu trebuie să deschizi setările. Explorează înainte să-ți configurezi propriile date.
 
-### Turul ghidat
-
-Turul deschide o notă „Tur ghidat” cu un tabel, un grafic, un tablou de bord și un temporizator, și arată pe rând fiecare dintre ele. Are nouă pași scurți:
-
-1. Înregistrează prima serie cu butonul **+**. Pasul se termină când o salvezi.
-2. Modifică sau șterge o serie cu butoanele de pe fiecare rând.
-3. Vezi-ți progresul în grafic.
-4. Vezi totalurile și tendințele în tabloul de bord.
-5. Vezi ce mușchi ai antrenat în harta de căldură a mușchilor.
-6. Pornește temporizatorul de pauză. Pasul se termină când apeși **Start**.
-7. Găsește pictograma cu ganteră din bara laterală, care deschide formularul de înregistrare din orice notă. Pe telefon, folosește paleta de comenzi.
-8. Rulează orice comandă **Adaugă** din paleta de comenzi. Pasul se termină când o faci.
-9. Gata.
-
-Folosește **Înapoi** și **Următor** ca să te deplasezi sau **Sări peste** ca să ieși. Dacă partea din notă la care arată turul nu se vede, **Arată-mi** derulează până la ea. Apasă `Esc` oricând ca să-l încheii. Turul se încheie și când închizi nota lui sau treci la alt fișier. Nu se pierde nimic: seriile tale rămân în jurnal.
-
-Când sunt folosite datele de exemplu, turul rulează pe ele. Altfel, rulează pe jurnalul tău, deci graficul și tabloul de bord încep aproape goale. Nota se creează o singură dată, lângă exemple sau în partea de sus a vault-ului tău. O notă existentă nu este suprascrisă niciodată, iar tu o poți edita sau șterge. Dacă există deja o notă numită „Tur ghidat” care nu aparține turului, acesta folosește „Tur ghidat 1” (sau următorul număr liber).
-
-Vrei să faci din nou turul? Selectează **Începe turul** sub **Setări → Workout Planner → Începe**, sau rulează **Începe turul** din paleta de comenzi.
-
 Vrei din nou exemplele sau ghidul? Selectează **Creează exemple** sau **Deschide ghidul de pornire** sub **Setări → Workout Planner → Începe**, ori rulează **Creează note de exemplu** sau **Deschide ghidul de pornire** din paleta de comenzi (`Ctrl/Cmd + P`). Crearea exemplelor nu suprascrie nimic: dacă o rulezi din nou, adaugă doar fișierele de exemplu care lipsesc, iar fișierele pe care le-ai modificat rămân cum sunt. Ghidul oferă să creeze exemplele dacă nu există încă. Un tabel, un grafic sau un tablou de bord gol are și un link **Sau explorează cu date de exemplu**. Dacă ai deja un jurnal de antrenamente, exemplele primesc propriul fișier de jurnal, iar al tău rămâne neatins.
 
 Pentru a adăuga un tabel în orice notă, de exemplu `Push Day`:
@@ -64,7 +44,7 @@ exercise: Bench Press
 ```
 ````
 
-Apasă **+** sub tabel, introdu repetările și greutatea și salvează. Tabelul se actualizează singur. Nici blocurile nu trebuie scrise de mână: comenzile **Adaugă grafic / tabel / temporizator / tablou de bord / durată** deschid un formular și inserează blocul pentru tine.
+Apasă **+** sub tabel, introdu repetările și greutatea și salvează. Tabelul se actualizează singur. Nici blocurile nu trebuie scrise de mână: comenzile **Adaugă grafic / tabel / serii / temporizator / tablou de bord / durată** și **Adaugă sesiune ghidată** deschid un formular (sau scriu blocul) pentru tine.
 
 ## Înregistrarea seriilor
 
@@ -171,11 +151,12 @@ showTrendLine: true
 | --------------- | -------------- | ------------------------------------------------------------------------- |
 | `exercise`      | —              | Doar acest exercițiu                                                      |
 | `workout`       | —              | Doar acest antrenament                                                    |
-| `type`          | `volume`       | `volume`, `weight`, `reps`, `duration`, `distance`, `pace` sau `heartRate` |
+| `type`          | `volume`       | `volume`, `weight`, `reps`, `e1rm`, `duration`, `distance`, `pace` sau `heartRate` |
 | `chartType`     | `exercise`     | Cum se construiește punctul fiecărei zile (mai jos)                       |
 | `dateRange`     | `30`           | Zile incluse                                                              |
 | `limit`         | —              | Doar ultimele N puncte                                                    |
 | `showTrendLine` | `false`        | Desenează o linie de tendință                                             |
+| `showTrend`     | `true`         | Afișează antetul tendinței deasupra graficului                            |
 | `showStats`     | `true`         | Afișează media, cel mai bun și cel mai slab sub grafic                    |
 | `title`         | `Trend <type>` | Titlul graficului                                                         |
 | `height`        | 4:3            | `300` (pixeli) sau orice lungime CSS, de exemplu `50vh`                   |
@@ -310,12 +291,13 @@ rounds: 8
 
 ## Sesiune ghidată
 
-Un bloc `workout-session` în partea de sus a notei de antrenament (comanda **Inserează sesiune ghidată**) te conduce prin antrenament câte un exercițiu pe rând: ce serie faci, ținta, ce ai făcut data trecută, un buton **Înregistrează seria** și temporizatorul de pauză, care pornește când înregistrezi o serie.
+Un bloc `workout-session` în partea de sus a notei de antrenament (comanda **Adaugă sesiune ghidată**) te conduce prin antrenament câte un exercițiu pe rând: ce serie faci, ținta, ce ai făcut data trecută, un buton **Înregistrează seria** și temporizatorul de pauză, care pornește când înregistrezi o serie.
 
 ![Sesiune ghidată pe telefon: seria 3 din 4 la genuflexiuni cu pauza pornită atât pe sesiune, cât și pe cardul de serii, formularul de înregistrare deschis de Înregistrează seria, apoi exercițiul următor cu temporizatorul de pauză pornit](assets/session.png)
 
 ````markdown
 ```workout-session
+
 ```
 
 ## Squat
@@ -473,24 +455,24 @@ Schimbarea unității de greutate nu reetichetează seriile vechi: fiecare serie
 
 Deschide paleta de comenzi (`Ctrl/Cmd + P`) și scrie numele.
 
-| Comandă                                                     | Ce face                                                            |
-| ----------------------------------------------------------- | ------------------------------------------------------------------ |
-| Creează jurnal de antrenament                               | Înregistrează o serie                                              |
-| Începe turul                                                | Parcurge turul ghidat                                              |
-| Creează note de exemplu                                     | Adaugă exerciții, antrenamente, jurnale și un tablou de bord de probă |
-| Deschide ghidul de pornire                                  | Deschide ghidul din exemple                                        |
-| Adaugă grafic / tabel / temporizator / tablou de bord / durată | Inserează un bloc printr-un formular                            |
-| Creează pagină de exercițiu                                 | Pagină nouă de exercițiu, cu tip și etichete                       |
-| Creează secțiunea de exerciții                              | Adaugă un titlu, un temporizator și un tabel pentru un exercițiu în nota curentă |
-| Adaugă bloc de exercițiu                                    | Inserează un bloc de exercițiu, cu completare automată a numelui   |
-| Convertește exercițiul                                      | Mută seriile unui exercițiu la alt tip de exercițiu                |
-| Gestionează etichetele pentru mușchi                        | Editează `muscle-tags.csv`                                         |
-| Generează referința etichetelor                             | Creează o notă cu fiecare etichetă de mușchi                       |
-| Verifică numele exercițiilor                                | Găsește același exercițiu înregistrat cu grafii diferite           |
-| Exportă antrenamentul în canvas                             | Aranjează antrenamentul curent pe un canvas Obsidian               |
-| Creează fișier de jurnal CSV                                | Creează un jurnal gol                                              |
-| Importă din Strong sau Hevy                                 | Adaugă seriile dintr-un export CSV Strong sau Hevy în jurnal      |
-| Migrează tipurile de exerciții, Adaugă ID-urile lipsă în blocurile de cod | Întreținere după actualizarea din versiuni mai vechi        |
+| Comandă                                                            | Ce face                                                                   |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------- |
+| Creează jurnal de antrenament                                      | Înregistrează o serie                                                     |
+| Creează note de exemplu                                            | Adaugă exerciții, antrenamente, jurnale și un tablou de bord de probă     |
+| Deschide ghidul de pornire, Începe turul                           | Deschide ghidul din exemple                                               |
+| Afișează ce e nou                                                  | Arată ce s-a schimbat în fiecare versiune                                 |
+| Adaugă grafic / tabel / serii / temporizator / tablou de bord / durată | Inserează un bloc printr-un formular                                  |
+| Adaugă sesiune ghidată                                             | Inserează un bloc `workout-session` la cursor                             |
+| Creează pagină de exercițiu                                        | Pagină nouă de exercițiu, cu tip și etichete                              |
+| Adaugă bloc de exercițiu                                           | Adaugă o secțiune pentru un exercițiu, cu blocul lui de serii, cu completare automată a numelui |
+| Convertește exercițiul                                             | Mută seriile unui exercițiu la alt tip de exercițiu                       |
+| Gestionează etichetele pentru mușchi                               | Editează `muscle-tags.csv`                                                |
+| Generează referința etichetelor                                    | Creează o notă cu fiecare etichetă de mușchi                              |
+| Verifică numele exercițiilor                                       | Găsește același exercițiu înregistrat cu grafii diferite                  |
+| Exportă antrenamentul în canvas                                    | Aranjează antrenamentul curent pe un canvas Obsidian                      |
+| Creează fișier de jurnal CSV                                       | Creează un jurnal gol                                                     |
+| Importă din Strong sau Hevy                                        | Adaugă seriile dintr-un export CSV Strong sau Hevy în jurnal              |
+| Migrează tipurile de exerciții, Adaugă ID-urile lipsă în blocurile de cod | Întreținere după actualizarea din versiuni mai vechi               |
 
 </details>
 

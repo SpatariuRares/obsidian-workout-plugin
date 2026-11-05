@@ -34,26 +34,6 @@ Grafikët tregojnë tendencën tuaj, harta termike e muskujve tregon çfarë ken
 
 Herën e parë që instaloni plugin-in, ai shton shënime shembull (ushtrime shembull, dy stërvitje me gjashtë javë regjistrime, një panel dhe një shfaqje të veçorive), e drejton plugin-in drejt tyre dhe hap udhëzuesin **Fillimi**: një faqe e shkurtër për çdo veçori, me shembuj funksionues që mund t'i provoni. Nuk keni nevojë të hapni cilësimet. Shikoni rreth para se të konfiguroni të tuat.
 
-### Tura udhëzuese
-
-Tura hap një shënim **Tur udhëzues** me një tabelë, një grafik, një panel dhe një timer, dhe tregon secilin në radhë. Ka nëntë hapa të shkurtër:
-
-1. Regjistro serinë tënde të parë me butonin **+**. Hapi përfundon kur e ruan.
-2. Redakto ose fshi një seri me butonat në çdo rresht.
-3. Shiko progresin tënd në grafik.
-4. Shiko totalet dhe tendencat në panel.
-5. Shiko cilët muskuj i ke stërvitur në hartën termike të muskujve.
-6. Nis timerin e pushimit. Hapi përfundon kur shtyp **Nis**.
-7. Gjej ikonën e shtangës në shiritin anësor, që hap formularin e regjistrimit nga çdo shënim. Në telefon, përdor paletën e komandave.
-8. Ekzekuto një komandë **Shto ... stërvitjeje** nga paleta e komandave. Hapi përfundon kur e bën.
-9. Përfundoi.
-
-Përdor **Prapa** dhe **Tjetra** për të lëvizur, ose **Kalo** për të dalë. Nëse pjesa e shënimit ku tregon tura është jashtë pamjes, **Më tregoni** të çon atje. Shtyp `Esc` në çdo kohë për ta mbyllur. Tura mbyllet gjithashtu kur e mbyll shënimin ose kalon në një skedar tjetër. Asgjë nuk humbet: seritë e tua mbeten në regjistër.
-
-Kur përdoren të dhënat shembull, tura punon mbi to. Përndryshe punon mbi regjistrin tënd, kështu që grafiku dhe paneli fillojnë pothuajse bosh. Shënimi krijohet një herë, pranë shembujve ose në krye të vault-it tënd. Një shënim ekzistues nuk shkruhet kurrë mbi, dhe ti mund ta redaktosh ose fshish. Nëse ekziston tashmë një shënim me emrin "Tur udhëzues" që nuk është i turit, tura përdor "Tur udhëzues 1" (ose numrin e radhës së lirë) në vend të tij.
-
-Dëshiron ta bësh turin përsëri? Zgjidh **Fillo turin** te **Cilësimet → Workout Planner → Fillimi**, ose ekzekuto **Fillo turin** nga paleta e komandave.
-
 Dëshiron shembujt ose udhëzuesin përsëri? Zgjidh **Krijo shembuj** ose **Hap udhëzuesin e fillimit** te **Cilësimet → Workout Planner → Fillimi**, ose ekzekuto **Krijo nota të shembullore** ose **Hap udhëzuesin e fillimit** nga paleta e komandave (`Ctrl/Cmd + P`). Krijimi i shembujve nuk shkruan kurrë mbi asgjë: ekzekutimi përsëri shton vetëm skedarët e shembujve që mungojnë, dhe skedarët që ke ndryshuar mbeten ashtu siç janë. Udhëzuesi të ofron të krijosh shembujt nëse nuk ekzistojnë ende. Një tabelë, grafik ose panel bosh ka gjithashtu një lidhje **Ose eksploro me të dhëna shembull**. Nëse ke tashmë një regjistër stërvitjesh, shembujt marrin skedarin e tyre të regjistrit dhe i yti mbetet i paprekur.
 
 Për të shtuar një tabelë në çdo shënim, për shembull `Push Day`:
@@ -64,7 +44,7 @@ exercise: Bench Press
 ```
 ````
 
-Shtyp **+** nën tabelë, fut përsëritjet dhe peshën, dhe ruaje. Tabela përditësohet vetvetiu. As nuk duhet t'i shkruash blloqet me dorë: komandat **Shto grafik / tabelë / timer / panel / kohëzgjatje stërvitjeje** hapin një formular dhe e fusin bllokun për ty.
+Shtyp **+** nën tabelë, fut përsëritjet dhe peshën, dhe ruaje. Tabela përditësohet vetvetiu. As nuk duhet t'i shkruash blloqet me dorë: komandat **Shto grafik / tabelë / seritë / timer / panel / kohëzgjatje stërvitjeje** dhe **Shto seancë të udhëzuar** hapin një formular (ose e shkruajnë vetë bllokun) për ty.
 
 ## Regjistrimi i serive
 
@@ -171,11 +151,12 @@ showTrendLine: true
 | --------------- | -------------- | ------------------------------------------------------------------------- |
 | `exercise`      | —              | Vetëm ky ushtrim                                                          |
 | `workout`       | —              | Vetëm kjo stërvitje                                                       |
-| `type`          | `volume`       | `volume`, `weight`, `reps`, `duration`, `distance`, `pace` ose `heartRate` |
+| `type`          | `volume`       | `volume`, `weight`, `reps`, `e1rm`, `duration`, `distance`, `pace` ose `heartRate` |
 | `chartType`     | `exercise`     | Si ndërtohet pika e çdo dite (më poshtë)                                  |
 | `dateRange`     | `30`           | Ditët për t'u përfshirë                                                   |
 | `limit`         | —              | Vetëm N pikat e fundit                                                    |
 | `showTrendLine` | `false`        | Vizato një vijë tendence                                                  |
+| `showTrend`     | `true`         | Shfaq titullin e tendencës mbi grafik                                     |
 | `showStats`     | `true`         | Shfaq mesataren, më të mirën dhe më të ulëtën nën grafik                  |
 | `title`         | `Tendenca <type>` | Titulli i grafikut                                                     |
 | `height`        | 4:3            | `300` (piksel) ose çdo gjatësi CSS si `50vh`                              |
@@ -316,6 +297,7 @@ Një bllok `workout-session` në krye të një shënimi stërvitjeje (komanda **
 
 ````markdown
 ```workout-session
+
 ```
 
 ## Squat
@@ -473,24 +455,24 @@ Ndryshimi i njësisë së peshës nuk ri-etikedon serinë e vjetër: çdo seri m
 
 Hap paletën e komandave (`Ctrl/Cmd + P`) dhe shkruaj emrin.
 
-| Komanda                                                     | Çfarë bën                                                          |
-| ----------------------------------------------------------- | ------------------------------------------------------------------ |
-| Krijo regjistrim stërvitjeje                                | Regjistro një seri                                                 |
-| Fillo turin                                                 | Ndiq turin udhëzues                                                |
-| Krijo nota të shembullore                                   | Shto ushtrime shembull, stërvitje, regjistra dhe një panel         |
-| Hap udhëzuesin e fillimit                                   | Hap udhëzuesin te shembujt                                         |
-| Shto grafik / tabelë / timer / panel / kohëzgjatje stërvitjeje | Fut një bllok përmes një formulari                             |
-| Krijo faqe ushtrimi                                         | Faqe e re ushtrimi me llojin dhe etiketat                          |
-| Krijo seksionin e ushtrimeve                                | Shto një titull, timer dhe tabelë për një ushtrim te shënimi aktual |
-| Shto bllok ushtrimi                                         | Fut një bllok ushtrimi, me plotësim automatik të emrit             |
-| Konverto ushtrimin                                          | Zhvendos serite e një ushtrimi te një lloj tjetër ushtrimi         |
-| Menaxho etiketat e muskujve                                 | Redakto `muscle-tags.csv`                                          |
-| Gjenero referencën e etiketave                              | Krijo një shënim që liston çdo etiketë muskuli                     |
-| Kontrollo emrat e ushtrimeve                                | Gjej të njëjtin ushtrim të regjistruar me shkrime të ndryshme      |
-| Eksporto stërvitjen në canvas                               | Vendos stërvitjen aktuale në një canvas të Obsidian                |
-| Krijo skedarin e regjistrit CSV                             | Krijo një regjistër bosh                                           |
-| Importo nga Strong ose Hevy                                 | Shto serinë e një eksporti CSV nga Strong ose Hevy te regjistri    |
-| Migro llojet e ushtrimeve, Shto ID-të që mungojnë në blloqet e kodit | Mirëmbajtje pas përditësimit nga versionet e vjetra       |
+| Komanda | Çfarë bën |
+| ------- | --------- |
+| Krijo regjistrim stërvitjeje | Regjistro një seri |
+| Krijo nota të shembullore | Shto ushtrime shembull, stërvitje, regjistra dhe një panel |
+| Hap udhëzuesin e fillimit, Fillo turin | Hap udhëzuesin te shembujt |
+| Shfaq çfarë është e re | Shfaq çfarë ka ndryshuar në çdo version |
+| Shto grafik / tabelë / seritë / timer / panel / kohëzgjatje stërvitjeje | Fut një bllok përmes një formulari |
+| Shto seancë të udhëzuar | Fut një bllok `workout-session` te kursori |
+| Krijo faqe ushtrimi | Faqe e re ushtrimi me llojin dhe etiketat |
+| Shto bllok ushtrimi | Shto një seksion për një ushtrim me blokun e tij të serive, me plotësim automatik të emrit |
+| Konverto ushtrimin | Zhvendos serite e një ushtrimi te një lloj tjetër ushtrimi |
+| Menaxho etiketat e muskujve | Redakto `muscle-tags.csv` |
+| Gjenero referencën e etiketave | Krijo një shënim që liston çdo etiketë muskuli |
+| Kontrollo emrat e ushtrimeve | Gjej të njëjtin ushtrim të regjistruar me shkrime të ndryshme |
+| Eksporto stërvitjen në canvas | Vendos stërvitjen aktuale në një canvas të Obsidian |
+| Krijo skedarin e regjistrit CSV | Krijo një regjistër bosh |
+| Importo nga Strong ose Hevy | Shto serinë e një eksporti CSV nga Strong ose Hevy te regjistri |
+| Migro llojet e ushtrimeve, Shto ID-të që mungojnë në blloqet e kodit | Mirëmbajtje pas përditësimit nga versionet e vjetra |
 
 </details>
 

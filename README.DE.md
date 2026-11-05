@@ -34,26 +34,6 @@ Diagramme zeigen deinen Trend, die Muskel-Heatmap zeigt, was du trainiert hast, 
 
 Beim ersten Installieren des Plugins legt es Beispielnotizen an (Beispielübungen, zwei Trainings mit sechs Wochen Protokollen, ein Dashboard und eine Funktionsübersicht), verweist das Plugin darauf und öffnet die Anleitung **Erste Schritte**: eine kurze Seite pro Funktion, mit funktionierenden Beispielen zum Ausprobieren. Du musst die Einstellungen nicht öffnen. Schau dich in Ruhe um, bevor du deine eigenen einrichtest.
 
-### Die geführte Tour
-
-Die Tour öffnet eine Notiz „Geführte Tour“ mit einer Tabelle, einem Diagramm, einem Dashboard und einem Timer und zeigt nacheinander auf jedes davon. Sie hat neun kurze Schritte:
-
-1. Protokolliere deinen ersten Satz mit der **+**-Schaltfläche. Der Schritt endet, wenn du ihn speicherst.
-2. Bearbeite oder lösche einen Satz mit den Schaltflächen in jeder Zeile.
-3. Sieh deinen Fortschritt im Diagramm.
-4. Sieh Summen und Trends im Dashboard.
-5. Sieh, welche Muskeln du in der Muskel-Heatmap trainiert hast.
-6. Starte den Pausen-Timer. Der Schritt endet, wenn du **Timer starten** drückst.
-7. Suche das Hantel-Symbol in der Leiste, das das Protokollformular aus jeder Notiz öffnet. Auf dem Handy verwendest du stattdessen die Befehlspalette.
-8. Führe über die Befehlspalette einen beliebigen der Befehle **Trainingsdiagramm einfügen**, **Trainingstabelle einfügen**, **Trainings-Timer einfügen**, **Trainings-Dashboard einfügen** oder **Trainingsdauer einfügen** aus. Der Schritt endet, wenn du das tust.
-9. Fertig.
-
-Nutze **Zurück** und **Weiter**, um dich zu bewegen, oder **Überspringen**, um die Tour zu verlassen. Liegt der Teil der Notiz, auf den die Tour zeigt, außerhalb des Sichtbereichs, scrollt **Zeige mir** dorthin. Drücke jederzeit `Esc`, um die Tour zu beenden. Die Tour endet auch, wenn du ihre Notiz schließt oder zu einer anderen Datei wechselst. Nichts geht verloren: Deine Sätze bleiben im Protokoll.
-
-Wenn die Beispieldaten verwendet werden, läuft die Tour mit ihnen. Andernfalls läuft sie mit deinem eigenen Protokoll, sodass Diagramm und Dashboard anfangs fast leer sind. Die Notiz wird einmal angelegt, neben den Beispielen oder oben in deinem Vault. Eine bestehende Notiz wird nie überschrieben, und du kannst sie bearbeiten oder löschen. Gibt es bereits eine Notiz „Geführte Tour“, die nicht die der Tour ist, verwendet die Tour stattdessen „Geführte Tour 1“ (oder die nächste freie Nummer).
-
-Möchtest du die Tour noch einmal machen? Wähle **Tour starten** unter **Einstellungen → Workout Planner → Erste Schritte** oder führe **Tour starten** aus der Befehlspalette aus.
-
 Möchtest du die Beispiele oder die Anleitung noch einmal? Wähle **Beispiele erstellen** oder **Anleitung für den Einstieg öffnen** unter **Einstellungen → Workout Planner → Erste Schritte** oder führe **Beispielnotizen erstellen** bzw. **Anleitung für den Einstieg öffnen** aus der Befehlspalette aus (`Ctrl/Cmd + P`). Das Erstellen der Beispiele überschreibt nichts: Beim erneuten Ausführen werden nur fehlende Beispieldateien ergänzt, und Dateien, die du geändert hast, bleiben, wie sie sind. Die Anleitung bietet an, die Beispiele zu erstellen, falls es sie noch nicht gibt. Eine leere Tabelle, ein leeres Diagramm oder Dashboard hat außerdem einen Link **Oder erkunde es mit Beispieldaten**. Hast du bereits ein Trainingsprotokoll, bekommen die Beispiele eine eigene Protokolldatei, und deine bleibt unberührt.
 
 Um eine Tabelle zu einer beliebigen Notiz hinzuzufügen, zum Beispiel `Push Day`:
@@ -64,7 +44,7 @@ exercise: Bench Press
 ```
 ````
 
-Tippe unter der Tabelle auf **+**, gib Wiederholungen und Gewicht ein und speichere. Die Tabelle aktualisiert sich von selbst. Du musst Blöcke auch nicht von Hand schreiben: Die Befehle **Trainingsdiagramm einfügen**, **Trainingstabelle einfügen**, **Trainings-Timer einfügen**, **Trainings-Dashboard einfügen** und **Trainingsdauer einfügen** öffnen ein Formular und fügen den Block für dich ein.
+Tippe unter der Tabelle auf **+**, gib Wiederholungen und Gewicht ein und speichere. Die Tabelle aktualisiert sich von selbst. Du musst Blöcke auch nicht von Hand schreiben: Die Befehle **Trainingsdiagramm einfügen**, **Trainingstabelle einfügen**, **Trainingssätze einfügen**, **Trainings-Timer einfügen**, **Trainings-Dashboard einfügen** und **Trainingsdauer einfügen** sowie **Geführte Einheit einfügen** öffnen ein Formular oder schreiben den Block für dich.
 
 ## Sätze erfassen
 
@@ -94,19 +74,19 @@ Mit `targetWeight` und `targetReps` erscheint über der Tabelle ein Ziel für pr
 <details>
 <summary>Alle Parameter</summary>
 
-| Parameter                    | Standard | Funktion                                             |
-| ---------------------------- | -------- | ---------------------------------------------------- |
-| `exercise`                   | —        | Nur diese Übung                                      |
-| `workout`                    | —        | Nur dieses Training (Notizname)                      |
-| `exactMatch`                 | `false`  | Übungsnamen exakt abgleichen                         |
-| `dateRange`                  | alle     | Heute und die vorherigen N Tage                      |
-| `limit`                      | `50`     | Maximale Zeilen; mit `sets` `sets × 2` (zwei Trainings) |
-| `sortBy`                     | `date`   | `date`, `exercise`, `weight`, `reps` oder `volume`   |
-| `sortOrder`                  | `desc`   | `asc` oder `desc`                                    |
-| `columns`                    | alle     | Anzuzeigende Spalten, z. B. `["date", "reps", "weight"]` |
-| `showProtocol`               | `true`   | Die Spalte mit dem Protokoll-Badge anzeigen          |
-| `showAddButton`              | `true`   | Die **+**-Schaltfläche anzeigen                      |
-| `targetWeight`, `targetReps` | —        | Ziel für progressive Überlast über der Tabelle anzeigen |
+| Parameter                    | Standard | Funktion                                                  |
+| ---------------------------- | -------- | --------------------------------------------------------- |
+| `exercise`                   | —        | Nur diese Übung                                           |
+| `workout`                    | —        | Nur dieses Training (Notizname)                           |
+| `exactMatch`                 | `false`  | Übungsnamen exakt abgleichen                              |
+| `dateRange`                  | alle     | Heute und die vorherigen N Tage                           |
+| `limit`                      | `50`     | Maximale Zeilen; mit `sets` `sets × 2` (zwei Trainings)   |
+| `sortBy`                     | `date`   | `date`, `exercise`, `weight`, `reps` oder `volume`        |
+| `sortOrder`                  | `desc`   | `asc` oder `desc`                                         |
+| `columns`                    | alle     | Anzuzeigende Spalten, z. B. `["date", "reps", "weight"]`  |
+| `showProtocol`               | `true`   | Die Spalte mit dem Protokoll-Badge anzeigen               |
+| `showAddButton`              | `true`   | Die **+**-Schaltfläche anzeigen                           |
+| `targetWeight`, `targetReps` | —        | Ziel für progressive Überlast über der Tabelle anzeigen   |
 | `sets`                       | —        | Geplante Sätze, gezählt von einem `workout-session`-Block |
 
 Übungsnamen werden standardmäßig ungefähr abgeglichen („squat“ findet „Squat (high bar)“). Mit `exactMatch: true` gilt nur genau dieser Name.
@@ -130,14 +110,14 @@ rest: 120
 <details>
 <summary>Alle Parameter</summary>
 
-| Parameter                    | Standard       | Funktion                                                                                         |
-| ---------------------------- | -------------- | ------------------------------------------------------------------------------------------------ |
-| `exercise`                   | —              | Die Übung (exakter Name)                                                                         |
-| `workout`                    | der Notizname  | Das Training, unter dem die Sätze protokolliert werden                                           |
-| `sets`                       | wie beim letzten Mal | Zeilen zum Ausfüllen (mindestens eine); **Satz hinzufügen** fügt weitere hinzu            |
-| `targetWeight`, `targetReps` | —              | Hinweise, wenn die Übung noch nie gemacht wurde, und ein Ziel für progressive Überlast           |
-| `rest`                       | —              | Sekunden Pause nach jedem Satz; `0` für keinen Timer. Ohne Angabe: der `workout-timer` desselben Abschnitts |
-| `timer.*`                    | —              | Die übrigen Optionen des Pausen-Timers: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
+| Parameter                    | Standard             | Funktion                                                                                                                                |
+| ---------------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `exercise`                   | —                    | Die Übung (exakter Name)                                                                                                                |
+| `workout`                    | der Notizname        | Das Training, unter dem die Sätze protokolliert werden                                                                                  |
+| `sets`                       | wie beim letzten Mal | Zeilen zum Ausfüllen (mindestens eine); **Satz hinzufügen** fügt weitere hinzu                                                          |
+| `targetWeight`, `targetReps` | —                    | Hinweise, wenn die Übung noch nie gemacht wurde, und ein Ziel für progressive Überlast                                                  |
+| `rest`                       | —                    | Sekunden Pause nach jedem Satz; `0` für keinen Timer. Ohne Angabe: der `workout-timer` desselben Abschnitts                             |
+| `timer.*`                    | —                    | Die übrigen Optionen des Pausen-Timers: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
 
 </details>
 
@@ -167,26 +147,27 @@ showTrendLine: true
 <details>
 <summary>Alle Parameter</summary>
 
-| Parameter       | Standard       | Funktion                                                                  |
-| --------------- | -------------- | ------------------------------------------------------------------------- |
-| `exercise`      | —              | Nur diese Übung                                                           |
-| `workout`       | —              | Nur dieses Training                                                       |
-| `type`          | `volume`       | `volume`, `weight`, `reps`, `duration`, `distance`, `pace` oder `heartRate` |
-| `chartType`     | `exercise`     | Wie der Punkt jedes Tages entsteht (unten)                                |
-| `dateRange`     | `30`           | Einzubeziehende Tage                                                      |
-| `limit`         | —              | Nur die letzten N Punkte                                                  |
-| `showTrendLine` | `false`        | Eine Trendlinie zeichnen                                                  |
-| `showStats`     | `true`         | Durchschnitt, Bestwert und niedrigsten Wert unter dem Diagramm anzeigen   |
-| `title`         | `Trend <type>` | Diagrammtitel                                                             |
-| `height`        | 4:3            | `300` (Pixel) oder eine beliebige CSS-Länge wie `50vh`                    |
-| `exactMatch`    | `false`        | Übungsnamen exakt abgleichen                                              |
+| Parameter       | Standard       | Funktion                                                                            |
+| --------------- | -------------- | ----------------------------------------------------------------------------------- |
+| `exercise`      | —              | Nur diese Übung                                                                     |
+| `workout`       | —              | Nur dieses Training                                                                 |
+| `type`          | `volume`       | `volume`, `weight`, `reps`, `e1rm`, `duration`, `distance`, `pace` oder `heartRate` |
+| `chartType`     | `exercise`     | Wie der Punkt jedes Tages entsteht (unten)                                          |
+| `dateRange`     | `30`           | Einzubeziehende Tage                                                                |
+| `limit`         | —              | Nur die letzten N Punkte                                                            |
+| `showTrendLine` | `false`        | Eine Trendlinie zeichnen                                                            |
+| `showTrend`     | `true`         | Trendzeile über dem Diagramm anzeigen                                               |
+| `showStats`     | `true`         | Durchschnitt, Bestwert und niedrigsten Wert unter dem Diagramm anzeigen             |
+| `title`         | `Trend <type>` | Diagrammtitel                                                                       |
+| `height`        | 4:3            | `300` (Pixel) oder eine beliebige CSS-Länge wie `50vh`                              |
+| `exactMatch`    | `false`        | Übungsnamen exakt abgleichen                                                        |
 
-| `chartType` | Genutzte Sätze                      | Punkt je Tag |
-| ----------- | ----------------------------------- | ------------ |
-| `exercise`  | Sätze von `exercise`                | Durchschnitt |
-| `workout`   | Sätze von `workout`                 | Summe        |
-| `combined`  | Sätze von `exercise` innerhalb von `workout` | Summe |
-| `all`       | jeder Satz (Filter ignoriert)       | Summe        |
+| `chartType` | Genutzte Sätze                               | Punkt je Tag |
+| ----------- | -------------------------------------------- | ------------ |
+| `exercise`  | Sätze von `exercise`                         | Durchschnitt |
+| `workout`   | Sätze von `workout`                          | Summe        |
+| `combined`  | Sätze von `exercise` innerhalb von `workout` | Summe        |
+| `all`       | jeder Satz (Filter ignoriert)                | Summe        |
 
 </details>
 
@@ -221,16 +202,16 @@ Die Heatmap zeigt, welche Muskeln du in der letzten Woche, im letzten Monat oder
 <details>
 <summary>Alle Parameter</summary>
 
-| Parameter             | Standard | Funktion                                                                                                                                                                                                    |
-| --------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`               | —        | Überschrift über dem Dashboard                                                                                                                                                                              |
-| `dateRange`           | alle     | Nur Sätze aus den letzten N Tagen                                                                                                                                                                           |
+| Parameter             | Standard | Funktion                                                                                                                                                                                                                                     |
+| --------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`               | —        | Überschrift über dem Dashboard                                                                                                                                                                                                               |
+| `dateRange`           | alle     | Nur Sätze aus den letzten N Tagen                                                                                                                                                                                                            |
 | `widgets`             | alle     | Die anzuzeigenden Widgets in dieser Reihenfolge: `summary`, `quickStats`, `heatMap`, `volume`, `recentWorkouts`, `protocolDistribution`, `protocolEffectiveness`, `duration`, `quickActions`, `fileErrors`, `muscleTags`, `trainingCalendar` |
-| `layout`              | `list`   | `grid` platziert jedes Widget in seinen Zellen (siehe oben)                                                                                                                                                 |
-| `columns`             | —        | Raster: die Spalten, für die das Raster gemacht wurde                                                                                                                                                       |
-| `grid.<widget>`       | —        | Raster: Spalte, Zeile, Breite und Höhe dieses Widgets                                                                                                                                                       |
-| `recentWorkoutsLimit` | `5`      | Trainings in der Liste „Letzte Trainings“                                                                                                                                                                   |
-| `volumeTrendDays`     | `30`     | Tage im Volumentrenddiagramm                                                                                                                                                                                |
+| `layout`              | `list`   | `grid` platziert jedes Widget in seinen Zellen (siehe oben)                                                                                                                                                                                  |
+| `columns`             | —        | Raster: die Spalten, für die das Raster gemacht wurde                                                                                                                                                                                        |
+| `grid.<widget>`       | —        | Raster: Spalte, Zeile, Breite und Höhe dieses Widgets                                                                                                                                                                                        |
+| `recentWorkoutsLimit` | `5`      | Trainings in der Liste „Letzte Trainings“                                                                                                                                                                                                    |
+| `volumeTrendDays`     | `30`     | Tage im Volumentrenddiagramm                                                                                                                                                                                                                 |
 
 </details>
 
@@ -243,12 +224,12 @@ Grobe Gruppen: `chest`, `back`, `shoulders`, `biceps`, `triceps`, `forearms`, `t
 
 Einzelne Muskeln haben einen eigenen Bereich des Körpers und zählen zu ihrer Gruppe. Ein grober Tag verteilt sich über den ganzen Bereich: `chest` lässt alle drei Teile der Brust ein wenig aufleuchten, `upper_chest` nur den oberen ganz.
 
-| Gruppe      | Einzelne Muskeln                            |
-| ----------- | ------------------------------------------- |
-| `chest`     | `upper_chest`, `mid_chest`, `lower_chest`   |
-| `shoulders` | `front_delts`, `side_delts`, `rear_delts`   |
+| Gruppe      | Einzelne Muskeln                              |
+| ----------- | --------------------------------------------- |
+| `chest`     | `upper_chest`, `mid_chest`, `lower_chest`     |
+| `shoulders` | `front_delts`, `side_delts`, `rear_delts`     |
 | `back`      | `lats`, `rhomboids`, `lower_back` (oder `ql`) |
-| `core`      | `obliques`, `serratus`                      |
+| `core`      | `obliques`, `serratus`                        |
 
 Tags in deiner eigenen Sprache, etwa `petto` oder `schiena`, funktionieren auch. Das Plugin ordnet sie den Gruppen oben anhand von `muscle-tags.csv` zu, das neben deinem Protokoll liegt. Bearbeite die Datei mit **Muskel-Tags verwalten** (hinzufügen, umbenennen, suchen, Doppelte finden) oder von Hand:
 
@@ -292,19 +273,19 @@ rounds: 8
 <details>
 <summary>Alle Parameter</summary>
 
-| Parameter             | Standard    | Funktion                                                              |
-| --------------------- | ----------- | --------------------------------------------------------------------- |
-| `type`                | `countdown` | `countdown`, `interval` oder `stopwatch`                              |
-| `duration`            | `30`        | Sekunden (Countdown; bei Intervall die Arbeit jeder Runde)            |
-| `work`                | —           | Intervall: Sekunden Arbeit pro Runde (ersetzt `duration`)             |
-| `rest`                | `0`         | Intervall: Sekunden Pause nach der Arbeit jeder Runde                 |
-| `rounds`              | `1`         | Runden (Intervall)                                                    |
-| `sound`               | `true`      | Piepen, wenn die Zeit abgelaufen ist                                  |
-| `autoStart`           | `false`     | Start, sobald die Notiz geöffnet wird                                 |
-| `showControls`        | `true`      | Start, Pause und Zurücksetzen anzeigen                                |
+| Parameter             | Standard    | Funktion                                                                                          |
+| --------------------- | ----------- | ------------------------------------------------------------------------------------------------- |
+| `type`                | `countdown` | `countdown`, `interval` oder `stopwatch`                                                          |
+| `duration`            | `30`        | Sekunden (Countdown; bei Intervall die Arbeit jeder Runde)                                        |
+| `work`                | —           | Intervall: Sekunden Arbeit pro Runde (ersetzt `duration`)                                         |
+| `rest`                | `0`         | Intervall: Sekunden Pause nach der Arbeit jeder Runde                                             |
+| `rounds`              | `1`         | Runden (Intervall)                                                                                |
+| `sound`               | `true`      | Piepen, wenn die Zeit abgelaufen ist                                                              |
+| `autoStart`           | `false`     | Start, sobald die Notiz geöffnet wird                                                             |
+| `showControls`        | `true`      | Start, Pause und Zurücksetzen anzeigen                                                            |
 | `preset`              | —           | Mit einer Voreinstellung starten (gespeichert, `Tabata` oder `EMOM`); Parameter überschreiben sie |
-| `exercise`, `workout` | —           | Timer neu starten, wenn du einen Satz für diese Übung oder dieses Training protokollierst |
-| `superset`            | `false`     | Nur Canvas-Export: diese Übung und die nächste als Superset zeichnen  |
+| `exercise`, `workout` | —           | Timer neu starten, wenn du einen Satz für diese Übung oder dieses Training protokollierst         |
+| `superset`            | `false`     | Nur Canvas-Export: diese Übung und die nächste als Superset zeichnen                              |
 
 </details>
 
@@ -316,6 +297,7 @@ Ein `workout-session`-Block oben in einer Trainingsnotiz (Befehl **Geführte Ein
 
 ````markdown
 ```workout-session
+
 ```
 
 ## Squat
@@ -356,13 +338,13 @@ tags:
 ---
 ```
 
-| `exercise_type`      | Das Protokollformular fragt nach             | Außerdem akzeptiert                                          |
-| -------------------- | -------------------------------------------- | ------------------------------------------------------------ |
-| `strength` (Standard) | Wiederholungen, Gewicht                     | `bodyweight`, `weights`                                      |
-| `timed`              | Dauer                                        | `duration`, `time`, `timer`, `interval`, `hold`, `isometric` |
-| `distance`           | Strecke, Dauer (optional)                    | `running`, `run`                                             |
-| `cardio`             | Dauer, Strecke und Herzfrequenz (optional)   | —                                                            |
-| `custom`             | nur die Felder, die du unter `parameters` aufführst | —                                                     |
+| `exercise_type`       | Das Protokollformular fragt nach                    | Außerdem akzeptiert                                          |
+| --------------------- | --------------------------------------------------- | ------------------------------------------------------------ |
+| `strength` (Standard) | Wiederholungen, Gewicht                             | `bodyweight`, `weights`                                      |
+| `timed`               | Dauer                                               | `duration`, `time`, `timer`, `interval`, `hold`, `isometric` |
+| `distance`            | Strecke, Dauer (optional)                           | `running`, `run`                                             |
+| `cardio`              | Dauer, Strecke und Herzfrequenz (optional)          | —                                                            |
+| `custom`              | nur die Felder, die du unter `parameters` aufführst | —                                                            |
 
 Yoga funktioniert genauso: Jede Pose ist eine `timed`-Übung, sodass das Formular nur fragt, wie lange du sie gehalten hast. Die Beispielnotizen enthalten einen Morgen-Yoga-Ablauf mit geführter Einheit.
 
@@ -397,14 +379,14 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 <details>
 <summary>Spalten und manuelle Bearbeitung</summary>
 
-| Spalte                     | Bedeutung                                  |
-| -------------------------- | ------------------------------------------ |
+| Spalte                     | Bedeutung                                    |
+| -------------------------- | -------------------------------------------- |
 | `date`                     | Wann der Satz protokolliert wurde (ISO 8601) |
-| `exercise`, `workout`      | Name der Übung und des Trainings           |
-| `reps`, `weight`, `volume` | Volumen ist Wiederholungen × Gewicht       |
-| `origine`                  | Link zur Notiz, aus der protokolliert wurde |
-| `timestamp`                | Eindeutige ID der Zeile (Millisekunden)    |
-| `notes`, `protocol`        | Freitext und Trainingstechnik              |
+| `exercise`, `workout`      | Name der Übung und des Trainings             |
+| `reps`, `weight`, `volume` | Volumen ist Wiederholungen × Gewicht         |
+| `origine`                  | Link zur Notiz, aus der protokolliert wurde  |
+| `timestamp`                | Eindeutige ID der Zeile (Millisekunden)      |
+| `notes`, `protocol`        | Freitext und Trainingstechnik                |
 
 Übungstypen mit eigenen Feldern (`duration`, `distance`, `heartRate` oder deine `parameters`) fügen Spalten am Ende hinzu. Die letzte Spalte, `weightUnit`, ist `kg` oder `lb`: die Einheit von `weight` und `volume` dieser Zeile. Ein leerer Wert bedeutet die Einheit aus den Einstellungen.
 
@@ -426,10 +408,10 @@ dv.paragraph(`Best: ${s.prWeight} × ${s.prReps} on ${s.prDate}`);
 <details>
 <summary>API-Referenz und weitere Beispiele</summary>
 
-| Methode                      | Liefert                                                                                                                                                                                                                                               |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `getWorkoutLogs(filter?)`    | Sätze, jeweils mit `date`, `exercise`, `reps`, `weight`, `volume`, `workout`, `notes`, `timestamp`, `protocol`. `weight` und `volume` sind in der Einstellungseinheit; `enteredWeight` und `enteredUnit` sind das, was protokolliert wurde |
-| `getExerciseStats(exercise)` | `estimatedOneRepMax`, `totalVolume`, `maxWeight`, `prWeight`, `prReps`, `prDate`, `totalSets`, `averageWeight`, `averageReps`, `lastWorkoutDate`, `trend`                                                                                             |
+| Methode                      | Liefert                                                                                                                                                                                                                                                                  |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `getWorkoutLogs(filter?)`    | Sätze, jeweils mit `date`, `exercise`, `reps`, `weight`, `volume`, `workout`, `notes`, `timestamp`, `protocol`. `weight` und `volume` sind in der Einstellungseinheit; `enteredWeight` und `enteredUnit` sind das, was protokolliert wurde                               |
+| `getExerciseStats(exercise)` | `estimatedOneRepMax`, `totalVolume`, `maxWeight`, `prWeight`, `prReps`, `prDate`, `totalSets`, `averageWeight`, `averageReps`, `lastWorkoutDate`, `trend`                                                                                                                |
 | `getExercises(filter?)`      | Übungsnamen, sortiert: die Dateinamen deiner Übungsseiten (inklusive Unterordner) oder die Namen in deinem Protokoll, wenn du keine Übungsseiten hast. `{ tag: "chest" }` behält die Übungen, deren Seite diesen Tag hat. Ohne Übungsseiten ist das Ergebnis daher leer. |
 
 `getWorkoutLogs` akzeptiert `exercise` (teilweise, ohne Beachtung der Groß-/Kleinschreibung), `workout`, `dateRange: { start, end }`, `protocol` und `exactMatch`.
@@ -473,24 +455,24 @@ Eine Änderung der Gewichtseinheit beschriftet alte Sätze nicht um: Jeder Satz 
 
 Öffne die Befehlspalette (`Ctrl/Cmd + P`) und gib den Namen ein.
 
-| Befehl                                                      | Was er macht                                                       |
-| ----------------------------------------------------------- | ------------------------------------------------------------------ |
-| Trainingsprotokoll erstellen                                | Einen Satz protokollieren                                          |
-| Tour starten                                                | Die geführte Tour machen                                           |
-| Beispielnotizen erstellen                                   | Beispielübungen, Trainings, Protokolle und ein Dashboard hinzufügen |
-| Anleitung für den Einstieg öffnen                           | Die Anleitung in den Beispielen öffnen                             |
-| Trainingsdiagramm / Trainingstabelle / Trainings-Timer / Trainings-Dashboard / Trainingsdauer einfügen | Einen Block über ein Formular einfügen |
-| Übungsseite erstellen                                       | Neue Übungsseite mit Typ und Tags                                  |
-| Übungsabschnitt erstellen                                   | Eine Überschrift, einen Timer und eine Tabelle für eine Übung zur aktuellen Notiz hinzufügen |
-| Übungsblock hinzufügen                                      | Einen Übungsblock mit Namensvorschlägen einfügen                   |
-| Übung umwandeln                                             | Die Sätze einer Übung in einen anderen Übungstyp verschieben       |
-| Muskel-Tags verwalten                                       | `muscle-tags.csv` bearbeiten                                       |
-| Tag-Referenz erstellen                                      | Eine Notiz mit allen Muskel-Tags erstellen                         |
-| Übungsnamen prüfen                                          | Dieselbe Übung unter verschiedenen Schreibweisen finden            |
-| Training als Canvas exportieren                             | Das aktuelle Training auf einer Obsidian-Canvas anordnen           |
-| CSV-Protokolldatei erstellen                                | Ein leeres Protokoll erstellen                                     |
-| Import von Strong oder Hevy                                 | Die Sätze einer Strong- oder Hevy-CSV-Datei zum Protokoll hinzufügen |
-| Übungstypen migrieren, Fehlende IDs zu Codeblöcken hinzufügen | Wartung nach dem Update von älteren Versionen                    |
+| Befehl                                                                                                                  | Was er macht                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Trainingsprotokoll erstellen                                                                                            | Einen Satz protokollieren                                                            |
+| Beispielnotizen erstellen                                                                                               | Beispielübungen, Trainings, Protokolle und ein Dashboard hinzufügen                  |
+| Anleitung für den Einstieg öffnen, Tour starten                                                                         | Die Anleitung in den Beispielen öffnen                                               |
+| Neuigkeiten anzeigen                                                                                                    | Zeigen, was sich in jeder Version geändert hat                                       |
+| Trainingsdiagramm / Trainingstabelle / Trainingssätze / Trainings-Timer / Trainings-Dashboard / Trainingsdauer einfügen | Einen Block über ein Formular einfügen                                               |
+| Geführte Einheit einfügen                                                                                               | Einen `workout-session`-Block an der Cursorposition einfügen                         |
+| Übungsseite erstellen                                                                                                   | Neue Übungsseite mit Typ und Tags                                                    |
+| Übungsblock hinzufügen                                                                                                  | Einen Abschnitt für eine Übung mit ihrem Satzblock hinzufügen, mit Namensvorschlägen |
+| Übung umwandeln                                                                                                         | Die Sätze einer Übung in einen anderen Übungstyp verschieben                         |
+| Muskel-Tags verwalten                                                                                                   | `muscle-tags.csv` bearbeiten                                                         |
+| Tag-Referenz erstellen                                                                                                  | Eine Notiz mit allen Muskel-Tags erstellen                                           |
+| Übungsnamen prüfen                                                                                                      | Dieselbe Übung unter verschiedenen Schreibweisen finden                              |
+| Training als Canvas exportieren                                                                                         | Das aktuelle Training auf einer Obsidian-Canvas anordnen                             |
+| CSV-Protokolldatei erstellen                                                                                            | Ein leeres Protokoll erstellen                                                       |
+| Import von Strong oder Hevy                                                                                             | Die Sätze einer Strong- oder Hevy-CSV-Datei zum Protokoll hinzufügen                 |
+| Übungstypen migrieren, Fehlende IDs zu Codeblöcken hinzufügen                                                           | Wartung nach dem Update von älteren Versionen                                        |
 
 </details>
 

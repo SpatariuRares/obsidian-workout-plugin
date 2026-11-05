@@ -34,26 +34,6 @@ Grafik menampilkan tren Anda, peta panas otot menunjukkan apa yang Anda latih, d
 
 Saat pertama kali Anda memasang plugin, plugin akan menambahkan catatan contoh (latihan contoh, dua sesi dengan log enam minggu, dasbor, dan pameran fitur), mengarahkan plugin ke catatan tersebut, dan membuka panduan **Memulai**: halaman pendek untuk setiap fitur, dengan contoh yang bisa Anda coba. Anda tidak perlu membuka pengaturan. Jelajahi dulu sebelum menyiapkan latihan Anda sendiri.
 
-### Tur berpemandu
-
-Tur membuka catatan "Tur berpemandu" yang berisi tabel, grafik, dasbor, dan timer, lalu menunjuk setiap bagian secara bergantian. Tur ini memiliki sembilan langkah singkat:
-
-1. Catat set pertama Anda dengan tombol **+**. Langkah ini selesai saat Anda menyimpannya.
-2. Sunting atau hapus set dengan tombol di setiap baris.
-3. Lihat kemajuan Anda di grafik.
-4. Lihat total dan tren di dasbor.
-5. Lihat otot mana yang Anda latih di peta panas otot.
-6. Mulai timer istirahat. Langkah ini selesai saat Anda menekan mulai.
-7. Temukan ikon dumbel di ribbon, yang membuka formulir log dari catatan mana pun. Di ponsel, gunakan palet perintah.
-8. Jalankan salah satu perintah **Sisipkan** dari palet perintah. Langkah ini selesai saat Anda melakukannya.
-9. Selesai.
-
-Gunakan **Kembali** dan **Berikutnya** untuk berpindah, atau **Lewati** untuk keluar. Jika bagian catatan yang ditunjuk tur berada di luar layar, **Tunjukkan** akan menggulir ke sana. Tekan `Esc` kapan saja untuk mengakhiri tur. Tur juga berakhir saat Anda menutup catatannya atau beralih ke file lain. Tidak ada yang hilang: set Anda tetap ada di log.
-
-Saat data contoh digunakan, tur berjalan dengan data tersebut. Jika tidak, tur berjalan dengan log Anda sendiri, sehingga grafik dan dasbor awalnya hampir kosong. Catatan dibuat sekali, di samping contoh atau di bagian atas vault Anda. Catatan yang sudah ada tidak pernah ditimpa, dan Anda dapat menyuntingnya atau menghapusnya. Jika catatan bernama "Tur berpemandu" sudah ada dan bukan milik tur, tur akan menggunakan "Tur berpemandu 1" (atau nomor kosong berikutnya) sebagai gantinya.
-
-Ingin mengikuti tur lagi? Pilih **Ikuti tur** di **Pengaturan → Workout Planner → Memulai**, atau jalankan **Mulai tur** dari palet perintah.
-
 Ingin contoh atau panduan lagi? Pilih **Buat contoh** atau **Buka panduan memulai** di **Pengaturan → Workout Planner → Memulai**, atau jalankan **Buat catatan contoh** atau **Buka panduan memulai** dari palet perintah (`Ctrl/Cmd + P`). Membuat contoh tidak pernah menimpa apa pun: menjalankannya lagi hanya menambahkan file contoh yang belum ada, dan file yang sudah Anda ubah tetap seperti semula. Panduan akan menawarkan untuk membuat contoh jika belum ada. Tabel, grafik, atau dasbor kosong juga memiliki tautan **Atau jelajahi dengan data contoh**. Jika Anda sudah punya log latihan, contoh akan mendapat file log sendiri dan log Anda tetap tidak tersentuh.
 
 Untuk menambahkan tabel ke catatan apa pun, misalnya `Push Day`:
@@ -64,7 +44,7 @@ exercise: Bench Press
 ```
 ````
 
-Ketuk **+** di bawah tabel, masukkan repetisi dan berat, lalu simpan. Tabel akan diperbarui sendiri. Anda juga tidak perlu menulis blok dengan tangan: perintah **Sisipkan grafik latihan**, **Sisipkan tabel latihan**, **Sisipkan timer latihan**, **Sisipkan dasbor latihan**, dan **Sisipkan durasi latihan** membuka formulir dan menyisipkan blok untuk Anda.
+Ketuk **+** di bawah tabel, masukkan repetisi dan berat, lalu simpan. Tabel akan diperbarui sendiri. Anda juga tidak perlu menulis blok dengan tangan: perintah **Sisipkan grafik latihan**, **Sisipkan tabel latihan**, **Sisipkan set latihan**, **Sisipkan timer latihan**, **Sisipkan dasbor latihan**, dan **Sisipkan durasi latihan**, serta **Sisipkan sesi terpandu**, membuka formulir (atau langsung menulis blok) untuk Anda.
 
 ## Mencatat set
 
@@ -171,11 +151,12 @@ showTrendLine: true
 | --------------- | -------------- | ------------------------------------------------------------------------- |
 | `exercise`      | —              | Hanya latihan ini                                                         |
 | `workout`       | —              | Hanya sesi ini                                                            |
-| `type`          | `volume`       | `volume`, `weight`, `reps`, `duration`, `distance`, `pace` atau `heartRate` |
+| `type`          | `volume`       | `volume`, `weight`, `reps`, `e1rm`, `duration`, `distance`, `pace` atau `heartRate` |
 | `chartType`     | `exercise`     | Cara titik setiap hari dibuat (di bawah)                                  |
 | `dateRange`     | `30`           | Jumlah hari yang disertakan                                               |
 | `limit`         | —              | Hanya N titik terbaru                                                     |
 | `showTrendLine` | `false`        | Gambar garis tren                                                         |
+| `showTrend`     | `true`         | Tampilkan header tren di atas grafik                                      |
 | `showStats`     | `true`         | Tampilkan rata-rata, terbaik, dan terendah di bawah grafik                |
 | `title`         | `Trend <type>` | Judul grafik                                                              |
 | `height`        | 4:3            | `300` (piksel) atau panjang CSS apa pun seperti `50vh`                    |
@@ -316,6 +297,7 @@ Blok `workout-session` di bagian atas catatan latihan (perintah **Sisipkan sesi 
 
 ````markdown
 ```workout-session
+
 ```
 
 ## Squat
@@ -473,24 +455,24 @@ Mengubah satuan berat tidak mengganti label set lama: setiap set tetap menyimpan
 
 Buka palet perintah (`Ctrl/Cmd + P`) dan ketik namanya.
 
-| Perintah                                                                              | Fungsinya                                                          |
-| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| Buat catatan latihan                                                                  | Catat satu set                                                     |
-| Mulai tur                                                                             | Ikuti tur berpemandu                                               |
-| Buat catatan contoh                                                                   | Tambahkan latihan, sesi, log, dan dasbor contoh                    |
-| Buka panduan memulai                                                                  | Buka panduan di contoh                                             |
-| Sisipkan grafik latihan / tabel latihan / timer latihan / dasbor latihan / durasi latihan | Sisipkan blok lewat formulir                                  |
-| Buat halaman latihan                                                                  | Halaman latihan baru dengan jenis dan tag                          |
-| Buat bagian latihan                                                                   | Tambahkan judul, timer, dan tabel untuk latihan ke catatan saat ini |
-| Tambah blok latihan                                                                   | Sisipkan blok latihan, dengan autolengkap nama                     |
-| Konversi latihan                                                                      | Pindahkan set latihan ke jenis latihan lain                        |
-| Kelola tag otot                                                                       | Sunting `muscle-tags.csv`                                          |
-| Buat referensi tag                                                                    | Buat catatan yang mencantumkan setiap tag otot                     |
-| Audit nama latihan                                                                    | Temukan latihan yang sama yang dicatat dengan ejaan berbeda        |
-| Ekspor latihan ke kanvas                                                              | Susun latihan saat ini di kanvas Obsidian                          |
-| Buat file log CSV                                                                     | Buat log kosong                                                    |
-| Impor dari Strong atau Hevy                                                           | Tambahkan set dari ekspor CSV Strong atau Hevy ke log              |
-| Migrasikan jenis latihan, Tambahkan ID yang hilang ke blok kode                       | Pemeliharaan setelah memperbarui dari versi lama                   |
+| Perintah                                                                                                | Fungsinya                                                                   |
+| ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Buat catatan latihan                                                                                    | Catat satu set                                                              |
+| Buat catatan contoh                                                                                     | Tambahkan latihan, sesi, log, dan dasbor contoh                             |
+| Buka panduan memulai, Mulai tur                                                                         | Buka panduan di contoh                                                      |
+| Tampilkan yang baru                                                                                     | Tampilkan apa yang berubah di setiap versi                                  |
+| Sisipkan grafik latihan / tabel latihan / set latihan / timer latihan / dasbor latihan / durasi latihan | Sisipkan blok lewat formulir                                                |
+| Sisipkan sesi terpandu                                                                                  | Sisipkan blok `workout-session` di kursor                                   |
+| Buat halaman latihan                                                                                    | Halaman latihan baru dengan jenis dan tag                                   |
+| Tambah blok latihan                                                                                     | Tambahkan bagian untuk latihan dengan blok set-nya, dengan autolengkap nama |
+| Konversi latihan                                                                                        | Pindahkan set latihan ke jenis latihan lain                                 |
+| Kelola tag otot                                                                                         | Sunting `muscle-tags.csv`                                                   |
+| Buat referensi tag                                                                                      | Buat catatan yang mencantumkan setiap tag otot                              |
+| Audit nama latihan                                                                                      | Temukan latihan yang sama yang dicatat dengan ejaan berbeda                 |
+| Ekspor latihan ke kanvas                                                                                | Susun latihan saat ini di kanvas Obsidian                                   |
+| Buat file log CSV                                                                                       | Buat log kosong                                                             |
+| Impor dari Strong atau Hevy                                                                             | Tambahkan set dari ekspor CSV Strong atau Hevy ke log                       |
+| Migrasikan jenis latihan, Tambahkan ID yang hilang ke blok kode                                         | Pemeliharaan setelah memperbarui dari versi lama                            |
 
 </details>
 

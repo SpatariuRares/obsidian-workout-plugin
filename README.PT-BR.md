@@ -34,26 +34,6 @@ Os gráficos mostram sua tendência, o mapa de calor muscular mostra o que você
 
 Na primeira vez que você instala o plugin, ele adiciona notas de exemplo (exercícios de exemplo, dois treinos com seis semanas de registros, um painel e uma demonstração dos recursos), aponta o plugin para elas e abre o guia **Como começar**: uma página curta por recurso, com exemplos práticos para testar. Você não precisa abrir as configurações. Explore à vontade antes de montar o seu.
 
-### O tour guiado
-
-O tour abre uma nota "Tour guiado" com uma tabela, um gráfico, um painel e um temporizador, e aponta para cada um deles em sequência. São nove passos curtos:
-
-1. Registre sua primeira série com o botão **+**. A etapa termina quando você salva.
-2. Edite ou exclua uma série com os botões de cada linha.
-3. Veja seu progresso no gráfico.
-4. Veja totais e tendências no painel.
-5. Veja quais músculos você treinou no mapa de calor muscular.
-6. Inicie o temporizador de descanso. A etapa termina quando você pressiona Iniciar.
-7. Encontre o ícone de halter na faixa lateral, que abre o formulário de registro em qualquer nota. No celular, use a paleta de comandos.
-8. Execute qualquer comando **Inserir** pela paleta de comandos. A etapa termina quando você fizer isso.
-9. Pronto.
-
-Use **Voltar** e **Próximo** para navegar, ou **Pular** para sair. Se a parte da nota apontada pelo tour estiver fora da tela, **Me mostre** rola até ela. Pressione `Esc` a qualquer momento para encerrar. O tour também termina quando você fecha a nota ou muda para outro arquivo. Nada se perde: suas séries continuam no registro.
-
-Quando os dados de exemplo estão em uso, o tour roda sobre eles. Caso contrário, roda sobre o seu próprio registro, então o gráfico e o painel começam quase vazios. A nota é criada uma única vez, ao lado dos exemplos ou no topo do seu cofre. Uma nota existente nunca é sobrescrita, e você pode editá-la ou excluí-la. Se já existir uma nota chamada "Tour guiado" que não seja do tour, ele usa "Tour guiado 1" (ou o próximo número livre).
-
-Quer fazer o tour de novo? Selecione **Iniciar o tour** em **Configurações → Workout Planner → Como começar**, ou execute **Iniciar o tour** pela paleta de comandos.
-
 Quer os exemplos ou o guia de novo? Selecione **Criar exemplos** ou **Abrir guia de início rápido** em **Configurações → Workout Planner → Como começar**, ou execute **Criar notas de exemplo** ou **Abrir guia de início rápido** pela paleta de comandos (`Ctrl/Cmd + P`). Criar os exemplos nunca sobrescreve nada: executá-lo de novo apenas adiciona os arquivos de exemplo que estiverem faltando, e os arquivos que você alterou permanecem como estão. O guia oferece criar os exemplos caso ainda não existam. Uma tabela, um gráfico ou um painel vazio também tem o link **Ou explore com dados de exemplo**. Se você já tem um registro de treino, os exemplos ganham um arquivo de registro próprio e o seu permanece intacto.
 
 Para adicionar uma tabela a qualquer nota, por exemplo `Push Day`:
@@ -64,7 +44,7 @@ exercise: Bench Press
 ```
 ````
 
-Toque em **+** abaixo da tabela, informe as repetições e a carga, e salve. A tabela se atualiza sozinha. Você também não precisa escrever os blocos à mão: os comandos **Inserir gráfico de treino / tabela de treino / temporizador de treino / painel de treino / duração do treino** abrem um formulário e inserem o bloco para você.
+Toque em **+** abaixo da tabela, informe as repetições e a carga, e salve. A tabela se atualiza sozinha. Você também não precisa escrever os blocos à mão: os comandos **Inserir gráfico de treino / tabela de treino / séries de treino / temporizador de treino / painel de treino / duração do treino** e **Inserir sessão guiada** abrem um formulário (ou gravam o bloco) para você.
 
 ## Registrando séries
 
@@ -94,20 +74,20 @@ Com `targetWeight` e `targetReps`, uma meta de sobrecarga progressiva aparece ac
 <details>
 <summary>Todos os parâmetros</summary>
 
-| Parâmetro                    | Padrão  | O que faz                                              |
-| ---------------------------- | ------- | ------------------------------------------------------ |
-| `exercise`                   | —       | Somente este exercício                                 |
-| `workout`                    | —       | Somente este treino (nome da nota)                     |
-| `exactMatch`                 | `false` | Corresponder exatamente ao nome do exercício           |
-| `dateRange`                  | todos   | Hoje e os N dias anteriores                            |
-| `limit`                      | `50`    | Máximo de linhas; com `sets`, `sets × 2` (dois treinos) |
-| `sortBy`                     | `date`  | `date`, `exercise`, `weight`, `reps` ou `volume`       |
-| `sortOrder`                  | `desc`  | `asc` ou `desc`                                        |
+| Parâmetro                    | Padrão  | O que faz                                                   |
+| ---------------------------- | ------- | ----------------------------------------------------------- |
+| `exercise`                   | —       | Somente este exercício                                      |
+| `workout`                    | —       | Somente este treino (nome da nota)                          |
+| `exactMatch`                 | `false` | Corresponder exatamente ao nome do exercício                |
+| `dateRange`                  | todos   | Hoje e os N dias anteriores                                 |
+| `limit`                      | `50`    | Máximo de linhas; com `sets`, `sets × 2` (dois treinos)     |
+| `sortBy`                     | `date`  | `date`, `exercise`, `weight`, `reps` ou `volume`            |
+| `sortOrder`                  | `desc`  | `asc` ou `desc`                                             |
 | `columns`                    | todas   | Colunas a mostrar, por exemplo `["date", "reps", "weight"]` |
-| `showProtocol`               | `true`  | Mostrar a coluna do selo de protocolo                  |
-| `showAddButton`              | `true`  | Mostrar o botão **+**                                  |
-| `targetWeight`, `targetReps` | —       | Mostrar uma meta de sobrecarga progressiva acima da tabela |
-| `sets`                       | —       | Séries planejadas, contadas por um bloco `workout-session` |
+| `showProtocol`               | `true`  | Mostrar a coluna do selo de protocolo                       |
+| `showAddButton`              | `true`  | Mostrar o botão **+**                                       |
+| `targetWeight`, `targetReps` | —       | Mostrar uma meta de sobrecarga progressiva acima da tabela  |
+| `sets`                       | —       | Séries planejadas, contadas por um bloco `workout-session`  |
 
 Por padrão, os nomes dos exercícios são comparados de forma aproximada ("squat" encontra "Squat (high bar)"); adicione `exactMatch: true` para aceitar apenas esse nome exato.
 
@@ -130,14 +110,14 @@ rest: 120
 <details>
 <summary>Todos os parâmetros</summary>
 
-| Parâmetro                    | Padrão        | O que faz                                                                                        |
-| ---------------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
-| `exercise`                   | —             | O exercício (nome exato)                                                                         |
-| `workout`                    | o nome da nota | O treino em que as séries são registradas                                                       |
-| `sets`                       | como da última vez | Linhas para preencher (pelo menos uma); **Adicionar série** adiciona mais                   |
-| `targetWeight`, `targetReps` | —             | Dicas quando o exercício nunca foi feito, e uma meta de sobrecarga progressiva                   |
-| `rest`                       | —             | Segundos de descanso após cada série; `0` para nenhum temporizador. Sem valor: o `workout-timer` da mesma seção |
-| `timer.*`                    | —             | As outras opções do temporizador de descanso: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
+| Parâmetro                    | Padrão             | O que faz                                                                                                                                     |
+| ---------------------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `exercise`                   | —                  | O exercício (nome exato)                                                                                                                      |
+| `workout`                    | o nome da nota     | O treino em que as séries são registradas                                                                                                     |
+| `sets`                       | como da última vez | Linhas para preencher (pelo menos uma); **Adicionar série** adiciona mais                                                                     |
+| `targetWeight`, `targetReps` | —                  | Dicas quando o exercício nunca foi feito, e uma meta de sobrecarga progressiva                                                                |
+| `rest`                       | —                  | Segundos de descanso após cada série; `0` para nenhum temporizador. Sem valor: o `workout-timer` da mesma seção                               |
+| `timer.*`                    | —                  | As outras opções do temporizador de descanso: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
 
 </details>
 
@@ -167,26 +147,27 @@ showTrendLine: true
 <details>
 <summary>Todos os parâmetros</summary>
 
-| Parâmetro       | Padrão         | O que faz                                                                 |
-| --------------- | -------------- | ------------------------------------------------------------------------- |
-| `exercise`      | —              | Somente este exercício                                                    |
-| `workout`       | —              | Somente este treino                                                       |
-| `type`          | `volume`       | `volume`, `weight`, `reps`, `duration`, `distance`, `pace` ou `heartRate` |
-| `chartType`     | `exercise`     | Como o ponto de cada dia é formado (abaixo)                               |
-| `dateRange`     | `30`           | Dias a incluir                                                            |
-| `limit`         | —              | Apenas os N pontos mais recentes                                          |
-| `showTrendLine` | `false`        | Desenhar uma linha de tendência                                           |
-| `showStats`     | `true`         | Mostrar média, melhor e pior valor abaixo do gráfico                      |
-| `title`         | `Trend <type>` | Título do gráfico                                                         |
-| `height`        | 4:3            | `300` (pixels) ou qualquer medida CSS, como `50vh`                        |
-| `exactMatch`    | `false`        | Corresponder exatamente ao nome do exercício                              |
+| Parâmetro       | Padrão         | O que faz                                                                         |
+| --------------- | -------------- | --------------------------------------------------------------------------------- |
+| `exercise`      | —              | Somente este exercício                                                            |
+| `workout`       | —              | Somente este treino                                                               |
+| `type`          | `volume`       | `volume`, `weight`, `reps`, `e1rm`, `duration`, `distance`, `pace` ou `heartRate` |
+| `chartType`     | `exercise`     | Como o ponto de cada dia é formado (abaixo)                                       |
+| `dateRange`     | `30`           | Dias a incluir                                                                    |
+| `limit`         | —              | Apenas os N pontos mais recentes                                                  |
+| `showTrendLine` | `false`        | Desenhar uma linha de tendência                                                   |
+| `showTrend`     | `true`         | Mostrar o cabeçalho de tendência acima do gráfico                                 |
+| `showStats`     | `true`         | Mostrar média, melhor e pior valor abaixo do gráfico                              |
+| `title`         | `Trend <type>` | Título do gráfico                                                                 |
+| `height`        | 4:3            | `300` (pixels) ou qualquer medida CSS, como `50vh`                                |
+| `exactMatch`    | `false`        | Corresponder exatamente ao nome do exercício                                      |
 
-| `chartType` | Séries usadas                       | Ponto de cada dia |
-| ----------- | ----------------------------------- | ----------------- |
-| `exercise`  | séries de `exercise`                | média             |
-| `workout`   | séries de `workout`                 | total             |
-| `combined`  | séries de `exercise` dentro de `workout` | total        |
-| `all`       | todas as séries (filtros ignorados) | total             |
+| `chartType` | Séries usadas                            | Ponto de cada dia |
+| ----------- | ---------------------------------------- | ----------------- |
+| `exercise`  | séries de `exercise`                     | média             |
+| `workout`   | séries de `workout`                      | total             |
+| `combined`  | séries de `exercise` dentro de `workout` | total             |
+| `all`       | todas as séries (filtros ignorados)      | total             |
 
 </details>
 
@@ -221,16 +202,16 @@ O mapa de calor mostra quais músculos você treinou na última semana, no últi
 <details>
 <summary>Todos os parâmetros</summary>
 
-| Parâmetro             | Padrão  | O que faz                                                                                                                                                                                                   |
-| --------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`               | —       | Título acima do painel                                                                                                                                                                                      |
-| `dateRange`           | todos   | Somente séries dos últimos N dias                                                                                                                                                                           |
-| `widgets`             | todos   | Os widgets a mostrar, nesta ordem: `summary`, `quickStats`, `heatMap`, `volume`, `recentWorkouts`, `protocolDistribution`, `protocolEffectiveness`, `duration`, `quickActions`, `fileErrors`, `muscleTags`, `trainingCalendar` |
-| `layout`              | `list`  | `grid` posiciona cada widget nas suas células (veja acima)                                                                                                                                                  |
-| `columns`             | —       | Grade: as colunas para as quais a grade foi feita                                                                                                                                                           |
-| `grid.<widget>`       | —       | Grade: coluna, linha, largura e altura desse widget                                                                                                                                                         |
-| `recentWorkoutsLimit` | `5`     | Treinos na lista de recentes                                                                                                                                                                                |
-| `volumeTrendDays`     | `30`    | Dias no gráfico de tendência de volume                                                                                                                                                                      |
+| Parâmetro             | Padrão | O que faz                                                                                                                                                                                                                      |
+| --------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `title`               | —      | Título acima do painel                                                                                                                                                                                                         |
+| `dateRange`           | todos  | Somente séries dos últimos N dias                                                                                                                                                                                              |
+| `widgets`             | todos  | Os widgets a mostrar, nesta ordem: `summary`, `quickStats`, `heatMap`, `volume`, `recentWorkouts`, `protocolDistribution`, `protocolEffectiveness`, `duration`, `quickActions`, `fileErrors`, `muscleTags`, `trainingCalendar` |
+| `layout`              | `list` | `grid` posiciona cada widget nas suas células (veja acima)                                                                                                                                                                     |
+| `columns`             | —      | Grade: as colunas para as quais a grade foi feita                                                                                                                                                                              |
+| `grid.<widget>`       | —      | Grade: coluna, linha, largura e altura desse widget                                                                                                                                                                            |
+| `recentWorkoutsLimit` | `5`    | Treinos na lista de recentes                                                                                                                                                                                                   |
+| `volumeTrendDays`     | `30`   | Dias no gráfico de tendência de volume                                                                                                                                                                                         |
 
 </details>
 
@@ -292,19 +273,19 @@ rounds: 8
 <details>
 <summary>Todos os parâmetros</summary>
 
-| Parâmetro             | Padrão      | O que faz                                                             |
-| --------------------- | ----------- | --------------------------------------------------------------------- |
-| `type`                | `countdown` | `countdown`, `interval` ou `stopwatch`                                |
-| `duration`            | `30`        | Segundos (contagem regressiva; no intervalado, o trabalho de cada rodada) |
-| `work`                | —           | Intervalado: segundos de trabalho por rodada (substitui `duration`)   |
-| `rest`                | `0`         | Intervalado: segundos de descanso após o trabalho de cada rodada      |
-| `rounds`              | `1`         | Rodadas (intervalado)                                                 |
-| `sound`               | `true`      | Bipe quando o tempo acaba                                             |
-| `autoStart`           | `false`     | Começar assim que a nota abrir                                        |
-| `showControls`        | `true`      | Mostrar iniciar, pausar e redefinir                                   |
+| Parâmetro             | Padrão      | O que faz                                                                                    |
+| --------------------- | ----------- | -------------------------------------------------------------------------------------------- |
+| `type`                | `countdown` | `countdown`, `interval` ou `stopwatch`                                                       |
+| `duration`            | `30`        | Segundos (contagem regressiva; no intervalado, o trabalho de cada rodada)                    |
+| `work`                | —           | Intervalado: segundos de trabalho por rodada (substitui `duration`)                          |
+| `rest`                | `0`         | Intervalado: segundos de descanso após o trabalho de cada rodada                             |
+| `rounds`              | `1`         | Rodadas (intervalado)                                                                        |
+| `sound`               | `true`      | Bipe quando o tempo acaba                                                                    |
+| `autoStart`           | `false`     | Começar assim que a nota abrir                                                               |
+| `showControls`        | `true`      | Mostrar iniciar, pausar e redefinir                                                          |
 | `preset`              | —           | Começar a partir de uma predefinição (salva, `Tabata` ou `EMOM`); os parâmetros a substituem |
-| `exercise`, `workout` | —           | Reiniciar o temporizador quando você registrar uma série deste exercício ou treino |
-| `superset`            | `false`     | Somente na exportação para o canvas: desenhar este exercício e o seguinte como um superset |
+| `exercise`, `workout` | —           | Reiniciar o temporizador quando você registrar uma série deste exercício ou treino           |
+| `superset`            | `false`     | Somente na exportação para o canvas: desenhar este exercício e o seguinte como um superset   |
 
 </details>
 
@@ -316,6 +297,7 @@ Um bloco `workout-session` no topo de uma nota de treino (comando **Inserir sess
 
 ````markdown
 ```workout-session
+
 ```
 
 ## Squat
@@ -356,13 +338,13 @@ tags:
 ---
 ```
 
-| `exercise_type`      | O formulário de registro pede                 | Também aceitos                                               |
-| -------------------- | --------------------------------------------- | ------------------------------------------------------------ |
-| `strength` (padrão)  | repetições, carga                             | `bodyweight`, `weights`                                      |
-| `timed`              | duração                                       | `duration`, `time`, `timer`, `interval`, `hold`, `isometric` |
-| `distance`           | distância, duração (opcional)                 | `running`, `run`                                             |
-| `cardio`             | duração, distância e frequência cardíaca (opcional) | —                                                      |
-| `custom`             | somente os campos listados em `parameters`   | —                                                            |
+| `exercise_type`     | O formulário de registro pede                       | Também aceitos                                               |
+| ------------------- | --------------------------------------------------- | ------------------------------------------------------------ |
+| `strength` (padrão) | repetições, carga                                   | `bodyweight`, `weights`                                      |
+| `timed`             | duração                                             | `duration`, `time`, `timer`, `interval`, `hold`, `isometric` |
+| `distance`          | distância, duração (opcional)                       | `running`, `run`                                             |
+| `cardio`            | duração, distância e frequência cardíaca (opcional) | —                                                            |
+| `custom`            | somente os campos listados em `parameters`          | —                                                            |
 
 A ioga funciona da mesma forma: cada postura é um exercício `timed`, então o formulário pergunta apenas por quanto tempo você a manteve. As notas de exemplo incluem uma sequência matinal de ioga com uma sessão guiada.
 
@@ -426,10 +408,10 @@ dv.paragraph(`Best: ${s.prWeight} × ${s.prReps} on ${s.prDate}`);
 <details>
 <summary>Referência da API e mais exemplos</summary>
 
-| Método                       | Retorna                                                                                                                                                                                                                                               |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `getWorkoutLogs(filter?)`    | Séries, cada uma com `date`, `exercise`, `reps`, `weight`, `volume`, `workout`, `notes`, `timestamp`, `protocol`. `weight` e `volume` estão na unidade das configurações; `enteredWeight` e `enteredUnit` são o que foi registrado                       |
-| `getExerciseStats(exercise)` | `estimatedOneRepMax`, `totalVolume`, `maxWeight`, `prWeight`, `prReps`, `prDate`, `totalSets`, `averageWeight`, `averageReps`, `lastWorkoutDate`, `trend`                                                                                             |
+| Método                       | Retorna                                                                                                                                                                                                                                                                                      |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `getWorkoutLogs(filter?)`    | Séries, cada uma com `date`, `exercise`, `reps`, `weight`, `volume`, `workout`, `notes`, `timestamp`, `protocol`. `weight` e `volume` estão na unidade das configurações; `enteredWeight` e `enteredUnit` são o que foi registrado                                                           |
+| `getExerciseStats(exercise)` | `estimatedOneRepMax`, `totalVolume`, `maxWeight`, `prWeight`, `prReps`, `prDate`, `totalSets`, `averageWeight`, `averageReps`, `lastWorkoutDate`, `trend`                                                                                                                                    |
 | `getExercises(filter?)`      | Nomes de exercícios, em ordem: os nomes dos arquivos das suas páginas de exercício (incluindo subpastas), ou os nomes do seu registro quando você não tem páginas de exercício. `{ tag: "chest" }` mantém os exercícios cuja página tem essa tag, então fica vazio sem páginas de exercício. |
 
 `getWorkoutLogs` aceita `exercise` (parcial, sem diferenciar maiúsculas), `workout`, `dateRange: { start, end }`, `protocol` e `exactMatch`.
@@ -473,24 +455,24 @@ Mudar a unidade de peso não altera o rótulo das séries antigas: cada série m
 
 Abra a paleta de comandos (`Ctrl/Cmd + P`) e digite o nome.
 
-| Comando                                                     | O que faz                                                          |
-| ----------------------------------------------------------- | ------------------------------------------------------------------ |
-| Criar registro de treino                                    | Registrar uma série                                                |
-| Iniciar o tour                                              | Fazer o tour guiado                                                |
-| Criar notas de exemplo                                      | Adicionar exercícios, treinos, registros e um painel de exemplo    |
-| Abrir guia de início rápido                                 | Abrir o guia nos exemplos                                          |
-| Inserir gráfico / tabela / temporizador / painel / duração de treino | Inserir um bloco por meio de um formulário                |
-| Criar página de exercício                                   | Nova página de exercício com tipo e tags                           |
-| Criar seção de exercício                                    | Adicionar um título, temporizador e tabela de um exercício à nota atual |
-| Adicionar bloco de exercício                                | Inserir um bloco de exercício, com autocompletar de nomes          |
-| Converter exercício                                         | Mover as séries de um exercício para outro tipo de exercício       |
-| Gerenciar tags musculares                                   | Editar o `muscle-tags.csv`                                         |
-| Gerar referência de tags                                    | Criar uma nota com todas as tags musculares                        |
-| Auditar nomes de exercícios                                 | Encontrar o mesmo exercício registrado com grafias diferentes      |
-| Exportar treino para o canvas                               | Organizar o treino atual em um canvas do Obsidian                  |
-| Criar arquivo CSV de registro                               | Criar um registro vazio                                            |
-| Importar de Strong ou Hevy                                  | Adicionar as séries de uma exportação CSV do Strong ou do Hevy ao registro |
-| Migrar tipos de exercício, Adicionar IDs ausentes aos blocos de código | Manutenção após atualizar de versões antigas            |
+| Comando                                                                                                                         | O que faz                                                                               |
+| ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Criar registro de treino                                                                                                        | Registrar uma série                                                                     |
+| Criar notas de exemplo                                                                                                          | Adicionar exercícios, treinos, registros e um painel de exemplo                         |
+| Abrir guia de início rápido, Iniciar o tour                                                                                     | Abrir o guia nos exemplos                                                               |
+| Mostrar novidades                                                                                                               | Mostrar o que mudou em cada versão                                                      |
+| Inserir gráfico de treino / tabela de treino / séries de treino / temporizador de treino / painel de treino / duração do treino | Inserir um bloco por meio de um formulário                                              |
+| Inserir sessão guiada                                                                                                           | Inserir um bloco `workout-session` no cursor                                            |
+| Criar página de exercício                                                                                                       | Nova página de exercício com tipo e tags                                                |
+| Adicionar bloco de exercício                                                                                                    | Adicionar uma seção para um exercício com o bloco de séries, com autocompletar de nomes |
+| Converter exercício                                                                                                             | Mover as séries de um exercício para outro tipo de exercício                            |
+| Gerenciar tags musculares                                                                                                       | Editar o `muscle-tags.csv`                                                              |
+| Gerar referência de tags                                                                                                        | Criar uma nota com todas as tags musculares                                             |
+| Auditar nomes de exercícios                                                                                                     | Encontrar o mesmo exercício registrado com grafias diferentes                           |
+| Exportar treino para o canvas                                                                                                   | Organizar o treino atual em um canvas do Obsidian                                       |
+| Criar arquivo CSV de registro                                                                                                   | Criar um registro vazio                                                                 |
+| Importar de Strong ou Hevy                                                                                                      | Adicionar as séries de uma exportação CSV do Strong ou do Hevy ao registro              |
+| Migrar tipos de exercício, Adicionar IDs ausentes aos blocos de código                                                          | Manutenção após atualizar de versões antigas                                            |
 
 </details>
 

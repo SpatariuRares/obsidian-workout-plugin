@@ -34,26 +34,6 @@ Los gráficos muestran tu tendencia, el mapa de calor muscular muestra lo que ha
 
 La primera vez que instalas el plugin, añade notas de ejemplo (ejercicios de muestra, dos entrenamientos con seis semanas de registros, un panel y una demostración de funciones), apunta el plugin hacia ellas y abre la guía de inicio: una página corta por función, con ejemplos prácticos que puedes probar. No necesitas abrir los ajustes. Explora antes de configurar los tuyos.
 
-### La visita guiada
-
-La visita abre una nota «Visita guiada» con una tabla, un gráfico, un panel y un temporizador, y señala cada uno por turnos. Tiene nueve pasos cortos:
-
-1. Registra tu primera serie con el botón **+**. El paso termina al guardarla.
-2. Edita o elimina una serie con los botones de cada fila.
-3. Mira tu progreso en el gráfico.
-4. Mira los totales y las tendencias en el panel.
-5. Mira qué músculos has entrenado en el mapa de calor muscular.
-6. Inicia el temporizador de descanso. El paso termina al pulsar **Iniciar**.
-7. Busca el icono de mancuerna en la cinta, que abre el formulario de registro desde cualquier nota. En un teléfono, usa la paleta de comandos.
-8. Ejecuta cualquier comando **Insertar** de entrenamiento desde la paleta de comandos. El paso termina cuando lo haces.
-9. Listo.
-
-Usa **Volver** y **Siguiente** para moverte, o **Saltar** para salir. Si la parte de la nota que señala la visita está fuera de la vista, **Muéstrame** la desplaza hasta ella. Pulsa `Esc` en cualquier momento para terminarla. La visita también termina al cerrar su nota o al cambiar a otro archivo. No se pierde nada: tus series siguen en el registro.
-
-Cuando se usan los datos de ejemplo, la visita funciona con ellos. Si no, funciona con tu propio registro, así que el gráfico y el panel empiezan casi vacíos. La nota se crea una sola vez, junto a los ejemplos o en la parte superior de tu bóveda. Una nota existente nunca se sobrescribe, y puedes editarla o eliminarla. Si ya existe una nota llamada «Visita guiada» que no es la de la visita, la visita usa «Visita guiada 1» (o el siguiente número libre) en su lugar.
-
-¿Quieres repetir la visita? Selecciona **Empezar la visita guiada** en **Configuración → Workout Planner → Cómo empezar**, o ejecuta **Iniciar la visita guiada** desde la paleta de comandos.
-
 ¿Quieres los ejemplos o la guía otra vez? Selecciona **Crear ejemplos** o **Abrir la guía de inicio** en **Configuración → Workout Planner → Cómo empezar**, o ejecuta **Crear notas de ejemplo** o **Abrir la guía de inicio** desde la paleta de comandos (`Ctrl/Cmd + P`). Crear los ejemplos nunca sobrescribe nada: si lo repites, solo añade los archivos de ejemplo que falten, y los archivos que hayas cambiado se quedan como están. La guía ofrece crear los ejemplos si todavía no existen. Una tabla, un gráfico o un panel vacíos también tienen un enlace **O explora con datos de ejemplo**. Si ya tienes un registro de entrenamientos, los ejemplos usan su propio archivo de registro y el tuyo queda intacto.
 
 Para añadir una tabla a cualquier nota, por ejemplo `Push Day`:
@@ -64,7 +44,7 @@ exercise: Bench Press
 ```
 ````
 
-Pulsa **+** debajo de la tabla, introduce repeticiones y peso, y guarda. La tabla se actualiza sola. Tampoco tienes que escribir los bloques a mano: los comandos **Insertar gráfico / tabla / temporizador / panel / duración de entrenamiento** abren un formulario e insertan el bloque por ti.
+Pulsa **+** debajo de la tabla, introduce repeticiones y peso, y guarda. La tabla se actualiza sola. Tampoco tienes que escribir los bloques a mano: los comandos **Insertar gráfico / tabla / series / temporizador / panel / duración de entrenamiento** e **Insertar sesión guiada** abren un formulario o escriben el bloque por ti.
 
 ## Registrar series
 
@@ -171,11 +151,12 @@ showTrendLine: true
 | --------------- | -------------- | ------------------------------------------------------------------------- |
 | `exercise`      | —              | Solo este ejercicio                                                       |
 | `workout`       | —              | Solo este entrenamiento                                                   |
-| `type`          | `volume`       | `volume`, `weight`, `reps`, `duration`, `distance`, `pace` o `heartRate`  |
+| `type`          | `volume`       | `volume`, `weight`, `reps`, `e1rm`, `duration`, `distance`, `pace` o `heartRate` |
 | `chartType`     | `exercise`     | Cómo se calcula el punto de cada día (abajo)                              |
 | `dateRange`     | `30`           | Días a incluir                                                            |
 | `limit`         | —              | Solo los últimos N puntos                                                 |
 | `showTrendLine` | `false`        | Dibujar una línea de tendencia                                            |
+| `showTrend`     | `true`         | Mostrar el encabezado de tendencia encima del gráfico                     |
 | `showStats`     | `true`         | Mostrar media, mejor y peor valor debajo del gráfico                      |
 | `title`         | `Trend <type>` | Título del gráfico                                                        |
 | `height`        | 4:3            | `300` (píxeles) o cualquier longitud CSS, como `50vh`                     |
@@ -316,6 +297,7 @@ Un bloque `workout-session` al inicio de una nota de entrenamiento (comando **In
 
 ````markdown
 ```workout-session
+
 ```
 
 ## Squat
@@ -473,23 +455,23 @@ Cambiar la unidad de peso no cambia la etiqueta de las series antiguas: cada ser
 
 Abre la paleta de comandos (`Ctrl/Cmd + P`) y escribe el nombre.
 
-| Comando                                                     | Qué hace                                                           |
-| ----------------------------------------------------------- | ------------------------------------------------------------------ |
-| Crear registro de entrenamiento                             | Registrar una serie                                                |
-| Iniciar la visita guiada                                    | Hacer la visita guiada                                             |
-| Crear notas de ejemplo                                      | Añadir ejercicios, entrenamientos, registros y un panel de ejemplo |
-| Abrir la guía de inicio                                     | Abrir la guía dentro de los ejemplos                               |
-| Insertar gráfico / tabla / temporizador / panel / duración de entrenamiento | Insertar un bloque mediante un formulario          |
-| Crear página de ejercicio                                   | Nueva página de ejercicio con tipo y etiquetas                     |
-| Crear sección de ejercicio                                  | Añadir a la nota actual un encabezado, un temporizador y una tabla para un ejercicio |
-| Añadir bloque de ejercicio                                  | Insertar un bloque de ejercicio, con autocompletado de nombres     |
-| Convertir ejercicio                                         | Mover las series de un ejercicio a otro tipo de ejercicio          |
-| Gestionar etiquetas musculares                              | Editar `muscle-tags.csv`                                           |
-| Generar referencia de etiquetas                             | Crear una nota con todas las etiquetas musculares                  |
-| Revisar nombres de ejercicios                               | Encontrar el mismo ejercicio registrado con distintas escrituras   |
-| Exportar entrenamiento al lienzo                            | Disponer el entrenamiento actual en un lienzo de Obsidian          |
-| Crear archivo de registro CSV                               | Crear un registro vacío                                            |
-| Importar desde Strong o Hevy                                | Añadir las series de una exportación CSV de Strong o Hevy al registro |
+| Comando | Qué hace |
+| --- | --- |
+| Crear registro de entrenamiento | Registrar una serie |
+| Crear notas de ejemplo | Añadir ejercicios, entrenamientos, registros y un panel de ejemplo |
+| Abrir la guía de inicio, Iniciar la visita guiada | Abrir la guía dentro de los ejemplos |
+| Mostrar novedades | Mostrar qué ha cambiado en cada versión |
+| Insertar gráfico / tabla / series / temporizador / panel / duración de entrenamiento | Insertar un bloque mediante un formulario |
+| Insertar sesión guiada | Insertar un bloque `workout-session` en el cursor |
+| Crear página de ejercicio | Nueva página de ejercicio con tipo y etiquetas |
+| Añadir bloque de ejercicio | Añadir una sección para un ejercicio con su bloque de series, con autocompletado de nombres |
+| Convertir ejercicio | Mover las series de un ejercicio a otro tipo de ejercicio |
+| Gestionar etiquetas musculares | Editar `muscle-tags.csv` |
+| Generar referencia de etiquetas | Crear una nota con todas las etiquetas musculares |
+| Revisar nombres de ejercicios | Encontrar el mismo ejercicio registrado con distintas escrituras |
+| Exportar entrenamiento al lienzo | Disponer el entrenamiento actual en un lienzo de Obsidian |
+| Crear archivo de registro CSV | Crear un registro vacío |
+| Importar desde Strong o Hevy | Añadir las series de una exportación CSV de Strong o Hevy al registro |
 | Migrar tipos de ejercicio, Añadir los IDs faltantes a los bloques de código | Mantenimiento tras actualizar desde versiones anteriores |
 
 </details>

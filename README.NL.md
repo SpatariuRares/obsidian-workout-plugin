@@ -34,26 +34,6 @@ Grafieken laten je trend zien, de spierheatmap laat zien wat je hebt getraind, e
 
 De eerste keer dat je de plugin installeert, voegt hij voorbeeldnotities toe (voorbeeldoefeningen, twee trainingen met zes weken aan logs, een dashboard en een functieoverzicht), wijst de plugin naar die notities en opent de handleiding **Beginnen**: per functie een korte pagina, met werkende voorbeelden om uit te proberen. Je hoeft de instellingen niet te openen. Kijk eerst rond voordat je je eigen training instelt.
 
-### De begeleide rondleiding
-
-De rondleiding opent een notitie "Begeleide rondleiding" met een tabel, een grafiek, een dashboard en een timer, en wijst om de beurt naar elk daarvan. Er zijn negen korte stappen:
-
-1. Log je eerste serie met de knop **+**. De stap is klaar zodra je hem opslaat.
-2. Bewerk of verwijder een serie met de knoppen op elke rij.
-3. Bekijk je voortgang in de grafiek.
-4. Bekijk totalen en trends in het dashboard.
-5. Bekijk in de spierheatmap welke spieren je hebt getraind.
-6. Start de rusttimer. De stap is klaar zodra je op start drukt.
-7. Zoek het halterpictogram in het lint; dat opent het logformulier vanuit elke notitie. Op een telefoon gebruik je in plaats daarvan het opdrachtenpalet.
-8. Voer een willekeurige opdracht **Trainingsgrafiek / tabel / timer / dashboard / duur invoegen** uit via het opdrachtenpalet. De stap is klaar zodra je dat doet.
-9. Klaar.
-
-Gebruik **Terug** en **Volgende** om te bewegen, of **Overslaan** om te stoppen. Als het deel van de notitie waar de rondleiding naar wijst buiten beeld is, scrolt **Laat me zien** ernaartoe. Druk op `Esc` om de rondleiding op elk moment te beëindigen. De rondleiding stopt ook als je de notitie sluit of naar een ander bestand gaat. Er gaat niets verloren: je series blijven in het log.
-
-Wanneer de voorbeeldgegevens in gebruik zijn, loopt de rondleiding daarop. Anders loopt hij op je eigen log, dus starten de grafiek en het dashboard bijna leeg. De notitie wordt één keer aangemaakt, naast de voorbeelden of bovenaan je kluis. Een bestaande notitie wordt nooit overschreven, en je kunt hem bewerken of verwijderen. Als er al een notitie "Begeleide rondleiding" bestaat die niet van de rondleiding is, gebruikt de rondleiding "Begeleide rondleiding 1" (of het eerstvolgende vrije nummer).
-
-Wil je de rondleiding opnieuw doen? Selecteer **Begin de tour** onder **Instellingen → Workout Planner → Beginnen**, of voer **Begin de tour** uit via het opdrachtenpalet.
-
 Wil je de voorbeelden of de handleiding opnieuw? Selecteer **Voorbeelden maken** of **Open handleiding** onder **Instellingen → Workout Planner → Beginnen**, of voer **Voorbeeldnotities maken** of **Open handleiding** uit via het opdrachtenpalet (`Ctrl/Cmd + P`). Het maken van de voorbeelden overschrijft nooit iets: opnieuw uitvoeren voegt alleen de ontbrekende voorbeeldbestanden toe, en bestanden die je hebt gewijzigd blijven zoals ze zijn. De handleiding biedt aan de voorbeelden te maken als die nog niet bestaan. Een lege tabel, grafiek of lege dashboard heeft ook een link **Of verken met voorbeeldgegevens**. Als je al een trainingslog hebt, krijgen de voorbeelden hun eigen logbestand en blijft het jouwe onaangeroerd.
 
 Om een tabel aan een notitie toe te voegen, bijvoorbeeld `Push Day`:
@@ -64,7 +44,7 @@ exercise: Bench Press
 ```
 ````
 
-Tik op **+** onder de tabel, vul herhalingen en gewicht in en sla op. De tabel werkt zichzelf bij. Je hoeft blokken ook niet met de hand te schrijven: de opdrachten **Trainingsgrafiek / tabel / timer / dashboard / duur invoegen** openen een formulier en voegen het blok voor je in.
+Tik op **+** onder de tabel, vul herhalingen en gewicht in en sla op. De tabel werkt zichzelf bij. Je hoeft blokken ook niet met de hand te schrijven: de opdrachten **Trainingsgrafiek / tabel / series / timer / dashboard / duur invoegen** en **Begeleide sessie invoegen** openen een formulier of schrijven het blok voor je.
 
 ## Series loggen
 
@@ -167,19 +147,20 @@ showTrendLine: true
 <details>
 <summary>Alle parameters</summary>
 
-| Parameter       | Standaard      | Wat het doet                                                              |
-| --------------- | -------------- | ------------------------------------------------------------------------- |
-| `exercise`      | —              | Alleen deze oefening                                                      |
-| `workout`       | —              | Alleen deze training                                                      |
-| `type`          | `volume`       | `volume`, `weight`, `reps`, `duration`, `distance`, `pace` of `heartRate` |
-| `chartType`     | `exercise`     | Hoe het punt van elke dag wordt opgebouwd (hieronder)                     |
-| `dateRange`     | `30`           | Aantal dagen dat wordt meegenomen                                         |
-| `limit`         | —              | Alleen de laatste N punten                                                |
-| `showTrendLine` | `false`        | Een trendlijn tekenen                                                     |
-| `showStats`     | `true`         | Gemiddelde, beste en laagste onder de grafiek tonen                       |
-| `title`         | `Trend <type>` | Titel van de grafiek                                                      |
-| `height`        | 4:3            | `300` (pixels) of een CSS-lengte zoals `50vh`                             |
-| `exactMatch`    | `false`        | De oefeningsnaam exact laten overeenkomen                                 |
+| Parameter       | Standaard      | Wat het doet                                                                      |
+| --------------- | -------------- | --------------------------------------------------------------------------------- |
+| `exercise`      | —              | Alleen deze oefening                                                              |
+| `workout`       | —              | Alleen deze training                                                              |
+| `type`          | `volume`       | `volume`, `weight`, `reps`, `e1rm`, `duration`, `distance`, `pace` of `heartRate` |
+| `chartType`     | `exercise`     | Hoe het punt van elke dag wordt opgebouwd (hieronder)                             |
+| `dateRange`     | `30`           | Aantal dagen dat wordt meegenomen                                                 |
+| `limit`         | —              | Alleen de laatste N punten                                                        |
+| `showTrendLine` | `false`        | Een trendlijn tekenen                                                             |
+| `showTrend`     | `true`         | De trendkop boven de grafiek tonen                                                |
+| `showStats`     | `true`         | Gemiddelde, beste en laagste onder de grafiek tonen                               |
+| `title`         | `Trend <type>` | Titel van de grafiek                                                              |
+| `height`        | 4:3            | `300` (pixels) of een CSS-lengte zoals `50vh`                                     |
+| `exactMatch`    | `false`        | De oefeningsnaam exact laten overeenkomen                                         |
 
 | `chartType` | Gebruikte series                    | Punt per dag     |
 | ----------- | ----------------------------------- | ---------------- |
@@ -316,6 +297,7 @@ Een `workout-session`-blok bovenaan een trainingsnotitie (opdracht **Begeleide s
 
 ````markdown
 ```workout-session
+
 ```
 
 ## Squat
@@ -473,24 +455,24 @@ Het wijzigen van de gewichtseenheid verandert oude series niet: elke serie behou
 
 Open het opdrachtenpalet (`Ctrl/Cmd + P`) en typ de naam.
 
-| Opdracht                                                    | Wat het doet                                                       |
-| ----------------------------------------------------------- | ------------------------------------------------------------------ |
-| Trainingslog maken                                          | Een serie loggen                                                   |
-| Begin de tour                                               | De begeleide rondleiding volgen                                    |
-| Voorbeeldnotities maken                                     | Voorbeeldoefeningen, trainingen, logs en een dashboard toevoegen   |
-| Open handleiding                                            | De handleiding openen bij de voorbeelden                           |
-| Trainingsgrafiek / tabel / timer / dashboard / duur invoegen | Een blok invoegen via een formulier                               |
-| Oefeningspagina maken                                       | Nieuwe oefeningspagina met type en labels                          |
-| Oefeningssectie maken                                       | Een kop, timer en tabel voor een oefening aan de huidige notitie toevoegen |
-| Oefeningsblok toevoegen                                     | Een oefeningsblok invoegen, met automatisch aanvullen van de naam  |
-| Oefening omzetten                                           | De series van een oefening naar een ander oefeningstype verplaatsen |
-| Spierlabels beheren                                         | `muscle-tags.csv` bewerken                                         |
-| Labeloverzicht genereren                                    | Een notitie maken met elk spierlabel                               |
-| Oefeningsnamen controleren                                  | Dezelfde oefening vinden die onder verschillende spellingen is gelogd |
-| Training exporteren naar canvas                             | De huidige training op een Obsidian-canvas uitlijnen               |
-| CSV-logbestand maken                                        | Een leeg log maken                                                 |
-| Importeren vanuit Strong of Hevy                            | De series van een Strong- of Hevy-CSV-export aan het log toevoegen |
-| Oefeningstypen migreren, Ontbrekende ID's aan codeblokken toevoegen | Onderhoud na een upgrade vanaf oudere versies              |
+| Opdracht                                                              | Wat het doet                                                                                 |
+| --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Trainingslog maken                                                    | Een serie loggen                                                                             |
+| Voorbeeldnotities maken                                               | Voorbeeldoefeningen, trainingen, logs en een dashboard toevoegen                             |
+| Open handleiding, Begin de tour                                       | De handleiding openen bij de voorbeelden                                                     |
+| Toon wat er nieuw is                                                  | Toon wat er in elke versie is veranderd                                                      |
+| Trainingsgrafiek / tabel / series / timer / dashboard / duur invoegen | Een blok invoegen via een formulier                                                          |
+| Begeleide sessie invoegen                                             | Een `workout-session`-blok op de cursor invoegen                                             |
+| Oefeningspagina maken                                                 | Nieuwe oefeningspagina met type en labels                                                    |
+| Oefeningsblok toevoegen                                               | Een oefening toevoegen als sectie met zijn seriesblok, met automatisch aanvullen van de naam |
+| Oefening omzetten                                                     | De series van een oefening naar een ander oefeningstype verplaatsen                          |
+| Spierlabels beheren                                                   | `muscle-tags.csv` bewerken                                                                   |
+| Labeloverzicht genereren                                              | Een notitie maken met elk spierlabel                                                         |
+| Oefeningsnamen controleren                                            | Dezelfde oefening vinden die onder verschillende spellingen is gelogd                        |
+| Training exporteren naar canvas                                       | De huidige training op een Obsidian-canvas uitlijnen                                         |
+| CSV-logbestand maken                                                  | Een leeg log maken                                                                           |
+| Importeren vanuit Strong of Hevy                                      | De series van een Strong- of Hevy-CSV-export aan het log toevoegen                           |
+| Oefeningstypen migreren, Ontbrekende ID's aan codeblokken toevoegen   | Onderhoud na een upgrade vanaf oudere versies                                                |
 
 </details>
 

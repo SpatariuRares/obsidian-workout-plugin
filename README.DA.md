@@ -34,26 +34,6 @@ Diagrammer viser din tendens, muskel-heatmappet viser, hvad du har trænet, og h
 
 Første gang du installerer pluginet, tilføjer det eksempelnoter (eksempeløvelser, to træninger med seks ugers logs, et dashboard og en funktionsgennemgang), peger pluginet på dem og åbner guiden **Sådan kommer du i gang**: én kort side pr. funktion, med fungerende eksempler, du kan prøve. Du behøver ikke åbne indstillingerne. Udforsk gerne, før du opsætter din egen.
 
-### Den guidede tur
-
-Turen åbner en note "Guidet tur" med en tabel, et diagram, et dashboard og en timer, og peger på hvert af dem i tur og orden. Den har ni korte trin:
-
-1. Registrér dit første sæt med knappen **+**. Trinnet afsluttes, når du gemmer det.
-2. Rediger eller slet et sæt med knapperne på hver række.
-3. Se din udvikling i diagrammet.
-4. Se totaler og tendenser i dashboardet.
-5. Se, hvilke muskler du har trænet, i muskel-heatmappet.
-6. Start hviletimeren. Trinnet afsluttes, når du trykker på start.
-7. Find håndvægtikonet i båndet, som åbner logformularen fra enhver note. På en telefon bruger du i stedet kommandopaletten.
-8. Kør en hvilken som helst **Indsæt træning**-kommando fra kommandopaletten. Trinnet afsluttes, når du gør det.
-9. Færdig.
-
-Brug **Tilbage** og **Næste** til at bevæge dig rundt, eller **Spring over** for at afslutte. Hvis den del af noten, turen peger på, er uden for synsfeltet, scroller **Vis mig** hen til den. Tryk på `Esc` når som helst for at afslutte. Turen afsluttes også, når du lukker dens note eller skifter til en anden fil. Intet går tabt: dine sæt bliver i loggen.
-
-Når eksempeldata er i brug, kører turen på dem. Ellers kører den på din egen log, så diagram og dashboard starter næsten tomme. Noten oprettes én gang, ved siden af eksemplerne eller øverst i din vault. En eksisterende note bliver aldrig overskrevet, og du kan redigere eller slette den. Hvis en note ved navn "Guidet tur" allerede findes, og den ikke er turens egen, bruger turen i stedet "Guidet tur 1" (eller det næste ledige nummer).
-
-Vil du tage turen igen? Vælg **Tag turen** under **Indstillinger → Workout Planner → Sådan kommer du i gang**, eller kør **Start turen** fra kommandopaletten.
-
 Vil du have eksemplerne eller vejledningen igen? Vælg **Opret eksempler** eller **Åbn vejledningen** under **Indstillinger → Workout Planner → Sådan kommer du i gang**, eller kør **Opret eksempelnoter** eller **Åbn vejledningen** fra kommandopaletten (`Ctrl/Cmd + P`). Oprettelse af eksemplerne overskriver aldrig noget: kører du det igen, tilføjes kun de eksempelfiler, der mangler, og filer, du har ændret, forbliver, som de er. Guiden tilbyder at oprette eksemplerne, hvis de ikke findes endnu. En tom tabel, et tomt diagram eller dashboard har også et link **Eller udforsk med eksempeldata**. Har du allerede en træningslog, får eksemplerne deres egen logfil, og din forbliver urørt.
 
 For at tilføje en tabel til en hvilken som helst note, f.eks. `Push Day`:
@@ -64,7 +44,7 @@ exercise: Bench Press
 ```
 ````
 
-Tryk på **+** under tabellen, indtast gentagelser og vægt, og gem. Tabellen opdateres af sig selv. Du behøver heller ikke skrive blokkene i hånden: kommandoerne **Indsæt træningsdiagram / træningstabel / træningstimer / træningsdashboard / træningsvarighed** åbner en formular og indsætter blokken for dig.
+Tryk på **+** under tabellen, indtast gentagelser og vægt, og gem. Tabellen opdateres af sig selv. Du behøver heller ikke skrive blokkene i hånden: kommandoerne **Indsæt træningsdiagram / træningstabel / træningssæt / træningstimer / træningsdashboard / træningsvarighed** og **Indsæt guidet session** åbner en formular (eller skriver blokken) for dig.
 
 ## Registrering af sæt
 
@@ -94,20 +74,20 @@ Med `targetWeight` og `targetReps` vises et mål for progressiv overbelastning o
 <details>
 <summary>Alle parametre</summary>
 
-| Parameter                    | Standard | Hvad den gør                                         |
-| ---------------------------- | -------- | ---------------------------------------------------- |
-| `exercise`                   | —        | Kun denne øvelse                                     |
-| `workout`                    | —        | Kun denne træning (notenavn)                         |
-| `exactMatch`                 | `false`  | Match øvelsesnavnet præcist                          |
-| `dateRange`                  | alle     | I dag og de foregående N dage                        |
+| Parameter                    | Standard | Hvad den gør                                                  |
+| ---------------------------- | -------- | ------------------------------------------------------------- |
+| `exercise`                   | —        | Kun denne øvelse                                              |
+| `workout`                    | —        | Kun denne træning (notenavn)                                  |
+| `exactMatch`                 | `false`  | Match øvelsesnavnet præcist                                   |
+| `dateRange`                  | alle     | I dag og de foregående N dage                                 |
 | `limit`                      | `50`     | Maksimalt antal rækker; med `sets`, `sets × 2` (to træninger) |
-| `sortBy`                     | `date`   | `date`, `exercise`, `weight`, `reps` eller `volume`  |
-| `sortOrder`                  | `desc`   | `asc` eller `desc`                                   |
-| `columns`                    | alle     | Kolonner der vises, f.eks. `["date", "reps", "weight"]` |
-| `showProtocol`               | `true`   | Vis kolonnen med protokolmærket                      |
-| `showAddButton`              | `true`   | Vis **+**-knappen                                    |
-| `targetWeight`, `targetReps` | —        | Vis et mål for progressiv overbelastning over tabellen |
-| `sets`                       | —        | Planlagte sæt, talt af en `workout-session`-blok     |
+| `sortBy`                     | `date`   | `date`, `exercise`, `weight`, `reps` eller `volume`           |
+| `sortOrder`                  | `desc`   | `asc` eller `desc`                                            |
+| `columns`                    | alle     | Kolonner der vises, f.eks. `["date", "reps", "weight"]`       |
+| `showProtocol`               | `true`   | Vis kolonnen med protokolmærket                               |
+| `showAddButton`              | `true`   | Vis **+**-knappen                                             |
+| `targetWeight`, `targetReps` | —        | Vis et mål for progressiv overbelastning over tabellen        |
+| `sets`                       | —        | Planlagte sæt, talt af en `workout-session`-blok              |
 
 Øvelsesnavne matcher løst som standard ("squat" finder "Squat (high bar)"); tilføj `exactMatch: true` for kun det præcise navn.
 
@@ -130,14 +110,14 @@ rest: 120
 <details>
 <summary>Alle parametre</summary>
 
-| Parameter                    | Standard      | Hvad den gør                                                                                     |
-| ---------------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
-| `exercise`                   | —             | Øvelsen (præcist navn)                                                                           |
-| `workout`                    | notenavnet    | Træningen sættene registreres under                                                              |
-| `sets`                       | som sidst     | Rækker at udfylde (mindst én); **Tilføj sæt** tilføjer flere                                     |
-| `targetWeight`, `targetReps` | —             | Hints, når øvelsen aldrig er lavet, og et mål for progressiv overbelastning                      |
-| `rest`                       | —             | Sekunder hvile efter hvert sæt; `0` for ingen timer. Ikke angivet: `workout-timer`-blokken i samme afsnit |
-| `timer.*`                    | —             | Hviletimerens øvrige valgmuligheder: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
+| Parameter                    | Standard   | Hvad den gør                                                                                                                         |
+| ---------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `exercise`                   | —          | Øvelsen (præcist navn)                                                                                                               |
+| `workout`                    | notenavnet | Træningen sættene registreres under                                                                                                  |
+| `sets`                       | som sidst  | Rækker at udfylde (mindst én); **Tilføj sæt** tilføjer flere                                                                         |
+| `targetWeight`, `targetReps` | —          | Hints, når øvelsen aldrig er lavet, og et mål for progressiv overbelastning                                                          |
+| `rest`                       | —          | Sekunder hvile efter hvert sæt; `0` for ingen timer. Ikke angivet: `workout-timer`-blokken i samme afsnit                            |
+| `timer.*`                    | —          | Hviletimerens øvrige valgmuligheder: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
 
 </details>
 
@@ -167,26 +147,27 @@ showTrendLine: true
 <details>
 <summary>Alle parametre</summary>
 
-| Parameter       | Standard       | Hvad den gør                                                              |
-| --------------- | -------------- | ------------------------------------------------------------------------- |
-| `exercise`      | —              | Kun denne øvelse                                                          |
-| `workout`       | —              | Kun denne træning                                                         |
-| `type`          | `volume`       | `volume`, `weight`, `reps`, `duration`, `distance`, `pace` eller `heartRate` |
-| `chartType`     | `exercise`     | Hvordan hvert dags punkt bygges (nedenfor)                                |
-| `dateRange`     | `30`           | Dage der medtages                                                         |
-| `limit`         | —              | Kun de seneste N punkter                                                  |
-| `showTrendLine` | `false`        | Tegn en tendenslinje                                                      |
-| `showStats`     | `true`         | Vis gennemsnit, bedste og laveste under diagrammet                        |
-| `title`         | `Trend <type>` | Diagrammets titel                                                         |
-| `height`        | 4:3            | `300` (pixels) eller enhver CSS-længde, f.eks. `50vh`                     |
-| `exactMatch`    | `false`        | Match øvelsesnavnet præcist                                               |
+| Parameter       | Standard       | Hvad den gør                                                                         |
+| --------------- | -------------- | ------------------------------------------------------------------------------------ |
+| `exercise`      | —              | Kun denne øvelse                                                                     |
+| `workout`       | —              | Kun denne træning                                                                    |
+| `type`          | `volume`       | `volume`, `weight`, `reps`, `e1rm`, `duration`, `distance`, `pace` eller `heartRate` |
+| `chartType`     | `exercise`     | Hvordan hvert dags punkt bygges (nedenfor)                                           |
+| `dateRange`     | `30`           | Dage der medtages                                                                    |
+| `limit`         | —              | Kun de seneste N punkter                                                             |
+| `showTrendLine` | `false`        | Tegn en tendenslinje                                                                 |
+| `showTrend`     | `true`         | Vis trendoverskriften over diagrammet                                                |
+| `showStats`     | `true`         | Vis gennemsnit, bedste og laveste under diagrammet                                   |
+| `title`         | `Trend <type>` | Diagrammets titel                                                                    |
+| `height`        | 4:3            | `300` (pixels) eller enhver CSS-længde, f.eks. `50vh`                                |
+| `exactMatch`    | `false`        | Match øvelsesnavnet præcist                                                          |
 
-| `chartType` | Sæt der bruges                      | Hvert dags punkt |
-| ----------- | ----------------------------------- | ---------------- |
-| `exercise`  | sæt af `exercise`                   | gennemsnit       |
-| `workout`   | sæt af `workout`                    | total            |
-| `combined`  | sæt af `exercise` inden for `workout` | total          |
-| `all`       | alle sæt (filtre ignoreres)         | total            |
+| `chartType` | Sæt der bruges                        | Hvert dags punkt |
+| ----------- | ------------------------------------- | ---------------- |
+| `exercise`  | sæt af `exercise`                     | gennemsnit       |
+| `workout`   | sæt af `workout`                      | total            |
+| `combined`  | sæt af `exercise` inden for `workout` | total            |
+| `all`       | alle sæt (filtre ignoreres)           | total            |
 
 </details>
 
@@ -221,16 +202,16 @@ Heatmappet viser, hvilke muskler du har trænet i den seneste uge, måned eller 
 <details>
 <summary>Alle parametre</summary>
 
-| Parameter             | Standard | Hvad den gør                                                                                                                                                                                                |
-| --------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`               | —        | Overskrift over dashboardet                                                                                                                                                                                 |
-| `dateRange`           | alle     | Kun sæt fra de seneste N dage                                                                                                                                                                               |
+| Parameter             | Standard | Hvad den gør                                                                                                                                                                                                                           |
+| --------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`               | —        | Overskrift over dashboardet                                                                                                                                                                                                            |
+| `dateRange`           | alle     | Kun sæt fra de seneste N dage                                                                                                                                                                                                          |
 | `widgets`             | alle     | De widgets, der vises, i denne rækkefølge: `summary`, `quickStats`, `heatMap`, `volume`, `recentWorkouts`, `protocolDistribution`, `protocolEffectiveness`, `duration`, `quickActions`, `fileErrors`, `muscleTags`, `trainingCalendar` |
-| `layout`              | `list`   | `grid` placerer hver widget i dens celler (se ovenfor)                                                                                                                                                      |
-| `columns`             | —        | Gitter: de kolonner, gitteret blev lavet til                                                                                                                                                                |
-| `grid.<widget>`       | —        | Gitter: kolonne, række, bredde og højde for den widget                                                                                                                                                      |
-| `recentWorkoutsLimit` | `5`      | Træninger på listen over seneste                                                                                                                                                                            |
-| `volumeTrendDays`     | `30`     | Dage i diagrammet over volumentendensen                                                                                                                                                                     |
+| `layout`              | `list`   | `grid` placerer hver widget i dens celler (se ovenfor)                                                                                                                                                                                 |
+| `columns`             | —        | Gitter: de kolonner, gitteret blev lavet til                                                                                                                                                                                           |
+| `grid.<widget>`       | —        | Gitter: kolonne, række, bredde og højde for den widget                                                                                                                                                                                 |
+| `recentWorkoutsLimit` | `5`      | Træninger på listen over seneste                                                                                                                                                                                                       |
+| `volumeTrendDays`     | `30`     | Dage i diagrammet over volumentendensen                                                                                                                                                                                                |
 
 </details>
 
@@ -292,19 +273,19 @@ rounds: 8
 <details>
 <summary>Alle parametre</summary>
 
-| Parameter             | Standard    | Hvad den gør                                                          |
-| --------------------- | ----------- | --------------------------------------------------------------------- |
-| `type`                | `countdown` | `countdown`, `interval` eller `stopwatch`                             |
-| `duration`            | `30`        | Sekunder (nedtælling; ved interval arbejdet i hver runde)             |
-| `work`                | —           | Interval: sekunder arbejde pr. runde (erstatter `duration`)           |
-| `rest`                | `0`         | Interval: sekunder hvile efter hver rundes arbejde                    |
-| `rounds`              | `1`         | Runder (interval)                                                     |
-| `sound`               | `true`      | Bip når tiden er gået                                                 |
-| `autoStart`           | `false`     | Start, så snart noten åbnes                                           |
-| `showControls`        | `true`      | Vis start, pause og nulstil                                           |
+| Parameter             | Standard    | Hvad den gør                                                                             |
+| --------------------- | ----------- | ---------------------------------------------------------------------------------------- |
+| `type`                | `countdown` | `countdown`, `interval` eller `stopwatch`                                                |
+| `duration`            | `30`        | Sekunder (nedtælling; ved interval arbejdet i hver runde)                                |
+| `work`                | —           | Interval: sekunder arbejde pr. runde (erstatter `duration`)                              |
+| `rest`                | `0`         | Interval: sekunder hvile efter hver rundes arbejde                                       |
+| `rounds`              | `1`         | Runder (interval)                                                                        |
+| `sound`               | `true`      | Bip når tiden er gået                                                                    |
+| `autoStart`           | `false`     | Start, så snart noten åbnes                                                              |
+| `showControls`        | `true`      | Vis start, pause og nulstil                                                              |
 | `preset`              | —           | Start fra en forudindstilling (gemt, `Tabata` eller `EMOM`); parametrene overskriver den |
-| `exercise`, `workout` | —           | Genstart timeren, når du registrerer et sæt for denne øvelse eller træning |
-| `superset`            | `false`     | Kun canvas-eksport: tegn denne øvelse og den næste som et supersæt    |
+| `exercise`, `workout` | —           | Genstart timeren, når du registrerer et sæt for denne øvelse eller træning               |
+| `superset`            | `false`     | Kun canvas-eksport: tegn denne øvelse og den næste som et supersæt                       |
 
 </details>
 
@@ -316,6 +297,7 @@ En `workout-session`-blok øverst i en træningsnote (kommandoen **Indsæt guide
 
 ````markdown
 ```workout-session
+
 ```
 
 ## Squat
@@ -356,13 +338,13 @@ tags:
 ---
 ```
 
-| `exercise_type`      | Logformularen spørger efter                  | Også accepteret                                              |
-| -------------------- | -------------------------------------------- | ------------------------------------------------------------ |
-| `strength` (standard) | gentagelser, vægt                           | `bodyweight`, `weights`                                      |
-| `timed`              | varighed                                     | `duration`, `time`, `timer`, `interval`, `hold`, `isometric` |
-| `distance`           | distance, varighed (valgfri)                 | `running`, `run`                                             |
-| `cardio`             | varighed, distance og puls (valgfri)         | —                                                            |
-| `custom`             | kun de felter, du angiver under `parameters` | —                                                            |
+| `exercise_type`       | Logformularen spørger efter                  | Også accepteret                                              |
+| --------------------- | -------------------------------------------- | ------------------------------------------------------------ |
+| `strength` (standard) | gentagelser, vægt                            | `bodyweight`, `weights`                                      |
+| `timed`               | varighed                                     | `duration`, `time`, `timer`, `interval`, `hold`, `isometric` |
+| `distance`            | distance, varighed (valgfri)                 | `running`, `run`                                             |
+| `cardio`              | varighed, distance og puls (valgfri)         | —                                                            |
+| `custom`              | kun de felter, du angiver under `parameters` | —                                                            |
 
 Yoga fungerer på samme måde: hver stilling er en `timed`-øvelse, så formularen kun spørger, hvor længe du holdt den. Eksempelnoterne indeholder et morgenflow med yoga og en guidet session.
 
@@ -397,14 +379,14 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 <details>
 <summary>Kolonner og manuel redigering</summary>
 
-| Kolonne                    | Betydning                           |
-| -------------------------- | ----------------------------------- |
+| Kolonne                    | Betydning                                  |
+| -------------------------- | ------------------------------------------ |
 | `date`                     | Hvornår sættet blev registreret (ISO 8601) |
-| `exercise`, `workout`      | Øvelsens og træningens navn         |
-| `reps`, `weight`, `volume` | Volumen er gentagelser × vægt       |
-| `origine`                  | Link til noten, det blev registreret fra |
-| `timestamp`                | Unikt ID for rækken (millisekunder) |
-| `notes`, `protocol`        | Fri tekst og træningsteknik         |
+| `exercise`, `workout`      | Øvelsens og træningens navn                |
+| `reps`, `weight`, `volume` | Volumen er gentagelser × vægt              |
+| `origine`                  | Link til noten, det blev registreret fra   |
+| `timestamp`                | Unikt ID for rækken (millisekunder)        |
+| `notes`, `protocol`        | Fri tekst og træningsteknik                |
 
 Øvelsestyper med deres egne felter (`duration`, `distance`, `heartRate` eller dine `parameters`) tilføjer kolonner til sidst. Den sidste kolonne, `weightUnit`, er `kg` eller `lb`: enheden for rækkens `weight` og `volume`. En tom værdi betyder enheden i indstillingerne.
 
@@ -426,10 +408,10 @@ dv.paragraph(`Best: ${s.prWeight} × ${s.prReps} on ${s.prDate}`);
 <details>
 <summary>API-reference og flere eksempler</summary>
 
-| Metode                       | Returnerer                                                                                                                                                                                                                                            |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `getWorkoutLogs(filter?)`    | Sæt, hver med `date`, `exercise`, `reps`, `weight`, `volume`, `workout`, `notes`, `timestamp`, `protocol`. `weight` og `volume` er i indstillingernes enhed; `enteredWeight` og `enteredUnit` er det, der blev registreret                             |
-| `getExerciseStats(exercise)` | `estimatedOneRepMax`, `totalVolume`, `maxWeight`, `prWeight`, `prReps`, `prDate`, `totalSets`, `averageWeight`, `averageReps`, `lastWorkoutDate`, `trend`                                                                                             |
+| Metode                       | Returnerer                                                                                                                                                                                                                                 |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `getWorkoutLogs(filter?)`    | Sæt, hver med `date`, `exercise`, `reps`, `weight`, `volume`, `workout`, `notes`, `timestamp`, `protocol`. `weight` og `volume` er i indstillingernes enhed; `enteredWeight` og `enteredUnit` er det, der blev registreret                 |
+| `getExerciseStats(exercise)` | `estimatedOneRepMax`, `totalVolume`, `maxWeight`, `prWeight`, `prReps`, `prDate`, `totalSets`, `averageWeight`, `averageReps`, `lastWorkoutDate`, `trend`                                                                                  |
 | `getExercises(filter?)`      | Øvelsesnavne, sorteret: filnavnene på dine øvelsessider (inklusive undermapper), eller navnene i din log, når du ikke har øvelsessider. `{ tag: "chest" }` beholder de øvelser, hvis side har det tag, så listen er tom uden øvelsessider. |
 
 `getWorkoutLogs` accepterer `exercise` (delvist, uden forskel på store og små bogstaver), `workout`, `dateRange: { start, end }`, `protocol` og `exactMatch`.
@@ -473,24 +455,24 @@ Angiv CSV- og øvelsesmapperne, standardenheden for vægt, vægttrinnet for **+/
 
 Åbn kommandopaletten (`Ctrl/Cmd + P`) og skriv navnet.
 
-| Kommando                                                    | Hvad den gør                                                       |
-| ----------------------------------------------------------- | ------------------------------------------------------------------ |
-| Opret træningslog                                           | Registrer et sæt                                                   |
-| Start turen                                                 | Tag den guidede tur                                                |
-| Opret eksempelnoter                                         | Tilføj eksempelovelser, træninger, logs og et dashboard            |
-| Åbn vejledningen                                            | Åbn guiden i eksemplerne                                           |
-| Indsæt træningsdiagram / træningstabel / træningstimer / træningsdashboard / træningsvarighed | Indsæt en blok via en formular |
-| Opret øvelsesside                                           | Ny øvelsesside med type og tags                                    |
-| Opret øvelsessektion                                        | Tilføj en overskrift, timer og tabel for en øvelse til den aktuelle note |
-| Tilføj øvelsesblok                                          | Indsæt en øvelsesblok med autofuldførelse af navne                 |
-| Konvertér øvelse                                            | Flyt en øvelses sæt til en anden øvelsestype                       |
-| Administrer muskeltags                                      | Rediger `muscle-tags.csv`                                          |
-| Generér tag-oversigt                                        | Opret en note med alle muskeltags                                  |
-| Gennemgå øvelsesnavne                                       | Find den samme øvelse registreret under forskellige stavemåder     |
-| Eksportér træning til canvas                                | Læg den aktuelle træning ud på et Obsidian-canvas                  |
-| Opret CSV-logfil                                            | Opret en tom log                                                   |
-| Importer fra Strong eller Hevy                              | Tilføj sættene fra en Strong- eller Hevy-CSV-eksport til loggen    |
-| Migrér øvelsestyper, Tilføj manglende ID'er til kodeblokke  | Vedligehold efter opgradering fra ældre versioner                  |
+| Kommando                                                                                                    | Hvad den gør                                                                   |
+| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Opret træningslog                                                                                           | Registrer et sæt                                                               |
+| Opret eksempelnoter                                                                                         | Tilføj eksempelovelser, træninger, logs og et dashboard                        |
+| Åbn vejledningen, Start turen                                                                               | Åbn guiden i eksemplerne                                                       |
+| Vis hvad der er nyt                                                                                         | Vis hvad der er ændret i hver version                                          |
+| Indsæt træningsdiagram / træningstabel / træningssæt / træningstimer / træningsdashboard / træningsvarighed | Indsæt en blok via en formular                                                 |
+| Indsæt guidet session                                                                                       | Indsæt en `workout-session`-blok ved markøren                                  |
+| Opret øvelsesside                                                                                           | Ny øvelsesside med type og tags                                                |
+| Tilføj øvelsesblok                                                                                          | Tilføj en sektion for en øvelse med dens sætblok, med autofuldførelse af navne |
+| Konvertér øvelse                                                                                            | Flyt en øvelses sæt til en anden øvelsestype                                   |
+| Administrer muskeltags                                                                                      | Rediger `muscle-tags.csv`                                                      |
+| Generér tag-oversigt                                                                                        | Opret en note med alle muskeltags                                              |
+| Gennemgå øvelsesnavne                                                                                       | Find den samme øvelse registreret under forskellige stavemåder                 |
+| Eksportér træning til canvas                                                                                | Læg den aktuelle træning ud på et Obsidian-canvas                              |
+| Opret CSV-logfil                                                                                            | Opret en tom log                                                               |
+| Importer fra Strong eller Hevy                                                                              | Tilføj sættene fra en Strong- eller Hevy-CSV-eksport til loggen                |
+| Migrér øvelsestyper, Tilføj manglende ID'er til kodeblokke                                                  | Vedligehold efter opgradering fra ældre versioner                              |
 
 </details>
 

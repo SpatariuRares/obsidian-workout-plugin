@@ -34,26 +34,6 @@ Diagrammene viser trenden din, muskelvarmekartet viser hva du har trent, og hver
 
 Første gang du installerer plugin-en, legger den til eksempelnotater (eksempeløvelser, to treninger med seks uker med logger, et dashbord og en funksjonsoversikt), peker plugin-en mot dem og åpner veiledningen **Hvordan komme i gang**: én kort side per funksjon, med fungerende eksempler du kan prøve. Du trenger ikke åpne innstillingene. Utforsk gjerne litt før du setter opp dine egne.
 
-### Den veiledede turen
-
-Turen åpner et notat som heter "Veiledet tur", med en tabell, et diagram, et dashbord og en timer, og peker på hver av dem etter tur. Den har ni korte steg:
-
-1. Logg ditt første sett med **+**-knappen. Steget er fullført når du lagrer det.
-2. Rediger eller slett et sett med knappene på hver rad.
-3. Se fremgangen din i diagrammet.
-4. Se totaler og trender i dashbordet.
-5. Se hvilke muskler du trente i muskelvarmekartet.
-6. Start hviletimeren. Steget er fullført når du trykker på start.
-7. Finn hantelikonet i båndet, som åpner loggskjemaet fra et hvilket som helst notat. På telefonen bruker du kommandopaletten i stedet.
-8. Kjør en av kommandoene **Legg til trening** fra kommandopaletten. Steget er fullført når du gjør det.
-9. Ferdig.
-
-Bruk **Tilbake** og **Neste** for å bevege deg, eller **Hopp over** for å avslutte. Hvis delen av notatet turen peker på er utenfor synsfeltet, scroller **Vis meg** dit. Trykk `Esc` når som helst for å avslutte. Turen avsluttes også når du lukker notatet eller bytter til en annen fil. Ingenting går tapt: settene dine ligger fortsatt i loggen.
-
-Når eksempeldataene er i bruk, kjører turen på dem. Ellers kjører den på din egen logg, slik at diagrammet og dashbordet starter nesten tomme. Notatet opprettes én gang, ved siden av eksemplene eller øverst i hvelvet. Et eksisterende notat blir aldri overskrevet, og du kan redigere eller slette det. Finnes det allerede et notat som heter "Veiledet tur" som ikke er turens eget, bruker turen "Veiledet tur 1" (eller neste ledige nummer) i stedet.
-
-Vil du ta turen igjen? Velg **Følg guiden** under **Innstillinger → Workout Planner → Komme i gang**, eller kjør **Start guiden** fra kommandopaletten.
-
 Vil du ha eksemplene eller veiledningen igjen? Velg **Opprett eksempler** eller **Åpne veiledning** under **Innstillinger → Workout Planner → Komme i gang**, eller kjør **Opprett eksempelnotater** eller **Åpne veiledning** fra kommandopaletten (`Ctrl/Cmd + P`). Å opprette eksemplene overskriver aldri noe: kjører du det på nytt, legges bare de manglende eksempelfilene til, og filer du har endret, blir som de er. Veiledningen tilbyr å opprette eksemplene hvis de ikke finnes ennå. En tom tabell, et tomt diagram eller et tomt dashbord har også en lenke, **Eller utforsk med eksempeldata**. Har du allerede en treningslogg, får eksemplene sin egen loggfil, og din forblir urørt.
 
 For å legge til en tabell i et hvilket som helst notat, for eksempel `Push Day`:
@@ -64,7 +44,7 @@ exercise: Bench Press
 ```
 ````
 
-Trykk **+** under tabellen, skriv inn repetisjoner og vekt, og lagre. Tabellen oppdateres av seg selv. Du trenger heller ikke skrive blokker for hånd: kommandoene **Legg til treningsdiagram**, **Legg til treningstabell**, **Legg til trenings-timer**, **Legg til treningsdashbord** og **Legg til treningsvarighet** åpner et skjema og setter inn blokken for deg.
+Trykk **+** under tabellen, skriv inn repetisjoner og vekt, og lagre. Tabellen oppdateres av seg selv. Du trenger heller ikke skrive blokker for hånd: kommandoene **Legg til treningsdiagram**, **Legg til treningstabell**, **Legg til treningssett**, **Legg til trenings-timer**, **Legg til treningsdashboard** og **Legg til treningsvarighet**, og **Sett inn veiledet økt**, åpner et skjema (eller skriver blokken) for deg.
 
 ## Logge sett
 
@@ -171,11 +151,12 @@ showTrendLine: true
 | --------------- | -------------- | --------------------------------------------------------------------------- |
 | `exercise`      | —              | Bare denne øvelsen                                                          |
 | `workout`       | —              | Bare denne treningen                                                        |
-| `type`          | `volume`       | `volume`, `weight`, `reps`, `duration`, `distance`, `pace` eller `heartRate` |
+| `type`          | `volume`       | `volume`, `weight`, `reps`, `e1rm`, `duration`, `distance`, `pace` eller `heartRate` |
 | `chartType`     | `exercise`     | Hvordan hvert dagspunkt bygges (under)                                      |
 | `dateRange`     | `30`           | Dager som tas med                                                           |
 | `limit`         | —              | Bare de siste N punktene                                                    |
 | `showTrendLine` | `false`        | Tegn en trendlinje                                                          |
+| `showTrend`     | `true`         | Vis trendoverskriften over diagrammet                                       |
 | `showStats`     | `true`         | Vis snitt, beste og laveste under diagrammet                                |
 | `title`         | `Trend <type>` | Diagramtittel                                                               |
 | `height`        | 4:3            | `300` (piksler) eller en hvilken som helst CSS-lengde, f.eks. `50vh`        |
@@ -316,6 +297,7 @@ En `workout-session`-blokk øverst i et treningsnotat (kommandoen **Sett inn vei
 
 ````markdown
 ```workout-session
+
 ```
 
 ## Squat
@@ -473,24 +455,24 @@ Angi mappene for CSV og øvelser, standard vektenhet, vektsteget for **+/−**-k
 
 Åpne kommandopaletten (`Ctrl/Cmd + P`) og skriv inn navnet.
 
-| Kommando                                                    | Hva den gjør                                                       |
-| ----------------------------------------------------------- | ------------------------------------------------------------------ |
-| Opprett treningslogg                                        | Logg et sett                                                       |
-| Start guiden                                                | Ta den veiledede turen                                             |
-| Opprett eksempelnotater                                     | Legg til eksempeløvelser, treninger, logger og et dashbord         |
-| Åpne veiledning                                             | Åpne veiledningen i eksemplene                                     |
-| Legg til treningsdiagram / treningstabell / timer / dashbord / varighet | Sett inn en blokk gjennom et skjema                    |
-| Opprett øvelsesside                                         | Ny øvelsesside med type og tagger                                  |
-| Opprett øvelsesseksjon                                      | Legg til en overskrift, timer og tabell for en øvelse i gjeldende notat |
-| Legg til øvelsesblokk                                       | Sett inn en øvelsesblokk, med autofullfør for navn                 |
-| Konverter øvelse                                            | Flytt en øvelses sett til en annen øvelsestype                     |
-| Administrer muskeltagger                                    | Rediger `muscle-tags.csv`                                          |
-| Generer tag-oversikt                                        | Lag et notat som lister hver muskeltagg                            |
-| Gå gjennom øvelsesnavn                                      | Finn samme øvelse logget under ulike stavemåter                    |
-| Eksporter økt til canvas                                    | Legg ut gjeldende trening på et Obsidian-canvas                    |
-| Opprett CSV-loggfil                                         | Lag en tom logg                                                    |
-| Importer fra Strong eller Hevy                              | Legg til settene i en Strong- eller Hevy-CSV-eksport i loggen      |
-| Migrer øvelsestyper, Legg til manglende ID-er i kodeblokker | Vedlikehold etter oppgradering fra eldre versjoner                 |
+| Kommando                                                                                | Hva den gjør                                                                |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Opprett treningslogg                                                                    | Logg et sett                                                                |
+| Opprett eksempelnotater                                                                 | Legg til eksempeløvelser, treninger, logger og et dashbord                  |
+| Åpne veiledning, Start guiden                                                           | Åpne veiledningen i eksemplene                                              |
+| Vis hva som er nytt                                                                     | Vis hva som er endret i hver versjon                                        |
+| Legg til treningsdiagram / treningstabell / treningssett / timer / dashboard / varighet | Sett inn en blokk gjennom et skjema                                         |
+| Sett inn veiledet økt                                                                   | Sett inn en `workout-session`-blokk ved markøren                            |
+| Opprett øvelsesside                                                                     | Ny øvelsesside med type og tagger                                           |
+| Legg til øvelsesblokk                                                                   | Legg til en seksjon for en øvelse med settblokken, med autofullfør for navn |
+| Konverter øvelse                                                                        | Flytt en øvelses sett til en annen øvelsestype                              |
+| Administrer muskeltagger                                                                | Rediger `muscle-tags.csv`                                                   |
+| Generer tag-oversikt                                                                    | Lag et notat som lister hver muskeltagg                                     |
+| Gå gjennom øvelsesnavn                                                                  | Finn samme øvelse logget under ulike stavemåter                             |
+| Eksporter økt til canvas                                                                | Legg ut gjeldende trening på et Obsidian-canvas                             |
+| Opprett CSV-loggfil                                                                     | Lag en tom logg                                                             |
+| Importer fra Strong eller Hevy                                                          | Legg til settene i en Strong- eller Hevy-CSV-eksport i loggen               |
+| Migrer øvelsestyper, Legg til manglende ID-er i kodeblokker                             | Vedlikehold etter oppgradering fra eldre versjoner                          |
 
 </details>
 

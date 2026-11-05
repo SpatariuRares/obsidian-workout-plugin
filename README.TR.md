@@ -34,26 +34,6 @@ Grafikler trendinizi gösterir, kas ısı haritası neyi çalıştırdığınız
 
 Eklentiyi ilk kez kurduğunuzda örnek notlar ekler (örnek egzersizler, altı haftalık kayıtları olan iki antrenman, bir gösterge paneli ve bir özellik tanıtımı), eklentiyi bunlara yönlendirir ve **Başlangıç kılavuzu**nu açar: her özellik için kısa bir sayfa, denemeniz için çalışan örneklerle. Ayarları açmanız gerekmez. Kendi notlarınızı kurmadan önce etrafa göz atın.
 
-### Rehberli tur
-
-Tur, bir tablo, bir grafik, bir gösterge paneli ve bir zamanlayıcı içeren bir "Rehberli tur" notu açar ve her birine sırayla işaret eder. Dokuz kısa adımı vardır:
-
-1. **+** düğmesiyle ilk setinizi kaydedin. Adım, kaydettiğinizde tamamlanır.
-2. Her satırdaki düğmelerle bir seti düzenleyin ya da silin.
-3. İlerlemenizi grafikte görün.
-4. Toplamları ve trendleri gösterge panelinde görün.
-5. Kas ısı haritasında hangi kasları çalıştırdığınızı görün.
-6. Dinlenme zamanlayıcısını başlatın. Adım, başlat tuşuna bastığınızda tamamlanır.
-7. Şeritteki dambıl simgesini bulun; bu simge herhangi bir nottan kayıt formunu açar. Telefonda bunun yerine komut paletini kullanın.
-8. Komut paletinden herhangi bir **Antrenman ... ekle** komutunu çalıştırın. Adım, bunu yaptığınızda tamamlanır.
-9. Tamamlandı.
-
-Gezinmek için **Geri** ve **İleri** düğmelerini, çıkmak için **Atla** düğmesini kullanın. Turun işaret ettiği bölüm görünmüyorsa **Beni göster** o kısma kaydırır. Turu istediğiniz zaman bitirmek için `Esc` tuşuna basın. Notu kapatırsanız ya da başka bir dosyaya geçerseniz tur da sona erer. Hiçbir şey kaybolmaz: setleriniz kayıtta kalır.
-
-Örnek veriler kullanılırken tur onlar üzerinde çalışır. Değilse kendi kayıtlarınız üzerinde çalışır; bu durumda grafik ve gösterge paneli neredeyse boş başlar. Not bir kez oluşturulur; örneklerin yanına ya da kasanızın en üstüne. Var olan bir not asla üzerine yazılmaz ve dilediğiniz gibi düzenleyebilir ya da silebilirsiniz. "Rehberli tur" adlı bir not zaten varsa ve turun kendi notu değilse, tur bunun yerine "Rehberli tur 1" (ya da bir sonraki boş numara) kullanır.
-
-Turu yeniden mi almak istiyorsunuz? **Ayarlar → Workout Planner → Başlangıç** altında **Turu başlat** seçeneğini seçin ya da komut paletinden **Turu başlat** komutunu çalıştırın.
-
 Örnekleri ya da kılavuzu yeniden mi istiyorsunuz? **Ayarlar → Workout Planner → Başlangıç** altında **Örnekleri oluştur** ya da **Başlangıç kılavuzunu aç** seçeneğini seçin; ya da komut paletinden (`Ctrl/Cmd + P`) **Örnek notlar oluştur** ya da **Başlangıç kılavuzunu aç** komutunu çalıştırın. Örnekleri oluşturmak hiçbir şeyin üzerine yazmaz: yeniden çalıştırmak yalnızca eksik örnek dosyaları ekler, değiştirdiğiniz dosyalar olduğu gibi kalır. Kılavuz, örnekler henüz yoksa bunları oluşturmayı önerir. Boş bir tablo, grafik ya da gösterge paneli de **Veya örnek veriyle keşfet** bağlantısını gösterir. Zaten bir antrenman kaydınız varsa örnekler kendi kayıt dosyasını alır ve sizinki dokunulmadan kalır.
 
 Herhangi bir nota, örneğin `Push Day` notuna tablo eklemek için:
@@ -64,7 +44,7 @@ exercise: Bench Press
 ```
 ````
 
-Tablonun altındaki **+** düğmesine dokunun, tekrar ve ağırlığı girin, kaydedin. Tablo kendiliğinden güncellenir. Blokları elle yazmanız da gerekmez: **Antrenman grafiği ekle**, **Antrenman tablosu ekle**, **Antrenman zamanlayıcısı ekle**, **Antrenman gösterge paneli ekle** ve **Antrenman süresi ekle** komutları bir form açar ve bloğu sizin için ekler.
+Tablonun altındaki **+** düğmesine dokunun, tekrar ve ağırlığı girin, kaydedin. Tablo kendiliğinden güncellenir. Blokları elle yazmanız da gerekmez: **Antrenman grafiği / tablosu / setleri / zamanlayıcısı / gösterge paneli / süresi ekle** komutları bir form açar ve bloğu sizin için ekler; **Rehberli antrenman ekle** komutu ise bloğu imlecin olduğu yere yazar.
 
 ## Set kaydetme
 
@@ -171,11 +151,12 @@ showTrendLine: true
 | --------------- | -------------- | ------------------------------------------------------------------------- |
 | `exercise`      | —              | Yalnızca bu egzersiz                                                      |
 | `workout`       | —              | Yalnızca bu antrenman                                                     |
-| `type`          | `volume`       | `volume`, `weight`, `reps`, `duration`, `distance`, `pace` veya `heartRate` |
+| `type`          | `volume`       | `volume`, `weight`, `reps`, `e1rm`, `duration`, `distance`, `pace` veya `heartRate` |
 | `chartType`     | `exercise`     | Her günün noktasının nasıl oluşturulduğu (aşağıda)                        |
 | `dateRange`     | `30`           | Dahil edilecek gün sayısı                                                 |
 | `limit`         | —              | Yalnızca son N nokta                                                      |
 | `showTrendLine` | `false`        | Trend çizgisi çiz                                                         |
+| `showTrend`     | `true`         | Grafiğin üstündeki trend başlığını göster                                  |
 | `showStats`     | `true`         | Grafiğin altında ortalama, en iyi ve en düşük değeri göster               |
 | `title`         | `Trend <type>` | Grafik başlığı                                                            |
 | `height`        | 4:3            | `300` (piksel) ya da `50vh` gibi herhangi bir CSS uzunluğu               |
@@ -316,6 +297,7 @@ Bir antrenman notunun en üstündeki `workout-session` bloğu (**Rehberli antren
 
 ````markdown
 ```workout-session
+
 ```
 
 ## Squat
@@ -476,13 +458,13 @@ Komut paletini açın (`Ctrl/Cmd + P`) ve adını yazın.
 | Komut                                                       | Ne yapar                                                            |
 | ----------------------------------------------------------- | ------------------------------------------------------------------- |
 | Antrenman kaydı oluştur                                     | Bir set kaydet                                                      |
-| Turu başlat                                                 | Rehberli turu başlat                                                |
 | Örnek notlar oluştur                                        | Örnek egzersizler, antrenmanlar, kayıtlar ve bir gösterge paneli ekle |
-| Başlangıç kılavuzunu aç                                     | Örneklerdeki kılavuzu aç                                            |
-| Antrenman grafiği / tablosu / zamanlayıcısı / gösterge paneli / süresi ekle | Bir bloğu form üzerinden ekle                       |
+| Başlangıç kılavuzunu aç, Turu başlat | Örneklerdeki kılavuzu aç |
+| Yenilikleri göster | Her sürümde neyin değiştiğini göster |
+| Antrenman grafiği / tablosu / setleri / zamanlayıcısı / gösterge paneli / süresi ekle | Bir bloğu form üzerinden ekle |
+| Rehberli antrenman ekle | İmlecin olduğu yere bir `workout-session` bloğu ekle |
 | Egzersiz sayfası oluştur                                    | Tür ve etiketlerle yeni bir egzersiz sayfası                        |
-| Egzersiz bölümü oluştur                                     | Mevcut nota bir egzersiz için başlık, zamanlayıcı ve tablo ekle     |
-| Egzersiz bloğu ekle                                         | Ad otomatik tamamlamasıyla bir egzersiz bloğu ekle                  |
+| Egzersiz bloğu ekle | Set bloğu olan bir egzersiz bölümü ekle, ad otomatik tamamlamasıyla |
 | Egzersizi dönüştür                                          | Bir egzersizin setlerini başka bir egzersiz türüne taşı             |
 | Kas etiketlerini yönet                                      | `muscle-tags.csv` dosyasını düzenle                                 |
 | Etiket başvurusu oluştur                                    | Her kas etiketini listeleyen bir not oluştur                        |

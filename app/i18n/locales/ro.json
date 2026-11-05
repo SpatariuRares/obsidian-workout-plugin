@@ -56,6 +56,7 @@
     "bpm": "bpm",
     "clear": "Șterge",
     "convert": "Convertește",
+    "error": "Eroare",
     "duration": {
       "hours": "{count}h",
       "minutes": "{count}m",
@@ -194,7 +195,8 @@
         "period": "Perioada",
         "side": "Parte",
         "metric": "Indicator"
-      }
+      },
+      "trainingAnalysis": "Analiza antrenamentului"
     },
     "editDashboard": "Editează tabloul de bord",
     "modal": {
@@ -727,6 +729,7 @@
       "muscleTagExists": "Eticheta \"{tag}\" există deja",
       "muscleTagExportError": "Eroare la exportul etichetelor pentru mușchi: {error}",
       "muscleTagExported": "Etichete exportate în muscle-tags-export.csv",
+      "muscleTagGroupRequired": "Alege o grupă musculară",
       "muscleTagImportError": "Eroare la importul etichetelor pentru mușchi: {error}",
       "muscleTagImportInvalidFormat": "Fișierul trebuie să aibă o coloană 'tag' și o coloană 'muscleGroup'",
       "muscleTagImportInvalidGroup": "Grupul muscular \"{group}\" este invalid pentru eticheta \"{tag}\". Trebuie să fie un grup muscular standard.",
@@ -734,6 +737,7 @@
       "muscleTagImportPreview": "{count} etichete pentru import",
       "muscleTagImported": "{count} etichete pentru mușchi importate cu succes!",
       "muscleTagLoading": "Se încarcă etichetele...",
+      "muscleTagNameRequired": "Introdu un nume pentru etichetă",
       "muscleTagNoResults": "Nicio etichetă nu corespunde căutării",
       "muscleTagSaveError": "Eroare la salvarea etichetei pentru mușchi: {error}",
       "muscleTagSaved": "Etichetă salvată",
@@ -1270,6 +1274,7 @@
     "close": "Am înțeles",
     "olderReleases": "Versiuni mai vechi pe GitHub",
     "releases": {
+      "v3_2_1": "**Adaugă bloc de exercițiu** adaugă acum exercițiul ca secțiune proprie, cu un bloc de serii (serii planificate și pauză de 90 s), aceeași structură ca în notițele de exemplu. Setarea șablonului de bloc de exercițiu a dispărut, la fel și comanda Creează secțiune de exercițiu, care făcea același lucru cu vechea structură: dacă ai pus o tastă rapidă pe ea, pune-o pe Adaugă bloc de exercițiu.\n\nEditând o serie, sau pornind de la ultima, acum se completează și câmpurile a căror coloană este scrisă altfel în jurnal (de exemplu `HR` sau `Duration (s)`).\n\nMai mult din plugin este în limba ta: mesajele pentru etichetele de mușchi, titlurile erorilor, analiza antrenamentului din harta termică a mușchilor și fereastra de conversie a exercițiilor. Referința etichetelor pentru mușchi este scrisă și ea în limba ta.\n\nGenerarea șabloanelor implicite acum spune când eșuează.\n\nExercițiile recente nu mai apar de două ori atunci când au fost scrise cu alt spațiu sau altă majusculă.",
       "v3_2_0": "**Corecturi.** Un bloc `workout-sets` cu `rest: 0` nu mai pornește cronometrul secțiunii într-o sesiune ghidată. „Ultimele N zile” are același sens peste tot (grafice, widgeturi ale tabloului de bord, filtre) și include întreaga zi de la limită. Graficele grupează punctele pe zi de antrenament, iar liniile de tendință folosesc aceeași regulă. „Ultima dată” și formularea țintei sunt identice în cardul sesiunii, în foaia de serii și în antetul țintei. Coloanele personalizate, precum `HR` sau `Duration (s)`, sunt citite peste tot. Conversia exercițiilor nu mai scrie greutățile în unitatea greșită. Eficiența protocoalelor urmează ordinea seriilor. Paginile de exerciții cu `:` sau `#` în nume primesc un frontmatter valid. Exportul pe canvas citește corect secțiunile și duratele cronometrelor. Presetările de temporizator și fereastra „Adaugă bloc de exercițiu” sunt traduse complet.\n\n**Îmbunătățiri.** Presetările de temporizator se aleg ca cipuri, cu opțiunea „Niciunul”; la editarea unui bloc se păstrează un preset care nu mai există în setări. Butoanele din ferestre au aceeași ordine peste tot, iar rândul de butoane rămâne mereu vizibil jos. Duratele sunt formatate la fel peste tot.",
       "v3_1_0": "**Ce e nou în plugin.** După o actualizare, pluginul arată o singură dată ce s-a schimbat. Deschide-l din nou oricând cu **Afișează ce e nou** din paleta de comenzi sau cu **Afișează modificările** din Setări → Workout Planner → Începe.\n\n**Serii de antrenament pentru toată lumea.** Blocul `workout-sets` nu mai este o funcționalitate beta: funcționează fără să activezi nimic, iar **Adaugă serii de exerciții** este mereu în paleta de comenzi.",
       "v3_0_0": "**Un aspect nou pentru fiecare bloc.** Jurnalele de antrenament, graficele, sesiunea ghidată, durata antrenamentului și fiecare widget al tabloului de bord sunt acum carduri cu aceleași comenzi și meniuri, cu contrast mai clar în temele deschise și întunecate. Nimic din notițele sau din jurnalul tău nu se schimbă: blocurile arată și se comportă doar mai consecvent.\n\n**Serii pe telefon (beta).** Un bloc nou `workout-sets` arată seriile de azi ale unui exercițiu ca rânduri de completat, cu valorile de data trecută ca sugestii. Bifează un rând ca să înregistrezi seria, iar cronometrul de pauză pornește singur; bifează din nou ca să scoți seria din jurnal, cu butonul Anulează timp de câteva secunde. Activează-o din Setări → Workout Planner → Funcționalități Beta (la instalările noi este activată), apoi folosește **Adaugă serii de exerciții** din paleta de comenzi.\n\n**Sesiunile ghidate țin cont și de blocurile de serii.** Un `workout-session` urmărește acum blocurile `workout-sets` pe lângă cele `workout-log`, ia pauza fiecărui exercițiu din blocul lui și împarte același cronometru cu cardul seriilor.\n\n**Graficele** afișează sub grafic un rând de statistici: medie, minim, maxim, tendința recentă și numărul de sesiuni.\n\n**Widgeturile tabloului de bord** au propriile setări în meniul ⋮ (câte antrenamente să listeze, ce cifre să afișeze, câte zile să fie numărate și altele).\n\n**Notițele de exemplu** folosesc acum `workout-sets` pentru exercițiile antrenamentului de exemplu."

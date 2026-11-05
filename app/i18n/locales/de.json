@@ -56,6 +56,7 @@
     "bpm": "BPM",
     "clear": "Leeren",
     "convert": "Konvertieren",
+    "error": "Fehler",
     "duration": {
       "hours": "{count} h",
       "minutes": "{count} min",
@@ -191,6 +192,7 @@
         "side": "Seite",
         "metric": "Messgröße"
       },
+      "trainingAnalysis": "Trainingsanalyse",
       "imbalance": {
         "backDominant": "Ungleichgewicht vorne–hinten: Deine Rückseite arbeitet deutlich mehr als deine Vorderseite.",
         "frontDominant": "Ungleichgewicht vorne–hinten: Deine Vorderseite arbeitet deutlich mehr als deine Rückseite."
@@ -727,6 +729,7 @@
       "muscleTagExists": "Das Tag \"{tag}\" existiert bereits",
       "muscleTagExportError": "Fehler beim Exportieren von Muskel-Tags: {error}",
       "muscleTagExported": "Tags nach muscle-tags-export.csv exportiert",
+      "muscleTagGroupRequired": "Wähle eine Muskelgruppe",
       "muscleTagImportError": "Fehler beim Importieren von Muskel-Tags: {error}",
       "muscleTagImportInvalidFormat": "Diese Datei braucht eine Spalte 'tag' und eine Spalte 'muscleGroup'",
       "muscleTagImportInvalidGroup": "Ungültige Muskelgruppe \"{group}\" für das Tag \"{tag}\". Muss eine gültige Muskelgruppe sein.",
@@ -734,6 +737,7 @@
       "muscleTagImportPreview": "{count} Tags zum Importieren",
       "muscleTagImported": "{count} Muskel-Tags erfolgreich importiert!",
       "muscleTagLoading": "Tags werden geladen...",
+      "muscleTagNameRequired": "Gib einen Tag-Namen ein",
       "muscleTagNoResults": "Keine Tags passen zu deiner Suche",
       "muscleTagSaveError": "Fehler beim Speichern des Muskel-Tags: {error}",
       "muscleTagSaved": "Tag gespeichert",
@@ -1270,6 +1274,7 @@
     "close": "Verstanden",
     "olderReleases": "Ältere Versionen auf GitHub",
     "releases": {
+      "v3_2_1": "**Übungsblock hinzufügen** fügt die Übung jetzt als eigenen Abschnitt mit einem Satzblock (geplante Sätze und 90 s Pause) ein, so wie es die Beispielnotizen zeigen. Die Einstellung für die Vorlage des Übungsblocks ist entfernt, und ebenso der Befehl Übungsabschnitt erstellen, der dasselbe mit dem alten Aufbau tat: Wenn du dafür einen Hotkey hattest, lege ihn auf Übungsblock hinzufügen.\n\nBeim Bearbeiten eines Satzes oder beim Start mit deinem letzten Satz werden jetzt auch Felder ausgefüllt, deren Spalte im Protokoll anders geschrieben ist (zum Beispiel `HR` oder `Duration (s)`).\n\nMehr vom Plugin ist jetzt auf Deutsch: die Meldungen zu Muskel-Tags, die Fehlertitel, die Trainingsanalyse der Muskel-Heatmap und das Fenster zum Umwandeln von Übungen. Auch die Referenz der Muskel-Tags ist auf Deutsch.\n\nStandardvorlagen generieren meldet jetzt, wenn es fehlschlägt.\n\nZuletzt verwendete Übungen zeigen dieselbe Übung nicht mehr doppelt, wenn sie mit anderen Leerzeichen oder anderer Groß- und Kleinschreibung getippt wurde.",
       "v3_2_0": "**Korrekturen.** Ein `workout-sets`-Block mit `rest: 0` startet in einer geführten Einheit nicht mehr den Timer des Abschnitts. „Letzte N Tage“ bedeutet überall dasselbe (Diagramme, Dashboard-Widgets, Filter) und schließt den ganzen Grenztag ein. Diagramme gruppieren Punkte nach Trainingstag, und Trendlinien folgen einer einzigen Regel. „Letztes Mal“ und die Zielangaben stimmen in der Karte der geführten Einheit, im Satzblatt und in der Zielanzeige überein. Eigene Spalten wie `HR` oder `Duration (s)` werden überall gelesen. Die Übungskonvertierung schreibt Gewichte nicht mehr in der falschen Einheit. Die Auswertung der Protokolle folgt der Satzreihenfolge. Übungsseiten mit `:` oder `#` im Namen bekommen gültiges Frontmatter. Der Canvas-Export liest Abschnitte und Timer-Längen richtig. Timer-Voreinstellungen und das Modal „Übungsblock hinzufügen“ sind vollständig übersetzt.\n\n**Verbesserungen.** Timer-Voreinstellungen werden als Chips ausgewählt, mit der Option „Keine“. Beim Bearbeiten eines Blocks bleibt eine Voreinstellung erhalten, die nicht mehr in den Einstellungen steht. Die Modal-Buttons haben überall dieselbe Reihenfolge, und die Buttonleiste bleibt unten immer sichtbar. Dauern werden überall gleich formatiert.",
       "v3_1_0": "**Neu im Plugin.** Nach einem Update zeigt das Plugin einmal an, was sich geändert hat. Öffne es jederzeit wieder über **Neuigkeiten anzeigen** in der Befehlspalette oder über **Änderungsprotokoll anzeigen** unter Einstellungen → Erste Schritte.\n\n**Sätze für alle.** Der `workout-sets`-Block ist keine Beta-Funktion mehr: Er funktioniert, ohne dass du etwas aktivierst, und **Trainingssätze einfügen** steht immer in der Befehlspalette.",
       "v3_0_0": "**Ein neues Design für jeden Block.** Trainingsprotokolle, Diagramme, die geführte Einheit, die Trainingsdauer und jedes Dashboard-Widget sind jetzt Karten mit demselben Aufbau, denselben Bedienelementen und Menüs, mit klarerem Kontrast in hellen und dunklen Designs. An deinen Notizen und deinem Protokoll ändert sich nichts: Die Blöcke sehen nur einheitlicher aus und verhalten sich auch so.\n\n**Sätze auf dem Handy (Beta).** Ein neuer `workout-sets`-Block zeigt die heutigen Sätze einer Übung als Zeilen zum Ausfüllen, mit den Werten vom letzten Mal als Hinweis. Markiere eine Zeile, um den Satz zu protokollieren, dann startet der Pausentimer von selbst; markiere sie erneut, um ihn zurückzunehmen, mit Rückgängig für einige Sekunden. Aktiviere es unter Einstellungen → Beta-Funktionen (bei neuen Installationen ist es an) und nutze dann **Trainingssätze einfügen** aus der Befehlspalette.\n\n**Geführte Einheiten lesen Satzblätter.** Eine `workout-session` folgt jetzt `workout-sets`-Blöcken ebenso wie `workout-log`-Blöcken und übernimmt die Pause jeder Übung aus dem eigenen Block und teilt sich einen Countdown mit der Satzkarte.\n\n**Diagramme** zeigen unter dem Diagramm eine Statistikzeile: Durchschnitt, Minimum, Maximum, aktuellen Trend und Anzahl der Einheiten.\n\n**Dashboard-Widgets** haben eigene Einstellungen im ⋮-Menü (wie viele Trainings aufgelistet werden, welche Kennzahlen angezeigt werden, wie viele Tage gezählt werden usw.).\n\n**Beispielnotizen** verwenden jetzt `workout-sets` für die Übungen des Beispieltrainings."

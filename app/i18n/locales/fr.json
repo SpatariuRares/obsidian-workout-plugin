@@ -56,6 +56,7 @@
     "bpm": "bpm",
     "clear": "Effacer",
     "convert": "Convertir",
+    "error": "Erreur",
     "duration": {
       "hours": "{count}h",
       "minutes": "{count}m",
@@ -194,7 +195,8 @@
       "imbalance": {
         "backDominant": "Déséquilibre avant/arrière : vos muscles du dos sont beaucoup plus sollicités que vos muscles du devant.",
         "frontDominant": "Déséquilibre avant/arrière : votre partie avant travaille beaucoup plus que votre partie arrière."
-      }
+      },
+      "trainingAnalysis": "Analyse de l'entraînement"
     },
     "editDashboard": "Modifier le tableau de bord",
     "modal": {
@@ -727,6 +729,7 @@
       "muscleTagExists": "Le tag \"{tag}\" existe déjà",
       "muscleTagExportError": "Erreur lors de l'exportation des tags musculaires : {error}",
       "muscleTagExported": "Tags exportés vers muscle-tags-export.csv",
+      "muscleTagGroupRequired": "Choisissez un groupe musculaire",
       "muscleTagImportError": "Erreur lors de l'importation des tags musculaires : {error}",
       "muscleTagImportInvalidFormat": "Ce fichier doit contenir une colonne 'tag' et une colonne 'muscleGroup'",
       "muscleTagImportInvalidGroup": "Groupe musculaire \"{group}\" invalide pour le tag \"{tag}\". Il doit s'agir d'un groupe musculaire standard.",
@@ -734,6 +737,7 @@
       "muscleTagImportPreview": "{count} tag(s) à importer",
       "muscleTagImported": "{count} tag(s) musculaire(s) importé(s) avec succès !",
       "muscleTagLoading": "Chargement des tags...",
+      "muscleTagNameRequired": "Saisissez un nom de tag",
       "muscleTagNoResults": "Aucun tag ne correspond à votre recherche",
       "muscleTagSaveError": "Erreur lors de l'enregistrement du tag musculaire : {error}",
       "muscleTagSaved": "Tag enregistré",
@@ -1270,6 +1274,7 @@
     "close": "Compris",
     "olderReleases": "Versions précédentes sur GitHub",
     "releases": {
+      "v3_2_1": "**Ajouter un bloc d'exercice** ajoute désormais l'exercice dans sa propre section, avec un bloc de séries (séries prévues et repos de 90 s), la mise en page des notes d'exemple. Le réglage du modèle de bloc d'exercice n'existe plus, et la commande Créer une section d'exercice, qui faisait la même chose avec l'ancienne mise en page, a disparu : si vous aviez attribué un raccourci à cette commande, attribuez-le à Ajouter un bloc d'exercice.\n\nModifier une série, ou partir de votre dernière série, remplit désormais les champs dont la colonne est écrite autrement dans le journal (par exemple `HR` ou `Duration (s)`).\n\nUne partie de plus du plugin est dans votre langue : messages des tags musculaires, titres d'erreur, analyse de l'entraînement de la carte thermique musculaire et fenêtre de conversion des exercices. La référence des tags musculaires est elle aussi rédigée en français.\n\nGénérer les modèles par défaut indique désormais quand l'opération échoue.\n\nLes exercices récents n'apparaissent plus deux fois lorsqu'un même exercice a été saisi avec un autre espacement ou une autre casse.",
       "v3_2_0": "**Corrections.** Un bloc `workout-sets` avec `rest: 0` ne lance plus le minuteur de la section dans une séance guidée. « Les N derniers jours » a le même sens partout (graphiques, widgets du tableau de bord, filtres) et compte le jour limite en entier. Les graphiques regroupent les points par jour d'entraînement, et les courbes de tendance suivent une seule règle. « Dernière fois » et la formulation de l'objectif sont identiques dans la carte de séance, la feuille de séries et l'en-tête des objectifs. Les colonnes personnalisées comme `HR` ou `Duration (s)` sont lues partout. La conversion d'exercices n'écrit plus les poids dans la mauvaise unité. L'efficacité des protocoles suit l'ordre des séries. Les pages d'exercice dont le nom contient `:` ou `#` ont un frontmatter valide. L'export canvas lit correctement les sections et la durée des minuteurs. Les préréglages de minuteur et la fenêtre « Ajouter un bloc d'exercice » sont entièrement traduits.\n\n**Améliorations.** Les préréglages de minuteur se choisissent sous forme de puces, avec une option « Aucun » ; modifier un bloc conserve un préréglage qui n'est plus dans les paramètres. Les boutons des fenêtres suivent le même ordre partout, avec la rangée de boutons toujours visible en bas. Les durées s'affichent de la même façon partout.",
       "v3_1_0": "**Les nouveautés du plugin.** Après une mise à jour, le plugin affiche une fois ce qui a changé. Rouvrez-la à tout moment avec **Afficher les nouveautés** dans la palette de commandes, ou **Voir le journal des modifications** sous Paramètres → Workout Planner → Premiers pas.\n\n**Les séries sur votre téléphone pour tout le monde.** Le bloc `workout-sets` n'est plus une fonctionnalité bêta : il fonctionne sans rien activer, et **Ajouter des séries d'exercices** est toujours dans la palette de commandes.",
       "v3_0_0": "**Un nouveau look pour chaque bloc.** Les journaux d'entraînement, les graphiques, la séance guidée, la durée d'entraînement et chaque widget du tableau de bord sont désormais des cartes avec la même mise en page, les mêmes commandes et les mêmes menus, et un contraste plus net en thème clair comme en thème sombre. Rien ne change dans vos notes ni dans votre journal : les blocs sont simplement plus cohérents.\n\n**Les séries sur votre téléphone (bêta).** Un nouveau bloc `workout-sets` affiche les séries du jour d'un exercice sous forme de lignes à remplir, avec les valeurs de la dernière fois comme repères. Cochez une ligne pour enregistrer la série : le minuteur de repos démarre tout seul. Recochez-la pour la reprendre, avec Annuler pendant quelques secondes. Activez-le dans Paramètres → Workout Planner → Fonctionnalités bêta (les nouvelles installations l'ont activé), puis utilisez **Ajouter des séries d'exercices** dans la palette de commandes.\n\n**Les séances guidées lisent les feuilles de séries.** Un `workout-session` suit désormais les blocs `workout-sets` en plus des blocs `workout-log`, prend le repos de chaque exercice dans son propre bloc et partage un seul compte à rebours avec la carte des séries.\n\n**Les graphiques** affichent sous le graphique une ligne de statistiques : moyenne, minimum, maximum, tendance récente et nombre de séances.\n\n**Les widgets du tableau de bord** ont leurs propres réglages dans leur menu ⋮ (nombre d'entraînements à lister, chiffres à afficher, jours comptés, etc.).\n\n**Les notes d'exemple** utilisent désormais `workout-sets` pour les exercices de l'entraînement d'exemple."

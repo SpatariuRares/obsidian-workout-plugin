@@ -56,6 +56,7 @@
     "bpm": "bpm",
     "clear": "Pastro",
     "convert": "Konverto",
+    "error": "Gabim",
     "duration": {
       "hours": "{count}o",
       "minutes": "{count}min",
@@ -194,7 +195,8 @@
       "imbalance": {
         "backDominant": "Çekuilibër mes pjesës së përparme dhe asaj të pasme: pjesa e pasme e trupit punon shumë më shumë se ajo e përparme.",
         "frontDominant": "Çekuilibër mes pjesës së përparme dhe asaj të pasme: pjesa e përparme punon shumë më shumë se ajo e pasme."
-      }
+      },
+      "trainingAnalysis": "Analiza e stërvitjes"
     },
     "editDashboard": "Redakto panelin",
     "modal": {
@@ -727,6 +729,7 @@
       "muscleTagExists": "Etiketa \"{tag}\" ekziston tashmë",
       "muscleTagExportError": "Gabim në eksportimin e etiketave të muskujve: {error}",
       "muscleTagExported": "Etiketat u eksportuan në muscle-tags-export.csv",
+      "muscleTagGroupRequired": "Zgjidh një grup muskulor",
       "muscleTagImportError": "Gabim në importimin e etiketave të muskujve: {error}",
       "muscleTagImportInvalidFormat": "Ky skedar duhet të ketë një kolonë 'tag' dhe një kolonë 'muscleGroup'",
       "muscleTagImportInvalidGroup": "Grup muskulor i pavlefshëm \"{group}\" për etiketën \"{tag}\". Duhet të jetë një grup muskulor standard.",
@@ -734,6 +737,7 @@
       "muscleTagImportPreview": "{count} etiketa për t'u importuar",
       "muscleTagImported": "{count} etiketa muskujsh u importuan me sukses!",
       "muscleTagLoading": "Po ngarkohen etiketat...",
+      "muscleTagNameRequired": "Vendos një emër etikete",
       "muscleTagNoResults": "Asnjë etiketë nuk përputhet me kërkimin tuaj",
       "muscleTagSaveError": "Gabim në ruajtjen e etiketës së muskujve: {error}",
       "muscleTagSaved": "Etiketa u ruajt",
@@ -1270,6 +1274,7 @@
     "close": "E kuptova",
     "olderReleases": "Versionet e mëparshme në GitHub",
     "releases": {
+      "v3_2_1": "**Shto bllok ushtrimi** tani e shton ushtrimin si seksion të veçantë me një bllok serish (seritë e planifikuara dhe pushim 90 s), me strukturën e shënimeve shembull. Cilësimi i shabllonit për bllokun e ushtrimit është hequr, po ashtu edhe komanda Krijo seksion ushtrimi, e cila bënte të njëjtën gjë me strukturën e vjetër: nëse keni pasur një shkurtore për të, vendoseni te Shto bllok ushtrimi.\n\nRedaktimi i një serie, ose nisja nga e fundit, tani plotëson fushat me kolona të shkruara ndryshe në regjistër (për shembull `HR` ose `Duration (s)`).\n\nMë shumë nga plugin-i është në gjuhën tuaj: mesazhet e etiketave të muskujve, titujt e gabimeve, analiza e stërvitjes te harta termike e muskujve dhe dritarja e konvertimit të ushtrimeve. Referenca e etiketave të muskujve është shkruar edhe ajo në gjuhën tuaj.\n\nGjenero shabllonet e parazgjedhura njofton tani kur dështon.\n\nUshtrimet e fundit nuk shfaqen më dy herë kur i njëjti ushtrim është shkruar me hapësira ose shkronja të ndryshme.",
       "v3_2_0": "**Ndreqje.** Një bllok `workout-sets` me `rest: 0` nuk e nis më timerin e seksionit në një seancë të udhëzuar. \"Ditët e fundit\" janë të njëjta kudo (grafikët, widget-et e panelit, filtrat) dhe përfshijnë plotësisht ditën kufi. Grafikët grupojnë pikat sipas ditës së stërvitjes, dhe vijat e trendit ndjekin një rregull. \"Herë e fundit\" dhe fjalët për objektivin përputhen te karta e seancës, fleta e serive dhe titulli i objektivit. Kolonat e personalizuara si `HR` ose `Duration (s)` lexohen kudo. Konvertimi i ushtrimeve nuk shkruan më peshat me njësi të gabuar. Efektiviteti i protokollit ndjek renditjen e serive. Faqet e ushtrimeve me `:` ose `#` në emër marrin frontmatter të vlefshëm. Eksportimi në canvas lexon saktë seksionet dhe gjatësitë e timerit. Paracaktimet e timerit dhe modali \"Shto bllok ushtrimi\" janë përkthyer plotësisht.\n\n**Përmirësime.** Paracaktimet e timerit zgjidhen si çipa, me opsionin \"Asnjë\"; redaktimi i një bloku mban një paracaktim që nuk është më në cilësime. Butonat e modaleve kanë të njëjtën renditje kudo, me rreshtin e butonave gjithmonë të dukshëm në fund. Kohëzgjatjet formatohen njësoj kudo.",
       "v3_1_0": "**Çfarë është e re në plugin.** Pas një përditësimi, plugini shfaq një herë atë që ka ndryshuar. Hapeni sërish në çdo kohë me **Shfaq çfarë është e re** në paletën e komandave, ose me **Shfaq ndryshimet** te Cilësimet → Workout Planner → Fillimi.\n\n**Seritë e stërvitjes për të gjithë.** Blloku `workout-sets` nuk është më funksion beta: funksionon pa aktivizuar asgjë, dhe **Shto seritë e stërvitjes** është gjithmonë në paletën e komandave.",
       "v3_0_0": "**Pamje e re për çdo bllok.** Regjistrat e stërvitjes, grafikët, seanca e udhëzuar, kohëzgjatja e stërvitjes dhe çdo widget i panelit janë tani kartela me të njëjtën paraqitje, kontrolle dhe menu, me kontrast më të qartë në temat e ndritshme dhe të errëta. Asgjë në shënimet ose regjistrin tuaj nuk ndryshon: blloqet thjesht duken dhe sillen më në mënyrë të qëndrueshme.\n\n**Seritë në telefon (beta).** Një bllok i ri `workout-sets` shfaq seritë e sotme të një ushtrimi si rreshta për t'i plotësuar, me vlerat e herës së fundit si sugjerime. Shëno një rresht për të regjistruar serinë dhe timeri i pushimit nis vetvetiu; shëno sërish për ta marrë mbrapsht, me Zhbëj për disa sekonda. Aktivizoje te Cilësimet → Workout Planner → Funksionet beta (instalimet e reja e kanë të aktivizuar), pastaj përdor **Shto seritë e stërvitjes** nga paleta e komandave.\n\n**Seancat e udhëzuara lexojnë fletët e serive.** Një `workout-session` ndjek tani blloqet `workout-sets` dhe `workout-log`, e merr pushimin e çdo ushtrimi nga blloku i vet, dhe ndan një numërim të vetëm me kartelën e serive.\n\n**Grafikët** shfaqin një rresht statistikash nën grafik: mesatarja, minimumi, maksimumi, tendenca e fundit dhe numri i seancave.\n\n**Widgetët e panelit** kanë cilësimet e tyre në menunë ⋮ (sa stërvitje të listohen, cilat shifra të shfaqen, ditët e numëruara, e kështu me radhë).\n\n**Shembujt e shënimeve** përdorin tani `workout-sets` për ushtrimet e stërvitjes shembull."

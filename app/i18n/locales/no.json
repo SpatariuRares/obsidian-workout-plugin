@@ -56,6 +56,7 @@
     "bpm": "bpm",
     "clear": "Tøm",
     "convert": "Konverter",
+    "error": "Feil",
     "duration": {
       "hours": "{count}t",
       "minutes": "{count}min",
@@ -191,6 +192,7 @@
         "side": "Side",
         "metric": "Måling"
       },
+      "trainingAnalysis": "Treningsanalyse",
       "imbalance": {
         "backDominant": "Ubalanse mellom for- og bakside: ryggen din er mye mer aktiv enn forsiden din",
         "frontDominant": "Ubalanse mellom for- og bakside: forsiden din fungerer mye mer enn baksiden din"
@@ -727,6 +729,7 @@
       "muscleTagExists": "Taggen \"{tag}\" finnes allerede",
       "muscleTagExportError": "Feil ved eksport av muskeltagger: {error}",
       "muscleTagExported": "Tagger eksportert til muscle-tags-export.csv",
+      "muscleTagGroupRequired": "Velg en muskelgruppe",
       "muscleTagImportError": "Feil ved import av muskeltagger: {error}",
       "muscleTagImportInvalidFormat": "Filen må ha en 'tag'-kolonne og en 'muscleGroup'-kolonne",
       "muscleTagImportInvalidGroup": "Ugyldig muskelgruppe \"{group}\" for tag \"{tag}\". Må være en standardisert muskelgruppe.",
@@ -734,6 +737,7 @@
       "muscleTagImportPreview": "{count} tag(ger) for import",
       "muscleTagImported": "{count} muskeltagg(er) importert!",
       "muscleTagLoading": "Laster inn tagger...",
+      "muscleTagNameRequired": "Skriv inn et taggnavn",
       "muscleTagNoResults": "Ingen tagger samsvarer med søket",
       "muscleTagSaveError": "Feil ved lagring av muskeltagg: {error}",
       "muscleTagSaved": "Taggen er lagret",
@@ -1270,6 +1274,7 @@
     "close": "Forstått",
     "olderReleases": "Eldre versjoner på GitHub",
     "releases": {
+      "v3_2_1": "**Legg til øvelsesblokk** legger nå til øvelsen som en egen seksjon med en settblokk (planlagte sett og 90 s hvile), oppsettet i eksempelnotatene. Innstillingen for mal til øvelsesblokk er borte, og det samme gjelder kommandoen Opprett øvelsesseksjon, som gjorde det samme med det gamle oppsettet: hadde du en hurtigtast på den, sett den på Legg til øvelsesblokk.\n\nNår du redigerer et sett, eller starter fra forrige, fylles nå felt inn der kolonnen er skrevet på en annen måte i loggen (for eksempel `HR` eller `Duration (s)`).\n\nMer av plugin-en er på norsk: meldinger om muskeltagger, feiltitler, varmekartets treningsanalyse og vinduet for øvelseskonvertering. Oversikten over muskeltagger er også skrevet på norsk.\n\nGenerer standardmaler sier nå fra når det mislykkes.\n\nNylige øvelser viser ikke lenger samme øvelse to ganger når den er skrevet med ulik mellomrom eller store og små bokstaver.",
       "v3_2_0": "**Feilrettinger.** Et `workout-sets`-blokk med `rest: 0` starter ikke lenger seksjonens timer i en veiledet økt. «Siste N dager» er likt overalt (diagrammer, dashbord-widgeter, filtre) og tar med hele grensedagen. Diagrammer grupperer punktene etter treningsdag, og trendlinjer bruker én regel. «Sist gang» og målteksten er like i øktkortet, settarket og målhodet. Egne kolonner som `HR` eller `Duration (s)` leses overalt. Øvelseskonvertering skriver ikke lenger vekter i feil enhet. Protokolleffektivitet følger settrekkefølgen. Øvelsessider med `:` eller `#` i navnet får gyldig frontmatter. Canvas-eksport leser seksjoner og timerlengder riktig. Timer-forhåndsinnstillinger og dialogen «Legg til øvelsesblokk» er fullt oversatt.\n\n**Forbedringer.** Timer-forhåndsinnstillinger velges som brikker, med et «Ingen»-valg; redigering av en blokk beholder en forhåndsinnstilling som ikke lenger står i innstillingene. Dialogknappene bruker samme rekkefølge overalt, med knapperaden alltid synlig nederst. Varigheter formateres likt overalt.",
       "v3_1_0": "**Hva er nytt i pluginen.** Etter en oppdatering viser pluginen hva som er endret, én gang. Åpne den igjen når som helst med **Vis hva som er nytt** i kommandopaletten, eller **Vis endringslogg** under Innstillinger → Komme i gang.\n\n**Sett på telefonen for alle.** `workout-sets`-blokken er ikke lenger en beta-funksjon: den fungerer uten at du slår på noe, og **Legg til treningssett** står alltid i kommandopaletten.",
       "v3_0_0": "**Et nytt utseende for hver blokk.** Treningslogger, diagrammer, den veiledede økten, treningsvarigheten og alle dashbord-widgeter er nå kort med samme oppsett, kontroller og menyer, med tydeligere kontrast i lys og mørk modus. Ingenting i notatene eller loggen din endres: blokkene ser bare mer enhetlige ut og oppfører seg mer likt.\n\n**Sett på telefonen (beta).** En ny `workout-sets`-blokk viser dagens sett for én øvelse som rader å fylle inn, med verdiene fra forrige gang som hint. Kryss av en rad for å logge settet, så starter hviletimeren av seg selv; kryss av igjen for å ta det tilbake, med Angre i noen sekunder. Slå den på under Innstillinger → Beta-funksjoner (nye installasjoner har den på), og bruk deretter **Legg til treningssett** fra kommandopaletten.\n\n**Veiledede økter leser settark.** En `workout-session` følger nå `workout-sets`-blokker i tillegg til `workout-log`-blokker, tar hvilen for hver øvelse fra sin egen blokk, og deler én nedtelling med settkortet.\n\n**Diagrammer** viser en statistikkrad under diagrammet: snitt, minimum, maksimum, nylig trend og antall økter.\n\n**Dashbord-widgeter** har egne innstillinger i ⋮-menyen (hvor mange økter som listes, hvilke tall som vises, hvor mange dager som telles, og så videre).\n\n**Eksempelnotatene** bruker nå `workout-sets` for øvelsene i eksempeløkten."

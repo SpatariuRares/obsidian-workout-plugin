@@ -56,6 +56,7 @@
     "bpm": "bpm",
     "clear": "Vymazat",
     "convert": "Převést",
+    "error": "Chyba",
     "duration": {
       "hours": "{count}h",
       "minutes": "{count}m",
@@ -191,6 +192,7 @@
         "side": "Strana",
         "metric": "Metrika"
       },
+      "trainingAnalysis": "Analýza tréninku",
       "imbalance": {
         "backDominant": "Nerovnováha mezi přední a zadní částí: vaše zadní strana pracuje mnohem více než přední.",
         "frontDominant": "Nerovnováha mezi přední a zadní částí: vaše přední strana pracuje mnohem více než zadní."
@@ -727,6 +729,7 @@
       "muscleTagExists": "Štítek \"{tag}\" už existuje",
       "muscleTagExportError": "Chyba při exportu štítků svalů: {error}",
       "muscleTagExported": "Štítky exportovány do muscle-tags-export.csv",
+      "muscleTagGroupRequired": "Vyberte skupinu svalů",
       "muscleTagImportError": "Chyba při importu štítků svalů: {error}",
       "muscleTagImportInvalidFormat": "Tento soubor potřebuje sloupce 'tag' a 'muscleGroup'",
       "muscleTagImportInvalidGroup": "Neplatná skupina svalů \"{group}\" pro štítek \"{tag}\". Musí se jednat o standardní skupinu svalů.",
@@ -734,6 +737,7 @@
       "muscleTagImportPreview": "Štítků k importu: {count}",
       "muscleTagImported": "Úspěšně importováno štítků svalů: {count}!",
       "muscleTagLoading": "Načítání štítků...",
+      "muscleTagNameRequired": "Zadejte název štítku",
       "muscleTagNoResults": "Hledání neodpovídá žádným štítkům",
       "muscleTagSaveError": "Chyba při ukládání štítku svalů: {error}",
       "muscleTagSaved": "Štítek uložen",
@@ -1270,6 +1274,7 @@
     "close": "Rozumím",
     "olderReleases": "Starší verze na GitHubu",
     "releases": {
+      "v3_2_1": "**Přidat blok cvičení** teď přidá cvik jako vlastní sekci s blokem sérií (plánované série a 90s odpočinek), tedy s rozvržením ukázkových poznámek. Nastavení šablony bloku cvičení zmizelo a spolu s ním i příkaz „Vytvořit sekci cvičení“, který dělal totéž se starým rozvržením: pokud jste měli na něj klávesovou zkratku, nastavte ji na „Přidat blok cvičení“.\n\nPři úpravě série nebo při začátku od poslední série se nyní doplňují pole, jejichž sloupec je v záznamu zapsán jinak (například `HR` nebo `Duration (s)`).\n\nVíce pluginu je ve vašem jazyce: zprávy o štítcích svalů, nadpisy chyb, analýza tréninku v tepelné mapě svalů a okno převodu cvičení. Referenční přehled štítků svalů je také napsán ve vašem jazyce.\n\n„Generovat výchozí šablony“ nyní oznámí, když selže.\n\nNedávná cvičení už neukazují stejné cvičení dvakrát, když bylo zadáno s jinými mezerami nebo velikostí písmen.",
       "v3_2_0": "**Opravy.** Blok `workout-sets` s `rest: 0` už v vedené relaci nespouští časovač sekce. „Posledních N dní“ je všude stejné (grafy, widgety dashboardu, filtry) a zahrnuje celý hraniční den. Grafy seskupují body podle tréninkového dne a trendové čáry používají jedno pravidlo. „Minule“ a formulace cíle se shodují v kartě relace, v tabulce sérií i v záhlaví cíle. Vlastní sloupce jako `HR` nebo `Duration (s)` se čtou všude. Převod cviků už nezapisuje váhy v chybné jednotce. Účinnost protokolů sleduje pořadí sérií. Stránky cviků se znaky `:` nebo `#` v názvu mají platný frontmatter. Export na plátno správně čte sekce a délky časovačů. Předvolby časovače a okno „Přidat blok cvičení“ jsou plně přeloženy.\n\n**Vylepšení.** Předvolby časovače se vybírají jako čipy s možností „Žádná“; úprava bloku zachová předvolbu, která už není v nastavení. Tlačítka v oknech mají všude stejné pořadí a řádek tlačítek je vždy viditelný dole. Trvání se formátuje stejně všude.",
       "v3_1_0": "**Co je nového v pluginu.** Po aktualizaci plugin jednou zobrazí, co se změnilo. Kdykoli ho můžete znovu otevřít příkazem **Zobrazit novinky** v paletě příkazů nebo tlačítkem **Zobrazit seznam změn** v Nastavení → Workout Planner → Začít.\n\n**Série tréninku pro všechny.** Blok `workout-sets` už není funkce v beta verzi: funguje bez zapínání čehokoli a příkaz **Vložit série tréninku** je vždy v paletě příkazů.",
       "v3_0_0": "**Nový vzhled všech bloků.** Záznamy tréninků, grafy, vedená relace, délka tréninku i každý widget dashboardu jsou nyní karty se stejným rozložením, ovládacími prvky a nabídkami, s výraznějším kontrastem ve světlém i tmavém motivu. Nic ve vašich poznámkách ani v záznamu se nemění: bloky jen vypadají a fungují jednotněji.\n\n**Série v telefonu (beta).** Nový blok `workout-sets` zobrazuje dnešní série jednoho cvičení jako řádky k vyplnění, s hodnotami z minulého tréninku jako nápovědou. Zaškrtněte řádek a série se zapíše do záznamu, odpočinkový časovač se spustí sám; zaškrtnutím ji znovu odeberete, s možností Vrátit několik sekund. Zapněte to v Nastavení → Workout Planner → Funkce pro testování (beta); nové instalace ji mají zapnutou. Pak použijte **Vložit série tréninku** v paletě příkazů.\n\n**Vedená relace čte série.** `workout-session` nyní sleduje bloky `workout-sets` stejně jako bloky `workout-log`, bere odpočinek každého cvičení z jeho vlastního bloku a sdílí jedno odpočítávání s kartou sérií.\n\n**Grafy** mají pod sebou řádek se statistikami: průměr, minimum, maximum, poslední trend a počet relací.\n\n**Widgety dashboardu** mají vlastní nastavení v nabídce ⋮ (kolik tréninků vypsat, které údaje zobrazit, kolik dní počítat a podobně).\n\n**Ukázkové poznámky** nyní pro cvičení ukázkového tréninku používají `workout-sets`."

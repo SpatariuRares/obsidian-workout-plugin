@@ -56,6 +56,7 @@
     "bpm": "bpm",
     "clear": "Ryd",
     "convert": "Konvertér",
+    "error": "Fejl",
     "duration": {
       "hours": "{count}t",
       "minutes": "{count}min",
@@ -194,7 +195,8 @@
       "imbalance": {
         "backDominant": "Ubalance mellem for- og bagside: din bagside arbejder meget mere end din forside.",
         "frontDominant": "Ubalance mellem for- og bagside: din forside arbejder meget mere end din bagside."
-      }
+      },
+      "trainingAnalysis": "Træningsanalyse"
     },
     "editDashboard": "Rediger dashboard",
     "modal": {
@@ -727,6 +729,7 @@
       "muscleTagExists": "Tagget \"{tag}\" findes allerede",
       "muscleTagExportError": "Fejl ved eksport af muskeltags: {error}",
       "muscleTagExported": "Tags eksporteret til muscle-tags-export.csv",
+      "muscleTagGroupRequired": "Vælg en muskelgruppe",
       "muscleTagImportError": "Fejl ved import af muskel-tags: {error}",
       "muscleTagImportInvalidFormat": "Filen skal have en 'tag'- og en 'muscleGroup'-kolonne",
       "muscleTagImportInvalidGroup": "Ugyldig muskelgruppe \"{group}\" for tag \"{tag}\". Skal være en standardiseret muskelgruppe.",
@@ -734,6 +737,7 @@
       "muscleTagImportPreview": "{count} tag(s) til import",
       "muscleTagImported": "{count} muskeltag(s) importeret!",
       "muscleTagLoading": "Indlæser tags...",
+      "muscleTagNameRequired": "Indtast et tagnavn",
       "muscleTagNoResults": "Ingen tags matcher din søgning",
       "muscleTagSaveError": "Fejl ved gemning af muskel-tag: {error}",
       "muscleTagSaved": "Tag gemt",
@@ -1270,6 +1274,7 @@
     "close": "Forstået",
     "olderReleases": "Ældre versioner på GitHub",
     "releases": {
+      "v3_2_1": "**Tilføj øvelsesblok** tilføjer nu øvelsen som sin egen sektion med en sætblok (planlagte sæt og 90 sek. hvile), i layoutet fra eksempelnoterne. Indstillingen for skabelon til øvelsesblokke er væk, og det samme gælder kommandoen Opret øvelsessektion, som gjorde det samme med det gamle layout: hvis du havde en genvej til den, så sæt den på Tilføj øvelsesblok i stedet.\n\nRedigering af et sæt, eller at starte fra dit sidste, udfylder nu felter, hvis kolonne er skrevet på en anden måde i loggen (for eksempel `HR` eller `Duration (s)`).\n\nMere af pluginet er på dansk: meddelelser om muskeltags, fejltitler, varmekortets træningsanalyse og vinduet til konvertering af øvelser. Referencen for muskeltags er også skrevet på dansk.\n\nGenerér standardskabeloner melder nu, når det fejler.\n\nSenest brugte øvelser viser ikke længere den samme øvelse to gange, når den er skrevet med forskelligt mellemrum eller store og små bogstaver.",
       "v3_2_0": "**Rettelser.** En `workout-sets`-blok med `rest: 0` starter ikke længere afsnittets timer i en guidet session. \"De seneste N dage\" er det samme overalt (diagrammer, dashboard-widgets, filtre) og inkluderer hele grænsedagen. Diagrammer grupperer punkter pr. træningsdag, og trendlinjer bruger én regel. \"Sidste gang\" og målformuleringen stemmer overens i sessionskortet, sætarket og måloverskriften. Brugerdefinerede kolonner som `HR` eller `Duration (s)` læses overalt. Øvelseskonvertering skriver ikke længere vægte i den forkerte enhed. Protokoleffektivitet følger sætrækkefølgen. Øvelsessider med `:` eller `#` i navnet får gyldig frontmatter. Canvas-eksport læser sektioner og timerlængder korrekt. Timerforudindstillinger og modalen \"Tilføj øvelsesblok\" er fuldt oversat.\n\n**Forbedringer.** Timerforudindstillinger vælges som chips, med en \"Ingen\"-mulighed; redigering af en blok beholder en forudindstilling, der ikke længere findes i indstillingerne. Modalknapper bruger samme rækkefølge overalt, og knapperækken er altid synlig nederst. Varigheder vises ens overalt.",
       "v3_1_0": "**Hvad er nyt i pluginet.** Efter en opdatering viser pluginet, hvad der er ændret, én gang. Åbn det igen når som helst med **Vis hvad der er nyt** i kommandopaletten, eller **Vis ændringslog** under Indstillinger → Workout Planner → Sådan kommer du i gang.\n\n**Sæt på telefonen for alle.** `workout-sets`-blokken er ikke længere en beta-funktion: den virker uden at slå noget til, og **Indsæt træningssæt** findes altid i kommandopaletten.",
       "v3_0_0": "**Et nyt look til alle blokke.** Træningslogs, diagrammer, den guidede session, træningsvarigheden og alle dashboard-widgets er nu kort med samme layout, kontroller og menuer, med tydeligere kontrast i lyst og mørkt tema. Intet i dine noter eller din log ændrer sig: blokkene ser bare mere ens ud og opfører sig mere ens.\n\n**Sæt på telefonen (beta).** En ny `workout-sets`-blok viser dagens sæt for én øvelse som rækker, du udfylder, med sidste gangs værdier som hints. Afkryds en række for at registrere sættet, så starter hviletimeren af sig selv; afkryds den igen for at tage det tilbage, med Fortryd i nogle sekunder. Slå det til under Indstillinger → Workout Planner → Funktioner i beta (nye installationer har det tændt), og brug derefter **Indsæt træningssæt** fra kommandopaletten.\n\n**Guidede sessioner læser sætkort.** En `workout-session` følger nu også `workout-sets`-blokke ud over `workout-log`-blokke, tager hver øvelses hvile fra sin egen blok og deler én nedtælling med sætkortet.\n\n**Diagrammer** viser en statistikrække under diagrammet: gennemsnit, min., maks., seneste tendens og antal træningspas.\n\n**Dashboard-widgets** har deres egne indstillinger i ⋮-menuen (hvor mange træninger der vises, hvilke tal der vises, hvor mange dage der tælles med og så videre).\n\n**Eksempelnoterne** bruger nu `workout-sets` til øvelserne i eksempeltræningen."

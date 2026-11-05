@@ -56,6 +56,7 @@
     "bpm": "bpm",
     "clear": "Wyczyść",
     "convert": "Konwertuj",
+    "error": "Błąd",
     "duration": {
       "hours": "{count}g",
       "minutes": "{count}min",
@@ -191,6 +192,7 @@
         "side": "Strona",
         "metric": "Miara"
       },
+      "trainingAnalysis": "Analiza treningu",
       "imbalance": {
         "backDominant": "Nierównowaga: tylne partie mięśni pracują znacznie bardziej niż przednie.",
         "frontDominant": "Nierównowaga: przednie partie mięśni pracują znacznie bardziej niż tylne."
@@ -727,6 +729,7 @@
       "muscleTagExists": "Tag \"{tag}\" już istnieje",
       "muscleTagExportError": "Błąd podczas eksportowania tagów mięśni: {error}",
       "muscleTagExported": "Wyeksportowano tagi do muscle-tags-export.csv",
+      "muscleTagGroupRequired": "Wybierz grupę mięśni",
       "muscleTagImportError": "Błąd podczas importowania tagów mięśni: {error}",
       "muscleTagImportInvalidFormat": "Ten plik musi mieć kolumny 'tag' i 'muscleGroup'",
       "muscleTagImportInvalidGroup": "Nieprawidłowa grupa mięśni \"{group}\" dla tagu \"{tag}\". Musi to być prawidłowa, standardowa grupa mięśni.",
@@ -734,6 +737,7 @@
       "muscleTagImportPreview": "Tagi do zaimportowania: {count}",
       "muscleTagImported": "Pomyślnie zaimportowano tagów mięśni: {count}!",
       "muscleTagLoading": "Wczytywanie tagów...",
+      "muscleTagNameRequired": "Wpisz nazwę tagu",
       "muscleTagNoResults": "Żaden tag nie pasuje do wyszukiwania",
       "muscleTagSaveError": "Błąd podczas zapisywania tagu mięśni: {error}",
       "muscleTagSaved": "Zapisano tag",
@@ -1270,6 +1274,7 @@
     "close": "Rozumiem",
     "olderReleases": "Starsze wersje na GitHubie",
     "releases": {
+      "v3_2_1": "**Dodaj blok ćwiczeń** dodaje teraz ćwiczenie jako osobną sekcję z blokiem serii (zaplanowane serie i odpoczynek 90 s), w układzie przykładowych notatek. Ustawienie szablonu bloku ćwiczeń zniknęło, podobnie jak polecenie Utwórz sekcję ćwiczenia, które robiło to samo w starym układzie: jeśli miałeś do niego skrót klawiszowy, przypisz go do polecenia Dodaj blok ćwiczeń.\n\nEdycja serii oraz start od ostatniej serii teraz uzupełniają pola, których kolumna w dzienniku jest zapisana inaczej (na przykład `HR` lub `Duration (s)`).\n\nWięcej wtyczki jest po polsku: komunikaty o tagach mięśni, tytuły błędów, analiza treningu na mapie cieplnej mięśni i okno konwersji ćwiczeń. Spis tagów mięśni też jest po polsku.\n\nGeneruj szablony teraz informuje, gdy się nie uda.\n\nOstatnie ćwiczenia nie pokazują już tego samego ćwiczenia dwa razy, gdy zostało wpisane z inną spacją lub wielkością liter.",
       "v3_2_0": "**Poprawki.** Blok `workout-sets` z `rest: 0` nie uruchamia już timera sekcji w sesji z przewodnikiem. „Ostatnie N dni” działa tak samo wszędzie (wykresy, widżety pulpitu, filtry) i obejmuje cały graniczny dzień. Wykresy grupują punkty według dnia treningowego, a linie trendu korzystają z jednej reguły. „Ostatni raz” i sformułowania celu są spójne w karcie sesji, arkuszu serii i nagłówku celu. Własne kolumny, takie jak `HR` lub `Duration (s)`, są odczytywane wszędzie. Konwersja ćwiczeń nie zapisuje już ciężarów w złej jednostce. Skuteczność protokołów podąża za kolejnością serii. Strony ćwiczeń z `:` lub `#` w nazwie mają poprawny frontmatter. Eksport do canvasu poprawnie odczytuje sekcje i długości timerów. Ustawienia timera i okno „Dodaj blok ćwiczeń” są w pełni przetłumaczone.\n\n**Ulepszenia.** Ustawienie timera wybiera się jako chipy, z opcją „Brak”; edycja bloku zachowuje ustawienie, którego nie ma już w ustawieniach. Przyciski modali mają tę samą kolejność wszędzie, a rząd przycisków jest zawsze widoczny na dole. Czasy trwania są formatowane tak samo wszędzie.",
       "v3_1_0": "**Co nowego we wtyczce.** Po aktualizacji wtyczka raz pokazuje, co się zmieniło. Możesz to otworzyć ponownie w dowolnym momencie poleceniem **Pokaż, co nowego** w palecie poleceń albo przyciskiem **Pokaż listę zmian** w ustawieniach → Jak zacząć.\n\n**Serie dla wszystkich.** Blok `workout-sets` nie jest już funkcją beta: działa bez włączania czegokolwiek, a **Dodaj serie treningu** jest zawsze dostępne w palecie poleceń.",
       "v3_0_0": "**Nowy wygląd każdego bloku.** Dzienniki treningów, wykresy, sesja z przewodnikiem, czas trwania treningu i każdy widżet panelu są teraz kartami o tym samym układzie, elementach sterujących i menu, z wyraźniejszym kontrastem w jasnym i ciemnym motywie. Nic w Twoich notatkach ani w dzienniku się nie zmienia: bloki po prostu wyglądają i działają spójniej.\n\n**Serie na telefonie (beta).** Nowy blok `workout-sets` pokazuje dzisiejsze serie jednego ćwiczenia jako wiersze do uzupełnienia, z wartościami z ostatniego razu jako podpowiedziami. Zaznacz wiersz, aby zapisać serię, a timer odpoczynku ruszy sam; odznacz go, aby cofnąć, z przyciskiem Cofnij widocznym przez kilka sekund. Włącz to w ustawieniach → Funkcje beta (w nowych instalacjach jest włączone), a następnie użyj **Dodaj serie treningu** z palety poleceń.\n\n**Sesje z przewodnikiem czytają bloki serii.** `workout-session` obsługuje teraz bloki `workout-sets` oraz `workout-log`, pobiera odpoczynek każdego ćwiczenia z jego własnego bloku i współdzieli jedno odliczanie z kartą serii.\n\n**Wykresy** pokazują pod wykresem wiersz statystyk: średnią, minimum, maksimum, ostatni trend i liczbę sesji.\n\n**Widżety panelu** mają własne ustawienia w menu ⋮ (ile treningów wyświetlić, które wartości pokazać, ile dni uwzględnić itd.).\n\n**Przykładowe notatki** używają teraz `workout-sets` dla ćwiczeń w przykładowym treningu."

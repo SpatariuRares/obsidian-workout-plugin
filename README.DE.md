@@ -10,7 +10,7 @@ Für dein Handy gebaut: Protokolliere jeden Satz, jede Strecke oder jede Pose w�
 
 Diagramme zeigen deinen Trend, die Muskel-Heatmap zeigt, was du trainiert hast, und jeder Satz behält seine eigene kg/lb-Einheit. Du kannst deine Sätze mit Dataview abfragen.
 
-![Workout Planner auf einem Handy: eine geführte Einheit mit laufendem Pausen-Timer, das Protokollformular mit +/−-Tasten und kg/lb-Auswahl sowie die Dashboard-Übersicht mit dem Trainingskalender](assets/hero.png)
+![Workout Planner auf einem Handy: eine Trainingssätze-Karte mit zwei abgehakten Sätzen und laufendem Pausen-Timer, das Protokollformular mit +/−-Tasten und kg/lb-Auswahl sowie die Dashboard-Übersicht mit dem Trainingskalender](assets/hero.png)
 
 ## Funktionen
 
@@ -18,6 +18,7 @@ Diagramme zeigen deinen Trend, die Muskel-Heatmap zeigt, was du trainiert hast, 
 - Jeden Satz in kg oder lb protokollieren, je nachdem, was die Scheiben vor dir sagen
 - Sätze mit einem Protokoll markieren: Dropset, Myo-Reps, Rest-Pause, Superset, 21er oder eigene
 - Tabellen deiner Sätze, nach Tagen gruppiert mit Tagessummen, mit einem Tipp bearbeitbar
+- Die heutigen Sätze als Zeilen zum Ausfüllen auf dem Handy: abhaken, um einen Satz zu protokollieren, und der Pausen-Timer startet (Beta)
 - Diagramme für Gewicht, Volumen, Wiederholungen, Dauer, Strecke, Tempo und Herzfrequenz sowie ein Trend, der dir klar sagt, ob du dich verbesserst
 - Ein Dashboard mit wöchentlicher Serie (mit Wochenziel), Trainingskalender, persönlichen Rekorden, Gesamtvolumen, letzten Trainings und Protokollstatistiken
 - Eine Muskel-Heatmap, vorne und hinten, nach Volumen, Sätzen oder Wiederholungen
@@ -109,6 +110,34 @@ Mit `targetWeight` und `targetReps` erscheint über der Tabelle ein Ziel für pr
 | `sets`                       | —        | Geplante Sätze, gezählt von einem `workout-session`-Block |
 
 Übungsnamen werden standardmäßig ungefähr abgeglichen („squat“ findet „Squat (high bar)“). Mit `exactMatch: true` gilt nur genau dieser Name.
+
+</details>
+
+## Sätze auf dem Handy (Beta)
+
+Ein `workout-sets`-Block ist zum Protokollieren im Fitnessstudio gemacht: die heutigen Sätze einer Übung als Zeilen zum Ausfüllen. Jede Zeile zeigt, was du beim letzten Mal im selben Satz gemacht hast, sodass du nur tippst, was sich geändert hat (ein leeres Feld protokolliert diesen Wert), und die Zeile abhakst. Der Satz landet im Protokoll, die Zeile wird zu einem protokollierten Satz, und der Pausen-Timer oben startet von selbst. Über den Pfeil eines protokollierten Satzes änderst du sein Protokoll und seine Notizen; abhaken nimmt ihn wieder zurück, mit **Rückgängig** für ein paar Sekunden.
+
+<img src="assets/sets.png" alt="Eine Trainingssätze-Karte auf dem Handy: vier ausgefüllte Zeilen mit den Werten vom letzten Mal, danach zwei abgehakte Sätze mit laufendem Pausen-Timer und eine geöffnete Zeile, in der das Rest-Pause-Protokoll gewählt und eine Notiz hinzugefügt wird">
+
+```workout-sets
+exercise: Squat
+sets: 4
+rest: 120
+```
+
+Der Block ist eine Beta-Funktion: Aktiviere **Trainingssätze** unter **Einstellungen → Beta-Funktionen** (bei neuen Installationen ist sie eingeschaltet). Danach fügt **Trainingssätze einfügen** aus der Befehlspalette einen Block für dich ein, und das ⋮-Menü bearbeitet ihn oder seinen Pausen-Timer.
+
+<details>
+<summary>Alle Parameter</summary>
+
+| Parameter                    | Standard       | Funktion                                                                                         |
+| ---------------------------- | -------------- | ------------------------------------------------------------------------------------------------ |
+| `exercise`                   | —              | Die Übung (exakter Name)                                                                         |
+| `workout`                    | der Notizname  | Das Training, unter dem die Sätze protokolliert werden                                           |
+| `sets`                       | wie beim letzten Mal | Zeilen zum Ausfüllen (mindestens eine); **Satz hinzufügen** fügt weitere hinzu            |
+| `targetWeight`, `targetReps` | —              | Hinweise, wenn die Übung noch nie gemacht wurde, und ein Ziel für progressive Überlast           |
+| `rest`                       | —              | Sekunden Pause nach jedem Satz; `0` für keinen Timer. Ohne Angabe: der `workout-timer` desselben Abschnitts |
+| `timer.*`                    | —              | Die übrigen Optionen des Pausen-Timers: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
 
 </details>
 
@@ -283,7 +312,7 @@ rounds: 8
 
 Ein `workout-session`-Block oben in einer Trainingsnotiz (Befehl **Geführte Einheit einfügen**) führt dich Übung für Übung durch das Training: welchen Satz du gerade machst, das Ziel, was du beim letzten Mal gemacht hast, eine Schaltfläche **Satz erfassen** und den Pausen-Timer, der startet, wenn du einen Satz protokollierst.
 
-![Eine geführte Einheit auf dem Handy: Satz 1 von 4 mit dem, was du beim letzten Mal gemacht hast, das mit Satz erfassen geöffnete Protokollformular und danach Satz 2 von 4 mit laufendem Pausen-Timer](assets/session.png)
+![Eine geführte Einheit auf dem Handy: Satz 3 von 4 der Kniebeuge mit laufender Pause in Einheit und Satzkarte, das mit Satz erfassen geöffnete Protokollformular und danach die nächste Übung mit laufendem Pausen-Timer](assets/session.png)
 
 ````markdown
 ```workout-session
@@ -291,19 +320,16 @@ Ein `workout-session`-Block oben in einer Trainingsnotiz (Befehl **Geführte Ein
 
 ## Squat
 
-```workout-log
+```workout-sets
 exercise: Squat
 sets: 4
 targetReps: 8
 targetWeight: 100
-```
-
-```workout-timer
-preset: rest
+rest: 180
 ```
 ````
 
-Der Plan ist die Notiz selbst: Jeder `workout-log`-Block mit einer `exercise` ist ein Schritt, in der Reihenfolge, in der sie erscheinen, mit seinen `sets`, `targetReps` und `targetWeight`. Die Pause kommt vom `workout-timer` im selben `##`-Abschnitt (ohne einen gilt die Standard-Voreinstellung). Die Einheit zählt die heute in diesem Training protokollierten Sätze, sodass sie dort weitermacht, wo du aufgehört hast, wenn du die Notiz erneut öffnest. Eine Übung ohne `sets` bleibt aktuell, bis du einen Satz einer späteren Übung protokollierst. **Zurück** und **Weiter** bewegen dich frei.
+Der Plan ist die Notiz selbst: Jeder `workout-log`- oder `workout-sets`-Block mit einer `exercise` ist ein Schritt, in der Reihenfolge, in der sie erscheinen, mit seinen `sets`, `targetReps` und `targetWeight`. Die Pause kommt aus der `rest` des `workout-sets`-Blocks, sonst vom `workout-timer` im selben `##`-Abschnitt (ohne einen gilt die Standard-Voreinstellung). Einheit und Satzkarte teilen sich einen Countdown. Die Einheit zählt die heute in diesem Training protokollierten Sätze, sodass sie dort weitermacht, wo du aufgehört hast, wenn du die Notiz erneut öffnest. Eine Übung ohne `sets` bleibt aktuell, bis du einen Satz einer späteren Übung protokollierst. **Zurück** und **Weiter** bewegen dich frei.
 
 ## Trainingsdauer
 
@@ -340,7 +366,7 @@ tags:
 
 Yoga funktioniert genauso: Jede Pose ist eine `timed`-Übung, sodass das Formular nur fragt, wie lange du sie gehalten hast. Die Beispielnotizen enthalten einen Morgen-Yoga-Ablauf mit geführter Einheit.
 
-![Ein Yoga-Ablauf auf dem Handy: die geführte Einheit bei Herabschauender Hund, das Protokollformular, das nur nach der Haltedauer fragt, und die Tabelle der Haltungen mit der Tagessumme](assets/yoga.png)
+![Ein Yoga-Ablauf auf dem Handy: die geführte Einheit bei Herabschauender Hund, das Protokollformular, das nur nach der Haltedauer fragt, und die Satzkarte mit dem ersten protokollierten Halten](assets/yoga.png)
 
 `type:` funktioniert wie `exercise_type:`. Füge eigene Felder unter `parameters` hinzu, zum Beispiel Runden fürs Seilspringen:
 

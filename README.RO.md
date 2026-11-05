@@ -10,7 +10,7 @@ Creat pentru telefon: înregistrează fiecare serie, alergare sau poziție pe m�
 
 Graficele îți arată tendința, harta de căldură a mușchilor arată ce ai antrenat, iar fiecare serie își păstrează propria unitate kg/lb. Îți poți interoga seriile din Dataview.
 
-![Workout Planner pe telefon: o sesiune ghidată cu temporizatorul de pauză pornit, formularul de înregistrare cu butoanele +/− și selectorul kg/lb, și sumarul tabloului de bord cu calendarul antrenamentelor](assets/hero.png)
+![Workout Planner pe telefon: un card de serii cu două serii bifate și cronometrul de pauză pornit, formularul de înregistrare cu butoanele +/− și selectorul kg/lb, și sumarul tabloului de bord cu calendarul antrenamentelor](assets/hero.png)
 
 ## Funcționalități
 
@@ -18,6 +18,7 @@ Graficele îți arată tendința, harta de căldură a mușchilor arată ce ai a
 - Înregistrează fiecare serie în kg sau lb, indiferent ce discuri vezi în fața ta
 - Etichetează seriile cu un protocol: drop set, myo-reps, rest-pause, superset, 21s sau propriul protocol
 - Tabele cu seriile tale, grupate pe zile, cu totaluri zilnice, editabile dintr-o singură atingere
+- Seriile de azi ca rânduri de completat pe telefon: bifezi o serie ca s-o înregistrezi, iar cronometrul de pauză pornește (beta)
 - Grafice pentru greutate, volum, repetări, durată, distanță, ritm și ritm cardiac, plus o tendință care îți spune clar dacă progresezi
 - Un tablou de bord cu serie săptămânală (cu un obiectiv săptămânal), calendar de antrenamente, recorduri personale, volum total, antrenamente recente și statistici pe protocoale
 - O hartă de căldură a mușchilor, față și spate, după volum, serii sau repetări
@@ -109,6 +110,34 @@ Cu `targetWeight` și `targetReps`, deasupra tabelului apare o țintă de supra�
 | `sets`                       | —        | Serii planificate, numărate de un bloc `workout-session` |
 
 Numele exercițiilor se potrivesc aproximativ implicit („squat” găsește „Squat (high bar)”); adaugă `exactMatch: true` ca să accepți doar numele exact.
+
+</details>
+
+## Serii pe telefon (beta)
+
+Un bloc `workout-sets` este făcut pentru înregistrarea la sală: seriile de azi ale unui exercițiu, ca rânduri de completat. Fiecare rând arată ce ai făcut în aceeași serie data trecută, așa că scrii doar ce s-a schimbat (un câmp gol înregistrează valoarea afișată) și bifezi rândul. Seria ajunge în jurnal, rândul devine o serie înregistrată, iar cronometrul de pauză din partea de sus pornește singur. Săgeata unei serii înregistrate schimbă protocolul și notele; o bifezi din nou ca s-o scoți, cu **Anulează** timp de câteva secunde.
+
+<img src="assets/sets.png" alt="Un card workout-sets pe telefon: patru rânduri completate cu valorile de data trecută, apoi două serii bifate cu cronometrul de pauză pornit, apoi un rând deschis ca să alegi protocolul rest-pause și să adaugi o notă">
+
+```workout-sets
+exercise: Squat
+sets: 4
+rest: 120
+```
+
+Blocul este o funcționalitate beta: activează-o la **Setări → Funcționalități Beta**, unde **Serii de exerciții** este pornită pe instalările noi. Apoi **Adaugă serii de exerciții** din paleta de comenzi scrie un bloc pentru tine, iar meniul ⋮ îl modifică sau îi modifică cronometrul de pauză.
+
+<details>
+<summary>Toți parametrii</summary>
+
+| Parametru                    | Implicit      | Ce face                                                                                          |
+| ---------------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
+| `exercise`                   | —             | Exercițiul (nume exact)                                                                          |
+| `workout`                    | numele notei  | Antrenamentul sub care se înregistrează seriile                                                  |
+| `sets`                       | ca data trecută | Rânduri de completat (cel puțin unul); **Adaugă serie** adaugă altele                         |
+| `targetWeight`, `targetReps` | —             | Sugestii când exercițiul nu a mai fost făcut, și o țintă de supraîncărcare progresivă           |
+| `rest`                       | —             | Secunde de pauză după fiecare serie; `0` pentru fără cronometru. Nedefinit: `workout-timer` din aceeași secțiune |
+| `timer.*`                    | —             | Celelalte opțiuni ale cronometrului de pauză: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
 
 </details>
 
@@ -283,7 +312,7 @@ rounds: 8
 
 Un bloc `workout-session` în partea de sus a notei de antrenament (comanda **Inserează sesiune ghidată**) te conduce prin antrenament câte un exercițiu pe rând: ce serie faci, ținta, ce ai făcut data trecută, un buton **Înregistrează seria** și temporizatorul de pauză, care pornește când înregistrezi o serie.
 
-![Sesiune ghidată pe telefon: seria 1 din 4 cu ce ai făcut data trecută, formularul de înregistrare deschis de Înregistrează seria, apoi seria 2 din 4 cu temporizatorul de pauză pornit](assets/session.png)
+![Sesiune ghidată pe telefon: seria 3 din 4 la genuflexiuni cu pauza pornită atât pe sesiune, cât și pe cardul de serii, formularul de înregistrare deschis de Înregistrează seria, apoi exercițiul următor cu temporizatorul de pauză pornit](assets/session.png)
 
 ````markdown
 ```workout-session
@@ -291,19 +320,16 @@ Un bloc `workout-session` în partea de sus a notei de antrenament (comanda **In
 
 ## Squat
 
-```workout-log
+```workout-sets
 exercise: Squat
 sets: 4
 targetReps: 8
 targetWeight: 100
-```
-
-```workout-timer
-preset: rest
+rest: 180
 ```
 ````
 
-Planul este chiar nota: fiecare bloc `workout-log` cu un `exercise` este un pas, în ordinea în care apare, cu `sets`, `targetReps` și `targetWeight`. Pauza vine din `workout-timer` din aceeași secțiune `##` (presetarea implicită dacă nu există unul). Sesiunea numără seriile pe care le-ai înregistrat azi în acest antrenament, așa că reia de unde ai rămas când redeschizi nota. Un exercițiu fără `sets` rămâne cel curent până înregistrezi o serie a unuia ulterior; **Anterior** și **Următor** te mută liber.
+Planul este chiar nota: fiecare bloc `workout-log` sau `workout-sets` cu un `exercise` este un pas, în ordinea în care apare, cu `sets`, `targetReps` și `targetWeight`. Pauza vine din `rest` al blocului `workout-sets`, altfel din `workout-timer` din aceeași secțiune `##` (presetarea implicită dacă nu există unul). Sesiunea și cardul de serii împart același cronometru. Sesiunea numără seriile pe care le-ai înregistrat azi în acest antrenament, așa că reia de unde ai rămas când redeschizi nota. Un exercițiu fără `sets` rămâne cel curent până înregistrezi o serie a unuia ulterior; **Anterior** și **Următor** te mută liber.
 
 ## Durata antrenamentului
 
@@ -340,7 +366,7 @@ tags:
 
 Yoga funcționează la fel: fiecare poziție este un exercițiu `timed`, deci formularul întreabă doar cât timp ai ținut-o. Notele de exemplu includ un flux de yoga de dimineață, cu o sesiune ghidată.
 
-![Un flux de yoga pe telefon: sesiunea ghidată la poziția Downward Dog, formularul care cere doar durata menținerii și tabelul menținerilor cu totalul zilei](assets/yoga.png)
+![Un flux de yoga pe telefon: sesiunea ghidată la poziția Downward Dog, formularul care cere doar durata menținerii și cardul de serii cu prima menținere înregistrată](assets/yoga.png)
 
 `type:` funcționează la fel ca `exercise_type:`. Adaugă propriile câmpuri sub `parameters`, de exemplu runde pentru coarda de sărit:
 

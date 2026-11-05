@@ -10,7 +10,7 @@ Feito para o seu telemóvel: registe cada série, corrida ou postura enquanto tr
 
 Os gráficos mostram a sua tendência, o mapa de calor muscular mostra o que treinou, e cada série mantém a sua unidade kg/lb. Pode consultar as suas séries a partir do Dataview.
 
-![Workout Planner num telemóvel: uma sessão guiada com o temporizador de descanso a contar, o formulário de registo com botões +/− e seletor kg/lb, e o resumo do painel com o calendário de treino](assets/hero.png)
+![Workout Planner num telemóvel: um cartão workout-sets com duas séries marcadas e o temporizador de descanso a contar, o formulário de registo com botões +/− e seletor kg/lb, e o resumo do painel com o calendário de treino](assets/hero.png)
 
 ## Funcionalidades
 
@@ -18,6 +18,7 @@ Os gráficos mostram a sua tendência, o mapa de calor muscular mostra o que tre
 - Registe cada série em kg ou lb, conforme o que dizem os discos à sua frente
 - Marque as séries com um protocolo: drop set, myo reps, rest-pause, superset, vinte e um (21s) ou um protocolo seu
 - Tabelas das suas séries, agrupadas por dia com totais diários, editáveis com um toque
+- As séries de hoje como linhas para preencher no telemóvel: marque uma série para a registar e o descanso começa (beta)
 - Gráficos de peso, volume, repetições, duração, distância, ritmo e frequência cardíaca, e uma tendência que lhe diz claramente se está a melhorar
 - Um painel com sequência semanal (com objetivo semanal), calendário de treino, recordes pessoais, volume total, treinos recentes e estatísticas de protocolos
 - Um mapa de calor muscular, frente e costas, por volume, séries ou repetições
@@ -109,6 +110,34 @@ Com `targetWeight` e `targetReps`, aparece um alvo de sobrecarga progressiva aci
 | `sets`                       | —            | Séries planeadas, contadas por um bloco `workout-session` |
 
 Por predefinição, os nomes dos exercícios correspondem de forma aproximada ("squat" encontra "Squat (high bar)"); adicione `exactMatch: true` para apenas esse nome exato.
+
+</details>
+
+## Séries no seu telemóvel (beta)
+
+Um bloco `workout-sets` serve para registar no ginásio: as séries de hoje de um exercício, em linhas para preencher. Cada linha mostra o que fez nessa mesma série da última vez, por isso escreve apenas o que mudou (um campo vazio regista esse valor) e marca a linha. A série vai para o registo, a linha passa a ser uma série registada e o temporizador de descanso no topo arranca sozinho. A seta de uma série registada altera o seu protocolo e as notas; marcá-la de novo tira-a do registo, com **Desfazer** durante alguns segundos.
+
+<img src="assets/sets.png" alt="Um cartão workout-sets num telemóvel: quatro linhas preenchidas com os valores da última vez, depois duas séries marcadas com o temporizador de descanso a contar, e uma linha aberta para escolher o protocolo rest-pause e acrescentar uma nota">
+
+```workout-sets
+exercise: Squat
+sets: 4
+rest: 120
+```
+
+O bloco é uma funcionalidade beta: ative **Séries de treino** em **Definições → Workout Planner → Funcionalidades beta** (as novas instalações já a têm ativa). Depois, **Inserir séries de exercícios** a partir do painel de comandos escreve um por si, e o menu ⋮ edita o bloco ou o temporizador de descanso.
+
+<details>
+<summary>Todos os parâmetros</summary>
+
+| Parâmetro                    | Predefinição  | O que faz                                                                                        |
+| ---------------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
+| `exercise`                   | —             | O exercício (nome exato)                                                                         |
+| `workout`                    | o nome da nota | O treino em que as séries são registadas                                                        |
+| `sets`                       | como da última vez | Linhas para preencher (pelo menos uma); **Adicionar conjunto** acrescenta mais              |
+| `targetWeight`, `targetReps` | —             | Sugestões quando o exercício nunca foi feito, e um objetivo de sobrecarga progressiva            |
+| `rest`                       | —             | Segundos de descanso após cada série; `0` para nenhum temporizador. Não definido: o `workout-timer` da mesma secção |
+| `timer.*`                    | —             | As outras opções do temporizador de descanso: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls` e `timer.sound` |
 
 </details>
 
@@ -283,7 +312,7 @@ rounds: 8
 
 Um bloco `workout-session` no topo de uma nota de treino (comando **Inserir sessão guiada**) guia-o por ela um exercício de cada vez: em que série está, o objetivo, o que fez da última vez, um botão **Registar série** e o temporizador de descanso, que arranca quando regista uma série.
 
-![Sessão guiada num telemóvel: série 1 de 4 com o que fez da última vez, o formulário de registo aberto por Registar série e, depois, a série 2 de 4 com o temporizador de descanso a contar](assets/session.png)
+![Sessão guiada num telemóvel: a série 3 de 4 do agachamento com o descanso a contar na sessão e no cartão de séries, o formulário de registo aberto por Registar série e, depois, o exercício seguinte com o temporizador de descanso a contar](assets/session.png)
 
 ````markdown
 ```workout-session
@@ -291,19 +320,16 @@ Um bloco `workout-session` no topo de uma nota de treino (comando **Inserir sess
 
 ## Squat
 
-```workout-log
+```workout-sets
 exercise: Squat
 sets: 4
 targetReps: 8
 targetWeight: 100
-```
-
-```workout-timer
-preset: rest
+rest: 180
 ```
 ````
 
-O plano é a própria nota: cada bloco `workout-log` com um `exercise` é um passo, pela ordem em que aparecem, com os seus `sets`, `targetReps` e `targetWeight`. O descanso vem do `workout-timer` na mesma secção `##` (ou da predefinição por omissão, se não houver nenhum). A sessão conta as séries que registou hoje neste treino, por isso retoma de onde ficou quando reabre a nota. Um exercício sem `sets` mantém-se atual até registar uma série de um exercício seguinte; **Anterior** e **Seguinte** movem-se livremente.
+O plano é a própria nota: cada bloco `workout-log` ou `workout-sets` com um `exercise` é um passo, pela ordem em que aparecem, com os seus `sets`, `targetReps` e `targetWeight`. O descanso vem do `rest` do próprio bloco `workout-sets`, ou, na falta dele, do `workout-timer` na mesma secção `##` (ou da predefinição por omissão, se não houver nenhum). A sessão e o cartão de séries partilham uma só contagem decrescente. A sessão conta as séries que registou hoje neste treino, por isso retoma de onde ficou quando reabre a nota. Um exercício sem `sets` mantém-se atual até registar uma série de um exercício seguinte; **Anterior** e **Seguinte** movem-se livremente.
 
 ## Duração do treino
 
@@ -340,7 +366,7 @@ tags:
 
 A ioga funciona da mesma forma: cada postura é um exercício `timed`, por isso o formulário pede apenas quanto tempo a manteve. As notas de exemplo incluem um fluxo de ioga matinal com uma sessão guiada.
 
-![Fluxo de ioga num telemóvel: a sessão guiada em Downward Dog, o formulário de registo a pedir apenas a duração da postura, e a tabela das posturas com o total do dia](assets/yoga.png)
+![Fluxo de ioga num telemóvel: a sessão guiada em Downward Dog, o formulário de registo a pedir apenas a duração da postura, e o cartão de séries com a primeira postura registada](assets/yoga.png)
 
 `type:` funciona da mesma forma que `exercise_type:`. Acrescente os seus próprios campos em `parameters`, por exemplo rondas para a corda de saltar:
 

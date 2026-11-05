@@ -10,7 +10,7 @@ Conçu pour votre téléphone : enregistrez chaque série, course ou posture pen
 
 Les graphiques montrent votre tendance, la carte thermique musculaire montre ce que vous avez travaillé, et chaque série conserve son unité kg/lb. Vous pouvez interroger vos séries depuis Dataview.
 
-![Workout Planner sur téléphone : une séance guidée avec son minuteur de repos en cours, le formulaire d'enregistrement avec ses boutons +/− et son sélecteur kg/lb, et le résumé du tableau de bord avec le calendrier d'entraînement](assets/hero.png)
+![Workout Planner sur téléphone : une carte de séries avec deux séries cochées et le minuteur de repos en cours, le formulaire d'enregistrement avec ses boutons +/− et son sélecteur kg/lb, et le résumé du tableau de bord avec le calendrier d'entraînement](assets/hero.png)
 
 ## Fonctionnalités
 
@@ -18,6 +18,7 @@ Les graphiques montrent votre tendance, la carte thermique musculaire montre ce 
 - Enregistrez chaque série en kg ou en lb, quelle que soit la charge affichée sur vos disques
 - Associez un protocole à une série : drop set, myo-reps, rest-pause, superset, 21s, ou le vôtre
 - Tableaux de vos séries, regroupés par jour avec les totaux quotidiens, modifiables d'un seul geste
+- Les séries du jour sous forme de lignes à remplir sur votre téléphone : cochez une série pour l'enregistrer, et le minuteur de repos démarre (bêta)
 - Graphiques du poids, du volume, des répétitions, de la durée, de la distance, de l'allure et de la fréquence cardiaque, avec une tendance qui vous indique clairement si vous progressez
 - Un tableau de bord avec la série de semaines (avec un objectif hebdomadaire), un calendrier d'entraînement, les records personnels, le volume total, les entraînements récents et les statistiques de protocoles
 - Une carte thermique musculaire, de face et de dos, par volume, séries ou répétitions
@@ -109,6 +110,34 @@ Avec `targetWeight` et `targetReps`, une cible de surcharge progressive apparaî
 | `sets`                       | —       | Séries prévues, comptées par un bloc `workout-session` |
 
 La correspondance des noms d'exercices est souple par défaut (« squat » trouve « Squat (high bar) ») ; ajoutez `exactMatch: true` pour ne retenir que ce nom exact.
+
+</details>
+
+## Séries sur votre téléphone (bêta)
+
+Un bloc `workout-sets` sert à enregistrer à la salle : les séries du jour d'un exercice, sous forme de lignes à remplir. Chaque ligne affiche ce que vous avez fait lors de la même série la fois précédente, si bien que vous ne saisissez que ce qui a changé (un champ vide enregistre cette valeur) puis cochez la ligne. La série rejoint le journal, la ligne devient une série enregistrée, et le minuteur de repos en haut démarre tout seul. La flèche d'une série enregistrée modifie son protocole et ses notes ; la décocher la retire du journal, et **Annuler** la remet pendant quelques secondes.
+
+<img src="assets/sets.png" alt="Une carte workout-sets sur téléphone : quatre lignes remplies avec les valeurs de la dernière fois, puis deux séries cochées avec le minuteur de repos en cours, puis une ligne ouverte pour choisir le protocole rest-pause et ajouter une note">
+
+```workout-sets
+exercise: Squat
+sets: 4
+rest: 120
+```
+
+Le bloc est une fonctionnalité bêta : activez **Séries d'entraînement** dans **Paramètres → Workout Planner → Fonctionnalités bêta** (les nouvelles installations l'ont activée). Ensuite, **Ajouter des séries d'exercices** dans la palette de commandes en insère un, et le menu ⋮ modifie le bloc ou son minuteur de repos.
+
+<details>
+<summary>Tous les paramètres</summary>
+
+| Paramètre                    | Défaut                 | Rôle                                                                                             |
+| ---------------------------- | ---------------------- | ------------------------------------------------------------------------------------------------ |
+| `exercise`                   | —                      | L'exercice (nom exact)                                                                           |
+| `workout`                    | le nom de la note      | L'entraînement sous lequel les séries sont enregistrées                                          |
+| `sets`                       | comme la fois précédente | Lignes à remplir (au moins une) ; **Ajouter une série** en ajoute                              |
+| `targetWeight`, `targetReps` | —                      | Indications quand l'exercice n'a jamais été fait, et objectif de surcharge progressive          |
+| `rest`                       | —                      | Secondes de repos après chaque série ; `0` pour aucun minuteur. Non défini : le `workout-timer` de la section |
+| `timer.*`                    | —                      | Les autres options du minuteur de repos : `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
 
 </details>
 
@@ -283,7 +312,7 @@ rounds: 8
 
 Un bloc `workout-session` en haut d'une note d'entraînement (commande **Insérer une séance guidée**) vous guide exercice par exercice : la série en cours, la cible, ce que vous avez fait la fois précédente, un bouton **Enregistrer la série** et le minuteur de repos, qui démarre quand vous enregistrez une série.
 
-![Une séance guidée sur téléphone : série 1 sur 4 avec ce que vous avez fait la fois précédente, le formulaire ouvert par Enregistrer la série, puis série 2 sur 4 avec le minuteur de repos en cours](assets/session.png)
+![Une séance guidée sur téléphone : série 3 sur 4 du squat avec le repos en cours à la fois sur la séance et sur le bloc de séries, le formulaire ouvert par Enregistrer la série, puis l'exercice suivant avec son minuteur de repos en cours](assets/session.png)
 
 ````markdown
 ```workout-session
@@ -291,19 +320,16 @@ Un bloc `workout-session` en haut d'une note d'entraînement (commande **Insére
 
 ## Squat
 
-```workout-log
+```workout-sets
 exercise: Squat
 sets: 4
 targetReps: 8
 targetWeight: 100
-```
-
-```workout-timer
-preset: rest
+rest: 180
 ```
 ````
 
-Le plan, c'est la note elle-même : chaque bloc `workout-log` avec un `exercise` est une étape, dans l'ordre d'apparition, avec ses `sets`, `targetReps` et `targetWeight`. Le repos vient du bloc `workout-timer` de la même section `##` (le préréglage par défaut s'il n'y en a pas). La séance compte les séries enregistrées aujourd'hui dans cet entraînement, donc elle reprend là où vous en étiez quand vous rouvrez la note. Un exercice sans `sets` reste en cours jusqu'à ce que vous enregistriez une série d'un exercice suivant ; **Précédent** et **Suivant** se déplacent librement.
+Le plan, c'est la note elle-même : chaque bloc `workout-log` ou `workout-sets` avec un `exercise` est une étape, dans l'ordre d'apparition, avec ses `sets`, `targetReps` et `targetWeight`. Le repos vient du `rest` du bloc `workout-sets`, sinon du bloc `workout-timer` de la même section `##` (le préréglage par défaut s'il n'y en a pas). La séance et le bloc de séries partagent un seul compte à rebours. La séance compte les séries enregistrées aujourd'hui dans cet entraînement, donc elle reprend là où vous en étiez quand vous rouvrez la note. Un exercice sans `sets` reste en cours jusqu'à ce que vous enregistriez une série d'un exercice suivant ; **Précédent** et **Suivant** se déplacent librement.
 
 ## Durée de l'entraînement
 
@@ -340,7 +366,7 @@ tags:
 
 Le yoga fonctionne de la même façon : chaque posture est un exercice `timed`, donc le formulaire demande seulement combien de temps vous l'avez tenue. Les notes d'exemple incluent un flow de yoga du matin avec une séance guidée.
 
-![Un flow de yoga sur téléphone : la séance guidée sur Chien tête en bas, le formulaire qui ne demande que la durée du maintien, et le tableau des maintiens avec le total de la journée](assets/yoga.png)
+![Un flow de yoga sur téléphone : la séance guidée sur Chien tête en bas, le formulaire qui ne demande que la durée du maintien, et la carte de séries avec le premier maintien enregistré](assets/yoga.png)
 
 `type:` fonctionne comme `exercise_type:`. Ajoutez vos propres champs sous `parameters`, par exemple des tours pour la corde à sauter :
 

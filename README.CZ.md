@@ -10,7 +10,7 @@ Vytvořeno pro telefon: zapisujte každou sérii, běh nebo pózu během trénin
 
 Grafy ukazují váš trend, tepelná mapa svalů ukazuje, co jste trénovali, a každá série si drží svou jednotku kg/lb. Své série můžete dotazovat z Dataview.
 
-![Workout Planner na telefonu: vedená relace s během odpočinku, formulář záznamu s tlačítky +/− a výběrem kg/lb a souhrn dashboardu s kalendářem tréninků](assets/hero.png)
+![Workout Planner na telefonu: karta workout-sets se dvěma zaškrtnutými sériemi a běžícím odpočinkem, formulář záznamu s tlačítky +/− a výběrem kg/lb a souhrn dashboardu s kalendářem tréninků](assets/hero.png)
 
 ## Funkce
 
@@ -18,6 +18,7 @@ Grafy ukazují váš trend, tepelná mapa svalů ukazuje, co jste trénovali, a 
 - Zapisujte každou sérii v kg nebo lb, podle kotoučů, které máte před sebou
 - Označte série protokolem: drop set, myo-reps, rest-pause, superset, 21s, nebo vlastním
 - Tabulky vašich sérií seskupené podle dne se součty za den, upravitelné jedním klepnutím
+- Dnešní série jako řádky k vyplnění v telefonu: zaškrtněte řádek a série se zapíše a spustí se odpočinkový časovač (beta)
 - Grafy váhy, objemu, opakování, doby, vzdálenosti, tempa a tepové frekvence a trend, který vám jasně řekne, zda se zlepšujete
 - Dashboard s týdenní sérií (s týdenním cílem), kalendářem tréninků, osobními rekordy, celkovým objemem, nedávnými tréninky a statistikami protokolů
 - Tepelná mapa svalů, zepředu i zezadu, podle objemu, sérií nebo opakování
@@ -109,6 +110,34 @@ S `targetWeight` a `targetReps` se nad tabulkou zobrazí cíl postupného zatě�
 | `sets`                       | —       | Plánované série, počítá blok `workout-session`         |
 
 Názvy cvičení se ve výchozím nastavení hledají volně („squat“ najde „Squat (high bar)“); pro přesný název přidejte `exactMatch: true`.
+
+</details>
+
+## Série na telefonu (beta)
+
+Blok `workout-sets` je určený k zapisování v posilovně: dnešní série jednoho cviku jako řádky k vyplnění. Každý řádek ukazuje, co jste v téže sérii udělali minule, takže píšete jen to, co se změnilo (prázdné pole zapíše tuto hodnotu), a řádek zaškrtnete. Série se zapíše do záznamu, řádek se promění v zapsanou sérii a odpočinkový časovač nahoře se spustí sám. Šipka u zapsané série mění její protokol a poznámky; opětovným zaškrtnutím ji odeberete, s tlačítkem **Vrátit** na několik sekund.
+
+<img src="assets/sets.png" alt="Karta workout-sets na telefonu: čtyři řádky vyplněné hodnotami z minula, pak dvě zaškrtnuté série s během odpočinku a pak řádek otevřený pro výběr protokolu rest-pause a přidání poznámky">
+
+```workout-sets
+exercise: Squat
+sets: 4
+rest: 120
+```
+
+Blok je funkce v beta verzi: zapněte **Série tréninku** v **Nastavení → Workout Planner → Funkce pro testování (beta)** (nové instalace ji mají zapnutou). Potom vám příkaz **Vložit série tréninku** z palety příkazů vloží jeden blok a nabídka ⋮ ho upraví, včetně jeho odpočinkového časovače.
+
+<details>
+<summary>Všechny parametry</summary>
+
+| Parametr                     | Výchozí       | K čemu slouží                                                                                    |
+| ---------------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
+| `exercise`                   | —             | Cvik (přesný název)                                                                              |
+| `workout`                    | název poznámky | Trénink, pod který se série zapisují                                                            |
+| `sets`                       | jako minule   | Řádky k vyplnění (alespoň jeden); **Přidat sérii** přidá další                                   |
+| `targetWeight`, `targetReps` | —             | Nápověda, když cvik ještě nikdy nedělali, a cíl postupného zatěžování                            |
+| `rest`                       | —             | Sekundy odpočinku po každé sérii; `0` znamená žádný časovač. Když není nastaveno: `workout-timer` stejné sekce |
+| `timer.*`                    | —             | Další možnosti odpočinkového časovače: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
 
 </details>
 
@@ -283,7 +312,7 @@ rounds: 8
 
 Blok `workout-session` na začátku poznámky tréninku (příkaz **Vložit vedenou relaci**) vás provede tréninkem po jednom cviku: která série je na řadě, cíl, co jste dělali minule, tlačítko **Zapsat sérii** a časovač odpočinku, který se spustí, když zapíšete sérii.
 
-![Vedená relace na telefonu: série 1 ze 4 s tím, co jste dělali minule, formulář záznamu otevřený tlačítkem Zapsat sérii a poté série 2 ze 4 s během odpočinku](assets/session.png)
+![Vedená relace na telefonu: série 3 ze 4 dřepů s během odpočinku v relaci i na kartě sérií, formulář záznamu otevřený tlačítkem Zapsat sérii a poté další cvik s během odpočinku](assets/session.png)
 
 ````markdown
 ```workout-session
@@ -291,19 +320,16 @@ Blok `workout-session` na začátku poznámky tréninku (příkaz **Vložit vede
 
 ## Squat
 
-```workout-log
+```workout-sets
 exercise: Squat
 sets: 4
 targetReps: 8
 targetWeight: 100
-```
-
-```workout-timer
-preset: rest
+rest: 180
 ```
 ````
 
-Plánem je samotná poznámka: každý blok `workout-log` s `exercise` je krok v pořadí, v jakém se objevují, se svými `sets`, `targetReps` a `targetWeight`. Odpočinek se vezme z bloku `workout-timer` ve stejné sekci `##` (bez něj výchozí předvolba). Relace počítá série, které jste dnes v tomto tréninku zapsali, takže při znovuotevření poznámky naváže tam, kde jste přestali. Cvik bez `sets` zůstává aktuální, dokud nezapíšete sérii dalšího cviku; **Předchozí** a **Další** se dají procházet volně.
+Plánem je samotná poznámka: každý blok `workout-log` nebo `workout-sets` s `exercise` je krok v pořadí, v jakém se objevují, se svými `sets`, `targetReps` a `targetWeight`. Odpočinek se vezme z vlastního `rest` bloku `workout-sets`, jinak z bloku `workout-timer` ve stejné sekci `##` (bez něj výchozí předvolba). Relace a karta sérií sdílejí jedno odpočítávání. Relace počítá série, které jste dnes v tomto tréninku zapsali, takže při znovuotevření poznámky naváže tam, kde jste přestali. Cvik bez `sets` zůstává aktuální, dokud nezapíšete sérii dalšího cviku; **Předchozí** a **Další** se dají procházet volně.
 
 ## Délka tréninku
 
@@ -340,7 +366,7 @@ tags:
 
 Jóga funguje stejně: každá póza je cvik `timed`, takže se formulář ptá jen na to, jak dlouho jste ji drželi. Ukázkové poznámky obsahují ranní jógový tok s vedenou relací.
 
-![Jógový tok na telefonu: vedená relace u Downward Dog, formulář záznamu, který se ptá jen na délku výdrže, a tabulka výdrží se součtem za den](assets/yoga.png)
+![Jógový tok na telefonu: vedená relace u Downward Dog, formulář záznamu, který se ptá jen na délku výdrže, a karta sérií s první zapsanou výdrží](assets/yoga.png)
 
 `type:` funguje stejně jako `exercise_type:`. Vlastní pole přidejte pod `parameters`, například kola pro švihadlo:
 

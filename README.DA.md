@@ -10,7 +10,7 @@ Lavet til din telefon: log hvert sæt, løb eller stilling, mens du træner, og 
 
 Diagrammer viser din tendens, muskel-heatmappet viser, hvad du har trænet, og hvert sæt beholder sin egen kg/lb-enhed. Du kan forespørge dine sæt fra Dataview.
 
-![Workout Planner på en telefon: en guidet session med hviletimeren kørende, logformularen med +/−-knapper og kg/lb-vælger, og dashboardets oversigt med træningskalenderen](assets/hero.png)
+![Workout Planner på en telefon: et træningssæt-kort med to sæt afkrydset og hviletimeren kørende, logformularen med +/−-knapper og kg/lb-vælger, og dashboardets oversigt med træningskalenderen](assets/hero.png)
 
 ## Funktioner
 
@@ -18,6 +18,7 @@ Diagrammer viser din tendens, muskel-heatmappet viser, hvad du har trænet, og h
 - Registrér hvert sæt i kg eller lb, uanset hvad pladerne foran dig siger
 - Markér sæt med en protokol: drop set, myo-reps, hvilepause, supersæt, 21s eller din egen
 - Tabeller over dine sæt, grupperet efter dag med dagens totaler, og redigerbare med ét tryk
+- Dagens sæt som rækker, du udfylder på din telefon: afkryds et sæt for at registrere det, og hviletimeren starter (beta)
 - Diagrammer for vægt, volumen, gentagelser, varighed, distance, tempo og puls, samt en tendens, der klart fortæller dig, om du forbedrer dig
 - Et dashboard med ugentlig streak (med et ugentligt mål), en træningskalender, personlige rekorder, samlet volumen, seneste træninger og protokolstatistik
 - Et muskel-heatmap, for og bag, efter volumen, sæt eller gentagelser
@@ -109,6 +110,34 @@ Med `targetWeight` og `targetReps` vises et mål for progressiv overbelastning o
 | `sets`                       | —        | Planlagte sæt, talt af en `workout-session`-blok     |
 
 Øvelsesnavne matcher løst som standard ("squat" finder "Squat (high bar)"); tilføj `exactMatch: true` for kun det præcise navn.
+
+</details>
+
+## Sæt på din telefon (beta)
+
+En `workout-sets`-blok er lavet til at registrere sæt i fitnesscentret: dagens sæt for én øvelse som rækker, du udfylder. Hver række viser, hvad du gjorde i det samme sæt sidst, så du kun skriver det, der har ændret sig (et tomt felt registrerer den værdi), og afkrydser rækken. Sættet går ind i loggen, rækken bliver til et registreret sæt, og hviletimeren øverst starter af sig selv. Et registreret sæts chevron ændrer dets protokol og noter; afkryds det igen for at tage det tilbage, med **Fortryd** i nogle sekunder.
+
+<img src="assets/sets.png" alt="Et workout-sets-kort på en telefon: fire rækker udfyldt med sidste gangs værdier, derefter to sæt afkrydset med hviletimeren kørende, og så en række åbnet for at vælge hvilepause-protokollen og tilføje en note">
+
+```workout-sets
+exercise: Squat
+sets: 4
+rest: 120
+```
+
+Blokken er en beta-funktion: slå **Træningssæt** til under **Indstillinger → Workout Planner → Funktioner i beta** (nye installationer har den til). Så skriver **Indsæt træningssæt** fra kommandopaletten en til dig, og ⋮-menuen redigerer den eller dens hviletimer.
+
+<details>
+<summary>Alle parametre</summary>
+
+| Parameter                    | Standard      | Hvad den gør                                                                                     |
+| ---------------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
+| `exercise`                   | —             | Øvelsen (præcist navn)                                                                           |
+| `workout`                    | notenavnet    | Træningen sættene registreres under                                                              |
+| `sets`                       | som sidst     | Rækker at udfylde (mindst én); **Tilføj sæt** tilføjer flere                                     |
+| `targetWeight`, `targetReps` | —             | Hints, når øvelsen aldrig er lavet, og et mål for progressiv overbelastning                      |
+| `rest`                       | —             | Sekunder hvile efter hvert sæt; `0` for ingen timer. Ikke angivet: `workout-timer`-blokken i samme afsnit |
+| `timer.*`                    | —             | Hviletimerens øvrige valgmuligheder: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
 
 </details>
 
@@ -283,7 +312,7 @@ rounds: 8
 
 En `workout-session`-blok øverst i en træningsnote (kommandoen **Indsæt guidet session**) fører dig gennem træningen én øvelse ad gangen: hvilket sæt du er på, målet, hvad du gjorde sidst, en knap **Registrer sæt** og hviletimeren, der starter, når du registrerer et sæt.
 
-![En guidet session på en telefon: sæt 1 af 4 med det, du gjorde sidst, logformularen åbnet med Registrer sæt, og derefter sæt 2 af 4 med hviletimeren kørende](assets/session.png)
+![En guidet session på en telefon: sæt 3 af 4 af squat med hvilen kørende både i sessionen og på sætkortet, logformularen åbnet med Registrer sæt, og derefter den næste øvelse med sin hviletimer kørende](assets/session.png)
 
 ````markdown
 ```workout-session
@@ -291,19 +320,16 @@ En `workout-session`-blok øverst i en træningsnote (kommandoen **Indsæt guide
 
 ## Squat
 
-```workout-log
+```workout-sets
 exercise: Squat
 sets: 4
 targetReps: 8
 targetWeight: 100
-```
-
-```workout-timer
-preset: rest
+rest: 180
 ```
 ````
 
-Planen er selve noten: hver `workout-log`-blok med en `exercise` er et trin, i den rækkefølge de står, med sine `sets`, `targetReps` og `targetWeight`. Hvilen kommer fra `workout-timer`-blokken i samme `##`-afsnit (standardforudindstillingen, hvis der ikke er en). Sessionen tæller de sæt, du har registreret i dag i denne træning, så den tager det op, hvor du slap, når du åbner noten igen. En øvelse uden `sets` forbliver aktuel, indtil du registrerer et sæt af en senere øvelse; **Forrige** og **Næste** bevæger sig frit.
+Planen er selve noten: hver `workout-log`- eller `workout-sets`-blok med en `exercise` er et trin, i den rækkefølge de står, med sine `sets`, `targetReps` og `targetWeight`. Hvilen kommer fra `workout-sets`-blokkens egen `rest`, ellers fra `workout-timer`-blokken i samme `##`-afsnit (standardforudindstillingen, hvis der ikke er en). Sessionen og sætkortet deler én nedtælling. Sessionen tæller de sæt, du har registreret i dag i denne træning, så den tager det op, hvor du slap, når du åbner noten igen. En øvelse uden `sets` forbliver aktuel, indtil du registrerer et sæt af en senere øvelse; **Forrige** og **Næste** bevæger sig frit.
 
 ## Varighed af træning
 
@@ -340,7 +366,7 @@ tags:
 
 Yoga fungerer på samme måde: hver stilling er en `timed`-øvelse, så formularen kun spørger, hvor længe du holdt den. Eksempelnoterne indeholder et morgenflow med yoga og en guidet session.
 
-![Et yogaflow på en telefon: den guidede session ved Downward Dog, logformularen der kun spørger om holdets varighed, og tabellen over holdene med dagens total](assets/yoga.png)
+![Et yogaflow på en telefon: den guidede session ved Downward Dog, logformularen der kun spørger om holdets varighed, og sætkortet med det første hold registreret](assets/yoga.png)
 
 `type:` virker på samme måde som `exercise_type:`. Tilføj dine egne felter under `parameters`, f.eks. runder til reb-hop:
 

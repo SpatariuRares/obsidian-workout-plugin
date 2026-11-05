@@ -18,6 +18,7 @@ Grafikler trendinizi gösterir, kas ısı haritası neyi çalıştırdığınız
 - Her seti kg ya da lb cinsinden kaydedin; önünüzdeki plakaların ne dediği önemli değil
 - Setleri bir protokolle etiketleyin: drop set, myo-reps, rest-pause, superset, 21s veya kendi protokolünüz
 - Setlerinizin tabloları, günlük toplamlarıyla günlere göre gruplanır ve tek dokunuşla düzenlenebilir
+- Bugünün setleri, telefonunuzda doldurabileceğiniz satırlar olarak: bir seti işaretleyerek kaydedin, dinlenme zamanlayıcısı kendiliğinden başlar (beta)
 - Ağırlık, hacim, tekrar, süre, mesafe, tempo ve nabız grafikleri; ayrıca ilerleyip ilerlemediğinizi açıkça söyleyen bir trend
 - Haftalık seri (haftalık hedefle), antrenman takvimi, kişisel rekorlar, toplam hacim, son antrenmanlar ve protokol istatistikleri içeren bir gösterge paneli
 - Ön ve arka görünümlü, hacme, sete ya da tekrara göre bir kas ısı haritası
@@ -109,6 +110,34 @@ targetReps: 8
 | `sets`                       | —          | Planlanan set sayısı; `workout-session` bloğu sayar   |
 
 Egzersiz adları varsayılan olarak gevşek eşleşir ("squat" ifadesi "Squat (high bar)" egzersizini bulur); yalnızca tam adı istiyorsanız `exactMatch: true` ekleyin.
+
+</details>
+
+## Telefonda setler (beta)
+
+`workout-sets` bloğu salonda kayıt için tasarlandı: bir egzersizin bugünkü setleri, doldurulacak satırlar olarak. Her satır, aynı setin geçen seferki değerini gösterir; bu yüzden yalnızca değişeni yazarsınız (boş bırakılan alan o değeri kaydeder) ve satırı işaretlersiniz. Set kayda girer, satır kaydedilmiş bir sete dönüşür ve üstteki dinlenme zamanlayıcısı kendiliğinden başlar. Kaydedilmiş bir setin okuyla protokolünü ve notlarını değiştirirsiniz; işaretini yeniden tıklamak seti kayıtlardan kaldırır ve birkaç saniye görünen **Geri al** ile geri getirirsiniz.
+
+<img src="assets/sets.png" alt="Telefonda bir workout-sets kartı: geçen seferki değerlerle doldurulmuş dört satır, ardından dinlenme zamanlayıcısı çalışırken işaretlenmiş iki set, sonra Rest-pause protokolünü seçmek ve not eklemek için açılmış bir satır">
+
+```workout-sets
+exercise: Squat
+sets: 4
+rest: 120
+```
+
+Blok bir beta özelliktir: **Ayarlar → Workout Planner → Beta özellikleri** altında **Egzersiz setleri** seçeneğini açın (yeni kurulumlarda açıktır). Ardından komut paletinden **Egzersiz setlerini ekle** komutu sizin için bir tane yazar; ⋮ menüsü bloğu ya da dinlenme zamanlayıcısını düzenler.
+
+<details>
+<summary>Tüm parametreler</summary>
+
+| Parametre                    | Varsayılan    | Ne yapar                                                                                         |
+| ---------------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
+| `exercise`                   | —             | Egzersiz (tam adı)                                                                               |
+| `workout`                    | not adı       | Setlerin kaydedileceği antrenman                                                                 |
+| `sets`                       | geçen seferki | Doldurulacak satır sayısı (en az bir); **Set ekle** daha fazlasını ekler                         |
+| `targetWeight`, `targetReps` | —             | Egzersiz hiç yapılmadıysa ipucu; aşamalı yüklenme hedefi                                         |
+| `rest`                       | —             | Her setten sonraki dinlenme (saniye); `0` zamanlayıcı yok demektir. Belirtilmezse: aynı bölümün `workout-timer` bloğu |
+| `timer.*`                    | —             | Dinlenme zamanlayıcısının diğer seçenekleri: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
 
 </details>
 
@@ -283,7 +312,7 @@ rounds: 8
 
 Bir antrenman notunun en üstündeki `workout-session` bloğu (**Rehberli antrenman ekle** komutu) sizi bir seferde bir egzersiz boyunca yönlendirir: hangi setteyken olduğunuz, hedef, geçen seferki sonuç, bir **Seti kaydet** düğmesi ve bir dinlenme zamanlayıcısı. Zamanlayıcı, bir set kaydettiğinizde başlar.
 
-![Telefonda rehberli antrenman: 4 setten 1. set, geçen seferki sonuç, Seti kaydet ile açılan kayıt formu, ardından çalışan dinlenme zamanlayıcısıyla 2. set](assets/session.png)
+![Telefonda rehberli antrenman: squat'ın 4 setinden 3. seti; dinlenme rehberli antrenmanda ve set kartında aynı anda sayıyor. Seti kaydet ile açılan kayıt formu, ardından dinlenme zamanlayıcısı çalışan sonraki egzersiz](assets/session.png)
 
 ````markdown
 ```workout-session
@@ -291,19 +320,16 @@ Bir antrenman notunun en üstündeki `workout-session` bloğu (**Rehberli antren
 
 ## Squat
 
-```workout-log
+```workout-sets
 exercise: Squat
 sets: 4
 targetReps: 8
 targetWeight: 100
-```
-
-```workout-timer
-preset: rest
+rest: 180
 ```
 ````
 
-Plan notun kendisidir: egzersizi olan her `workout-log` bloğu, göründükleri sırayla bir adımdır; `sets`, `targetReps` ve `targetWeight` değerleriyle birlikte. Dinlenme, aynı `##` bölümündeki `workout-timer` bloğundan gelir (yoksa varsayılan ön ayar). Oturum, bu antrenmanda bugün kaydettiğiniz setleri sayar; bu yüzden notu yeniden açtığınızda kaldığınız yerden devam eder. `sets` değeri olmayan bir egzersiz, sonraki bir egzersizin setini kaydedene kadar geçerli kalır; **Önceki** ve **Sonraki** düğmeleri serbestçe gezinir.
+Plan notun kendisidir: egzersizi olan her `workout-log` ya da `workout-sets` bloğu, göründükleri sırayla bir adımdır; `sets`, `targetReps` ve `targetWeight` değerleriyle birlikte. Dinlenme, `workout-sets` bloğunun kendi `rest` değerinden gelir; yoksa aynı `##` bölümündeki `workout-timer` bloğundan (onsuz varsayılan ön ayar). Rehberli antrenman ve set kartı tek bir geri sayımı paylaşır. Oturum, bu antrenmanda bugün kaydettiğiniz setleri sayar; bu yüzden notu yeniden açtığınızda kaldığınız yerden devam eder. `sets` değeri olmayan bir egzersiz, sonraki bir egzersizin setini kaydedene kadar geçerli kalır; **Önceki** ve **Sonraki** düğmeleri serbestçe gezinir.
 
 ## Antrenman süresi
 
@@ -340,7 +366,7 @@ tags:
 
 Yoga da aynı şekilde çalışır: her poz `timed` bir egzersizdir, yani form yalnızca pozu ne kadar süre tuttuğunuzu sorar. Örnek notlar, rehberli antrenmanlı bir sabah yoga akışı içerir.
 
-![Telefonda bir yoga akışı: Aşağı Bakan Köpek için rehberli antrenman, yalnızca tutuş süresini soran kayıt formu ve günün toplamıyla tutuşlar tablosu](assets/yoga.png)
+![Telefonda bir yoga akışı: Aşağı Bakan Köpek için rehberli antrenman, yalnızca tutuş süresini soran kayıt formu ve ilk tutuşu kaydedilmiş set kartı](assets/yoga.png)
 
 `type:`, `exercise_type:` ile aynı işe yarar. `parameters` altına kendi alanlarınızı ekleyin; örneğin ip atlama için tur sayısı:
 

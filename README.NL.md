@@ -10,7 +10,7 @@ Gemaakt voor je telefoon: log elke serie, elke run of elke houding terwijl je tr
 
 Grafieken laten je trend zien, de spierheatmap laat zien wat je hebt getraind, en elke serie behoudt zijn eigen kg/lb-eenheid. Je kunt je series opvragen vanuit Dataview.
 
-![Workout Planner op een telefoon: een begeleide sessie met de lopende rusttimer, het logformulier met +/−-knoppen en de kg/lb-keuze, en de samenvatting van het dashboard met de trainingskalender](assets/hero.png)
+![Workout Planner op een telefoon: een workout-sets-kaart met twee afgevinkte series en de lopende rusttimer, het logformulier met +/−-knoppen en de kg/lb-keuze, en de samenvatting van het dashboard met de trainingskalender](assets/hero.png)
 
 ## Functies
 
@@ -18,6 +18,7 @@ Grafieken laten je trend zien, de spierheatmap laat zien wat je hebt getraind, e
 - Log elke serie in kg of lb, wat de schijven voor je ook zeggen
 - Markeer series met een protocol: drop set, myo-reps, rest-pause, superset, 21s, of je eigen protocol
 - Tabellen met je series, gegroepeerd per dag met dagtotalen, met één tik te bewerken
+- De series van vandaag als rijen om op je telefoon in te vullen: tik een serie aan om hem te loggen, en de rusttimer start (bèta)
 - Grafieken voor gewicht, volume, herhalingen, duur, afstand, tempo en hartslag, en een trend die duidelijk zegt of je vooruitgaat
 - Een dashboard met wekelijkse reeks (met een wekelijks doel), een trainingskalender, persoonlijke records, totaal volume, recente trainingen en protocolstatistieken
 - Een spierheatmap, voor- en achterkant, op volume, series of herhalingen
@@ -109,6 +110,34 @@ Met `targetWeight` en `targetReps` verschijnt er boven de tabel een doel voor pr
 | `sets`                       | —         | Geplande series, geteld door een `workout-session`-blok |
 
 Oefeningsnamen worden standaard losjes vergeleken ("squat" vindt "Squat (high bar)"); voeg `exactMatch: true` toe om alleen die exacte naam te krijgen.
+
+</details>
+
+## Series op je telefoon (bèta)
+
+Een `workout-sets`-blok is gemaakt voor het loggen in de sportschool: de series van vandaag van één oefening als rijen om in te vullen. Elke rij toont wat je bij dezelfde serie de vorige keer deed, zodat je alleen typt wat veranderd is (een leeg veld logt die waarde) en daarna de rij aantikt. De serie gaat naar het log, de rij wordt een gelogde serie, en de rusttimer bovenaan start vanzelf. Met het pijltje van een gelogde serie wijzig je het protocol en de notities; nog een keer aantikken haalt hem terug, met **Ongedaan maken** een paar seconden lang.
+
+<img src="assets/sets.png" alt="Een workout-sets-kaart op een telefoon: vier rijen ingevuld met de waarden van de vorige keer, daarna twee afgevinkte series met de lopende rusttimer, en een rij geopend om het protocol rest-pause te kiezen en een notitie toe te voegen">
+
+```workout-sets
+exercise: Squat
+sets: 4
+rest: 120
+```
+
+Het blok is een bètafunctie: zet **Trainingsseries** aan onder **Instellingen → Workout Planner → Bètafuncties** (nieuwe installaties hebben het aan staan). Daarna maakt **Trainingsseries invoegen** in het opdrachtenpalet er een voor je, en het ⋮-menu bewerkt het blok of de rusttimer ervan.
+
+<details>
+<summary>Alle parameters</summary>
+
+| Parameter                    | Standaard     | Wat het doet                                                                                     |
+| ---------------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
+| `exercise`                   | —             | De oefening (exacte naam)                                                                        |
+| `workout`                    | de naam van de notitie | De training waaronder de series worden gelogd                                           |
+| `sets`                       | zoals vorige keer | Rijen om in te vullen (minstens één); **Voeg serie toe** voegt er meer toe                   |
+| `targetWeight`, `targetReps` | —             | Hints als de oefening nog nooit is gedaan, en een doel voor progressieve overbelasting           |
+| `rest`                       | —             | Seconden rust na elke serie; `0` voor geen timer. Niet ingesteld: de `workout-timer` van dezelfde sectie |
+| `timer.*`                    | —             | De overige opties van de rusttimer: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
 
 </details>
 
@@ -283,7 +312,7 @@ rounds: 8
 
 Een `workout-session`-blok bovenaan een trainingsnotitie (opdracht **Begeleide sessie invoegen**) leidt je er oefening voor oefening doorheen: welke serie je doet, het doel, wat je de vorige keer deed, een knop **Serie registreren** en de rusttimer, die start wanneer je een serie logt.
 
-![Een begeleide sessie op een telefoon: serie 1 van 4 met wat je de vorige keer deed, het logformulier geopend via Serie registreren, en daarna serie 2 van 4 met de lopende rusttimer](assets/session.png)
+![Een begeleide sessie op een telefoon: serie 3 van 4 van de squat met de rust lopend op zowel de sessie als de setkaart, het logformulier geopend via Serie registreren, en daarna de volgende oefening met zijn lopende rusttimer](assets/session.png)
 
 ````markdown
 ```workout-session
@@ -291,19 +320,16 @@ Een `workout-session`-blok bovenaan een trainingsnotitie (opdracht **Begeleide s
 
 ## Squat
 
-```workout-log
+```workout-sets
 exercise: Squat
 sets: 4
 targetReps: 8
 targetWeight: 100
-```
-
-```workout-timer
-preset: rest
+rest: 180
 ```
 ````
 
-Het plan is de notitie zelf: elk `workout-log`-blok met een `exercise` is een stap, in de volgorde waarin ze staan, met zijn `sets`, `targetReps` en `targetWeight`. De rust komt van de `workout-timer` in dezelfde `##`-sectie (zonder die timer geldt de standaardvoorinstelling). De sessie telt de series die je vandaag in deze training hebt gelogd, dus hij pakt het op waar je was wanneer je de notitie opnieuw opent. Een oefening zonder `sets` blijft actueel totdat je een serie van een latere oefening logt; **Vorige** en **Volgende** bewegen vrij.
+Het plan is de notitie zelf: elk `workout-log`- of `workout-sets`-blok met een `exercise` is een stap, in de volgorde waarin ze staan, met zijn `sets`, `targetReps` en `targetWeight`. De rust komt uit de `rest` van het `workout-sets`-blok, of anders uit de `workout-timer` in dezelfde `##`-sectie (zonder die timer geldt de standaardvoorinstelling). De sessie en de setkaart delen één aftelling. De sessie telt de series die je vandaag in deze training hebt gelogd, dus hij pakt het op waar je was wanneer je de notitie opnieuw opent. Een oefening zonder `sets` blijft actueel totdat je een serie van een latere oefening logt; **Vorige** en **Volgende** bewegen vrij.
 
 ## Trainingsduur
 
@@ -340,7 +366,7 @@ tags:
 
 Yoga werkt op dezelfde manier: elke houding is een `timed`-oefening, dus het formulier vraagt alleen hoe lang je de houding aanhield. De voorbeeldnotities bevatten een ochtendyogaflow met een begeleide sessie.
 
-![Een yogaflow op een telefoon: de begeleide sessie bij Neerwaartse hond, het logformulier dat alleen de duur van de houding vraagt, en de tabel met de houdingen en het totaal van de dag](assets/yoga.png)
+![Een yogaflow op een telefoon: de begeleide sessie bij Neerwaartse hond, het logformulier dat alleen de duur van de houding vraagt, en de setkaart met de eerste houding gelogd](assets/yoga.png)
 
 `type:` werkt hetzelfde als `exercise_type:`. Voeg je eigen velden toe onder `parameters`, bijvoorbeeld rondes voor touwspringen:
 

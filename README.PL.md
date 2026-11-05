@@ -10,7 +10,7 @@ Stworzony z myślą o telefonie: zapisuj każdą serię, bieg lub pozycję podcz
 
 Wykresy pokazują twój trend, mapa cieplna mięśni pokazuje, co trenowałeś, a każda seria zachowuje własną jednostkę kg/lb. Możesz wyszukiwać swoje serie w Dataview.
 
-![Workout Planner na telefonie: sesja z przewodnikiem z działającym timerem odpoczynku, formularz zapisu serii z przyciskami +/− i wyborem kg/lb oraz podsumowanie panelu kontrolnego z kalendarzem treningów](assets/hero.png)
+![Workout Planner na telefonie: karta workout-sets z dwiema zaznaczonymi seriami i działającym timerem odpoczynku, formularz zapisu serii z przyciskami +/− i wyborem kg/lb oraz podsumowanie panelu kontrolnego z kalendarzem treningów](assets/hero.png)
 
 ## Funkcje
 
@@ -18,6 +18,7 @@ Wykresy pokazują twój trend, mapa cieplna mięśni pokazuje, co trenowałeś, 
 - Zapisuj każdą serię w kg lub lb, zgodnie z tym, co pokazują talerze przed tobą
 - Oznaczaj serie protokołem: drop set, myo-reps, rest-pause, superset, 21s lub własnym
 - Tabele twoich serii, pogrupowane według dnia z sumami dziennymi, edytowalne jednym dotknięciem
+- Dzisiejsze serie jako wiersze do uzupełnienia na telefonie: zaznacz serię, aby ją zapisać, a timer odpoczynku ruszy (beta)
 - Wykresy ciężaru, objętości, powtórzeń, czasu trwania, dystansu, tempa i tętna oraz trend, który jasno pokazuje, czy się poprawiasz
 - Panel kontrolny z tygodniową passą (z tygodniowym celem), kalendarzem treningów, rekordami osobistymi, łączną objętością, ostatnimi treningami i statystykami protokołów
 - Mapa cieplna mięśni, z przodu i z tyłu, według objętości, serii lub powtórzeń
@@ -109,6 +110,34 @@ Z `targetWeight` i `targetReps` nad tabelą pojawia się cel progresywnego przec
 | `sets`                       | —         | Zaplanowane serie, liczone przez blok `workout-session` |
 
 Nazwy ćwiczeń domyślnie dopasowują się luźno („przysiad” znajdzie „Przysiad (high bar)”); dodaj `exactMatch: true`, aby dopasować tylko tę dokładną nazwę.
+
+</details>
+
+## Serie na telefonie (beta)
+
+Blok `workout-sets` jest stworzony do zapisywania serii na siłowni: dzisiejsze serie jednego ćwiczenia jako wiersze do uzupełnienia. Każdy wiersz pokazuje, co zrobiłeś w tej samej serii ostatnim razem, więc wpisujesz tylko to, co się zmieniło (puste pole zapisuje tę wartość), i zaznaczasz wiersz. Seria trafia do dziennika, wiersz staje się zapisaną serią, a timer odpoczynku na górze startuje sam. Strzałka zapisanej serii zmienia jej protokół i notatki; ponowne zaznaczenie cofa ją, z przyciskiem **Cofnij** przez kilka sekund.
+
+<img src="assets/sets.png" alt="Karta workout-sets na telefonie: cztery wiersze wypełnione wartościami z ostatniego razu, potem dwie zaznaczone serie z działającym timerem odpoczynku, a potem wiersz otwarty, aby wybrać protokół rest-pause i dodać notatkę">
+
+```workout-sets
+exercise: Squat
+sets: 4
+rest: 120
+```
+
+Blok jest funkcją beta: włącz **Serie treningu** w **Ustawienia → Workout Planner → Funkcje beta** (nowe instalacje mają ją włączoną). Potem polecenie **Wstaw serie treningu** z palety poleceń wstawi go za ciebie, a menu ⋮ edytuje blok albo jego timer odpoczynku.
+
+<details>
+<summary>Wszystkie parametry</summary>
+
+| Parametr                     | Domyślnie     | Co robi                                                                                          |
+| ---------------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
+| `exercise`                   | —             | Ćwiczenie (dokładna nazwa)                                                                       |
+| `workout`                    | nazwa notatki | Trening, pod którym zapisywane są serie                                                          |
+| `sets`                       | jak ostatnio  | Wiersze do uzupełnienia (co najmniej jeden); **Dodaj serię** dodaje kolejne                      |
+| `targetWeight`, `targetReps` | —             | Podpowiedzi, gdy ćwiczenia nigdy nie wykonywano, oraz cel progresywnego przeciążenia             |
+| `rest`                       | —             | Sekundy odpoczynku po każdej serii; `0` oznacza brak timera. Bez wartości: `workout-timer` z tej samej sekcji |
+| `timer.*`                    | —             | Pozostałe opcje timera odpoczynku: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
 
 </details>
 
@@ -283,7 +312,7 @@ rounds: 8
 
 Blok `workout-session` na górze notatki treningowej (polecenie **Wstaw sesję z przewodnikiem**) prowadzi cię przez trening ćwiczenie po ćwiczeniu: pokazuje, której serii dotyczysz, cel, co robiłeś ostatnio, przycisk **Zapisz serię** i timer odpoczynku, który startuje, gdy zapiszesz serię.
 
-![Sesja z przewodnikiem na telefonie: seria 1 z 4 z informacją, co robiłeś ostatnio, formularz otwarty przyciskiem Zapisz serię, a potem seria 2 z 4 z działającym timerem odpoczynku](assets/session.png)
+![Sesja z przewodnikiem na telefonie: seria 3 z 4 przysiadu z odpoczynkiem działającym jednocześnie w sesji i na karcie serii, formularz otwarty przyciskiem Zapisz serię, a potem następne ćwiczenie z działającym timerem odpoczynku](assets/session.png)
 
 ````markdown
 ```workout-session
@@ -291,19 +320,16 @@ Blok `workout-session` na górze notatki treningowej (polecenie **Wstaw sesję z
 
 ## Squat
 
-```workout-log
+```workout-sets
 exercise: Squat
 sets: 4
 targetReps: 8
 targetWeight: 100
-```
-
-```workout-timer
-preset: rest
+rest: 180
 ```
 ````
 
-Plan to sama notatka: każdy blok `workout-log` z `exercise` to krok, w kolejności występowania, z `sets`, `targetReps` i `targetWeight`. Odpoczynek pochodzi z `workout-timer` w tej samej sekcji `##` (domyślne ustawienie, gdy go nie ma). Sesja liczy serie zapisane dziś w tym treningu, więc po ponownym otwarciu notatki wraca dokładnie tam, gdzie skończyłeś. Ćwiczenie bez `sets` pozostaje bieżące, aż zapiszesz serię późniejszego; **Wstecz** i **Dalej** pozwalają poruszać się swobodnie.
+Plan to sama notatka: każdy blok `workout-log` lub `workout-sets` z `exercise` to krok, w kolejności występowania, z `sets`, `targetReps` i `targetWeight`. Odpoczynek pochodzi z własnego `rest` bloku `workout-sets`, a jeśli go brak, z `workout-timer` w tej samej sekcji `##` (a bez niego z ustawienia domyślnego). Sesja i karta serii dzielą jeden odliczany czas. Sesja liczy serie zapisane dziś w tym treningu, więc po ponownym otwarciu notatki wraca dokładnie tam, gdzie skończyłeś. Ćwiczenie bez `sets` pozostaje bieżące, aż zapiszesz serię późniejszego; **Wstecz** i **Dalej** pozwalają poruszać się swobodnie.
 
 ## Czas trwania treningu
 
@@ -340,7 +366,7 @@ tags:
 
 Joga działa tak samo: każda pozycja to ćwiczenie `timed`, więc formularz pyta tylko, jak długo ją utrzymywałeś. Przykładowe notatki zawierają poranny przepływ jogi z sesją z przewodnikiem.
 
-![Przepływ jogi na telefonie: sesja z przewodnikiem przy Psie z głową w dół, formularz zapisu pytający tylko o czas utrzymania pozycji i tabela utrzymań z sumą dnia](assets/yoga.png)
+![Przepływ jogi na telefonie: sesja z przewodnikiem przy Psie z głową w dół, formularz zapisu pytający tylko o czas utrzymania pozycji i karta serii z zapisanym pierwszym utrzymaniem](assets/yoga.png)
 
 `type:` działa tak samo jak `exercise_type:`. Dodaj własne pola pod `parameters`, na przykład rundy dla skakanki:
 

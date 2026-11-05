@@ -10,7 +10,7 @@ Dibuat untuk ponsel Anda: catat setiap set, lari, atau pose saat berlatih, lalu 
 
 Grafik menampilkan tren Anda, peta panas otot menunjukkan apa yang Anda latih, dan setiap set menyimpan satuan kg/lb-nya sendiri. Anda dapat membuat kueri set Anda dari Dataview.
 
-![Workout Planner di ponsel: sesi terpandu dengan timer istirahatnya berjalan, formulir log dengan tombol +/− dan pemilih kg/lb, serta ringkasan dasbor dengan kalender latihan](assets/hero.png)
+![Workout Planner di ponsel: kartu workout-sets dengan dua set tercentang dan timer istirahat berjalan, formulir log dengan tombol +/− dan pemilih kg/lb, serta ringkasan dasbor dengan kalender latihan](assets/hero.png)
 
 ## Fitur
 
@@ -18,6 +18,7 @@ Grafik menampilkan tren Anda, peta panas otot menunjukkan apa yang Anda latih, d
 - Catat setiap set dalam kg atau lb, sesuai dengan cakram beban di depan Anda
 - Beri tag set dengan protokol: drop set, myo-reps, rest-pause, superset, 21s, atau protokol Anda sendiri
 - Tabel set Anda, dikelompokkan per hari dengan total harian, dapat disunting dengan satu ketukan
+- Set hari ini sebagai baris untuk diisi di ponsel: centang set untuk mencatatnya, dan timer istirahat dimulai (beta)
 - Grafik untuk berat, volume, repetisi, durasi, jarak, pace, dan detak jantung, serta tren yang memberi tahu dengan jelas apakah Anda membaik
 - Dasbor dengan rentetan mingguan (dengan target mingguan), kalender latihan, rekor pribadi, total volume, latihan terbaru, dan statistik protokol
 - Peta panas otot, depan dan belakang, berdasarkan volume, set, atau repetisi
@@ -109,6 +110,34 @@ Dengan `targetWeight` dan `targetReps`, target kelebihan beban progresif muncul 
 | `sets`                       | —       | Set yang direncanakan, dihitung oleh blok `workout-session` |
 
 Nama latihan cocok secara longgar secara default ("squat" menemukan "Squat (high bar)"); tambahkan `exactMatch: true` untuk hanya nama persis itu.
+
+</details>
+
+## Set di ponsel (beta)
+
+Blok `workout-sets` dibuat untuk mencatat di gym: set hari ini dari satu latihan sebagai baris yang tinggal Anda isi. Setiap baris menampilkan apa yang Anda lakukan pada set yang sama terakhir kali, jadi Anda cukup mengetik yang berubah (kolom kosong mencatat nilai itu), lalu centang barisnya. Set masuk ke log, baris berubah menjadi set yang tercatat, dan timer istirahat di bagian atas langsung berjalan. Panah (chevron) pada set yang tercatat mengubah protokol dan catatannya; mencentangnya lagi membatalkan set itu, dengan **Urungkan** selama beberapa detik.
+
+<img src="assets/sets.png" alt="Kartu workout-sets di ponsel: empat baris terisi dengan nilai terakhir, lalu dua set tercentang dengan timer istirahat berjalan, lalu sebuah baris dibuka untuk memilih protokol rest-pause dan menambahkan catatan">
+
+```workout-sets
+exercise: Squat
+sets: 4
+rest: 120
+```
+
+Blok ini adalah fitur beta: aktifkan **Set latihan** di **Pengaturan → Workout Planner → Fitur Beta** (instalasi baru sudah aktif). Lalu **Sisipkan set latihan** dari palet perintah menulis satu blok untuk Anda, dan menu ⋮ mengedit blok atau timer istirahatnya.
+
+<details>
+<summary>Semua parameter</summary>
+
+| Parameter                    | Default          | Fungsinya                                                                                          |
+| ---------------------------- | ---------------- | -------------------------------------------------------------------------------------------------- |
+| `exercise`                   | —                | Latihan (nama persis)                                                                              |
+| `workout`                    | nama catatan     | Sesi tempat set dicatat                                                                            |
+| `sets`                       | sesuai terakhir  | Baris untuk diisi (minimal satu); **Tambah set** menambah lagi                                     |
+| `targetWeight`, `targetReps` | —                | Petunjuk saat latihan belum pernah dilakukan, dan target kelebihan beban progresif                 |
+| `rest`                       | —                | Detik istirahat setelah setiap set; `0` untuk tanpa timer. Tidak diisi: `workout-timer` di bagian yang sama |
+| `timer.*`                    | —                | Opsi timer istirahat lainnya: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
 
 </details>
 
@@ -283,7 +312,7 @@ rounds: 8
 
 Blok `workout-session` di bagian atas catatan latihan (perintah **Sisipkan sesi terpandu**) memandu Anda melalui latihan satu latihan per waktu: set mana yang sedang Anda kerjakan, targetnya, apa yang Anda lakukan terakhir kali, tombol **Catat set**, dan timer istirahat, yang dimulai saat Anda mencatat set.
 
-![Sesi terpandu di ponsel: set 1 dari 4 dengan apa yang Anda lakukan terakhir kali, formulir log dibuka oleh Catat set, lalu set 2 dari 4 dengan timer istirahat berjalan](assets/session.png)
+![Sesi terpandu di ponsel: set 3 dari 4 squat dengan istirahat berjalan di sesi dan di kartu set, formulir log dibuka oleh Catat set, lalu latihan berikutnya dengan timer istirahatnya berjalan](assets/session.png)
 
 ````markdown
 ```workout-session
@@ -291,19 +320,16 @@ Blok `workout-session` di bagian atas catatan latihan (perintah **Sisipkan sesi 
 
 ## Squat
 
-```workout-log
+```workout-sets
 exercise: Squat
 sets: 4
 targetReps: 8
 targetWeight: 100
-```
-
-```workout-timer
-preset: rest
+rest: 180
 ```
 ````
 
-Rencana adalah catatan itu sendiri: setiap blok `workout-log` dengan `exercise` menjadi satu langkah, sesuai urutan kemunculannya, dengan `sets`, `targetReps`, dan `targetWeight`-nya. Istirahatnya berasal dari `workout-timer` dalam bagian `##` yang sama (preset default jika tidak ada). Sesi menghitung set yang Anda catat hari ini dalam latihan ini, sehingga melanjutkan dari tempat Anda berhenti saat membuka kembali catatan. Latihan tanpa `sets` tetap aktif hingga Anda mencatat set dari latihan berikutnya; **Sebelumnya** dan **Berikutnya** dapat dipakai bebas.
+Rencana adalah catatan itu sendiri: setiap blok `workout-log` atau `workout-sets` dengan `exercise` menjadi satu langkah, sesuai urutan kemunculannya, dengan `sets`, `targetReps`, dan `targetWeight`-nya. Istirahatnya berasal dari `rest` pada blok `workout-sets`, atau dari `workout-timer` dalam bagian `##` yang sama (preset default jika tidak ada). Sesi dan kartu set berbagi satu hitung mundur. Sesi menghitung set yang Anda catat hari ini dalam latihan ini, sehingga melanjutkan dari tempat Anda berhenti saat membuka kembali catatan. Latihan tanpa `sets` tetap aktif hingga Anda mencatat set dari latihan berikutnya; **Sebelumnya** dan **Berikutnya** dapat dipakai bebas.
 
 ## Durasi latihan
 
@@ -340,7 +366,7 @@ tags:
 
 Yoga bekerja dengan cara yang sama: setiap pose adalah latihan `timed`, sehingga formulir hanya menanyakan berapa lama Anda menahannya. Catatan contoh mencakup alur yoga pagi dengan sesi terpandu.
 
-![Alur yoga di ponsel: sesi terpandu pada Downward Dog, formulir log yang hanya meminta durasi tahan, dan tabel tahanan dengan total hari itu](assets/yoga.png)
+![Alur yoga di ponsel: sesi terpandu pada Downward Dog, formulir log yang hanya meminta durasi tahan, dan kartu set dengan tahanan pertama tercatat](assets/yoga.png)
 
 `type:` bekerja sama seperti `exercise_type:`. Tambahkan kolom Anda sendiri di bawah `parameters`, misalnya putaran untuk lompat tali:
 

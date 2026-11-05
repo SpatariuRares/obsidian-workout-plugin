@@ -10,7 +10,7 @@ I ndërtuar për telefonin tuaj: regjistroni çdo seri, vrapim ose pozë ndërsa
 
 Grafikët tregojnë tendencën tuaj, harta termike e muskujve tregon çfarë keni stërvitur, dhe çdo seri mban njësinë e vet kg/lb. Mund t'i kërkoni seritë tuaja nga Dataview.
 
-![Workout Planner në telefon: një seancë e udhëzuar me timerin e pushimit në punë, formulari i regjistrimit me butonat +/− dhe zgjedhësin kg/lb, dhe përmbledhja e panelit me kalendarin e stërvitjes](assets/hero.png)
+![Workout Planner në telefon: një bllok workout-sets me dy seri të shënuara dhe timerin e pushimit në punë, formulari i regjistrimit me butonat +/− dhe zgjedhësin kg/lb, dhe përmbledhja e panelit me kalendarin e stërvitjes](assets/hero.png)
 
 ## Veçoritë
 
@@ -18,6 +18,7 @@ Grafikët tregojnë tendencën tuaj, harta termike e muskujve tregon çfarë ken
 - Regjistro çdo seri në kg ose lb, çfarëdo që tregojnë diskat para teje
 - Shëno serinë me një protokoll: drop set, myo-reps, rest-pause, superset, 21s, ose protokollin tënd
 - Tabela të serive të tua, të grupuara sipas ditës me totalet ditore, të redaktueshme me një prekje
+- Seritë e sotme si rreshta për t'i plotësuar në telefon: shëno një rresht për ta regjistruar, dhe timeri i pushimit nis vetë (beta)
 - Grafikë për peshën, volumin, përsëritjet, kohëzgjatjen, distancën, ritmin dhe rrahjet e zemrës, dhe një tendencë që të tregon qartë nëse po përmirësohesh
 - Një panel me serinë javore (me objektiv javor), kalendar stërvitjesh, rekorde personale, volum total, stërvitje të fundit dhe statistika protokollesh
 - Një hartë termike e muskujve, para dhe prapa, sipas volumit, serive ose përsëritjeve
@@ -109,6 +110,34 @@ Me `targetWeight` dhe `targetReps`, mbi tabelë shfaqet një objektiv i mbingark
 | `sets`                       | —            | Seritë e planifikuara, të numëruara nga një bllok `workout-session` |
 
 Emrat e ushtrimeve përputhen me lirshmëri si parazgjedhje ("squat" gjen "Squat (high bar)"); shto `exactMatch: true` për vetëm atë emër të saktë.
+
+</details>
+
+## Seritë në telefonin tuaj (beta)
+
+Një bllok `workout-sets` është bërë për regjistrim në palestër: seritë e sotme të një ushtrimi si rreshta për t'i plotësuar. Çdo rresht tregon çfarë bëre në të njëjtën seri herën e fundit, kështu që shkruan vetëm atë që ka ndryshuar (një fushë bosh regjistron vlerën e saj) dhe shënon rreshtin. Seria shkon në regjistër, rreshti bëhet seri e regjistruar, dhe timeri i pushimit në krye nis vetvetiu. Shigjeta e një serie të regjistruar ndryshon protokollin dhe shënimet e saj; shënimi sërish e heq, me **Zhbëj** për disa sekonda.
+
+<img src="assets/sets.png" alt="Një bllok workout-sets në telefon: katër rreshta të plotësuar me vlerat e herës së fundit, pastaj dy seri të shënuara me timerin e pushimit në punë, pastaj një rresht i hapur për të zgjedhur protokollin rest-pause dhe për të shtuar një shënim">
+
+```workout-sets
+exercise: Squat
+sets: 4
+rest: 120
+```
+
+Blloku është një funksion beta: aktivizo **Seritë e stërvitjes** te **Cilësimet → Workout Planner → Funksionet beta** (instalimet e reja e kanë të aktivizuar). Pastaj **Shto seritë e stërvitjes** nga paleta e komandave e shkruan një për ty, dhe menyja ⋮ e redakton ose timerin e tij të pushimit.
+
+<details>
+<summary>Të gjitha parametrat</summary>
+
+| Parametri                    | Parazgjedhja  | Çfarë bën                                                                                        |
+| ---------------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
+| `exercise`                   | —             | Ushtrimi (emri i saktë)                                                                          |
+| `workout`                    | emri i shënimit | Stërvitja nën të cilën regjistrohen seritë                                                     |
+| `sets`                       | si herën e fundit | Rreshta për t'i plotësuar (të paktën një); **Shto seri** shton të tjera                      |
+| `targetWeight`, `targetReps` | —             | Sugjerime kur ushtrimi nuk është bërë kurrë, dhe një objektiv për progresin e ngarkesës           |
+| `rest`                       | —             | Sekonda pushimi pas çdo serie; `0` për pa timer. Pa vlerë: `workout-timer` i të njëjtit seksion |
+| `timer.*`                    | —             | Opsionet e tjera të timerit të pushimit: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
 
 </details>
 
@@ -283,7 +312,7 @@ rounds: 8
 
 Një bllok `workout-session` në krye të një shënimi stërvitjeje (komanda **Fut seancë të udhëzuar**) të udhëzon nëpër të një ushtrim në herë: cilën seri je duke bërë, objektivin, çfarë bëre herën e kaluar, një buton **Regjistro serinë** dhe timerin e pushimit, që nis kur regjistron një seri.
 
-![Një seancë e udhëzuar në telefon: seria 1 nga 4 me atë që bëre herën e kaluar, formulari i regjistrimit i hapur nga Regjistro serinë, dhe më pas seria 2 nga 4 me timerin e pushimit në punë](assets/session.png)
+![Një seancë e udhëzuar në telefon: seria 3 nga 4 e squat me pushimin që po numërohet te seanca dhe te blloku i serive, formulari i regjistrimit i hapur nga Regjistro serinë, dhe më pas ushtrimi tjetër me timerin e pushimit në punë](assets/session.png)
 
 ````markdown
 ```workout-session
@@ -291,19 +320,16 @@ Një bllok `workout-session` në krye të një shënimi stërvitjeje (komanda **
 
 ## Squat
 
-```workout-log
+```workout-sets
 exercise: Squat
 sets: 4
 targetReps: 8
 targetWeight: 100
-```
-
-```workout-timer
-preset: rest
+rest: 180
 ```
 ````
 
-Plani është vetë shënimi: çdo bllok `workout-log` me një `exercise` është një hap, sipas radhës ku shfaqen, me `sets`, `targetReps` dhe `targetWeight` të tij. Pushimi vjen nga `workout-timer` në të njëjtën seksion `##` (paracaktimi i parazgjedhur nëse nuk ka një të tillë). Seanca numëron seritë që ke regjistruar sot në këtë stërvitje, kështu që vazhdon nga aty ku e le kur e rihap shënimin. Një ushtrim pa `sets` mbetet aktual derisa të regjistrosh një seri të një ushtrimi të mëvonshëm; **E mëparshme** dhe **Tjetra** lëvizin lirshëm.
+Plani është vetë shënimi: çdo bllok `workout-log` ose `workout-sets` me një `exercise` është një hap, sipas radhës ku shfaqen, me `sets`, `targetReps` dhe `targetWeight` të tij. Pushimi vjen nga `rest` i blokut `workout-sets`, ose nga `workout-timer` në të njëjtën seksion `##` (paracaktimi i parazgjedhur nëse nuk ka një të tillë). Seanca dhe blloku i serive ndajnë një numërim të vetëm. Seanca numëron seritë që ke regjistruar sot në këtë stërvitje, kështu që vazhdon nga aty ku e le kur e rihap shënimin. Një ushtrim pa `sets` mbetet aktual derisa të regjistrosh një seri të një ushtrimi të mëvonshëm; **E mëparshme** dhe **Tjetra** lëvizin lirshëm.
 
 ## Kohëzgjatja e stërvitjes
 
@@ -340,7 +366,7 @@ tags:
 
 Yoga funksionon në të njëjtën mënyrë: çdo pozë është një ushtrim `timed`, kështu që formulari pyet vetëm sa kohë e mban. Shënimet shembull përfshijnë një rrjedhë yoge në mëngjes me një seancë të udhëzuar.
 
-![Një rrjedhë yoge në telefon: seanca e udhëzuar te Downward Dog, formulari i regjistrimit që pyet vetëm kohëzgjatjen e mbajtjes, dhe tabela e mbajtjeve me totalin e ditës](assets/yoga.png)
+![Një rrjedhë yoge në telefon: seanca e udhëzuar te Downward Dog, formulari i regjistrimit që pyet vetëm kohëzgjatjen e mbajtjes, dhe blloku i serive me mbajtjen e parë të regjistruar](assets/yoga.png)
 
 `type:` funksionon njësoj si `exercise_type:`. Shto fushat e tua nën `parameters`, për shembull raunde për litarin e kërcimit:
 

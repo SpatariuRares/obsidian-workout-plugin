@@ -164,3 +164,73 @@ describe("ChipGroup.createMulti", () => {
     expect(group.hasAttribute("aria-describedby")).toBe(false);
   });
 });
+
+describe("ChipGroup.createOptional", () => {
+  const open = (selected?: string, onPick = jest.fn()) => {
+    const group = ChipGroup.createOptional(createObsidianContainer(), {
+      label: "Preset",
+      none: "None",
+      options,
+      selected,
+      onPick,
+    });
+    const chip = (text: string) =>
+      [...group.container.querySelectorAll<HTMLButtonElement>("button")].find(
+        (b) => b.textContent === text,
+      )!;
+    return { group, chip, onPick };
+  };
+
+  it("draws a None chip first, pressed when nothing is picked", () => {
+    const { group } = open();
+    const labels = [...group.container.querySelectorAll("button")].map((b) => b.textContent);
+
+    expect(labels).toEqual(["None", "Week", "Month", "Year"]);
+    expect(pressed(group.container)).toEqual(["true", "false", "false", "false"]);
+    expect(group.value()).toBeUndefined();
+  });
+
+  it("unpicks the picked chip when it is clicked again, or when None is", () => {
+    const { group, chip, onPick } = open("month");
+    expect(group.value()).toBe("month");
+
+    chip("Month").click();
+    expect(group.value()).toBeUndefined();
+    expect(pressed(group.container)).toEqual(["true", "false", "false", "false"]);
+    expect(onPick).toHaveBeenLastCalledWith(undefined);
+
+    chip("Year").click();
+    expect(group.value()).toBe("year");
+    chip("None").click();
+    expect(group.value()).toBeUndefined();
+    expect(onPick).toHaveBeenCalledTimes(3);
+  });
+
+  it("picks from code, and clears with select(undefined)", () => {
+    const { group, onPick } = open();
+
+    expect(group.select("week")).toBe(true);
+    expect(group.select("week")).toBe(true);
+    expect(group.value()).toBe("week");
+    expect(group.select("decade")).toBe(false);
+    expect(group.select(undefined)).toBe(true);
+    expect(group.value()).toBeUndefined();
+    expect(onPick.mock.calls).toEqual([["week"], [undefined]]);
+  });
+
+  it("swaps its options, dropping a pick no longer offered to none", () => {
+    const { group, onPick } = open("month");
+
+    group.setOptions([options[1], options[2]]);
+    expect(group.value()).toBe("month");
+    expect(pressed(group.container)).toEqual(["false", "true", "false"]);
+
+    group.setOptions([options[0]]);
+    expect(group.value()).toBeUndefined();
+    expect(pressed(group.container)).toEqual(["true", "false"]);
+
+    group.setOptions(options, "year");
+    expect(group.value()).toBe("year");
+    expect(onPick).not.toHaveBeenCalled();
+  });
+});

@@ -158,7 +158,7 @@
       "name": "ChipGroup (ProtocolPicker)",
       "kind": "chip",
       "refersTo": "chip-selected",
-      "description": "A labelled group of chips, one picked, one scrolling row: a set's protocol, the heat map's period, side and measure.",
+      "description": "A labelled group of chips, one picked, one scrolling row: a set's protocol, the heat map's period, side and measure. createOptional puts a None chip first for a choice that may be empty (a timer preset).",
       "html": "<div class=\"ds-picker\"><div class=\"ds-picker-label\" id=\"ds-p\">Protocol</div><div class=\"ds-picker-chips\" role=\"group\" aria-labelledby=\"ds-p\"><button class=\"ds-chip ds-chip-on\" aria-pressed=\"true\">Standard</button><button class=\"ds-chip\" aria-pressed=\"false\">Warm-up</button><button class=\"ds-chip\" aria-pressed=\"false\">Drop set</button></div></div>",
       "css": ".ds-picker{display:flex;flex-direction:column;gap:2px} .ds-picker-label{font-size:.8em;color:var(--text-muted,#5c5c5c)} .ds-picker-chips{display:flex;gap:4px;overflow-x:auto} .ds-chip{flex:none;min-height:36px;padding:8px 16px;border-radius:9999px;border:1px solid var(--workout-border-color,#8a8a8a);background:var(--background-secondary,#f6f6f6);color:var(--text-normal,#000);font-size:.85em;font-weight:500;cursor:pointer} .ds-chip:hover{border-color:var(--interactive-accent,#9873f7)} .ds-chip:focus-visible{outline:2px solid var(--interactive-accent,#9873f7);outline-offset:2px} .ds-chip-on{background:var(--workout-accent-fill,#7a5cc5);color:var(--text-on-accent,#fff);border-color:var(--interactive-accent,#9873f7)}"
     },

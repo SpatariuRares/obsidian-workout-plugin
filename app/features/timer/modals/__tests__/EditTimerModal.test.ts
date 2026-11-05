@@ -134,7 +134,7 @@ describe("EditTimerModal", () => {
       "```",
     ].join("\n");
     const { contentEl } = openModal(interval);
-    const pressed = [...contentEl.querySelectorAll(".workout-chip-group button")]
+    const pressed = [...contentEl.querySelectorAll(".workout-modal-type-chips button")]
       .filter((b) => b.getAttribute("aria-pressed") === "true")
       .map((b) => b.textContent);
     const hidden = [...contentEl.querySelectorAll(".workout-field-with-adjust")].filter((el) =>
@@ -143,6 +143,22 @@ describe("EditTimerModal", () => {
 
     expect(pressed).toEqual([t("timer.interval")]);
     expect(hidden).toHaveLength(0);
+  });
+
+  it("keeps a preset that is no longer in the settings, picked", async () => {
+    const note = NOTE.replace("type: countdown", "preset: Gone\ntype: countdown");
+    const { state, contentEl, update } = openModal(note);
+    const gone = [...contentEl.querySelectorAll<HTMLButtonElement>("button")].find(
+      (b) => b.textContent === "Gone",
+    )!;
+    expect(gone.getAttribute("aria-pressed")).toBe("true");
+
+    [...contentEl.querySelectorAll<HTMLInputElement>("input")].find((el) => el.value === "90")!
+      .value = "60";
+    update();
+    await flush();
+
+    expect(state.content).toBe(note.replace("duration: 90", "duration: 60"));
   });
 
   it("hides the duration when the stopwatch is picked", () => {

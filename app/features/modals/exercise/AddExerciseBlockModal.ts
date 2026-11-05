@@ -6,12 +6,13 @@ import type { ExerciseAutocompleteElements } from "@app/types/ModalTypes";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { ChipGroup } from "@app/components/molecules";
 import { StringUtils } from "@app/utils/StringUtils";
+import { savedDefaultTimerPreset } from "@app/features/timer/business/timerPresets";
 
 export class AddExerciseBlockModal extends BaseInsertModal {
   private exerciseElements?: ExerciseAutocompleteElements;
   private durationInput?: HTMLInputElement;
-  /** The picked timer preset; empty = none */
-  private selectedPreset = "";
+  /** The picked timer preset; undefined = none */
+  private selectedPreset?: string;
   private workoutInput?: HTMLInputElement;
 
   constructor(app: App, plugin: WorkoutPluginContext) {
@@ -55,17 +56,11 @@ export class AddExerciseBlockModal extends BaseInsertModal {
     // Saved presets as chips, like the timer insert modal (the default one picked)
     const presetNames = Object.keys(this.plugin.settings.timerPresets);
     if (presetNames.length > 0) {
-      const defaultPreset = this.plugin.settings.defaultTimerPreset;
-      this.selectedPreset =
-        defaultPreset && presetNames.includes(defaultPreset)
-          ? defaultPreset
-          : "";
-      ChipGroup.create(timerSection, {
+      this.selectedPreset = savedDefaultTimerPreset(this.plugin.settings);
+      ChipGroup.createOptional(timerSection, {
         label: t("modal.timerPreset"),
-        options: [
-          { id: "", label: t("settings.options.none") },
-          ...presetNames.map((name) => ({ id: name, label: name })),
-        ],
+        none: t("settings.options.none"),
+        options: presetNames.map((name) => ({ id: name, label: name })),
         selected: this.selectedPreset,
         onPick: (id) => {
           this.selectedPreset = id;
@@ -126,7 +121,8 @@ export class AddExerciseBlockModal extends BaseInsertModal {
         exercise: exerciseName,
         duration,
         workout,
-        preset: this.selectedPreset,
+        // The template writes no preset as an empty value
+        preset: this.selectedPreset ?? "",
       },
     );
   }

@@ -102,4 +102,13 @@ describe("AddExerciseBlockModal", () => {
 
     expect(generate()).toContain("preset: \n");
   });
+
+  it("writes no preset when the picked preset is clicked again", () => {
+    const { generate, chip, exercise } = openModal("Long");
+    exercise().value = "Squat";
+    chip("Long").click();
+
+    expect(chip(t("settings.options.none")).getAttribute("aria-pressed")).toBe("true");
+    expect(generate()).toContain("preset: \n");
+  });
 });

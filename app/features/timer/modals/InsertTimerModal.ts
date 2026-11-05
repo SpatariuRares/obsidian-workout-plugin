@@ -12,8 +12,14 @@ import {
   type EmbeddedTimerParams,
 } from "@app/features/timer/types";
 import { timerBlock } from "@app/features/timer/timerBlock";
-import { timerPresets } from "@app/features/timer/business/timerPresets";
-import { Chip } from "@app/components/atoms/Chip";
+import {
+  savedDefaultTimerPreset,
+  timerPresets,
+} from "@app/features/timer/business/timerPresets";
+import {
+  ChipGroup,
+  type ChipOptionalGroupResult,
+} from "@app/components/molecules/ChipGroup";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { t } from "@app/i18n";
@@ -21,8 +27,8 @@ import { t } from "@app/i18n";
 export class InsertTimerModal extends BaseInsertModal {
   protected timerElements?: TimerConfigurationElements;
   protected timerHandlers?: TimerConfigurationHandlers;
-  protected selectedPreset?: string;
-  protected presetChips: Map<string, HTMLButtonElement> = new Map();
+  /** The presets of the picked type; none picked = no preset */
+  protected presetChoice?: ChipOptionalGroupResult;
 
   constructor(app: App, plugin: WorkoutPluginContext) {
     super(app, plugin);
@@ -55,65 +61,45 @@ export class InsertTimerModal extends BaseInsertModal {
     this.timerHandlers = timerHandlers;
 
     // Preset chips under the timer type: the Saved presets list (Tabata and
-    // EMOM are in it unless the user deleted them)
-    for (const name of Object.keys(this.plugin.settings.timerPresets)) {
-      const isDefault = name === this.plugin.settings.defaultTimerPreset;
-      const chip = Chip.create(timerElements.presetChipsContainer, {
-        text: name,
-        selected: isDefault,
-        onClick: () => this.onPresetChipClick(name),
-      });
-      this.presetChips.set(name, chip);
-      if (isDefault) {
-        this.selectedPreset = name;
-      }
-    }
-
-    // Apply preset values if a default preset is selected
-    if (this.selectedPreset) {
-      this.applyPresetValues(this.selectedPreset);
-    }
-    this.showPresetsFor(timerElements.timerType.value());
+    // EMOM are in it unless the user deleted them), only those of the type
+    this.presetChoice = ChipGroup.createOptional(timerElements.presetGroup, {
+      label: t("modal.sections.preset"),
+      none: t("settings.options.none"),
+      options: [],
+      onPick: (name) => {
+        if (name) this.applyPresetValues(name);
+      },
+    });
+    // The default preset is picked and applied (its type first)
+    const picked = savedDefaultTimerPreset(this.plugin.settings);
+    if (picked) this.applyPresetValues(picked);
+    this.showPresetsFor(timerElements.timerType.value(), picked);
   }
 
-  /** Show only the presets of this type; a selected preset of another type is dropped */
-  private showPresetsFor(type: TIMER_TYPE): void {
-    if (!this.timerElements || !this.plugin) return;
+  /** The presets the chips can offer, of any type: the Saved presets list */
+  protected offeredPresets(): string[] {
+    return this.plugin ? Object.keys(this.plugin.settings.timerPresets) : [];
+  }
+
+  /**
+   * Offers only the presets of this type (the group hides when there are
+   * none); a picked preset of another type is dropped
+   */
+  protected showPresetsFor(type: TIMER_TYPE, picked?: string): void {
+    if (!this.timerElements || !this.plugin || !this.presetChoice) return;
     const presets = timerPresets(this.plugin.settings);
-    let anyShown = false;
-    for (const [name, chip] of this.presetChips) {
-      const shown = presets[name]?.type === type;
-      chip.classList.toggle("workout-display-none", !shown);
-      anyShown ||= shown;
-    }
+    const names = this.offeredPresets().filter(
+      // A preset with no config left has no type to filter by
+      (name) => !presets[name] || presets[name].type === type,
+    );
+    this.presetChoice.setOptions(
+      names.map((name) => ({ id: name, label: name })),
+      picked,
+    );
     this.timerElements.presetGroup.classList.toggle(
       "workout-display-none",
-      !anyShown,
+      names.length === 0,
     );
-    if (this.selectedPreset && presets[this.selectedPreset]?.type !== type) {
-      this.selectedPreset = undefined;
-      for (const [, chip] of this.presetChips) {
-        Chip.setSelected(chip, false);
-      }
-    }
-  }
-
-  protected onPresetChipClick(name: string): void {
-    if (this.selectedPreset === name) {
-      // Deselect
-      this.selectedPreset = undefined;
-      for (const [, chip] of this.presetChips) {
-        Chip.setSelected(chip, false);
-      }
-      return;
-    }
-
-    // Select new preset
-    this.selectedPreset = name;
-    for (const [presetName, chip] of this.presetChips) {
-      Chip.setSelected(chip, presetName === name);
-    }
-    this.applyPresetValues(name);
   }
 
   protected applyPresetValues(presetName: string): void {
@@ -155,7 +141,7 @@ export class InsertTimerModal extends BaseInsertModal {
     const type = values.type as TIMER_TYPE;
 
     return {
-      preset: this.selectedPreset || undefined,
+      preset: this.presetChoice?.value(),
       type,
       duration: values.duration || undefined,
       work: values.work,

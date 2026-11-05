@@ -88,6 +88,19 @@ export function timerPresets(
   return { ...BUILT_IN_TIMER_PRESETS, ...settings.timerPresets };
 }
 
+/**
+ * The default preset, when it is still in the settings list (a deleted one is
+ * not picked); undefined when there is none
+ */
+export function savedDefaultTimerPreset(
+  settings: Pick<WorkoutChartsSettings, "timerPresets" | "defaultTimerPreset">,
+): string | undefined {
+  const name = settings.defaultTimerPreset;
+  return name && Object.prototype.hasOwnProperty.call(settings.timerPresets, name)
+    ? name
+    : undefined;
+}
+
 const TIMER_TYPE_LABEL: Record<TIMER_TYPE, () => string> = {
   [TIMER_TYPE.COUNTDOWN]: () => t("timer.countdown"),
   [TIMER_TYPE.INTERVAL]: () => t("timer.interval"),

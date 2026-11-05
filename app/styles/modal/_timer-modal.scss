@@ -1,14 +1,5 @@
 @use "../variables";
 
-/* Timer preset chips - horizontal scrollable */
-.workout-timer-preset-chips {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: var(--workout-space-sm);
-  overflow-x: auto;
-  padding: var(--workout-space-xs) 0;
-}
-
 /* Display options row - compact flex layout */
 .workout-timer-options-row {
   display: flex;

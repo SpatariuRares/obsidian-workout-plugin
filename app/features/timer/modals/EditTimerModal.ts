@@ -4,7 +4,6 @@ import { InsertTimerModal } from "@app/features/timer/modals/InsertTimerModal";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
 import { timerBlock } from "@app/features/timer/timerBlock";
 import type { EditTarget } from "@app/features/modals/base/components/createEditButtons";
-import { Chip } from "@app/components/atoms/Chip";
 import { t } from "@app/i18n";
 
 /**
@@ -56,6 +55,13 @@ export class EditTimerModal extends InsertTimerModal {
     return params;
   }
 
+  /** Also the preset the block names when it is no longer saved, so saving keeps it */
+  protected offeredPresets(): string[] {
+    const saved = super.offeredPresets();
+    const named = this.initialParams.preset;
+    return named && !saved.includes(named) ? [...saved, named] : saved;
+  }
+
   protected createConfigurationSections(
     container: HTMLElement,
   ): void {
@@ -76,16 +82,13 @@ export class EditTimerModal extends InsertTimerModal {
     // duration/type) show the correct preset values instead of form defaults.
     if (params.preset) {
       this.applyPresetValues(params.preset);
-      this.selectedPreset = params.preset;
-      for (const [name, chip] of this.presetChips) {
-        Chip.setSelected(chip, name === params.preset);
-      }
     }
 
     // Override with explicit params from the code block
     if (params.type) {
       this.timerHandlers.setTimerType(params.type);
     }
+    this.showPresetsFor(this.timerElements.timerType.value(), params.preset);
     // For intervals the duration field shows the work phase
     const duration = params.work ?? params.duration;
     if (duration !== undefined) {

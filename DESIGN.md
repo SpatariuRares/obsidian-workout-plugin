@@ -247,6 +247,7 @@ One of a few options, picked from chips.
 
 - One scrolling row of chips in a `role="group"` labelled by its visible label (label type). Selected: accent fill, `aria-pressed="true"`.
 - A pick presses the new chip at once, so a caller that doesn't redraw stays right (the heat map's Period, Side and Measure).
+- `ChipGroup.createOptional`: one option or none (a timer preset). A `none` chip ("None") comes first and is pressed when nothing is picked; clicking the picked chip again also picks none; `value()` is undefined then, and `setOptions` drops a pick no longer offered to none instead of picking the first option. Both preset choices (timer insert/edit, filtered by the timer type, and the exercise block) use it.
 - `ChipGroup.createMulti`: the same group where several chips are pressed (`picked()`, `setError` under the chips, cleared by the next pick). For settings that show some of a few things (cards, periods, buttons).
 - `labelHidden` when the options name themselves (Week, Month, Year): the label still names the group for screen readers, without a row of its own.
 - **ProtocolPicker** is the ChipGroup of a set's protocol: the caller passes the list (`ProtocolCatalog.all()`), adding a picked protocol that is no longer in the settings.

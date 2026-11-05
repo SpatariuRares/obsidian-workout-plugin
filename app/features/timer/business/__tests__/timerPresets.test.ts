@@ -1,5 +1,6 @@
 import {
   isUnchangedDefaultTimerPreset,
+  savedDefaultTimerPreset,
   timerPresets,
   timerPresetSummary,
   withDefaultTimerPresets,
@@ -99,5 +100,36 @@ describe("isUnchangedDefaultTimerPreset", () => {
     expect(isUnchangedDefaultTimerPreset({ ...Tabata, rounds: 6 })).toBe(false);
     expect(isUnchangedDefaultTimerPreset(rest)).toBe(false);
     expect(isUnchangedDefaultTimerPreset({ ...rest, name: "toString" })).toBe(false);
+  });
+});
+
+describe("savedDefaultTimerPreset", () => {
+  const rest: TimerPresetConfig = {
+    name: "Rest",
+    type: TIMER_TYPE.COUNTDOWN,
+    duration: 90,
+    showControls: true,
+    sound: true,
+  };
+
+  it("gives the default preset when it is in the settings list", () => {
+    expect(
+      savedDefaultTimerPreset({ timerPresets: { Rest: rest }, defaultTimerPreset: "Rest" }),
+    ).toBe("Rest");
+  });
+
+  it("gives none when the default preset was deleted, even a built-in one", () => {
+    expect(
+      savedDefaultTimerPreset({ timerPresets: { Rest: rest }, defaultTimerPreset: "Tabata" }),
+    ).toBeUndefined();
+  });
+
+  it("gives none when no default preset is set", () => {
+    expect(
+      savedDefaultTimerPreset({ timerPresets: { Rest: rest }, defaultTimerPreset: null }),
+    ).toBeUndefined();
+    expect(
+      savedDefaultTimerPreset({ timerPresets: { Rest: rest }, defaultTimerPreset: "" }),
+    ).toBeUndefined();
   });
 });

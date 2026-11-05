@@ -48,6 +48,29 @@ export interface ChipGroupResult<T extends string = string> {
   setOptions: (options: ChipOption<T>[], selected?: string) => void;
 }
 
+export interface ChipOptionalGroupProps<T extends string = string>
+  extends Omit<ChipGroupProps<T>, "selected" | "onPick"> {
+  /** The first chip's label ("None"): picked when no option is */
+  none: string;
+  /** The option picked when the group opens; none when unset */
+  selected?: T;
+  /** The pick changed (undefined = none), by a click or `select` */
+  onPick?: (id: T | undefined) => void;
+}
+
+export interface ChipOptionalGroupResult<T extends string = string> {
+  container: HTMLElement;
+  /** The picked option's id; undefined when none is */
+  value: () => T | undefined;
+  /** Picks `id` (undefined = none) as a click would; false when `id` is not offered */
+  select: (id: string | undefined) => boolean;
+  /**
+   * Draws `options` instead. The pick becomes `selected` when offered, else
+   * stays when still offered, else none; onPick doesn't run.
+   */
+  setOptions: (options: ChipOption<T>[], selected?: string) => void;
+}
+
 export interface ChipMultiGroupProps {
   label: string;
   options: ChipOption[];
@@ -71,35 +94,102 @@ export class ChipGroup {
     parent: HTMLElement,
     props: ChipGroupProps<T>,
   ): ChipGroupResult<T> {
+    const { onPick } = props;
+    const group = this.single<T>(parent, props, {
+      initial: props.selected,
+      // Without a None chip the pick is never undefined
+      onPick: onPick && ((id) => id !== undefined && onPick(id)),
+    });
+    return {
+      container: group.container,
+      // Starts as `selected` and only moves to an option (see `single`), so
+      // never undefined; the shared state is typed for the optional group too
+      value: () => group.value() as T,
+      select: group.select,
+      setOptions: group.setOptions,
+    };
+  }
+
+  /**
+   * One option or none: a None chip comes first, and clicking the picked
+   * chip again also picks none (a timer preset, which a block may not name).
+   */
+  static createOptional<T extends string>(
+    parent: HTMLElement,
+    props: ChipOptionalGroupProps<T>,
+  ): ChipOptionalGroupResult<T> {
+    return this.single<T>(parent, props, {
+      initial: props.selected,
+      onPick: props.onPick,
+      none: props.none,
+    });
+  }
+
+  /**
+   * The single-pick group both kinds share. With `none`, a None chip comes
+   * first and stands for the undefined pick; without it the pick is always
+   * an option (or `initial`).
+   */
+  private static single<T extends string>(
+    parent: HTMLElement,
+    props: Omit<ChipGroupProps<T>, "selected" | "onPick">,
+    choice: {
+      initial: T | undefined;
+      onPick?: (id: T | undefined) => void;
+      /** The None chip's label; unset = no None chip */
+      none?: string;
+    },
+  ): ChipOptionalGroupResult<T> {
+    const { none } = choice;
     const { container, group } = this.frame(parent, props);
 
     let options = props.options;
-    let selected = props.selected;
-    let chips: HTMLButtonElement[] = [];
-    const press = () =>
-      chips.forEach((c, i) => Chip.setSelected(c, options[i].id === selected));
-    const select = (id: string): boolean => {
+    let selected: T | undefined = choice.initial;
+    /** Each drawn chip with the pick it stands for (undefined = the None chip) */
+    let chips: { chip: HTMLButtonElement; id: T | undefined }[] = [];
+    const press = () => chips.forEach(({ chip, id }) => Chip.setSelected(chip, id === selected));
+    const pick = (id: T | undefined) => {
+      if (id === selected) return;
+      selected = id;
+      press();
+      choice.onPick?.(id);
+    };
+    const select = (id: string | undefined): boolean => {
+      if (id === undefined) {
+        if (none === undefined) return false;
+        pick(undefined);
+        return true;
+      }
       const option = options.find((o) => o.id === id);
       if (!option) return false;
-      if (option.id === selected) return true;
-      selected = option.id;
-      press();
-      props.onPick?.(option.id);
+      pick(option.id);
       return true;
+    };
+    const chipFor = (text: string, id: T | undefined) => {
+      const chip = Chip.create(group, {
+        text,
+        selected: id === selected,
+        onClick: () => pick(none !== undefined && id === selected ? undefined : id),
+      });
+      if (props.focusKeyPrefix) DomUtils.setFocusKey(chip, `${props.focusKeyPrefix}-${id ?? ""}`);
+      return { chip, id };
     };
     const draw = () => {
       group.empty();
-      chips = options.map((option) => {
-        const chip = Chip.create(group, {
-          text: option.label,
-          selected: option.id === selected,
-          onClick: () => select(option.id),
-        });
-        if (props.focusKeyPrefix) DomUtils.setFocusKey(chip, `${props.focusKeyPrefix}-${option.id}`);
-        return chip;
-      });
+      chips = none === undefined ? [] : [chipFor(none, undefined)];
+      for (const option of options) chips.push(chipFor(option.label, option.id));
     };
     draw();
+
+    /**
+     * The pick when the new options offer neither the wanted nor the current
+     * one: none when there is a None chip, else the first option (the current
+     * pick stays when there is no option at all)
+     */
+    const pickWhenDropped = (next: ChipOption<T>[]): T | undefined => {
+      if (none !== undefined) return undefined;
+      return next.length > 0 ? next[0].id : selected;
+    };
 
     return {
       container,
@@ -107,9 +197,8 @@ export class ChipGroup {
       select,
       setOptions: (next, wanted) => {
         options = next;
-        const pick =
-          next.find((o) => o.id === wanted) ?? next.find((o) => o.id === selected) ?? next[0];
-        if (pick) selected = pick.id;
+        const offered = (id: string | undefined) => next.find((o) => o.id === id)?.id;
+        selected = offered(wanted) ?? offered(selected) ?? pickWhenDropped(next);
         draw();
       },
     };

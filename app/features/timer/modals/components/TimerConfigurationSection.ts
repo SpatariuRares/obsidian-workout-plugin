@@ -18,7 +18,6 @@ export interface TimerConfigurationElements {
   timerType: ChipGroupResult<TIMER_TYPE>;
   /** Row under the timer type for the presets of that type (filled by the modal) */
   presetGroup: HTMLElement;
-  presetChipsContainer: HTMLElement;
   durationInput: HTMLInputElement;
   durationContainer: HTMLElement;
   restInput: HTMLInputElement;
@@ -73,12 +72,6 @@ export class TimerConfigurationSection {
 
     // Presets of the selected type, between the type and its values
     const presetGroup = modal.createFormGroup(container);
-    presetGroup.createEl("label", {
-      text: t("modal.sections.preset"),
-    });
-    const presetChipsContainer = presetGroup.createDiv({
-      cls: "workout-timer-preset-chips",
-    });
 
     // Parameters container (grid: 1 col mobile, 2 col desktop)
     const parametersContainer = container.createDiv({
@@ -163,7 +156,6 @@ export class TimerConfigurationSection {
     const elements: TimerConfigurationElements = {
       timerType,
       presetGroup,
-      presetChipsContainer,
       durationInput,
       durationContainer,
       restInput,

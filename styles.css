@@ -3494,15 +3494,6 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
    This stylesheet uses a modular approach with component-based CSS files.
    All components follow Obsidian's theming system for consistent appearance.
    ============================================================================ */
-/* Timer preset chips - horizontal scrollable */
-.workout-timer-preset-chips {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: var(--workout-space-sm);
-  overflow-x: auto;
-  padding: var(--workout-space-xs) 0;
-}
-
 /* Display options row - compact flex layout */
 .workout-timer-options-row {
   display: flex;

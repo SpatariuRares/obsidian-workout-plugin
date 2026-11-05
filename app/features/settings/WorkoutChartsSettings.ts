@@ -77,7 +77,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
    * display(), so no row may exist outside this list.
    */
   getSettingDefinitions(): SettingDefinitionItem[] {
-    return this.definitions();
+    return this.definitions().map(withoutRenderResult);
   }
 
   private definitions(): DefinitionItem[] {
@@ -121,4 +121,29 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       this.display();
     }
   }
+}
+
+/**
+ * Obsidian 1.13 keeps whatever a row's `render` returns as its cleanup and
+ * calls it when the row is redrawn or the tab closes; a row written as
+ * `(setting) => setting.addToggle(...)` returns the Setting, which then throws
+ * "t is not a function". The rows draw only, so nothing is returned.
+ */
+function withoutRenderResult(item: DefinitionItem): DefinitionItem {
+  if ("items" in item) {
+    return {
+      ...item,
+      items: item.items.map(withoutRenderResult),
+    } as DefinitionItem;
+  }
+  if ("render" in item) {
+    const render = item.render;
+    return {
+      ...item,
+      render: (setting) => {
+        render(setting);
+      },
+    };
+  }
+  return item;
 }

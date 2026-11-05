@@ -1,5 +1,5 @@
 /** @jest-environment jsdom */
-import { withHelpers } from "obsidian";
+import { Setting, withHelpers } from "obsidian";
 import type { App, SettingDefinitionItem } from "obsidian";
 import { WorkoutChartsSettingTab } from "@app/features/settings/WorkoutChartsSettings";
 import { t } from "@app/i18n";
@@ -142,6 +142,27 @@ describe("WorkoutChartsSettingTab definitions (settings search)", () => {
       ["Myo"],
       [],
     ]);
+  });
+});
+
+describe("WorkoutChartsSettingTab render rows (Obsidian 1.13)", () => {
+  // Obsidian calls a render's return value as the row's cleanup
+  it("never returns a value from a row's render", () => {
+    const { tab } = makeTab();
+    const renders: ((setting: unknown) => unknown)[] = [];
+    const collect = (items: AnyItem[]) =>
+      items.forEach((item) => {
+        const render = (item as { render?: (s: unknown) => unknown }).render;
+        if (render) renders.push(render);
+        collect(item.items ?? []);
+      });
+    collect(tab.getSettingDefinitions() as AnyItem[]);
+
+    expect(renders.length).toBeGreaterThan(0);
+    for (const render of renders) {
+      const setting = new Setting(document.createElement("div"));
+      expect(render(setting)).toBeUndefined();
+    }
   });
 });
 

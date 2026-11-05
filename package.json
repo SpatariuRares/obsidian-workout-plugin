@@ -33,7 +33,8 @@
   "author": "Rares Spatariu",
   "license": "MIT",
   "dependencies": {
-    "chart.js": "^4.4.0"
+    "chart.js": "^4.4.0",
+    "fflate": "^0.8.3"
   },
   "devDependencies": {
     "@eslint/json": "^0.14.0",

@@ -6,7 +6,7 @@ import {
   RELEASES_URL,
   type ReleaseNotes,
 } from "@app/services/onboarding/WhatsNew";
-import logo from "@app/features/modals/common/whatsNewLogo.png";
+import logo from "@app/features/modals/common/whatsNewLogo.webp";
 
 /**
  * The release notes of one or more versions, newest first

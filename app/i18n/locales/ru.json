@@ -495,7 +495,7 @@
       "session": "Тренировка с гидом",
       "note": "Примечание: работайте на максимум",
       "recoverySuffix": "(Восстановление: {seconds} с)",
-      "setsReps": "{sets} подх. x {reps} повт."
+      "setsReps": "{sets} подх. × {reps} повт."
     },
     "workouts": {
       "cardioDay": {
@@ -567,7 +567,7 @@
     "createLogButtonAria": "Создать запись для: {exerciseName}",
     "createLogButtonText": "Создать запись для: {exerciseName}",
     "noDataTitle": "Не найдено записей для {exerciseName}",
-    "exploreExampleData": "Или изучите примеры данных.",
+    "exploreExampleData": "Или изучите примеры данных",
     "lastSet": "Последний раз: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Личный рекорд: {weight} {unit} × {reps}"
@@ -764,7 +764,7 @@
       "chartUpdateFailed": "Не удалось обновить график: его не нашли в заметке, либо у другого графика без ID такие же настройки. Откройте заметку заново и попробуйте ещё раз.",
       "dashboardInserted": "Панель управления успешно добавлена!",
       "exerciseNameRequired": "Пожалуйста, введите название упражнения.",
-      "exerciseSectionCreated": "Раздел \"Упражнения\" успешно создан!",
+      "exerciseSectionCreated": "Раздел упражнения успешно создан!",
       "tableInserted": "Таблица успешно добавлена!",
       "tableUpdated": "Таблица успешно обновлена!",
       "timerInserted": "Таймер успешно добавлен!",

@@ -115,7 +115,7 @@
       "noTags": "Geen spierlabels in de frontmatter",
       "title": "Foutmeldingen bij bestanden",
       "tooManyTags": "Te veel spierlabels ({count}, maximaal {max})",
-      "sharedName": "Dezelfde oefeningsnaam als {pages}: logs gaan naar maar één van hen"
+      "sharedName": "Dezelfde oefeningsnaam als {pages}: logs gaan maar naar één van hen"
     },
     "muscleTags": {
       "description": "Labels die je in de frontmatter van een oefeningspagina kunt gebruiken. Klik op een label om het te kopiëren.",

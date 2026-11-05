@@ -5,7 +5,7 @@ import {
   allReleaseNotes,
   compareVersions,
   MAX_RELEASES,
-  releaseNotesAfterUpdate,
+  unseenReleaseNotes,
   releaseVersions,
   versionsSince,
 } from "@app/services/onboarding/WhatsNew";
@@ -65,26 +65,25 @@ describe("release notes in en.json", () => {
   });
 });
 
-describe("releaseNotesAfterUpdate", () => {
+describe("unseenReleaseNotes", () => {
   it("shows the current version's notes after an update and records it", async () => {
     const { plugin, saveSettings } = makePlugin("2.11.0");
-    const releases = await releaseNotesAfterUpdate(plugin, "3.0.0", {
-      weightUnit: "kg",
-    });
+    const releases = await unseenReleaseNotes(plugin, "3.0.0");
     expect(releases.map((r) => r.version)).toEqual(["3.0.0"]);
     expect(plugin.settings.lastSeenVersion).toBe("3.0.0");
     expect(saveSettings).toHaveBeenCalled();
   });
-  it("shows nothing on a fresh install, but records the version", async () => {
+  it("shows the installed version's notes on a fresh install", async () => {
     const { plugin } = makePlugin();
-    expect(await releaseNotesAfterUpdate(plugin, "3.0.0", null)).toEqual([]);
+    const releases = await unseenReleaseNotes(plugin, "3.0.0");
+    expect(releases.map((r) => r.version)).toEqual(["3.0.0"]);
     expect(plugin.settings.lastSeenVersion).toBe("3.0.0");
   });
-  it("shows nothing again once the version was seen", async () => {
-    const { plugin, saveSettings } = makePlugin("3.0.0");
-    expect(
-      await releaseNotesAfterUpdate(plugin, "3.0.0", { weightUnit: "kg" }),
-    ).toEqual([]);
+  it("shows nothing on later loads of the same version", async () => {
+    const { plugin, saveSettings } = makePlugin();
+    await unseenReleaseNotes(plugin, "3.0.0");
+    saveSettings.mockClear();
+    expect(await unseenReleaseNotes(plugin, "3.0.0")).toEqual([]);
     expect(saveSettings).not.toHaveBeenCalled();
   });
 });

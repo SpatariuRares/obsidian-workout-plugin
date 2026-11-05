@@ -1284,7 +1284,7 @@
     "setColumn": "세트",
     "fieldOfSet": "{field}, 세트 {set}",
     "details": "세트 {set}의 프로토콜 및 메모",
-    "logSet": "로그 세트 {set}",
+    "logSet": "세트 {set} 기록",
     "unlogSet": "로그에서 세트 {set} 삭제",
     "setRemoved": "세트 {set}을(를) 제거했습니다",
     "valueOfSet": "{field}, 세트 {set}: {value}"

@@ -177,7 +177,7 @@
       "metrics": {
         "volume": "Volum",
         "sets": "Serii",
-        "reps": "Număr de repetări"
+        "reps": "Repetări"
       },
       "average": {
         "volume": "Volum mediu: {value} {unit}",
@@ -927,7 +927,7 @@
       "protocolAbbreviation": "Abrevierea scurtă afișată pe badge (max 3 caractere)",
       "protocolColor": "Culoarea de fundal a badge-ului (în format hex, de exemplu, #FF5733)",
       "quickWeightIncrement": "Creșterea greutății utilizată de butoanele +/- în modalele de creare/editare a jurnalului de antrenament (de exemplu, 2,5 pentru adăugarea a 2,5 unități / scăderea cu 2,5 unități)",
-      "repDuration": "Timpul estimat pentru efectuarea unei repetiții. Utilizat atunci când numărul de repetiții este cunoscut (de exemplu, 'x 10 repetiții').",
+      "repDuration": "Timpul estimat pentru efectuarea unei repetiții. Utilizat atunci când numărul de repetiții este cunoscut (de exemplu, 'x 10 repetări').",
       "runAllMaintenance": "Execută toate sarcinile de întreținere în mod secvențial. Este sigur să le execuți de mai multe ori.",
       "setDuration": "Folosită când repetările nu sunt specificate (rezervă). Interval tipic: 30–60 de secunde.",
       "setupCSV": "Creează atât fișierul workout_logs.csv, cât și fișierul muscle-tags.csv în folderul configurat.",
@@ -1153,7 +1153,7 @@
       "log": "Eroare la încărcarea jurnalului: {error}",
       "timer": "Eroare la încărcarea temporizatorului: {error}",
       "dashboard": "Eroare la încărcarea tabloului de bord: {error}",
-      "sets": "Eroare la încărcarea seturilor: {error}"
+      "sets": "Eroare la încărcarea seriilor: {error}"
     },
     "validation": {
       "title": "Parametri incorecți:",
@@ -1296,7 +1296,7 @@
     "olderReleases": "Versiuni mai vechi pe GitHub",
     "releases": {
       "v3_1_0": "**Ce e nou în plugin.** După o actualizare, pluginul arată o singură dată ce s-a schimbat. Deschide-l din nou oricând cu **Afișează ce e nou** din paleta de comenzi sau cu **Afișează modificările** din Setări → Workout Planner → Începe.\n\n**Serii de antrenament pentru toată lumea.** Blocul `workout-sets` nu mai este o funcționalitate beta: funcționează fără să activezi nimic, iar **Adaugă serii de exerciții** este mereu în paleta de comenzi.",
-      "v3_0_0": "**Un aspect nou pentru fiecare bloc.** Jurnalele de antrenament, graficele, sesiunea ghidată, durata antrenamentului și fiecare widget al tabloului de bord sunt acum carduri cu aceleași comenzi și meniuri, cu contrast mai clar în temele deschise și întunecate. Nimic din notițele sau din jurnalul tău nu se schimbă: blocurile arată și se comportă doar mai consecvent.\n\n**Serii pe telefon (beta).** Un bloc nou `workout-sets` arată seriile de azi ale unui exercițiu ca rânduri de completat, cu valorile de data trecută ca sugestii. Bifează un rând ca să înregistrezi seria, iar cronometrul de pauză pornește singur; bifează din nou ca să scoți seria din jurnal, cu butonul Anulează timp de câteva secunde. Activeaz-o din Setări → Workout Planner → Funcționalități Beta (la instalările noi este activată), apoi folosește **Adaugă serii de exerciții** din paleta de comenzi.\n\n**Sesiunile ghidate țin cont și de blocurile de serii.** Un `workout-session` urmărește acum blocurile `workout-sets` pe lângă cele `workout-log`, ia pauza fiecărui exercițiu din blocul lui și împarte același cronometru cu cardul seriilor.\n\n**Graficele** afișează sub grafic un rând de statistici: medie, minim, maxim, tendința recentă și numărul de sesiuni.\n\n**Widgeturile tabloului de bord** au propriile setări în meniul ⋮ (câte antrenamente să listeze, ce cifre să afișeze, câte zile să fie numărate și altele).\n\n**Notițele de exemplu** folosesc acum `workout-sets` pentru exercițiile antrenamentului de exemplu."
+      "v3_0_0": "**Un aspect nou pentru fiecare bloc.** Jurnalele de antrenament, graficele, sesiunea ghidată, durata antrenamentului și fiecare widget al tabloului de bord sunt acum carduri cu aceleași comenzi și meniuri, cu contrast mai clar în temele deschise și întunecate. Nimic din notițele sau din jurnalul tău nu se schimbă: blocurile arată și se comportă doar mai consecvent.\n\n**Serii pe telefon (beta).** Un bloc nou `workout-sets` arată seriile de azi ale unui exercițiu ca rânduri de completat, cu valorile de data trecută ca sugestii. Bifează un rând ca să înregistrezi seria, iar cronometrul de pauză pornește singur; bifează din nou ca să scoți seria din jurnal, cu butonul Anulează timp de câteva secunde. Activează-o din Setări → Workout Planner → Funcționalități Beta (la instalările noi este activată), apoi folosește **Adaugă serii de exerciții** din paleta de comenzi.\n\n**Sesiunile ghidate țin cont și de blocurile de serii.** Un `workout-session` urmărește acum blocurile `workout-sets` pe lângă cele `workout-log`, ia pauza fiecărui exercițiu din blocul lui și împarte același cronometru cu cardul seriilor.\n\n**Graficele** afișează sub grafic un rând de statistici: medie, minim, maxim, tendința recentă și numărul de sesiuni.\n\n**Widgeturile tabloului de bord** au propriile setări în meniul ⋮ (câte antrenamente să listeze, ce cifre să afișeze, câte zile să fie numărate și altele).\n\n**Notițele de exemplu** folosesc acum `workout-sets` pentru exercițiile antrenamentului de exemplu."
     }
   }
 }

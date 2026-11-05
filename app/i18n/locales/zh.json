@@ -397,7 +397,7 @@
       "purposeColumn": "用途",
       "codeBlockWorkoutSession": "按组跟随笔记中的计划",
       "sessionTitle": "6. 引导训练",
-      "sessionIntro": "`workout-session` 代码块会按照笔记中的计划逐步引导您：每个包含练习的 `workout-log` 代码块对应一步，包含其 `sets` 与目标，并使用同一章节中的休息计时器。在 [[{workout}]] 中试试。",
+      "sessionIntro": "`workout-session` 代码块会按照笔记中的计划逐步引导您：每个包含训练动作的 `workout-log` 代码块对应一步，包含其 `sets` 与目标，并使用同一章节中的休息计时器。在 [[{workout}]] 中试试。",
       "dashboardsTitle": "7. 仪表盘",
       "dashboardsIntro": "仪表盘会显示全部小组件，或只显示 `widgets` 中列出的小组件，并按该顺序排列。在仪表盘右上角的菜单中选择。",
       "dashboardWidgetsTitle": "已选小组件",
@@ -426,7 +426,7 @@
     },
     "gettingStarted": {
       "commandCreateExercise": "创建训练动作页面",
-      "commandCreateExerciseDesc": "创建新的训练文件",
+      "commandCreateExerciseDesc": "创建新的训练动作文件",
       "commandCreateLog": "创建训练记录",
       "commandCreateLogDesc": "添加新的训练记录",
       "commandInsertChart": "插入训练图表",
@@ -1153,7 +1153,7 @@
       "log": "加载记录时出错：{error}",
       "timer": "加载计时器时出错：{error}",
       "dashboard": "加载仪表盘时出错：{error}",
-      "sets": "加载集合时出错：{error}"
+      "sets": "加载组时出错：{error}"
     },
     "validation": {
       "title": "无效参数：",
@@ -1253,7 +1253,7 @@
     "intro": "请选择应用导出的训练数据 CSV 文件。确认之前不会写入任何内容。"
   },
   "session": {
-    "exerciseOf": "第 {current} / {total} 个练习",
+    "exerciseOf": "第 {current} / {total} 个训练动作",
     "setOf": "第 {set} / {sets} 组",
     "setNumber": "第 {set} 组",
     "target": "目标：{target}",

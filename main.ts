@@ -21,7 +21,7 @@ import {
   openOnboarding,
   shouldShowWelcome,
 } from "@app/services/onboarding/Welcome";
-import { releaseNotesAfterUpdate } from "@app/services/onboarding/WhatsNew";
+import { unseenReleaseNotes } from "@app/services/onboarding/WhatsNew";
 import { WhatsNewModal } from "@app/features/modals/common/WhatsNewModal";
 import { WorkoutLogFile } from "@app/services/data/WorkoutLogFile";
 import { VaultLogStorage } from "@app/services/data/LogStorage";
@@ -202,7 +202,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.app.workspace.onLayoutReady(() => {
       this.commandHandlerService.registerCommands();
       void this.openGettingStartedOnFreshInstall();
-      void this.showWhatsNewAfterUpdate();
+      void this.showWhatsNewOnNewVersion();
     });
 
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
@@ -306,13 +306,9 @@ export default class WorkoutChartsPlugin extends Plugin {
     await openOnboarding(this);
   }
 
-  /** Once after an update: what changed since the version last seen */
-  private async showWhatsNewAfterUpdate(): Promise<void> {
-    const releases = await releaseNotesAfterUpdate(
-      this,
-      this.manifest.version,
-      this.savedDataAtLoad,
-    );
+  /** Once per new version (install or update): what changed since the version last seen */
+  private async showWhatsNewOnNewVersion(): Promise<void> {
+    const releases = await unseenReleaseNotes(this, this.manifest.version);
     if (releases.length > 0) new WhatsNewModal(this.app, releases).open();
   }
 

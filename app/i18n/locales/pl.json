@@ -43,11 +43,11 @@
     "createCsvLog": "Utwórz plik dziennika w formacie CSV",
     "exportWorkoutToCanvas": "Eksportuj trening do canvasu",
     "generateTagReference": "Wygeneruj spis tagów",
-    "insertTable": "Wstaw tabelę treningu",
+    "insertTable": "Dodaj tabelę treningu",
     "manageMuscleTags": "Zarządzaj tagami mięśni",
     "migrateExerciseTypes": "Migruj typy ćwiczeń",
     "createExampleNotes": "Utwórz przykładowe notatki",
-    "openGettingStartedGuide": "Otwórz przewodnik dla początkujących",
+    "openGettingStartedGuide": "Otwórz przewodnik „Jak zacząć”",
     "startTour": "Rozpocznij wycieczkę",
     "importWorkouts": "Importuj z Strong lub Hevy",
     "showWhatsNew": "Pokaż, co nowego"
@@ -474,9 +474,9 @@
       },
       "pagesIntro": "Zapoznaj się z jedną funkcją na stronie. Śledź linki w odpowiedniej kolejności, lub wybierz funkcję poniżej. Użyj przycisków „Wstecz” i „Dalej”, aby przechodzić między notatkami; przewijaj normalnie, aby zapoznać się z każdym przykładem.",
       "liveIntro": "Poznaj wszystkie funkcje na przykładowych treningach z sześciu tygodni. To dane demonstracyjne; wypróbuj sterowanie i sprawdź, jak działają Twoje notatki.",
-      "tryLog": "Użyj przycisku \"+\", aby dodać serię. Tabela, wykresy i panel kontrolny odczytują ten sam plik CSV.",
+      "tryLog": "Użyj przycisku „+”, aby dodać serię. Tabela, wykresy i panel kontrolny odczytują ten sam plik CSV.",
       "continueWithWorkout": "Otwórz [[{workout}]], aby spróbować kompletnego treningu z tabelami ćwiczeń i timerami odpoczynku.",
-      "moreExamples": "Zobacz [[{showcase}]] w celu uzyskania więcej informacji o typach wykresów, filtrowaniu oraz protokołach szkoleniowych.",
+      "moreExamples": "Zobacz [[{showcase}]], aby poznać więcej typów wykresów, filtrów i protokołów treningowych.",
       "ownData": "Gdy będziesz gotowy, wybierz własny folder CSV i folder ćwiczeń w ustawieniach → Konfiguracja i dane. Folder z przykładami zachowaj jako punkt odniesienia.",
       "openGuideDesc": "Otwórz stronę „Jak zacząć” z działającymi przykładami tabel, wykresów, timerów i panelu kontrolnego."
     },
@@ -519,7 +519,7 @@
     "pointedAtExamples": "Teraz, gdy wyświetlasz przykładowe logi i ćwiczenia, możesz to zmienić w ustawieniach danych.",
     "usesSeparateLog": "Masz już dziennik treningów, więc pozostał bez zmian. Przykłady korzystają z własnego pliku dziennika.",
     "yoga": {
-      "intro": "Krótki poranny flow z odliczanymi wstrzymaniami pozycji. Uruchom sesję z przewodnikiem, utrzymuj każdą pozycję, a potem zapisz, jak długo ją trzymałeś: minutnik odpoczynku włącza się sam.",
+      "intro": "Krótki poranny flow z odliczanymi wstrzymaniami pozycji. Uruchom sesję z przewodnikiem, utrzymuj każdą pozycję, a potem zapisz, jak długo ją trzymałeś: timer odpoczynku włącza się sam.",
       "holds": "{holds} wstrzymań × {seconds} sek",
       "progressTitle": "Postęp"
     }
@@ -797,7 +797,7 @@
       "selectMuscleGroup": "Wybierz grupę mięśni...",
       "selectWorkoutFile": "Wybierz plik treningowy, aby go eksportować...",
       "sets": "4",
-      "workout": "np. Trening A, Trening B, lub użyj pola wyboru poniżej"
+      "workout": "np. Trening A, Trening B albo użyj pola wyboru poniżej"
     },
     "recentExercises": "Ostatnie",
     "protocol": "Protokół",
@@ -810,7 +810,7 @@
       "exerciseConfiguration": "Konfiguracja ćwiczenia",
       "options": "Opcje",
       "preset": "Ustawienie",
-      "progressiveOverload": "Progresywne przeciążenie",
+      "progressiveOverload": "Progresja obciążeń",
       "tableType": "Typ tabeli",
       "target": "Cel",
       "workout": "Trening",
@@ -859,7 +859,7 @@
       "insertChart": "Dodaj wykres treningu",
       "insertDashboard": "Dodaj panel z wynikami treningu",
       "insertDuration": "Dodaj czas trwania treningu",
-      "insertSession": "Wstaw sesję z przewodnikiem",
+      "insertSession": "Dodaj sesję z przewodnikiem",
       "insertTable": "Dodaj tabelę z dziennikiem treningów",
       "insertTimer": "Dodaj timer treningowy",
       "muscleTagManager": "Zarządzaj tagami mięśni",
@@ -931,7 +931,7 @@
       "runAllMaintenance": "Wykonaj wszystkie zadania konserwacyjne po kolei. Można je bezpiecznie uruchamiać wielokrotnie.",
       "setDuration": "Używane, gdy nie podano liczby powtórzeń (wartość zapasowa). Typowy zakres: 30-60 sekund.",
       "setupCSV": "Utwórz pliki workout_logs.csv i muscle-tags.csv w skonfigurowanym folderze.",
-      "weightIncrement": "Domyślny krok zwiększania wagi dla progresywnego obciążania (np. 2,5 dla kroków o wartości 2,5 jednostki)",
+      "weightIncrement": "Domyślny krok zwiększania wagi w progresji obciążeń (np. 2,5 dla kroków o wartości 2,5 jednostki)",
       "showRibbonIcon": "Pokaż ikonę hantli na pasku bocznym, która otwiera formularz dziennika treningowego",
       "weightUnit": "Jednostka dla wykresów, sum i nowych wpisów. Każdy wpis zachowuje jednostkę, w której został wprowadzony.",
       "welcomeWindow": "Wyświetl ponownie okno powitalne, aby rozpocząć pracę z przykładowymi danymi lub od zera.",
@@ -1190,12 +1190,12 @@
     "steps": {
       "logSet": {
         "title": "Zapisz pierwszą serię",
-        "text": "Naciśnij przycisk \"+\", aby otworzyć formularz, a następnie zapisz serię. Od razu pojawi się w tabeli."
+        "text": "Naciśnij przycisk „+”, aby otworzyć formularz, a następnie zapisz serię. Od razu pojawi się w tabeli."
       },
       "rowActions": {
         "title": "Edytuj lub usuń serię",
-        "mobileText": "Naciśnij serię, aby ją poprawić. Aby ją usunąć, użyj opcji \"Usuń serię\" w formularzu, który się otworzy.",
-        "text": "Użyj ołówka w wierszu, aby poprawić serię. Aby ją usunąć, użyj opcji \"Usuń serię\" w otwartym formularzu."
+        "mobileText": "Naciśnij serię, aby ją poprawić. Aby ją usunąć, użyj opcji „Usuń serię” w formularzu, który się otworzy.",
+        "text": "Użyj ołówka w wierszu, aby poprawić serię. Aby ją usunąć, użyj opcji „Usuń serię” w otwartym formularzu."
       },
       "chart": {
         "title": "Twój postęp",
@@ -1211,7 +1211,7 @@
       },
       "timer": {
         "title": "Timer odpoczynku",
-        "text": "Naciśnij przycisk \"Start\", aby uruchomić odliczanie między seriami."
+        "text": "Naciśnij przycisk „Start”, aby uruchomić odliczanie między seriami."
       },
       "ribbon": {
         "title": "Zapisz notatkę z dowolnego miejsca",
@@ -1220,7 +1220,7 @@
       },
       "commands": {
         "title": "Dodaj polecenia",
-        "text": "Otwórz paletę poleceń i uruchom polecenie „Wstaw tabelę treningu”, „Dodaj wykres treningu” lub „Dodaj timer treningowy”, aby wstawić blok do notatki."
+        "text": "Otwórz paletę poleceń i uruchom polecenie „Dodaj tabelę treningu”, „Dodaj wykres treningu” lub „Dodaj timer treningowy”, aby wstawić blok do notatki."
       },
       "end": {
         "title": "Gotowe",
@@ -1235,7 +1235,7 @@
   },
   "import": {
     "chooseFile": "Wybierz plik CSV",
-    "notAnExport": "Ten plik nie jest eksportem \"Strong\" ani \"Hevy\".",
+    "notAnExport": "Ten plik nie jest eksportem „Strong” ani „Hevy”.",
     "noSets": "Nie udało się odczytać żadnych serii z tego pliku. Sprawdź, czy jest to plik CSV, który aplikacja wyeksportowała, bez zmian.",
     "readError": "Nie udało się odczytać pliku: {error}",
     "source": "Eksport z {source}",
@@ -1264,7 +1264,7 @@
     "next": "Dalej",
     "rest": "Odpoczynek",
     "done": "Trening zakończony. Dziś zapisane serie: {sets}.",
-    "empty": "Dodaj blok `workout-log` lub `workout-sets` z ćwiczeniem do tej notatki, aby móc ją traktować jako sesję."
+    "empty": "Dodaj blok `workout-log` lub `workout-sets` z ćwiczeniem do tej notatki, aby śledzić ją jako sesję."
   },
   "sets": {
     "addSet": "Dodaj serię",

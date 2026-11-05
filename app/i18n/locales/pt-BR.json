@@ -79,7 +79,7 @@
       "weight": "Peso ({unit})"
     },
     "preview": {
-      "noEntries": "Nenhuma entrada de registro encontrada para este exercício.",
+      "noEntries": "Nenhuma entrada de registro encontrada para este exercício",
       "title": "Visualização",
       "willConvertMany": "Serão convertidas {count} entradas de registro",
       "willConvertOne": "1 entrada de registro será convertida"
@@ -408,7 +408,7 @@
       "importIntro": "Execute **{command}** pela paleta de comandos e escolha o CSV exportado pelo app. Séries que já estão no seu registro são ignoradas, e o registro é salvo antes como backup.",
       "setsTitle": "Registrar séries no celular",
       "setsIntro": "Um bloco `workout-sets` mostra as séries de hoje como linhas. Os números em cinza são a mesma série da última vez: marque uma linha para registrá-la como está, ou digite o que você fez. Toque na seta para ver o protocolo e as notas da série, e em uma série registrada para editá-la.",
-      "codeBlockWorkoutSets": "Registre as séries de hoje, linha por linha."
+      "codeBlockWorkoutSets": "Registre as séries de hoje, linha por linha"
     },
     "fileNames": {
       "dashboard": "Painel de controle",
@@ -640,7 +640,7 @@
       "renameInCsv": "Renomear em CSV",
       "update": "Atualizar registro",
       "updateTable": "Atualizar tabela",
-      "updateTargetWeight": "Atualizar peso alvo",
+      "updateTargetWeight": "Atualizar meta",
       "updateTimer": "Atualizar temporizador",
       "decreaseBy": "Diminuir {label} em {increment}",
       "increaseBy": "Aumentar {label} em {increment}",
@@ -812,7 +812,7 @@
       "preset": "Predefinição",
       "progressiveOverload": "Sobrecarga progressiva",
       "tableType": "Tipo de tabela",
-      "target": "Alvo",
+      "target": "Meta",
       "workout": "Treino",
       "mobileOptions": "Exercícios recentes e treino"
     },
@@ -1074,7 +1074,7 @@
     "gotoExercise": "Ir para o exercício",
     "invalidDate": "Data inválida",
     "labels": {
-      "target": "Alvo:"
+      "target": "Meta:"
     },
     "noData": "Sem dados",
     "notAvailable": "N/D",
@@ -1082,7 +1082,7 @@
     "target": {
       "noSetsYet": "Nenhuma série com {weight} ainda",
       "progress": "Melhor {best}/{target} repetições",
-      "progressTooltip": "Melhor: {best} repetições / Alvo: {target} repetições",
+      "progressTooltip": "Melhor: {best} repetições / Meta: {target} repetições",
       "repsSuffix": "repetições",
       "separator": " × "
     },
@@ -1256,7 +1256,7 @@
     "exerciseOf": "Exercício {current} de {total}",
     "setOf": "Série {set} de {sets}",
     "setNumber": "Série {set}",
-    "target": "Alvo: {target}",
+    "target": "Meta: {target}",
     "targetReps": "{reps} repetições",
     "targetWeight": "{weight} {unit}",
     "logSet": "Registrar série",

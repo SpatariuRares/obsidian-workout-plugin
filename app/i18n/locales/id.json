@@ -408,7 +408,7 @@
       "importIntro": "Jalankan **{command}** dari palet perintah lalu pilih CSV yang diekspor aplikasi. Set yang sudah ada di log dilewati, dan log dicadangkan terlebih dahulu.",
       "setsTitle": "Mencatat set di ponsel Anda",
       "setsIntro": "Sebuah blok `workout-sets` menampilkan set hari ini dalam bentuk baris. Angka abu-abu adalah set yang sama pada latihan sebelumnya: centang baris untuk mencatatnya apa adanya, atau ketik apa yang Anda lakukan. Ketuk panah untuk protokol dan catatan set, dan untuk mengedit set yang sudah dicatat.",
-      "codeBlockWorkoutSets": "Catat setiap set yang dilakukan hari ini, satu per satu."
+      "codeBlockWorkoutSets": "Catat setiap set yang dilakukan hari ini, satu per satu"
     },
     "fileNames": {
       "dashboard": "Dasbor",
@@ -493,7 +493,7 @@
       "chart": "grafik",
       "duration": "Durasi",
       "session": "Sesi terpandu",
-      "note": "Catatan: Berikan usaha maksimal",
+      "note": "Catatan: berikan usaha maksimal",
       "recoverySuffix": "(Pemulihan: {seconds} detik)",
       "setsReps": "{sets} set x {reps} repetisi"
     },
@@ -647,7 +647,7 @@
       "deleteSet": "Hapus set",
       "updateDashboard": "Perbarui dasbor",
       "updateChart": "Perbarui grafik",
-      "insertSets": "Tambahkan set"
+      "insertSets": "Sisipkan set"
     },
     "canvasLayout": "Tata letak",
     "canvasOptions": "Pilihan",

@@ -48,7 +48,7 @@
     "migrateExerciseTypes": "ترحيل أنواع التمارين",
     "createExampleNotes": "إنشاء ملاحظات نموذجية",
     "openGettingStartedGuide": "فتح دليل البدء السريع",
-    "startTour": "ابدأ الجولة",
+    "startTour": "بدء الجولة",
     "showWhatsNew": "عرض ما الجديد",
     "importWorkouts": "استيراد من \"Strong\" أو \"Hevy\""
   },
@@ -704,7 +704,7 @@
     "note": "الملاحظة",
     "notices": {
       "auditConfirmRenameFile": "هل تريد إعادة تسمية هذا الملف؟\n\n{oldName} → {newName}",
-      "auditMismatchCount": "تم العثور على {count} تناقض:",
+      "auditMismatchCount": "تم العثور على {count} من حالات عدم التطابق المحتملة:",
       "auditNoMatchFound": "لم يُعثر على تطابق",
       "auditNoMismatches": "كل ملفات التمارين تطابق أسماءها في السجل.",
       "auditRenameError": "تعذّرت إعادة التسمية: {error}",
@@ -773,7 +773,7 @@
       "tableUpdateFailed": "تعذّر تحديث الجدول: لم يُعثر عليه في ملاحظته. أعد فتح الملاحظة وحاول مرة أخرى.",
       "timerUpdateFailed": "تعذّر تحديث المؤقت: لم يُعثر عليه في ملاحظته. أعد فتح الملاحظة وحاول مرة أخرى.",
       "dashboardUpdateFailed": "تعذّر تحديث لوحة التحكم: لم يُعثر عليها في ملاحظتها، أو توجد لوحة أخرى بلا معرّف بالإعدادات نفسها. أعد فتح الملاحظة وحاول مرة أخرى.",
-      "setsInserted": "تم إدخال المجموعات"
+      "setsInserted": "تم إدراج المجموعات"
     },
     "parameterKey": "المفتاح",
     "parameterLabel": "التسمية",
@@ -1129,7 +1129,7 @@
     "increasing": "متزايد",
     "invariant": "ثابت",
     "neutral": "محايد",
-    "stable": "مُستقر",
+    "stable": "مستقر",
     "stableLower": "مستقر",
     "up": "ارتفاع"
   },
@@ -1274,11 +1274,11 @@
     "editBlock": "تحرير المجموعات",
     "editRestTimer": "تحرير مؤقت الراحة",
     "blockUpdated": "تم تحديث المجموعات",
-    "blockUpdateFailed": "فشلت عملية تحديث المجموعات: لم يتم العثور على العنصر في الملاحظة. أعد فتح الملاحظة وحاول مرة أخرى.",
+    "blockUpdateFailed": "فشلت عملية تحديث المجموعات: لم يتم العثور على الكتلة في الملاحظة. أعد فتح الملاحظة وحاول مرة أخرى.",
     "workoutLabel": "التدريب",
     "workoutPlaceholder": "فارغ: {note}",
     "restLabel": "الراحة بعد كل مجموعة (0 = مؤقت القسم)",
-    "noExercise": "أضف `exercise:` إلى هذا القسم لتسجيل مجموعاته.",
+    "noExercise": "أضف `exercise:` إلى هذه الكتلة لتسجيل مجموعاتها.",
     "progress": "{done}/{sets} مجموعة",
     "lastTime": "آخر مرة ({date}): {sets}",
     "setColumn": "المجموعة",

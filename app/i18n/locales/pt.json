@@ -79,13 +79,13 @@
       "weight": "Peso ({unit})"
     },
     "preview": {
-      "noEntries": "Não foram encontrados registos para este exercício.",
+      "noEntries": "Não foram encontrados registos para este exercício",
       "title": "Visualização",
       "willConvertMany": "Serão convertidos {count} registos",
       "willConvertOne": "1 registo será convertido"
     },
     "sectionExercise": "Exercício",
-    "success": "Conversão concluída: {count} registos convertidos com êxito.",
+    "success": "Conversão concluída: {count} registos convertidos com êxito",
     "title": "Converter dados do exercício",
     "typeSelect": {
       "convertTo": "Converter para",
@@ -115,7 +115,7 @@
       "noTags": "Nenhuma tag muscular no frontmatter",
       "title": "Erros de ficheiro",
       "tooManyTags": "Demasiadas tags musculares ({count}, no máximo {max})",
-      "sharedName": "Mesmo nome de exercício que {pages}: os registos são enviados apenas para um deles."
+      "sharedName": "Mesmo nome de exercício que {pages}: os registos são enviados apenas para um deles"
     },
     "muscleTags": {
       "description": "Tags que pode usar no frontmatter de uma página de exercício. Clique numa para a copiar.",
@@ -142,7 +142,7 @@
       "disclaimer": "Correlação, não prova: o peso, o descanso e o sono também alteram estes números.",
       "noData": "Ainda não há dados suficientes: cada protocolo precisa de pelo menos 5 séries registadas.",
       "title": "Eficácia do protocolo",
-      "subtitle": "Como cada protocolo funcionou em todas as séries registadas."
+      "subtitle": "Como cada protocolo funcionou em todas as séries registadas"
     },
     "quickActions": {
       "addWorkoutLog": "Adicionar registo de treino",
@@ -190,8 +190,8 @@
         "metric": "Medida"
       },
       "imbalance": {
-        "backDominant": "Desequilíbrio entre a parte frontal e a traseira: a sua parte traseira trabalha muito mais do que a parte frontal.",
-        "frontDominant": "Desequilíbrio entre a parte frontal e a traseira: a sua parte frontal trabalha muito mais do que a traseira."
+        "backDominant": "Desequilíbrio entre a parte frontal e a traseira: a sua parte traseira trabalha muito mais do que a parte frontal",
+        "frontDominant": "Desequilíbrio entre a parte frontal e a traseira: a sua parte frontal trabalha muito mais do que a traseira"
       }
     },
     "editDashboard": "Editar painel",
@@ -291,7 +291,7 @@
     "restTime": "Tempo de descanso",
     "setCount": "{count} séries",
     "setTime": "Tempo por série",
-    "unableToAnalyze": "Não foi possível analisar o ficheiro do treino."
+    "unableToAnalyze": "Não foi possível analisar o ficheiro do treino"
   },
   "examples": {
     "dashboard": {
@@ -408,7 +408,7 @@
       "importIntro": "Execute **{command}** a partir da paleta de comandos e escolha o CSV exportado pela app. As séries que já estão no seu registo são ignoradas, e o registo é guardado primeiro.",
       "setsTitle": "Registar séries no seu telemóvel",
       "setsIntro": "Um bloco `workout-sets` mostra as séries de hoje em linhas. Os números a cinzento são a mesma série da última vez: marque uma linha para a registar tal como está, ou escreva o que fez. Toque na seta para ver o protocolo e as notas da série, e numa série já registada para a editar.",
-      "codeBlockWorkoutSets": "Registe as séries de hoje, linha a linha."
+      "codeBlockWorkoutSets": "Registe as séries de hoje, linha a linha"
     },
     "fileNames": {
       "dashboard": "Painel",
@@ -594,7 +594,7 @@
     "success": {
       "blockIdsAdded": "Adicionados {count} ID(s) em falta em {files} ficheiro(s)",
       "csvCreated": "O ficheiro CSV foi criado com sucesso!",
-      "noBlockIdsNeeded": "Todos os blocos de código já têm IDs.",
+      "noBlockIdsNeeded": "Todos os blocos de código já têm IDs",
       "weightUnitsStamped": "Unidade de peso guardada em {count} registos mais antigos"
     },
     "tagReferenceGenerated": "Referência de tags gerada com sucesso!",
@@ -699,7 +699,7 @@
     "layoutVertical": "Fluxo vertical",
     "muscleGroup": "Grupo muscular",
     "newTag": "Nova tag",
-    "noTagsFound": "Não foram encontradas tags que correspondam à sua pesquisa.",
+    "noTagsFound": "Não foram encontradas tags que correspondam à sua pesquisa",
     "noTagsSelected": "Nenhuma tag selecionada. Clique nas tags abaixo para adicioná-las.",
     "note": "Nota",
     "notices": {
@@ -748,7 +748,7 @@
       "suggestedNextWeight": "Próximo peso sugerido: {suggestedWeight}{weightUnit}",
       "targetAchieved": "Objetivo alcançado!",
       "timerElementsNotInitialized": "Os elementos do temporizador não foram inicializados",
-      "validationFillAll": "Por favor, preencha todos os campos com valores válidos.",
+      "validationFillAll": "Por favor, preencha todos os campos com valores válidos",
       "validMissingField": "Campo obrigatório ausente: {field}",
       "validMustBeNumber": "{field} deve ser um número válido",
       "validMinValue": "{field} deve ser pelo menos {min}",
@@ -918,7 +918,7 @@
       "defaultRepsPerSet": "Número de repetições assumido quando não especificado. Se for 0, utiliza a 'Duração de série alternativa'.",
       "defaultTimerPreset": "Selecione uma predefinição para os novos temporizadores",
       "exerciseBlockTemplate": "Modelo para blocos de exercícios. Marcadores disponíveis: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
-      "exerciseFolder": "Caminho para a pasta que contém as páginas de exercícios.",
+      "exerciseFolder": "Caminho para a pasta que contém as páginas de exercícios",
       "generateDefaultTemplates": "Gere o modelo predefinido da página de exercício e a referência de tags na pasta 'Workout Templates'. Pode personalizar estes ficheiros para alterar o idioma e a estrutura.",
       "noPresets": "Não existem predefinições de temporizador. Clique em 'Adicionar predefinição' para criar uma.",
       "presetDurationDesc": "Duração em segundos (por exemplo, 90 para um temporizador de 90 segundos).",
@@ -926,7 +926,7 @@
       "presetRoundsDesc": "Número de rondas de intervalo antes de parar.",
       "protocolAbbreviation": "Abreviatura curta apresentada na etiqueta (máximo de 3 caracteres)",
       "protocolColor": "Cor de fundo da etiqueta (formato hexadecimal, por exemplo, #FF5733)",
-      "quickWeightIncrement": "Incremento de peso usado pelos botões +/- nos modais de criação/edição de registos de treino (por exemplo, 2,5 para adicionar/remover 2,5 unidades).",
+      "quickWeightIncrement": "Incremento de peso usado pelos botões +/- nos modais de criação/edição de registos de treino (por exemplo, 2,5 para adicionar/remover 2,5 unidades)",
       "repDuration": "Tempo estimado para realizar uma repetição. Utilizado quando o número de repetições é conhecido (por exemplo, 'x 10 repetições').",
       "runAllMaintenance": "Execute todas as tarefas de manutenção de forma sequencial. Seguro para executar várias vezes.",
       "setDuration": "Utilizado quando as repetições não são especificadas (alternativa). Intervalo típico: 30 a 60 segundos.",
@@ -976,13 +976,13 @@
       "confirmDeleteProtocol": "Tem a certeza de que pretende eliminar este protocolo?",
       "csvFilesCreated": "Ficheiros CSV criados com sucesso!",
       "presetDeleted": "Predefinição eliminada",
-      "presetNameExists": "Já existe uma predefinição com este nome.",
+      "presetNameExists": "Já existe uma predefinição com este nome",
       "presetNameRequired": "O nome da predefinição é obrigatório",
       "presetSaved": "Predefinição guardada",
       "protocolAbbreviationRequired": "Abreviatura é obrigatória (máximo 3 caracteres)",
       "protocolColorRequired": "Introduza uma cor hexadecimal válida (por exemplo, #FF5733)",
       "protocolDeleted": "Protocolo eliminado",
-      "protocolNameExists": "Um protocolo com este nome já existe.",
+      "protocolNameExists": "Um protocolo com este nome já existe",
       "protocolNameRequired": "O nome do protocolo é obrigatório",
       "protocolSaved": "Protocolo guardado",
       "weightUnitChangeFailed": "Não foi possível alterar a unidade de peso: {error}"
@@ -1267,7 +1267,7 @@
     "empty": "Adicione um bloco `workout-log` ou `workout-sets` com um exercício a esta nota para a seguir como sessão."
   },
   "sets": {
-    "addSet": "Adicionar conjunto",
+    "addSet": "Adicionar série",
     "removeSet": "Remover série",
     "protocol": "Protocolo",
     "notes": "Observações",

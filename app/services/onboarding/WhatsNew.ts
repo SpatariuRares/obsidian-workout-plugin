@@ -45,9 +45,9 @@ export function allReleaseNotes(): ReleaseNotes[] {
 }
 
 /**
- * The versions to show after an update from `lastSeen` to `current`, newest
- * first. With no `lastSeen` (updated from a plugin that didn't record it)
- * only `current`'s notes, so nobody gets the whole history.
+ * The versions to show when `current` replaces `lastSeen`, newest first.
+ * With no `lastSeen` (a fresh install, or an update from a plugin that didn't
+ * record it) only `current`'s notes, so nobody gets the whole history.
  */
 export function versionsSince(
   versions: string[],
@@ -64,20 +64,17 @@ export function versionsSince(
 }
 
 /**
- * The notes to show once after an update, and records `current` as seen.
- * A fresh install (`savedData` null) sees no notes: it gets the onboarding.
+ * The notes to show once when `current` is new to this vault (installed or
+ * updated), and records it as seen: every later load of the same version
+ * shows nothing.
  */
-export async function releaseNotesAfterUpdate(
+export async function unseenReleaseNotes(
   plugin: SettingsPort,
   current: string,
-  savedData: unknown,
 ): Promise<ReleaseNotes[]> {
   const lastSeen = plugin.settings.lastSeenVersion;
   if (lastSeen === current) return [];
-  const isUpdate = savedData !== null && savedData !== undefined;
-  const shown = isUpdate
-    ? versionsSince(releaseVersions(), lastSeen, current)
-    : [];
+  const shown = versionsSince(releaseVersions(), lastSeen, current);
   plugin.settings.lastSeenVersion = current;
   await plugin.saveSettings();
   return allReleaseNotes().filter((release) => shown.includes(release.version));

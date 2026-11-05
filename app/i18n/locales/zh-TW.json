@@ -185,7 +185,7 @@
         "reps": "平均次數：{value}"
       },
       "imbalance": {
-        "backDominant": "前後肌肉力量失衡：您的後方肌肉活動量遠大於您的前方肌肉。",
+        "backDominant": "前後肌肉力量失衡：您的後側肌肉活動量遠大於前側。",
         "frontDominant": "前後肌肉力量失衡：您的前側肌肉活動量遠大於後側。"
       },
       "controls": {
@@ -309,9 +309,9 @@
       "logTitle": "紀錄",
       "paceTrackingNote": "追蹤您的配速進步（數值越低 = 越快）：",
       "paceTrackingTitle": "配速追蹤",
-      "repTrackingTitle": "重複次數追蹤",
+      "repTrackingTitle": "次數追蹤",
       "volumeChartTitle": "訓練量圖",
-      "weightProgressionTitle": "重量增長",
+      "weightProgressionTitle": "重量進展",
       "e1rmTitle": "預估的 1RM"
     },
     "exercises": {
@@ -360,7 +360,7 @@
       "byExerciseTitle": "依動作",
       "byWorkoutTitle": "依運動",
       "cardioExerciseTitle": "心肺運動（距離 + 配速）",
-      "chartsIntro": "圖表呈現你隨時間的進展。可用類型：`volume`、`weight`、`e1rm`、`reps`、`duration`、`distance`、`heartRate`、`pace`。",
+      "chartsIntro": "圖表呈現您隨時間的進展。可用類型：`volume`、`weight`、`e1rm`、`reps`、`duration`、`distance`、`heartRate`、`pace`。",
       "chartsTitle": "1. 圖表",
       "codeBlockWorkoutChart": "以圖表呈現隨時間的進度",
       "codeBlockWorkoutDashboard": "完整統計概覽",
@@ -383,13 +383,13 @@
       "timersTitle": "3. 計時器",
       "tip": "**提示**：個人儀表板請查看 [[{dashboard}]]",
       "title": "功能展示",
-      "trainingProtocolsIntro": "每組都可以設定一個訓練法，在表格中以徽章顯示。你可以編輯這些訓練法，或在 設定 → 訓練法 中新增自己的。",
+      "trainingProtocolsIntro": "每組都可以設定一個訓練法，在表格中以徽章顯示。您可以編輯這些訓練法，或在 設定 → 訓練法 中新增自己的。",
       "trainingProtocolsTitle": "5. 訓練法",
       "workoutChartTitle": "運動圖表（所有動作合併）",
       "e1rmChartTitle": "預估的 1RM",
       "e1rmIntro": "依 Epley 公式（重量 ×（1 + 次數 / 30））計算每天的最佳估算值，使用 1 到 12 次的組。熱身組與遞減組不計入。",
       "presetTimersTitle": "Tabata 與 EMOM",
-      "presetTimersIntro": "計時器可以用 `preset` 依名稱執行已儲存的預設。Tabata 與 EMOM 已內建；你可以編輯它們，或在 設定 → 計時器預設 中新增自己的。",
+      "presetTimersIntro": "計時器可以用 `preset` 依名稱執行已儲存的預設。Tabata 與 EMOM 已內建；您可以編輯它們，或在 設定 → 計時器預設 中新增自己的。",
       "protocolColumn": "訓練法",
       "badgeColumn": "徽章",
       "descriptionColumn": "描述",
@@ -397,7 +397,7 @@
       "purposeColumn": "用途",
       "codeBlockWorkoutSession": "依組順序跟隨筆記中的計畫",
       "sessionTitle": "6. 引導訓練",
-      "sessionIntro": "`workout-session` 區塊會依照筆記中的計畫逐步引導你：每個含有動作的 `workout-log` 區塊對應一步，包含其 `sets` 與目標，並使用同一章節的休息計時器。在 [[{workout}]] 中試試看。",
+      "sessionIntro": "`workout-session` 區塊會依照筆記中的計畫逐步引導您：每個含有動作的 `workout-log` 區塊對應一步，包含其 `sets` 與目標，並使用同一章節的休息計時器。在 [[{workout}]] 中試試看。",
       "dashboardsTitle": "7. 儀表板",
       "dashboardsIntro": "儀表板會顯示所有小工具，或只顯示 `widgets` 中列出的小工具，並依該順序排列。在儀表板右上角的選單中選擇。",
       "dashboardWidgetsTitle": "已選小工具",
@@ -407,7 +407,7 @@
       "importTitle": "8. 從 Strong 或 Hevy 匯入",
       "importIntro": "從命令面板執行 **{command}**，然後選擇應用程式匯出的 CSV。紀錄中已有的組會被略過，紀錄會先備份。",
       "setsTitle": "在手機上紀錄您的組",
-      "setsIntro": "`workout-sets` 區塊會以列的形式顯示今日的組。灰色數字是上次做同一組的數值：勾選該列即可照原樣紀錄，或直接輸入你實際做的數字。點擊箭頭可查看該組的訓練法與備註，點擊已紀錄的組則可編輯。",
+      "setsIntro": "`workout-sets` 區塊會以列的形式顯示今日的組。灰色數字是上次做同一組的數值：勾選該列即可照原樣紀錄，或直接輸入您實際做的數字。點擊箭頭可查看該組的訓練法與備註，點擊已紀錄的組則可編輯。",
       "codeBlockWorkoutSets": "逐列紀錄今日的訓練組"
     },
     "fileNames": {
@@ -458,7 +458,7 @@
         "latestTitle": "動作的最新組",
         "latestIntro": "`exercise` 選擇動作，`limit` 決定表格顯示幾組。",
         "targetTitle": "目標與計畫組數",
-        "targetIntro": "設定 `targetWeight` 與 `targetReps` 後，表格會顯示你離目標還有多遠；達成目標時，徽章會提供把下一個重量寫入區塊的選項。`sets` 是你計畫的組數：未設定 `limit` 時，表格會顯示最近兩次運動，引導訓練也會以此計算。加上 `workout` 與 `exactMatch: true` 時，只保留該運動中該動作的組。",
+        "targetIntro": "設定 `targetWeight` 與 `targetReps` 後，表格會顯示您離目標還有多遠；達成目標時，徽章會提供把下一個重量寫入區塊的選項。`sets` 是您計畫的組數：未設定 `limit` 時，表格會顯示最近兩次運動，引導訓練也會以此計算。加上 `workout` 與 `exactMatch: true` 時，只保留該運動中該動作的組。",
         "workoutTitle": "整場運動",
         "workoutIntro": "設定 `workout` 但不設定 `exercise` 時，表格會列出該運動的每一組。`dateRange: 14` 保留最近 14 天。",
         "columnsTitle": "欄位與排序",
@@ -466,11 +466,11 @@
       },
       "sets": {
         "lastTimeTitle": "與上次相同的組",
-        "lastTimeIntro": "設定 `workout` 時，灰色數字來自你上次在該運動中做這個動作的紀錄。未設定時，區塊使用筆記的名稱。",
+        "lastTimeIntro": "設定 `workout` 時，灰色數字來自您上次在該運動中做這個動作的紀錄。未設定時，區塊使用筆記的名稱。",
         "restTitle": "休息計時器與目標",
-        "restIntro": "`rest` 是每組之後的休息秒數（`0` 表示不計時）；未設定時，區塊使用該章節的 `workout-timer`。`targetWeight` 與 `targetReps` 顯示目標，也是你第一次做該動作時的提示。",
+        "restIntro": "`rest` 是每組之後的休息秒數（`0` 表示不計時）；未設定時，區塊使用該章節的 `workout-timer`。`targetWeight` 與 `targetReps` 顯示目標，也是您第一次做該動作時的提示。",
         "restTimerTitle": "休息計時器選項",
-        "restTimerIntro": "區塊包含休息計時器的所有選項，因此一天的筆記不需要 `workout-timer`：`timer.type`（`interval` 會以 `rest` 作為每回合的運動時間，搭配 `timer.rest` 與 `timer.rounds`）、`timer.preset`、`timer.sound` 與 `timer.showControls`。⋮ → 編輯休息計時器會替你寫入這些設定。"
+        "restTimerIntro": "區塊包含休息計時器的所有選項，因此一天的筆記不需要 `workout-timer`：`timer.type`（`interval` 會以 `rest` 作為每回合的運動時間，搭配 `timer.rest` 與 `timer.rounds`）、`timer.preset`、`timer.sound` 與 `timer.showControls`。⋮ → 編輯休息計時器會替您寫入這些設定。"
       },
       "pagesIntro": "逐頁探索一個功能。請依連結的順序閱讀，或從下方選擇功能。使用「返回」和「下一頁」在筆記之間切換，並像一般頁面一樣捲動來探索每個範例。",
       "liveIntro": "以下範例運動涵蓋六週，可用來探索所有功能。這些是示範資料，您可以實際操作，看看筆記如何運作。",
@@ -495,7 +495,7 @@
       "session": "引導訓練",
       "note": "備註：全力以赴",
       "recoverySuffix": "（恢復：{seconds} 秒）",
-      "setsReps": "{sets} 組 x {reps} 次"
+      "setsReps": "{sets} 組 × {reps} 次"
     },
     "workouts": {
       "cardioDay": {
@@ -937,7 +937,7 @@
       "welcomeWindow": "再次顯示歡迎畫面，以便從範例資料開始，或從頭開始。",
       "weeklyGoal": "每週要維持連續紀錄的訓練天數，顯示在儀表板摘要與訓練日曆中。",
       "keepScreenAwake": "盡可能在任何計時器正在運作時保持螢幕開啟狀態。這會消耗更多電力；其可用性取決於您的裝置和系統設定。",
-      "vibrateOnCompletion": "在計時器結束時，會短暫震動，與聲音無關。需要點擊頁面，並使用支援的設備（例如 Android）。在 iOS 系統上不可用；不會發送背景警示。",
+      "vibrateOnCompletion": "在計時器結束時，會短暫震動，與聲音無關。需要點擊頁面，並使用支援的裝置（例如 Android）。在 iOS 系統上不可用；不會發送背景警示。",
       "presetRestDesc": "每輪運動後的休息秒數（0 表示不休息）。",
       "noCustomProtocols": "目前還沒有訓練法。點擊「新增訓練法」即可建立。",
       "showWhatsNew": "查看外掛每個版本的變更內容。"
@@ -1009,7 +1009,7 @@
       "timerPresets": "計時器預設",
       "trainingParameters": "訓練參數",
       "gettingStarted": "開始使用",
-      "timerDeviceCues": "計時器設備提示",
+      "timerDeviceCues": "計時器裝置提示",
       "customProtocols": "訓練法",
       "beta": "β 版本功能"
     },
@@ -1020,7 +1020,7 @@
       "editProtocol": "編輯訓練法"
     },
     "validation": {
-      "csvFolderNotFound": "在保管庫中找不到資料夾。請執行「設定 CSV 檔案」來建立。",
+      "csvFolderNotFound": "在保險庫中找不到資料夾。請執行「設定 CSV 檔案」來建立。",
       "csvPathEmpty": "路徑欄位不能為空",
       "mustBeNonNegative": "必須為 0 或大於 0",
       "mustBePositive": "必須大於 0"
@@ -1031,7 +1031,7 @@
       "myoReps": "先做一組啟動組，再做幾組短暫的迷你組，組間休息幾秒。",
       "restPause": "力竭後休息幾秒，再多做幾次。",
       "superset": "連續進行兩個動作，中間沒有休息。",
-      "twentyone": "先做 7 次下半範圍，再做 7 次上半範圍，最後做 7 次完整動作。"
+      "twentyone": "先做 7 次下半段動作，再做 7 次上半段動作，最後做 7 次完整動作。"
     },
     "presetHelp": {
       "tabata": "20 秒高強度運動，10 秒休息，共 8 輪：總共 4 分鐘。",
@@ -1296,7 +1296,7 @@
     "olderReleases": "GitHub 上的舊版本",
     "releases": {
       "v3_1_0": "**外掛的新內容。** 更新後，外掛會在首次顯示變更內容。之後隨時可在指令面板中執行 **顯示更新內容**，或在「設定 → Workout Planner → 開始使用」中點擊 **顯示更新紀錄**。\n\n**所有人都能使用運動組。** `workout-sets` 區塊不再是 β 版本功能：無需開啟任何設定即可使用，指令面板中也一律提供 **插入運動組**。",
-      "v3_0_0": "**每個區塊都有全新外觀。** 運動紀錄、圖表、引導式訓練、運動時長，以及每個儀表板小工具，現在都是版面、控制項與選單一致的卡片，並在淺色與深色主題中有更清楚的對比。你的筆記與紀錄內容都不會改變：區塊只是外觀與操作更一致。\n\n**手機上的組（β 版本）。** 新的 `workout-sets` 區塊會以列的形式顯示某個動作今天的組，並以上次的數值作為提示。勾選一列即可紀錄該組，休息計時器會自動開始；再次勾選即可收回，並可在數秒內按「復原」。請在「設定 → Workout Planner → β 版本功能」中開啟（新安裝預設為開啟），然後從指令面板使用 **插入運動組**。\n\n**引導式訓練會讀取組表。** `workout-session` 現在也會追蹤 `workout-sets` 與 `workout-log` 區塊，每個動作的休息時間取自其自己的區塊，並與組卡片共用同一個倒數計時。\n\n**圖表**在圖表下方顯示統計列：平均、最小、最大、近期趨勢與訓練次數。\n\n**儀表板小工具**在其 ⋮ 選單中有自己的設定（要列出幾筆運動、顯示哪些數據、計算的天數等）。\n\n**範例筆記**現在會用 `workout-sets` 呈現範例運動的動作。"
+      "v3_0_0": "**每個區塊都有全新外觀。** 運動紀錄、圖表、引導式訓練、運動時長，以及每個儀表板小工具，現在都是版面、控制項與選單一致的卡片，並在淺色與深色主題中有更清楚的對比。您的筆記與紀錄內容都不會改變：區塊只是外觀與操作更一致。\n\n**手機上的組（β 版本）。** 新的 `workout-sets` 區塊會以列的形式顯示某個動作今天的組，並以上次的數值作為提示。勾選一列即可紀錄該組，休息計時器會自動開始；再次勾選即可收回，並可在數秒內按「復原」。請在「設定 → Workout Planner → β 版本功能」中開啟（新安裝預設為開啟），然後從指令面板使用 **插入運動組**。\n\n**引導式訓練會讀取組表。** `workout-session` 現在也會追蹤 `workout-sets` 與 `workout-log` 區塊，每個動作的休息時間取自其自己的區塊，並與組卡片共用同一個倒數計時。\n\n**圖表**在圖表下方顯示統計列：平均、最小、最大、近期趨勢與訓練次數。\n\n**儀表板小工具**在其 ⋮ 選單中有自己的設定（要列出幾筆運動、顯示哪些數據、計算的天數等）。\n\n**範例筆記**現在會用 `workout-sets` 呈現範例運動的動作。"
     }
   }
 }

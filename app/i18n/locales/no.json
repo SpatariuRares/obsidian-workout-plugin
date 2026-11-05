@@ -475,7 +475,7 @@
       "pagesIntro": "Utforsk én funksjon per side. Følg lenkene i rekkefølge, eller velg en funksjon nedenfor. Bruk \"Tilbake\" og \"Neste\" for å navigere mellom notatene; scroll normalt for å utforske hvert eksempel.",
       "liveIntro": "Utforsk alle funksjonene nedenfor med seks uker med eksempler på treningsøkter. Dette er demonstrasjonsdata; prøv kontrollene og se hvordan notene dine fungerer.",
       "tryLog": "Bruk \"+\" knappen for å legge til et sett. Tabellen, diagrammene og dashboardet bruker samme CSV-fil.",
-      "continueWithWorkout": "Åpne [[{workout}]] for å prøve en komplett treningsøkt med øvelseslister og pausetimer.",
+      "continueWithWorkout": "Åpne [[{workout}]] for å prøve en komplett treningsøkt med øvelseslister og hviletimer.",
       "moreExamples": "Se [[{showcase}]] for flere diagramtyper, filtre og treningsprotokoller.",
       "ownData": "Når du er klar, velg din egen CSV-mappe og eksempelmappe i Innstillinger → Oppsett og data. Behold eksempelmappen som en referanse.",
       "openGuideDesc": "Åpne siden «Hvordan komme i gang» med fungerende eksempler på tabeller, diagrammer, timere og dashbord."
@@ -519,7 +519,7 @@
     "pointedAtExamples": "Visningene dine leser nå eksempelloggen og øvelsene. Endre dette i datainnstillingene.",
     "usesSeparateLog": "Du har allerede en treningslogg, så den ble ikke endret. Eksemplene bruker sin egen loggfil.",
     "yoga": {
-      "intro": "En kort morgenflyt med tidsstyrte holdeposisjoner. Start den veiledede økten, hold hver posisjon, og logg deretter hvor lenge du holdt den: hviletimeren starter av seg selv.",
+      "intro": "En kort morgenflyt med tidsbaserte holdeposisjoner. Start den veiledede økten, hold hver posisjon, og logg deretter hvor lenge du holdt den: hviletimeren starter av seg selv.",
       "holds": "{holds} holdeposisjoner × {seconds} s",
       "progressTitle": "Fremdrift"
     }
@@ -547,8 +547,8 @@
       "dailyVolume": "Daglig volum ({unit})",
       "pace": "Tempo (min/km)",
       "totalCustom": "Totalt {label}",
-      "totalDistance": "Total avstand (km)",
-      "totalDuration": "Total varighet (sek)",
+      "totalDistance": "Totalavstand (km)",
+      "totalDuration": "Totalvarighet (sek)",
       "totalVolume": "Totalvolum ({unit})",
       "totalWeight": "Totalvekt ({unit})"
     },
@@ -1167,12 +1167,12 @@
   },
   "welcome": {
     "title": "Velkommen til treningsplugin",
-    "intro": "Spor treningsøktene dine, og se dem deretter som grafer, tabeller og et dashbord. Hvordan vil du helst starte?",
+    "intro": "Spor treningsøktene dine, og se dem deretter som diagrammer, tabeller og et dashbord. Hvordan vil du helst starte?",
     "tryExamples": "Prøv med eksempeldata",
     "startScratch": "Start fra bunnen av",
     "later": "Senere",
     "tryExamplesDesc": "Legger til eksempeløkter, og viser deg deretter hvordan plugin-en fungerer med dem.",
-    "startScratchDesc": "Veileder deg gjennom plugin-et med dine egne data, og starter med ditt første sett.",
+    "startScratchDesc": "Veileder deg gjennom plugin-en med dine egne data, og starter med ditt første sett.",
     "tourOnYourData": "Du har allerede en treningslogg, så turen bruker dine egne data."
   },
   "tour": {

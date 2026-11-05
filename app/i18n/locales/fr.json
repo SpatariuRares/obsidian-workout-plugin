@@ -472,12 +472,12 @@
         "restTimerTitle": "Options du minuteur de repos",
         "restTimerIntro": "Le bloc contient toutes les options de son minuteur de repos : une note de jour n'a donc pas besoin de `workout-timer`. `timer.type` (`interval` utilise `rest` comme travail de chaque tour, avec `timer.rest` et `timer.rounds`), `timer.preset`, `timer.sound` et `timer.showControls`. ⋮ → Modifier le minuteur de repos les écrit pour vous."
       },
-      "pagesIntro": "Explorez une fonctionnalité par page. Suivez les liens dans l'ordre, ou choisissez une fonctionnalité ci-dessous. Utilisez les boutons \"Précédent\" et \"Suivant\" pour naviguer entre les notes ; faites défiler normalement pour explorer chaque exemple.",
+      "pagesIntro": "Explorez une fonctionnalité par page. Suivez les liens dans l'ordre, ou choisissez une fonctionnalité ci-dessous. Utilisez les boutons « Précédent » et « Suivant » pour naviguer entre les notes ; faites défiler normalement pour explorer chaque exemple.",
       "liveIntro": "Explorez toutes les fonctionnalités ci-dessous avec des exemples d'entraînements sur six semaines. Il s'agit de données de démonstration ; essayez les commandes et voyez comment vos notes fonctionnent.",
       "tryLog": "Utilisez le bouton \"+\" pour ajouter une série. Le tableau, les graphiques et le tableau de bord utilisent le même fichier CSV.",
       "continueWithWorkout": "Ouvrez [[{workout}]] pour essayer un entraînement complet avec des tableaux d'exercices et des minuteries de repos.",
       "moreExamples": "Consultez [[{showcase}]] pour plus d'informations sur les différents types de graphiques, les filtres et les protocoles d'entraînement.",
-      "ownData": "Lorsque vous êtes prêt, choisissez votre propre dossier CSV et votre dossier d'exemple dans les paramètres → Configuration et données. Conservez le dossier d'exemple comme référence.",
+      "ownData": "Lorsque vous êtes prêt, choisissez votre propre dossier CSV et votre dossier d'exemple dans Paramètres → Configuration et données. Conservez le dossier d'exemple comme référence.",
       "openGuideDesc": "Ouvrez la page « Comment débuter » avec des exemples fonctionnels de tableaux, de graphiques, de minuteurs et du tableau de bord."
     },
     "hiit": {
@@ -1039,7 +1039,7 @@
     },
     "beta": {
       "intro": "Nouvelles fonctionnalités à tester avant leur lancement général. Elles sont temporairement désactivées et peuvent encore être modifiées.",
-      "disabledBlock": "{feature} est une fonctionnalité en version bêta. Activez-la dans les paramètres → Fonctionnalités bêta pour utiliser cette fonctionnalité."
+      "disabledBlock": "{feature} est une fonctionnalité en version bêta. Activez-la dans Paramètres → Fonctionnalités bêta pour utiliser ce bloc."
     }
   },
   "table": {
@@ -1295,7 +1295,7 @@
     "close": "Compris",
     "olderReleases": "Versions précédentes sur GitHub",
     "releases": {
-      "v3_1_0": "**Les nouveautés du plugin.** Après une mise à jour, le plugin affiche une fois ce qui a changé. Rouvrez-la à tout moment avec **Afficher les nouveautés** dans la palette de commandes, ou **Voir le journal des modifications** sous Paramètres → Workout Planner → Démarrage.\n\n**Les séries sur votre téléphone pour tout le monde.** Le bloc `workout-sets` n'est plus une fonctionnalité bêta : il fonctionne sans rien activer, et **Ajouter des séries d'exercices** est toujours dans la palette de commandes.",
+      "v3_1_0": "**Les nouveautés du plugin.** Après une mise à jour, le plugin affiche une fois ce qui a changé. Rouvrez-la à tout moment avec **Afficher les nouveautés** dans la palette de commandes, ou **Voir le journal des modifications** sous Paramètres → Workout Planner → Premiers pas.\n\n**Les séries sur votre téléphone pour tout le monde.** Le bloc `workout-sets` n'est plus une fonctionnalité bêta : il fonctionne sans rien activer, et **Ajouter des séries d'exercices** est toujours dans la palette de commandes.",
       "v3_0_0": "**Un nouveau look pour chaque bloc.** Les journaux d'entraînement, les graphiques, la séance guidée, la durée d'entraînement et chaque widget du tableau de bord sont désormais des cartes avec la même mise en page, les mêmes commandes et les mêmes menus, et un contraste plus net en thème clair comme en thème sombre. Rien ne change dans vos notes ni dans votre journal : les blocs sont simplement plus cohérents.\n\n**Les séries sur votre téléphone (bêta).** Un nouveau bloc `workout-sets` affiche les séries du jour d'un exercice sous forme de lignes à remplir, avec les valeurs de la dernière fois comme repères. Cochez une ligne pour enregistrer la série : le minuteur de repos démarre tout seul. Recochez-la pour la reprendre, avec Annuler pendant quelques secondes. Activez-le dans Paramètres → Workout Planner → Fonctionnalités bêta (les nouvelles installations l'ont activé), puis utilisez **Ajouter des séries d'exercices** dans la palette de commandes.\n\n**Les séances guidées lisent les feuilles de séries.** Un `workout-session` suit désormais les blocs `workout-sets` en plus des blocs `workout-log`, prend le repos de chaque exercice dans son propre bloc et partage un seul compte à rebours avec la carte des séries.\n\n**Les graphiques** affichent sous le graphique une ligne de statistiques : moyenne, minimum, maximum, tendance récente et nombre de séances.\n\n**Les widgets du tableau de bord** ont leurs propres réglages dans leur menu ⋮ (nombre d'entraînements à lister, chiffres à afficher, jours comptés, etc.).\n\n**Les notes d'exemple** utilisent désormais `workout-sets` pour les exercices de l'entraînement d'exemple."
     }
   }

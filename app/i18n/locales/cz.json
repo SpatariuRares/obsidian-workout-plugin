@@ -408,7 +408,7 @@
       "importIntro": "Spusťte **{command}** z panelu příkazů a vyberte CSV, které aplikace exportovala. Série, které už jsou v deníku, se přeskočí a deník se nejprve zálohuje.",
       "setsTitle": "Záznamy aktivit na vašem telefonu",
       "setsIntro": "Blok `workout-sets` zobrazuje dnešní série jako řádky. Šedá čísla představují stejnou sérii z předchozího dne: zaškrtněte řádek, abyste ji zapsali tak, jak je, nebo zadejte, co jste skutečně udělali. Klepnutím na šipku otevřete protokol a poznámky dané série; zapsanou sérii lze upravit.",
-      "codeBlockWorkoutSets": "Zaznamenejte si dnešní série postupně, řádek po řádku."
+      "codeBlockWorkoutSets": "Zaznamenejte si dnešní série postupně, řádek po řádku"
     },
     "fileNames": {
       "dashboard": "Přehled",
@@ -519,7 +519,7 @@
     "pointedAtExamples": "Vaše nastavení nyní čte příkladový log a cvičení. Změňte to v nastaveních dat.",
     "usesSeparateLog": "Máte již vytvořený záznam tréninků, takže byl ponechán bez úprav. Příklady používají vlastní soubor pro záznam.",
     "yoga": {
-      "intro": "Krátký ranní flow sekvenci časově měřených výdrží. Spusťte vedenou relaci, udržte každou pozici a potom zapište, jak dlouho jste ji drželi: odpočinkový časovač se spustí sám.",
+      "intro": "Krátký ranní flow z časově měřených výdrží. Spusťte vedenou relaci, udržte každou pozici a potom zapište, jak dlouho jste ji drželi: odpočinkový časovač se spustí sám.",
       "holds": "{holds} výdrží × {seconds} s",
       "progressTitle": "Pokrok"
     }
@@ -595,7 +595,7 @@
       "blockIdsAdded": "Přidáno chybějících ID: {count} (souborů: {files})",
       "csvCreated": "Soubor CSV byl úspěšně vytvořen!",
       "noBlockIdsNeeded": "Všechny bloky kódu už mají ID",
-      "weightUnitsStamped": "Jednotka váhy uložena u {count} starších záznamů."
+      "weightUnitsStamped": "Jednotka váhy uložena u {count} starších záznamů"
     },
     "tagReferenceGenerated": "Přehled štítků byl úspěšně vygenerován!",
     "timerCompleted": "Časovač dokončen!",
@@ -741,7 +741,7 @@
       "muscleTagImported": "Úspěšně importováno štítků svalů: {count}!",
       "muscleTagLoading": "Načítání štítků...",
       "muscleTagNoResults": "Hledání neodpovídá žádným štítkům",
-      "muscleTagSaveError": "Chyba při ukládání štítku svalové skupiny: {error}",
+      "muscleTagSaveError": "Chyba při ukládání štítku svalů: {error}",
       "muscleTagSaved": "Štítek uložen",
       "muscleTagSimilarFound": "Nalezeno podobných štítků: {count}",
       "muscleTagSimilarWarning": "Podobný štítek už existuje",
@@ -755,7 +755,7 @@
       "validMaxValue": "{field} musí být nejvýše {max}",
       "validFieldRequired": "{field} je povinné",
       "migrationNoUpdates": "Všechny stránky cvičení jsou již aktuální",
-      "validMustBeWholeNumber": "{field} musí být celé číslo.",
+      "validMustBeWholeNumber": "{field} musí být celé číslo",
       "newRecord": "Nový osobní rekord: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Graf byl úspěšně vložen!",
       "chartUpdated": "Graf byl úspěšně aktualizován!",
@@ -920,7 +920,7 @@
       "exerciseBlockTemplate": "Šablona pro bloky cvičení. Dostupné zástupné znaky: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Cesta ke složce obsahující stránky cvičení",
       "generateDefaultTemplates": "Vygeneruje výchozí šablonu stránky cvičení a přehled štítků ve složce 'Workout Templates'. Úpravou těchto souborů můžete změnit jazyk a strukturu.",
-      "noPresets": "Nejsou nastaveny žádné předvolby časovače. Klikněte na 'Přidat předvolbu' a vytvořte novou.",
+      "noPresets": "Nejsou nastaveny žádné předvolby časovače. Klikněte na „Přidat předvolbu“ a vytvořte novou.",
       "presetDurationDesc": "Doba trvání v sekundách (např. 90 pro časovač 90 sekund).",
       "presetNameDesc": "Jedinečný název této předvolby časovače (např. 'Odpočinek 90s', 'HIIT 30/10').",
       "presetRoundsDesc": "Počet intervalových kol, která proběhnou před zastavením.",
@@ -1020,7 +1020,7 @@
       "editProtocol": "Upravit protokol"
     },
     "validation": {
-      "csvFolderNotFound": "Složka nebyla v trezoru nalezena. Vytvořte ji pomocí 'Nastavit soubory CSV'.",
+      "csvFolderNotFound": "Složka nebyla v trezoru nalezena. Vytvořte ji pomocí „Nastavit soubory CSV“.",
       "csvPathEmpty": "Cesta nemůže být prázdná",
       "mustBeNonNegative": "Musí být 0 nebo větší",
       "mustBePositive": "Musí být větší než 0"
@@ -1039,7 +1039,7 @@
     },
     "beta": {
       "intro": "Nové funkce, které si můžete vyzkoušet, než budou dostupné všem. Jsou zatím nedostupné a mohou se ještě změnit.",
-      "disabledBlock": "{feature} je funkce v beta verzi. Pro použití této funkce zapněte ji v Nastavení → Funkce v beta verzi."
+      "disabledBlock": "{feature} je funkce v beta verzi. Pro použití této funkce zapněte ji v Nastavení → Funkce pro testování (beta)."
     }
   },
   "table": {
@@ -1153,14 +1153,14 @@
       "log": "Chyba při načítání záznamů: {error}",
       "timer": "Chyba při načítání časovače: {error}",
       "dashboard": "Chyba při načítání přehledu: {error}",
-      "sets": "Chyba při načítání sad: {error}"
+      "sets": "Chyba při načítání sérií: {error}"
     },
     "validation": {
       "title": "Neplatné parametry:",
       "notANumber": "Hodnota {key} musí být číslo, ale je \"{value}\"",
-      "tooSmall": "Hodnota {key} musí být {min} nebo vyšší, ale je {value}.",
-      "outOfRange": "Hodnota {key} musí být mezi {min} a {max}, ale je {value}.",
-      "notABoolean": "Hodnota {key} musí být buď pravda, nebo nepravda, ale je \"{value}\"",
+      "tooSmall": "Hodnota {key} musí být {min} nebo vyšší, ale je {value}",
+      "outOfRange": "Hodnota {key} musí být mezi {min} a {max}, ale je {value}",
+      "notABoolean": "Hodnota {key} musí být true nebo false, ale je \"{value}\"",
       "notOneOf": "{key} musí být jedním z {allowed}, ale je \"{value}\"",
       "notACell": "{key} musí být čtyři celá čísla od 1 (sloupec, řádek, šířka, výška), ale je \"{value}\""
     }
@@ -1172,7 +1172,7 @@
     "startScratch": "Začněte od začátku",
     "later": "Později",
     "tryExamplesDesc": "Přidá ukázkové tréninky a poté vás provede pluginem na těchto datech.",
-    "startScratchDesc": "Vede vás krok za krokem používáním pluginu s vašimi vlastními daty, počínaje první sadou.",
+    "startScratchDesc": "Vede vás krok za krokem používáním pluginu s vašimi vlastními daty, počínaje první sérií.",
     "tourOnYourData": "Máte již vytvořený záznam tréninků, takže prohlídka běží na vašich vlastních datech."
   },
   "tour": {
@@ -1296,7 +1296,7 @@
     "olderReleases": "Starší verze na GitHubu",
     "releases": {
       "v3_1_0": "**Co je nového v pluginu.** Po aktualizaci plugin jednou zobrazí, co se změnilo. Kdykoli ho můžete znovu otevřít příkazem **Zobrazit novinky** v paletě příkazů nebo tlačítkem **Zobrazit seznam změn** v Nastavení → Workout Planner → Začít.\n\n**Série tréninku pro všechny.** Blok `workout-sets` už není funkce v beta verzi: funguje bez zapínání čehokoli a příkaz **Vložit série tréninku** je vždy v paletě příkazů.",
-      "v3_0_0": "**Nový vzhled všech bloků.** Záznamy tréninků, grafy, vedená relace, délka tréninku i každý widget dashboardu jsou nyní karty se stejným rozložením, ovládacími prvky a nabídkami, s výraznějším kontrastem ve světlém i tmavém motivu. Nic ve vašich poznámkách ani v záznamu se nemění: bloky jen vypadají a fungují jednotněji.\n\n**Série v telefonu (beta).** Nový blok `workout-sets` zobrazuje dnešní série jednoho cvičení jako řádky k vyplnění, s hodnotami z minulého tréninku jako nápovědou. Zaškrtněte řádek a série se zapíše do záznamu, odpočinkový časovač se spustí sám; zaškrtnutím ji znovu odeberete, s možností Vrátit několik sekund. Zapněte to v Nastavení → Workout Planner → Funkce v beta verzi (nové instalace ji mají zapnutou) a pak použijte **Vložit série tréninku** v paletě příkazů.\n\n**Vedená relace čte série.** `workout-session` nyní sleduje bloky `workout-sets` stejně jako bloky `workout-log`, bere odpočinek každého cvičení z jeho vlastního bloku a sdílí jedno odpočítávání s kartou sérií.\n\n**Grafy** zobrazují pod sebou řádek se statistikami: průměr, minimum, maximum, poslední trend a počet relací.\n\n**Widgety dashboardu** mají vlastní nastavení v nabídce ⋮ (kolik tréninků vypsat, které údaje zobrazit, kolik dní počítat a podobně).\n\n**Ukázkové poznámky** nyní pro cvičení ukázkového tréninku používají `workout-sets`."
+      "v3_0_0": "**Nový vzhled všech bloků.** Záznamy tréninků, grafy, vedená relace, délka tréninku i každý widget dashboardu jsou nyní karty se stejným rozložením, ovládacími prvky a nabídkami, s výraznějším kontrastem ve světlém i tmavém motivu. Nic ve vašich poznámkách ani v záznamu se nemění: bloky jen vypadají a fungují jednotněji.\n\n**Série v telefonu (beta).** Nový blok `workout-sets` zobrazuje dnešní série jednoho cvičení jako řádky k vyplnění, s hodnotami z minulého tréninku jako nápovědou. Zaškrtněte řádek a série se zapíše do záznamu, odpočinkový časovač se spustí sám; zaškrtnutím ji znovu odeberete, s možností Vrátit několik sekund. Zapněte to v Nastavení → Workout Planner → Funkce pro testování (beta); nové instalace ji mají zapnutou. Pak použijte **Vložit série tréninku** v paletě příkazů.\n\n**Vedená relace čte série.** `workout-session` nyní sleduje bloky `workout-sets` stejně jako bloky `workout-log`, bere odpočinek každého cvičení z jeho vlastního bloku a sdílí jedno odpočítávání s kartou sérií.\n\n**Grafy** mají pod sebou řádek se statistikami: průměr, minimum, maximum, poslední trend a počet relací.\n\n**Widgety dashboardu** mají vlastní nastavení v nabídce ⋮ (kolik tréninků vypsat, které údaje zobrazit, kolik dní počítat a podobně).\n\n**Ukázkové poznámky** nyní pro cvičení ukázkového tréninku používají `workout-sets`."
     }
   }
 }

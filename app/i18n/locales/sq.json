@@ -406,7 +406,7 @@
       "trainingCalendarIntro": "Kalendari i stërvitjes shfaq një vit ditësh stërvitjeje dhe sa javë radhazi ke arritur objektivin tënd javor (Cilësimet → Objektivi javor).",
       "importTitle": "8. Importo nga Strong ose Hevy",
       "importIntro": "Ekzekuto **{command}** nga paleta e komandave dhe zgjidh CSV-në që aplikacioni eksportoi. Seritë që janë tashmë në regjistrin tënd kapërcehen, dhe regjistri kopjohet së pari.",
-      "setsTitle": "Shënimet për grupet në telefonin tuaj",
+      "setsTitle": "Regjistrimi i serive në telefonin tuaj",
       "setsIntro": "Një bllok `workout-sets` shfaq seritë e ditës si rreshta. Numrat gri janë e njëjta seri herën e fundit: shëno një rresht për ta regjistruar ashtu siç është, ose shkruaj çfarë ke bërë. Prek shigjetën për protokollin dhe shënimet e serisë, dhe një seri të regjistruar për ta redaktuar.",
       "codeBlockWorkoutSets": "Regjistro seritë e ditës rresht për rresht"
     },
@@ -462,7 +462,7 @@
         "workoutTitle": "Një stërvitje e tërë",
         "workoutIntro": "Me `workout` dhe pa `exercise` tabela liston çdo ser të asaj stërvitjeje. `dateRange: 14` mban 14 ditët e fundit.",
         "columnsTitle": "Kolonat dhe renditja",
-        "columnsIntro": "`columns` zgjedh kolonat dhe radhën e tyre; `sortBy` dhe `sortOrder` radhën e rreshtave, këtu seritë më të rënda të parat. `showAddButton: false` fshih butonin +, dhe `showProtocol: false` do të fshihte etiketat e protokolleve."
+        "columnsIntro": "`columns` zgjedh kolonat dhe radhën e tyre; `sortBy` dhe `sortOrder` radhën e rreshtave, këtu seritë më të rënda të parat. `showAddButton: false` fsheh butonin +, dhe `showProtocol: false` do të fshihte etiketat e protokolleve."
       },
       "sets": {
         "lastTimeTitle": "Të njëjtat seri si herën e fundit",
@@ -595,7 +595,7 @@
       "blockIdsAdded": "U shtuan {count} ID që mungonin në {files} skedar(ë)",
       "csvCreated": "Skedari CSV u krijua me sukses!",
       "noBlockIdsNeeded": "Të gjitha blloqet e kodit kanë tashmë ID",
-      "weightUnitsStamped": "U ruajt njësia e peshës në {count} regjistra të vjetra."
+      "weightUnitsStamped": "U ruajt njësia e peshës në {count} regjistrime të vjetra."
     },
     "tagReferenceGenerated": "Referenca e etiketave u gjenerua me sukses!",
     "timerCompleted": "Timeri përfundoi!",
@@ -1296,7 +1296,7 @@
     "olderReleases": "Versionet e mëparshme në GitHub",
     "releases": {
       "v3_1_0": "**Çfarë është e re në plugin.** Pas një përditësimi, plugini shfaq një herë atë që ka ndryshuar. Hapeni sërish në çdo kohë me **Shfaq çfarë është e re** në paletën e komandave, ose me **Shfaq ndryshimet** te Cilësimet → Workout Planner → Fillimi.\n\n**Seritë e stërvitjes për të gjithë.** Blloku `workout-sets` nuk është më funksion beta: funksionon pa aktivizuar asgjë, dhe **Shto seritë e stërvitjes** është gjithmonë në paletën e komandave.",
-      "v3_0_0": "**Pamje e re për çdo bllok.** Regjistrat e stërvitjes, grafikët, seanca e udhëzuar, kohëzgjatja e stërvitjes dhe çdo widget i panelit janë tani kartela me të njëjtën paraqitje, kontrolle dhe menu, me kontrast më të qartë në temat e çelët dhe të errët. Asgjë në shënimet ose regjistrin tuaj nuk ndryshon: blloqet thjesht duken dhe sillen më në mënyrë të qëndrueshme.\n\n**Seritë në telefon (beta).** Një bllok i ri `workout-sets` shfaq seritë e sotme të një ushtrimi si rreshta për t'i plotësuar, me vlerat e herës së fundit si sugjerime. Shëno një rresht për të regjistruar serinë dhe timeri i pushimit nis vetvetiu; shëno sërish për ta marrë mbrapsht, me Zhbëj për disa sekonda. Aktivizoje te Cilësimet → Workout Planner → Funksionet beta (instalimet e reja e kanë të aktivizuar), pastaj përdor **Shto seritë e stërvitjes** nga paleta e komandave.\n\n**Seancat e udhëzuara lexojnë fletët e serive.** Një `workout-session` ndjek tani blloqet `workout-sets` dhe `workout-log`, e merr pushimin e çdo ushtrimi nga blloku i vet, dhe ndan një numërim të vetëm me kartelën e serive.\n\n**Grafikët** shfaqin një rresht statistikash nën grafik: mesatarja, minimumi, maksimumi, tendenca e fundit dhe numri i seancave.\n\n**Widgetët e panelit** kanë cilësimet e tyre në menunë ⋮ (sa stërvitje të listohen, cilat shifra të shfaqen, ditët e numëruara, e kështu me radhë).\n\n**Shembujt e shënimeve** përdorin tani `workout-sets` për ushtrimet e stërvitjes shembull."
+      "v3_0_0": "**Pamje e re për çdo bllok.** Regjistrat e stërvitjes, grafikët, seanca e udhëzuar, kohëzgjatja e stërvitjes dhe çdo widget i panelit janë tani kartela me të njëjtën paraqitje, kontrolle dhe menu, me kontrast më të qartë në temat e ndritshme dhe të errëta. Asgjë në shënimet ose regjistrin tuaj nuk ndryshon: blloqet thjesht duken dhe sillen më në mënyrë të qëndrueshme.\n\n**Seritë në telefon (beta).** Një bllok i ri `workout-sets` shfaq seritë e sotme të një ushtrimi si rreshta për t'i plotësuar, me vlerat e herës së fundit si sugjerime. Shëno një rresht për të regjistruar serinë dhe timeri i pushimit nis vetvetiu; shëno sërish për ta marrë mbrapsht, me Zhbëj për disa sekonda. Aktivizoje te Cilësimet → Workout Planner → Funksionet beta (instalimet e reja e kanë të aktivizuar), pastaj përdor **Shto seritë e stërvitjes** nga paleta e komandave.\n\n**Seancat e udhëzuara lexojnë fletët e serive.** Një `workout-session` ndjek tani blloqet `workout-sets` dhe `workout-log`, e merr pushimin e çdo ushtrimi nga blloku i vet, dhe ndan një numërim të vetëm me kartelën e serive.\n\n**Grafikët** shfaqin një rresht statistikash nën grafik: mesatarja, minimumi, maksimumi, tendenca e fundit dhe numri i seancave.\n\n**Widgetët e panelit** kanë cilësimet e tyre në menunë ⋮ (sa stërvitje të listohen, cilat shifra të shfaqen, ditët e numëruara, e kështu me radhë).\n\n**Shembujt e shënimeve** përdorin tani `workout-sets` për ushtrimet e stërvitjes shembull."
     }
   }
 }

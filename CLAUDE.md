@@ -620,7 +620,7 @@ A new user-facing feature ships off, behind a toggle in Settings → Beta featur
 ## Testing
 
 **Framework**: Jest with ts-jest
-**Coverage**: measured over all of `app/`; `jest.config.js` thresholds are a floor at the current real level (~55%). Raise them when you add tests, never lower them. Prioritize logic that writes or transforms user data.
+**Coverage**: measured over all of `app/`; `jest.config.js` thresholds are a floor at the current real level (~80%: statements 78, branches 75, functions 77, lines 78). Raise them when you add tests, never lower them. Prioritize logic that writes or transforms user data.
 
 ```bash
 npm test                 # Run all tests

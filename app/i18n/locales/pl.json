@@ -56,6 +56,11 @@
     "bpm": "bpm",
     "clear": "Wyczyść",
     "convert": "Konwertuj",
+    "duration": {
+      "hours": "{count}g",
+      "minutes": "{count}min",
+      "seconds": "{count}s"
+    },
     "exercise": "Ćwiczenie",
     "km": "km",
     "minPerKm": "min/km",
@@ -801,12 +806,14 @@
       "chartType": "Typ wykresu",
       "configuration": "Konfiguracja",
       "displayOptions": "Opcje wyświetlania",
+      "exercise": "Ćwiczenie",
       "exerciseConfiguration": "Konfiguracja ćwiczenia",
       "options": "Opcje",
       "preset": "Ustawienie",
       "progressiveOverload": "Progresja obciążeń",
       "tableType": "Typ tabeli",
       "target": "Cel",
+      "timer": "Timer",
       "workout": "Trening",
       "mobileOptions": "Ostatnie ćwiczenia i trening"
     },
@@ -1098,7 +1105,12 @@
     "interval": "Interwał",
     "presets": {
       "detailsControls": "Elementy sterowania",
-      "detailsSound": "Dźwięk"
+      "detailsSound": "Dźwięk",
+      "summaryType": "Typ: {type}",
+      "summaryDuration": "Czas trwania: {seconds}s",
+      "summaryRounds": "Rundy: {rounds}",
+      "summaryRest": "Odpoczynek: {seconds}s",
+      "summaryOptions": "Opcje: {options}"
     },
     "stopwatch": "Stoper",
     "phase": {

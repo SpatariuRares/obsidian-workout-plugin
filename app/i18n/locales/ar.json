@@ -56,6 +56,11 @@
     "bpm": "bpm",
     "clear": "مسح",
     "convert": "تحويل",
+    "duration": {
+      "hours": "{count}س",
+      "minutes": "{count}د",
+      "seconds": "{count}ث"
+    },
     "exercise": "تمرين",
     "km": "كم",
     "minPerKm": "دقيقة/كم",
@@ -801,12 +806,14 @@
       "chartType": "نوع المخطط",
       "configuration": "التكوين",
       "displayOptions": "خيارات العرض",
+      "exercise": "التمرين",
       "exerciseConfiguration": "إعدادات التمرين",
       "options": "خيارات",
       "preset": "الإعداد المسبق",
       "progressiveOverload": "التحميل التدريجي",
       "tableType": "نوع الجدول",
       "target": "الهدف",
+      "timer": "المؤقت",
       "workout": "التدريب",
       "mobileOptions": "التمارين الأخيرة والتدريب"
     },
@@ -1098,7 +1105,12 @@
     "interval": "فترات",
     "presets": {
       "detailsControls": "عناصر التحكم",
-      "detailsSound": "الصوت"
+      "detailsSound": "الصوت",
+      "summaryType": "النوع: {type}",
+      "summaryDuration": "المدة: {seconds}ث",
+      "summaryRounds": "الجولات: {rounds}",
+      "summaryRest": "الراحة: {seconds}ث",
+      "summaryOptions": "الخيارات: {options}"
     },
     "stopwatch": "ساعة إيقاف",
     "phase": {

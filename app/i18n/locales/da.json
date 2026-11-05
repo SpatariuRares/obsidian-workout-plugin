@@ -56,6 +56,11 @@
     "bpm": "bpm",
     "clear": "Ryd",
     "convert": "Konvertér",
+    "duration": {
+      "hours": "{count}t",
+      "minutes": "{count}min",
+      "seconds": "{count}s"
+    },
     "exercise": "Øvelse",
     "km": "km",
     "minPerKm": "min/km",
@@ -801,12 +806,14 @@
       "chartType": "Diagramtype",
       "configuration": "Konfiguration",
       "displayOptions": "Visningsindstillinger",
+      "exercise": "Øvelse",
       "exerciseConfiguration": "Øvelseskonfiguration",
       "options": "Indstillinger",
       "preset": "Forudindstilling",
       "progressiveOverload": "Progressiv overbelastning",
       "tableType": "Tabeltype",
       "target": "Mål",
+      "timer": "Timer",
       "workout": "Træning",
       "mobileOptions": "Seneste øvelser og træning"
     },
@@ -1098,7 +1105,12 @@
     "interval": "Interval",
     "presets": {
       "detailsControls": "Kontroller",
-      "detailsSound": "Lyd"
+      "detailsSound": "Lyd",
+      "summaryType": "Type: {type}",
+      "summaryDuration": "Varighed: {seconds}s",
+      "summaryRounds": "Runder: {rounds}",
+      "summaryRest": "Hvile: {seconds}s",
+      "summaryOptions": "Indstillinger: {options}"
     },
     "stopwatch": "Stopur",
     "phase": {

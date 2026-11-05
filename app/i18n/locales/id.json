@@ -56,6 +56,11 @@
     "bpm": "BPM",
     "clear": "Hapus",
     "convert": "Konversi",
+    "duration": {
+      "hours": "{count}j",
+      "minutes": "{count}m",
+      "seconds": "{count}dtk"
+    },
     "exercise": "Latihan",
     "km": "km",
     "minPerKm": "menit/km",
@@ -801,12 +806,14 @@
       "chartType": "Jenis grafik",
       "configuration": "Konfigurasi",
       "displayOptions": "Opsi tampilan",
+      "exercise": "Latihan",
       "exerciseConfiguration": "Konfigurasi latihan",
       "options": "Pilihan",
       "preset": "Preset",
       "progressiveOverload": "Progressive overload",
       "tableType": "Jenis tabel",
       "target": "Target",
+      "timer": "Timer",
       "workout": "Latihan",
       "mobileOptions": "Latihan terbaru dan sesi latihan"
     },
@@ -1098,7 +1105,12 @@
     "interval": "Interval",
     "presets": {
       "detailsControls": "Kontrol",
-      "detailsSound": "Suara"
+      "detailsSound": "Suara",
+      "summaryType": "Jenis: {type}",
+      "summaryDuration": "Durasi: {seconds}dtk",
+      "summaryRounds": "Putaran: {rounds}",
+      "summaryRest": "Istirahat: {seconds}dtk",
+      "summaryOptions": "Opsi: {options}"
     },
     "stopwatch": "Stopwatch",
     "phase": {

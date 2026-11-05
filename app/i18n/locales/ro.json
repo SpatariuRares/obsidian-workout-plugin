@@ -56,6 +56,11 @@
     "bpm": "bpm",
     "clear": "Șterge",
     "convert": "Convertește",
+    "duration": {
+      "hours": "{count}h",
+      "minutes": "{count}m",
+      "seconds": "{count}s"
+    },
     "exercise": "Exercițiu",
     "km": "km",
     "minPerKm": "min/km",
@@ -801,12 +806,14 @@
       "chartType": "Tip de grafic",
       "configuration": "Configurare",
       "displayOptions": "Opțiuni de afișare",
+      "exercise": "Exercițiu",
       "exerciseConfiguration": "Configurarea exercițiului",
       "options": "Opțiuni",
       "preset": "Preset",
       "progressiveOverload": "Supraîncărcare progresivă",
       "tableType": "Tip de tabel",
       "target": "Țintă",
+      "timer": "Temporizator",
       "workout": "Antrenament",
       "mobileOptions": "Exercițiile și antrenamentele recente"
     },
@@ -1098,7 +1105,12 @@
     "interval": "Interval",
     "presets": {
       "detailsControls": "Comenzi",
-      "detailsSound": "Sunet"
+      "detailsSound": "Sunet",
+      "summaryType": "Tip: {type}",
+      "summaryDuration": "Durată: {seconds}s",
+      "summaryRounds": "Runde: {rounds}",
+      "summaryRest": "Pauză: {seconds}s",
+      "summaryOptions": "Opțiuni: {options}"
     },
     "stopwatch": "Cronometru",
     "phase": {

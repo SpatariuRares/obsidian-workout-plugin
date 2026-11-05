@@ -56,6 +56,11 @@
     "bpm": "bpm",
     "clear": "Temizle",
     "convert": "Çevir",
+    "duration": {
+      "hours": "{count}sa",
+      "minutes": "{count}dk",
+      "seconds": "{count}sn"
+    },
     "exercise": "Egzersiz",
     "km": "km",
     "minPerKm": "dk/km",
@@ -801,12 +806,14 @@
       "chartType": "Grafik türü",
       "configuration": "Yapılandırma",
       "displayOptions": "Görüntüleme seçenekleri",
+      "exercise": "Egzersiz",
       "exerciseConfiguration": "Egzersiz yapılandırması",
       "options": "Seçenekler",
       "preset": "Ön ayar",
       "progressiveOverload": "Progresif yükleme",
       "tableType": "Tablo türü",
       "target": "Hedef",
+      "timer": "Zamanlayıcı",
       "workout": "Antrenman",
       "mobileOptions": "Son egzersizler ve antrenman"
     },
@@ -1098,7 +1105,12 @@
     "interval": "Aralık",
     "presets": {
       "detailsControls": "Kontroller",
-      "detailsSound": "Ses"
+      "detailsSound": "Ses",
+      "summaryType": "Tür: {type}",
+      "summaryDuration": "Süre: {seconds}sn",
+      "summaryRounds": "Turlar: {rounds}",
+      "summaryRest": "Dinlenme: {seconds}sn",
+      "summaryOptions": "Seçenekler: {options}"
     },
     "stopwatch": "Stoper",
     "phase": {

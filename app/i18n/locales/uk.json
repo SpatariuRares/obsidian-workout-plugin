@@ -56,6 +56,11 @@
     "bpm": "bpm",
     "clear": "Очистити",
     "convert": "Перетворити",
+    "duration": {
+      "hours": "{count} год",
+      "minutes": "{count} хв",
+      "seconds": "{count} с"
+    },
     "exercise": "Вправа",
     "km": "км",
     "minPerKm": "хв/км",
@@ -801,12 +806,14 @@
       "chartType": "Тип графіка",
       "configuration": "Налаштування",
       "displayOptions": "Параметри відображення",
+      "exercise": "Вправа",
       "exerciseConfiguration": "Налаштування вправи",
       "options": "Параметри",
       "preset": "Пресет",
       "progressiveOverload": "Прогресивне навантаження",
       "tableType": "Тип таблиці",
       "target": "Ціль",
+      "timer": "Таймер",
       "workout": "Тренування",
       "mobileOptions": "Нещодавні вправи та тренування"
     },
@@ -1098,7 +1105,12 @@
     "interval": "Інтервал",
     "presets": {
       "detailsControls": "Елементи керування",
-      "detailsSound": "Звук"
+      "detailsSound": "Звук",
+      "summaryType": "Тип: {type}",
+      "summaryDuration": "Тривалість: {seconds} с",
+      "summaryRounds": "Раунди: {rounds}",
+      "summaryRest": "Відпочинок: {seconds} с",
+      "summaryOptions": "Параметри: {options}"
     },
     "stopwatch": "Секундомір",
     "phase": {

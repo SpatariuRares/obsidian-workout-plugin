@@ -56,6 +56,11 @@
     "bpm": "बीपीएम",
     "clear": "साफ़ करें",
     "convert": "रूपांतरित करें",
+    "duration": {
+      "hours": "{count}घं",
+      "minutes": "{count}मि",
+      "seconds": "{count}से"
+    },
     "exercise": "व्यायाम",
     "km": "km",
     "minPerKm": "मिनट/किमी",
@@ -801,12 +806,14 @@
       "chartType": "चार्ट का प्रकार",
       "configuration": "कॉन्फ़िगरेशन",
       "displayOptions": "डिस्प्ले विकल्प",
+      "exercise": "व्यायाम",
       "exerciseConfiguration": "व्यायाम कॉन्फ़िगरेशन",
       "options": "विकल्प",
       "preset": "प्रीसेट",
       "progressiveOverload": "प्रोग्रेसिव ओवरलोड",
       "tableType": "तालिका का प्रकार",
       "target": "लक्ष्य",
+      "timer": "टाइमर",
       "workout": "वर्कआउट",
       "mobileOptions": "हाल के व्यायाम और वर्कआउट"
     },
@@ -1098,7 +1105,12 @@
     "interval": "अंतराल",
     "presets": {
       "detailsControls": "नियंत्रण",
-      "detailsSound": "ध्वनि"
+      "detailsSound": "ध्वनि",
+      "summaryType": "प्रकार: {type}",
+      "summaryDuration": "अवधि: {seconds}से",
+      "summaryRounds": "राउंड: {rounds}",
+      "summaryRest": "आराम: {seconds}से",
+      "summaryOptions": "विकल्प: {options}"
     },
     "stopwatch": "स्टॉपवॉच",
     "phase": {

@@ -56,6 +56,11 @@
     "bpm": "bpm",
     "clear": "清除",
     "convert": "轉換",
+    "duration": {
+      "hours": "{count}時",
+      "minutes": "{count}分",
+      "seconds": "{count}秒"
+    },
     "exercise": "動作",
     "km": "公里",
     "minPerKm": "分鐘/公里",
@@ -801,12 +806,14 @@
       "chartType": "圖表類型",
       "configuration": "設定",
       "displayOptions": "顯示選項",
+      "exercise": "動作",
       "exerciseConfiguration": "動作設定",
       "options": "選項",
       "preset": "預設",
       "progressiveOverload": "漸進式超負荷",
       "tableType": "表格類型",
       "target": "目標",
+      "timer": "計時器",
       "workout": "運動",
       "mobileOptions": "最近的動作和運動"
     },
@@ -1098,7 +1105,12 @@
     "interval": "間隔",
     "presets": {
       "detailsControls": "控制項",
-      "detailsSound": "音效"
+      "detailsSound": "音效",
+      "summaryType": "類型：{type}",
+      "summaryDuration": "時長：{seconds}秒",
+      "summaryRounds": "輪數：{rounds}",
+      "summaryRest": "休息：{seconds}秒",
+      "summaryOptions": "選項：{options}"
     },
     "stopwatch": "碼錶",
     "phase": {

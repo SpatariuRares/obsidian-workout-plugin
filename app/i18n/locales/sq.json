@@ -56,6 +56,11 @@
     "bpm": "bpm",
     "clear": "Pastro",
     "convert": "Konverto",
+    "duration": {
+      "hours": "{count}o",
+      "minutes": "{count}min",
+      "seconds": "{count}sek"
+    },
     "exercise": "Ushtrim",
     "km": "km",
     "minPerKm": "min/km",
@@ -801,12 +806,14 @@
       "chartType": "Lloji i grafikut",
       "configuration": "Konfigurim",
       "displayOptions": "Opsionet e shfaqjes",
+      "exercise": "Ushtrim",
       "exerciseConfiguration": "Konfigurimi i ushtrimit",
       "options": "Opsionet",
       "preset": "Paracaktim",
       "progressiveOverload": "Mbingarkesë progresive",
       "tableType": "Lloji i tabelës",
       "target": "Objektivi",
+      "timer": "Timer",
       "workout": "Stërvitja",
       "mobileOptions": "Ushtrimet e fundit dhe stërvitja"
     },
@@ -1098,7 +1105,12 @@
     "interval": "Interval",
     "presets": {
       "detailsControls": "Kontrollet",
-      "detailsSound": "Tingulli"
+      "detailsSound": "Tingulli",
+      "summaryType": "Lloji: {type}",
+      "summaryDuration": "Kohëzgjatja: {seconds}sek",
+      "summaryRounds": "Raunde: {rounds}",
+      "summaryRest": "Pushimi: {seconds}sek",
+      "summaryOptions": "Opsionet: {options}"
     },
     "stopwatch": "Kronometër",
     "phase": {

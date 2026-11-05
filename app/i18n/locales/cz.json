@@ -56,6 +56,11 @@
     "bpm": "bpm",
     "clear": "Vymazat",
     "convert": "Převést",
+    "duration": {
+      "hours": "{count}h",
+      "minutes": "{count}m",
+      "seconds": "{count}s"
+    },
     "exercise": "Cvičení",
     "km": "km",
     "minPerKm": "min/km",
@@ -801,12 +806,14 @@
       "chartType": "Typ grafu",
       "configuration": "Konfigurace",
       "displayOptions": "Možnosti zobrazení",
+      "exercise": "Cvičení",
       "exerciseConfiguration": "Nastavení cvičení",
       "options": "Možnosti",
       "preset": "Předvolba",
       "progressiveOverload": "Progresivní přetížení",
       "tableType": "Typ tabulky",
       "target": "Cíl",
+      "timer": "Časovač",
       "workout": "Trénink",
       "mobileOptions": "Nedávné cvičení a trénink"
     },
@@ -1098,7 +1105,12 @@
     "interval": "Interval",
     "presets": {
       "detailsControls": "Ovládací prvky",
-      "detailsSound": "Zvuk"
+      "detailsSound": "Zvuk",
+      "summaryType": "Typ: {type}",
+      "summaryDuration": "Doba: {seconds}s",
+      "summaryRounds": "Kola: {rounds}",
+      "summaryRest": "Odpočinek: {seconds}s",
+      "summaryOptions": "Možnosti: {options}"
     },
     "stopwatch": "Stopky",
     "phase": {

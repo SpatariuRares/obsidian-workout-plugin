@@ -56,6 +56,11 @@
     "bpm": "bpm",
     "clear": "クリア",
     "convert": "変換",
+    "duration": {
+      "hours": "{count}時間",
+      "minutes": "{count}分",
+      "seconds": "{count}秒"
+    },
     "exercise": "エクササイズ",
     "km": "km",
     "minPerKm": "分/km",
@@ -801,12 +806,14 @@
       "chartType": "グラフの種類",
       "configuration": "設定",
       "displayOptions": "表示オプション",
+      "exercise": "エクササイズ",
       "exerciseConfiguration": "エクササイズの設定",
       "options": "オプション",
       "preset": "プリセット",
       "progressiveOverload": "漸進性過負荷",
       "tableType": "テーブルの種類",
       "target": "目標",
+      "timer": "タイマー",
       "workout": "ワークアウト",
       "mobileOptions": "最近のエクササイズとワークアウト"
     },
@@ -1098,7 +1105,12 @@
     "interval": "インターバル",
     "presets": {
       "detailsControls": "操作",
-      "detailsSound": "音"
+      "detailsSound": "音",
+      "summaryType": "種類: {type}",
+      "summaryDuration": "所要時間: {seconds}秒",
+      "summaryRounds": "ラウンド数: {rounds}",
+      "summaryRest": "休憩: {seconds}秒",
+      "summaryOptions": "オプション: {options}"
     },
     "stopwatch": "ストップウォッチ",
     "phase": {

@@ -56,6 +56,11 @@
     "bpm": "bpm",
     "clear": "Wissen",
     "convert": "Converteren",
+    "duration": {
+      "hours": "{count}h",
+      "minutes": "{count}m",
+      "seconds": "{count}s"
+    },
     "exercise": "Oefening",
     "km": "km",
     "minPerKm": "min/km",
@@ -801,12 +806,14 @@
       "chartType": "Grafiektype",
       "configuration": "Configuratie",
       "displayOptions": "Weergaveopties",
+      "exercise": "Oefening",
       "exerciseConfiguration": "Oefeningsconfiguratie",
       "options": "Opties",
       "preset": "Voorinstelling",
       "progressiveOverload": "Progressieve overbelasting",
       "tableType": "Tabeltype",
       "target": "Doel",
+      "timer": "Timer",
       "workout": "Training",
       "mobileOptions": "Recente oefeningen en trainingen"
     },
@@ -1098,7 +1105,12 @@
     "interval": "Interval",
     "presets": {
       "detailsControls": "Bedieningselementen",
-      "detailsSound": "Geluid"
+      "detailsSound": "Geluid",
+      "summaryType": "Type: {type}",
+      "summaryDuration": "Duur: {seconds}s",
+      "summaryRounds": "Rondes: {rounds}",
+      "summaryRest": "Rust: {seconds}s",
+      "summaryOptions": "Opties: {options}"
     },
     "stopwatch": "Stopwatch",
     "phase": {

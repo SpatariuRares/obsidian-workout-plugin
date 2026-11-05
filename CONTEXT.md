@@ -245,6 +245,10 @@ _Avoid_: workout time
 An exercise's heaviest eligible weight ever lifted. Warm-up (`warmup`) and drop sets (`drop_set`) are excluded from PRs and new-record counts; other built-in and custom protocols remain eligible. Warm-up and drop sets still contribute to volume and trends. The first eligible weighted set establishes the PR without counting as a new record. A set "sets a new PR" when it is strictly heavier than every earlier set of that exercise. Exercise names are compared ignoring case and spacing. Of several sets at the PR weight, the one with most reps (then the earliest) is the PR. Exercises logged without weight have no PR.
 _Avoid_: best, max (as separate concepts)
 
+**Last time**:
+The latest earlier training day on which the exercise was done (in any workout), with all of that day's sets of it in set order. It is what today's sets and the target are compared against.
+_Avoid_: last set (for the whole day)
+
 **Trend**:
 The direction of a series of training-day values (for weight: the heaviest set of each training day), read from its linear regression line: up, down or stable (within 5% of the mean). For pace, lower is better.
 _Avoid_: progress, variation (for the direction itself)

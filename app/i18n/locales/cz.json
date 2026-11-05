@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "Přidat mapování pole",
       "removeMapping": "Odstranit přiřazení",
-      "reps": "Opakování",
-      "title": "Mapování polí",
-      "weight": "Hmotnost ({unit})"
+      "title": "Mapování polí"
     },
     "preview": {
       "noEntries": "Pro toto cvičení nebyly nalezeny žádné záznamy",
-      "title": "Předběžný náhled",
       "willConvertMany": "Počet záznamů k převodu: {count}",
       "willConvertOne": "1 záznam bude převeden"
     },

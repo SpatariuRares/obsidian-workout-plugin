@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "Feldzuordnung hinzufügen",
       "removeMapping": "Zuordnung entfernen",
-      "reps": "Wiederholungen",
-      "title": "Zuordnung von Feldern",
-      "weight": "Gewicht ({unit})"
+      "title": "Zuordnung von Feldern"
     },
     "preview": {
       "noEntries": "Keine Protokolleinträge für diese Übung gefunden",
-      "title": "Vorschau",
       "willConvertMany": "{count} Protokoll-Einträge werden konvertiert",
       "willConvertOne": "1 Protokoll-Eintrag wird konvertiert"
     },

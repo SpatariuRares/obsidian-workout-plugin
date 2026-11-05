@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "Alan eşleme ekle",
       "removeMapping": "Eşlemeyi kaldır",
-      "reps": "Tekrarlar",
-      "title": "Alan eşleme",
-      "weight": "Ağırlık ({unit})"
+      "title": "Alan eşleme"
     },
     "preview": {
       "noEntries": "Bu egzersiz için kayıt bulunamadı",
-      "title": "Önizleme",
       "willConvertMany": "{count} kayıt dönüştürülecek",
       "willConvertOne": "1 kayıt dönüştürülecek"
     },

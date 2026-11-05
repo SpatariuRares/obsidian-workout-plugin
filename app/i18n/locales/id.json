@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "Tambahkan pemetaan bidang",
       "removeMapping": "Hapus pemetaan",
-      "reps": "Repetisi",
-      "title": "Pemetaan bidang",
-      "weight": "Berat ({unit})"
+      "title": "Pemetaan bidang"
     },
     "preview": {
       "noEntries": "Tidak ditemukan entri log untuk latihan ini",
-      "title": "Pratinjau",
       "willConvertMany": "{count} entri log akan dikonversi",
       "willConvertOne": "1 entri log akan dikonversi"
     },

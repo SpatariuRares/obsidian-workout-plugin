@@ -1,16 +1,23 @@
-import {
-  EXERCISE_TYPE_IDS,
-  getExerciseTypeById,
-} from "@app/constants/exerciseTypes.constants";
-import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
+import { EXERCISE_TYPE_IDS } from "@app/constants/exerciseTypes.constants";
+import type {
+  ExerciseTypeDefinition,
+  ParameterDefinition,
+} from "@app/types/ExerciseTypes";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { StringUtils } from "@app/utils/StringUtils";
 import { DataFilter } from "@app/services/data/DataFilter";
 import { toLogEntryInput } from "@app/services/data/WorkoutLogCodec";
 import {
+  fieldKey,
   fieldValue,
+  hasFieldValue,
   setFieldValue,
 } from "@app/services/exercise/ExerciseFields";
+import {
+  ExerciseTypeCatalog,
+  type ExerciseTypeInfo,
+} from "@app/services/exercise/ExerciseTypeCatalog";
 
 export interface FieldMapping {
   fromField: string;
@@ -21,6 +28,58 @@ export interface FieldMapping {
 
 export class ExerciseConversionService {
   constructor(private plugin: WorkoutPluginContext) {}
+
+  /**
+   * The types an exercise can be converted to: the built-in ones, then the
+   * user's own (Settings → Exercise types)
+   */
+  public targetTypes(): ExerciseTypeInfo[] {
+    return this.catalog().pickable();
+  }
+
+  /** A type by its id, built-in or the user's own */
+  public resolveType(typeId: string): ExerciseTypeInfo | undefined {
+    return this.catalog().resolve(typeId);
+  }
+
+  /**
+   * The fields a conversion can read from this exercise's sets: the fields
+   * its page logs (its type's, then the page's `parameters:`), then any
+   * other column its sets have a value in
+   */
+  public async sourceFields(
+    exerciseName: string,
+  ): Promise<ParameterDefinition[]> {
+    const fields = [
+      ...(await this.plugin
+        .getExerciseDefinitionService()
+        .getParametersForExercise(exerciseName)),
+    ];
+    const known = (key: string) =>
+      fields.some((field) => fieldKey(field.key) === fieldKey(key));
+    for (const set of await this.setsOf(exerciseName)) {
+      for (const [key, value] of Object.entries(
+        set.customFields ?? {},
+      )) {
+        if (!known(key) && hasFieldValue(value)) {
+          fields.push({
+            key,
+            label: StringUtils.humanize(key),
+            type: "number",
+            required: false,
+          });
+        }
+      }
+    }
+    return fields;
+  }
+
+  /** The types as the settings have them now */
+  private catalog(): ExerciseTypeCatalog {
+    return new ExerciseTypeCatalog(
+      this.plugin.settings.exerciseTypes ?? [],
+    );
+  }
 
   /**
    * Suggests initial field mappings based on source and target types
@@ -54,11 +113,16 @@ export class ExerciseConversionService {
    * The sets a conversion of this exercise rewrites: exact name only, so a
    * similar exercise is never converted
    */
-  public async setsOf(exerciseName: string): Promise<WorkoutLogData[]> {
-    return DataFilter.filterRows(await this.plugin.getWorkoutLogData(), {
-      exercise: exerciseName,
-      exactMatch: true,
-    });
+  public async setsOf(
+    exerciseName: string,
+  ): Promise<WorkoutLogData[]> {
+    return DataFilter.filterRows(
+      await this.plugin.getWorkoutLogData(),
+      {
+        exercise: exerciseName,
+        exactMatch: true,
+      },
+    );
   }
 
   /**
@@ -94,7 +158,7 @@ export class ExerciseConversionService {
         // Clear fields that don't belong to the target type. A type with no
         // parameters of its own (custom: defined per exercise) clears
         // nothing, and fields the user mapped are always kept.
-        const targetType = getExerciseTypeById(targetTypeId);
+        const targetType = this.resolveType(targetTypeId);
         const targetParams = targetType?.parameters ?? [];
         if (targetParams.length > 0) {
           const keptKeys = new Set([
@@ -110,7 +174,9 @@ export class ExerciseConversionService {
           }
 
           if (updatedEntry.customFields) {
-            for (const key of Object.keys(updatedEntry.customFields)) {
+            for (const key of Object.keys(
+              updatedEntry.customFields,
+            )) {
               if (!keptKeys.has(key)) {
                 delete updatedEntry.customFields[key];
               }
@@ -139,8 +205,11 @@ export class ExerciseConversionService {
       .getExerciseDefinition(exerciseName);
 
     if (definition) {
-      // Update exercise type
+      // Update exercise type. The page's own fields go with the old type:
+      // the sets no longer hold them (only the target type's and the mapped
+      // fields are kept)
       definition.typeId = targetTypeId;
+      delete definition.customParameters;
 
       // Save updated definition
       await this.plugin

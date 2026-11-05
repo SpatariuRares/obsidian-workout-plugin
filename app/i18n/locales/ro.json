@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "Adaugă mapare de câmpuri",
       "removeMapping": "Elimină maparea",
-      "reps": "Repetări",
-      "title": "Maparea câmpurilor",
-      "weight": "Greutate ({unit})"
+      "title": "Maparea câmpurilor"
     },
     "preview": {
       "noEntries": "Nu au fost găsite înregistrări în jurnal pentru acest exercițiu.",
-      "title": "Previzualizare",
       "willConvertMany": "{count} înregistrări vor fi convertite",
       "willConvertOne": "1 înregistrare va fi convertită"
     },

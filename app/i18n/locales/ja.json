@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "フィールドのマッピングを追加する",
       "removeMapping": "マッピングを削除する",
-      "reps": "レップ数",
-      "title": "フィールドのマッピング",
-      "weight": "重量（{unit}）"
+      "title": "フィールドのマッピング"
     },
     "preview": {
       "noEntries": "このエクササイズに関するログエントリは見つかりませんでした。",
-      "title": "プレビュー",
       "willConvertMany": "{count} 件のログエントリが変換されます",
       "willConvertOne": "1件のログエントリが変換されます"
     },

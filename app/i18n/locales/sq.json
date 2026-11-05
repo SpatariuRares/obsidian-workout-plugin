@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "Shto mapim fushash",
       "removeMapping": "Hiq mapimin",
-      "reps": "Përsëritjet",
-      "title": "Mapimi i fushave",
-      "weight": "Pesha ({unit})"
+      "title": "Mapimi i fushave"
     },
     "preview": {
       "noEntries": "Nuk u gjet asnjë regjistrim për këtë ushtrim",
-      "title": "Parapamje",
       "willConvertMany": "{count} regjistrime do të konvertohen",
       "willConvertOne": "1 regjistrim do të konvertohet"
     },

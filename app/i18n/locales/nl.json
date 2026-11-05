@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "Veldmapping toevoegen",
       "removeMapping": "Mapping verwijderen",
-      "reps": "Herhalingen",
-      "title": "Veldmapping",
-      "weight": "Gewicht ({unit})"
+      "title": "Veldmapping"
     },
     "preview": {
       "noEntries": "Geen logboekgegevens gevonden voor deze oefening.",
-      "title": "Voorbeeld",
       "willConvertMany": "{count} logregels worden omgezet",
       "willConvertOne": "1 logregel wordt omgezet"
     },

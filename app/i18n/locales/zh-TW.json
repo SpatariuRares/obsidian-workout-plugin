@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "新增欄位對應",
       "removeMapping": "移除對應",
-      "reps": "次數",
-      "title": "欄位對應",
-      "weight": "重量（{unit}）"
+      "title": "欄位對應"
     },
     "preview": {
       "noEntries": "未找到與此動作相關的任何紀錄",
-      "title": "預覽",
       "willConvertMany": "將轉換 {count} 筆紀錄",
       "willConvertOne": "將轉換 1 筆紀錄"
     },

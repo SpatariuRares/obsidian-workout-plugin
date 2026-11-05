@@ -78,14 +78,14 @@
     },
     "fieldMapping": {
       "addMapping": "Aggiungi la mappatura dei campi",
+      "empty": "Nessun campo mappato: aggiungine uno per portare i suoi valori nel nuovo tipo.",
+      "from": "Da",
       "removeMapping": "Rimuovi la mappatura",
-      "reps": "Ripetizioni",
       "title": "Mappatura dei campi",
-      "weight": "Peso ({unit})"
+      "to": "A"
     },
     "preview": {
       "noEntries": "Non sono state trovate voci di log per questo esercizio.",
-      "title": "Anteprima",
       "willConvertMany": "Verranno convertite {count} voci di log",
       "willConvertOne": "Verrà convertita 1 voce di log"
     },

@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "Ajouter une correspondance de champs",
       "removeMapping": "Supprimer la correspondance",
-      "reps": "Répétitions",
-      "title": "Correspondance des champs",
-      "weight": "Poids ({unit})"
+      "title": "Correspondance des champs"
     },
     "preview": {
       "noEntries": "Aucun enregistrement de journal trouvé pour cet exercice.",
-      "title": "Aperçu",
       "willConvertMany": "{count} entrées de journal seront converties",
       "willConvertOne": "1 entrée sera convertie"
     },

@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "Legg til feltmapping",
       "removeMapping": "Fjern mapping",
-      "reps": "Repetisjoner",
-      "title": "Feltmapping",
-      "weight": "Vekt ({unit})"
+      "title": "Feltmapping"
     },
     "preview": {
       "noEntries": "Ingen loggposter funnet for denne øvelsen",
-      "title": "Forhåndsvis",
       "willConvertMany": "{count} loggposter vil bli konvertert",
       "willConvertOne": "1 loggpost vil bli konvertert"
     },

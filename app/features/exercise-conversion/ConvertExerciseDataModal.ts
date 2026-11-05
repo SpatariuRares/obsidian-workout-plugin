@@ -2,9 +2,11 @@ import { App, Notice } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { t } from "@app/i18n";
-import { getExerciseTypeById } from "@app/constants/exerciseTypes.constants";
 import { exerciseTypeName } from "@app/constants/ui.constants";
-import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
+import type {
+  ExerciseTypeDefinition,
+  ParameterDefinition,
+} from "@app/types/ExerciseTypes";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import {
   ExerciseConversionService,
@@ -12,28 +14,35 @@ import {
 } from "@app/features/exercise-conversion/logic/ExerciseConversionService";
 import { ConversionTypeSelect } from "@app/features/exercise-conversion/components/ConversionTypeSelect";
 import { FieldMappingList } from "@app/features/exercise-conversion/components/FieldMappingList";
-import { ConversionPreview } from "@app/features/exercise-conversion/components/ConversionPreview";
-import { Button } from "@app/components/atoms";
+import { Button, Feedback } from "@app/components/atoms";
+import { StatCard } from "@app/components/molecules";
 
+/**
+ * Converts the logged sets of one exercise to another exercise type
+ * (built-in or the user's own), moving values between fields. Three section
+ * cards: the exercise (with its current type and how many sets change), the
+ * type to convert to, the field mapping; the action row stays at the bottom.
+ */
 export class ConvertExerciseDataModal extends ModalBase {
   private plugin: WorkoutPluginContext;
   private conversionService: ExerciseConversionService;
 
-  // Components
   private typeSelect: ConversionTypeSelect | null = null;
   private fieldMappingList: FieldMappingList | null = null;
-  private conversionPreview: ConversionPreview | null = null;
 
   // State
   private selectedExercise: string = "";
   private currentType: ExerciseTypeDefinition | null = null;
+  private sourceFields: ParameterDefinition[] = [];
   private targetType: string = "";
   private updateFrontmatter: boolean = true;
   private entryCount: number = 0;
   private mappings: FieldMapping[] = [];
 
   // UI Elements
-  private currentTypeDisplay: HTMLElement | null = null;
+  private summaryEl: HTMLElement | null = null;
+  /** Shown once an exercise is picked */
+  private laterSections: HTMLElement[] = [];
   private convertButton: HTMLButtonElement | null = null;
 
   constructor(app: App, plugin: WorkoutPluginContext) {
@@ -42,55 +51,64 @@ export class ConvertExerciseDataModal extends ModalBase {
     this.conversionService = new ExerciseConversionService(plugin);
   }
 
-  async onOpen(): Promise<void> {
+  onOpen(): void {
     const { contentEl } = this;
     contentEl.empty();
     contentEl.addClass("workout-modal");
 
     contentEl.createEl("h2", { text: t("convert.title") });
 
-    const mainContainer = this.createStyledMainContainer(contentEl);
+    const form = this.createStyledMainContainer(contentEl);
+    form.addClass("workout-convert-form");
 
-    // Exercise Section
-    await this.createExerciseSection(mainContainer);
+    this.createExerciseSection(form);
 
-    // Conversion Type Section
+    const typeSection = this.createSection(
+      form,
+      t("convert.typeSelect.convertTo"),
+    );
     this.typeSelect = new ConversionTypeSelect(
-      mainContainer,
-      (typeId) => void this.handleTargetTypeChange(typeId),
+      this,
+      typeSection,
+      this.conversionService.targetTypes(),
+      (typeId) => this.handleTargetTypeChange(typeId),
       (update) => {
         this.updateFrontmatter = update;
       },
     );
-    this.typeSelect.render();
-    this.typeSelect.setVisible(false);
 
-    // Field Mapping Section
+    const mappingSection = this.createSection(
+      form,
+      t("convert.fieldMapping.title"),
+    );
     this.fieldMappingList = new FieldMappingList(
-      mainContainer,
+      this,
+      mappingSection,
       (mappings) => {
         this.mappings = mappings;
         this.updateState();
       },
     );
-    this.fieldMappingList.setVisible(false);
 
-    // Preview Section
-    this.conversionPreview = new ConversionPreview(mainContainer);
-    this.conversionPreview.setVisible(false);
+    this.laterSections = [typeSection, mappingSection];
+    this.laterSections.forEach((section) => setShown(section, false));
 
-    // Buttons
-    this.createButtons(mainContainer);
+    this.convertButton =
+      Button.createModalActions(contentEl, {
+        primary: {
+          text: t("common.convert"),
+          disabled: true,
+          onClick: () => this.handleConvert(),
+        },
+        onCancel: () => this.close(),
+      }).primary ?? null;
   }
 
   onClose(): void {
-    const { contentEl } = this;
-    contentEl.empty();
+    this.contentEl.empty();
   }
 
-  private async createExerciseSection(
-    parent: HTMLElement,
-  ): Promise<void> {
+  private createExerciseSection(parent: HTMLElement): void {
     const section = this.createSection(
       parent,
       t("convert.sectionExercise"),
@@ -104,116 +122,106 @@ export class ConvertExerciseDataModal extends ModalBase {
       { showCreateButton: false },
     );
 
-    elements.exerciseInput.addEventListener("change", () => {
-      this.selectedExercise = elements.exerciseInput.value.trim();
+    const pick = () => {
+      const value = elements.exerciseInput.value.trim();
+      if (value === this.selectedExercise) return;
+      this.selectedExercise = value;
       void this.handleExerciseChange();
-    });
+    };
+    elements.exerciseInput.addEventListener("change", pick);
+    elements.exerciseInput.addEventListener("blur", pick);
 
-    elements.exerciseInput.addEventListener("blur", () => {
-      const newValue = elements.exerciseInput.value.trim();
-      if (newValue && newValue !== this.selectedExercise) {
-        this.selectedExercise = newValue;
-        void this.handleExerciseChange();
-      }
+    this.summaryEl = section.createDiv({
+      cls: "workout-convert-summary",
     });
-
-    const typeGroup = this.createFormGroup(section);
-    typeGroup.createEl("label", { text: t("convert.currentType") });
-    this.currentTypeDisplay = typeGroup.createSpan({
-      cls: "workout-convert-current-type",
-      text: "—",
-    });
-  }
-
-  private createButtons(parent: HTMLElement): void {
-    this.convertButton = Button.createModalActions(parent, {
-      primary: {
-        text: t("common.convert"),
-        disabled: true,
-        onClick: () => this.handleConvert(),
-      },
-      onCancel: () => this.close(),
-    }).primary ?? null;
+    setShown(this.summaryEl, false);
   }
 
   private async handleExerciseChange(): Promise<void> {
-    if (!this.selectedExercise) {
+    const exercise = this.selectedExercise;
+    if (!exercise) {
       this.resetUI();
       return;
     }
 
-    this.currentType = await this.plugin
+    const currentType = await this.plugin
       .getExerciseDefinitionService()
-      .getExerciseType(this.selectedExercise);
+      .getExerciseType(exercise);
+    const entryCount = (await this.conversionService.setsOf(exercise))
+      .length;
+    const sourceFields =
+      await this.conversionService.sourceFields(exercise);
+    // Another exercise was picked while these were read
+    if (exercise !== this.selectedExercise) return;
 
-    if (this.currentTypeDisplay) {
-      this.currentTypeDisplay.textContent = exerciseTypeName(this.currentType);
-    }
-
-    this.entryCount = (
-      await this.conversionService.setsOf(this.selectedExercise)
-    ).length;
-
-    // Show Type Select
-    this.typeSelect?.setVisible(true);
+    this.currentType = currentType;
+    this.entryCount = entryCount;
+    this.sourceFields = sourceFields;
+    this.renderSummary();
+    this.laterSections.forEach((section) => setShown(section, true));
+    // Offers every type but the current one and maps the pick's fields
+    this.typeSelect?.setCurrentType(currentType.id);
   }
 
-  private async handleTargetTypeChange(
-    typeId: string,
-  ): Promise<void> {
+  /** "Current type: Strength", then how many sets change (or that none would) */
+  private renderSummary(): void {
+    const el = this.summaryEl;
+    if (!el || !this.currentType) return;
+    el.empty();
+    setShown(el, true);
+
+    const row = StatCard.row(el);
+    StatCard.create(row, {
+      label: t("convert.currentType"),
+      value: exerciseTypeName(this.currentType),
+      detail:
+        this.entryCount === 1
+          ? t("convert.preview.willConvertOne")
+          : this.entryCount > 1
+            ? t("convert.preview.willConvertMany", {
+                count: this.entryCount,
+              })
+            : undefined,
+    });
+    if (this.entryCount === 0) {
+      Feedback.renderWarning(el, t("convert.preview.noEntries"), {
+        append: true,
+      });
+    }
+  }
+
+  private handleTargetTypeChange(typeId: string): void {
     this.targetType = typeId;
+    const target = this.conversionService.resolveType(typeId);
+    if (!this.currentType || !target) return;
 
-    const targetTypeDef = getExerciseTypeById(typeId);
-    if (!this.currentType || !targetTypeDef) return;
-
-    const suggested = this.conversionService.suggestInitialMappings(
-      this.currentType,
-      targetTypeDef,
+    this.fieldMappingList?.setFields(
+      this.sourceFields,
+      target.parameters,
+      this.conversionService.suggestInitialMappings(
+        this.currentType,
+        target,
+      ),
     );
-
-    this.fieldMappingList?.setTypes(this.currentType, targetTypeDef);
-
-    const fullMappings: FieldMapping[] = suggested.map((s) => ({
-      fromField: s.from,
-      toField: s.to,
-      fromLabel: s.from,
-      toLabel: s.to,
-    }));
-
-    this.fieldMappingList?.setMappings(fullMappings);
-    this.mappings = fullMappings;
-
-    this.fieldMappingList?.setVisible(true);
-    this.conversionPreview?.setVisible(true);
-
-    this.updateState();
   }
 
   private updateState(): void {
-    if (this.conversionPreview) {
-      this.conversionPreview.update(this.entryCount, this.mappings);
-    }
-
-    if (this.convertButton) {
-      const isValid =
-        this.selectedExercise &&
-        this.targetType &&
-        this.currentType?.id !== this.targetType &&
-        this.mappings.length > 0 &&
-        this.entryCount > 0;
-
-      this.convertButton.disabled = !isValid;
-    }
+    if (!this.convertButton) return;
+    const isValid =
+      this.selectedExercise &&
+      this.targetType &&
+      this.currentType?.id !== this.targetType &&
+      this.mappings.length > 0 &&
+      this.entryCount > 0;
+    this.convertButton.disabled = !isValid;
   }
 
   private resetUI(): void {
-    this.typeSelect?.setVisible(false);
-    this.fieldMappingList?.setVisible(false);
-    this.conversionPreview?.setVisible(false);
-    if (this.currentTypeDisplay) {
-      this.currentTypeDisplay.textContent = "—";
-    }
+    this.laterSections.forEach((section) => setShown(section, false));
+    if (this.summaryEl) setShown(this.summaryEl, false);
+    this.currentType = null;
     this.entryCount = 0;
+    this.mappings = [];
     this.updateState();
   }
 
@@ -240,4 +248,8 @@ export class ConvertExerciseDataModal extends ModalBase {
       );
     }
   }
+}
+
+function setShown(el: HTMLElement, shown: boolean): void {
+  el.classList.toggle("workout-display-none", !shown);
 }

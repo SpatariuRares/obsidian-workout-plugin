@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "Dodaj mapowanie pól",
       "removeMapping": "Usuń mapowanie",
-      "reps": "Powtórzenia",
-      "title": "Mapowanie pól",
-      "weight": "Waga ({unit})"
+      "title": "Mapowanie pól"
     },
     "preview": {
       "noEntries": "Nie znaleziono żadnych wpisów w dzienniku dla tego ćwiczenia",
-      "title": "Podgląd",
       "willConvertMany": "{count} wpisów zostanie przekonwertowanych",
       "willConvertOne": "1 wpis zostanie przekonwertowany"
     },

@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "필드 매핑 추가",
       "removeMapping": "매핑 제거",
-      "reps": "반복 횟수",
-      "title": "필드 매핑",
-      "weight": "무게 ({unit})"
+      "title": "필드 매핑"
     },
     "preview": {
       "noEntries": "이 운동 종목에 대한 로그 항목이 없습니다.",
-      "title": "미리보기",
       "willConvertMany": "{count} 로그 항목이 변환됩니다.",
       "willConvertOne": "1개의 로그 항목이 변환됩니다."
     },

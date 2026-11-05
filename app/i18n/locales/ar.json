@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "إضافة ربط حقل",
       "removeMapping": "إزالة الربط",
-      "reps": "التكرارات",
-      "title": "ربط الحقول",
-      "weight": "الوزن ({unit})"
+      "title": "ربط الحقول"
     },
     "preview": {
       "noEntries": "لم يتم العثور على أي سجلات لهذا التمرين.",
-      "title": "معاينة",
       "willConvertMany": "سيتم تحويل {count} من إدخالات السجل",
       "willConvertOne": "سيتم تحويل إدخال سجل واحد"
     },

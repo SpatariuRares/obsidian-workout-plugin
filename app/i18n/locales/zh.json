@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "添加字段映射",
       "removeMapping": "移除映射",
-      "reps": "次数",
-      "title": "字段映射",
-      "weight": "重量（{unit}）"
+      "title": "字段映射"
     },
     "preview": {
       "noEntries": "未找到此训练动作的记录",
-      "title": "预览",
       "willConvertMany": "{count} 条记录将被转换",
       "willConvertOne": "1 条记录将被转换"
     },

@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "Adicionar mapeamento de campo",
       "removeMapping": "Remover mapeamento",
-      "reps": "Repetições",
-      "title": "Mapeamento de campos",
-      "weight": "Peso ({unit})"
+      "title": "Mapeamento de campos"
     },
     "preview": {
       "noEntries": "Não foram encontrados registos para este exercício",
-      "title": "Visualização",
       "willConvertMany": "Serão convertidos {count} registos",
       "willConvertOne": "1 registo será convertido"
     },

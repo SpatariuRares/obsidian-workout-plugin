@@ -1,210 +1,171 @@
-import { EXERCISE_TYPE_IDS } from "@app/constants/exerciseTypes.constants";
 import type { FieldMapping } from "@app/features/exercise-conversion/logic/ExerciseConversionService";
-import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
-import { Button, BUTTONVARIANT } from "@app/components/atoms";
-import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
+import type { ParameterDefinition } from "@app/types/ExerciseTypes";
+import type { ModalBase } from "@app/features/modals/base/ModalBase";
+import {
+  Button,
+  BUTTONVARIANT,
+  DeleteButton,
+  Feedback,
+} from "@app/components/atoms";
+import { ICONS } from "@app/constants/ui.constants";
 import { t } from "@app/i18n";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 
+interface FieldOption {
+  text: string;
+  value: string;
+}
+
+/**
+ * Which field of the old sets fills which field of the new type: one row per
+ * mapping (from → to, the trash at the end), then "Add field mapping".
+ */
 export class FieldMappingList {
-  private container: HTMLElement;
   private mappings: FieldMapping[] = [];
-  private sourceType: ExerciseTypeDefinition | null = null;
-  private targetType: ExerciseTypeDefinition | null = null;
-  private onChange: (mappings: FieldMapping[]) => void;
+  private sourceOptions: FieldOption[] = [];
+  private targetOptions: FieldOption[] = [];
 
   constructor(
-    parent: HTMLElement,
-    onChange: (mappings: FieldMapping[]) => void,
-  ) {
-    this.container = parent.createDiv(
-      "workout-convert-mappings-container",
-    );
-    this.onChange = onChange;
-  }
+    private readonly modal: ModalBase,
+    private readonly container: HTMLElement,
+    private readonly onChange: (mappings: FieldMapping[]) => void,
+  ) {}
 
-  public setTypes(
-    source: ExerciseTypeDefinition,
-    target: ExerciseTypeDefinition,
+  /**
+   * The fields a mapping reads from (the exercise's, its own type or not) and
+   * writes to (the target type's), with the mappings to start from
+   */
+  public setFields(
+    source: ParameterDefinition[],
+    target: ParameterDefinition[],
+    mappings: Array<{ from: string; to: string }>,
   ): void {
-    this.sourceType = source;
-    this.targetType = target;
-    // When types change, we might want to validate or clear mappings,
-    // but the parent controller usually handles the logic of "resetting" mappings.
-    // We just re-render if needed.
+    this.sourceOptions = fieldOptions(source);
+    this.targetOptions = fieldOptions(target);
+    this.mappings = mappings.map(({ from, to }) =>
+      this.mapping(from, to),
+    );
     this.render();
-  }
-
-  public setMappings(mappings: FieldMapping[]): void {
-    this.mappings = [...mappings];
-    this.render();
-  }
-
-  public getMappings(): FieldMapping[] {
-    return this.mappings;
-  }
-
-  public setVisible(visible: boolean): void {
-    if (visible) {
-      this.container.show();
-    } else {
-      this.container.hide();
-    }
+    this.onChange(this.mappings);
   }
 
   private render(): void {
     this.container.empty();
 
-    if (!this.sourceType || !this.targetType) {
-      return;
-    }
-
-    this.container.createEl("h3", {
-      text: t("convert.fieldMapping.title"),
+    const list = this.container.createDiv({
+      cls: "workout-convert-mapping-list",
     });
-
-    const listContainer = this.container.createDiv(
-      "workout-convert-mapping-list",
+    if (this.mappings.length === 0) {
+      Feedback.renderEmpty(list, t("convert.fieldMapping.empty"), {
+        append: true,
+      });
+    }
+    this.mappings.forEach((mapping, index) =>
+      this.renderRow(list, mapping, index),
     );
 
-    this.mappings.forEach((mapping, index) => {
-      this.renderMappingRow(listContainer, mapping, index);
-    });
-
-    const addButton = Button.create(this.container, {
+    const add = Button.create(this.container, {
       text: t("convert.fieldMapping.addMapping"),
+      icon: ICONS.ACTIONS.ADD,
       variant: BUTTONVARIANT.SECONDARY,
-      ariaLabel: t("convert.fieldMapping.addMapping"),
+      className: "workout-convert-add-mapping",
+      disabled:
+        this.sourceOptions.length === 0 ||
+        this.targetOptions.length === 0,
     });
-    Button.onClick(addButton, () => {
-      this.addEmptyMapping();
+    Button.onClick(add, () => {
+      this.mappings.push(
+        this.mapping(
+          this.sourceOptions[0]?.value ?? "",
+          this.targetOptions[0]?.value ?? "",
+        ),
+      );
+      this.changed();
     });
   }
 
-  private renderMappingRow(
+  private renderRow(
     parent: HTMLElement,
     mapping: FieldMapping,
     index: number,
   ): void {
-    const row = parent.createDiv("workout-convert-mapping-row");
-
-    // Source Select
-    const sourceSelect = row.createEl("select");
-    const sourceOptions = this.getSourceFieldOptions(
-      this.sourceType!,
+    const row = parent.createDiv({
+      cls: "workout-convert-mapping-row",
+    });
+    const from = this.select(
+      row,
+      this.sourceOptions,
+      mapping.fromField,
+      t("convert.fieldMapping.from"),
     );
-    sourceOptions.forEach((opt) => {
-      const option = sourceSelect.createEl("option", {
-        text: opt.text,
-        value: opt.value,
-      });
-      if (opt.value === mapping.fromField) {
-        option.selected = true;
-      }
+    row.createSpan({
+      cls: "workout-convert-mapping-arrow",
+      text: "→",
+      attr: { "aria-hidden": "true" },
+    });
+    const to = this.select(
+      row,
+      this.targetOptions,
+      mapping.toField,
+      t("convert.fieldMapping.to"),
+    );
+    DeleteButton.create(row, {
+      label: t("convert.fieldMapping.removeMapping"),
+      onClick: () => {
+        this.mappings.splice(index, 1);
+        this.changed();
+      },
     });
 
-    row.createSpan({ text: "→" });
-
-    // Target Select
-    const targetSelect = row.createEl("select");
-    const targetOptions = this.getFieldOptions(this.targetType!);
-    targetOptions.forEach((opt) => {
-      const option = targetSelect.createEl("option", {
-        text: opt.text,
-        value: opt.value,
-      });
-      if (opt.value === mapping.toField) {
-        option.selected = true;
-      }
-    });
-
-    // Remove Button
-    const removeBtn = Button.create(row, {
-      text: "×",
-      variant: BUTTONVARIANT.WARNING,
-      ariaLabel: t("convert.fieldMapping.removeMapping"),
-    });
-    Button.onClick(removeBtn, () => {
-      this.removeMapping(index);
-    });
-
-    // Listeners
-    const updateHandler = () => {
-      if (index < 0 || index >= this.mappings.length) return;
-      const newMapping: FieldMapping = {
-        fromField: sourceSelect.value,
-        toField: targetSelect.value,
-        fromLabel:
-          sourceSelect.options[sourceSelect.selectedIndex]?.text ||
-          "",
-        toLabel:
-          targetSelect.options[targetSelect.selectedIndex]?.text ||
-          "",
-      };
-      this.mappings[index] = newMapping;
+    const update = () => {
+      this.mappings[index] = this.mapping(from.value, to.value);
       this.onChange(this.mappings);
     };
-
-    sourceSelect.addEventListener("change", updateHandler);
-    targetSelect.addEventListener("change", updateHandler);
+    from.addEventListener("change", update);
+    to.addEventListener("change", update);
   }
 
-  private addEmptyMapping(): void {
-    if (!this.sourceType || !this.targetType) return;
+  private changed(): void {
+    this.render();
+    this.onChange(this.mappings);
+  }
 
-    const sourceOptions = this.getSourceFieldOptions(this.sourceType);
-    const targetOptions = this.getFieldOptions(this.targetType);
+  /** A labelled select of the form kit (ModalBase.createSelect), set to `value` */
+  private select(
+    row: HTMLElement,
+    options: FieldOption[],
+    value: string,
+    label: string,
+  ): HTMLSelectElement {
+    const group = this.modal.createFormGroup(row);
+    group.addClass("workout-convert-mapping-field");
+    const select = this.modal.createSelect(group, label, options);
+    select.value = value;
+    return select;
+  }
 
-    const newMapping: FieldMapping = {
-      fromField: sourceOptions[0]?.value || "",
-      toField: targetOptions[0]?.value || "",
-      fromLabel: sourceOptions[0]?.text || "",
-      toLabel: targetOptions[0]?.text || "",
+  private mapping(from: string, to: string): FieldMapping {
+    return {
+      fromField: from,
+      toField: to,
+      fromLabel:
+        this.sourceOptions.find((o) => o.value === from)?.text ??
+        from,
+      toLabel:
+        this.targetOptions.find((o) => o.value === to)?.text ?? to,
     };
-
-    this.mappings.push(newMapping);
-    this.render();
-    this.onChange(this.mappings);
   }
+}
 
-  private removeMapping(index: number): void {
-    this.mappings.splice(index, 1);
-    this.render();
-    this.onChange(this.mappings);
+/** The fields as options, each key once, named as the log's columns are */
+function fieldOptions(fields: ParameterDefinition[]): FieldOption[] {
+  const options: FieldOption[] = [];
+  for (const param of fields) {
+    if (options.some((o) => o.value === param.key)) continue;
+    options.push({
+      text: TableColumnResolver.formatParameterHeader(param),
+      value: param.key,
+    });
   }
-
-  private getSourceFieldOptions(
-    type: ExerciseTypeDefinition,
-  ): Array<{ text: string; value: string }> {
-    const options: Array<{ text: string; value: string }> = [];
-
-    // Standard fields usage based on type
-    if (type.id === EXERCISE_TYPE_IDS.STRENGTH) {
-      options.push({
-        text: t("convert.fieldMapping.reps"),
-        value: "reps",
-      });
-      const weightUnit = ParameterUtils.getWeightUnit();
-      options.push({
-        text: t("convert.fieldMapping.weight", { unit: weightUnit }),
-        value: "weight",
-      });
-    }
-
-    for (const param of type.parameters) {
-      // Avoid duplicates
-      if (options.some((o) => o.value === param.key)) continue;
-      options.push({
-        text: TableColumnResolver.formatParameterHeader(param),
-        value: param.key,
-      });
-    }
-    return options;
-  }
-
-  private getFieldOptions(
-    type: ExerciseTypeDefinition,
-  ): Array<{ text: string; value: string }> {
-    return this.getSourceFieldOptions(type);
-  }
+  return options;
 }

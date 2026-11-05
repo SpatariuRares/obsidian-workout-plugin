@@ -36,15 +36,38 @@ const makeLog = (overrides: Partial<WorkoutLogData> = {}) =>
     ...overrides,
   });
 
+/** A type the user made in Settings → Exercise types */
+const CLIMBING = {
+  id: "climbing",
+  name: "Rock climbing",
+  parameters: [
+    {
+      key: "grade",
+      label: "Grade",
+      type: "number" as const,
+      required: true,
+    },
+    {
+      key: "duration",
+      label: "Duration",
+      type: "number" as const,
+      unit: "sec",
+      required: false,
+    },
+  ],
+};
+
 describe("ExerciseConversionService", () => {
   let logs: WorkoutLogData[];
   let plugin: {
+    settings: Pick<WorkoutChartsSettings, "exerciseTypes">;
     getWorkoutLogData: jest.Mock;
     updateWorkoutLogEntry: jest.Mock;
     batchOperation: jest.Mock;
     getExerciseDefinitionService: jest.Mock;
   };
   let definitionService: {
+    getParametersForExercise: jest.Mock;
     getExerciseDefinition: jest.Mock;
     saveExerciseDefinition: jest.Mock;
   };
@@ -53,18 +76,18 @@ describe("ExerciseConversionService", () => {
   beforeEach(() => {
     logs = [];
     definitionService = {
+      getParametersForExercise: jest.fn(async () => []),
       getExerciseDefinition: jest.fn(),
       saveExerciseDefinition: jest.fn().mockResolvedValue(undefined),
     };
     plugin = {
+      settings: { exerciseTypes: [CLIMBING] },
       getWorkoutLogData: jest.fn(async () => logs),
       updateWorkoutLogEntry: jest.fn().mockResolvedValue(undefined),
       batchOperation: jest.fn(
         async (_op: string, fn: () => Promise<void>) => fn(),
       ),
-      getExerciseDefinitionService: jest.fn(
-        () => definitionService,
-      ),
+      getExerciseDefinitionService: jest.fn(() => definitionService),
     };
     service = new ExerciseConversionService(
       plugin as unknown as WorkoutPluginContext,
@@ -103,6 +126,91 @@ describe("ExerciseConversionService", () => {
           type(EXERCISE_TYPE_IDS.STRENGTH),
         ),
       ).toEqual([]);
+    });
+  });
+
+  describe("the user's own exercise types", () => {
+    it("offers them as targets after the built-in ones, never a deleted one", () => {
+      plugin.settings.exerciseTypes = [
+        CLIMBING,
+        { ...CLIMBING, id: "old", name: "Old", retired: true },
+      ];
+
+      const ids = service.targetTypes().map((type) => type.id);
+
+      expect(ids).toContain(EXERCISE_TYPE_IDS.STRENGTH);
+      expect(ids[ids.length - 1]).toBe("climbing");
+      expect(ids).not.toContain("old");
+      expect(ids).not.toContain(EXERCISE_TYPE_IDS.CUSTOM);
+    });
+
+    it("resolves one by its id with its fields", () => {
+      expect(service.resolveType("climbing")?.parameters).toEqual(
+        CLIMBING.parameters,
+      );
+    });
+
+    it("keeps only the fields of the user's type when converting to it", async () => {
+      logs = [
+        makeLog({
+          exercise: "Bouldering",
+          reps: 6,
+          weight: 10,
+          customFields: { duration: 300, heartRate: 140 },
+        }),
+      ];
+
+      await service.convertExerciseData("Bouldering", "climbing", [
+        mapping("reps", "grade"),
+      ]);
+
+      const updated = plugin.updateWorkoutLogEntry.mock.calls[0][1];
+      expect(updated).toMatchObject({
+        reps: 0,
+        weight: 0,
+        customFields: { grade: 6, duration: 300 },
+      });
+      expect(updated.customFields).not.toHaveProperty("heartRate");
+    });
+
+    it("suggests no mapping between types without a smart default", () => {
+      expect(
+        service.suggestInitialMappings(
+          type(EXERCISE_TYPE_IDS.STRENGTH),
+          service.resolveType("climbing")!,
+        ),
+      ).toEqual([]);
+    });
+  });
+
+  describe("sourceFields", () => {
+    it("gives the exercise's fields, then the other columns its sets fill in", async () => {
+      definitionService.getParametersForExercise.mockResolvedValue(
+        CLIMBING.parameters,
+      );
+      logs = [
+        makeLog({
+          exercise: "Bouldering",
+          customFields: {
+            grade: 6,
+            Duration: 60,
+            attempts: 3,
+            empty: "",
+          },
+        }),
+        makeLog({ exercise: "Other", customFields: { other: 1 } }),
+      ];
+
+      const fields = await service.sourceFields("Bouldering");
+
+      expect(fields.map((field) => field.key)).toEqual([
+        "grade",
+        "duration",
+        "attempts",
+      ]);
+      expect(
+        definitionService.getParametersForExercise,
+      ).toHaveBeenCalledWith("Bouldering");
     });
   });
 
@@ -284,7 +392,10 @@ describe("ExerciseConversionService", () => {
       );
 
       const updated = plugin.updateWorkoutLogEntry.mock.calls[0][1];
-      expect(updated).toMatchObject({ weight: 100, weightUnit: "lb" });
+      expect(updated).toMatchObject({
+        weight: 100,
+        weightUnit: "lb",
+      });
     });
 
     it("should keep reps and weight untouched when the target is strength and no mappings are given", async () => {
@@ -381,9 +492,7 @@ describe("ExerciseConversionService", () => {
     });
 
     it("should parse numeric strings when mapping a custom field into reps and weight", async () => {
-      logs = [
-        makeLog({ customFields: { a: "12", b: "7.5" } }),
-      ];
+      logs = [makeLog({ customFields: { a: "12", b: "7.5" } })];
 
       await service.convertExerciseData(
         "Plank",
@@ -512,13 +621,16 @@ describe("ExerciseConversionService", () => {
         { retryDelayMs: 0 },
       );
       const context = {
+        settings: { exerciseTypes: [] },
         getWorkoutLogData: () => logFile.read(),
         updateWorkoutLogEntry: (
           log: WorkoutLogData,
           entry: Parameters<WorkoutLogFile["update"]>[1],
         ) => logFile.update(log, entry),
-        batchOperation: async (_op: string, fn: () => Promise<void>) =>
-          fn(),
+        batchOperation: async (
+          _op: string,
+          fn: () => Promise<void>,
+        ) => fn(),
       };
       return {
         storage,
@@ -528,9 +640,13 @@ describe("ExerciseConversionService", () => {
       };
     }
 
-    function firstRow(storage: InMemoryLogStorage): Record<string, string> {
+    function firstRow(
+      storage: InMemoryLogStorage,
+    ): Record<string, string> {
       const [header, row] = parseCsv(storage.content ?? "");
-      return Object.fromEntries(header.map((name, i) => [name, row[i]]));
+      return Object.fromEntries(
+        header.map((name, i) => [name, row[i]]),
+      );
     }
 
     it("keeps a set logged in lb in lb when the weight is mapped, with settings in kg", async () => {
@@ -589,6 +705,34 @@ describe("ExerciseConversionService", () => {
       expect(
         definitionService.saveExerciseDefinition,
       ).toHaveBeenCalledWith({ name: "Plank", typeId: "timed" });
+    });
+
+    it("drops the page's own fields along with the old type", async () => {
+      definitionService.getExerciseDefinition.mockResolvedValue({
+        name: "Bouldering",
+        typeId: "custom",
+        customParameters: [
+          {
+            key: "attempts",
+            label: "Attempts",
+            type: "number",
+            required: false,
+          },
+        ],
+      });
+
+      await service.updateExerciseFrontmatter(
+        "Bouldering",
+        "climbing",
+      );
+
+      const saved =
+        definitionService.saveExerciseDefinition.mock.calls[0][0];
+      expect(saved).toEqual({
+        name: "Bouldering",
+        typeId: "climbing",
+      });
+      expect(saved).not.toHaveProperty("customParameters");
     });
 
     it("should do nothing when the exercise has no definition", async () => {

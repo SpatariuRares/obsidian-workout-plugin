@@ -79,13 +79,10 @@
     "fieldMapping": {
       "addMapping": "Tilføj felttilknytning",
       "removeMapping": "Fjern tilknytning",
-      "reps": "Gentagelser",
-      "title": "Felttilknytning",
-      "weight": "Vægt ({unit})"
+      "title": "Felttilknytning"
     },
     "preview": {
       "noEntries": "Ingen logposter fundet for denne øvelse",
-      "title": "Forhåndsvisning",
       "willConvertMany": "{count} logposter vil blive konverteret",
       "willConvertOne": "1 logpost vil blive konverteret"
     },

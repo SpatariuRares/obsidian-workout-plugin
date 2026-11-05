@@ -3331,14 +3331,69 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
   border-color: var(--workout-text-error);
 }
 
-/* Conversion modal */
-.workout-convert-mapping-row {
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
+/* Convert exercise data modal: section cards from ModalBase.createSection,
+   the summary a StatCard row, the selects the form kit's */
+.workout-convert-summary {
   display: flex;
-  align-items: center;
-  gap: var(--workout-space-md);
-  margin-bottom: var(--workout-space-md);
+  flex-direction: column;
+  gap: var(--workout-space-sm);
 }
 
+.workout-convert-mapping-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-md);
+}
+
+/* from → to, trash at the end, on the selects' line; the selects share the width */
+.workout-convert-mapping-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--workout-space-sm);
+}
+
+.workout-convert-mapping-row .workout-convert-mapping-field {
+  min-width: 0;
+}
+
+.workout-convert-mapping-row .workout-form-field-input {
+  width: 100%;
+  min-height: var(--workout-touch-target-min);
+}
+
+.workout-convert-mapping-arrow {
+  align-self: center;
+  color: var(--text-muted);
+}
+
+.workout-convert-add-mapping {
+  align-self: flex-start;
+}
+
+/* Phones: from over to, so a field's name is never cut */
+@media (max-width: 484px) {
+  .workout-convert-mapping-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .workout-convert-mapping-arrow {
+    display: none;
+  }
+  .workout-convert-mapping-row .workout-convert-mapping-field {
+    grid-column: 1;
+  }
+  .workout-convert-mapping-row .workout-delete-button {
+    grid-column: 2;
+    grid-row: 1/span 2;
+  }
+}
 /* Tag Manager Modal styles */
 /* Tag form container */
 .workout-tag-form-container {

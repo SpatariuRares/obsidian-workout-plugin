@@ -6,7 +6,6 @@ import { FormField } from "@app/components/molecules/FormField";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import { t } from "@app/i18n";
 
-
 let nextCheckboxId = 0;
 export abstract class ModalBase extends Modal {
   constructor(app: App) {
@@ -127,13 +126,16 @@ export abstract class ModalBase extends Modal {
     label: string,
     options: Array<{ text: string; value: string }>,
   ): HTMLSelectElement {
-    container.createEl("label", {
+    const labelEl = container.createEl("label", {
       text: label,
       cls: "workout-form-field-label",
     });
     const select = container.createEl("select", {
       cls: "workout-form-field-input",
     });
+    // Tied to its label, so the select has a name
+    select.id = `workout-select-${++nextCheckboxId}`;
+    labelEl.setAttribute("for", select.id);
     options.forEach((option) => {
       select.createEl("option", {
         text: option.text,

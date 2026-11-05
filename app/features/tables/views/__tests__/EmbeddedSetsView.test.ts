@@ -70,6 +70,7 @@ function setup(
   rows: WorkoutLogData[],
   params: EmbeddedSetsParams = { exercise: "Bench Press", sets: 3 },
   editBlock?: () => void,
+  parameters: ParameterDefinition[] = STRENGTH,
 ) {
   const eventBus = new WorkoutEventBus();
   const added: LogEntryInput[] = [];
@@ -91,7 +92,7 @@ function setup(
       return rows;
     },
     getExerciseDefinitionService: () => ({
-      getParametersForExercise: async () => STRENGTH,
+      getParametersForExercise: async () => parameters,
     }),
     addWorkoutLogEntry: async (entry: LogEntryInput, options: { timestamp?: number } = {}) => {
       added.push(entry);
@@ -485,6 +486,30 @@ describe("EmbeddedSetsView", () => {
         t("sets.valueOfSet", { field: "Weight (kg)", set: 1, value: "80" }),
       ]);
       expect(el.querySelector(".workout-sets-columns")!.getAttribute("aria-hidden")).toBe("true");
+    });
+
+    it("stacks more than two fields, each with its label, and types text with the normal keyboard", async () => {
+      const climbing: ParameterDefinition[] = [
+        { key: "grade", label: "Grade", type: "string", required: true },
+        { key: "attempts", label: "Attempts", type: "number", required: true, min: 1 },
+        { key: "sent", label: "Sent", type: "boolean", required: false },
+      ];
+      const { el } = setup([], { exercise: "Bouldering", sets: 1 }, undefined, climbing);
+      await flush();
+
+      expect(el.querySelector(".workout-sets-rows")!.classList.contains("is-stacked")).toBe(true);
+      const row = rowsOf(el)[0];
+      expect(
+        Array.from(row.querySelectorAll(".workout-sets-cell-label")).map((l) => l.textContent),
+      ).toEqual(["Grade", "Attempts", "Sent"]);
+      expect(inputsOf(row).map((i) => i.getAttribute("inputmode"))).toEqual(["text", "decimal"]);
+    });
+
+    it("keeps two fields side by side", async () => {
+      const { el } = setup([]);
+      await flush();
+
+      expect(el.querySelector(".workout-sets-rows")!.classList.contains("is-stacked")).toBe(false);
     });
 
     it("groups the protocol chips under their label", async () => {

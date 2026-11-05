@@ -21,6 +21,8 @@ export interface NumberFieldProps {
   suggestion?: string;
   /** Whole numbers: numeric keyboard, steppers round */
   integer?: boolean;
+  /** Free text (a grade, a style): the normal keyboard */
+  text?: boolean;
   /** Shown at the end of the field ("kg") */
   unit?: string;
   /** Adds − / + buttons and ↑ / ↓ keys that move the value by this much */
@@ -80,7 +82,7 @@ export class NumberField {
       attr: {
         id,
         type: "text",
-        inputmode: props.integer ? "numeric" : "decimal",
+        inputmode: props.text ? "text" : props.integer ? "numeric" : "decimal",
         enterkeyhint: props.enterKeyHint ?? "done",
         autocomplete: "off",
         "aria-label": label,

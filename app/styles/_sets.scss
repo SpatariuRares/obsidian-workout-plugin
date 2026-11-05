@@ -16,10 +16,9 @@
 }
 
 .workout-sets-rows {
-  // Set number, one column per field, details toggle, tick (its column is
-  // wider than the tick: see .workout-sets-row-main > .workout-check-toggle)
-  --workout-sets-columns: 2.25rem repeat(var(--workout-sets-fields, 2), minmax(0, 1fr))
-    2.5rem 4rem;
+  // Set number, the fields, details toggle, tick (its column is wider than
+  // the tick: see .workout-sets-row-main > .workout-check-toggle)
+  --workout-sets-columns: 2.25rem minmax(0, 1fr) 2.5rem 4rem;
 
   display: flex;
   flex-direction: column;
@@ -33,6 +32,24 @@
   align-items: center;
 }
 
+// One column per field, the header's labels above them
+.workout-sets-cells {
+  display: grid;
+  grid-template-columns: repeat(var(--workout-sets-fields, 2), minmax(0, 1fr));
+  gap: var(--workout-space-sm);
+  align-items: center;
+  min-width: 0;
+}
+
+.workout-sets-cell {
+  min-width: 0;
+}
+
+// A field's label in its cell, only while the fields are stacked
+.workout-sets-cell-label {
+  display: none;
+}
+
 .workout-sets-columns {
   font-size: var(--workout-font-xs);
   color: var(--text-muted);
@@ -42,9 +59,14 @@
   align-items: end;
   padding: 0 var(--workout-space-xs) var(--workout-space-xs);
 
-  > span {
+  > span,
+  .workout-sets-cells > span {
     min-width: 0;
     overflow-wrap: anywhere;
+  }
+
+  .workout-sets-cells {
+    align-items: end;
   }
 
   > span:first-child {
@@ -123,4 +145,37 @@
   align-self: flex-start;
   min-width: var(--workout-touch-target-min, 44px);
   min-height: var(--workout-touch-target-min, 44px);
+}
+
+// More than two fields on a phone (a grade, attempts, sent, style): two per
+// line, each with its label, instead of columns too narrow for a word
+@media (max-width: variables.$breakpoint-mobile) {
+  .workout-sets-rows.is-stacked {
+    .workout-sets-columns {
+      display: none;
+    }
+
+    .workout-sets-cells {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: var(--workout-space-xs);
+      align-items: start;
+    }
+
+    .workout-sets-cell-label {
+      display: block;
+      padding-left: calc(var(--workout-space-sm) + var(--workout-border-thin));
+      font-size: var(--workout-font-xs);
+      color: var(--text-muted);
+      overflow-wrap: anywhere;
+    }
+
+    .workout-sets-row-main {
+      padding-block: var(--workout-space-sm);
+    }
+
+    // Under its label the value stands out anyway; smaller, a word fits
+    .workout-sets-value {
+      font-size: var(--workout-font-base);
+    }
+  }
 }

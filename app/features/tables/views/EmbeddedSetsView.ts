@@ -266,6 +266,8 @@ export class SetSheet extends MarkdownRenderChild {
       DomUtils.setCssProps(table, {
         "--workout-sets-fields": String(Math.max(parameters.length, 1)),
       });
+      // More fields than fit side by side on a phone: two per line, each labelled
+      table.classList.toggle("is-stacked", parameters.length > 2);
       this.renderColumns(table, drawn.labels);
       for (const row of rows) this.renderRow(table, row, drawn);
 
@@ -335,7 +337,9 @@ export class SetSheet extends MarkdownRenderChild {
       cls: "workout-sets-columns",
       attr: { "aria-hidden": "true" },
     });
-    for (const label of [t("sets.setColumn"), ...labels]) row.createSpan({ text: label });
+    row.createSpan({ text: t("sets.setColumn") });
+    const cells = row.createDiv({ cls: "workout-sets-cells" });
+    for (const label of labels) cells.createSpan({ text: label });
   }
 
   private renderRow(table: HTMLElement, row: SetRow, drawn: Drawn): void {
@@ -351,8 +355,17 @@ export class SetSheet extends MarkdownRenderChild {
     const main = el.createDiv({ cls: "workout-sets-row-main" });
     this.renderNumber(main, row.number, drawn.protocols.resolve(rowProtocol(row, draft)));
     const log = () => void this.logRow(row, drawn, el, fields);
+    const cells = main.createDiv({ cls: "workout-sets-cells" });
     const fields = drawn.parameters.map((param, index) =>
-      this.renderInput(main, row, draft, param, drawn.labels[index], index, log),
+      this.renderInput(
+        this.renderCell(cells, drawn.labels[index]),
+        row,
+        draft,
+        param,
+        drawn.labels[index],
+        index,
+        log,
+      ),
     );
 
     this.renderDetailsToggle(
@@ -403,8 +416,11 @@ export class SetSheet extends MarkdownRenderChild {
     const main = el.createDiv({ cls: "workout-sets-row-main" });
     this.renderNumber(main, row.number, drawn.protocols.resolve(set.protocol));
     // The values as the table shows them (weight as entered, N/A…)
+    const cells = main.createDiv({ cls: "workout-sets-cells" });
     TableRowProcessor.displayRow(set, drawn.columns).forEach((value, index) => {
-      const cell = main.createDiv({ cls: "workout-sets-value" });
+      const cell = this.renderCell(cells, drawn.labels[index]).createDiv({
+        cls: "workout-sets-value",
+      });
       cell.createSpan({ text: value, attr: { "aria-hidden": "true" } });
       // The column headers are hidden from screen readers: each value says its field
       cell.createSpan({
@@ -445,6 +461,16 @@ export class SetSheet extends MarkdownRenderChild {
     }
   }
 
+  /**
+   * One field's place in a row, with its label: shown only when the fields
+   * are stacked (the column headers are hidden then)
+   */
+  private renderCell(cells: HTMLElement, label: string): HTMLElement {
+    const cell = cells.createDiv({ cls: "workout-sets-cell" });
+    cell.createSpan({ cls: "workout-sets-cell-label", text: label, attr: { "aria-hidden": "true" } });
+    return cell;
+  }
+
   /** The chevron that shows the row's protocol and notes */
   private renderDetailsToggle(
     main: HTMLElement,
@@ -479,7 +505,7 @@ export class SetSheet extends MarkdownRenderChild {
    * @param onEnter - Enter in the field logs the row
    */
   private renderInput(
-    main: HTMLElement,
+    cell: HTMLElement,
     row: SetRow,
     draft: SetDraft,
     param: ParameterDefinition,
@@ -490,8 +516,7 @@ export class SetSheet extends MarkdownRenderChild {
     const label = t("sets.fieldOfSet", { field: column, set: row.number });
     const focusKey = FOCUS.field(row.number, index);
     if (param.type === "boolean") {
-      const cell = main.createDiv({ cls: "workout-sets-field" });
-      const box = cell.createEl("input", {
+      const box = cell.createDiv({ cls: "workout-sets-field" }).createEl("input", {
         attr: { type: "checkbox", "aria-label": label },
       });
       DomUtils.setFocusKey(box, focusKey);
@@ -505,12 +530,13 @@ export class SetSheet extends MarkdownRenderChild {
       };
     }
 
-    return NumberField.create(main, {
+    return NumberField.create(cell, {
       className: "workout-sets-field",
       label,
       value: draft.values[param.key],
       suggestion: row.placeholders[param.key],
       integer: param.type === "number" && fieldFor(param).integer,
+      text: param.type === "string",
       focusKey,
       onInput: (value) => {
         draft.values[param.key] = value;

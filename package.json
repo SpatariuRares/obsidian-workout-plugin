@@ -1,6 +1,6 @@
 {
   "name": "workout-planner",
-  "version": "2.11.0",
+  "version": "3.0.0",
   "description": "Track any workout from your phone, from lifting and running to yoga: follow a guided session and see your progress in your notes with tables, charts, timers and a dashboard with PRs, trends and a muscle heat map. All in one CSV file.",
   "main": "main.js",
   "scripts": {

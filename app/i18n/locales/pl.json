@@ -79,7 +79,10 @@
     "fieldMapping": {
       "addMapping": "Dodaj mapowanie pól",
       "removeMapping": "Usuń mapowanie",
-      "title": "Mapowanie pól"
+      "title": "Mapowanie pól",
+      "empty": "Żadne pole nie zostało jeszcze przypisane: dodaj jedno, aby przenosić jego wartości do nowego typu.",
+      "from": "Z",
+      "to": "Do"
     },
     "preview": {
       "noEntries": "Nie znaleziono żadnych wpisów w dzienniku dla tego ćwiczenia",

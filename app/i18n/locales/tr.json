@@ -79,7 +79,10 @@
     "fieldMapping": {
       "addMapping": "Alan eşleme ekle",
       "removeMapping": "Eşlemeyi kaldır",
-      "title": "Alan eşleme"
+      "title": "Alan eşleme",
+      "empty": "Henüz herhangi bir alan eşleştirilmedi: yeni tipe değerlerini taşımak için bir tane ekleyin.",
+      "from": "'den",
+      "to": "İçin"
     },
     "preview": {
       "noEntries": "Bu egzersiz için kayıt bulunamadı",

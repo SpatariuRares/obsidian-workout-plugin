@@ -79,7 +79,10 @@
     "fieldMapping": {
       "addMapping": "Feldzuordnung hinzufügen",
       "removeMapping": "Zuordnung entfernen",
-      "title": "Zuordnung von Feldern"
+      "title": "Zuordnung von Feldern",
+      "empty": "Noch kein Feld wurde zugeordnet: fügen Sie eines hinzu, um seine Werte in den neuen Typ zu übertragen.",
+      "from": "Von",
+      "to": "Um"
     },
     "preview": {
       "noEntries": "Keine Protokolleinträge für diese Übung gefunden",

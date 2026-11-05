@@ -79,7 +79,10 @@
     "fieldMapping": {
       "addMapping": "Tambahkan pemetaan bidang",
       "removeMapping": "Hapus pemetaan",
-      "title": "Pemetaan bidang"
+      "title": "Pemetaan bidang",
+      "empty": "Belum ada bidang yang dipetakan: tambahkan satu untuk membawa nilainya ke tipe baru.",
+      "from": "Dari",
+      "to": "Untuk"
     },
     "preview": {
       "noEntries": "Tidak ditemukan entri log untuk latihan ini",

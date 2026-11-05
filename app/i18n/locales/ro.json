@@ -79,7 +79,10 @@
     "fieldMapping": {
       "addMapping": "Adaugă mapare de câmpuri",
       "removeMapping": "Elimină maparea",
-      "title": "Maparea câmpurilor"
+      "title": "Maparea câmpurilor",
+      "empty": "Niciun câmp nu a fost încă mapat: adăugați unul pentru a transfera valorile sale în noul tip.",
+      "from": "De la",
+      "to": "Pentru"
     },
     "preview": {
       "noEntries": "Nu au fost găsite înregistrări în jurnal pentru acest exercițiu.",

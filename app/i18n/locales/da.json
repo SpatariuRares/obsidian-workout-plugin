@@ -79,7 +79,10 @@
     "fieldMapping": {
       "addMapping": "Tilføj felttilknytning",
       "removeMapping": "Fjern tilknytning",
-      "title": "Felttilknytning"
+      "title": "Felttilknytning",
+      "empty": "Ingen felt er blevet kortlagt endnu: tilføj et for at overføre dets værdier til den nye type.",
+      "from": "Fra",
+      "to": "Til"
     },
     "preview": {
       "noEntries": "Ingen logposter fundet for denne øvelse",

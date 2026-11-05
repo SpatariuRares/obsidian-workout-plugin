@@ -79,7 +79,10 @@
     "fieldMapping": {
       "addMapping": "Añadir mapeo de campos",
       "removeMapping": "Eliminar mapeo",
-      "title": "Mapeo de campos"
+      "title": "Mapeo de campos",
+      "empty": "Ningún campo ha sido asignado aún: añada uno para que pueda transportar sus valores al nuevo tipo.",
+      "from": "De",
+      "to": "Para"
     },
     "preview": {
       "noEntries": "No se encontraron registros para este ejercicio.",

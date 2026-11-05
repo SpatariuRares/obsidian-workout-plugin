@@ -79,7 +79,10 @@
     "fieldMapping": {
       "addMapping": "Přidat mapování pole",
       "removeMapping": "Odstranit přiřazení",
-      "title": "Mapování polí"
+      "title": "Mapování polí",
+      "empty": "Žádné pole ještě nebylo přiřazeno: přidejte jedno, aby se jeho hodnoty přenesly do nového typu.",
+      "from": "Z",
+      "to": "Pro"
     },
     "preview": {
       "noEntries": "Pro toto cvičení nebyly nalezeny žádné záznamy",

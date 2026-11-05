@@ -79,7 +79,10 @@
     "fieldMapping": {
       "addMapping": "添加字段映射",
       "removeMapping": "移除映射",
-      "title": "字段映射"
+      "title": "字段映射",
+      "empty": "尚未进行任何字段映射：请添加一个，以便将其值导入到新的类型中。",
+      "from": "从",
+      "to": "为了"
     },
     "preview": {
       "noEntries": "未找到此训练动作的记录",

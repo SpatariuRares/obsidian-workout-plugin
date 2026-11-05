@@ -79,7 +79,10 @@
     "fieldMapping": {
       "addMapping": "Ajouter une correspondance de champs",
       "removeMapping": "Supprimer la correspondance",
-      "title": "Correspondance des champs"
+      "title": "Correspondance des champs",
+      "empty": "Aucun champ n'a encore été mappé : ajoutez-en un pour pouvoir y transférer ses valeurs vers le nouveau type.",
+      "from": "De",
+      "to": "Pour"
     },
     "preview": {
       "noEntries": "Aucun enregistrement de journal trouvé pour cet exercice.",

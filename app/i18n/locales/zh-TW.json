@@ -79,7 +79,10 @@
     "fieldMapping": {
       "addMapping": "新增欄位對應",
       "removeMapping": "移除對應",
-      "title": "欄位對應"
+      "title": "欄位對應",
+      "empty": "尚未建立欄位對應：請新增一個，以便將其值傳遞到新的類型。",
+      "from": "從",
+      "to": "為了"
     },
     "preview": {
       "noEntries": "未找到與此動作相關的任何紀錄",

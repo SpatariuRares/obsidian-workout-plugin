@@ -79,7 +79,10 @@
     "fieldMapping": {
       "addMapping": "Legg til feltmapping",
       "removeMapping": "Fjern mapping",
-      "title": "Feltmapping"
+      "title": "Feltmapping",
+      "empty": "Ingen felt er ennå mappet: legg til ett for å overføre verdier til den nye typen.",
+      "from": "Fra",
+      "to": "Til"
     },
     "preview": {
       "noEntries": "Ingen loggposter funnet for denne øvelsen",

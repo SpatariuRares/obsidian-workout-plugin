@@ -79,7 +79,10 @@
     "fieldMapping": {
       "addMapping": "Shto mapim fushash",
       "removeMapping": "Hiq mapimin",
-      "title": "Mapimi i fushave"
+      "title": "Mapimi i fushave",
+      "empty": "Endër tregonuar ende: shtryp njërin për të transmetuar vlerat e tij në tipin të ri.",
+      "from": "Nga",
+      "to": "Në"
     },
     "preview": {
       "noEntries": "Nuk u gjet asnjë regjistrim për këtë ushtrim",

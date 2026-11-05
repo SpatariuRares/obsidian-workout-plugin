@@ -14,7 +14,7 @@ Releases are driven by a `X.Y.Z` tag on a commit of `main` that already has `man
 3. Builds from the tag, attests build provenance for `main.js`, `styles.css`, `manifest.json`, and publishes a GitHub release with them
 4. Prunes old releases
 
-This skill bumps `manifest.json`, `package.json` and `package-lock.json` to the new version in a `chore: release X.Y.Z` commit on `main`. Leave `versions.json` alone, and don't use `npm version` (its `version` script runs `version-bump.mjs`, which edits `versions.json`).
+This skill bumps `manifest.json`, `package.json` and `package-lock.json` to the new version in a `chore: release X.Y.Z` commit on `main`. Leave `versions.json` alone (the fallback list older Obsidian versions read), and don't use `npm version` (it commits and tags on its own).
 
 ## Steps
 

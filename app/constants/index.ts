@@ -17,7 +17,6 @@
 export * from "@app/constants/ui.constants";
 export * from "@app/constants/defaults.constants";
 export * from "@app/constants/muscles.constants";
-export * from "@app/constants/validation.constants";
 export * from "@app/constants/exerciseTypes.constants";
 
 // Import from modular files for composing CONSTANTS
@@ -34,7 +33,6 @@ import { defaultTagMap } from "@app/constants/muscles.constants";
 
 import { DEFAULT_TABLE_CONFIG } from "@app/constants/defaults.constants";
 
-import { ERROR_TYPES } from "@app/constants/validation.constants";
 
 /**
  * Gets dynamic table labels with proper weight unit.
@@ -58,17 +56,8 @@ function getDynamicTableLabels() {
  */
 export const CONSTANTS = {
   WORKOUT: {
-    UI: {
-      LABELS: {
-        TRAINING_ANALYSIS: "Training analysis",
-        TOTAL_WORKOUT: "Total workout",
-      },
-    },
     MUSCLES: {
       TAG_MAP: defaultTagMap(),
-    },
-    ERRORS: {
-      TYPES: ERROR_TYPES,
     },
     LABELS: {
       GENERAL: GENERAL_UI.LABELS,

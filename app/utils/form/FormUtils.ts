@@ -1,3 +1,5 @@
+import { fieldValue, type FieldValue } from "@app/services/exercise/ExerciseFields";
+
 /**
  * Utility functions for form handling across modals
  * Consolidates common form patterns like toggle handlers and field population
@@ -41,27 +43,24 @@ export function setupWorkoutToggle(
 }
 
 /**
- * Fills dynamic form inputs from custom fields data
+ * Fills dynamic form inputs from custom fields data, each input from its
+ * field's column however it is written ("HR", "Duration (s)")
  * Handles text inputs, number inputs, and checkboxes appropriately
  *
  * @param customFields - Record of field names to values (may be undefined)
- * @param inputMap - Map of field names to their corresponding input elements
+ * @param inputMap - Map of field keys to their corresponding input elements
  */
 export function fillDynamicInputsFromCustomFields(
-  customFields: Record<string, string | number | boolean> | undefined,
+  customFields: Record<string, FieldValue> | undefined,
   inputMap: Map<string, HTMLInputElement>,
 ): void {
   if (!customFields) {
     return;
   }
 
-  for (const [key, value] of Object.entries(customFields)) {
+  for (const [key, input] of inputMap) {
+    const value = fieldValue({ customFields }, key);
     if (value === null || value === undefined) {
-      continue;
-    }
-
-    const input = inputMap.get(key);
-    if (!input) {
       continue;
     }
 

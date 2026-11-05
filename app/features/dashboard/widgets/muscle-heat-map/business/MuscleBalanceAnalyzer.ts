@@ -3,7 +3,6 @@ import type { MuscleGroupData } from "@app/features/dashboard/widgets/muscle-hea
 import type { HeatMapMetric } from "@app/features/dashboard/widgets/muscle-heat-map/types";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { t } from "@app/i18n";
-import { CONSTANTS } from "@app/constants";
 import {
   MUSCLE_GROUPS,
   type BodySide,
@@ -98,7 +97,7 @@ export class MuscleBalanceAnalyzer {
 
     // Display analysis header
     infoPanel.createEl("h4", {
-      text: CONSTANTS.WORKOUT.UI.LABELS.TRAINING_ANALYSIS,
+      text: t("dashboard.muscleHeatMap.trainingAnalysis"),
     });
 
     infoPanel.createEl("p", {

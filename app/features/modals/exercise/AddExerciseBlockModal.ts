@@ -1,23 +1,12 @@
 import { t } from "@app/i18n";
-import { App } from "obsidian";
-import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
-import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
-import type { ExerciseAutocompleteElements } from "@app/types/ModalTypes";
-import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import { ChipGroup } from "@app/components/molecules";
-import { StringUtils } from "@app/utils/StringUtils";
-import { savedDefaultTimerPreset } from "@app/features/timer/business/timerPresets";
+import { InsertSetsModal } from "@app/features/tables/modals/InsertSetsModal";
 
-export class AddExerciseBlockModal extends BaseInsertModal {
-  private exerciseElements?: ExerciseAutocompleteElements;
-  private durationInput?: HTMLInputElement;
-  /** The picked timer preset; undefined = none */
-  private selectedPreset?: string;
-  private workoutInput?: HTMLInputElement;
-
-  constructor(app: App, plugin: WorkoutPluginContext) {
-    super(app, plugin);
-  }
+/**
+ * Adds an exercise to the workout note: a `## <exercise>` section holding
+ * its `workout-sets` block, with its own rest (the example notes' layout)
+ */
+export class AddExerciseBlockModal extends InsertSetsModal {
+  protected defaultRest = 90;
 
   protected getModalTitle(): string {
     return t("modal.titles.addExerciseBlock");
@@ -31,99 +20,9 @@ export class AddExerciseBlockModal extends BaseInsertModal {
     return t("modal.notices.exerciseBlockInserted");
   }
 
-  protected createConfigurationSections(
-    container: HTMLElement,
-  ): void {
-    if (!this.plugin) {
-      throw new Error("Plugin is required for AddExerciseBlockModal");
-    }
-
-    // Exercise selection section with autocomplete
-    const exerciseSection = this.createSection(
-      container,
-      t("modal.sections.exercise"),
-    );
-    const { elements: exerciseElements } =
-      ExerciseAutocomplete.create(this, exerciseSection, this.plugin, undefined, { showCreateButton: false });
-    this.exerciseElements = exerciseElements;
-
-    // Timer configuration section
-    const timerSection = this.createSection(
-      container,
-      t("modal.sections.timer"),
-    );
-
-    // Saved presets as chips, like the timer insert modal (the default one picked)
-    const presetNames = Object.keys(this.plugin.settings.timerPresets);
-    if (presetNames.length > 0) {
-      this.selectedPreset = savedDefaultTimerPreset(this.plugin.settings);
-      ChipGroup.createOptional(timerSection, {
-        label: t("modal.timerPreset"),
-        none: t("settings.options.none"),
-        options: presetNames.map((name) => ({ id: name, label: name })),
-        selected: this.selectedPreset,
-        onPick: (id) => {
-          this.selectedPreset = id;
-        },
-      });
-    }
-
-    // Timer duration input
-    this.durationInput = this.createNumberField(
-      timerSection,
-      t("modal.timerDuration"),
-      90,
-      {
-        min: 1,
-        max: 3600,
-        placeholder: "90",
-      },
-    );
-
-    // Workout file section
-    const workoutSection = this.createSection(
-      container,
-      t("modal.sections.workout"),
-    );
-
-    // Workout file input with current file as default
-    const currentFileName = this.getCurrentFileName();
-    this.workoutInput = this.createTextField(
-      workoutSection,
-      t("modal.workoutFile"),
-      currentFileName,
-      currentFileName,
-    );
-  }
-
   protected generateCode(): string {
-    if (
-      !this.exerciseElements ||
-      !this.durationInput ||
-      !this.workoutInput ||
-      !this.plugin
-    ) {
-      throw new Error(t("modal.notices.validationFillAll"));
-    }
-
-    const exerciseName =
-      this.exerciseElements.exerciseInput.value.trim();
-    if (!exerciseName) {
-      throw new Error(t("modal.notices.exerciseNameRequired"));
-    }
-
-    const duration = this.durationInput.value || "90";
-    const workout =
-      this.workoutInput.value.trim() || this.getCurrentFileName();
-    return StringUtils.fillTemplate(
-      this.plugin.settings.exerciseBlockTemplate,
-      {
-        exercise: exerciseName,
-        duration,
-        workout,
-        // The template writes no preset as an empty value
-        preset: this.selectedPreset ?? "",
-      },
-    );
+    const block = super.generateCode();
+    // eslint-disable-next-line i18next/no-literal-string -- markdown heading
+    return `## ${this.collectParams().exercise}\n\n${block}`;
   }
 }

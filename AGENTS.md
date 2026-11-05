@@ -12,7 +12,6 @@ npm run lint:fix     # ESLint with auto-fix
 npm test             # Jest test suite
 npm run test:watch   # Jest watch mode
 npm run test:coverage # Jest with coverage report
-npm run version      # Bump version in manifest.json and versions.json
 ```
 
 **Run single test file**: `npm test -- app/utils/__tests__/DateUtils.test.ts`
@@ -210,39 +209,3 @@ All user-facing strings in `app/constants/Constants.ts` under `CONSTANTS.WORKOUT
 
 - **Avoid Node/Electron APIs** - Not available on mobile
 - **Avoid regex lookbehind** - Only supported iOS 16.4+
-
-## Debug Mode
-
-Enable via settings or per-block with `debug: true`. See `DEBUG_GUIDE.md` for detailed troubleshooting.
-
----
-
-## Agent Workflow (SOP System)
-
-This project uses a 3-tier architecture for AI-assisted development to maximize reliability.
-
-### 1. Directive Level (What to do)
-
-- **Location**: `directives/` (Markdown files)
-- **Content**: SOPs (Standard Operating Procedures) in natural language
-- **Purpose**: Define objectives, inputs, required tools, and expected outputs
-- **Rule**: Before starting a complex task, search for or create a directive
-
-### 2. Orchestration Level (AI reasoning)
-
-- **Who**: The AI Agent (Claude)
-- **What**: Intelligent routing. Read directives → Call execution scripts → Handle errors
-- **Rule**: Don't do everything manually. If a task is repeatable, it should become a script
-
-### 3. Execution Level (Deterministic arm)
-
-- **Location**: `execution/` (Scripts)
-- **Content**: Atomic, robust, deterministic scripts
-- **Rule**: Use `execution/` for file operations, bulk API calls, or complex logic
-- **Storage**: Use `.tmp/` for intermediate files. Never commit `.tmp/`
-
-### Operational Rules
-
-1. **Safety First**: Never commit tokens or API keys. Use `.env`
-2. **Config Over Code**: If logic can reside in config/constants, put it there, don't hardcode
-3. **Determinism**: For repetitive maintenance tasks, create scripts in `execution/`

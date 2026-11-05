@@ -23,11 +23,6 @@ export class TemplatesSettings {
             desc: t("settings.descriptions.generateDefaultTemplates"),
             render: (setting) => this.renderGenerate(setting),
           },
-          {
-            name: t("settings.labels.exerciseBlockTemplate"),
-            desc: t("settings.descriptions.exerciseBlockTemplate"),
-            render: (setting) => this.renderBlockTemplate(setting),
-          },
         ],
       },
     ];
@@ -76,17 +71,4 @@ export class TemplatesSettings {
       });
   }
 
-  private renderBlockTemplate(setting: Setting): void {
-    setting.addTextArea((text) => {
-      text
-        .setValue(this.plugin.settings.exerciseBlockTemplate)
-        .setPlaceholder(this.plugin.settings.exerciseBlockTemplate)
-        .onChange(async (value) => {
-          this.plugin.settings.exerciseBlockTemplate = value;
-          await this.plugin.saveSettings();
-        });
-      text.inputEl.rows = 10;
-      text.inputEl.cols = 50;
-    });
-  }
 }

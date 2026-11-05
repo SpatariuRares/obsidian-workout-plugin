@@ -806,14 +806,12 @@
       "chartType": "Diagramtype",
       "configuration": "Konfigurasjon",
       "displayOptions": "Visningsalternativer",
-      "exercise": "Øvelse",
       "exerciseConfiguration": "Øvelseskonfigurasjon",
       "options": "Alternativer",
       "preset": "Forhåndsinnstilling",
       "progressiveOverload": "Progressiv overbelastning",
       "tableType": "Tabelltype",
       "target": "Mål",
-      "timer": "Timer",
       "workout": "Trening",
       "mobileOptions": "Nylige øvelser og trening"
     },
@@ -844,8 +842,6 @@
     "status": "Status",
     "tag": "Tagg",
     "tagsSelector": "Muskeltagger",
-    "timerDuration": "Timervarighet (sekunder)",
-    "timerPreset": "Timer-forhåndsinnstilling",
     "timerType": "Timertype",
     "titles": {
       "addExerciseBlock": "Legg til øvelsesblokk",
@@ -890,7 +886,6 @@
     "rounds": "Runder",
     "work": "Arbeid",
     "workout": "Trening (valgfri)",
-    "workoutFile": "Treningsfil",
     "workoutNameOptional": "Treningsnavn (valgfritt)"
   },
   "settings": {
@@ -917,7 +912,6 @@
       "defaultExactMatch": "Når aktivert, filtreres øvelser som standard på nøyaktig navn. Deaktiver for omtrentlig match.",
       "defaultRepsPerSet": "Antatt antall repetisjoner når det ikke er angitt. Hvis 0, brukes 'Reservevarighet per sett'.",
       "defaultTimerPreset": "Velg en standard forhåndsinnstilling for nye timere",
-      "exerciseBlockTemplate": "Mal for øvelsesblokker. Tilgjengelige plassholdere: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Sti til mappen som inneholder øvelsessider",
       "generateDefaultTemplates": "Generer standardmal for øvelsessider og tag-referanse i mappen 'Workout Templates'. Du kan tilpasse disse filene for å endre språk og struktur.",
       "noPresets": "Ingen timer-forhåndsinnstillinger er konfigurert. Klikk på «Legg til forhåndsinnstilling» for å opprette en.",
@@ -947,7 +941,6 @@
       "defaultExactMatch": "Standard nøyaktig match",
       "defaultRepsPerSet": "Standard antall repetisjoner per sett",
       "defaultTimerPreset": "Standard forhåndsinnstilling for timer",
-      "exerciseBlockTemplate": "Mal for øvelsesblokk",
       "exerciseFolder": "Sti til øvelsesmappe",
       "generateDefaultTemplates": "Generer standardmaler",
       "presetDuration": "Varighet (sekunder)",

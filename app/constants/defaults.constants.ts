@@ -12,8 +12,6 @@
  * documentation explaining its purpose and typical use case.
  */
 
-import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
-
 import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 
 /**
@@ -26,16 +24,6 @@ export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
   csvLogFilePath: "theGYM/Log/workout_logs.csv",
   /** Default folder path for exercise pages */
   exerciseFolderPath: "Esercizi",
-  /** Default exercise name (empty means no default) */
-  defaultExercise: "",
-  /** Default chart data type to display */
-  chartType: CHART_DATA_TYPE.VOLUME,
-  /** Default date range in days for charts and data filtering */
-  dateRange: 30,
-  /** Whether to show trend lines on charts by default */
-  showTrendLine: true,
-  /** Default chart height in pixels */
-  chartHeight: 400,
   /** Whether exercise filtering uses exact matching by default */
   defaultExactMatch: true,
   /** Saved timer presets (empty by default) */
@@ -46,20 +34,6 @@ export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
   defaultTimerPreset: null,
   keepScreenAwake: true,
   vibrateOnCompletion: false,
-  /** Template for exercise blocks inserted via modal */
-  exerciseBlockTemplate: `## {{exercise}}
-
-\`\`\`workout-timer
-duration: {{duration}}
-exercise: {{exercise}}
-workout: {{workout}}
-preset: {{preset}}
-\`\`\`
-
-\`\`\`workout-log
-exercise: {{exercise}}
-workout: {{workout}}
-\`\`\``,
   /** Default weight increment for progressive overload suggestions */
   weightIncrement: 2.5,
   /** Record of targets the user has achieved (exercise -> weight) */

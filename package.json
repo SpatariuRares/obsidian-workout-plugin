@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "node build-css.mjs && node esbuild.config.mjs",
     "build": "tsc -noEmit -skipLibCheck && node build-css.mjs && node esbuild.config.mjs production",
-    "version": "node version-bump.mjs && git add manifest.json versions.json",
     "test": "jest",
     "typecheck": "tsc -noEmit -skipLibCheck",
     "test:watch": "jest --watch",
@@ -14,13 +13,7 @@
     "lint": "eslint . --max-warnings 0 && node scripts/check-readme.mjs",
     "lint:fix": "eslint . --fix",
     "prepare": "husky",
-    "doe:validate": "node scripts/validation/check-imports.mjs",
-    "doe:analyze-errors": "node scripts/learning/error-analyzer.mjs",
-    "doe:generate-component": "node scripts/automation/generate-component.mjs",
-    "doe:error-stats": "node scripts/learning/error-logger.mjs stats",
-    "doe:prune-errors": "node scripts/learning/error-logger.mjs prune",
-    "doe:init-errors": "node scripts/learning/error-logger.mjs init",
-    "migrate:i18n": "node scripts/migrate-i18n-constants.mjs"
+    "doe:validate": "node scripts/validation/check-imports.mjs"
   },
   "keywords": [
     "obsidian",

@@ -806,14 +806,12 @@
       "chartType": "图表类型",
       "configuration": "配置",
       "displayOptions": "显示选项",
-      "exercise": "训练动作",
       "exerciseConfiguration": "训练动作配置",
       "options": "选项",
       "preset": "预设",
       "progressiveOverload": "渐进式超负荷",
       "tableType": "表格类型",
       "target": "目标",
-      "timer": "计时器",
       "workout": "训练",
       "mobileOptions": "最近的训练动作和训练"
     },
@@ -844,8 +842,6 @@
     "status": "状态",
     "tag": "标签",
     "timerType": "计时器类型",
-    "timerPreset": "计时器预设",
-    "timerDuration": "计时时长（秒）",
     "tagsSelector": "肌肉标签",
     "titles": {
       "addExerciseBlock": "添加训练动作块",
@@ -890,7 +886,6 @@
     "restTime": "休息时间（秒）",
     "work": "工作",
     "workoutNameOptional": "训练名称（可选）",
-    "workoutFile": "训练文件",
     "workout": "训练（可选）"
   },
   "settings": {
@@ -917,7 +912,6 @@
       "defaultExactMatch": "启用时，训练筛选默认使用精确名称匹配。禁用则使用模糊匹配。",
       "defaultRepsPerSet": "未指定时的默认次数。若为 0，则使用“备用组时长”。",
       "defaultTimerPreset": "选择新计时器的默认预设",
-      "exerciseBlockTemplate": "训练块模板。可用占位符：{{exercise}}、{{duration}}、{{workout}}、{{preset}}",
       "exerciseFolder": "包含训练动作页面的文件夹路径",
       "generateDefaultTemplates": "在“训练模板”文件夹中生成默认的训练页面模板和标签参考。您可以自定义这些文件以更改语言和结构。",
       "noPresets": "未配置计时器预设。点击“添加预设”即可创建一个。",
@@ -947,7 +941,6 @@
       "defaultExactMatch": "默认精确匹配",
       "defaultRepsPerSet": "默认每组次数",
       "defaultTimerPreset": "默认计时器预设",
-      "exerciseBlockTemplate": "训练块模板",
       "exerciseFolder": "训练动作文件夹路径",
       "generateDefaultTemplates": "生成默认模板",
       "presetDuration": "时长（秒）",

@@ -5,7 +5,7 @@
  */
 
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
-import { CHARTS_UI } from "../ui.constants";
+import { CHARTS_UI, exerciseTypeName } from "../ui.constants";
 import { t } from "@app/i18n";
 
 describe("ui.constants", () => {
@@ -115,6 +115,18 @@ describe("ui.constants", () => {
         const hrTypeName = t("charts.types.heartRate");
         expect(resultHR).toBe(`${hrTypeName}: 145`);
       });
+    });
+  });
+
+  describe("exerciseTypeName", () => {
+    it("gives a built-in type's translated name", () => {
+      expect(exerciseTypeName({ id: "timed", name: "Timed" })).toBe(
+        t("modal.selectOptions.timed"),
+      );
+    });
+
+    it("keeps the name of a type with no translation", () => {
+      expect(exerciseTypeName({ id: "yoga", name: "Yoga" })).toBe("Yoga");
     });
   });
 });

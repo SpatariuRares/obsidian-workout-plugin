@@ -3,6 +3,7 @@
 import { TableErrorMessage } from "@app/features/tables/ui/TableErrorMessage";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { Feedback } from "@app/components/atoms/Feedback";
+import { t } from "@app/i18n";
 
 jest.mock("@app/components/atoms/Feedback", () => ({
   Feedback: {
@@ -40,7 +41,7 @@ describe("TableErrorMessage", () => {
       expect(Feedback.renderError).toHaveBeenCalledWith(
         container,
         "Something went wrong",
-        expect.objectContaining({ title: expect.any(String) }),
+        { title: t("common.error") },
       );
     });
   });

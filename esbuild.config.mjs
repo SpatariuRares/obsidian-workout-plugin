@@ -2,7 +2,6 @@ import esbuild from "esbuild";
 import process from "process";
 import { builtinModules } from "node:module";
 import postcss from "esbuild-postcss";
-import { logBuildError } from "./scripts/learning/error-logger.mjs";
 import { packedLocales } from "./scripts/esbuild-packed-locales.mjs";
 
 const banner = `/*
@@ -55,11 +54,6 @@ if (prod) {
     process.exit(0);
   } catch (error) {
     console.error("✗ esbuild failed:", error.message);
-    await logBuildError({
-      script: "esbuild.config.mjs",
-      error: error,
-      context: { mode: "production" },
-    });
     process.exit(1);
   }
 } else {
@@ -67,11 +61,6 @@ if (prod) {
     await context.watch();
   } catch (error) {
     console.error("✗ esbuild watch failed:", error.message);
-    await logBuildError({
-      script: "esbuild.config.mjs",
-      error: error,
-      context: { mode: "development" },
-    });
     process.exit(1);
   }
 }

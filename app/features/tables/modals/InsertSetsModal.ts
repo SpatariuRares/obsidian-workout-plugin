@@ -20,6 +20,8 @@ export class InsertSetsModal extends BaseInsertModal {
   protected workoutInput?: HTMLInputElement;
   protected planFields?: PlanFieldsElements;
   protected restInput?: HTMLInputElement;
+  /** The rest the form starts with; 0 leaves `rest` out */
+  protected defaultRest = 0;
 
   constructor(app: App, plugin: WorkoutPluginContext) {
     super(app, plugin);
@@ -56,7 +58,7 @@ export class InsertSetsModal extends BaseInsertModal {
     // 0 leaves `rest` out: the rest of the section's workout-timer
     this.restInput = AdjustField.create(plan, {
       label: t("sets.restLabel"),
-      value: 0,
+      value: this.defaultRest,
       min: 0,
       max: 600,
       step: REST_INCREMENT,

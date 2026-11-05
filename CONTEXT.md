@@ -304,7 +304,7 @@ Everything. `isDesktopOnly: false`. No Node.js/Electron APIs. No regex lookbehin
 | **General**              | CSV file path, exercise folder path, exact match mode |
 | **Timer**                | Presets (create/save/delete), default preset          |
 | **Protocols**            | Custom protocol definitions (name, abbrev, color)     |
-| **Templates**            | Exercise block template with placeholders             |
+| **Templates**            | Exercise page template, muscle tags reference         |
 | **Progressive Overload** | Weight increment for suggestions (default 2.5kg)      |
 | **Duration**             | Default set duration (45s) for estimation             |
 | **Mobile**               | Ribbon icon toggle, quick weight increment            |
@@ -327,7 +327,7 @@ Everything. `isDesktopOnly: false`. No Node.js/Electron APIs. No regex lookbehin
 | Create exercise page        | Creates a new exercise file                  |
 | Create exercise section     | Adds exercise section to current note        |
 | Audit exercise names        | Finds mismatches between files and CSV       |
-| Add exercise block          | Inserts templated exercise block             |
+| Add exercise block          | Adds a `## exercise` section with its `workout-sets` |
 | Export workout to canvas    | Exports workout structure to Obsidian Canvas |
 | Migrate exercise types      | Converts between exercise type formats       |
 | Convert exercise data       | Converts exercise data formats               |

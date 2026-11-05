@@ -23,7 +23,7 @@ export function validateMuscleTagSave(
   if (!tag) {
     return {
       isValid: false,
-      notice: "Please enter a tag name",
+      notice: t("modal.notices.muscleTagNameRequired"),
       focusTarget: "tag",
     };
   }
@@ -31,7 +31,7 @@ export function validateMuscleTagSave(
   if (!muscleGroup) {
     return {
       isValid: false,
-      notice: "Please select a muscle group",
+      notice: t("modal.notices.muscleTagGroupRequired"),
       focusTarget: "group",
     };
   }

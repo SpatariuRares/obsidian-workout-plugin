@@ -3,7 +3,6 @@ import { ExerciseLibrary } from "@app/services/exercise/ExerciseLibrary";
 import { FakeVault } from "@app/services/exercise/__tests__/FakeVault";
 import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import { MUSCLE_TAG_ENTRIES } from "@app/constants/muscles.constants";
-import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { App, getLanguage } from "obsidian";
 
 /** Where the service keeps the tags: next to the workout log */
@@ -37,16 +36,10 @@ describe("MuscleTagService", () => {
     mockSettings = {
       csvLogFilePath: "workout-data/workout_logs.csv",
       exerciseFolderPath: "exercises",
-      defaultExercise: "",
-      chartType: CHART_DATA_TYPE.VOLUME,
-      dateRange: 30,
       weightUnit: "kg",
-      showTrendLine: false,
-      chartHeight: 400,
       defaultExactMatch: true,
       timerPresets: {},
       defaultTimerPreset: null,
-      exerciseBlockTemplate: "",
       weightIncrement: 2.5,
       achievedTargets: {},
       customProtocols: [],

@@ -806,14 +806,12 @@
       "chartType": "Tip de grafic",
       "configuration": "Configurare",
       "displayOptions": "Opțiuni de afișare",
-      "exercise": "Exercițiu",
       "exerciseConfiguration": "Configurarea exercițiului",
       "options": "Opțiuni",
       "preset": "Preset",
       "progressiveOverload": "Supraîncărcare progresivă",
       "tableType": "Tip de tabel",
       "target": "Țintă",
-      "timer": "Temporizator",
       "workout": "Antrenament",
       "mobileOptions": "Exercițiile și antrenamentele recente"
     },
@@ -844,8 +842,6 @@
     "status": "Stare",
     "tag": "Etichetă",
     "tagsSelector": "Etichete de grupe musculare",
-    "timerDuration": "Durată cronometru (secunde)",
-    "timerPreset": "Preset de cronometru",
     "timerType": "Tip de cronometru",
     "titles": {
       "addExerciseBlock": "Adaugă bloc de exercițiu",
@@ -890,7 +886,6 @@
     "rounds": "Runde",
     "work": "Efort",
     "workout": "Antrenament (opțional)",
-    "workoutFile": "Fișier de antrenament",
     "workoutNameOptional": "Numele antrenamentului (opțional)"
   },
   "settings": {
@@ -917,7 +912,6 @@
       "defaultExactMatch": "Când este activat, filtrarea exercițiilor folosește implicit potrivirea exactă a numelor. Dezactivează-l pentru potrivire aproximativă.",
       "defaultRepsPerSet": "Numărul presupus de repetări, dacă nu este specificat. Dacă este 0, se folosește „Durată implicită a seriei”.",
       "defaultTimerPreset": "Selectează un preset implicit pentru temporizatoarele noi",
-      "exerciseBlockTemplate": "Șablon pentru blocuri de exerciții. Variabile disponibile: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Calea către folderul care conține paginile cu exerciții",
       "generateDefaultTemplates": "Generează șablonul implicit pentru pagina de exercițiu și referința etichetelor în folderul „Workout Templates”. Poți personaliza aceste fișiere ca să schimbi limba și structura.",
       "noPresets": "Nu sunt configurate preseturi pentru temporizator. Apasă pe „Adaugă preset” ca să creezi unul.",
@@ -947,7 +941,6 @@
       "defaultExactMatch": "Potrivire exactă implicită",
       "defaultRepsPerSet": "Numărul implicit de repetări pe serie",
       "defaultTimerPreset": "Preset implicit pentru temporizator",
-      "exerciseBlockTemplate": "Șablon pentru blocul de exerciții",
       "exerciseFolder": "Cale către folderul cu exerciții",
       "generateDefaultTemplates": "Generează șabloane implicite",
       "presetDuration": "Durată (secunde)",

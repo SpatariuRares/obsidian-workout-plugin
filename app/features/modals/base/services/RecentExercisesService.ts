@@ -1,4 +1,5 @@
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
+import { normalizeExercise } from "@app/services/events/WorkoutEventTypes";
 
 const MAX_RECENT_EXERCISES = 10;
 const DEFAULT_DISPLAY_RECENT_COUNT = 5;
@@ -29,14 +30,13 @@ export class RecentExercisesService {
     if (!normalizedExercise) return;
 
     const currentRecent = this.plugin.settings.recentExercises || [];
+    const key = normalizeExercise(normalizedExercise);
     const alreadyFirst =
-      currentRecent[0]?.toLowerCase() ===
-      normalizedExercise.toLowerCase();
+      currentRecent.length > 0 && normalizeExercise(currentRecent[0]) === key;
     if (alreadyFirst) return;
 
     const filteredRecent = currentRecent.filter(
-      (item) =>
-        item.toLowerCase() !== normalizedExercise.toLowerCase(),
+      (item) => normalizeExercise(item) !== key,
     );
 
     this.plugin.settings.recentExercises = [

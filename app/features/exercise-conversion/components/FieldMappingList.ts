@@ -4,6 +4,7 @@ import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { t } from "@app/i18n";
+import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 
 export class FieldMappingList {
   private container: HTMLElement;
@@ -193,10 +194,10 @@ export class FieldMappingList {
     for (const param of type.parameters) {
       // Avoid duplicates
       if (options.some((o) => o.value === param.key)) continue;
-      const label = param.unit
-        ? `${param.label} (${param.unit})`
-        : param.label;
-      options.push({ text: label, value: param.key });
+      options.push({
+        text: TableColumnResolver.formatParameterHeader(param),
+        value: param.key,
+      });
     }
     return options;
   }

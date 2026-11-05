@@ -6,8 +6,7 @@ import { t } from "@app/i18n";
 
 function setup(generate: jest.Mock) {
   const plugin = {
-    settings: { exerciseBlockTemplate: "" },
-    saveSettings: jest.fn(),
+    settings: {},
     templateGeneratorService: { generateDefaultTemplates: generate },
   };
   const container = withHelpers(document.createElement("div"));

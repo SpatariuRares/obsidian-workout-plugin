@@ -806,14 +806,12 @@
       "chartType": "차트 유형",
       "configuration": "설정",
       "displayOptions": "표시 옵션",
-      "exercise": "운동 종목",
       "exerciseConfiguration": "운동 종목 설정",
       "options": "옵션",
       "preset": "프리셋",
       "progressiveOverload": "점진적 과부하",
       "tableType": "표 유형",
       "target": "목표",
-      "timer": "타이머",
       "workout": "운동 루틴",
       "mobileOptions": "최근 운동 종목 및 운동 루틴"
     },
@@ -844,8 +842,6 @@
     "status": "상태",
     "tag": "태그",
     "tagsSelector": "근육 태그",
-    "timerDuration": "타이머 시간 (초)",
-    "timerPreset": "타이머 프리셋",
     "timerType": "타이머 유형",
     "titles": {
       "addExerciseBlock": "운동 블록 추가",
@@ -890,7 +886,6 @@
     "rounds": "라운드",
     "work": "운동",
     "workout": "운동 루틴 (선택 사항)",
-    "workoutFile": "운동 파일",
     "workoutNameOptional": "운동 루틴 이름 (선택 사항)"
   },
   "settings": {
@@ -917,7 +912,6 @@
       "defaultExactMatch": "활성화하면 운동 필터링은 기본적으로 정확한 이름 일치 방식을 사용합니다. 유사 일치 방식을 쓰려면 비활성화하세요.",
       "defaultRepsPerSet": "지정되지 않은 경우에 사용되는 기본 반복 횟수입니다. 값이 0이면 '대체 세트 시간'을 사용합니다.",
       "defaultTimerPreset": "새 타이머의 기본 프리셋을 선택하세요",
-      "exerciseBlockTemplate": "운동 블록 템플릿. 사용 가능한 자리 표시: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "운동 페이지가 포함된 폴더의 경로",
       "generateDefaultTemplates": "'운동 템플릿' 폴더에 기본 운동 페이지 템플릿 및 태그 참조를 생성합니다. 이 파일을 수정하여 언어 및 구조를 변경할 수 있습니다.",
       "noPresets": "타이머 프리셋이 설정되지 않았습니다. '프리셋 추가'를 클릭하여 새 프리셋을 만드세요.",
@@ -947,7 +941,6 @@
       "defaultExactMatch": "기본 정확 일치",
       "defaultRepsPerSet": "세트당 기본 반복 횟수",
       "defaultTimerPreset": "기본 타이머 프리셋",
-      "exerciseBlockTemplate": "운동 블록 템플릿",
       "exerciseFolder": "운동 종목 폴더 경로",
       "generateDefaultTemplates": "기본 템플릿 생성",
       "presetDuration": "시간 (초)",

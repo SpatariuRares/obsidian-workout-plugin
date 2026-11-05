@@ -102,7 +102,7 @@ describe("TemplateGeneratorService", () => {
     it("should show an error notice when the template path is a file, not a folder", async () => {
       existing[FOLDER] = new TFile();
 
-      await service.generateDefaultTemplates();
+      await expect(service.generateDefaultTemplates()).rejects.toThrow();
 
       expect(app.vault.create).not.toHaveBeenCalled();
       expect(Notice).toHaveBeenCalledTimes(1);
@@ -114,10 +114,10 @@ describe("TemplateGeneratorService", () => {
       );
     });
 
-    it("should show an error notice instead of throwing when creating a file fails", async () => {
+    it("should show an error notice and throw when creating a file fails", async () => {
       (app.vault.create as jest.Mock).mockRejectedValue(new Error("nope"));
 
-      await expect(service.generateDefaultTemplates()).resolves.toBeUndefined();
+      await expect(service.generateDefaultTemplates()).rejects.toThrow("nope");
 
       expect(Notice).toHaveBeenCalledWith(
         t("messages.errors.templateGenError", { error: "nope" }),
@@ -129,7 +129,7 @@ describe("TemplateGeneratorService", () => {
         new Error("denied"),
       );
 
-      await service.generateDefaultTemplates();
+      await expect(service.generateDefaultTemplates()).rejects.toThrow("denied");
 
       expect(Notice).toHaveBeenCalledWith(
         t("messages.errors.templateGenError", { error: "denied" }),
@@ -145,7 +145,7 @@ describe("TemplateGeneratorService", () => {
       expect(content).toContain(
         "tags:\n  - abs\n  - gambe\n  - petto\n---",
       );
-      expect(content).toContain("title: Muscle Tags Reference");
+      expect(content).toContain(`title: ${t("templates.tagReference.title")}`);
       expect(content).toContain(`# ${t("templates.tagReference.title")}`);
     });
 
@@ -154,7 +154,7 @@ describe("TemplateGeneratorService", () => {
 
       await service.generateTagReference(FOLDER);
 
-      expect(createdContent(TAGS_PATH)).toContain("tags:\n---");
+      expect(createdContent(TAGS_PATH)).toContain("tags: []\n---");
     });
 
     it("should skip an existing reference file unless overwrite is set", async () => {

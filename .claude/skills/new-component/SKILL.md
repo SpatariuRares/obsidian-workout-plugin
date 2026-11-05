@@ -13,20 +13,16 @@ Argument: `<Name> [atom|molecule|widget|feature-ui:<feature>]`. If the kind is m
 
 ## 1. Scaffold
 
-**atom / molecule**: use the existing generator:
+**atom / molecule**: copy the shape of an existing one, e.g. `app/components/atoms/CheckToggle.ts` and its test:
+- `app/components/<type>s/<Name>.ts`: a class with `static create(parent, props)` that builds its DOM under `parent` and returns the element; export the props type next to it
+- `app/components/<type>s/__tests__/<Name>.test.ts`: `/** @jest-environment jsdom */` as the first line, `createObsidianContainer()` from `@app/components/__tests__/obsidianDomMocks`
+- Add `export { <Name>, type <Name>Props } from "@app/components/<type>s/<Name>";` to that folder's `index.ts`
+- If it is a kit piece (DESIGN.md), document it there and in `.impeccable/design.json`
 
-```bash
-npm run doe:generate-component -- --name=<Name> --type=<atom|molecule>
-```
-
-It creates `app/components/<type>s/<Name>.ts`, `__tests__/<Name>.test.ts`, and appends the barrel export to `index.ts`. Then fix two things in its output:
-- It renders a hardcoded placeholder (`element.textContent = "<Name> component"`). Replace it with real rendering, and send any user-facing text through `t()`.
-- Its test uses `document.createElement("div")`. Switch to `createObsidianContainer()` from `@app/components/__tests__/obsidianDomMocks` and add `/** @jest-environment jsdom */` as the first line. `ActionButtonGroup.test.ts` shows the pattern.
-
-**widget**: copy the shape of an existing widget (e.g. `app/features/dashboard/widgets/quick-stats/`):
-- `app/features/dashboard/widgets/<kebab-name>/<Name>.ts`: renders inside `DashboardCard` from `app/features/dashboard/ui/`
+**widget**: follow CLAUDE.md → "Adding New Dashboard Widgets" and copy the shape of an existing widget (e.g. `app/features/dashboard/widgets/quick-stats/`):
+- `app/features/dashboard/widgets/<kebab-name>/<Name>.ts`: draws inside a `WidgetContainer` (`app/features/dashboard/ui/`) and builds its content from the kit
 - `.../<kebab-name>/business/`: pure calculations with no DOM, unit-tested
-- Export it from `app/features/dashboard/widgets/index.ts`, then register it in `EmbeddedDashboardView.render()`
+- Add its id to `DASHBOARD_WIDGET_IDS` (`dashboard/types.ts`) and an entry to `DASHBOARD_WIDGETS` (`widgets/dashboardWidgets.ts`); the view and the modals read that registry
 
 **feature-ui**: create `app/features/<feature>/ui/<Name>.ts`. Do not add it to the shared barrels.
 

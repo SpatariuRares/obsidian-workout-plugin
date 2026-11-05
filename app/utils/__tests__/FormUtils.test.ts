@@ -253,21 +253,21 @@ describe("FormUtils", () => {
 
     describe("number input filling", () => {
       it("should fill number input with number value", () => {
-        const weightInput = createNumberInput("weight");
-        const customFields = { weight: 75.5 };
+        const distanceInput = createNumberInput("distance");
+        const customFields = { distance: 75.5 };
 
         fillDynamicInputsFromCustomFields(customFields, inputMap);
 
-        expect(weightInput.value).toBe("75.5");
+        expect(distanceInput.value).toBe("75.5");
       });
 
       it("should fill number input with string number value", () => {
-        const repsInput = createNumberInput("reps");
-        const customFields = { reps: "10" };
+        const lapsInput = createNumberInput("laps");
+        const customFields = { laps: "10" };
 
         fillDynamicInputsFromCustomFields(customFields, inputMap);
 
-        expect(repsInput.value).toBe("10");
+        expect(lapsInput.value).toBe("10");
       });
     });
 
@@ -380,6 +380,29 @@ describe("FormUtils", () => {
       });
     });
 
+    describe("column written differently", () => {
+      it("fills a field whose column is written another way", () => {
+        const heartRate = createNumberInput("heartRate");
+        const duration = createNumberInput("duration");
+
+        fillDynamicInputsFromCustomFields(
+          { HR: 142, "Duration (s)": "90" },
+          inputMap,
+        );
+
+        expect(heartRate.value).toBe("142");
+        expect(duration.value).toBe("90");
+      });
+
+      it("leaves reps and weight to the set itself", () => {
+        const weight = createNumberInput("weight");
+
+        fillDynamicInputsFromCustomFields({ weight: 100 }, inputMap);
+
+        expect(weight.value).toBe("");
+      });
+    });
+
     describe("missing input key handling", () => {
       it("should gracefully skip keys not in inputMap", () => {
         const nameInput = createTextInput("name");
@@ -420,19 +443,19 @@ describe("FormUtils", () => {
     describe("multiple fields", () => {
       it("should fill multiple fields of different types", () => {
         const nameInput = createTextInput("name");
-        const weightInput = createNumberInput("weight");
+        const distanceInput = createNumberInput("distance");
         const activeInput = createCheckboxInput("active");
 
         const customFields = {
           name: "Workout A",
-          weight: 100,
+          distance: 100,
           active: true,
         };
 
         fillDynamicInputsFromCustomFields(customFields, inputMap);
 
         expect(nameInput.value).toBe("Workout A");
-        expect(weightInput.value).toBe("100");
+        expect(distanceInput.value).toBe("100");
         expect(activeInput.checked).toBe(true);
       });
     });

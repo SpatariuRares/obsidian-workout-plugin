@@ -806,14 +806,12 @@
       "chartType": "Grafiektype",
       "configuration": "Configuratie",
       "displayOptions": "Weergaveopties",
-      "exercise": "Oefening",
       "exerciseConfiguration": "Oefeningsconfiguratie",
       "options": "Opties",
       "preset": "Voorinstelling",
       "progressiveOverload": "Progressieve overbelasting",
       "tableType": "Tabeltype",
       "target": "Doel",
-      "timer": "Timer",
       "workout": "Training",
       "mobileOptions": "Recente oefeningen en trainingen"
     },
@@ -844,8 +842,6 @@
     "status": "Status",
     "tag": "Label",
     "tagsSelector": "Spierlabels",
-    "timerDuration": "Timerduur (seconden)",
-    "timerPreset": "Timervoorinstelling",
     "timerType": "Timertype",
     "titles": {
       "addExerciseBlock": "Oefeningsblok toevoegen",
@@ -890,7 +886,6 @@
     "rounds": "Rondes",
     "work": "Inspanning",
     "workout": "Training (optioneel)",
-    "workoutFile": "Trainingsbestand",
     "workoutNameOptional": "Naam van de training (optioneel)"
   },
   "settings": {
@@ -917,7 +912,6 @@
       "defaultExactMatch": "Wanneer ingeschakeld, gebruikt de filterfunctie standaard exacte overeenkomsten. Schakel uit voor vage overeenkomsten.",
       "defaultRepsPerSet": "Aangenomen aantal herhalingen indien niet opgegeven. Bij 0 wordt de 'Terugvalduur per serie' gebruikt.",
       "defaultTimerPreset": "Selecteer een standaardvoorinstelling voor nieuwe timers",
-      "exerciseBlockTemplate": "Template voor oefenblokken. Beschikbare placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Pad naar de map met de oefenpagina's",
       "generateDefaultTemplates": "Genereer een standaardsjabloon voor oefeningspagina's en een labeloverzicht in de map 'Workout Templates'. Je kunt deze bestanden aanpassen om de taal en structuur te wijzigen.",
       "noPresets": "Geen timervoorinstellingen geconfigureerd. Klik op 'Voorinstelling toevoegen' om er een aan te maken.",
@@ -947,7 +941,6 @@
       "defaultExactMatch": "Standaard exacte overeenkomst",
       "defaultRepsPerSet": "Standaard aantal herhalingen per serie",
       "defaultTimerPreset": "Standaard timervoorinstelling",
-      "exerciseBlockTemplate": "Template voor een oefenblok",
       "exerciseFolder": "Pad naar de map met de oefeningen",
       "generateDefaultTemplates": "Standaard sjablonen genereren",
       "presetDuration": "Duur (seconden)",

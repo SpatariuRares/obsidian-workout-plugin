@@ -14,14 +14,10 @@ jest.mock("obsidian", () => {
 });
 import { AddExerciseBlockModal } from "@app/features/modals/exercise/AddExerciseBlockModal";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
+import { setsBlock } from "@app/features/tables/setsBlock";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import { TIMER_TYPE } from "@app/features/timer/types";
-import { t } from "@app/i18n";
 
-const TEMPLATE =
-  "## {{exercise}}\nduration: {{duration}}\nworkout: {{workout}}\npreset: {{preset}}\n{{exercise}}";
-
-function openModal(defaultTimerPreset: string | null = null) {
+function openModal() {
   const app = {
     workspace: {
       getActiveViewOfType: () => ({ file: { path: "Leg day.md", basename: "Leg day" } }),
@@ -30,21 +26,9 @@ function openModal(defaultTimerPreset: string | null = null) {
     vault: { getMarkdownFiles: () => [] },
     metadataCache: { getFileCache: () => null },
   } as unknown as App;
-  const preset = (name: string) => ({
-    name,
-    type: TIMER_TYPE.COUNTDOWN,
-    duration: 60,
-    showControls: true,
-    sound: true,
-  });
   const plugin = {
     app,
-    settings: {
-      timerPresets: { Rest: preset("Rest"), Long: preset("Long") },
-      defaultTimerPreset,
-      recentExercises: [],
-      exerciseBlockTemplate: TEMPLATE,
-    },
+    settings: { timerPresets: {}, defaultTimerPreset: null, recentExercises: [] },
     getWorkoutLogData: async () => [],
     getExerciseLibrary: () => ({ pages: () => [], find: () => undefined }),
     getExerciseDefinitionService: () => ({
@@ -59,56 +43,49 @@ function openModal(defaultTimerPreset: string | null = null) {
   modal.onOpen();
   const generate = () =>
     (modal as unknown as { generateCode(): string }).generateCode();
-  const chip = (text: string) =>
-    [...contentEl.querySelectorAll("button")].find((b) => b.textContent === text)!;
   const exercise = () =>
     contentEl.querySelector<HTMLInputElement>("input[type='text']")!;
-  return { contentEl, generate, chip, exercise };
+  return { generate, exercise };
+}
+
+/** The block's parameters, read back with its schema */
+function blockParams(code: string) {
+  const body = /```workout-sets\n([\s\S]*?)```/.exec(code)?.[1] ?? "";
+  return setsBlock.parse(body);
 }
 
 describe("AddExerciseBlockModal", () => {
-  it("titles its sections in the current language", () => {
-    const { contentEl } = openModal();
-    const titles = [...contentEl.querySelectorAll("h3")].map((h) => h.textContent);
-    expect(titles).toEqual([
-      t("modal.sections.exercise"),
-      t("modal.sections.timer"),
-      t("modal.sections.workout"),
-    ]);
-  });
-
-  it("offers the saved presets as chips, with the default one picked", () => {
-    const { chip, contentEl } = openModal("Long");
-    expect(contentEl.textContent).toContain(t("modal.timerPreset"));
-    expect(chip("Long").getAttribute("aria-pressed")).toBe("true");
-    expect(chip("Rest").getAttribute("aria-pressed")).toBe("false");
-    expect(chip(t("settings.options.none"))).toBeDefined();
-  });
-
-  it("fills every placeholder of the template, with the picked preset", () => {
-    const { generate, chip, exercise } = openModal("Long");
+  it("writes the exercise's section with its workout-sets block", () => {
+    const { generate, exercise } = openModal();
     exercise().value = "Squat";
-    chip("Rest").click();
 
-    expect(generate()).toBe(
-      "## Squat\nduration: 90\nworkout: Leg day\npreset: Rest\nSquat",
-    );
+    const code = generate();
+
+    expect(code.startsWith("## Squat\n\n```workout-sets\n")).toBe(true);
+    expect(blockParams(code)).toMatchObject({
+      params: { exercise: "Squat", sets: 3, rest: 90 },
+    });
   });
 
-  it("writes no preset when None is picked", () => {
-    const { generate, chip, exercise } = openModal("Long");
+  it("gives the block an id, so it can be edited later", () => {
+    const { generate, exercise } = openModal();
     exercise().value = "Squat";
-    chip(t("settings.options.none")).click();
 
-    expect(generate()).toContain("preset: \n");
+    expect(blockParams(generate())).toMatchObject({
+      params: { id: expect.any(String) },
+    });
   });
 
-  it("writes no preset when the picked preset is clicked again", () => {
-    const { generate, chip, exercise } = openModal("Long");
+  it("leaves the workout out, so the block follows the note's name", () => {
+    const { generate, exercise } = openModal();
     exercise().value = "Squat";
-    chip("Long").click();
 
-    expect(chip(t("settings.options.none")).getAttribute("aria-pressed")).toBe("true");
-    expect(generate()).toContain("preset: \n");
+    expect(generate()).not.toContain("workout:");
+  });
+
+  it("asks for an exercise", () => {
+    const { generate } = openModal();
+
+    expect(() => generate()).toThrow();
   });
 });

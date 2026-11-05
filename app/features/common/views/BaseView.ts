@@ -11,7 +11,7 @@ import { EmbeddedViewParams } from "@app/types/PluginTypes";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { t } from "@app/i18n";
-import { CONSTANTS, ICONS } from "@app/constants";
+import { ICONS } from "@app/constants";
 /**
  * Base class for all embedded views that provides common functionality
  * and reduces code duplication across Chart, Table, and Timer views.
@@ -40,7 +40,7 @@ export abstract class BaseView {
    */
   protected handleError(container: HTMLElement, error: unknown): void {
     Feedback.renderError(container, ErrorUtils.getErrorMessage(error), {
-      title: CONSTANTS.WORKOUT.ERRORS.TYPES.GENERIC,
+      title: t("common.error"),
     });
   }
 

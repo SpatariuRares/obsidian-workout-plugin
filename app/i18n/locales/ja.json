@@ -806,14 +806,12 @@
       "chartType": "グラフの種類",
       "configuration": "設定",
       "displayOptions": "表示オプション",
-      "exercise": "エクササイズ",
       "exerciseConfiguration": "エクササイズの設定",
       "options": "オプション",
       "preset": "プリセット",
       "progressiveOverload": "漸進性過負荷",
       "tableType": "テーブルの種類",
       "target": "目標",
-      "timer": "タイマー",
       "workout": "ワークアウト",
       "mobileOptions": "最近のエクササイズとワークアウト"
     },
@@ -844,8 +842,6 @@
     "status": "ステータス",
     "tag": "タグ",
     "tagsSelector": "筋肉タグ",
-    "timerDuration": "タイマーの時間（秒）",
-    "timerPreset": "タイマーのプリセット",
     "timerType": "タイマーの種類",
     "titles": {
       "addExerciseBlock": "エクササイズブロックを追加",
@@ -890,7 +886,6 @@
     "rounds": "ラウンド数",
     "work": "作業",
     "workout": "ワークアウト（任意）",
-    "workoutFile": "ワークアウトファイル",
     "workoutNameOptional": "ワークアウト名（任意）"
   },
   "settings": {
@@ -917,7 +912,6 @@
       "defaultExactMatch": "有効にした場合、フィルタリングはデフォルトで完全一致による名前のマッチングを使用します。あいまいなマッチングを使用するには、無効にします。",
       "defaultRepsPerSet": "指定がない場合に想定するレップ数。0の場合は「代替のセット時間」を使用します。",
       "defaultTimerPreset": "新しいタイマーのデフォルトのプリセットを選択してください。",
-      "exerciseBlockTemplate": "エクササイズブロックのテンプレート。利用可能なプレースホルダー: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "エクササイズページの保存されているフォルダーへのパス",
       "generateDefaultTemplates": "'ワークアウトテンプレート'フォルダーに、デフォルトのエクササイズページのテンプレートとタグの参照を作成します。これらのファイルは、言語や構造を変更するためにカスタマイズできます。",
       "noPresets": "タイマーのプリセットは設定されていません。「プリセットを追加」をクリックして、新しいプリセットを作成してください。",
@@ -947,7 +941,6 @@
       "defaultExactMatch": "デフォルトの完全一致",
       "defaultRepsPerSet": "デフォルトのセットごとの回数",
       "defaultTimerPreset": "デフォルトのタイマープリセット",
-      "exerciseBlockTemplate": "エクササイズブロックテンプレート",
       "exerciseFolder": "エクササイズフォルダーのパス",
       "generateDefaultTemplates": "デフォルトのテンプレートを生成する",
       "presetDuration": "時間（秒）",

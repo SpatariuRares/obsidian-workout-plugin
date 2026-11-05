@@ -28,20 +28,6 @@ export class StringUtils {
   }
 
   /**
-   * Fill a user template's `{{name}}` placeholders (the exercise block
-   * template). Values are written as typed; a placeholder without a value
-   * stays in the text.
-   */
-  static fillTemplate(
-    template: string,
-    vars: Record<string, string>,
-  ): string {
-    return template.replace(/\{\{(\w+)\}\}/g, (match: string, name: string) =>
-      Object.prototype.hasOwnProperty.call(vars, name) ? vars[name] : match,
-    );
-  }
-
-  /**
    * Capitalize the first letter of each word (Title Case).
    *
    * @param str - String to capitalize

@@ -806,14 +806,12 @@
       "chartType": "Lloji i grafikut",
       "configuration": "Konfigurim",
       "displayOptions": "Opsionet e shfaqjes",
-      "exercise": "Ushtrim",
       "exerciseConfiguration": "Konfigurimi i ushtrimit",
       "options": "Opsionet",
       "preset": "Paracaktim",
       "progressiveOverload": "Mbingarkesë progresive",
       "tableType": "Lloji i tabelës",
       "target": "Objektivi",
-      "timer": "Timer",
       "workout": "Stërvitja",
       "mobileOptions": "Ushtrimet e fundit dhe stërvitja"
     },
@@ -844,8 +842,6 @@
     "status": "Statusi",
     "tag": "Etiketë",
     "tagsSelector": "Etiketat e muskujve",
-    "timerDuration": "Kohëzgjatja e timerit (sekonda)",
-    "timerPreset": "Paracaktimi i timerit",
     "timerType": "Lloji i timerit",
     "titles": {
       "addExerciseBlock": "Shto bllok ushtrimi",
@@ -890,7 +886,6 @@
     "rounds": "Raundet",
     "work": "Punë",
     "workout": "Stërvitja (opsionale)",
-    "workoutFile": "Skedari i stërvitjes",
     "workoutNameOptional": "Emri i stërvitjes (opsionale)"
   },
   "settings": {
@@ -917,7 +912,6 @@
       "defaultExactMatch": "Kur është aktivizuar, filtrimi i ushtrimeve përdor si parazgjedhje përputhjen e saktë të emrit. Çaktivizojeni për përputhje të përafërt.",
       "defaultRepsPerSet": "Numri i supozuar i përsëritjeve kur nuk është specifikuar. Nëse është 0, përdoret 'Kohëzgjatja rezervë e serisë'.",
       "defaultTimerPreset": "Zgjidhni një paracaktim të parazgjedhur për timerët e rinj",
-      "exerciseBlockTemplate": "Shabllon për blloqet e ushtrimeve. Vendmbajtësit e disponueshëm: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Shtegu i dosjes që përmban faqet e ushtrimeve",
       "generateDefaultTemplates": "Gjeneron shabllonin e parazgjedhur të faqes së ushtrimit dhe referencën e etiketave në dosjen 'Workout Templates'. Mund t'i personalizoni këta skedarë për të ndryshuar gjuhën dhe strukturën.",
       "noPresets": "Nuk ka paracaktime timeri të konfiguruara. Klikoni 'Shto paracaktim' për të krijuar një.",
@@ -947,7 +941,6 @@
       "defaultExactMatch": "Përputhje e saktë si parazgjedhje",
       "defaultRepsPerSet": "Përsëritje të parazgjedhura për seri",
       "defaultTimerPreset": "Paracaktimi i parazgjedhur i timerit",
-      "exerciseBlockTemplate": "Shablloni i bllokut të ushtrimit",
       "exerciseFolder": "Shtegu i dosjes së ushtrimeve",
       "generateDefaultTemplates": "Gjenero shabllonet e parazgjedhura",
       "presetDuration": "Kohëzgjatja (sekonda)",

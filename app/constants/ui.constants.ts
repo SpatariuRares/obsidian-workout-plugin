@@ -295,6 +295,14 @@ export const MODAL_UI = {
   },
 } as const;
 
+/** An exercise type's name in the plugin's language (its own name when it has no translation) */
+export function exerciseTypeName(type: { id: string; name: string }): string {
+  return (
+    MODAL_UI.SELECT_OPTIONS.EXERCISE_TYPE.find((o) => o.value === type.id)
+      ?.text ?? type.name
+  );
+}
+
 /**
  * Gets dynamic settings labels with proper weight unit.
  * Returns label strings that include weight units, adjusted based on settings.

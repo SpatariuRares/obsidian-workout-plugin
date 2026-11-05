@@ -1,5 +1,5 @@
 import { Feedback } from "@app/components/atoms/Feedback";
-import { CONSTANTS } from "@app/constants";
+import { t } from "@app/i18n";
 /**
  * UI component for rendering error messages.
  * Pure UI logic with no business dependencies.
@@ -14,7 +14,7 @@ export class TableErrorMessage {
   static render(
     container: HTMLElement,
     message: string,
-    title = CONSTANTS.WORKOUT.ERRORS.TYPES.GENERIC,
+    title = t("common.error"),
   ): void {
     Feedback.renderError(container, message, { title });
   }

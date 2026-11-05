@@ -1,21 +1,5 @@
 import { StringUtils } from "@app/utils/StringUtils";
 
-describe("StringUtils.fillTemplate", () => {
-  it("replaces every {{name}} with its value", () => {
-    expect(
-      StringUtils.fillTemplate("{{a}} and {{b}}, {{a}} again", { a: "1", b: "2" }),
-    ).toBe("1 and 2, 1 again");
-  });
-
-  it("leaves placeholders it has no value for", () => {
-    expect(StringUtils.fillTemplate("{{a}} {{other}}", { a: "x" })).toBe("x {{other}}");
-  });
-
-  it("writes values literally, even with $ patterns", () => {
-    expect(StringUtils.fillTemplate("{{a}}", { a: "$& $1" })).toBe("$& $1");
-  });
-});
-
 describe("StringUtils", () => {
   describe("getMatchScore", () => {
     it("should return 100 for exact match", () => {

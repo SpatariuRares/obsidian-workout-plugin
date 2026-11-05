@@ -1,4 +1,5 @@
 import { BUILT_IN_EXERCISE_TYPES } from "@app/constants/exerciseTypes.constants";
+import { exerciseTypeName } from "@app/constants/ui.constants";
 import { Setting } from "obsidian";
 import { t } from "@app/i18n";
 
@@ -24,7 +25,7 @@ export class ConversionTypeSelect {
 
     const options: Record<string, string> = {};
     BUILT_IN_EXERCISE_TYPES.forEach((type) => {
-      options[type.id] = type.name;
+      options[type.id] = exerciseTypeName(type);
     });
 
     new Setting(this.container)

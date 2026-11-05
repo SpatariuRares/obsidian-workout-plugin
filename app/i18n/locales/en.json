@@ -56,6 +56,7 @@
     "bpm": "bpm",
     "clear": "Clear",
     "convert": "Convert",
+    "error": "Error",
     "duration": {
       "hours": "{count}h",
       "minutes": "{count}m",
@@ -194,7 +195,8 @@
         "period": "Period",
         "side": "Side",
         "metric": "Measure"
-      }
+      },
+      "trainingAnalysis": "Training analysis"
     },
     "editDashboard": "Edit dashboard",
     "modal": {
@@ -756,6 +758,7 @@
       "muscleTagExists": "Tag \"{tag}\" already exists",
       "muscleTagExportError": "Error exporting muscle tags: {error}",
       "muscleTagExported": "Tags exported to muscle-tags-export.csv",
+      "muscleTagGroupRequired": "Pick a muscle group",
       "muscleTagImportError": "Error importing muscle tags: {error}",
       "muscleTagImportInvalidFormat": "This file needs a 'tag' and a 'muscleGroup' column",
       "muscleTagImportInvalidGroup": "Invalid muscle group \"{group}\" for tag \"{tag}\". Must be a canonical muscle group.",
@@ -763,6 +766,7 @@
       "muscleTagImportPreview": "{count} tag(s) to import",
       "muscleTagImported": "{count} muscle tag(s) imported successfully!",
       "muscleTagLoading": "Loading tags...",
+      "muscleTagNameRequired": "Enter a tag name",
       "muscleTagNoResults": "No tags match your search",
       "muscleTagSaveError": "Error saving muscle tag: {error}",
       "muscleTagSaved": "Tag saved",
@@ -825,7 +829,6 @@
       "chartType": "Chart type",
       "configuration": "Configuration",
       "displayOptions": "Display options",
-      "exercise": "Exercise",
       "exerciseConfiguration": "Exercise configuration",
       "mobileOptions": "Recent exercises and workout",
       "options": "Options",
@@ -833,7 +836,6 @@
       "progressiveOverload": "Progressive overload",
       "tableType": "Table type",
       "target": "Target",
-      "timer": "Timer",
       "workout": "Workout"
     },
     "selectOptions": {
@@ -863,8 +865,6 @@
     "status": "Status",
     "tag": "Tag",
     "tagsSelector": "Muscle tags",
-    "timerDuration": "Timer duration (seconds)",
-    "timerPreset": "Timer preset",
     "timerType": "Timer type",
     "titles": {
       "addExerciseBlock": "Add exercise block",
@@ -890,7 +890,6 @@
     "weightUnitToggle": "Unit for this entry",
     "work": "Work",
     "workout": "Workout (optional)",
-    "workoutFile": "Workout file",
     "workoutNameOptional": "Workout name (optional)"
   },
   "settings": {
@@ -919,7 +918,6 @@
       "defaultTimerPreset": "Select a default preset for new timers",
       "keepScreenAwake": "Try to keep the screen awake while any timer runs in the foreground. Uses more battery; availability depends on your device and system settings.",
       "vibrateOnCompletion": "Vibrate briefly when a timer finishes, independently of sound. Requires a tap on the page and a supported device (such as Android). Unavailable on iOS; no background alerts.",
-      "exerciseBlockTemplate": "Template for exercise blocks. Available placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Path to the folder containing exercise pages",
       "generateDefaultTemplates": "Generate default exercise page template and tag reference in the 'Workout Templates' folder. You can customize these files to change the language and structure.",
       "noCustomProtocols": "No protocols yet. Click 'Add protocol' to create one.",
@@ -949,7 +947,6 @@
       "defaultTimerPreset": "Default timer preset",
       "keepScreenAwake": "Keep screen awake while a timer runs",
       "vibrateOnCompletion": "Vibrate when a timer completes",
-      "exerciseBlockTemplate": "Exercise block template",
       "exerciseFolder": "Exercise folder path",
       "generateDefaultTemplates": "Generate default templates",
       "presetDuration": "Duration (seconds)",

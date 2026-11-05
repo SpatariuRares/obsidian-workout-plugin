@@ -3,6 +3,7 @@ import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { t } from "@app/i18n";
 import { getExerciseTypeById } from "@app/constants/exerciseTypes.constants";
+import { exerciseTypeName } from "@app/constants/ui.constants";
 import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import {
@@ -146,7 +147,7 @@ export class ConvertExerciseDataModal extends ModalBase {
       .getExerciseType(this.selectedExercise);
 
     if (this.currentTypeDisplay) {
-      this.currentTypeDisplay.textContent = this.currentType.name;
+      this.currentTypeDisplay.textContent = exerciseTypeName(this.currentType);
     }
 
     this.entryCount = (

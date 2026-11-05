@@ -29,9 +29,6 @@ strings_found/*
 # Local issue tracker (agent skills)
 .scratch/
 
-# Build error log written by scripts/learning/error-logger.mjs (machine-specific)
-scripts/learning/error-log.json
-
 # Screenshot captures (obsidian-verify recipes)
 .shots/
 docs/ui-*

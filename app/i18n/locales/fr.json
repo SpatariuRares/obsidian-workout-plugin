@@ -806,14 +806,12 @@
       "chartType": "Type de graphique",
       "configuration": "Configuration",
       "displayOptions": "Options d'affichage",
-      "exercise": "Exercice",
       "exerciseConfiguration": "Configuration de l'exercice",
       "options": "Options",
       "preset": "Préréglage",
       "progressiveOverload": "Surcharge progressive",
       "tableType": "Type de tableau",
       "target": "Cible",
-      "timer": "Minuteur",
       "workout": "Entraînement",
       "mobileOptions": "Exercices et séances d'entraînement récents"
     },
@@ -842,8 +840,6 @@
     "status": "Statut",
     "tag": "Tag",
     "tagsSelector": "Tags musculaires",
-    "timerDuration": "Durée du minuteur (secondes)",
-    "timerPreset": "Préréglage du minuteur",
     "timerType": "Type de minuteur",
     "titles": {
       "addExerciseBlock": "Ajouter un bloc d'exercice",
@@ -890,7 +886,6 @@
     "rounds": "Tours",
     "work": "Travail",
     "workout": "Entraînement (facultatif)",
-    "workoutFile": "Fichier d'entraînement",
     "workoutNameOptional": "Nom de l'entraînement (facultatif)"
   },
   "settings": {
@@ -917,7 +912,6 @@
       "defaultExactMatch": "Lorsque cette option est activée, le filtre d'exercices utilise par défaut une correspondance exacte du nom. Désactivez-la pour une correspondance approximative.",
       "defaultRepsPerSet": "Nombre de répétitions supposé lorsqu'il n'est pas précisé. Si 0, la « Durée de série par défaut » est utilisée.",
       "defaultTimerPreset": "Sélectionnez un préréglage par défaut pour les nouveaux minuteurs.",
-      "exerciseBlockTemplate": "Modèle des blocs d'exercices. Variables disponibles : {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Chemin d'accès au dossier contenant les pages d'exercices.",
       "generateDefaultTemplates": "Générez le modèle de page d'exercice par défaut et la référence des tags dans le dossier 'Workout Templates'. Vous pouvez personnaliser ces fichiers pour modifier la langue et la structure.",
       "noPresets": "Aucun préréglage de minuteur configuré. Cliquez sur « Ajouter un préréglage » pour en créer un.",
@@ -947,7 +941,6 @@
       "defaultExactMatch": "Correspondance exacte par défaut",
       "defaultRepsPerSet": "Répétitions par série par défaut",
       "defaultTimerPreset": "Préréglage de minuteur par défaut",
-      "exerciseBlockTemplate": "Modèle de bloc d'exercice",
       "exerciseFolder": "Chemin du dossier des exercices",
       "generateDefaultTemplates": "Générer les modèles par défaut",
       "presetDuration": "Durée (secondes)",

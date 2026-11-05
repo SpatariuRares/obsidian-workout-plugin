@@ -34,7 +34,6 @@ function makePlugin() {
       repDuration: 3,
       defaultRepsPerSet: 10,
       setDuration: 45,
-      exerciseBlockTemplate: "template",
       defaultTimerPreset: null as string | null,
       timerPresets: {
         rest: {
@@ -101,7 +100,6 @@ const EXPECTED_ROWS = [
   "settings.labels.defaultRepsPerSet",
   "settings.labels.setDuration",
   "settings.labels.generateDefaultTemplates",
-  "settings.labels.exerciseBlockTemplate",
   "settings.labels.runAllMaintenance",
 ];
 
@@ -124,7 +122,7 @@ describe("WorkoutChartsSettingTab definitions (settings search)", () => {
     expect(page?.name).toBe(t("settings.sections.advanced"));
     const advancedNames = rowNames(page?.items ?? []);
     expect(advancedNames).toContain(
-      t("settings.labels.exerciseBlockTemplate"),
+      t("settings.labels.generateDefaultTemplates"),
     );
     expect(advancedNames).toContain(
       t("settings.labels.runAllMaintenance"),

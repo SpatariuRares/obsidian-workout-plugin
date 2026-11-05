@@ -806,14 +806,12 @@
       "chartType": "Tipo de gráfico",
       "configuration": "Configuração",
       "displayOptions": "Opções de exibição",
-      "exercise": "Exercício",
       "exerciseConfiguration": "Configuração do exercício",
       "options": "Opções",
       "preset": "Predefinição",
       "progressiveOverload": "Sobrecarga progressiva",
       "tableType": "Tipo de tabela",
       "target": "Meta",
-      "timer": "Temporizador",
       "workout": "Treino",
       "mobileOptions": "Exercícios recentes e treino"
     },
@@ -844,8 +842,6 @@
     "status": "Status",
     "tag": "Tag",
     "tagsSelector": "Tags musculares",
-    "timerDuration": "Duração do temporizador (segundos)",
-    "timerPreset": "Predefinição do temporizador",
     "timerType": "Tipo de temporizador",
     "titles": {
       "addExerciseBlock": "Adicionar bloco de exercício",
@@ -890,7 +886,6 @@
     "rounds": "Rodadas",
     "work": "Trabalho",
     "workout": "Treino (opcional)",
-    "workoutFile": "Arquivo do treino",
     "workoutNameOptional": "Nome do treino (opcional)"
   },
   "settings": {
@@ -917,7 +912,6 @@
       "defaultExactMatch": "Quando ativado, o filtro de exercícios usa correspondência exata por padrão. Desative para correspondência aproximada.",
       "defaultRepsPerSet": "Número de repetições assumido quando não especificado. Se for 0, utiliza a 'Duração de série alternativa'.",
       "defaultTimerPreset": "Selecione uma predefinição padrão para novos temporizadores",
-      "exerciseBlockTemplate": "Modelo para blocos de exercícios. Placeholders disponíveis: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Caminho para a pasta que contém as páginas de exercícios.",
       "generateDefaultTemplates": "Gere o modelo padrão da página de exercícios e a referência de tags na pasta 'Workout Templates'. Você pode personalizar esses arquivos para alterar o idioma e a estrutura.",
       "noPresets": "Não há predefinições de temporizador. Clique em 'Adicionar predefinição' para criar uma.",
@@ -947,7 +941,6 @@
       "defaultExactMatch": "Correspondência exata padrão",
       "defaultRepsPerSet": "Número padrão de repetições por série",
       "defaultTimerPreset": "Predefinição padrão do temporizador",
-      "exerciseBlockTemplate": "Modelo de bloco de exercícios",
       "exerciseFolder": "Caminho da pasta de exercícios",
       "generateDefaultTemplates": "Gerar modelos padrão",
       "presetDuration": "Duração (segundos)",

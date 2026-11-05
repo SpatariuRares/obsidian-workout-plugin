@@ -806,14 +806,12 @@
       "chartType": "Diagramtype",
       "configuration": "Konfiguration",
       "displayOptions": "Visningsindstillinger",
-      "exercise": "Øvelse",
       "exerciseConfiguration": "Øvelseskonfiguration",
       "options": "Indstillinger",
       "preset": "Forudindstilling",
       "progressiveOverload": "Progressiv overbelastning",
       "tableType": "Tabeltype",
       "target": "Mål",
-      "timer": "Timer",
       "workout": "Træning",
       "mobileOptions": "Seneste øvelser og træning"
     },
@@ -844,8 +842,6 @@
     "status": "Status",
     "tag": "Tag",
     "tagsSelector": "Muskel-tags",
-    "timerDuration": "Timerens varighed (sekunder)",
-    "timerPreset": "Timer-forudindstilling",
     "timerType": "Timertype",
     "titles": {
       "addExerciseBlock": "Tilføj øvelsesblok",
@@ -890,7 +886,6 @@
     "rounds": "Runder",
     "work": "Arbejde",
     "workout": "Træning (valgfri)",
-    "workoutFile": "Træningsfil",
     "workoutNameOptional": "Træningens navn (valgfrit)"
   },
   "settings": {
@@ -917,7 +912,6 @@
       "defaultExactMatch": "Når det er aktiveret, filtreres øvelser som standard på præcist navn. Deaktiver for fuzzy match.",
       "defaultRepsPerSet": "Antaget antal gentagelser, hvis intet er angivet. Hvis 0, bruges 'Reservevarighed for sæt'.",
       "defaultTimerPreset": "Vælg en standardforudindstilling for nye timere",
-      "exerciseBlockTemplate": "Skabelon til øvelsesblokke. Tilgængelige pladsholdere: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Sti til mappen med øvelsessider",
       "generateDefaultTemplates": "Generér standardskabelon til øvelsessider og tag-reference i mappen 'Workout Templates'. Du kan tilpasse disse filer for at ændre sprog og struktur.",
       "noPresets": "Ingen timer-forudindstillinger konfigureret. Klik på 'Tilføj forudindstilling' for at oprette en.",
@@ -947,7 +941,6 @@
       "defaultExactMatch": "Præcist match som standard",
       "defaultRepsPerSet": "Standard antal gentagelser pr. sæt",
       "defaultTimerPreset": "Standard-timerforudindstilling",
-      "exerciseBlockTemplate": "Skabelon til øvelsesblok",
       "exerciseFolder": "Sti til øvelsesmappe",
       "generateDefaultTemplates": "Generér standardskabeloner",
       "presetDuration": "Varighed (sekunder)",

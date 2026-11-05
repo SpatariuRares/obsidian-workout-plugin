@@ -1,9 +1,6 @@
 // Types for workout log data. Reading and writing the CSV is WorkoutLogFile's job.
 import { TFile } from "obsidian";
-import {
-  CHART_DATA_TYPE,
-  TimerPresetConfig,
-} from "@app/types/WorkoutConfigTypes";
+import { TimerPresetConfig } from "@app/types/WorkoutConfigTypes";
 import type { WeightUnit } from "@app/utils/WeightUnitUtils";
 
 /**
@@ -104,11 +101,6 @@ export type TimedLogEntryInput = LogEntryInput & { timestamp: number };
 export interface WorkoutChartsSettings {
   csvLogFilePath: string;
   exerciseFolderPath: string;
-  defaultExercise: string;
-  chartType: CHART_DATA_TYPE;
-  dateRange: number; // days
-  showTrendLine: boolean;
-  chartHeight: number;
   defaultExactMatch: boolean;
   timerPresets: Record<string, TimerPresetConfig>;
   defaultTimerPreset: string | null;
@@ -118,7 +110,6 @@ export interface WorkoutChartsSettings {
   keepScreenAwake: boolean;
   /** Optional tactile cue at actual timer completion, independent of sound */
   vibrateOnCompletion: boolean;
-  exerciseBlockTemplate: string;
   weightIncrement: number;
   achievedTargets: Record<string, number>;
   customProtocols: CustomProtocolConfig[];

@@ -33,10 +33,6 @@ import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { DomUtils } from "@app/utils/DomUtils";
 import { t } from "@app/i18n";
 import { groupByProtocol, protocolId } from "@app/services/protocols/ProtocolCatalog";
-import {
-  TOUR_TARGETS,
-  markTourTarget,
-} from "@app/features/tour/tourTargets";
 
 /**
  * Dashboard View for displaying comprehensive workout analytics
@@ -154,7 +150,6 @@ export class EmbeddedDashboardView extends BaseView {
     const dashboardEl = container.createDiv({
       cls: "workout-dashboard",
     });
-    markTourTarget(dashboardEl, TOUR_TARGETS.dashboard);
 
     // Title (if any) and the menu to edit the block
     const headerEl = dashboardEl.createDiv({

@@ -480,7 +480,16 @@
       "continueWithWorkout": "Åbn [[{workout}]] for at prøve en komplet træning med øvelsestabeller og pausetimere.",
       "moreExamples": "Se [[{showcase}]] for flere diagramtyper, filtre og træningsprotokoller.",
       "ownData": "Når du er klar, vælg din egen CSV-mappe og eksempelmappe i Indstillinger → Opsætning og data. Behold eksempelmappen som en reference.",
-      "openGuideDesc": "Åbn siden med eksempler, der viser, hvordan man bruger tabeller, diagrammer, tidsmålere og dashboardet."
+      "openGuideDesc": "Åbn siden med eksempler, der viser, hvordan man bruger tabeller, diagrammer, tidsmålere og dashboardet.",
+      "setsTitle": "Dine sæt",
+      "progressTitle": "Fremskridt",
+      "dashboardTitle": "Dashboard",
+      "chartIntro": "Diagrammet viser, hvordan en øvelse udvikler sig over tid, med en trendlinje og statistikker.",
+      "dashboardIntro": "Samlede tal, udvikling i volumen og seneste træninger, alt sammen på ét sted.",
+      "timerIntro": "Tryk på \"Start\" for at starte en tæller mellem sæt.",
+      "back": "Tilbage",
+      "next": "Næste",
+      "done": "Færdig"
     },
     "hiit": {
       "cyclingCooldownTitle": "Nedkøling på cykel",
@@ -1169,74 +1178,6 @@
       "notOneOf": "{key} skal være en af {allowed}, men det er \"{value}\"",
       "notACell": "{key} skal være fire hele tal fra 1 og op (kolonne, række, bredde, højde), men det er \"{value}\""
     }
-  },
-  "welcome": {
-    "title": "Velkommen til træningsplugin'et",
-    "intro": "Spor dine sæt, og se dem derefter som grafer, tabeller og et overblik. Hvordan vil du gerne starte?",
-    "tryExamples": "Prøv med eksempeldata",
-    "startScratch": "Start fra nul",
-    "later": "Senere",
-    "tryExamplesDesc": "Tilføjer eksempeltræninger, og guider dig derefter igennem brugen af plugin'et på disse.",
-    "startScratchDesc": "Guider dig igennem plugin'et med dine egne data, og starter med dit første sæt.",
-    "tourOnYourData": "Du har allerede en træningslog, så turen baseres på dine egne data."
-  },
-  "tour": {
-    "back": "Tilbage",
-    "next": "Næste",
-    "skip": "Spring over",
-    "done": "Færdig",
-    "progress": "{current} af {total}",
-    "noteName": "Guidet tur",
-    "noteIntro": "Den guidede tur viser hvert element i plugin'et på denne side. Rediger eller slet dette notat, når du har lyst.",
-    "noteTable": "Dine sæt",
-    "noteChart": "Fremskridt",
-    "noteDashboard": "Dashboard",
-    "noteTimer": "Hviletimer",
-    "steps": {
-      "logSet": {
-        "title": "Registrér dit første sæt",
-        "text": "Tryk på +-knappen for at åbne formularen, og gem derefter et sæt. Det vises straks i tabellen."
-      },
-      "rowActions": {
-        "title": "Rediger eller slet et sæt",
-        "mobileText": "Tryk på et sæt for at rette det. For at fjerne det, skal du bruge \"Slet sæt\" i formularen, der åbnes.",
-        "text": "Brug blyanten på en række for at rette et sæt. For at fjerne det, skal du bruge \"Slet sæt\" i formularen, der åbnes."
-      },
-      "chart": {
-        "title": "Din fremgang",
-        "text": "Diagrammet viser, hvordan en øvelse udvikler sig over tid, med en trendlinje og statistikker.",
-        "textMine": "Diagrammet viser, hvordan en øvelse udvikler sig over tid. Det er næsten tomt, indtil du har registreret et par sæt.",
-        "mobileText": "På en mobiltelefon vises diagrammet som en tabel med de samme tal.",
-        "mobileTextMine": "På en mobiltelefon vises diagrammet som en tabel. Det er næsten tomt, indtil du har registreret et par sæt."
-      },
-      "dashboard": {
-        "title": "Dit overblik",
-        "text": "Samlede tal, udvikling i volumen og seneste træninger, alt sammen på ét sted.",
-        "textMine": "Samlede resultater, volumentendenser og seneste træninger. Det fyldes op, efterhånden som du registrerer flere sæt."
-      },
-      "timer": {
-        "title": "Hviletimer",
-        "text": "Tryk på \"Start\" for at starte en tæller mellem sæt."
-      },
-      "ribbon": {
-        "title": "Log fra enhver note",
-        "text": "Håndvægtikonet i båndet åbner formularen til træningslog fra hvor som helst.",
-        "mobileText": "På en telefon er der ingen båndikon her. Brug kommandopaletten til at åbne formularen fra ethvert notat."
-      },
-      "commands": {
-        "title": "Indsæt kommandoer",
-        "text": "Åbn kommandopaletten og kør kommandoen \"Indsæt træning\" for at tilføje en tabel, et diagram, en timer eller et dashboard til en note."
-      },
-      "end": {
-        "title": "Du er klar.",
-        "text": "Du kan gennemføre denne tur igen fra Indstillinger → Sådan kommer du i gang."
-      },
-      "muscles": {
-        "title": "Muskel-heatmap",
-        "text": "Heatmappet viser, hvilke muskler du har trænet senest."
-      }
-    },
-    "showMe": "Vis mig"
   },
   "import": {
     "chooseFile": "Vælg CSV-fil",

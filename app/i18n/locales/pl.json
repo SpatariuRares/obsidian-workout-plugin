@@ -480,7 +480,16 @@
       "continueWithWorkout": "Otwórz [[{workout}]], aby spróbować kompletnego treningu z tabelami ćwiczeń i timerami odpoczynku.",
       "moreExamples": "Zobacz [[{showcase}]], aby poznać więcej typów wykresów, filtrów i protokołów treningowych.",
       "ownData": "Gdy będziesz gotowy, wybierz własny folder CSV i folder ćwiczeń w ustawieniach → Konfiguracja i dane. Folder z przykładami zachowaj jako punkt odniesienia.",
-      "openGuideDesc": "Otwórz stronę „Jak zacząć” z działającymi przykładami tabel, wykresów, timerów i panelu kontrolnego."
+      "openGuideDesc": "Otwórz stronę „Jak zacząć” z działającymi przykładami tabel, wykresów, timerów i panelu kontrolnego.",
+      "setsTitle": "Twoje serie",
+      "progressTitle": "Postęp",
+      "dashboardTitle": "Panel kontrolny",
+      "chartIntro": "Na wykresie przedstawiono, jak dane ćwiczenie zmienia się w czasie, wraz z linią trendu i statystykami.",
+      "dashboardIntro": "Podsumowania, trendy dotyczące objętości i ostatnie treningi – wszystko w jednym miejscu.",
+      "timerIntro": "Naciśnij przycisk „Start”, aby uruchomić odliczanie między seriami.",
+      "back": "Wstecz",
+      "next": "Dalej",
+      "done": "Zakończono"
     },
     "hiit": {
       "cyclingCooldownTitle": "Schłodzenie na rowerze",
@@ -1169,74 +1178,6 @@
       "notOneOf": "{key} musi być jedną z wartości: {allowed}, ale jest \"{value}\"",
       "notACell": "{key} musi być czterema liczbami całkowitymi od 1 (kolumna, wiersz, szerokość, wysokość), ale wynosi \"{value}\""
     }
-  },
-  "welcome": {
-    "title": "Witaj w wtyczce do treningów",
-    "intro": "Śledź swoje serie, a następnie zobacz je w formie wykresów, tabel i panelu kontrolnego. Jak chcesz zacząć?",
-    "tryExamples": "Wypróbuj z przykładowymi danymi",
-    "startScratch": "Zacznij od zera",
-    "later": "Później",
-    "tryExamplesDesc": "Dodaje przykładowe treningi, a następnie przeprowadza Cię przez wtyczkę na ich podstawie.",
-    "startScratchDesc": "Przewodnik po wtyczce na Twoich własnych danych, zaczynając od pierwszej serii.",
-    "tourOnYourData": "Masz już dziennik treningów, więc wycieczka przebiega na Twoich własnych danych."
-  },
-  "tour": {
-    "back": "Wstecz",
-    "next": "Dalej",
-    "skip": "Pomiń",
-    "done": "Zakończono",
-    "progress": "{current} z {total}",
-    "noteName": "Wycieczka z przewodnikiem",
-    "noteIntro": "Wycieczka z przewodnikiem wskazuje każdy element wtyczki na tej stronie. Edytuj lub usuń tę notatkę, kiedy tylko chcesz.",
-    "noteTable": "Twoje serie",
-    "noteChart": "Postęp",
-    "noteDashboard": "Panel kontrolny",
-    "noteTimer": "Timer odpoczynku",
-    "steps": {
-      "logSet": {
-        "title": "Zapisz pierwszą serię",
-        "text": "Naciśnij przycisk „+”, aby otworzyć formularz, a następnie zapisz serię. Od razu pojawi się w tabeli."
-      },
-      "rowActions": {
-        "title": "Edytuj lub usuń serię",
-        "mobileText": "Naciśnij serię, aby ją poprawić. Aby ją usunąć, użyj opcji „Usuń serię” w formularzu, który się otworzy.",
-        "text": "Użyj ołówka w wierszu, aby poprawić serię. Aby ją usunąć, użyj opcji „Usuń serię” w otwartym formularzu."
-      },
-      "chart": {
-        "title": "Twój postęp",
-        "text": "Na wykresie przedstawiono, jak dane ćwiczenie zmienia się w czasie, wraz z linią trendu i statystykami.",
-        "textMine": "Na wykresie przedstawiono, jak postępuje ćwiczenie w czasie. Początkowo wykres jest prawie pusty, aż do momentu, w którym zarejestrujesz kilka serii.",
-        "mobileText": "Na telefonie wykres jest wyświetlany jako tabela z tymi samymi liczbami.",
-        "mobileTextMine": "Na telefonie wykres jest wyświetlany jako tabela. Początkowo jest prawie pusty, aż do momentu, gdy dodasz kilka serii."
-      },
-      "dashboard": {
-        "title": "Twój panel kontrolny",
-        "text": "Podsumowania, trendy dotyczące objętości i ostatnie treningi – wszystko w jednym miejscu.",
-        "textMine": "Podsumowania, trendy objętości i ostatnie treningi. Dane pojawiają się automatycznie, gdy rejestrujesz kolejne serie."
-      },
-      "timer": {
-        "title": "Timer odpoczynku",
-        "text": "Naciśnij przycisk „Start”, aby uruchomić odliczanie między seriami."
-      },
-      "ribbon": {
-        "title": "Zapisz notatkę z dowolnego miejsca",
-        "text": "Ikona hantla w pasku otwiera formularz dziennika z dowolnego miejsca.",
-        "mobileText": "Na telefonie nie ma tutaj ikony na pasku. Użyj palety poleceń, aby otworzyć formularz dziennika z dowolnej notatki."
-      },
-      "commands": {
-        "title": "Dodaj polecenia",
-        "text": "Otwórz paletę poleceń i uruchom polecenie „Dodaj tabelę treningu”, „Dodaj wykres treningu” lub „Dodaj timer treningowy”, aby wstawić blok do notatki."
-      },
-      "end": {
-        "title": "Gotowe",
-        "text": "Tę wycieczkę możesz powtórzyć w ustawieniach, w sekcji Jak zacząć."
-      },
-      "muscles": {
-        "title": "Mapa cieplna mięśni",
-        "text": "Mapa cieplna pokazuje, które mięśnie trenowałeś ostatnio najczęściej."
-      }
-    },
-    "showMe": "Pokaż mi"
   },
   "import": {
     "chooseFile": "Wybierz plik CSV",

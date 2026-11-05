@@ -480,7 +480,16 @@
       "continueWithWorkout": "Otevřete [[{workout}]], kde najdete kompletní trénink s tabulkami cvičení a časovači odpočinku.",
       "moreExamples": "Další typy grafů, filtry a tréninkové protokoly najdete v [[{showcase}]].",
       "ownData": "Když jste připraveni, vyberte si vlastní složku CSV a složku cvičení v Nastavení → Nastavení a data. Složku s příklady si ponechte jako referenci.",
-      "openGuideDesc": "Otevřete stránku s návodem a ukázkami, které demonstrují použití tabulek, grafů, časovačů a dashboardu."
+      "openGuideDesc": "Otevřete stránku s návodem a ukázkami, které demonstrují použití tabulek, grafů, časovačů a dashboardu.",
+      "setsTitle": "Vaše série",
+      "progressTitle": "Pokrok",
+      "dashboardTitle": "Přehled",
+      "chartIntro": "Graf zobrazuje, jak se cvičení vyvíjí v čase, včetně spojnice trendu a statistik.",
+      "dashboardIntro": "Celkové hodnoty, trendy objemu a nedávné tréninky, vše na jednom místě.",
+      "timerIntro": "Stiskněte tlačítko „Start“, abyste spustili časovač mezi sériemi.",
+      "back": "Zpět",
+      "next": "Další",
+      "done": "Hotovo"
     },
     "hiit": {
       "cyclingCooldownTitle": "Zklidnění na kole",
@@ -1169,74 +1178,6 @@
       "notOneOf": "{key} musí být jedním z {allowed}, ale je \"{value}\"",
       "notACell": "{key} musí být čtyři celá čísla od 1 (sloupec, řádek, šířka, výška), ale je \"{value}\""
     }
-  },
-  "welcome": {
-    "title": "Vítejte v pluginu pro trénink",
-    "intro": "Sledujte své série a poté je zobrazujte jako grafy, tabulky a přehled. Jak chcete začít?",
-    "tryExamples": "Zkuste s ukázkovými daty",
-    "startScratch": "Začněte od začátku",
-    "later": "Později",
-    "tryExamplesDesc": "Přidá ukázkové tréninky a poté vás provede pluginem na těchto datech.",
-    "startScratchDesc": "Vede vás krok za krokem používáním pluginu s vašimi vlastními daty, počínaje první sérií.",
-    "tourOnYourData": "Máte již vytvořený záznam tréninků, takže prohlídka běží na vašich vlastních datech."
-  },
-  "tour": {
-    "back": "Zpět",
-    "next": "Další",
-    "skip": "Přeskočit",
-    "done": "Hotovo",
-    "progress": "{current} z {total}",
-    "noteName": "Prohlídka s průvodcem",
-    "noteIntro": "Tato prohlídka vás provede každou částí tohoto pluginu na této stránce. Můžete upravit nebo smazat tuto poznámku kdykoli potřebujete.",
-    "noteTable": "Vaše série",
-    "noteChart": "Pokrok",
-    "noteDashboard": "Přehled",
-    "noteTimer": "Časovač odpočinku",
-    "steps": {
-      "logSet": {
-        "title": "Zaznamenejte první sérii",
-        "text": "Stiskněte tlačítko +, abyste otevřeli formulář, a poté uložte sérii. Série se okamžitě zobrazí v tabulce."
-      },
-      "rowActions": {
-        "title": "Upravte nebo odstraňte sérii",
-        "mobileText": "Klepněte na sérii a upravte ji. Pro odstranění použijte tlačítko „Smazat sérii“ ve formuláři, který se otevře.",
-        "text": "Na řádku použijte tužku a upravte sérii. Pro odstranění použijte tlačítko „Smazat sérii“ ve formuláři, který se otevře."
-      },
-      "chart": {
-        "title": "Váš pokrok",
-        "text": "Graf zobrazuje, jak se cvičení vyvíjí v čase, včetně spojnice trendu a statistik.",
-        "textMine": "Graf zobrazuje, jak se cvičení vyvíjí v průběhu času. Na začátku je graf téměř prázdný, dokud nezaznamenáte několik sérií.",
-        "mobileText": "Na mobilním telefonu je graf zobrazen jako tabulka se stejnými čísly.",
-        "mobileTextMine": "Na telefonu je graf zobrazen jako tabulka. Je téměř prázdný, dokud nezaznamenáte několik sérií."
-      },
-      "dashboard": {
-        "title": "Váš přehled",
-        "text": "Celkové hodnoty, trendy objemu a nedávné tréninky, vše na jednom místě.",
-        "textMine": "Celkové hodnoty, trendy objemu a nedávné tréninky. Plní se, jak zaznamenáváte další série."
-      },
-      "timer": {
-        "title": "Časovač odpočinku",
-        "text": "Stiskněte tlačítko „Start“, abyste spustili časovač mezi sériemi."
-      },
-      "ribbon": {
-        "title": "Záznam z libovolné poznámky",
-        "text": "Ikona činky na liště otevírá formulář záznamů odkudkoli.",
-        "mobileText": "Na telefonu tu ikona na liště není. Formulář záznamu otevřete z libovolné poznámky přes paletu příkazů."
-      },
-      "commands": {
-        "title": "Příkazy pro vložení",
-        "text": "Otevřete panel příkazů a spusťte příkaz pro vložení, abyste přidali tabulku, graf, časovač nebo dashboard do poznámky."
-      },
-      "end": {
-        "title": "Jste připraveni",
-        "text": "Tuto prohlídku si můžete znovu spustit v Nastavení → Začít."
-      },
-      "muscles": {
-        "title": "Tepelná mapa svalů",
-        "text": "Mapa tepelné aktivity ukazuje, které svaly jste trénovali naposledy."
-      }
-    },
-    "showMe": "Ukaž mi"
   },
   "import": {
     "chooseFile": "Vyberte soubor ve formátu CSV",

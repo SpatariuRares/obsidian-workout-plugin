@@ -14,7 +14,6 @@ import { WhatsNewModal } from "@app/features/modals/common/WhatsNewModal";
 import { allReleaseNotes } from "@app/services/onboarding/WhatsNew";
 import type {
   EventBusPort,
-  TourPort,
   WorkoutPluginContext,
 } from "@app/types/PluginPorts";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
@@ -35,7 +34,7 @@ export class GeneralSettings {
 
   constructor(
     private app: App,
-    private plugin: WorkoutPluginContext & EventBusPort & TourPort,
+    private plugin: WorkoutPluginContext & EventBusPort,
   ) {}
 
   definitions(): DefinitionItem[] {

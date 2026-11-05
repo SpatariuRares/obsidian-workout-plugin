@@ -480,7 +480,16 @@
       "continueWithWorkout": "Buka [[{workout}]] untuk mencoba latihan lengkap dengan tabel latihan dan timer istirahat.",
       "moreExamples": "Lihat [[{showcase}]] untuk jenis grafik, filter, dan protokol pelatihan lainnya.",
       "ownData": "Saat Anda siap, pilih folder CSV dan folder latihan Anda sendiri di Pengaturan → Pengaturan & data. Simpan folder contoh sebagai referensi.",
-      "openGuideDesc": "Buka halaman \"mulai\" dengan contoh-contoh yang berfungsi dari tabel, grafik, timer, dan dasbor."
+      "openGuideDesc": "Buka halaman \"mulai\" dengan contoh-contoh yang berfungsi dari tabel, grafik, timer, dan dasbor.",
+      "setsTitle": "Set Anda",
+      "progressTitle": "Kemajuan",
+      "dashboardTitle": "Dasbor",
+      "chartIntro": "Grafik ini menunjukkan bagaimana suatu latihan berubah seiring waktu, dengan garis tren dan statistik.",
+      "dashboardIntro": "Total, tren volume, dan latihan terbaru, semuanya dalam satu tampilan.",
+      "timerIntro": "Tekan tombol \"mulai\" untuk menjalankan hitungan mundur antar set.",
+      "back": "Kembali",
+      "next": "Berikutnya",
+      "done": "Selesai"
     },
     "hiit": {
       "cyclingCooldownTitle": "Pendinginan setelah bersepeda",
@@ -1169,74 +1178,6 @@
       "notOneOf": "{key} harus berupa salah satu dari {allowed}, tetapi sekarang \"{value}\"",
       "notACell": "{key} harus berupa empat bilangan bulat mulai dari 1 (kolom, baris, lebar, tinggi), tetapi nilainya \"{value}\""
     }
-  },
-  "welcome": {
-    "title": "Selamat datang di plugin latihan",
-    "intro": "Catat set Anda, lalu lihat dalam bentuk grafik, tabel, dan dasbor. Bagaimana Anda ingin memulai?",
-    "tryExamples": "Coba dengan data contoh",
-    "startScratch": "Mulai dari awal",
-    "later": "Nanti",
-    "tryExamplesDesc": "Menambahkan contoh latihan, kemudian memandu Anda dalam menggunakan plugin tersebut.",
-    "startScratchDesc": "Memandu Anda dalam menggunakan plugin pada data Anda sendiri, mulai dari set pertama Anda.",
-    "tourOnYourData": "Anda sudah memiliki catatan latihan, jadi tur ini akan berjalan berdasarkan data Anda sendiri."
-  },
-  "tour": {
-    "back": "Kembali",
-    "next": "Berikutnya",
-    "skip": "Lewati",
-    "done": "Selesai",
-    "progress": "{current} dari {total}",
-    "noteName": "Tur berpemandu",
-    "noteIntro": "Panduan tur ini menunjuk ke setiap bagian dari plugin di halaman ini. Edit atau hapus catatan ini kapan pun Anda mau.",
-    "noteTable": "Set Anda",
-    "noteChart": "Kemajuan",
-    "noteDashboard": "Dasbor",
-    "noteTimer": "Timer istirahat",
-    "steps": {
-      "logSet": {
-        "title": "Catat set pertama Anda",
-        "text": "Tekan tombol \"+\" untuk membuka formulir, lalu simpan satu set. Set tersebut akan langsung muncul di tabel."
-      },
-      "rowActions": {
-        "title": "Sunting atau hapus set",
-        "mobileText": "Ketuk sebuah set untuk memperbaikinya. Untuk menghapusnya, gunakan opsi \"Hapus set\" pada formulir yang terbuka.",
-        "text": "Gunakan ikon pensil pada satu baris untuk menyunting set. Untuk menghapusnya, gunakan opsi \"Hapus set\" pada formulir yang terbuka."
-      },
-      "chart": {
-        "title": "Kemajuan Anda",
-        "text": "Grafik ini menunjukkan bagaimana suatu latihan berubah seiring waktu, dengan garis tren dan statistik.",
-        "textMine": "Grafik ini menunjukkan bagaimana suatu latihan berubah seiring waktu. Grafik ini hampir kosong hingga Anda mencatat beberapa set latihan.",
-        "mobileText": "Di ponsel, grafik ditampilkan sebagai tabel dengan angka yang sama.",
-        "mobileTextMine": "Di ponsel, grafik ditampilkan sebagai tabel. Grafik ini hampir kosong sampai Anda mencatat beberapa set latihan."
-      },
-      "dashboard": {
-        "title": "Dasbor Anda",
-        "text": "Total, tren volume, dan latihan terbaru, semuanya dalam satu tampilan.",
-        "textMine": "Total, tren volume, dan latihan terbaru. Informasi ini akan terisi saat Anda mencatat lebih banyak set latihan."
-      },
-      "timer": {
-        "title": "Timer istirahat",
-        "text": "Tekan tombol \"mulai\" untuk menjalankan hitungan mundur antar set."
-      },
-      "ribbon": {
-        "title": "Catat dari catatan apa pun",
-        "text": "Ikon dumbel pada ribbon membuka formulir log dari mana saja.",
-        "mobileText": "Di ponsel, tidak ada ikon ribbon di sini. Gunakan palet perintah untuk membuka formulir log dari catatan mana pun."
-      },
-      "commands": {
-        "title": "Masukkan perintah",
-        "text": "Buka palet perintah dan jalankan perintah \"Sisipkan\" (misalnya \"Sisipkan timer latihan\") untuk menambahkan tabel, grafik, timer, atau dasbor ke dalam catatan."
-      },
-      "end": {
-        "title": "Anda sudah siap",
-        "text": "Anda dapat mengikuti tur ini lagi dari Pengaturan → Memulai."
-      },
-      "muscles": {
-        "title": "Peta panas otot",
-        "text": "Peta panas menunjukkan otot mana yang Anda latih paling baru."
-      }
-    },
-    "showMe": "Tunjukkan"
   },
   "import": {
     "chooseFile": "Pilih file CSV",

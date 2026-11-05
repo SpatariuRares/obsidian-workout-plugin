@@ -5,7 +5,6 @@
  */
 
 import { BlockCard } from "@app/components/molecules";
-import { markTourTarget, type TourTarget } from "@app/features/tour/tourTargets";
 
 export interface WidgetContainerProps {
   /** Widget title, in the card's top row */
@@ -16,8 +15,6 @@ export interface WidgetContainerProps {
   className?: string;
   /** Whether the widget spans full width */
   isWide?: boolean;
-  /** `data-tour` value, so the guided tour can point at this widget */
-  tourTarget?: TourTarget;
 }
 
 export class WidgetContainer {
@@ -41,7 +38,6 @@ export class WidgetContainer {
     });
     header.firstElementChild?.addClass("workout-widget-title");
 
-    if (props.tourTarget) markTourTarget(widgetEl, props.tourTarget);
 
     if (props.subtitle) {
       widgetEl.createDiv({

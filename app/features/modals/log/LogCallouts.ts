@@ -8,7 +8,6 @@ import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSele
 import type { BlockMenuAction } from "@app/features/common/ui/BlockMenu";
 import { t } from "@app/i18n";
 import { openGettingStartedGuide } from "@app/services/examples/GettingStartedGuide";
-import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
 import { ICONS } from "@app/constants/ui.constants";
 import { PathUtils } from "@app/utils/PathUtils";
 
@@ -69,7 +68,6 @@ export class LogCallouts {
       }),
     });
     // On an empty log this is the only way to a first set (tour step 1)
-    markTourTarget(createButton, TOUR_TARGETS.tableAddButton);
 
     Button.onClick(createButton, () => {
       const link =
@@ -122,7 +120,6 @@ export class LogCallouts {
         { exerciseName: exerciseName ?? "Workout" },
       ),
     });
-    markTourTarget(button, TOUR_TARGETS.tableAddButton);
 
     Button.onClick(
       button,

@@ -92,7 +92,7 @@
       {
         "name": "shadow-lg",
         "value": "0 8px 24px rgba(0, 0, 0, 0.15)",
-        "purpose": "Autocomplete, tour cards."
+        "purpose": "Autocomplete."
       }
     ],
     "motion": [

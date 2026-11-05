@@ -22,31 +22,23 @@ import type {
   CommandRegistryPort,
   WorkoutAPIPort,
   TemplateGeneratorPort,
-  TourPort,
 } from "@app/types/PluginPorts";
 import {
   createExampleNotes,
   openGettingStartedGuide,
 } from "@app/services/examples/GettingStartedGuide";
-import { startGuidedTour } from "@app/features/tour/startGuidedTour";
 import { allReleaseNotes } from "@app/services/onboarding/WhatsNew";
 import { WhatsNewModal } from "@app/features/modals/common/WhatsNewModal";
-import type { InsertCommandKind } from "@app/services/events/WorkoutEventTypes";
 import { durationBlock } from "@app/features/duration/durationBlock";
 import { sessionBlock } from "@app/features/session/sessionBlock";
 
-type CommandHandlerPlugin = WorkoutPluginContext & CommandRegistryPort & WorkoutAPIPort & TemplateGeneratorPort & TourPort;
+type CommandHandlerPlugin = WorkoutPluginContext & CommandRegistryPort & WorkoutAPIPort & TemplateGeneratorPort;
 
 export class CommandHandlerService {
   constructor(
     private app: App,
     private plugin: CommandHandlerPlugin,
   ) {}
-
-  /** Tells the guided tour that an "Insert workout ..." command ran. */
-  private emitInsert(kind: InsertCommandKind): void {
-    this.plugin.eventBus.emit({ type: "command:insert", payload: { kind } });
-  }
 
   registerCommands(): void {
     this.plugin.addCommand({
@@ -82,8 +74,9 @@ export class CommandHandlerService {
     this.plugin.addCommand({
       id: "start-tour",
       name: t("commands.startTour"),
+      // The tour was replaced by the getting-started guide; the id stays for hotkeys
       callback: async () => {
-        await startGuidedTour(this.plugin, { source: "command" });
+        await openGettingStartedGuide(this.plugin);
       },
     });
 
@@ -107,7 +100,6 @@ export class CommandHandlerService {
       id: "insert-workout-chart",
       name: t("modal.titles.insertChart"),
       callback: () => {
-        this.emitInsert("chart");
         new InsertChartModal(this.app, this.plugin).open();
       },
     });
@@ -116,7 +108,6 @@ export class CommandHandlerService {
       id: "insert-workout-table",
       name: t("commands.insertTable"),
       callback: () => {
-        this.emitInsert("table");
         new InsertTableModal(this.app, this.plugin).open();
       },
     });
@@ -125,7 +116,6 @@ export class CommandHandlerService {
       id: "insert-workout-sets",
       name: t("modal.titles.insertSets"),
       callback: () => {
-        this.emitInsert("sets");
         new InsertSetsModal(this.app, this.plugin).open();
       },
     });
@@ -134,7 +124,6 @@ export class CommandHandlerService {
       id: "insert-workout-timer",
       name: t("modal.titles.insertTimer"),
       callback: () => {
-        this.emitInsert("timer");
         new InsertTimerModal(this.app, this.plugin).open();
       },
     });
@@ -151,7 +140,6 @@ export class CommandHandlerService {
       id: "insert-workout-dashboard",
       name: t("modal.titles.insertDashboard"),
       callback: () => {
-        this.emitInsert("dashboard");
         new InsertDashboardModal(this.app).open();
       },
     });
@@ -160,7 +148,6 @@ export class CommandHandlerService {
       id: "insert-workout-duration",
       name: t("modal.titles.insertDuration"),
       editorCallback: (editor) => {
-        this.emitInsert("duration");
         editor.replaceRange(
           durationBlock.serialize({}) + "\n\n",
           editor.getCursor(),
@@ -173,7 +160,6 @@ export class CommandHandlerService {
       id: "insert-workout-session",
       name: t("modal.titles.insertSession"),
       editorCallback: (editor) => {
-        this.emitInsert("session");
         editor.replaceRange(
           sessionBlock.serialize({}) + "\n\n",
           editor.getCursor(),

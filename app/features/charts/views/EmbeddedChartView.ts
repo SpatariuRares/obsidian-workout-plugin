@@ -22,10 +22,6 @@ import { ChartTypeResolver } from "@app/features/charts/business/ChartTypeResolv
 import { BaseView } from "@app/features/common/views/BaseView";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { Feedback } from "@app/components/atoms/Feedback";
-import {
-  TOUR_TARGETS,
-  markTourTarget,
-} from "@app/features/tour/tourTargets";
 import { BlockCard } from "@app/components/molecules/BlockCard";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import type { BlockMenuAction } from "@app/features/common/ui/BlockMenu";
@@ -194,7 +190,6 @@ export class EmbeddedChartView extends BaseView {
     // Stable per-block ID: re-renders replace this block's chart only, and
     // two blocks with the same exercise/type no longer destroy each other
     chartContainer.id = `workout-chart-${getElementScopedId(container)}`;
-    markTourTarget(chartContainer, TOUR_TARGETS.chart);
 
     if (params.showTrendLine && datasets.length > 0) {
       ChartRenderer.addTrendLineToDatasets(datasets);

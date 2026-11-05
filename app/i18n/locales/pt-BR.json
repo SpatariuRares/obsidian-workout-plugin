@@ -480,7 +480,16 @@
       "continueWithWorkout": "Abra [[{workout}]] para experimentar um treino completo com tabelas de exercícios e temporizadores de descanso.",
       "moreExamples": "Consulte [[{showcase}]] para obter mais tipos de gráficos, filtros e protocolos de treinamento.",
       "ownData": "Quando estiver pronto, escolha sua própria pasta CSV e a pasta de exercícios em Configurações → Configuração e dados. Mantenha a pasta de exemplos como referência.",
-      "openGuideDesc": "Abra a página \"Como começar\" com exemplos práticos de tabelas, gráficos, temporizadores e painel de controle."
+      "openGuideDesc": "Abra a página \"Como começar\" com exemplos práticos de tabelas, gráficos, temporizadores e painel de controle.",
+      "setsTitle": "Suas séries",
+      "progressTitle": "Progresso",
+      "dashboardTitle": "Painel de controle",
+      "chartIntro": "O gráfico mostra como um exercício evolui ao longo do tempo, com uma linha de tendência e estatísticas.",
+      "dashboardIntro": "Resumo, tendências de volume e treinos recentes, tudo em um único bloco.",
+      "timerIntro": "Pressione \"Iniciar\" para rodar uma contagem regressiva entre as séries.",
+      "back": "Voltar",
+      "next": "Próximo",
+      "done": "Concluído"
     },
     "hiit": {
       "cyclingCooldownTitle": "Desaquecimento na bicicleta",
@@ -1169,74 +1178,6 @@
       "notOneOf": "{key} deve ser uma das opções listadas em {allowed}, mas é \"{value}\"",
       "notACell": "{key} deve ser quatro números inteiros a partir de 1 (coluna, linha, largura, altura), mas é \"{value}\""
     }
-  },
-  "welcome": {
-    "title": "Bem-vindo ao plugin de treino",
-    "intro": "Acompanhe seus treinos e depois visualize-os em gráficos, tabelas e um painel de controle. Como você gostaria de começar?",
-    "tryExamples": "Experimentar com dados de exemplo",
-    "startScratch": "Começar do zero",
-    "later": "Mais tarde",
-    "tryExamplesDesc": "Adiciona treinos de exemplo e depois mostra como usar o plugin com eles.",
-    "startScratchDesc": "Guia você pelo funcionamento do plugin com seus próprios dados, começando pela sua primeira série.",
-    "tourOnYourData": "Você já possui um registro de treino, portanto, o tour utiliza seus próprios dados."
-  },
-  "tour": {
-    "back": "Voltar",
-    "next": "Próximo",
-    "skip": "Pular",
-    "done": "Concluído",
-    "progress": "{current} de {total}",
-    "noteName": "Tour guiado",
-    "noteIntro": "O tour guiado destaca cada parte do plugin nesta página. Edite ou exclua esta nota sempre que desejar.",
-    "noteTable": "Suas séries",
-    "noteChart": "Progresso",
-    "noteDashboard": "Painel de controle",
-    "noteTimer": "Temporizador de descanso",
-    "steps": {
-      "logSet": {
-        "title": "Registre sua primeira série",
-        "text": "Pressione o botão \"+\" para abrir o formulário e salve uma série. Ela aparece na tabela imediatamente."
-      },
-      "rowActions": {
-        "title": "Editar ou excluir uma série",
-        "mobileText": "Toque em uma série para corrigi-la. Para removê-la, use \"Excluir série\" no formulário que se abre.",
-        "text": "Use o lápis em uma linha para corrigir uma série. Para removê-la, use \"Excluir série\" no formulário que se abre."
-      },
-      "chart": {
-        "title": "Seu progresso",
-        "text": "O gráfico mostra como um exercício evolui ao longo do tempo, com uma linha de tendência e estatísticas.",
-        "textMine": "O gráfico mostra como um exercício evolui ao longo do tempo. Ele fica quase vazio até que você registre algumas séries.",
-        "mobileText": "No celular, o gráfico é exibido como uma tabela com os mesmos números.",
-        "mobileTextMine": "No celular, o gráfico é exibido como uma tabela. Ele fica quase vazio até que você registre algumas séries."
-      },
-      "dashboard": {
-        "title": "Seu painel de controle",
-        "text": "Resumo, tendências de volume e treinos recentes, tudo em um único bloco.",
-        "textMine": "Totais, tendências de volume e treinos recentes. Preenche-se à medida que você registra mais séries."
-      },
-      "timer": {
-        "title": "Temporizador de descanso",
-        "text": "Pressione \"Iniciar\" para rodar uma contagem regressiva entre as séries."
-      },
-      "ribbon": {
-        "title": "Registrar de qualquer nota",
-        "text": "O ícone de halter na faixa abre o formulário de registro de qualquer lugar.",
-        "mobileText": "No celular não há ícone na faixa aqui. Use a paleta de comandos para abrir o formulário de registro em qualquer nota."
-      },
-      "commands": {
-        "title": "Inserir comandos",
-        "text": "Abra a paleta de comandos e execute um dos comandos \"Inserir\" para adicionar uma tabela, gráfico, temporizador ou painel de controle a uma nota."
-      },
-      "end": {
-        "title": "Você está pronto",
-        "text": "Você pode repetir este tour em Configurações → Como começar."
-      },
-      "muscles": {
-        "title": "Mapa de calor muscular",
-        "text": "O mapa de calor mostra quais músculos você treinou mais recentemente."
-      }
-    },
-    "showMe": "Mostrar"
   },
   "import": {
     "chooseFile": "Selecione o arquivo CSV",

@@ -480,7 +480,16 @@
       "continueWithWorkout": "Open [[{workout}]] om een complete training uit te proberen met oefentabellen en rusttimers.",
       "moreExamples": "Raadpleeg [[{showcase}]] voor meer grafiektypen, filters en trainingsprotocollen.",
       "ownData": "Wanneer je klaar bent, kies je je eigen CSV-map en oefenmap onder Instellingen → Instellingen en gegevens. Bewaar de voorbeeldmap als referentie.",
-      "openGuideDesc": "Open de pagina met voorbeelden om aan de slag te gaan, met voorbeelden van tabellen, grafieken, timers en het dashboard."
+      "openGuideDesc": "Open de pagina met voorbeelden om aan de slag te gaan, met voorbeelden van tabellen, grafieken, timers en het dashboard.",
+      "setsTitle": "Je series",
+      "progressTitle": "Vooruitgang",
+      "dashboardTitle": "Dashboard",
+      "chartIntro": "De grafiek toont hoe een oefening zich in de loop van de tijd ontwikkelt, met een trendlijn en statistieken.",
+      "dashboardIntro": "Overzichten, trends in het volume en recente trainingen, allemaal op één plek.",
+      "timerIntro": "Druk op 'Start' om een aftelling tussen de series te starten.",
+      "back": "Terug",
+      "next": "Volgende",
+      "done": "Klaar"
     },
     "hiit": {
       "cyclingCooldownTitle": "Cooldown op de fiets",
@@ -1169,74 +1178,6 @@
       "notOneOf": "{key} moet één van {allowed} zijn, maar het is \"{value}\"",
       "notACell": "{key} moet vier gehele getallen vanaf 1 zijn (kolom, rij, breedte, hoogte), maar het is \"{value}\""
     }
-  },
-  "welcome": {
-    "title": "Welkom bij de workout-plugin",
-    "intro": "Houd je series bij en bekijk ze daarna in grafieken, tabellen en een dashboard. Hoe wil je beginnen?",
-    "tryExamples": "Probeer met voorbeeldgegevens",
-    "startScratch": "Vanaf nul beginnen",
-    "later": "Later",
-    "tryExamplesDesc": "Voegt voorbeeldtrainingen toe en begeleidt je daarna stap voor stap door de plugin met die gegevens.",
-    "startScratchDesc": "Leidt je stap voor stap door de plugin met je eigen gegevens, beginnend met je eerste serie.",
-    "tourOnYourData": "Je hebt al een trainingslog, dus de tour gebruikt je eigen gegevens."
-  },
-  "tour": {
-    "back": "Terug",
-    "next": "Volgende",
-    "skip": "Overslaan",
-    "done": "Klaar",
-    "progress": "{current} van {total}",
-    "noteName": "Begeleide rondleiding",
-    "noteIntro": "De rondleiding wijst naar elk onderdeel van de plugin op deze pagina. Bewerk of verwijder deze notitie wanneer je wilt.",
-    "noteTable": "Je series",
-    "noteChart": "Vooruitgang",
-    "noteDashboard": "Dashboard",
-    "noteTimer": "Rusttimer",
-    "steps": {
-      "logSet": {
-        "title": "Registreer je eerste serie",
-        "text": "Druk op de + knop om het formulier te openen en sla vervolgens een serie op. Die verschijnt meteen in de tabel."
-      },
-      "rowActions": {
-        "title": "Bewerk of verwijder een serie",
-        "mobileText": "Tik op een serie om deze te corrigeren. Om deze te verwijderen, gebruik je de knop \"Serie verwijderen\" in het formulier dat wordt geopend.",
-        "text": "Gebruik het potlood in een rij om een serie te corrigeren. Om deze te verwijderen, gebruik je de knop \"Serie verwijderen\" in het formulier dat wordt geopend."
-      },
-      "chart": {
-        "title": "Je voortgang",
-        "text": "De grafiek toont hoe een oefening zich in de loop van de tijd ontwikkelt, met een trendlijn en statistieken.",
-        "textMine": "De grafiek laat zien hoe een oefening zich in de loop van de tijd ontwikkelt. Die is bijna leeg totdat je een paar series hebt gelogd.",
-        "mobileText": "Op een telefoon wordt de grafiek weergegeven als een tabel met dezelfde getallen.",
-        "mobileTextMine": "Op een telefoon wordt de grafiek weergegeven als tabel. Die is bijna leeg totdat je een paar series hebt gelogd."
-      },
-      "dashboard": {
-        "title": "Je dashboard",
-        "text": "Overzichten, trends in het volume en recente trainingen, allemaal op één plek.",
-        "textMine": "Totalen, volumetrends en recente trainingen. Het vult zich naarmate je meer series registreert."
-      },
-      "timer": {
-        "title": "Rusttimer",
-        "text": "Druk op 'Start' om een aftelling tussen de series te starten."
-      },
-      "ribbon": {
-        "title": "Loggen vanuit elke notitie",
-        "text": "Het halterpictogram in het lint opent het logformulier vanaf elke locatie.",
-        "mobileText": "Op een telefoon is er hier geen lintpictogram. Gebruik het opdrachtenpalet om het logformulier vanuit elke notitie te openen."
-      },
-      "commands": {
-        "title": "Opdrachten invoegen",
-        "text": "Open het opdrachtenpalet en voer een opdracht uit zoals \"Trainingstabel invoegen\", \"Trainingsgrafiek invoegen\" of \"Trainingstimer invoegen\" om een tabel, grafiek, timer of dashboard aan een notitie toe te voegen."
-      },
-      "end": {
-        "title": "Je bent klaar",
-        "text": "Je kunt deze tour opnieuw starten via Instellingen → Beginnen."
-      },
-      "muscles": {
-        "title": "Spierheatmap",
-        "text": "De heatmap toont welke spieren je het meest recent hebt getraind."
-      }
-    },
-    "showMe": "Laat me zien"
   },
   "import": {
     "chooseFile": "Kies een CSV-bestand",

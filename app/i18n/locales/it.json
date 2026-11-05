@@ -480,7 +480,16 @@
         "restIntro": "`rest` è il riposo dopo ogni serie, in secondi (`0` = nessun timer); senza, il blocco usa il `workout-timer` della sezione. `targetWeight` e `targetReps` mostrano l'obiettivo e sono il suggerimento la prima volta che fai un esercizio.",
         "restTimerTitle": "Opzioni del timer di riposo",
         "restTimerIntro": "Il blocco contiene tutte le opzioni del suo timer di riposo, quindi la nota di un giorno non ha bisogno di `workout-timer`: `timer.type` (`interval` usa `rest` come lavoro di ogni round, con `timer.rest` e `timer.rounds`), `timer.preset`, `timer.sound` e `timer.showControls`. ⋮ → Modifica timer di riposo le scrive per te."
-      }
+      },
+      "setsTitle": "Le tue serie",
+      "progressTitle": "Progresso",
+      "dashboardTitle": "Dashboard",
+      "chartIntro": "Il grafico mostra come un esercizio evolve nel tempo, con una linea di tendenza e i relativi dati statistici.",
+      "dashboardIntro": "Totali, andamento del volume e allenamenti recenti, tutto in un unico blocco.",
+      "timerIntro": "Premi il pulsante \"avvia\" per avviare un conto alla rovescia tra le serie.",
+      "back": "Indietro",
+      "next": "Avanti",
+      "done": "Completato"
     },
     "hiit": {
       "cyclingCooldownTitle": "Defaticamento in bici",
@@ -1169,74 +1178,6 @@
       "notOneOf": "{key} deve essere uno tra {allowed}, ma è \"{value}\"",
       "notACell": "{key} deve essere quattro numeri interi a partire da 1 (colonna, riga, larghezza, altezza), ma è \"{value}\""
     }
-  },
-  "welcome": {
-    "title": "Benvenuti nel plugin per l'allenamento",
-    "intro": "Monitora i tuoi allenamenti, quindi visualizzali sotto forma di grafici, tabelle e dashboard. Come preferisci iniziare?",
-    "tryExamples": "Prova con dati di esempio",
-    "startScratch": "Inizia da zero",
-    "later": "Più tardi",
-    "tryExamplesDesc": "Aggiunge esempi di allenamenti, quindi ti guida nell'utilizzo del plugin con questi esempi.",
-    "startScratchDesc": "La guida ti accompagnerà nell'utilizzo del plugin sui tuoi dati, a partire dalla tua prima serie.",
-    "tourOnYourData": "Hai già un registro degli allenamenti, quindi il tour utilizza i tuoi dati."
-  },
-  "tour": {
-    "back": "Indietro",
-    "next": "Avanti",
-    "skip": "Salta",
-    "done": "Completato",
-    "progress": "{current} di {total}",
-    "noteName": "Visita guidata",
-    "noteIntro": "La guida evidenzia ogni parte del plugin presente su questa pagina. Modifica o elimina questa nota quando desideri.",
-    "noteTable": "Le tue serie",
-    "noteChart": "Progresso",
-    "noteDashboard": "Dashboard",
-    "noteTimer": "Timer di riposo",
-    "steps": {
-      "logSet": {
-        "title": "Registra la tua prima serie",
-        "text": "Premi il pulsante «+» per aprire il modulo, quindi salva una serie. Apparirà subito nella tabella."
-      },
-      "rowActions": {
-        "title": "Modifica o elimina una serie",
-        "mobileText": "Tocca una serie per correggerla. Per eliminarla, usa «Elimina serie» nel modulo che si apre.",
-        "text": "Usa la matita su una riga per correggere una serie. Per eliminarla, usa «Elimina serie» nel modulo che si apre."
-      },
-      "chart": {
-        "title": "Il tuo progresso",
-        "text": "Il grafico mostra come un esercizio evolve nel tempo, con una linea di tendenza e i relativi dati statistici.",
-        "textMine": "Il grafico mostra come un esercizio evolve nel tempo. Inizialmente è quasi vuoto, ma si riempie man mano che registri alcune serie.",
-        "mobileText": "Sul telefono, il grafico viene visualizzato come una tabella con gli stessi numeri.",
-        "mobileTextMine": "Sul telefono il grafico è mostrato come tabella. È quasi vuoto finché non registri alcune serie."
-      },
-      "dashboard": {
-        "title": "La tua dashboard",
-        "text": "Totali, andamento del volume e allenamenti recenti, tutto in un unico blocco.",
-        "textMine": "Totali, andamento del volume e allenamenti recenti. Si popola man mano che registri più serie."
-      },
-      "timer": {
-        "title": "Timer di riposo",
-        "text": "Premi il pulsante \"avvia\" per avviare un conto alla rovescia tra le serie."
-      },
-      "ribbon": {
-        "title": "Accedi da qualsiasi nota",
-        "text": "L'icona del manubrio nella barra laterale apre il modulo di registrazione da qualsiasi punto.",
-        "mobileText": "Sul telefono non c'è l'icona nella barra laterale. Usa la palette dei comandi per aprire il modulo di registrazione da qualsiasi nota."
-      },
-      "commands": {
-        "title": "Inserisci i comandi",
-        "text": "Apri la palette dei comandi ed esegui un comando «Inserisci» (ad esempio «Inserisci tabella allenamento») per aggiungere una tabella, un grafico, un timer o una dashboard a una nota."
-      },
-      "end": {
-        "title": "Sei pronto!",
-        "text": "Puoi ripetere il tour da Impostazioni → Per iniziare."
-      },
-      "muscles": {
-        "title": "Mappa di calore muscolare",
-        "text": "La mappa di calore mostra quali muscoli hai allenato più di recente."
-      }
-    },
-    "showMe": "Mostrami"
   },
   "import": {
     "chooseFile": "Seleziona il file CSV",

@@ -62,20 +62,6 @@ export interface PluginErrorPayload {
   recoverable: boolean;
 }
 
-/** Which "Insert workout ..." command ran. */
-export type InsertCommandKind =
-  | "chart"
-  | "table"
-  | "timer"
-  | "dashboard"
-  | "duration"
-  | "session"
-  | "sets";
-
-export interface CommandInsertPayload {
-  kind: InsertCommandKind;
-}
-
 // ---- Discriminated Union ----
 
 export type WorkoutEvent =
@@ -85,7 +71,6 @@ export type WorkoutEvent =
   | { type: "log:bulk-changed"; payload: LogBulkChangedPayload }
   | { type: "muscle-tags:changed"; payload: MuscleTagsChangedPayload }
   | { type: "settings:changed"; payload: SettingsChangedPayload }
-  | { type: "command:insert"; payload: CommandInsertPayload }
   | { type: "plugin:error"; payload: PluginErrorPayload };
 
 export type WorkoutEventType = WorkoutEvent["type"];

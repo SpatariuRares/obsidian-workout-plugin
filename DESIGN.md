@@ -202,7 +202,7 @@ Breakpoints (Sass): mobile 484px, tablet 768px, xl 1200px, huge 1600px. Layout t
 
 ## Elevation & Depth
 
-Flat by default, depth by tone: a card (`--background-secondary`) sits on the note, and fields, ticks and the rest strip are inset into it with `--background-primary`. Shadows (`--workout-shadow-sm/md/lg`) appear only on things that float over content: dropdowns, the autocomplete, the tour.
+Flat by default, depth by tone: a card (`--background-secondary`) sits on the note, and fields, ticks and the rest strip are inset into it with `--background-primary`. Shadows (`--workout-shadow-sm/md/lg`) appear only on things that float over content: dropdowns and the autocomplete.
 
 **The Inset Not Lifted Rule.** A control inside a card is inset (page color plus border), never lifted with a shadow.
 

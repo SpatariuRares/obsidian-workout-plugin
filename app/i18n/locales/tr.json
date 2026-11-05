@@ -480,7 +480,16 @@
       "continueWithWorkout": "[[{workout}]]'ı açarak, egzersiz tabloları ve dinlenme zamanlayıcıları ile birlikte kapsamlı bir antrenman deneyin.",
       "moreExamples": "Daha fazla grafik türü, filtre ve antrenman protokolleri için [[{showcase}]] bölümüne bakın.",
       "ownData": "Hazır olduğunuzda, Ayarlar → Kurulum ve veri bölümünde kendi CSV klasörünüzü ve egzersiz klasörünüzü seçin. Örnek klasörü bir referans olarak saklayın.",
-      "openGuideDesc": "Tablolar, grafikler, zamanlayıcılar ve gösterge paneli gibi örneklerle birlikte \"başlangıç\" sayfasını açın."
+      "openGuideDesc": "Tablolar, grafikler, zamanlayıcılar ve gösterge paneli gibi örneklerle birlikte \"başlangıç\" sayfasını açın.",
+      "setsTitle": "Setleriniz",
+      "progressTitle": "İlerleme",
+      "dashboardTitle": "Gösterge paneli",
+      "chartIntro": "Grafik, egzersizin zaman içindeki değişimini, eğilim çizgisini ve istatistikleri gösterir.",
+      "dashboardIntro": "Toplamlar, hacim eğilimleri ve son antrenmanlar, tek bir blokta.",
+      "timerIntro": "Setler arasında geri sayımı başlatmak için başlat düğmesine basın.",
+      "back": "Geri",
+      "next": "İleri",
+      "done": "Tamamlandı"
     },
     "hiit": {
       "cyclingCooldownTitle": "Bisikletle Soğuma",
@@ -1169,74 +1178,6 @@
       "notOneOf": "{key}, {allowed}'den biri olmalıdır, ancak \"{value}\" değeridir.",
       "notACell": "{key}, 1'den başlayan dört tam sayı olmalı (sütun, satır, genişlik, yükseklik), ama değeri \"{value}\""
     }
-  },
-  "welcome": {
-    "title": "Antrenman eklentisine hoş geldiniz",
-    "intro": "Setlerinizi takip edin, ardından bunları grafik, tablo ve gösterge paneli olarak görün. Nasıl başlamak istersiniz?",
-    "tryExamples": "Örnek verilerle deneyin",
-    "startScratch": "Sıfırdan başla",
-    "later": "Daha sonra",
-    "tryExamplesDesc": "Örnek antrenmanları ekler, ardından bunlar üzerinde eklentiyi adım adım gösterir.",
-    "startScratchDesc": "Eklentiyi kendi verilerinizle, ilk setinizi kaydetmekle başlayarak adım adım gösterir.",
-    "tourOnYourData": "Zaten bir antrenman kaydınız var, bu nedenle tur, kendi verileriniz üzerinde çalışacak."
-  },
-  "tour": {
-    "back": "Geri",
-    "next": "İleri",
-    "skip": "Atla",
-    "done": "Tamamlandı",
-    "progress": "{current} / {total}",
-    "noteName": "Rehberli tur",
-    "noteIntro": "Bu sayfadaki rehberli tur, eklentinin her bölümünü gösterir. İstediğiniz zaman bu notu düzenleyebilir veya silebilirsiniz.",
-    "noteTable": "Setleriniz",
-    "noteChart": "İlerleme",
-    "noteDashboard": "Gösterge paneli",
-    "noteTimer": "Dinlenme zamanlayıcısı",
-    "steps": {
-      "logSet": {
-        "title": "İlk setinizi kaydedin",
-        "text": "'+' düğmesine basarak formu açın, ardından bir set kaydedin. Set hemen tabloya eklenir."
-      },
-      "rowActions": {
-        "title": "Bir seti düzenleyin veya silin",
-        "mobileText": "Bir seti seçerek düzeltin. Silmek için, açılan formda \"Set'i sil\" seçeneğini kullanın.",
-        "text": "Bir satırdaki kalem simgesiyle seti düzeltin. Silmek için, açılan formda \"Set'i sil\" seçeneğini kullanın."
-      },
-      "chart": {
-        "title": "İlerlemeniz",
-        "text": "Grafik, egzersizin zaman içindeki değişimini, eğilim çizgisini ve istatistikleri gösterir.",
-        "textMine": "Grafik, bir egzersizin zaman içindeki gelişimini gösterir. Birkaç set kaydedene kadar neredeyse boş görünür.",
-        "mobileText": "Telefon üzerinde, grafik aynı sayılarla bir tablo olarak görüntülenir.",
-        "mobileTextMine": "Telefonda grafik bir tablo olarak görüntülenir. Birkaç set kaydedene kadar neredeyse boş görünür."
-      },
-      "dashboard": {
-        "title": "Gösterge paneliniz",
-        "text": "Toplamlar, hacim eğilimleri ve son antrenmanlar, tek bir blokta.",
-        "textMine": "Toplamlar, hacim trendleri ve son antrenmanlar. Daha fazla set kaydettikçe otomatik olarak güncellenir."
-      },
-      "timer": {
-        "title": "Dinlenme zamanlayıcısı",
-        "text": "Setler arasında geri sayımı başlatmak için başlat düğmesine basın."
-      },
-      "ribbon": {
-        "title": "Herhangi bir nottan kayıt ekleyin",
-        "text": "Şeritteki dambıl simgesi, her yerden kayıt formunu açar.",
-        "mobileText": "Telefonda şerit simgesi yoktur. Herhangi bir nottan kayıt formunu açmak için komut paletini kullanın."
-      },
-      "commands": {
-        "title": "Komutları ekle",
-        "text": "Komut paletini açın ve bir nota tablo, grafik, zamanlayıcı veya gösterge paneli eklemek için \"Antrenman tablosu ekle\", \"Antrenman grafiği ekle\", \"Antrenman zamanlayıcısı ekle\" veya \"Antrenman gösterge paneli ekle\" komutlarından birini çalıştırın."
-      },
-      "end": {
-        "title": "Hazırsınız",
-        "text": "Bu turu, Ayarlar → Başlangıç bölümünden tekrar başlatabilirsiniz."
-      },
-      "muscles": {
-        "title": "Kas ısı haritası",
-        "text": "Isı haritası, hangi kasları en son çalıştırdığınızı gösterir."
-      }
-    },
-    "showMe": "Beni göster"
   },
   "import": {
     "chooseFile": "CSV dosyasını seçin",

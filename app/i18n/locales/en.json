@@ -483,7 +483,16 @@
         "restIntro": "`rest` is the rest after each set, in seconds (`0` = no timer); without it the block uses the section's `workout-timer`. `targetWeight` and `targetReps` show the target, and are the hint the first time you do an exercise.",
         "restTimerTitle": "Rest timer options",
         "restTimerIntro": "The block holds every option of its rest timer, so a day's note needs no `workout-timer`: `timer.type` (`interval` uses `rest` as the work of each round, with `timer.rest` and `timer.rounds`), `timer.preset`, `timer.sound` and `timer.showControls`. ⋮ → Edit rest timer writes them for you."
-      }
+      },
+      "setsTitle": "Your sets",
+      "progressTitle": "Progress",
+      "dashboardTitle": "Dashboard",
+      "chartIntro": "The chart shows how an exercise moves over time, with a trend line and stats.",
+      "dashboardIntro": "Totals, volume trends and recent workouts, all in one block.",
+      "timerIntro": "Press start to run a countdown between sets.",
+      "back": "Back",
+      "next": "Next",
+      "done": "Done"
     },
     "hiit": {
       "cyclingCooldownTitle": "Cycling Cool-down",
@@ -1168,74 +1177,6 @@
       "notABoolean": "{key} must be true or false, but it is \"{value}\"",
       "notOneOf": "{key} must be one of {allowed}, but it is \"{value}\"",
       "notACell": "{key} must be four whole numbers from 1 up (column, row, width, height), but it is \"{value}\""
-    }
-  },
-  "welcome": {
-    "title": "Welcome to the workout plugin",
-    "intro": "Track your sets, then see them as charts, tables and a dashboard. How do you want to begin?",
-    "tryExamples": "Try with example data",
-    "tryExamplesDesc": "Adds sample workouts, then walks you through the plugin on them.",
-    "startScratch": "Start from scratch",
-    "startScratchDesc": "Walks you through the plugin on your own data, starting with your first set.",
-    "later": "Later",
-    "tourOnYourData": "You already have a workout log, so the tour runs on your own data."
-  },
-  "tour": {
-    "back": "Back",
-    "showMe": "Show me",
-    "next": "Next",
-    "skip": "Skip",
-    "done": "Done",
-    "progress": "{current} of {total}",
-    "noteName": "Guided tour",
-    "noteIntro": "The guided tour points at each part of the plugin on this page. Edit or delete this note whenever you like.",
-    "noteTable": "Your sets",
-    "noteChart": "Progress",
-    "noteDashboard": "Dashboard",
-    "noteTimer": "Rest timer",
-    "steps": {
-      "logSet": {
-        "title": "Log your first set",
-        "text": "Press the + button to open the form, then save a set. It lands in the table right away."
-      },
-      "rowActions": {
-        "mobileText": "Tap a set to fix it. To remove it, use Delete set in the form that opens.",
-        "text": "Use the pencil on a row to fix a set. To remove it, use Delete set in the form that opens.",
-        "title": "Edit or delete a set"
-      },
-      "chart": {
-        "title": "Your progress",
-        "text": "The chart shows how an exercise moves over time, with a trend line and stats.",
-        "textMine": "The chart shows how an exercise moves over time. It is nearly empty until you log a few sets.",
-        "mobileText": "On a phone the chart is shown as a table with the same numbers.",
-        "mobileTextMine": "On a phone the chart is shown as a table. It is nearly empty until you log a few sets."
-      },
-      "dashboard": {
-        "title": "Your dashboard",
-        "text": "Totals, volume trends and recent workouts, all in one block.",
-        "textMine": "Totals, volume trends and recent workouts. It fills up as you log more sets."
-      },
-      "muscles": {
-        "title": "Muscle heat map",
-        "text": "The heat map shows which muscles you trained most recently."
-      },
-      "timer": {
-        "title": "Rest timer",
-        "text": "Press start to run a countdown between sets."
-      },
-      "ribbon": {
-        "title": "Log from any note",
-        "text": "The dumbbell icon in the ribbon opens the log form from anywhere.",
-        "mobileText": "On a phone there is no ribbon icon here. Use the command palette to open the log form from any note."
-      },
-      "commands": {
-        "title": "Insert commands",
-        "text": "Open the command palette and run an Insert workout command to add a table, chart, timer or dashboard to a note."
-      },
-      "end": {
-        "title": "You are set",
-        "text": "You can take this tour again from Settings → Getting started."
-      }
     }
   },
   "import": {

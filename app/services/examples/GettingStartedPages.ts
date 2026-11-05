@@ -38,7 +38,7 @@ export function gettingStartedPages() {
   const sections = [
     {
       name: "01 Tables",
-      title: t("tour.noteTable"),
+      title: t("examples.gettingStarted.setsTitle"),
       intro: t("examples.gettingStarted.tryLog"),
       block: variants(
         {
@@ -90,8 +90,8 @@ export function gettingStartedPages() {
     },
     {
       name: "02 Strength charts",
-      title: t("tour.noteChart"),
-      intro: t("tour.steps.chart.text"),
+      title: t("examples.gettingStarted.progressTitle"),
+      intro: t("examples.gettingStarted.chartIntro"),
       block: chart(exercise, CHART_DATA_TYPE.VOLUME),
     },
     {
@@ -114,8 +114,8 @@ export function gettingStartedPages() {
     },
     {
       name: "05 Statistics",
-      title: t("tour.noteDashboard"),
-      intro: t("tour.steps.dashboard.text"),
+      title: t("examples.gettingStarted.dashboardTitle"),
+      intro: t("examples.gettingStarted.dashboardIntro"),
       block: dashboardBlock.serialize({
         id: generateCodeBlockId(),
         dateRange: 60,
@@ -124,7 +124,7 @@ export function gettingStartedPages() {
     {
       name: "06 Rest timer",
       title: t("examples.featureShowcase.countdownTimerTitle"),
-      intro: t("tour.steps.timer.text"),
+      intro: t("examples.gettingStarted.timerIntro"),
       block: timerBlock.serialize({
         id: "gettingStartedRest",
         duration: 90,
@@ -134,7 +134,7 @@ export function gettingStartedPages() {
     {
       name: "07 Interval timer",
       title: t("examples.featureShowcase.intervalTimerTitle"),
-      intro: t("tour.steps.timer.text"),
+      intro: t("examples.gettingStarted.timerIntro"),
       block: timerBlock.serialize({
         id: "gettingStartedIntervals",
         type: TIMER_TYPE.INTERVAL,
@@ -232,11 +232,11 @@ export function gettingStartedPages() {
     const link = (path: string, label: string) =>
       `[[${PathUtils.linkTarget(path)}|${label}]]`;
     const navigation = [
-      link(i > 0 ? pages[i - 1].path : index, t("tour.back")),
+      link(i > 0 ? pages[i - 1].path : index, t("examples.gettingStarted.back")),
       link(index, t("examples.gettingStarted.title")),
       link(
         i + 1 < pages.length ? pages[i + 1].path : index,
-        i + 1 < pages.length ? t("tour.next") : t("tour.done"),
+        i + 1 < pages.length ? t("examples.gettingStarted.next") : t("examples.gettingStarted.done"),
       ),
     ].join(" · ");
     return {

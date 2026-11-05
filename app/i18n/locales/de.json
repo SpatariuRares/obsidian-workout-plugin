@@ -480,7 +480,16 @@
       "continueWithWorkout": "Öffne [[{workout}]], um ein komplettes Training mit Übungstabellen und Pausentimern auszuprobieren.",
       "moreExamples": "Weitere Diagrammtypen, Filter und Trainingsprotokolle findest du unter [[{showcase}]].",
       "ownData": "Wenn du bereit bist, wähle deinen eigenen CSV-Ordner und Übungsordner unter „Einstellungen → Einrichtung und Daten“ aus. Behalte den Beispielordner als Referenz.",
-      "openGuideDesc": "Öffne die Seite „Erste Schritte“ mit funktionierenden Beispielen für Tabellen, Diagramme, Timer und das Dashboard."
+      "openGuideDesc": "Öffne die Seite „Erste Schritte“ mit funktionierenden Beispielen für Tabellen, Diagramme, Timer und das Dashboard.",
+      "setsTitle": "Deine Sätze",
+      "progressTitle": "Fortschritt",
+      "dashboardTitle": "Dashboard",
+      "chartIntro": "Das Diagramm zeigt, wie sich eine Übung im Lauf der Zeit entwickelt, mit einer Trendlinie und Statistiken.",
+      "dashboardIntro": "Gesamtsummen, Trends bei der Trainingsmenge und letzte Trainings – alles auf einen Blick.",
+      "timerIntro": "Drücke Start, um zwischen den Sätzen einen Countdown laufen zu lassen.",
+      "back": "Zurück",
+      "next": "Weiter",
+      "done": "Fertig"
     },
     "hiit": {
       "cyclingCooldownTitle": "Cool-down auf dem Rad",
@@ -1169,74 +1178,6 @@
       "notOneOf": "{key} muss einer von {allowed} sein, aber es ist \"{value}\"",
       "notACell": "{key} muss vier ganze Zahlen ab 1 sein (Spalte, Zeile, Breite, Höhe), ist aber \"{value}\""
     }
-  },
-  "welcome": {
-    "title": "Willkommen beim Trainings-Plugin",
-    "intro": "Verfolge deine Sätze und sieh sie dir dann als Diagramme, Tabellen und Dashboard an. Wie möchtest du beginnen?",
-    "tryExamples": "Mit Beispieldaten ausprobieren",
-    "startScratch": "Von Grund auf starten",
-    "later": "Später",
-    "tryExamplesDesc": "Fügt Beispieltrainings hinzu und führt dich danach anhand dieser Trainings durch das Plugin.",
-    "startScratchDesc": "Führt dich Schritt für Schritt mit deinen eigenen Daten durch das Plugin, beginnend mit deinem ersten Satz.",
-    "tourOnYourData": "Du hast bereits ein Trainingsprotokoll, daher läuft die Tour mit deinen eigenen Daten."
-  },
-  "tour": {
-    "back": "Zurück",
-    "next": "Weiter",
-    "skip": "Überspringen",
-    "done": "Fertig",
-    "progress": "{current} von {total}",
-    "noteName": "Geführte Tour",
-    "noteIntro": "Die geführte Tour zeigt auf jeden Teil des Plugins auf dieser Seite. Bearbeite oder lösche diese Notiz, wann immer du willst.",
-    "noteTable": "Deine Sätze",
-    "noteChart": "Fortschritt",
-    "noteDashboard": "Dashboard",
-    "noteTimer": "Pausentimer",
-    "steps": {
-      "logSet": {
-        "title": "Protokolliere deinen ersten Satz",
-        "text": "Drücke die Schaltfläche „+“, um das Formular zu öffnen, und speichere dann einen Satz. Er erscheint sofort in der Tabelle."
-      },
-      "rowActions": {
-        "title": "Satz bearbeiten oder löschen",
-        "mobileText": "Tippe auf einen Satz, um ihn zu korrigieren. Zum Entfernen nutze „Satz löschen“ im Formular, das sich öffnet.",
-        "text": "Nutze den Stift in einer Zeile, um einen Satz zu korrigieren. Zum Entfernen nutze „Satz löschen“ im geöffneten Formular."
-      },
-      "chart": {
-        "title": "Dein Fortschritt",
-        "text": "Das Diagramm zeigt, wie sich eine Übung im Lauf der Zeit entwickelt, mit einer Trendlinie und Statistiken.",
-        "textMine": "Das Diagramm zeigt, wie sich eine Übung im Lauf der Zeit entwickelt. Es ist fast leer, bis du ein paar Sätze protokolliert hast.",
-        "mobileText": "Auf dem Handy wird das Diagramm als Tabelle mit denselben Zahlen angezeigt.",
-        "mobileTextMine": "Auf dem Handy wird das Diagramm als Tabelle angezeigt. Es ist fast leer, bis du einige Sätze protokolliert hast."
-      },
-      "dashboard": {
-        "title": "Dein Dashboard",
-        "text": "Gesamtsummen, Trends bei der Trainingsmenge und letzte Trainings – alles auf einen Blick.",
-        "textMine": "Gesamtsummen, Volumentrends und letzte Trainings. Es füllt sich, wenn du weitere Sätze protokollierst."
-      },
-      "timer": {
-        "title": "Pausentimer",
-        "text": "Drücke Start, um zwischen den Sätzen einen Countdown laufen zu lassen."
-      },
-      "ribbon": {
-        "title": "Protokoll erstellen aus jeder Notiz",
-        "text": "Das Hantel-Symbol in der Leiste öffnet das Protokollformular von überall.",
-        "mobileText": "Auf dem Handy gibt es hier kein Symbol in der Leiste. Nutze die Befehlspalette, um das Protokollformular aus jeder Notiz zu öffnen."
-      },
-      "commands": {
-        "title": "Befehle zum Einfügen",
-        "text": "Öffne die Befehlspalette und führe einen Befehl wie „Trainingstabelle einfügen“ aus, um eine Tabelle, ein Diagramm, einen Timer oder ein Dashboard in eine Notiz einzufügen."
-      },
-      "end": {
-        "title": "Alles ist vorbereitet",
-        "text": "Du kannst diese Tour jederzeit unter „Einstellungen → Erste Schritte“ erneut starten."
-      },
-      "muscles": {
-        "title": "Muskel-Heatmap",
-        "text": "Die Heatmap zeigt, welche Muskeln du zuletzt trainiert hast."
-      }
-    },
-    "showMe": "Zeige mir"
   },
   "import": {
     "chooseFile": "CSV-Datei auswählen",

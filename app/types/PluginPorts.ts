@@ -12,7 +12,6 @@ import type { LogBulkChangedPayload } from "@app/services/events/WorkoutEventTyp
 import type { TemplateGeneratorService } from "@app/services/templates/TemplateGeneratorService";
 import type { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import type { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
-import type { TourRunner } from "@app/features/tour/TourStep";
 import type { WeightUnit } from "@app/utils/WeightUnitUtils";
 import type { TimerDeviceEffects } from "@app/features/timer/business/TimerDeviceEffects";
 
@@ -64,10 +63,6 @@ export interface MuscleTagPort {
 
 export interface LogModalPort {
   createLogModalHandler: { openModal(): void };
-}
-
-export interface TourPort {
-  getTourEngine(): TourRunner;
 }
 
 export interface QuickLogRibbonPort {

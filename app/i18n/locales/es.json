@@ -480,7 +480,16 @@
       "continueWithWorkout": "Abre [[{workout}]] para probar un entrenamiento completo con tablas de ejercicios y temporizadores de descanso.",
       "moreExamples": "Consulta [[{showcase}]] para ver más tipos de gráfico, filtros y protocolos de entrenamiento.",
       "ownData": "Cuando estés listo, elige tu propia carpeta CSV y tu carpeta de ejercicios en Configuración → Configuración y datos. Conserva la carpeta de ejemplos como referencia.",
-      "openGuideDesc": "Abrir la página de inicio con ejemplos prácticos de tablas, gráficos, temporizadores y el panel de control."
+      "openGuideDesc": "Abrir la página de inicio con ejemplos prácticos de tablas, gráficos, temporizadores y el panel de control.",
+      "setsTitle": "Tus series",
+      "progressTitle": "Progreso",
+      "dashboardTitle": "Panel de control",
+      "chartIntro": "El gráfico muestra cómo evoluciona un ejercicio a lo largo del tiempo, con una línea de tendencia y estadísticas.",
+      "dashboardIntro": "Totales, tendencias de volumen y entrenamientos recientes, todo en un solo bloque.",
+      "timerIntro": "Pulsa «Iniciar» para comenzar un temporizador entre series.",
+      "back": "Volver",
+      "next": "Siguiente",
+      "done": "Completado"
     },
     "hiit": {
       "cyclingCooldownTitle": "Vuelta a la calma en bicicleta",
@@ -1169,74 +1178,6 @@
       "notOneOf": "{key} debe ser uno de {allowed}, pero es \"{value}\"",
       "notACell": "{key} debe ser cuatro números enteros desde 1 (columna, fila, ancho, alto), pero es \"{value}\""
     }
-  },
-  "welcome": {
-    "title": "Bienvenido al complemento de entrenamiento",
-    "intro": "Registra tus series y después míralas en gráficos, tablas y un panel de control. ¿Cómo quieres empezar?",
-    "tryExamples": "Prueba con datos de ejemplo",
-    "startScratch": "Comenzar desde cero",
-    "later": "Más tarde",
-    "tryExamplesDesc": "Añade entrenamientos de ejemplo y luego te guía por el plugin con ellos.",
-    "startScratchDesc": "Te guía por el plugin con tus propios datos, empezando por tu primera serie.",
-    "tourOnYourData": "Ya tienes un registro de tus entrenamientos, por lo que el recorrido usa tus propios datos."
-  },
-  "tour": {
-    "back": "Volver",
-    "next": "Siguiente",
-    "skip": "Saltar",
-    "done": "Completado",
-    "progress": "{current} de {total}",
-    "noteName": "Visita guiada",
-    "noteIntro": "La visita guiada señala cada parte del plugin en esta página. Edita o elimina esta nota cuando quieras.",
-    "noteTable": "Tus series",
-    "noteChart": "Progreso",
-    "noteDashboard": "Panel de control",
-    "noteTimer": "Temporizador de descanso",
-    "steps": {
-      "logSet": {
-        "title": "Registra tu primera serie",
-        "text": "Pulsa el botón «+» para abrir el formulario y guarda una serie. Aparecerá en la tabla al instante."
-      },
-      "rowActions": {
-        "title": "Editar o eliminar una serie",
-        "mobileText": "Toca una serie para corregirla. Para eliminarla, usa «Eliminar serie» en el formulario que se abre.",
-        "text": "Usa el lápiz de una fila para corregir una serie. Para eliminarla, usa «Eliminar serie» en el formulario que se abre."
-      },
-      "chart": {
-        "title": "Tu progreso",
-        "text": "El gráfico muestra cómo evoluciona un ejercicio a lo largo del tiempo, con una línea de tendencia y estadísticas.",
-        "textMine": "El gráfico muestra cómo evoluciona un ejercicio a lo largo del tiempo. Estará casi vacío hasta que registres algunas series.",
-        "mobileText": "En un teléfono, el gráfico se muestra como una tabla con los mismos números.",
-        "mobileTextMine": "En un teléfono, el gráfico se muestra como una tabla. Estará casi vacía hasta que registres algunas series."
-      },
-      "dashboard": {
-        "title": "Tu panel de control",
-        "text": "Totales, tendencias de volumen y entrenamientos recientes, todo en un solo bloque.",
-        "textMine": "Totales, tendencias de volumen y entrenamientos recientes. Se completa a medida que registras más series."
-      },
-      "timer": {
-        "title": "Temporizador de descanso",
-        "text": "Pulsa «Iniciar» para comenzar un temporizador entre series."
-      },
-      "ribbon": {
-        "title": "Acceder desde cualquier nota",
-        "text": "El icono de la mancuerna en la cinta abre el formulario de registro desde cualquier lugar.",
-        "mobileText": "En un teléfono no hay icono de la cinta aquí. Usa la paleta de comandos para abrir el formulario de registro desde cualquier nota."
-      },
-      "commands": {
-        "title": "Comandos de inserción",
-        "text": "Abre la paleta de comandos y ejecuta un comando «Insertar…» de entrenamiento para añadir una tabla, un gráfico, un temporizador o un panel a una nota."
-      },
-      "end": {
-        "title": "¡Todo listo!",
-        "text": "Puedes repetir esta visita desde Configuración → Cómo empezar."
-      },
-      "muscles": {
-        "title": "Mapa de calor muscular",
-        "text": "El mapa de calor muestra qué músculos entrenaste más recientemente."
-      }
-    },
-    "showMe": "Muéstrame"
   },
   "import": {
     "chooseFile": "Seleccionar archivo CSV",

@@ -6,7 +6,6 @@ import {
   BUTTONVARIANT,
   BUTTONSIZE,
 } from "@app/components/atoms/Button";
-import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
 
 export interface TimerControlCallbacks {
   onStart: () => void;
@@ -32,7 +31,6 @@ export class TimerControls {
       size: BUTTONSIZE.SMALL,
       ariaLabel: t("timer.controls.startTimer"),
     });
-    markTourTarget(startStopBtn, TOUR_TARGETS.timerStart);
 
     // Reset button
     const resetBtn = Button.create(controlsDiv, {

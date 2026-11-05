@@ -480,7 +480,16 @@
       "continueWithWorkout": "Hapni [[{workout}]] për të provuar një stërvitje të plotë me tabela ushtrimesh dhe timer pushimi.",
       "moreExamples": "Për më shumë lloje grafikësh, filtra dhe protokolle stërvitjeje, shihni [[{showcase}]].",
       "ownData": "Kur të jeni gati, zgjidhni dosjen tuaj CSV dhe dosjen e ushtrimeve te Cilësimet → Konfigurim dhe të dhëna. Mbajeni dosjen e shembujve si referencë.",
-      "openGuideDesc": "Hapni faqen e fillimit me shembuj funksionues të tabelave, grafikëve, timerëve dhe panelit."
+      "openGuideDesc": "Hapni faqen e fillimit me shembuj funksionues të tabelave, grafikëve, timerëve dhe panelit.",
+      "setsTitle": "Seritë tuaja",
+      "progressTitle": "Progresi",
+      "dashboardTitle": "Paneli",
+      "chartIntro": "Grafiku tregon si evoluon një ushtrim me kalimin e kohës, me vijën e tendencës dhe statistikat.",
+      "dashboardIntro": "Numra, tendenca e volumit dhe stërvitjet e fundit, të gjitha në një seksion.",
+      "timerIntro": "Shtypni \"Nis\" për të nisur një numërim mbrapsht mes serive.",
+      "back": "Prapa",
+      "next": "Tjetra",
+      "done": "Mbaruar"
     },
     "hiit": {
       "cyclingCooldownTitle": "Qetësimi me biçikletë",
@@ -1169,74 +1178,6 @@
       "notOneOf": "{key} duhet të jetë një nga {allowed}, por është \"{value}\"",
       "notACell": "{key} duhet të jetë katër numra të plotë, secili të paktën 1 (kolona, rreshti, gjerësia, lartësia), por është \"{value}\""
     }
-  },
-  "welcome": {
-    "title": "Mirë se vini në pluginin e stërvitjes",
-    "intro": "Regjistroni seritë tuaja, pastaj shikojini si grafikë, tabela dhe panel. Si dëshironi të filloni?",
-    "tryExamples": "Provoni me të dhëna shembullore",
-    "startScratch": "Filloni nga zero",
-    "later": "Më vonë",
-    "tryExamplesDesc": "Shton stërvitje shembull, pastaj ju udhëzon nëpër plugin me to.",
-    "startScratchDesc": "Ju udhëzon nëpër plugin me të dhënat tuaja, duke filluar nga seria juaj e parë.",
-    "tourOnYourData": "Keni tashmë një regjistër stërvitjesh, ndaj tura do të përdorë të dhënat tuaja."
-  },
-  "tour": {
-    "back": "Prapa",
-    "next": "Tjetra",
-    "skip": "Kalo",
-    "done": "Mbaruar",
-    "progress": "{current} nga {total}",
-    "noteName": "Tur udhëzues",
-    "noteIntro": "Turi udhëzues tregon çdo pjesë të pluginit në këtë faqe. Redaktojeni ose fshijeni këtë shënim kur të dëshironi.",
-    "noteTable": "Seritë tuaja",
-    "noteChart": "Progresi",
-    "noteDashboard": "Paneli",
-    "noteTimer": "Timer pushimi",
-    "steps": {
-      "logSet": {
-        "title": "Regjistro serinë e parë",
-        "text": "Shtypni butonin + për të hapur formularin, pastaj ruani një seri. Ajo shfaqet menjëherë në tabelë."
-      },
-      "rowActions": {
-        "title": "Redakto ose fshi një seri",
-        "mobileText": "Prekni një seri për ta korrigjuar. Për ta fshirë, përdorni Fshi serinë në formularin që hapet.",
-        "text": "Përdorni lapsin në një rresht për të korrigjuar një seri. Për ta fshirë, përdorni Fshi serinë në formularin që hapet."
-      },
-      "chart": {
-        "title": "Progresi juaj",
-        "text": "Grafiku tregon si evoluon një ushtrim me kalimin e kohës, me vijën e tendencës dhe statistikat.",
-        "textMine": "Grafiku tregon si evoluon një ushtrim me kalimin e kohës. Është pothuajse bosh derisa të regjistroni disa seri.",
-        "mobileText": "Në telefon, grafiku shfaqet si tabelë me të njëjtat numra.",
-        "mobileTextMine": "Në telefon, grafiku shfaqet si tabelë. Është pothuajse bosh derisa të regjistroni disa seri."
-      },
-      "dashboard": {
-        "title": "Paneli juaj",
-        "text": "Numra, tendenca e volumit dhe stërvitjet e fundit, të gjitha në një seksion.",
-        "textMine": "Totalet, tendencat e volumit dhe stërvitjet e fundit. Mbushet me çdo seri që regjistroni."
-      },
-      "timer": {
-        "title": "Timer pushimi",
-        "text": "Shtypni \"Nis\" për të nisur një numërim mbrapsht mes serive."
-      },
-      "ribbon": {
-        "title": "Regjistro nga çdo shënim",
-        "text": "Ikona e shtangës në shiritin anësor hap formularin e regjistrimit nga kudo.",
-        "mobileText": "Në telefon nuk ka ikonë në shiritin anësor. Përdorni paletën e komandave për të hapur formularin e regjistrimit nga çdo shënim."
-      },
-      "commands": {
-        "title": "Komandat për shtim",
-        "text": "Hapni paletën e komandave dhe ekzekutoni një komandë \"Shto\" stërvitjeje për të shtuar një tabelë, grafik, timer ose panel në një shënim."
-      },
-      "end": {
-        "title": "Jeni gati",
-        "text": "Mund ta ndiqni këtë tur përsëri nga Cilësimet → Fillimi."
-      },
-      "muscles": {
-        "title": "Harta termike e muskujve",
-        "text": "Harta termike tregon cilët muskuj i keni trajnuar më së fundmi."
-      }
-    },
-    "showMe": "Më tregoni"
   },
   "import": {
     "chooseFile": "Zgjidhni skedarin CSV",

@@ -1,6 +1,5 @@
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { t } from "@app/i18n";
-import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
 import { ICONS } from "@app/constants/ui.constants";
 
 /**
@@ -27,7 +26,6 @@ export class ActionButtons {
       variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("table.editTitle"),
     });
-    markTourTarget(actions, TOUR_TARGETS.tableRowActions);
     return { container: actions, editBtn };
   }
 }

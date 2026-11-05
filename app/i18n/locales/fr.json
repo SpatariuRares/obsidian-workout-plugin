@@ -480,7 +480,16 @@
       "continueWithWorkout": "Ouvrez [[{workout}]] pour essayer un entraînement complet avec des tableaux d'exercices et des minuteries de repos.",
       "moreExamples": "Consultez [[{showcase}]] pour plus d'informations sur les différents types de graphiques, les filtres et les protocoles d'entraînement.",
       "ownData": "Lorsque vous êtes prêt, choisissez votre propre dossier CSV et votre dossier d'exemple dans Paramètres → Configuration et données. Conservez le dossier d'exemple comme référence.",
-      "openGuideDesc": "Ouvrez la page « Comment débuter » avec des exemples fonctionnels de tableaux, de graphiques, de minuteurs et du tableau de bord."
+      "openGuideDesc": "Ouvrez la page « Comment débuter » avec des exemples fonctionnels de tableaux, de graphiques, de minuteurs et du tableau de bord.",
+      "setsTitle": "Vos séries",
+      "progressTitle": "Progression",
+      "dashboardTitle": "Tableau de bord",
+      "chartIntro": "Le graphique montre l'évolution d'un exercice au fil du temps, avec une ligne de tendance et des statistiques.",
+      "dashboardIntro": "Totaux, tendances du volume et séances récentes, regroupés dans un seul bloc.",
+      "timerIntro": "Appuyez sur le bouton \"Démarrer\" pour lancer un compte à rebours entre les séries.",
+      "back": "Retour",
+      "next": "Suivant",
+      "done": "Terminé"
     },
     "hiit": {
       "cyclingCooldownTitle": "Retour au calme à vélo",
@@ -1169,74 +1178,6 @@
       "notOneOf": "{key} doit être l'une des valeurs suivantes : {allowed}, mais elle est \"{value}\"",
       "notACell": "{key} doit être quatre nombres entiers à partir de 1 (colonne, ligne, largeur, hauteur), mais vaut \"{value}\""
     }
-  },
-  "welcome": {
-    "title": "Bienvenue dans le plugin d'entraînement",
-    "intro": "Suivez vos séries, puis visualisez-les sous forme de graphiques, de tableaux et de tableau de bord. Comment souhaitez-vous commencer ?",
-    "tryExamples": "Essayer avec des données d'exemple",
-    "startScratch": "Commencer à zéro",
-    "later": "Plus tard",
-    "tryExamplesDesc": "Ajoutez des entraînements d'exemple, puis lancez la visite du plugin avec eux.",
-    "startScratchDesc": "Vous guide à travers l'utilisation du plugin sur vos propres données, en commençant par votre première série.",
-    "tourOnYourData": "Vous avez déjà un journal d'entraînement, donc la visite se déroule sur vos propres données."
-  },
-  "tour": {
-    "back": "Retour",
-    "next": "Suivant",
-    "skip": "Passer la visite",
-    "done": "Terminé",
-    "progress": "{current} de {total}",
-    "noteName": "Visite guidée",
-    "noteIntro": "La visite guidée met en évidence chaque élément du plugin sur cette page. Modifiez ou supprimez cette note à votre guise.",
-    "noteTable": "Vos séries",
-    "noteChart": "Progression",
-    "noteDashboard": "Tableau de bord",
-    "noteTimer": "Minuteur de repos",
-    "steps": {
-      "logSet": {
-        "title": "Enregistrez votre première série",
-        "text": "Appuyez sur le bouton \"+\" pour ouvrir le formulaire, puis enregistrez une série. Elle apparaît immédiatement dans le tableau."
-      },
-      "rowActions": {
-        "title": "Modifier ou supprimer une série",
-        "mobileText": "Appuyez sur une série pour la corriger. Pour la supprimer, utilisez « Supprimer la série » dans le formulaire qui s'ouvre.",
-        "text": "Utilisez le crayon sur une ligne pour corriger une série. Pour la supprimer, utilisez « Supprimer la série » dans le formulaire qui s'ouvre."
-      },
-      "chart": {
-        "title": "Votre progression",
-        "text": "Le graphique montre l'évolution d'un exercice au fil du temps, avec une ligne de tendance et des statistiques.",
-        "textMine": "Le graphique montre l'évolution d'un exercice au fil du temps. Il est presque vide jusqu'à ce que vous ayez enregistré quelques séries.",
-        "mobileText": "Sur un téléphone, le graphique est affiché sous forme de tableau avec les mêmes chiffres.",
-        "mobileTextMine": "Sur un téléphone, le graphique est affiché sous forme de tableau. Il est presque vide jusqu'à ce que vous ayez enregistré quelques séries."
-      },
-      "dashboard": {
-        "title": "Votre tableau de bord",
-        "text": "Totaux, tendances du volume et séances récentes, regroupés dans un seul bloc.",
-        "textMine": "Totaux, tendances du volume et séances récentes. Il se remplit à mesure que vous enregistrez davantage de séries."
-      },
-      "timer": {
-        "title": "Minuteur de repos",
-        "text": "Appuyez sur le bouton \"Démarrer\" pour lancer un compte à rebours entre les séries."
-      },
-      "ribbon": {
-        "title": "Enregistrer depuis n'importe quelle note",
-        "text": "L'icône d'haltère dans le ruban ouvre le formulaire d'enregistrement depuis n'importe quelle note.",
-        "mobileText": "Sur un téléphone, il n'y a pas d'icône de ruban ici. Utilisez la palette de commandes pour ouvrir le formulaire de journal depuis n'importe quelle note."
-      },
-      "commands": {
-        "title": "Ajouter des commandes",
-        "text": "Ouvrez la palette de commandes et lancez une commande « Insérer » pour ajouter un tableau, un graphique, un minuteur ou un tableau de bord à une note."
-      },
-      "end": {
-        "title": "Vous êtes prêt.",
-        "text": "Vous pouvez refaire cette visite depuis Paramètres → Premiers pas."
-      },
-      "muscles": {
-        "title": "Carte thermique musculaire",
-        "text": "La carte thermique indique quels muscles vous avez le plus récemment sollicités."
-      }
-    },
-    "showMe": "Montrez-moi"
   },
   "import": {
     "chooseFile": "Sélectionner le fichier CSV",

@@ -480,7 +480,16 @@
       "continueWithWorkout": "Deschide [[{workout}]] pentru a încerca un antrenament complet, cu tabele de exerciții și temporizatoare de pauză.",
       "moreExamples": "Vezi [[{showcase}]] pentru mai multe tipuri de grafice, filtre și protocoale de antrenament.",
       "ownData": "Când ești pregătit, alege folderul CSV și folderul de exerciții din Setări → Configurare și date. Păstrează folderul de exemple ca referință.",
-      "openGuideDesc": "Deschide pagina „Cum să începi”, cu exemple funcționale de tabele, grafice, temporizatoare și tabloul de bord."
+      "openGuideDesc": "Deschide pagina „Cum să începi”, cu exemple funcționale de tabele, grafice, temporizatoare și tabloul de bord.",
+      "setsTitle": "Seriile tale",
+      "progressTitle": "Progres",
+      "dashboardTitle": "Tablou de bord",
+      "chartIntro": "Graficul prezintă evoluția unui exercițiu în timp, cu o linie de tendință și statistici.",
+      "dashboardIntro": "Totaluri, tendințe ale volumului și antrenamente recente, totul într-un singur bloc.",
+      "timerIntro": "Apasă Start ca să pornești o numărătoare inversă între serii.",
+      "back": "Înapoi",
+      "next": "Următor",
+      "done": "Finalizat"
     },
     "hiit": {
       "cyclingCooldownTitle": "Răcire după ciclism",
@@ -1169,74 +1178,6 @@
       "notOneOf": "{key} trebuie să fie unul dintre {allowed}, dar este \"{value}\"",
       "notACell": "{key} trebuie să fie patru numere întregi începând cu 1 (coloană, rând, lățime, înălțime), dar este \"{value}\""
     }
-  },
-  "welcome": {
-    "title": "Bun venit în pluginul pentru antrenamente",
-    "intro": "Urmărește-ți antrenamentele, apoi vezi-le sub formă de grafice, tabele și tablou de bord. Cum vrei să începi?",
-    "tryExamples": "Încearcă cu date de exemplu",
-    "startScratch": "Începe de la zero",
-    "later": "Mai târziu",
-    "tryExamplesDesc": "Adaugă antrenamente de exemplu, apoi te ghidează prin plugin folosindu-le.",
-    "startScratchDesc": "Te ghidează prin plugin, cu datele tale, începând cu prima serie.",
-    "tourOnYourData": "Ai deja un jurnal de antrenament, așa că turul folosește datele tale."
-  },
-  "tour": {
-    "back": "Înapoi",
-    "next": "Următor",
-    "skip": "Sări peste",
-    "done": "Finalizat",
-    "progress": "{current} din {total}",
-    "noteName": "Tur ghidat",
-    "noteIntro": "Turul ghidat arată fiecare componentă a pluginului de pe această pagină. Editează sau șterge această notă oricând vrei.",
-    "noteTable": "Seriile tale",
-    "noteChart": "Progres",
-    "noteDashboard": "Tablou de bord",
-    "noteTimer": "Temporizator de pauză",
-    "steps": {
-      "logSet": {
-        "title": "Înregistrează prima serie",
-        "text": "Apasă butonul „+” ca să deschizi formularul, apoi salvează o serie. Apare imediat în tabel."
-      },
-      "rowActions": {
-        "title": "Modifică sau șterge o serie",
-        "mobileText": "Atinge o serie ca s-o corectezi. Ca s-o elimini, folosește „Șterge seria” din formularul care se deschide.",
-        "text": "Folosește creionul de pe un rând ca să corectezi o serie. Ca s-o ștergi, folosește „Șterge seria” din formularul care se deschide."
-      },
-      "chart": {
-        "title": "Progresul tău",
-        "text": "Graficul prezintă evoluția unui exercițiu în timp, cu o linie de tendință și statistici.",
-        "textMine": "Graficul arată cum evoluează un exercițiu în timp. Inițial, este aproape gol, până când înregistrezi câteva serii.",
-        "mobileText": "Pe un telefon, graficul este afișat sub forma unui tabel cu aceleași numere.",
-        "mobileTextMine": "Pe telefon, graficul apare ca un tabel. Inițial este aproape gol, dar se umple după ce înregistrezi câteva serii."
-      },
-      "dashboard": {
-        "title": "Tabloul tău de bord",
-        "text": "Totaluri, tendințe ale volumului și antrenamente recente, totul într-un singur bloc.",
-        "textMine": "Totaluri, tendințe ale volumului și antrenamente recente. Se umple pe măsură ce înregistrezi mai multe serii."
-      },
-      "timer": {
-        "title": "Temporizator de pauză",
-        "text": "Apasă Start ca să pornești o numărătoare inversă între serii."
-      },
-      "ribbon": {
-        "title": "Înregistrează de la orice notă",
-        "text": "Iconița cu ganteră din bara laterală deschide formularul de oriunde.",
-        "mobileText": "Pe telefon nu există iconița din bara laterală aici. Folosește paleta de comenzi ca să deschizi formularul din orice notă."
-      },
-      "commands": {
-        "title": "Introdu comenzile",
-        "text": "Deschide paleta de comenzi și rulează o comandă „Adaugă” ca să pui un tabel, un grafic, un temporizator sau un tablou de bord într-o notă."
-      },
-      "end": {
-        "title": "Ești pregătit",
-        "text": "Poți relua turul din Setări → Începe."
-      },
-      "muscles": {
-        "title": "Harta de căldură a mușchilor",
-        "text": "Harta de căldură indică care mușchi ai antrenat cel mai recent."
-      }
-    },
-    "showMe": "Arată-mi"
   },
   "import": {
     "chooseFile": "Selectează fișierul CSV",

@@ -480,7 +480,16 @@
       "continueWithWorkout": "Abra [[{workout}]] para experimentar um treino completo com tabelas de exercícios e temporizadores de descanso.",
       "moreExamples": "Consulte [[{showcase}]] para obter mais tipos de gráficos, filtros e protocolos de treino.",
       "ownData": "Quando estiver pronto, escolha a sua própria pasta CSV e a pasta de exercícios nas definições → Configuração e dados. Mantenha a pasta de exemplos como referência.",
-      "openGuideDesc": "Abra a página Como começar com exemplos práticos de tabelas, gráficos, temporizadores e do painel."
+      "openGuideDesc": "Abra a página Como começar com exemplos práticos de tabelas, gráficos, temporizadores e do painel.",
+      "setsTitle": "As suas séries",
+      "progressTitle": "Progresso",
+      "dashboardTitle": "Painel",
+      "chartIntro": "O gráfico mostra como um exercício evolui ao longo do tempo, com uma linha de tendência e estatísticas.",
+      "dashboardIntro": "Totais, tendências de volume e treinos recentes, tudo num único bloco.",
+      "timerIntro": "Prima \"Iniciar\" para correr uma contagem decrescente entre as séries.",
+      "back": "Voltar",
+      "next": "Seguinte",
+      "done": "Concluído"
     },
     "hiit": {
       "cyclingCooldownTitle": "Arrefecimento no ciclismo",
@@ -1169,74 +1178,6 @@
       "notOneOf": "{key} deve ser uma das opções listadas em {allowed}, mas é \"{value}\"",
       "notACell": "{key} tem de ser quatro números inteiros a partir de 1 (coluna, linha, largura, altura), mas é \"{value}\""
     }
-  },
-  "welcome": {
-    "title": "Bem-vindo ao plugin de treino",
-    "intro": "Registe os seus treinos e veja-os em gráficos, tabelas e num painel. Como prefere começar?",
-    "tryExamples": "Experimentar com dados de exemplo",
-    "startScratch": "Começar do zero",
-    "later": "Mais tarde",
-    "tryExamplesDesc": "Inclui treinos de exemplo e guia-o pelo plugin com esses dados.",
-    "startScratchDesc": "Guia-o pelo plugin com os seus próprios dados, a começar pela sua primeira série.",
-    "tourOnYourData": "Já tem um registo de treino, por isso a visita guiada usa os seus próprios dados."
-  },
-  "tour": {
-    "back": "Voltar",
-    "next": "Seguinte",
-    "skip": "Saltar",
-    "done": "Concluído",
-    "progress": "{current} de {total}",
-    "noteName": "Visita guiada",
-    "noteIntro": "A visita guiada assinala cada parte do plugin nesta página. Edite ou elimine esta nota quando quiser.",
-    "noteTable": "As suas séries",
-    "noteChart": "Progresso",
-    "noteDashboard": "Painel",
-    "noteTimer": "Temporizador de descanso",
-    "steps": {
-      "logSet": {
-        "title": "Registe a sua primeira série",
-        "text": "Prima o botão \"+\" para abrir o formulário e guarde uma série. Aparece logo na tabela."
-      },
-      "rowActions": {
-        "title": "Editar ou eliminar uma série",
-        "mobileText": "Toque numa série para a corrigir. Para a remover, utilize \"Eliminar série\" no formulário que se abre.",
-        "text": "Utilize o lápis numa linha para corrigir uma série. Para a remover, utilize \"Eliminar série\" no formulário que se abre."
-      },
-      "chart": {
-        "title": "O seu progresso",
-        "text": "O gráfico mostra como um exercício evolui ao longo do tempo, com uma linha de tendência e estatísticas.",
-        "textMine": "O gráfico mostra como um exercício evolui ao longo do tempo. Fica quase vazio até registar algumas séries.",
-        "mobileText": "No telemóvel, o gráfico é apresentado como uma tabela com os mesmos números.",
-        "mobileTextMine": "No telemóvel, o gráfico é apresentado como uma tabela. Fica quase vazio até registar algumas séries."
-      },
-      "dashboard": {
-        "title": "O seu painel",
-        "text": "Totais, tendências de volume e treinos recentes, tudo num único bloco.",
-        "textMine": "Totais, tendências de volume e treinos recentes. Preenche-se à medida que regista mais séries."
-      },
-      "timer": {
-        "title": "Temporizador de descanso",
-        "text": "Prima \"Iniciar\" para correr uma contagem decrescente entre as séries."
-      },
-      "ribbon": {
-        "title": "Registar a partir de qualquer nota",
-        "text": "O ícone de haltere na barra lateral abre o formulário de registo a partir de qualquer ponto.",
-        "mobileText": "No telemóvel não há aqui um ícone na barra lateral. Utilize o painel de comandos para abrir o formulário de registo a partir de qualquer nota."
-      },
-      "commands": {
-        "title": "Adicionar comandos",
-        "text": "Abra o painel de comandos e execute um comando \"Inserir treino\" para adicionar uma tabela, um gráfico, um temporizador ou um painel a uma nota."
-      },
-      "end": {
-        "title": "Está pronto",
-        "text": "Pode repetir esta visita guiada em Definições → Como começar."
-      },
-      "muscles": {
-        "title": "Mapa de calor muscular",
-        "text": "O mapa de calor mostra os músculos que treinou mais recentemente."
-      }
-    },
-    "showMe": "Mostre-me"
   },
   "import": {
     "chooseFile": "Escolher ficheiro CSV",

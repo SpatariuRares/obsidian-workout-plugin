@@ -135,7 +135,7 @@ The rules for a field (see "Field" in `CONTEXT.md`): `fieldKey(name)` gives the 
 
 #### ExampleGeneratorService (`app/services/examples/ExampleGeneratorService.ts`)
 
-Entry points for commands, modals and callouts are `createExampleNotes(plugin)` and `openGettingStartedGuide(plugin)` in `GettingStartedGuide.ts` (`examplesCreated(result)` is the one success check); don't call `new ExampleGeneratorService(plugin).createExamples()` or `generateExampleFolder()` from UI code. Creation only adds missing files and never overwrites one (so running it again is safe, even on an example log the user logs to), and there is no overwrite prompt. With no log at `csvLogFilePath` it points `csvLogFilePath`/`exerciseFolderPath` at the example files so the views show them; with a real log it changes no setting. Example notes build every block through the feature generators (`app/features/*/example*Generator.ts`, all via `schema.serialize`), and `exampleShowcase.test.ts` parses every block of them, so a new feature or block parameter belongs in those generators and in the Feature Showcase. Getting-started pages are only appended (`09 …`, `10 …`): renumbering would leave the old files in vaults that already have the examples. Example vault paths come from `examplePaths` (`ExamplePaths.ts`); "is there a log at `csvLogFilePath`" is `logFileExists(plugin)` (`app/services/data/logFileExists.ts`).
+Entry points for commands, modals and callouts are `createExampleNotes(plugin)` and `openGettingStartedGuide(plugin)` in `GettingStartedGuide.ts` (`examplesCreated(result)` is the one success check); don't call `new ExampleGeneratorService(plugin).createExamples()` or `generateExampleFolder()` from UI code. Creation only adds missing files and never overwrites one (so running it again is safe, even on an example log the user logs to), and there is no overwrite prompt. With no log at `csvLogFilePath` it points `csvLogFilePath`/`exerciseFolderPath` at the example files so the views show them; with a real log it changes no setting. Example notes build every block through the feature generators (`app/features/*/example*Generator.ts`, all via `schema.serialize`), and `exampleShowcase.test.ts` parses every block of them, so a new feature or block parameter belongs in those generators and in the Feature Showcase. Getting-started pages are only appended (`10 …`, `11 …`): renumbering would leave the old files in vaults that already have the examples. Example vault paths come from `examplePaths` (`ExamplePaths.ts`); "is there a log at `csvLogFilePath`" is `logFileExists(plugin)` (`app/services/data/logFileExists.ts`).
 
 The welcome flow: `Welcome.ts` (`shouldShowWelcome`, `markWelcomeShown`) and `WelcomeModal`, shown once on a fresh install. The window has two choices plus Later, and both end in the guided tour: "Try with example data" creates the examples, then `startGuidedTour(plugin, { source: "welcome-examples" })`; "Start from scratch" calls it with `"welcome-scratch"` (the tour's first step logs the first set). The "Show welcome" button in Settings → Getting started opens `WelcomeModal` directly, without the fresh-install check and without touching `welcomeShown`.
 
@@ -181,9 +181,12 @@ Each view has a `cleanup()` method called during plugin unload.
 
 ```
 app/components/
-├── atoms/        # Primitives: Button, Input, Text, Icon, Container, Canvas, Chip, ProtocolBadge, SpacerStat
+├── atoms/        # Primitives: Button, Input, Text, Icon, Container, Canvas, Chip, ProtocolBadge, SpacerStat,
+│                 #             DeleteButton (red trash icon: use it for every delete/remove),
+│                 #             CheckToggle, DisclosureToggle, LiveRegion, ProgressMeter (UI kit, see below)
 ├── molecules/    # Composites: StatCard, FormField, SearchBox, Badge, TrendIndicator, LoadingSpinner,
-│                 #            FilterIndicator, CopyableBadge, ListItem
+│                 #            FilterIndicator, CopyableBadge, ListItem,
+│                 #            NumberField, ChipGroup, ProtocolPicker, NotesField, UndoNotice, BlockCard (UI kit, see below)
 └── index.ts      # Barrel export (DO use for components)
 ```
 
@@ -208,11 +211,11 @@ import { Button } from "@app/components/atoms/Button";
 
 ```
 app/features/
-├── dashboard/ui/DashboardCard.ts      # Dashboard-specific card component
+├── dashboard/ui/WidgetContainer.ts    # A widget's BlockCard (title, subtitle; ⋮ via WidgetActionSelect)
 ├── tables/ui/ActionButtons.ts         # Table row action (edit)
 ├── tables/ui/TargetHeader.ts          # Table target calculation header
-├── charts/components/TrendHeader.ts   # Chart trend indicator header
-└── dashboard/ui/StatsBox.ts           # Dashboard stats box
+├── charts/components/TrendHeader.ts   # Chart card's trend row
+└── charts/ui/StatsBox.ts              # Chart card's stats row (StatCards)
 ```
 
 These stay in feature directories because they're domain-specific, not general-purpose.
@@ -230,7 +233,7 @@ app/features/
 │   ├── config/          # Chart.js configuration
 │   ├── business/        # ChartDataUtils (data transformation)
 │   ├── modals/          # InsertChartModal
-│   ├── ui/              # Chart-specific UI helpers
+│   ├── ui/              # StatsBox (stats row), ChartLegendItem
 │   └── views/           # EmbeddedChartView
 │
 ├── tables/              # workout-log and its phone version workout-sets (see "workout-sets")
@@ -241,7 +244,7 @@ app/features/
 │   └── views/           # EmbeddedTableView, EmbeddedSetsView
 │
 ├── dashboard/
-│   ├── ui/              # DashboardCard, StatsBox
+│   ├── ui/              # WidgetContainer, WidgetActionSelect, GridEditor
 │   ├── widgets/         # one folder per widget (quick-stats, volume-analytics, muscle-heat-map,
 │   │                    # protocol-*, recent-workouts, summary, duration-comparison, ...)
 │   ├── business/        # Dashboard calculation utilities
@@ -467,7 +470,8 @@ workout: Push Day # unset: the note's name
 sets: 4 # rows to fill in; unset: as many as last time (at least one)
 targetReps: 8 # hint when the exercise was never done
 targetWeight: 80
-rest: 90 # seconds after each set; 0 = no timer; unset = the section's workout-timer (else the default preset)
+rest: 90 # seconds after each set (interval: work per round); 0 = no timer; unset with no timer.* = the section's workout-timer (else the default preset)
+timer.type: interval # the rest timer's other options, no defaults: timer.preset, timer.type, timer.rest, timer.rounds, timer.showControls, timer.sound
 ```
 
 Beta (`setSheet`, see "Beta features"): off by default. The "Set sheet" in `CONTEXT.md`: the V2 of `workout-log`, made for logging on the phone. It lives in `app/features/tables/` and shares the table's pieces, so add a behavior to both blocks by changing the shared piece, not by copying it:
@@ -478,14 +482,14 @@ Beta (`setSheet`, see "Beta features"): off by default. The "Set sheet" in `CONT
 - **Targets**: `renderTargetSection` (`tables/ui/TargetSection.ts`): target, progress bar, achievement badge that writes the next weight into the block with its own schema.
 - **Menu**: the ⋮ of `workout-log`, always in the top right corner of the block's first row: `ExerciseActionSelect` (go to exercise + the processor's edit action), only edit when the block names no exercise, so the frame adds no second menu. The processor redraws the sheet like a table (`await sheet.render()`, then `refreshOnLogChange(… () => sheet.render().finally(syncMenu))`).
 - **Exercise fields**: `parametersOrNone(plugin, exercise)` (`ExerciseDefinitionService.ts`), the fields or none, as the session and the log modal's history read them.
-- **Rest**: `RestTimer` (`timer/views/RestTimer.ts`), the same as `workout-session`: a rest that names a `workout-timer` id runs on that block's timer (shared through `activeTimers`), else on the block's own. `restOf(params, plan)` (setSheet) picks it: `rest` seconds, else the exercise's section rest from `readNotePlan`/`stepOf` (sessionPlan), none with `rest: 0`. It is drawn at the top and restarts on each tick, except after the last row to fill in.
-- **Logging**: a logged row opens `EditLogModal`; a new set goes through `LogEntryDraft` (`readSetFields`, `validate`, `toEntry`) like the log form.
+- **Rest**: `RestTimer` (`timer/views/RestTimer.ts`), the same as `workout-session`: a rest that names a `workout-timer` id runs on that block's timer (shared through `activeTimers`), else on the block's own. `restOf(params, plan)` (setSheet) picks it: `rest` seconds, else the exercise's section rest from `readNotePlan`/`stepOf` (sessionPlan), none with `rest: 0`. `blockRest(params)` / `restParams(timer)` (`setsBlock.ts`) turn `rest` + `timer.*` into the block's own timer and back; it wins over the section's. ⋮ → "Edit rest timer" (`EditRestTimerModal`, the timer form writing into the sets block; when the block had no timer of its own it writes every option, so it keeps resting the same way). It is drawn at the top and restarts on each tick, except after the last row to fill in.
+- **Logging**: a new set goes through `LogEntryDraft` (`readSetFields`, `validate`, `toEntry`) like the log form. A logged row has the same chevron and tick, no modal: its details change the set's protocol and notes in the log (`updateWorkoutLogEntry`), and its tick deletes the set, whose values (`draftFromSet`) become the first row to fill in; a notice offers Undo, which puts the very set back (`addWorkoutLogEntry(entry, { timestamp })`, same place in the set order, no record notice). Taking back the last set also stops the rest it started (`RestTimer.cancel`).
 
 What only the sets block has: `setRows` (`tables/business/setSheet.ts`, pure) gives the rows: today's sets of the exercise in this workout (`TrainingHistory.setsOn`) ticked, then rows to fill in, each with placeholders from the same set of `TrainingHistory.previousDay` (else the targets) and that set's protocol as suggestion; `rowToFormData` turns a row into the set to log (typed value, else placeholder). `EmbeddedSetsView` keeps the drafts of unticked rows in its `SetSheet` render child across the `log:*` redraws (a row is removed from the drafts before the add, so the `log:added` redraw already shows it logged). It finds sets with `TrainingHistory` (exact exercise name), not `DataFilter`: logging must never match a similar exercise. Insert: `InsertSetsModal` (`insert-workout-sets`), edit: `EditSetsModal`.
 
 #### workout-session
 
-No parameters. `readSessionPlan` (`app/features/session/business/sessionPlan.ts`) reads the note's plan with `readWorkoutNote`: one step per `workout-log` or `workout-sets` block with an `exercise`, in note order (a section's table and sets of one exercise are one step), with its `sets`/`targetReps`/`targetWeight`, and the rest from the `workout-timer` in the same `##` section. `sessionProgress` hands today's sets of this workout (`TrainingHistory.sessions({ workout: note name })`) to the steps; nothing is stored, so progress comes back from the log. `EmbeddedSessionView` shows the current step, logs through `CreateLogModal` (prefill: today's last set, else the last set with the targets on top) and starts the rest on `log:added` (not after the plan's last set). The rest runs on the section timer's own `EmbeddedTimerView` when that block has an `id` (shared through `activeTimers`, so the block and the card show one countdown), otherwise on the session's own timer. There is no weekly schedule: the user opens the note they want to train. The `insert-workout-session` command writes the empty block at the cursor; the example "Lower Body A" note has one right after its chart, before the exercises, and its tables carry `sets`.
+No parameters. `readSessionPlan` (`app/features/session/business/sessionPlan.ts`) reads the note's plan with `readWorkoutNote`: one step per `workout-log` or `workout-sets` block with an `exercise`, in note order (a section's table and sets of one exercise are one step), with its `sets`/`targetReps`/`targetWeight`, and the rest from its `workout-sets` block's own timer, else the `workout-timer` in the same `##` section (`step.restBlock` says where it is written: the card's ⋮ "Edit rest timer" opens `EditRestTimerModal` or `EditTimerModal` on it). `sessionProgress` hands today's sets of this workout (`TrainingHistory.sessions({ workout: note name })`) to the steps; nothing is stored, so progress comes back from the log. `EmbeddedSessionView` shows the current step, logs through `CreateLogModal` (prefill: today's last set, else the last set with the targets on top) and starts the rest on `log:added` (not after the plan's last set). The rest runs on the section timer's own `EmbeddedTimerView` when that block has an `id` (shared through `activeTimers`, so the block and the card show one countdown), otherwise on the session's own timer. There is no weekly schedule: the user opens the note they want to train. The `insert-workout-session` command writes the empty block at the cursor; the example "Lower Body A" note has one right after its chart, before the exercises, and each exercise is one `workout-sets` block with `sets` and its own `rest`, without a `workout-timer` (the Yoga Flow keeps a timer per pose).
 
 #### workout-timer
 
@@ -524,7 +528,7 @@ grid.heatMap: 1 2 2 2
 
 The grid rules (no overlap, inside the columns, at least the widget's `minColumns`, first-fit packing, reading order) are only in `app/features/dashboard/layout/gridLayout.ts` (pure); `dashboardGrid.ts` turns a block's `grid.<id>` lines into placements and back and its problems into messages. The view draws the placed widgets in reading order and sets `--workout-grid-columns` / `--workout-cell-column` / `--workout-cell-row`; the columns follow the dashboard's width (`columnsForWidth`, one `ResizeObserver` per dashboard): as saved when they fit, packed again (`fitColumns`) when narrower. `GridEditor` (`dashboard/ui/`) is the modal's grid: tiles, stash, pointer drag (listeners on the document) and keyboard; it calls only `gridLayout`.
 
-The widgets live in one registry, `app/features/dashboard/widgets/dashboardWidgets.ts` (`DASHBOARD_WIDGETS` with label, `minColumns` and render; `resolveWidgets(params)`); the view loops over it. `InsertDashboardModal` is the form (checkboxes + ↑/↓ order) and writes `widgets` only when it differs from the default, so untouched dashboards get later widgets; `EditDashboardModal` (the processor's edit action, in the ⋮ of every dashboard's header) patches the change. The old `showSummary`/`showQuickStats`/... flags were removed: the schema skips them, so such blocks show every widget. A block without an `id` is found by its body (`CodeBlockMatch { body, lines? }`: the processor's `source`, within `ctx.getSectionInfo`'s lines when Obsidian gives them, which it doesn't inside a callout in Live Preview; it must be the only match) and gets an `id` when saved. `EmbeddedDashboardParams` holds only block parameters; what the view knows besides them (its note and how to find it without an id, for the widget menus; its edit action; the protocol picked in the pie chart) is `DashboardViewState`, passed to `render`/`createDashboard` separately.
+The widgets live in one registry, `app/features/dashboard/widgets/dashboardWidgets.ts` (`DASHBOARD_WIDGETS` with label, `minColumns`, render and `settings`; `resolveWidgets(params)`); the view loops over it. A widget's `settings` are what its ⋮ → `EditWidgetModal` shows; a number setting carries the schema's `min`, a `max` for the form only (not in `dashboardBlock`, so blocks already holding more keep rendering), a `step` and an optional `unit`. Widgets read their defaults from `dashboardBlock.defaults` (typed: a parameter with a default is never undefined there), never a literal. `InsertDashboardModal` is the form (checkboxes + ↑/↓ order) and writes `widgets` only when it differs from the default, so untouched dashboards get later widgets; `EditDashboardModal` (the processor's edit action, in the ⋮ of every dashboard's header) patches the change. The old `showSummary`/`showQuickStats`/... flags were removed: the schema skips them, so such blocks show every widget. A block without an `id` is found by its body (`CodeBlockMatch { body, lines? }`: the processor's `source`, within `ctx.getSectionInfo`'s lines when Obsidian gives them, which it doesn't inside a callout in Live Preview; it must be the only match) and gets an `id` when saved. `EmbeddedDashboardParams` holds only block parameters; what the view knows besides them (its note and how to find it without an id, for the widget menus; its edit action; the protocol picked in the pie chart) is `DashboardViewState`, passed to `render`/`createDashboard` separately.
 
 Code blocks written by the insert modals also carry an `id`, used to find the block when it is edited.
 
@@ -545,7 +549,8 @@ Code blocks written by the insert modals also carry an `id`, used to find the bl
 3. For insert modals: implement `generateCode()` to return code block string
 4. Register command in `CommandHandlerService.registerCommands()`
 5. Add modal UI strings as keys in `app/i18n/locales/en.json` and read them with `t()` (see "Internationalization")
-6. Put the main buttons (save/update, cancel) in `Button.createModalActions(parent)` (a `Setting` row: `.setClass("workout-modal-actions")`): the row stays at the bottom of the modal, always visible, while the form scrolls
+6. Build fields from the kit (`DESIGN.md` "Modal forms"): `AdjustField` / `NumberField` for numbers (`AdjustField.createField` gives `setError`; pass `validate` to `createEditButtons` so an invalid value blocks Update instead of being dropped), `ChipGroup` for a labelled choice, `ProtocolPicker`, `NotesField`. The log form's protocol is a `ProtocolChoice` (`LogFormElements.protocol`: `value`, `set(id)` keeps a protocol no longer in the settings)
+7. Put the main buttons (save/update, cancel) in `Button.createModalActions(parent)` (a `Setting` row: `.setClass("workout-modal-actions")`): the row stays at the bottom of the modal, always visible, while the form scrolls
 
 ### Adding New Components
 
@@ -554,6 +559,20 @@ Code blocks written by the insert modals also carry an `id`, used to find the bl
 3. Add test file in `__tests__/` directory (co-located with source)
 4. Follow naming pattern: `ComponentName.ts`, `ComponentName.test.ts`
 5. Export types alongside component: `export { Component, type ComponentProps }`
+
+### UI kit (logging controls)
+
+`DESIGN.md` (root) is the design system: tokens, color roles, the rules and every kit component; `.impeccable/design.json` is its sidecar for the Impeccable panel. Read it before building UI, and update both when a token or kit component changes. `workout-sets` (`EmbeddedSetsView`) is the reference use of every piece. A block where the user logs or edits sets builds its controls from the kit, never by hand:
+
+- **Fields**: `NumberField` (suggestion = last time's value, logged when empty; `integer`, `unit`, `step` with ↑/↓, `onEnter`, `setError`); `NotesField` (`saveOn: "input"` for a draft, `"change"` for a value written to the log).
+- **Row controls**: `CheckToggle` (to do / done; its label names the action of the current state), `DisclosureToggle` (`aria-expanded`, `marked` dot), `ChipGroup` (a labelled group of chips, one picked; it presses the pick itself; `createMulti` for several) and `ProtocolPicker` (its protocol version; pass `ProtocolCatalog.all()`), `DeleteButton`.
+- **One-tap removal**: `UndoNotice` (Undo at the right end, 8s) instead of a confirm; make undo exact (a set comes back with `addWorkoutLogEntry(entry, { timestamp })`).
+- **Redraws**: a block redrawn on every `log:*` event loses focus. Give controls a `focusKey` and after drawing call `DomUtils.focusByKey(root, key)`; say silent changes with a `LiveRegion` created once outside the redrawn element (see `SetSheet.body()`).
+- **Progress**: `ProgressMeter` (value, max, label) for how far something is from done; the target (`TargetSection`) uses it. Neutral fill, accent only once done, the number also in words. The target is its own inset panel in the card (it is the block's goal), the achievement row inside it.
+- **Figures**: `StatCard` (label, figure, optional detail; `is-up`/`is-neutral` tones a change) in a `StatCard.row` for a summary row; `workout-chart`'s stats row (`StatsBox`) is the reference.
+- **Rest**: `RestTimer.draw` draws the one-line `.workout-timer-strip`; never the standalone timer's phone layout inside a block.
+- **Card**: a block is a `BlockCard` (`workout-log`, `workout-sets`, `workout-session`, `workout-chart`, `workout-duration`, and every dashboard widget through `WidgetContainer`): `create(parent, { title, meta, className })` gives the card and its top row, where the ⋮ menu goes last; `BlockCard.footer(card)` is a row of actions at the end. `workout-log` keeps Add log under the title (a new set is the table's first row) and shades each day as one group (`workout-table-day-even/odd`, never row by row).
+- **Styles** live in `app/styles/components/` (`_fields`, `_toggles`, `_chip-group`, `_notice`); a block's own stylesheet only places them (grid columns, alignment). Field selectors are two classes deep to outrank Obsidian's `input[type="text"]`.
 
 ### Adding New Services
 
@@ -575,7 +594,7 @@ The settings tab is declarative (Obsidian 1.13+ settings search). Every row come
 
 A new user-facing feature ships off, behind a toggle in Settings → Beta features, so an update never changes how someone trains until they opt in. Bug fixes and refactors are not gated.
 
-- The list is `BETA_FEATURES` in `app/services/features/BetaFeatures.ts`; `settings.betaFeatures` (`Record<id, boolean>`, missing = off) holds the user's choice; `betaEnabled(settings, id)` is the only check.
+- The list is `BETA_FEATURES` in `app/services/features/BetaFeatures.ts`; `settings.betaFeatures` (`Record<id, boolean>`, missing = off) holds the user's choice; a new install (`loadData()` null) starts with all on (`newInstallBetaFeatures`, in `loadSettings`), updates keep them off; `betaEnabled(settings, id)` is the only check.
 - To add one: its id in `BETA_FEATURES`, `settings.beta.<id>.name`/`.desc` in `en.json` (the settings section draws a toggle per id), then gate where it shows up: its block draws `settings.beta.disabledBlock` (with its ⋮ menu) instead of its content, its commands use `checkCallback` returning false. The toggle emits `settings:changed` (`betaFeatures`), so blocks redraw at once through `EventAwareRenderChild`.
 - To release it for everyone: remove the id, its checks and its `settings.beta.<id>` keys (from every locale too).
 - Current: `setSheet` (`workout-sets` block and `insert-workout-sets`).
@@ -584,7 +603,7 @@ A new user-facing feature ships off, behind a toggle in Settings → Beta featur
 
 1. Create widget in `app/features/dashboard/widgets/[widget-name]/`
 2. Create business logic in `business/` subdirectory
-3. Use `DashboardCard` component from `app/features/dashboard/ui/`
+3. Draw it in a `WidgetContainer` (`app/features/dashboard/ui/`, a BlockCard) and build its content from the kit (`StatCard.row` for figures, `ChipGroup` for a choice; DESIGN.md "Dashboard")
 4. Add its id to `DASHBOARD_WIDGET_IDS` (`dashboard/types.ts`) and an entry to `DASHBOARD_WIDGETS` (`widgets/dashboardWidgets.ts`); the view and the modals read the registry
 5. Add widget UI strings as keys in `app/i18n/locales/en.json` and read them with `t()` (see "Internationalization")
 
@@ -710,8 +729,8 @@ Feature folders have no barrels at any depth (`app/__tests__/structure.test.ts` 
 6. **Service Dependencies**: Services initialized in order - ExerciseLibrary must exist before ExerciseDefinitionService and MuscleTagService
 7. **Barrel Import Circular Dependencies**: If circular dependency error, import directly instead of using barrel file
 8. **Constants Backward Compatibility**: When refactoring constants, maintain `CONSTANTS.WORKOUT.*` structure for legacy code
-9. **Grid tracks on mobile**: use `minmax(0, 1fr)`, never a bare `1fr`. A `1fr` track grows to its widest child's min-content (e.g. a widget table), pushing the whole dashboard off-screen
-10. **Mobile layouts**: on phones `workout-log` rows become cards (CSS reads each cell's `data-label`, set by `TableRenderer`), and `workout-chart` deliberately shows a table instead of the chart. Use `@media (hover: hover)` for hover effects that move or resize elements, since touch keeps `:hover` after a tap. Check changes live with `app.emulateMobile(true)` plus a 390px viewport (see "Live Debugging")
+9. **Grid tracks on mobile**: use `minmax(0, 1fr)`, never a bare `1fr` (exception: the `workout-log` phone row's number tracks are `minmax(min-content, 1fr)`, since only short nowrap figures set them and Obsidian's table cells would cut a figure with an ellipsis). A `1fr` track grows to its widest child's min-content (e.g. a widget table), pushing the whole dashboard off-screen
+10. **Mobile layouts**: on phones each `workout-log` set is one grid row under one row of column labels (`TableRenderer` gives `th` and `td` the same column class and sets `--workout-log-fields`; exercise goes above the numbers, protocol and notes under them), and `workout-chart` deliberately shows a table instead of the chart. Use `@media (hover: hover)` for hover effects that move or resize elements, since touch keeps `:hover` after a tap. Check changes live with `app.emulateMobile(true)` plus a 390px viewport (see "Live Debugging")
 
 ## CSS Organization
 

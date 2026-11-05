@@ -117,7 +117,7 @@ Estimates total workout duration based on exercises, sets, and configurable set 
 
 ### 6. `workout-sets` - Set Sheet (Logging on the Phone)
 
-**Beta**: off until the user turns on "Workout sets" in Settings → Beta features; until then the block shows how to turn it on and its insert command is hidden.
+**Beta**: on for new installs; after an update, off until the user turns on "Workout sets" in Settings → Beta features; until then the block shows how to turn it on and its insert command is hidden.
 
 The V2 of `workout-log`: the same exercise table (columns, values as entered, protocol badges, target with progress and achievement badge, menu), made for logging instead of reading history. One exercise, today's sets as rows with one input per field of the exercise type (kg + reps for strength, duration/distance for cardio):
 
@@ -127,7 +127,8 @@ sets: 4 # rows to fill in; unset: as many as last time
 targetReps: 8
 targetWeight: 80
 workout: Push Day # unset: the note's name
-rest: 90 # seconds of rest after each set; 0 = none; unset = the section's workout-timer
+rest: 90 # seconds of rest after each set; 0 = none; unset (and no timer.*) = the section's workout-timer
+timer.type: countdown # the rest timer's other options: timer.preset, timer.type, timer.rest, timer.rounds, timer.sound, timer.showControls
 ```
 
 **Set sheet** rules:
@@ -135,7 +136,7 @@ rest: 90 # seconds of rest after each set; 0 = none; unset = the section's worko
 - **Rows**: today's sets of the exercise in this workout come first, ticked; then rows to fill in up to `sets`. "Add set" adds one more row for this view only.
 - **Hints** (input placeholders): the same set number on the last earlier day the exercise was done (any workout), the last set of that day past its end, else the targets. Ticking a row with an empty field logs its hint, so "same as last time" is one tap.
 - **Protocol and notes**: the arrow opens a row's protocol chips (the settings list) and notes. A row starts with the protocol of the same set last time when that was not standard (a warm-up stays a warm-up).
-- **Rest**: a rest timer at the top starts by itself when a set is ticked (not after the last row to fill in). It runs on the section's `workout-timer` when the block has no `rest`, so both show one countdown.
+- **Rest**: a rest timer at the top starts by itself when a set is ticked (not after the last row to fill in). The block can carry every option of that timer (`rest` is its length; `timer.*` the rest, see blockRest), so a day's note needs no `workout-timer`: ⋮ → "Edit rest timer" opens the timer form and writes them into the block. Without them it runs on the section's `workout-timer`, so both show one countdown.
 - **Ticking** logs the set at once (in the settings unit, origin = the note). Tapping a ticked set opens the edit form (change or delete). What is typed in rows not ticked yet is kept while the note is open, never stored.
 - A `workout-session` in the note reads `workout-sets` blocks as plan steps too; a section's table and sets of the same exercise are one step.
 
@@ -143,7 +144,7 @@ rest: 90 # seconds of rest after each set; 0 = none; unset = the section's worko
 
 ### Beta features
 
-New features ship as **beta features**: each has a toggle in Settings → Beta features, off by default, so updating the plugin never changes how someone trains until they choose to try something. A beta feature that is off shows nothing new (a block of it explains where to turn it on). When a feature is ready for everyone, its toggle goes away and it is simply on.
+New features ship as **beta features**: each has a toggle in Settings → Beta features, off after an update, so updating the plugin never changes how someone trains until they choose to try something. A new install (nothing saved by the plugin yet) starts with every beta feature on, since there is no habit to keep. A beta feature that is off shows nothing new (a block of it explains where to turn it on). When a feature is ready for everyone, its toggle goes away and it is simply on.
 
 ---
 
@@ -461,4 +462,4 @@ preset: rest
 
 Each exercise has its table (showing recent sets) and its timer (for rest). The user scrolls down as they move through the workout. This is the primary interface.
 
-A `workout-session` block at the top turns that note into a **guided session**: the note's `workout-log` and `workout-sets` blocks are the **plan** (one step per exercise, `sets` and targets from the block, rest from the section's timer), shown one exercise at a time. Progress is today's sets of this workout in the log, never stored elsewhere.
+A `workout-session` block at the top turns that note into a **guided session**: the note's `workout-log` and `workout-sets` blocks are the **plan** (one step per exercise, `sets` and targets from the block, rest from its `workout-sets` block's own timer, else the section's; the card's ⋮ edits it where it is written), shown one exercise at a time. Progress is today's sets of this workout in the log, never stored elsewhere.

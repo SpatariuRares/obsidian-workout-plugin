@@ -1,11 +1,9 @@
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
-import {
-  fieldFor,
-  formatFieldNumber,
-} from "@app/services/exercise/ExerciseFields";
+import { fieldFor } from "@app/services/exercise/ExerciseFields";
 
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import { Button, Input } from "@app/components/atoms";
+import { Input } from "@app/components/atoms";
+import { NumberField } from "@app/components/molecules/NumberField";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { fillDynamicInputsFromCustomFields } from "@app/utils/form/FormUtils";
@@ -16,10 +14,6 @@ import {
   WEIGHT_UNITS,
   type WeightUnit,
 } from "@app/utils/WeightUnitUtils";
-import {
-  BUTTONVARIANT,
-  BUTTONSIZE,
-} from "@app/components/atoms/Button";
 
 export class DynamicFieldsRenderer {
   constructor(private plugin: WorkoutPluginContext) {}
@@ -62,93 +56,38 @@ export class DynamicFieldsRenderer {
       cls: "workout-field-with-adjust",
     });
 
-    const label = fieldContainer.createDiv({
+    // A number's unit is at the end of its field
+    const label = fieldContainer.createEl("label", {
       cls: "workout-field-label",
+      text:
+        param.unit && param.type !== "number"
+          ? `${param.label} (${param.unit})`
+          : param.label,
     });
-    const labelText = param.unit
-      ? `${param.label} (${param.unit})`
-      : param.label;
-    label.textContent = labelText;
 
-    // For numeric fields, add adjust buttons
+    // For numeric fields, a NumberField with − / + by the quick increment
     if (param.type === "number") {
       const field = fieldFor(param);
-      const inputContainer = fieldContainer.createDiv({
-        cls: "workout-input-with-adjust",
-      });
+      const isWeight = param.key === "weight";
+      const increment = isWeight
+        ? await this.getWeightIncrement(context)
+        : field.increment;
 
-      // Quick adjust buttons
-      const increment =
-        param.key === "weight"
-          ? await this.getWeightIncrement(context)
-          : field.increment;
-
-      const minusBtn = Button.create(inputContainer, {
-        text: t("modal.buttons.adjustMinus") + increment,
-        className: "workout-adjust-btn workout-adjust-minus",
-        ariaLabel: t("modal.buttons.decreaseBy", {
-          label: param.label,
-          increment,
-        }),
-        variant: BUTTONVARIANT.SECONDARY,
-        size: BUTTONSIZE.SMALL,
-      });
-      minusBtn.type = "button";
-
-      const input = Input.create(inputContainer, {
-        type: INPUT_TYPE.NUMBER,
-        className: "workout-charts-input",
+      const { input } = NumberField.create(fieldContainer, {
+        label: param.label,
+        integer: field.integer,
+        // The weight's unit is the picker next to its label
+        unit: isWeight ? undefined : param.unit,
+        step: increment,
         min: param.min ?? 0,
         max: param.max,
-        step: field.step,
-        placeholder: param.default?.toString() || "",
       });
-
-      const plusBtn = Button.create(inputContainer, {
-        text: t("modal.buttons.adjustPlus") + increment,
-        className: "workout-adjust-btn workout-adjust-plus",
-        ariaLabel: t("modal.buttons.increaseBy", {
-          label: param.label,
-          increment,
-        }),
-        variant: BUTTONVARIANT.SECONDARY,
-        size: BUTTONSIZE.SMALL,
-      });
-      plusBtn.type = "button";
-
-      Button.onClick(minusBtn, () => {
-        const current = parseFloat(input.value) || 0;
-        const newValue = Math.max(
-          param.min || 0,
-          current - increment,
-        );
-        input.value = formatFieldNumber(field, newValue);
-      });
-
-      Button.onClick(plusBtn, () => {
-        const current = parseFloat(input.value) || 0;
-        const newValue = current + increment;
-        input.value = formatFieldNumber(
-          field,
-          param.max !== undefined
-            ? Math.min(param.max, newValue)
-            : newValue,
-        );
-      });
-
-      input.setAttribute("aria-label", param.label);
+      label.htmlFor = input.id;
       if (param.required) {
         input.required = true;
       }
-      // Phones open the digit pad instead of the full keyboard. Not for
-      // decimals: the pad's separator follows the locale (","), which a
-      // number input may reject
-      if (field.integer) {
-        input.inputMode = "numeric";
-      }
 
-      if (param.key === "weight") {
-        label.textContent = param.label;
+      if (isWeight) {
         this.renderWeightUnitSelect(label, input);
       }
 
@@ -178,6 +117,8 @@ export class DynamicFieldsRenderer {
           : undefined,
     });
     input.setAttribute("aria-label", param.label);
+    input.id = `workout-log-field-${param.key}`;
+    label.htmlFor = input.id;
     if (param.required) {
       input.required = true;
     }

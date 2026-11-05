@@ -10,7 +10,8 @@ import {
 } from "@app/services/exercise/ExerciseFields";
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
 import { stepOf, type SessionStep } from "@app/features/session/business/sessionPlan";
-import { TIMER_TYPE, type EmbeddedTimerParams } from "@app/features/timer/types";
+import type { EmbeddedTimerParams } from "@app/features/timer/types";
+import { blockRest, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
 import {
   readSetFields,
   validate,
@@ -28,6 +29,21 @@ export interface SetDraft {
 
 export function emptyDraft(): SetDraft {
   return { values: {}, notes: "" };
+}
+
+/**
+ * A logged set back as a row's draft, when it is unticked: ticking the row
+ * again logs the same set (weight in the settings unit).
+ */
+export function draftFromSet(set: WorkoutLogData, parameters: ParameterDefinition[]): SetDraft {
+  const values: Record<string, string> = {};
+  for (const param of parameters) {
+    const value = loggedValue(set, fieldKey(param.key));
+    if (param.type === "boolean") values[param.key] = value === true || value === "true" ? "true" : "";
+    else if (typeof value === "number") values[param.key] = formatFieldNumber(fieldFor(param), value);
+    else if (typeof value === "string" && value !== "") values[param.key] = value;
+  }
+  return { values, protocol: protocolId(set.protocol), notes: set.notes ?? "" };
 }
 
 /** One row of the sheet */
@@ -165,17 +181,18 @@ export function rowToFormData(
 }
 
 /**
- * The timer a block rests on after each set: its own `rest` seconds; without
- * one the rest of its exercise's section (the section's `workout-timer`, or
- * {} for the default preset); none with `rest: 0`.
+ * The timer a block rests on after each set: its own (`rest` and `timer.*`,
+ * see blockRest); without one the rest of its exercise's section (the
+ * section's `workout-timer`, or {} for the default preset); none with
+ * `rest: 0`.
  */
 export function restOf(
-  params: { exercise?: string; rest?: number },
+  params: EmbeddedSetsParams,
   plan: SessionStep[],
 ): EmbeddedTimerParams | undefined {
   if (params.rest === 0) return undefined;
-  if (params.rest !== undefined) {
-    return { type: TIMER_TYPE.COUNTDOWN, duration: params.rest };
-  }
-  return (params.exercise && stepOf(plan, params.exercise)?.rest) || {};
+  return (
+    blockRest(params) ??
+    ((params.exercise && stepOf(plan, params.exercise)?.rest) || {})
+  );
 }

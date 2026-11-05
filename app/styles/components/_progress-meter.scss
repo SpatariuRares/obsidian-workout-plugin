@@ -1,0 +1,29 @@
+/* ============================================================================
+   PROGRESS METER (ProgressMeter): how far something is from done
+   ============================================================================
+   A thin bar: neutral ink on the way, accent fill once done. No traffic
+   lights: being short of a target is not an error.
+   ============================================================================ */
+
+.workout-progress-meter {
+  height: var(--workout-progress-meter-height);
+  border-radius: var(--workout-radius-full);
+  background: var(--background-modifier-border);
+  overflow: hidden;
+}
+
+.workout-progress-meter-fill {
+  width: var(--workout-progress-value, 0%);
+  height: 100%;
+  border-radius: inherit;
+  background: var(--text-muted);
+  transition: width 0.3s ease;
+
+  .workout-progress-meter.is-done & {
+    background: var(--workout-accent-fill);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

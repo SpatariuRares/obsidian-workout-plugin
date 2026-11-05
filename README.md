@@ -10,7 +10,7 @@ Built for your phone: log each set, run or pose as you train, then watch your pr
 
 Charts show your trend, the muscle heat map shows what you trained, and each set keeps its own kg/lb unit. You can query your sets from Dataview.
 
-![Workout Planner on a phone: a guided session with its rest timer running, the log form with +/− buttons and kg/lb picker, and the dashboard summary with the training calendar](assets/hero.png)
+![Workout Planner on a phone: a workout-sets card with two sets ticked and the rest timer running, the log form with +/− buttons and kg/lb picker, and the dashboard summary with the training calendar](assets/hero.png)
 
 ## Features
 
@@ -18,6 +18,7 @@ Charts show your trend, the muscle heat map shows what you trained, and each set
 - Log each set in kg or lb, whatever the plates in front of you say
 - Tag sets with a protocol: drop set, myo-reps, rest-pause, superset, 21s, or your own
 - Tables of your sets, grouped by day with daily totals, editable with one tap
+- Today's sets as rows to fill in on your phone: tick a set to log it, and the rest timer starts (beta)
 - Charts for weight, volume, reps, duration, distance, pace and heart rate, and a trend that tells you plainly if you're improving
 - A dashboard with weekly streak (with a weekly goal), a training calendar, personal records, total volume, recent workouts and protocol stats
 - A muscle heat map, front and back, by volume, sets or reps
@@ -109,6 +110,34 @@ With `targetWeight` and `targetReps`, a progressive-overload target appears abov
 | `sets`                       | —       | Sets planned, counted by a `workout-session` block |
 
 Exercise names match loosely by default ("squat" finds "Squat (high bar)"); add `exactMatch: true` for only that exact name.
+
+</details>
+
+## Sets on your phone (beta)
+
+A `workout-sets` block is made for logging at the gym: today's sets of one exercise as rows to fill in. Each row shows what you did in the same set last time, so you type only what changed (an empty field logs that value) and tick the row. The set goes into the log, the row turns into a logged set, and the rest timer at the top starts on its own. A logged set's chevron changes its protocol and notes; ticking it again takes it back, with **Undo** for a few seconds.
+
+<img src="assets/sets.png" alt="A workout-sets card on a phone: four rows filled in with last time's values, then two sets ticked with the rest timer running, then a row opened to pick the rest-pause protocol and add a note">
+
+```workout-sets
+exercise: Squat
+sets: 4
+rest: 120
+```
+
+The block is a beta feature: turn on **Workout sets** under **Settings → Workout Planner → Beta features** (new installs have it on). Then **Insert workout sets** from the command palette writes one for you, and the ⋮ menu edits it or its rest timer.
+
+<details>
+<summary>All parameters</summary>
+
+| Parameter                    | Default       | What it does                                                                                     |
+| ---------------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
+| `exercise`                   | —             | The exercise (exact name)                                                                        |
+| `workout`                    | the note name | The workout the sets are logged under                                                            |
+| `sets`                       | as last time  | Rows to fill in (at least one); **Add set** adds more                                            |
+| `targetWeight`, `targetReps` | —             | Hints when the exercise was never done, and a progressive-overload target                        |
+| `rest`                       | —             | Seconds of rest after each set; `0` for no timer. Unset: the `workout-timer` of the same section |
+| `timer.*`                    | —             | The rest timer's other options: `timer.type`, `timer.preset`, `timer.rest`, `timer.rounds`, `timer.showControls`, `timer.sound` |
 
 </details>
 
@@ -283,7 +312,7 @@ rounds: 8
 
 A `workout-session` block at the top of a workout note (command **Insert guided session**) walks you through it one exercise at a time: which set you're on, the target, what you did last time, a **Log set** button and the rest timer, which starts when you log a set.
 
-![A guided session on a phone: set 1 of 4 with what you did last time, the log form opened by Log set, then set 2 of 4 with the rest timer running](assets/session.png)
+![A guided session on a phone: set 3 of 4 of the squat with the rest running on both the session and the sets card, the log form opened by Log set, then the next exercise with its rest timer running](assets/session.png)
 
 ````markdown
 ```workout-session
@@ -291,19 +320,16 @@ A `workout-session` block at the top of a workout note (command **Insert guided 
 
 ## Squat
 
-```workout-log
+```workout-sets
 exercise: Squat
 sets: 4
 targetReps: 8
 targetWeight: 100
-```
-
-```workout-timer
-preset: rest
+rest: 180
 ```
 ````
 
-The plan is the note itself: each `workout-log` block with an `exercise` is a step, in the order they appear, with its `sets`, `targetReps` and `targetWeight`. The rest comes from the `workout-timer` in the same `##` section (the default preset without one). The session counts the sets you logged today in this workout, so it picks up where you left off when you reopen the note. An exercise without `sets` stays current until you log a set of a later one; **Previous** and **Next** move freely.
+The plan is the note itself: each `workout-log` or `workout-sets` block with an `exercise` is a step, in the order they appear, with its `sets`, `targetReps` and `targetWeight`. The rest comes from the `workout-sets` block's own `rest`, else from the `workout-timer` in the same `##` section (the default preset without one). The session and the sets card share one countdown. The session counts the sets you logged today in this workout, so it picks up where you left off when you reopen the note. An exercise without `sets` stays current until you log a set of a later one; **Previous** and **Next** move freely.
 
 ## Workout duration
 
@@ -340,7 +366,7 @@ tags:
 
 Yoga works the same way: each pose is a `timed` exercise, so the form asks only how long you held it. The example notes include a morning yoga flow with a guided session.
 
-![A yoga flow on a phone: the guided session on Downward Dog, the log form asking only for the hold's duration, and the table of holds with the day's total](assets/yoga.png)
+![A yoga flow on a phone: the guided session on Downward Dog, the log form asking only for the hold's duration, and the sets card with the first hold logged](assets/yoga.png)
 
 `type:` works the same as `exercise_type:`. Add your own fields under `parameters`, for example rounds for jump rope:
 

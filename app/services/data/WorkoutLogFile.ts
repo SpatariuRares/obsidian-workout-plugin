@@ -138,8 +138,10 @@ export class WorkoutLogFile {
    * Append a set. Creates the file when missing. The timestamp is
    * generated, volume is reps × weight, and the unit defaults to the
    * settings unit.
+   * @param options.timestamp - Put back a set just deleted (undo): it keeps
+   * its place in the set order, and is not announced as a new record
    */
-  async add(entry: LogEntryInput): Promise<void> {
+  async add(entry: LogEntryInput, options: { timestamp?: number } = {}): Promise<void> {
     let file = this.storage.file();
     if (!file) {
       await this.create();
@@ -156,7 +158,11 @@ export class WorkoutLogFile {
     let added!: CSVWorkoutLogEntry;
     let recordIncrease: number | undefined;
     await this.rewrite(file, (entries) => {
-      added = { ...this.toRow(entry), timestamp: Date.now() };
+      added = { ...this.toRow(entry), timestamp: options.timestamp ?? Date.now() };
+      if (options.timestamp !== undefined) {
+        entries.push(added);
+        return;
+      }
       recordIncrease = new TrainingHistory(
         entries.map((row) => this.toLog(row, file)),
       ).recordIncrease(this.toLog(added, file));

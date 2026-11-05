@@ -1,9 +1,14 @@
 import { TFile, type Vault } from "obsidian";
-import { readWorkoutNote } from "@app/services/notes/WorkoutNote";
+import { readWorkoutNote, type NoteBlock } from "@app/services/notes/WorkoutNote";
 import { tableBlock } from "@app/features/tables/tableBlock";
-import { setsBlock } from "@app/features/tables/setsBlock";
+import {
+  blockRest,
+  setsBlock,
+  type EmbeddedSetsParams,
+} from "@app/features/tables/setsBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
 import type { EmbeddedTimerParams } from "@app/features/timer/types";
+import type { CodeBlockMatch } from "@app/services/editor/CodeBlockEditorService";
 import {
   WorkoutProtocol,
   type WorkoutLogData,
@@ -18,9 +23,23 @@ export interface SessionStep {
   sets?: number;
   targetReps?: number;
   targetWeight?: number;
-  /** The section's `workout-timer` block ({} without one: the default preset) */
+  /**
+   * The rest after each set: the step's `workout-sets` block's own timer,
+   * else the section's `workout-timer` block ({} without one: the default
+   * preset)
+   */
   rest: EmbeddedTimerParams;
+  /** Where the rest is set, to edit it; none without either block */
+  restBlock?: RestBlock;
 }
+
+/**
+ * The block a step's rest is written in: its `workout-sets` block (which
+ * takes the timer's options), else the section's `workout-timer`
+ */
+export type RestBlock =
+  | { type: "workout-sets"; params: EmbeddedSetsParams; match: CodeBlockMatch }
+  | { type: "workout-timer"; params: EmbeddedTimerParams; match: CodeBlockMatch };
 
 /**
  * The plan of a workout note: one step per `workout-log` or `workout-sets`
@@ -34,26 +53,38 @@ export function readSessionPlan(content: string): SessionStep[] {
   for (const section of readWorkoutNote(content).sections) {
     const timer = section.blocks.find((b) => b.type === timerBlock.type);
     const timerRead = timer ? timerBlock.parse(timer.body) : undefined;
-    const rest =
-      timerRead && timerRead.errors.length === 0 ? timerRead.params : {};
+    const timerOk = timer && timerRead && timerRead.errors.length === 0;
+    const rest = timerOk ? timerRead.params : {};
+    const sectionRestBlock: RestBlock | undefined = timerOk
+      ? { type: "workout-timer", params: timerRead.params, match: matchOf(timer) }
+      : undefined;
 
     const sectionSteps: SessionStep[] = [];
     for (const block of section.blocks) {
+      const isSets = block.type === setsBlock.type;
       const read =
         block.type === tableBlock.type
           ? tableBlock.parse(block.body)
-          : block.type === setsBlock.type
+          : isSets
             ? setsBlock.parse(block.body)
             : undefined;
       if (!read) continue;
       const { params, errors } = read;
       if (errors.length > 0 || !params.exercise) continue;
+      const setsRest: RestBlock | undefined = isSets
+        ? { type: "workout-sets", params, match: matchOf(block) }
+        : undefined;
+      const ownRest = isSets ? blockRest(params) : undefined;
 
       const same = stepOf(sectionSteps, params.exercise);
       if (same) {
         same.sets ??= params.sets;
         same.targetReps ??= params.targetReps;
         same.targetWeight ??= params.targetWeight;
+        if (setsRest && same.restBlock?.type !== setsBlock.type) {
+          same.restBlock = setsRest;
+          same.rest = ownRest ?? same.rest;
+        }
         continue;
       }
       sectionSteps.push({
@@ -61,12 +92,18 @@ export function readSessionPlan(content: string): SessionStep[] {
         sets: params.sets,
         targetReps: params.targetReps,
         targetWeight: params.targetWeight,
-        rest,
+        rest: ownRest ?? rest,
+        restBlock: setsRest ?? sectionRestBlock,
       });
     }
     steps.push(...sectionSteps);
   }
   return steps;
+}
+
+/** How to find a block written without an id */
+function matchOf(block: NoteBlock): CodeBlockMatch {
+  return { body: block.body, lines: { start: block.start, end: block.end } };
 }
 
 /** The plan of the note at `path`; null when there is no such note */

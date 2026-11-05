@@ -7,18 +7,8 @@
   min-height: 280px;
 }
 
-.workout-widget-subtitle {
-  font-size: var(--workout-font-sm);
-  color: var(--text-muted);
-  margin-top: calc(-1 * var(--workout-space-md));
-  margin-bottom: var(--workout-space-md);
-}
-
 .workout-protocol-no-data {
-  text-align: center;
   color: var(--text-muted);
-  padding: var(--workout-space-xl);
-  font-style: italic;
 }
 
 .workout-protocol-chart-container {
@@ -54,8 +44,10 @@
   border-radius: var(--workout-radius-sm);
   transition: var(--workout-transition);
 
-  &:hover {
-    background: var(--background-secondary);
+  @media (hover: hover) {
+    &:hover {
+      background: var(--background-modifier-hover);
+    }
   }
 }
 
@@ -74,8 +66,8 @@
 
 .workout-protocol-legend-count {
   font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
   color: var(--text-muted);
-  font-weight: var(--workout-font-weight-medium);
 }
 
 /* ============================================================================
@@ -88,8 +80,7 @@
   align-items: center;
   gap: var(--workout-space-sm);
   padding: var(--workout-space-sm) var(--workout-space-md);
-  margin-bottom: var(--workout-space-md);
-  background: var(--background-secondary);
+  background: var(--background-primary);
   border-radius: var(--workout-radius-md);
   border-left: 3px solid var(--interactive-accent);
 
@@ -137,7 +128,7 @@
   user-select: none;
 
   &-active {
-    background: var(--background-secondary);
+    background: var(--background-modifier-hover);
     border-left: 3px solid var(--interactive-accent);
     padding-left: calc(var(--workout-space-sm) - 3px);
   }
@@ -160,84 +151,72 @@
 }
 
 .workout-protocol-effectiveness-no-data {
-  text-align: center;
   color: var(--text-muted);
-  padding: var(--workout-space-xl);
-  font-style: italic;
 }
 
+/* What the figures can't say, as meta under the table */
 .workout-protocol-effectiveness-disclaimer {
-  margin-top: var(--workout-space-md);
-  padding: var(--workout-space-sm) var(--workout-space-md);
-  background: var(--background-secondary);
-  border-radius: var(--workout-radius-sm);
-  border-left: 3px solid var(--text-warning);
   font-size: var(--workout-font-sm);
   color: var(--text-muted);
-  font-style: italic;
 }
 
 .workout-protocol-effectiveness-table-container {
   overflow-x: auto;
 }
 
-.workout-protocol-effectiveness-table {
+/* Qualified to beat Obsidian's note table rules (a border around every cell) */
+.workout-dashboard table.workout-protocol-effectiveness-table {
   width: 100%;
+  margin: 0;
+  border: none;
   border-collapse: collapse;
-  font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
 
   th,
   td {
-    padding: var(--workout-space-sm) var(--workout-space-md);
-    text-align: left;
+    padding: var(--workout-space-sm) var(--workout-space-xs);
+    text-align: start;
+    border: none;
     border-bottom: var(--workout-border-thin) solid
       var(--workout-border-subtle);
+    background: none;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
   }
 
   th {
-    font-weight: var(--workout-font-weight-semibold);
+    font-weight: normal;
     color: var(--text-muted);
     font-size: var(--workout-font-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
   }
 
-  tr:hover {
-    background: var(--background-secondary);
+  // Figure columns: the label over the right-aligned figures
+  th:not(:first-child) {
+    text-align: end;
   }
 }
 
-.workout-protocol-effectiveness-protocol-cell {
-  /* Contains the badge */
+.workout-dashboard .workout-protocol-effectiveness-table {
+  .workout-protocol-effectiveness-entries-cell,
+  .workout-protocol-effectiveness-volume-cell,
+  .workout-protocol-effectiveness-progression-cell {
+    text-align: end;
+    font-weight: var(--workout-font-weight-semibold);
+  }
 }
 
-.workout-protocol-effectiveness-badge {
-  display: inline-block;
-  padding: var(--workout-space-xs) var(--workout-space-sm);
-  border-radius: var(--workout-radius-sm);
-  font-size: var(--workout-font-xs);
-  font-weight: var(--workout-font-weight-semibold);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.workout-protocol-effectiveness-entries-cell,
-.workout-protocol-effectiveness-volume-cell,
-.workout-protocol-effectiveness-progression-cell {
-  text-align: center;
-}
-
+/* Toned like StatCard: an improvement in success text, stable muted, a
+   decline stays ink (never red: a worse figure is not an error) */
 .workout-protocol-effectiveness-positive {
   color: var(--workout-text-success);
-  font-weight: var(--workout-font-weight-medium);
 }
 
 .workout-protocol-effectiveness-negative {
-  color: var(--workout-text-error);
-  font-weight: var(--workout-font-weight-medium);
+  color: var(--text-normal);
 }
 
 .workout-protocol-effectiveness-neutral {
   color: var(--text-muted);
-  font-weight: var(--workout-font-weight-medium);
 }

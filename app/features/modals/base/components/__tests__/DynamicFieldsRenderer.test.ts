@@ -88,7 +88,7 @@ describe("DynamicFieldsRenderer quick adjust buttons", () => {
     const container = createObsidianContainer();
     const inputs = await new DynamicFieldsRenderer(plugin).renderDynamicFields(container, params);
     const plus = (key: string) =>
-      inputs.get(key)!.closest(".workout-field-with-adjust")!.querySelector(".workout-adjust-plus") as HTMLButtonElement;
+      inputs.get(key)!.closest(".workout-field-with-adjust")!.querySelectorAll<HTMLButtonElement>(".workout-number-field-step")[1];
     return { inputs, plus };
   };
 
@@ -109,15 +109,14 @@ describe("DynamicFieldsRenderer quick adjust buttons", () => {
     plus("reps").click();
 
     expect(inputs.get("reps")!.value).toBe("9");
-    expect(inputs.get("reps")!.step).toBe("1");
   });
 
-  it("should ask phones for the digit pad on whole-number fields only", async () => {
+  it("should ask phones for the digit pad on whole numbers and the decimal pad on the rest", async () => {
     const reps: ParameterDefinition = { key: "reps", label: "Reps", type: "number", required: true, min: 0 };
     const { inputs } = await render([reps, weightParam]);
 
     expect(inputs.get("reps")!.inputMode).toBe("numeric");
-    expect(inputs.get("weight")!.inputMode).toBe("");
+    expect(inputs.get("weight")!.inputMode).toBe("decimal");
   });
 
   it("should adjust a duration in seconds by five", async () => {

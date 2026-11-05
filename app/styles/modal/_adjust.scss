@@ -1,53 +1,30 @@
 @use "../variables";
 
-/* Quick adjust components */
+/* A labelled number in a form (AdjustField, the log form's fields): the
+   label above a NumberField, whose − / + and figure type come from the kit
+   (components/_fields). */
 .workout-field-with-adjust {
   display: flex;
   flex-direction: column;
-  gap: var(--workout-space-md);
+  gap: var(--workout-space-2xs);
   width: 100%;
+  min-width: 0;
 
+  // Weight: the kg/lb picker sits on the label's line
   .workout-field-label {
     display: flex;
-    margin-bottom: var(--workout-space-sm);
-    font-weight: var(--workout-font-weight-semibold);
-    color: var(--text-normal);
-    font-size: var(--workout-font-base);
     align-items: center;
     gap: var(--workout-space-sm);
+    // As tall as the kg/lb picker, so fields side by side line up
+    min-height: var(--workout-space-3xl);
   }
+
   .workout-weight-unit-select {
-    font-weight: normal;
-  }
-  .workout-input-with-adjust {
-    --workout-adjust-btn-width: clamp(4ch, 20%, 100px);
-    display: grid;
-    grid-template-columns:
-      var(--workout-adjust-btn-width) minmax(0, 1fr)
-      var(--workout-adjust-btn-width);
-    align-items: center;
-    gap: var(--workout-space-sm);
-    width: 100%;
-
-    .workout-adjust-btn {
-      width: 100%;
-      min-width: 4ch;
-      max-width: 100px;
-    }
-
-    .workout-charts-input {
-      width: 100%;
-      min-width: 5ch;
-      text-align: center;
-    }
+    font-size: var(--workout-font-xs);
   }
 }
 
-@media (max-width: variables.$breakpoint-tablet) {
-  .workout-modal {
-    .workout-adjust-btn {
-      min-width: 4ch;
-      min-height: var(--workout-touch-target-min);
-    }
-  }
+// Obsidian's phone picker is a 44px target, so the label line is too
+body.is-mobile .workout-field-with-adjust .workout-field-label {
+  min-height: var(--workout-touch-target-min);
 }

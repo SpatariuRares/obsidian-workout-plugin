@@ -2,67 +2,55 @@
    STATS & INFO BOXES
    ============================================================================ */
 
+/* StatCard.row: the summary row on a card, under a subtle border */
+.stat-card-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(7.5rem, 100%), 1fr));
+  gap: var(--workout-space-md) var(--workout-space-lg);
+  padding-top: var(--workout-space-md);
+  border-top: var(--workout-border-thin) solid var(--workout-border-subtle);
+}
+
+/* StatCard: label, figure, detail (workout-chart, workout-duration) */
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-2xs);
+  min-width: 0;
+}
+
+.stat-card-label {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-xs);
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+}
+
+.stat-card-value {
+  font-size: var(--workout-font-lg);
+  font-weight: var(--workout-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-normal);
+  overflow-wrap: anywhere;
+}
+
+.stat-card-detail {
+  font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+// A change: success text when it is an improvement, muted when stable
+.stat-card.is-up .stat-card-value {
+  color: var(--workout-text-success);
+}
+
+.stat-card.is-neutral .stat-card-value {
+  color: var(--text-muted);
+}
+
 .workout-charts {
-  &-stats {
-    margin-top: var(--workout-space-2xl);
-    padding: var(--workout-space-xl);
-    background: var(--background-secondary);
-    border-radius: var(--workout-radius-xl);
-    font-size: var(--workout-font-base);
-    border: var(--workout-border-thin) solid
-      var(--workout-border-color);
-    color: var(--text-normal);
-    box-shadow: var(--workout-shadow-md);
-
-    .workout-charts-stats-title {
-      font-size: var(--workout-font-lg);
-    }
-
-    .workout-charts-stats-list {
-      margin-top: var(--workout-space-md);
-      margin-bottom: var(--workout-space-xs);
-      list-style-type: square;
-      padding-left: var(--workout-space-2xl);
-      .workout-stat-item {
-        margin: 0;
-        display: flex;
-        flex-direction: row;
-        gap: var(--workout-space-sm);
-        flex-wrap: wrap;
-      }
-    }
-  }
-
-  &-trend-header {
-    padding: var(--workout-space-xl);
-    margin-bottom: var(--workout-space-xl);
-    background: var(--background-secondary);
-    border-radius: var(--workout-radius-xl);
-    text-align: center;
-    border: var(--workout-border-thin) solid
-      var(--workout-border-color);
-    box-shadow: var(--workout-shadow-md);
-    color: var(--text-normal);
-
-    .workout-charts-trend-header-h3 {
-      margin: 0;
-      font-size: var(--workout-font-xl);
-      font-weight: var(--workout-font-weight-bold);
-      color: var(--text-normal);
-    }
-
-    .workout-charts-trend-header-p {
-      margin: var(--workout-space-sm) 0 0 0;
-      font-size: var(--workout-font-base);
-      color: var(--text-muted);
-    }
-  }
-
-  &-trend-variation {
-    font-weight: var(--workout-font-weight-bold);
-    color: var(--workout-text-accent);
-  }
-
   &-info {
     padding: var(--workout-space-lg) var(--workout-space-xl);
     margin: var(--workout-space-lg) 0;

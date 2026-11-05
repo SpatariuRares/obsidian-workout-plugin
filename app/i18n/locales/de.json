@@ -8,7 +8,6 @@
       "variationFromTo": " von {startValue} bis {endValue}",
       "weightIncrementUnit": "Erhöhung des Gewichts {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "Gesamtveränderung: ",
     "significantIncrease": "Anstieg von null",
     "trendLine": "Trendlinie",
     "typeNotAvailable": "Der Diagrammtyp \"{chartDataType}\" ist für Übungen vom Typ {exerciseType} nicht verfügbar. Verfügbare Typen: {typeList}",
@@ -25,7 +24,16 @@
     "defaultTitle": "Trend {type}",
     "noTypesAvailable": "Keine verfügbaren Diagrammtypen",
     "noEligibleE1rm": "Keine geeigneten Sätze für das geschätzte 1RM. Protokolliere ein positives Gewicht mit 1–12 Wiederholungen. Aufwärmsätze und Drop-Sets sind ausgeschlossen.",
-    "editChart": "Diagramm bearbeiten"
+    "editChart": "Diagramm bearbeiten",
+    "stats": {
+      "average": "Durchschnitt",
+      "last3": "letzte 3",
+      "max": "Max",
+      "min": "Min",
+      "recentTrend": "Aktueller Trend",
+      "sessions": "Einheiten",
+      "vsPrevious": "gegenüber vorher"
+    }
   },
   "commands": {
     "addExerciseBlock": "Übungsblock hinzufügen",
@@ -53,11 +61,12 @@
     "minPerKm": "Min/km",
     "notAvailable": "Nicht verfügbar",
     "sec": "Sek.",
+    "undo": "Rückgängig",
     "unknown": "Unbekannt",
     "workout": "Training"
   },
   "convert": {
-    "currentType": "Aktueller Typ:",
+    "currentType": "Aktueller Typ",
     "errors": {
       "convertError": "Fehler beim Konvertieren der Übungsdaten: {error}"
     },
@@ -78,7 +87,7 @@
     "success": "Erfolgreich konvertiert: {count} Protokoll-Einträge",
     "title": "Übungsdaten konvertieren",
     "typeSelect": {
-      "convertTo": "Umwandeln in:",
+      "convertTo": "Umwandeln in",
       "updateFileType": "Dateityp für Übung aktualisieren"
     }
   },
@@ -108,7 +117,7 @@
       "sharedName": "Gleicher Übungsname wie {pages}: Protokolle landen nur bei einer von ihnen."
     },
     "muscleTags": {
-      "description": "Beschreibung",
+      "description": "Tags, die du im Frontmatter einer Übungsseite verwenden kannst. Klicke auf einen, um ihn zu kopieren.",
       "title": "Muskel-Tags",
       "tooltip": "Zum Kopieren klicken: {tag}",
       "totalCount": "Gesamt: {count} Tags verfügbar"
@@ -129,7 +138,7 @@
       "columnProgression": "Fortschritt",
       "columnProtocol": "Protokoll",
       "columnVolumeChange": "Volumenänderung",
-      "disclaimer": "Hinweis",
+      "disclaimer": "Korrelation, kein Beweis: Gewicht, Pausen und Schlaf beeinflussen diese Werte ebenfalls.",
       "noData": "Noch nicht genug Daten: Jedes Protokoll braucht mindestens 5 erfasste Sätze.",
       "title": "Wirksamkeit der Protokolle",
       "subtitle": "Wie jedes Protokoll in allen erfassten Sätzen gewirkt hat"
@@ -174,6 +183,11 @@
         "sets": "Durchschnittliche Anzahl Sätze: {value}",
         "reps": "Durchschnittliche Wiederholungen: {value}"
       },
+      "controls": {
+        "period": "Zeitraum",
+        "side": "Seite",
+        "metric": "Messgröße"
+      },
       "imbalance": {
         "backDominant": "Ungleichgewicht vorne–hinten: Deine Rückseite arbeitet deutlich mehr als deine Vorderseite.",
         "frontDominant": "Ungleichgewicht vorne–hinten: Deine Vorderseite arbeitet deutlich mehr als deine Rückseite."
@@ -186,9 +200,8 @@
       "moveUp": "{widget} nach oben verschieben",
       "moveDown": "{widget} nach unten verschieben",
       "allHistory": "Leer: gesamter Verlauf",
-      "recentWorkoutsLimit": "Trainings in der Liste „Letzte Trainings“:",
-      "volumeTrendDays": "Tage im Volumentrend:",
-      "gridColumns": "Spalten:",
+      "recentWorkoutsLimit": "Trainings in der Liste „Letzte Trainings“",
+      "volumeTrendDays": "Tage im Volumentrend",
       "layout": "Layout",
       "layoutGrid": "Raster",
       "layoutList": "Liste",
@@ -200,6 +213,7 @@
       "size": "{width} × {height}",
       "gridHint": "Ziehe ein Widget, um es zu verschieben, und seine Ecke, um es in der Größe zu ändern. Die Ablage unten zeigt die kleinste Größe, die jedes Widget haben kann. Entferne ein Widget mit seinem ×, oder indem du es auf die Ablage ziehst. Mit der Tastatur: Pfeile bewegen, Umschalt und Pfeile ändern die Größe, Entf entfernt es.",
       "gridColumnsMeasured": "{columns} Spalten passen in die Breite der Notiz.",
+      "gridColumns": "Spalten",
       "remove": "{widget} vom Dashboard entfernen"
     },
     "grid": {
@@ -230,37 +244,51 @@
       "edit": "Widget bearbeiten",
       "removeConfirm": "„{widget}“ vom Dashboard entfernen?",
       "removeConfirmButton": "Entfernen",
-      "calendarWeeks": "Angezeigte Wochen:",
+      "calendarWeeks": "Angezeigte Wochen, von dieser Woche aus rückwärts gezählt",
       "quickStatsPeriods": "Angezeigte Zeiträume",
-      "quickStatsMetrics": "Angezeigte Zeilen",
+      "quickStatsMetrics": "Angezeigte Werte",
       "heatMapTimeFrame": "Anfangszeitraum",
-      "heatMapMetric": "Anfangskennzahl",
-      "heatMapView": "Anfangsansicht",
-      "volumeTopLimit": "Übungen in der Topliste:",
-      "protocolDays": "Gezählte Tage:",
-      "protocolMinEntries": "Sätze, die ein Protokoll für den Vergleich braucht:",
-      "durationRecentCount": "Verglichene Trainings:",
-      "durationRestSeconds": "Pause zwischen den Sätzen in der Schätzung (Sekunden):",
+      "heatMapMetric": "Anfangs-Messgröße",
+      "heatMapView": "Anfangsseite",
+      "volumeTopLimit": "Aufgelistete Übungen",
+      "protocolDays": "Gezählte Tage",
+      "protocolMinEntries": "Mindestanzahl Sätze pro Protokoll",
+      "durationRecentCount": "Verglichene Trainings",
+      "durationRestSeconds": "Pause zwischen Sätzen in der Schätzung",
       "summaryMetrics": "Angezeigte Karten",
       "calendarShowStats": "Serien und den Fortschritt dieser Woche anzeigen",
       "heatMapShowImbalance": "Das Panel zu Ungleichgewichten anzeigen",
-      "volumeShowBreakdown": "Die Liste der Top-Übungen anzeigen",
-      "protocolChartType": "Diagramm",
+      "volumeShowBreakdown": "Top-Übungen nach Volumen anzeigen",
+      "protocolChartType": "Diagrammtyp",
       "chartPie": "Kreis",
       "chartDoughnut": "Ring",
-      "protocolSortBy": "Sortiert nach (bester zuerst)",
-      "durationShowTrend": "Den Trend der Abweichung anzeigen",
+      "protocolSortBy": "Sortieren nach",
+      "durationShowTrend": "Trend der Schätzgenauigkeit anzeigen",
       "quickActionsShown": "Angezeigte Schaltflächen",
-      "fileErrorsMaxItems": "Aufgelistete Seiten (leer: alle):",
-      "fileErrorsMaxTags": "Höchstanzahl Muskel-Tags pro Seite:",
+      "fileErrorsMaxItems": "Aufgelistete Seiten",
+      "fileErrorsMaxTags": "Höchstens so viele Muskel-Tags pro Seite",
       "fileErrorsCheckSharedNames": "Seiten markieren, die sich einen Übungsnamen teilen",
-      "muscleTagsGroupByMuscle": "Tags nach Muskel gruppieren"
+      "muscleTagsGroupByMuscle": "Tags nach Muskel gruppieren",
+      "volumeTrendDays": "Tage im Volumendiagramm",
+      "recentWorkoutsLimit": "Angezeigte Trainings",
+      "all": "Alle",
+      "numberRange": "Gib eine ganze Zahl von {min} bis {max} ein.",
+      "pickOne": "Wähle mindestens eine Option oder entferne das Widget.",
+      "units": {
+        "days": "Tage",
+        "weeks": "Wochen",
+        "seconds": "s"
+      },
+      "editTitle": "{widget} bearbeiten",
+      "sortMostSets": "Meiste Sätze",
+      "lastWidget": "Dies ist das einzige Widget des Dashboards und kann daher nicht entfernt werden: Lösche stattdessen den Block."
     }
   },
   "duration": {
     "estimatedDuration": "Geschätzte Dauer",
     "lastSession": "Letzte Einheit",
     "restTime": "Ruhezeit",
+    "setCount": "{count} Sätze",
     "setTime": "Satzdauer",
     "unableToAnalyze": "Trainingsdatei konnte nicht analysiert werden"
   },
@@ -377,9 +405,9 @@
       "trainingCalendarIntro": "Der Trainingskalender zeigt ein Jahr mit Trainingstagen und wie viele Wochen in Folge du dein Wochenziel erreicht hast (Einstellungen → Wochenziel).",
       "importTitle": "8. Import aus Strong oder Hevy",
       "importIntro": "Führe **{command}** in der Befehlspalette aus und wähle die CSV-Datei, die die App exportiert hat. Sätze, die schon in deinem Protokoll stehen, werden übersprungen, und das Protokoll wird vorher gesichert.",
-      "setsTitle": "Protokollierung von Sets auf Ihrem Telefon",
-      "setsIntro": "Ein Block mit `workout-sets` zeigt die heutigen Sätze als Zeilen an. Die grauen Zahlen entsprechen dem letzten Satz: markieren Sie eine Zeile, um sie so zu protokollieren, oder geben Sie an, was Sie getan haben. Tippen Sie auf den Pfeil, um das Protokoll und die Notizen für den Satz anzuzeigen, und um den protokollierten Satz zu bearbeiten.",
-      "codeBlockWorkoutSets": "Erfassen Sie heute die Trainingssätze, zeile für Zeile."
+      "setsTitle": "Sätze auf dem Handy protokollieren",
+      "setsIntro": "Ein Block mit `workout-sets` zeigt die heutigen Sätze als Zeilen. Die grauen Zahlen sind derselbe Satz beim letzten Mal: Markiere eine Zeile, um ihn so zu protokollieren, oder gib ein, was du gemacht hast. Tippe auf den Pfeil für Protokoll und Notizen des Satzes und auf einen protokollierten Satz, um ihn zu bearbeiten.",
+      "codeBlockWorkoutSets": "Erfasse heute deine Sätze, Zeile für Zeile"
     },
     "fileNames": {
       "dashboard": "Dashboard",
@@ -425,6 +453,24 @@
       "workoutsDesc": "Beispielvorlagen für Trainings",
       "workoutsFolder": "**{folder}/**",
       "sessionIntro": "Diese Notiz hat einen kleinen Plan: eine Übung mit ihren Sätzen, Ziel und Pausentimer. Die Einheit zeigt den nächsten Satz; erfasse ihn, dann startet der Pausentimer.",
+      "tables": {
+        "latestTitle": "Letzte Sätze einer Übung",
+        "latestIntro": "`exercise` wählt die Übung, `limit` bestimmt, wie viele Sätze die Tabelle zeigt.",
+        "targetTitle": "Ziel und geplante Sätze",
+        "targetIntro": "Mit `targetWeight` und `targetReps` zeigt die Tabelle, wie nah du am Ziel bist; sobald du es erreichst, bietet ein Badge an, das nächste Gewicht in den Block zu schreiben. `sets` ist die Anzahl deiner geplanten Sätze: ohne `limit` zeigt die Tabelle die letzten zwei Trainings, und eine geführte Einheit zählt sie. `workout` mit `exactMatch: true` behält nur die Sätze dieser Übung in diesem Training.",
+        "workoutTitle": "Ein ganzes Training",
+        "workoutIntro": "Mit `workout` und ohne `exercise` listet die Tabelle jeden Satz dieses Trainings auf. `dateRange: 14` behält die letzten 14 Tage.",
+        "columnsTitle": "Spalten und Sortierung",
+        "columnsIntro": "`columns` legt die Spalten und ihre Reihenfolge fest; `sortBy` und `sortOrder` die Reihenfolge der Zeilen, hier die schwersten Sätze zuerst. `showAddButton: false` blendet die +-Schaltfläche aus, und `showProtocol: false` würde die Protokoll-Badges ausblenden."
+      },
+      "sets": {
+        "lastTimeTitle": "Gleiche Sätze wie beim letzten Mal",
+        "lastTimeIntro": "Mit `workout` kommen die grauen Zahlen vom letzten Mal, als du diese Übung in diesem Training gemacht hast. Ohne sie nutzt der Block den Namen der Notiz.",
+        "restTitle": "Pausentimer und Ziele",
+        "restIntro": "`rest` ist die Pause nach jedem Satz in Sekunden (`0` = kein Timer); ohne sie nutzt der Block den `workout-timer` des Abschnitts. `targetWeight` und `targetReps` zeigen das Ziel und sind der Hinweis beim ersten Mal, wenn du eine Übung machst.",
+        "restTimerTitle": "Optionen des Pausentimers",
+        "restTimerIntro": "Der Block enthält alle Optionen seines Pausentimers, daher braucht die Notiz eines Trainingstags kein `workout-timer`: `timer.type` (`interval` nutzt `rest` als Arbeitszeit jeder Runde, zusammen mit `timer.rest` und `timer.rounds`), `timer.preset`, `timer.sound` und `timer.showControls`. ⋮ → Pausentimer bearbeiten schreibt sie für dich."
+      },
       "pagesIntro": "Erkunde jeweils eine Funktion pro Seite. Folge den Links in der angegebenen Reihenfolge oder wähle unten eine Funktion aus. Verwende die Schaltflächen „Zurück“ und „Weiter“, um zwischen den Notizen zu wechseln. Scrolle normal, um jedes Beispiel zu erkunden.",
       "liveIntro": "Entdecke alle Funktionen unten mit sechs Wochen Beispieltrainings. Das sind Demodaten: Probiere die Steuerelemente aus und sieh, wie deine Notizen funktionieren.",
       "tryLog": "Verwende die Schaltfläche „+“, um einen Satz hinzuzufügen. Tabelle, Diagramme und Dashboard lesen dieselbe CSV-Datei.",
@@ -600,7 +646,7 @@
       "deleteSet": "Satz löschen",
       "updateDashboard": "Dashboard aktualisieren",
       "updateChart": "Diagramm aktualisieren",
-      "insertSets": "Mengen einfügen"
+      "insertSets": "Sätze einfügen"
     },
     "canvasLayout": "Anordnung",
     "canvasOptions": "Einstellungen",
@@ -623,43 +669,38 @@
     },
     "confirmAction": "Aktion bestätigen",
     "csvExercise": "CSV-Übung",
-    "customParameters": "Benutzerdefinierte Parameter:",
-    "customTitle": "Benutzerdefinierter Titel:",
-    "dataLimit": "Datenlimit (0 = alle):",
-    "dataType": "Datentyp:",
-    "dateRange": "Zeitraum (Tage):",
-    "daysRange": "Zeitraum in Tagen (0 = alle):",
+    "customParameters": "Eigene Parameter",
+    "customTitle": "Eigener Titel",
+    "dataLimit": "Datenlimit (0 = alle)",
+    "dataType": "Datentyp",
     "delete": "Löschen",
-    "duration": "Dauer (Sekunden):",
     "editTag": "Tag bearbeiten",
-    "exerciseType": "Übungstyp:",
     "exportTags": "Tags exportieren",
     "fileName": "Dateiname",
-    "folderPath": "Ordnerpfad (optional):",
+    "folderPath": "Ordnerpfad (optional)",
     "importMerge": "Zusammenführen",
     "importReplace": "Alle ersetzen",
     "importTags": "Tags importieren",
     "labels": {
       "actions": "Aktionen",
       "currentFileInfo": "Aktuelle Datei: {fileName}",
-      "exercise": "Übung:",
-      "reps": "Wiederholungen:",
-      "targetReps": "Ziel-Wiederholungen:",
-      "plannedSets": "Geplante Sätze:",
-      "targetWeight": "Ziel: ({unit}):",
-      "volume": "Volumen ({unit}):",
-      "weight": "Gewicht ({unit}):"
+      "exercise": "Übung",
+      "reps": "Wiederholungen",
+      "targetReps": "Ziel-Wiederholungen",
+      "plannedSets": "Geplante Sätze",
+      "targetWeight": "Zielgewicht ({unit})",
+      "volume": "Volumen ({unit})",
+      "weight": "Gewicht ({unit})"
     },
     "layoutGrouped": "Gruppiert nach Muskel",
     "layoutHorizontal": "Horizontaler Ablauf",
-    "layoutType": "Anordnungsart:",
+    "layoutType": "Layout-Typ",
     "layoutVertical": "Vertikaler Ablauf",
     "muscleGroup": "Muskelgruppe",
     "newTag": "Neuer Tag",
     "noTagsFound": "Keine Tags passen zu deiner Suche",
     "noTagsSelected": "Keine Tags ausgewählt. Klicke unten auf Tags, um sie hinzuzufügen.",
-    "note": "Hinweis:",
-    "notes": "Notizen (optional):",
+    "note": "Notiz",
     "notices": {
       "auditConfirmRenameFile": "Diese Datei umbenennen?\n\n{oldName} → {newName}",
       "auditMismatchCount": "{count} mögliche Unstimmigkeiten gefunden:",
@@ -722,7 +763,7 @@
       "exerciseNameRequired": "Bitte gib einen Namen für die Übung ein",
       "exerciseSectionCreated": "Übungsabschnitt erfolgreich erstellt!",
       "tableInserted": "Tabelle erfolgreich eingefügt!",
-      "tableUpdateFailed": "Tabelle konnte nicht aktualisiert werden: Sie wurde in ihrer Notiz nicht gefunden. Öffne die Notiz neu und versuche es noch einmal.",
+      "tableUpdateFailed": "Tabelle konnte nicht aktualisiert werden: sie wurde in ihrer Notiz nicht gefunden. Öffne die Notiz neu und versuche es noch einmal.",
       "tableUpdated": "Tabelle erfolgreich aktualisiert!",
       "timerInserted": "Timer erfolgreich eingefügt!",
       "timerUpdateFailed": "Timer konnte nicht aktualisiert werden: Er wurde in seiner Notiz nicht gefunden. Öffne die Notiz neu und versuche es noch einmal.",
@@ -731,13 +772,13 @@
       "validationCombinedMode": "Für den Typ \"Übung + Training\" musst du beide Felder ausfüllen!",
       "dashboardUpdated": "Dashboard erfolgreich aktualisiert!",
       "dashboardUpdateFailed": "Dashboard konnte nicht aktualisiert werden: Es wurde in seiner Notiz nicht gefunden, oder ein anderes Dashboard ohne ID hat dieselben Einstellungen. Öffne die Notiz neu und versuche es noch einmal.",
-      "setsInserted": "Datensätze hinzugefügt"
+      "setsInserted": "Sätze hinzugefügt"
     },
-    "parameterKey": "Schlüssel:",
-    "parameterLabel": "Beschriftung:",
+    "parameterKey": "Schlüssel",
+    "parameterLabel": "Bezeichnung",
     "parameterRequired": "Pflichtfeld",
-    "parameterType": "Typ:",
-    "parameterUnit": "Einheit (optional):",
+    "parameterType": "Typ",
+    "parameterUnit": "Einheit (optional)",
     "placeholders": {
       "customTitle": "Leer lassen für automatischen Titel",
       "enterTagName": "Tag-Namen eingeben (z. B. Brust, petto)",
@@ -757,10 +798,8 @@
       "sets": "4",
       "workout": "z. B. Training A, Training B oder nutze das Kontrollkästchen unten"
     },
-    "protocol": "Protokoll:",
-    "recentExercises": "Zuletzt:",
-    "restTime": "Pausenzeit (Sekunden):",
-    "rounds": "Runden:",
+    "protocol": "Protokoll",
+    "recentExercises": "Zuletzt verwendet",
     "save": "Speichern",
     "sections": {
       "advancedOptions": "Erweiterte Optionen",
@@ -797,15 +836,15 @@
       "yesNo": "Ja/Nein",
       "warmup": "Aufwärmsatz"
     },
-    "sets": "Sätze:",
-    "similarTags": "Ähnliche Tags:",
+    "sets": "Sätze",
+    "similarTags": "Ähnliche Tags",
     "similarity": "Ähnlichkeit",
     "status": "Status",
     "tag": "Tag",
-    "tagsSelector": "Muskel-Tags:",
-    "timerDuration": "Timer-Dauer (Sekunden):",
-    "timerPreset": "Timer-Voreinstellung:",
-    "timerType": "Timer-Typ:",
+    "tagsSelector": "Muskel-Tags",
+    "timerDuration": "Timer-Dauer (Sekunden)",
+    "timerPreset": "Timer-Voreinstellung",
+    "timerType": "Timer-Typ",
     "titles": {
       "addExerciseBlock": "Übungsblock hinzufügen",
       "auditExerciseNames": "Übungsnamen prüfen",
@@ -825,25 +864,32 @@
       "muscleTagManager": "Muskel-Tags verwalten",
       "editDashboard": "Dashboard bearbeiten",
       "editChart": "Diagrammeinstellungen bearbeiten",
-      "insertSets": "Übungen hinzufügen"
+      "insertSets": "Trainingssätze einfügen"
     },
-    "workout": "Training (optional):",
-    "workoutFile": "Trainingsdatei:",
-    "workoutNameOptional": "Trainingstitel (optional):",
     "importMergeAriaLabel": "Zusammenführen: nur neue Tags hinzufügen, bestehende behalten",
     "importReplaceAriaLabel": "Ersetzen: alle vorhandenen Tags überschreiben",
     "editItem": "{item} bearbeiten",
     "deleteItem": "{item} löschen",
+    "duration": "Dauer (Sekunden)",
     "errors": {
       "missingElements": "Fehlende Elemente",
       "validationCombinedMode": "Für den Typ Übung + Training beide Felder ausfüllen"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Sätze: {sets}\n- Wiederholungen: {reps}\n- Pause: {restTime}s\n\n",
+    "exerciseType": "Übungstyp",
     "noteTemplate": "**Hinweis: {note}**\n",
+    "notes": "Notizen (optional)",
     "date": "Datum",
+    "dateRange": "Zeitraum (Tage)",
+    "daysRange": "Zeitraum in Tagen (0 = alle)",
     "weightUnitToggle": "Einheit für diesen Eintrag",
     "work": "Arbeit",
-    "rest": "Pause"
+    "workout": "Training (optional)",
+    "workoutFile": "Trainingsdatei",
+    "workoutNameOptional": "Trainingsname (optional)",
+    "rest": "Pause",
+    "restTime": "Pausenzeit (Sekunden)",
+    "rounds": "Runden"
   },
   "settings": {
     "buttons": {
@@ -994,23 +1040,13 @@
       "emom": "Jede Minute zur vollen Minute: Beginne die Wiederholungen am Anfang jeder Minute und pausiere für den Rest der Minute, 10 Runden."
     },
     "beta": {
-      "intro": "Neue Funktionen, die Sie ausprobieren können, bevor sie für alle verfügbar sind. Sie sind vorerst deaktiviert und können sich noch ändern.",
+      "intro": "Neue Funktionen, die du ausprobieren kannst, bevor sie für alle verfügbar sind. Sie sind vorerst deaktiviert und können sich noch ändern.",
       "setSheet": {
-        "name": "Trainingsprogramme",
-        "desc": "The `workout-sets` block: today's sets as rows to fill in on your phone, with the last time's values as hints and a rest timer that starts on each tick."
+        "name": "Trainingssätze",
+        "desc": "Der Block `workout-sets`: die heutigen Sätze als Zeilen zum Ausfüllen auf dem Handy, mit den Werten vom letzten Mal als Hinweis und einem Pausentimer, der bei jedem Abhaken startet."
       },
-      "disabledBlock": "{feature} ist eine Beta-Funktion. Aktivieren Sie diese Funktion unter \"Einstellungen\" → Beta-Funktionen, um diese Funktion zu nutzen."
+      "disabledBlock": "{feature} ist eine Beta-Funktion. Aktiviere sie unter „Einstellungen → Beta-Funktionen“, um diese Funktion zu nutzen."
     }
-  },
-  "stats": {
-    "max": "Max: ",
-    "min": "Min: ",
-    "recentLast3": " (letzte 3)",
-    "recentTrend": "Aktueller Trend",
-    "recentVsPrev": " (vs. vorh.)",
-    "sessions": "Einheiten",
-    "average": "Durchschnitt: ",
-    "title": "{dataTypeLabel} Statistiken ({contextLabel}):"
   },
   "table": {
     "actions": "Aktionen",
@@ -1050,6 +1086,8 @@
     "notAvailable": "k. A.",
     "refreshSuccess": "Tabelle aktualisiert",
     "target": {
+      "noSetsYet": "Noch keine Sätze mit {weight}",
+      "progress": "Bestwert {best}/{target} Wiederholungen",
       "progressTooltip": "Bestwert: {best} Wiederholungen / Ziel: {target} Wiederholungen",
       "repsSuffix": "Wiederholungen",
       "separator": " × "
@@ -1232,25 +1270,29 @@
     "next": "Weiter",
     "rest": "Pause",
     "done": "Training abgeschlossen. Heute erfasste Sätze: {sets}.",
-    "empty": "Fügen Sie einen `workout-log` oder `workout-sets` Block mit einer Übung zu dieser Notiz hinzu, um sie als Trainingssession zu verfolgen."
+    "empty": "Füge einen `workout-log`- oder `workout-sets`-Block mit einer Übung zu dieser Notiz hinzu, um sie als geführte Einheit zu verfolgen."
   },
   "sets": {
-    "editSet": "Set bearbeiten {set}",
-    "addSet": "Set hinzufügen",
+    "addSet": "Satz hinzufügen",
+    "removeSet": "Satz entfernen",
     "protocol": "Protokoll",
-    "notes": "Anmerkungen",
-    "editBlock": "Sets bearbeiten",
-    "blockUpdated": "Sets wurden aktualisiert",
-    "blockUpdateFailed": "Fehlgeschlagenes Aktualisieren der Datensätze: Der Eintrag wurde nicht gefunden. Bitte den Eintrag erneut öffnen und erneut versuchen.",
-    "workoutLabel": "Training:",
+    "notes": "Notizen",
+    "editBlock": "Sätze bearbeiten",
+    "editRestTimer": "Pausentimer bearbeiten",
+    "blockUpdated": "Sätze aktualisiert",
+    "blockUpdateFailed": "Sätze konnten nicht aktualisiert werden: Der Block wurde in seiner Notiz nicht gefunden. Öffne die Notiz neu und versuche es noch einmal.",
+    "workoutLabel": "Training",
     "workoutPlaceholder": "Leer: {note}",
-    "restLabel": "Pause nach jeder Übungseinheit (0 = Timer der Übungsabteilung)",
-    "noExercise": "Fügen Sie `exercise:` zu diesem Block hinzu, um die Sätze zu protokollieren.",
+    "restLabel": "Pause nach jedem Satz (0 = Timer des Abschnitts)",
+    "noExercise": "Füge `exercise:` zu diesem Block hinzu, um seine Sätze zu protokollieren.",
     "progress": "{done}/{sets} Sätze",
-    "lastTime": "Letzte Zeit ({date}): {sets}",
-    "setColumn": "Einstellen",
-    "fieldOfSet": "{field}, Feld {set} festlegen",
+    "lastTime": "Letztes Mal ({date}): {sets}",
+    "setColumn": "Satz",
+    "fieldOfSet": "{field}, Satz {set}",
     "details": "Protokoll und Notizen für den Satz {set}",
-    "logSet": "Protokoll-Satz {set}"
+    "logSet": "Satz {set} protokollieren",
+    "unlogSet": "Satz {set} aus dem Protokoll entfernen",
+    "setRemoved": "Satz {set} entfernt",
+    "valueOfSet": "{field}, Satz {set}: {value}"
   }
 }

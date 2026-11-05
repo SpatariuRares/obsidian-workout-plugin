@@ -1,3 +1,5 @@
+import { Icon, ProgressMeter } from "@app/components/atoms";
+import { ICONS } from "@app/constants/ui.constants";
 import { TargetCalculator } from "@app/features/tables/business/TargetCalculator";
 import { t } from "@app/i18n";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
@@ -5,8 +7,10 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 /**
  * TargetHeader - UI component for displaying target weight/reps with progress
  *
- * Renders a header showing the target and a progress bar if both
- * targetWeight and targetReps are specified.
+ * The goal of the block as its own panel, inset into the card: the target in
+ * big figures and, when both weight and reps are set, the best reps at that
+ * weight with a progress meter (done once reached). The achievement row,
+ * when there is one, goes inside the same panel (TargetSection).
  */
 export interface TargetHeaderProps {
   targetWeight?: number;
@@ -17,10 +21,10 @@ export interface TargetHeaderProps {
 
 export class TargetHeader {
   /**
-   * Renders the target header with optional progress bar
+   * Renders the target panel with optional progress meter
    * @param container - Parent element
    * @param props - Header properties
-   * @returns The created header element, or null if no targets set
+   * @returns The created panel, or null if no targets set
    */
   static render(
     container: HTMLElement,
@@ -37,6 +41,15 @@ export class TargetHeader {
     const targetDiv = container.createDiv({
       cls: "workout-target-header",
     });
+    const top = targetDiv.createDiv({ cls: "workout-target-row" });
+    Icon.create(top, {
+      name: ICONS.TABLE.TARGET,
+      className: "workout-target-icon",
+    });
+    top.createSpan({
+      cls: "workout-target-label",
+      text: t("table.labels.target"),
+    });
 
     // Build the target text
     const parts: string[] = [];
@@ -50,20 +63,20 @@ export class TargetHeader {
         `${separator}${targetReps} ${t("table.target.repsSuffix")}`,
       );
     }
-
-    const targetText = `${t("table.labels.target")} ${parts.join("")}`;
-    targetDiv.createSpan({
+    targetDiv.createDiv({
       cls: "workout-target-text",
-      text: targetText,
+      text: parts.join(""),
     });
 
-    // Render progress bar if both targets are set
+    // Progress only when both targets are set
     if (targetWeight !== undefined && targetReps !== undefined) {
-      this.renderProgressBar(
+      this.renderProgress(
         targetDiv,
+        top,
         targetWeight,
         targetReps,
         filteredData,
+        weightUnit,
       );
     }
 
@@ -71,56 +84,39 @@ export class TargetHeader {
   }
 
   /**
-   * Renders a progress bar showing current progress toward target
+   * The best reps at the target weight, in words and as a meter
    */
-  private static renderProgressBar(
-    container: HTMLElement,
+  private static renderProgress(
+    targetDiv: HTMLElement,
+    top: HTMLElement,
     targetWeight: number,
     targetReps: number,
     filteredData: WorkoutLogData[],
+    weightUnit: string,
   ): void {
     const bestReps = TargetCalculator.calculateBestRepsAtWeight(
       targetWeight,
       filteredData,
     );
-
-    if (bestReps === 0) {
-      // No data at target weight yet
-      return;
-    }
-
-    const progressPercent = TargetCalculator.calculateProgressPercent(
-      bestReps,
-      targetReps,
-    );
-    const progressLevel =
-      TargetCalculator.getProgressLevel(progressPercent);
-
-    // Create progress bar container
-    const progressContainer = container.createDiv({
-      cls: "workout-progress-container",
-    });
-
-    // Create progress bar background
-    const progressBar = progressContainer.createDiv({
-      cls: "workout-progress-bar",
-    });
-
-    // Create progress fill with color coding
-    const progressFill = progressBar.createDiv({
-      cls: "workout-progress-fill",
-    });
-    progressFill.style.width = `${progressPercent}%`;
-
-    // Apply color coding based on progress level
-    progressFill.addClass(`workout-progress-${progressLevel}`);
-
-    // Add tooltip
-    const tooltip = t("table.target.progressTooltip", {
+    const counts = {
       best: String(bestReps),
       target: String(targetReps),
+    };
+
+    top.createSpan({
+      cls: "workout-target-progress",
+      text:
+        bestReps === 0
+          ? t("table.target.noSetsYet", {
+              weight: `${targetWeight}${weightUnit}`,
+            })
+          : t("table.target.progress", counts),
     });
-    progressBar.setAttribute("title", tooltip);
-    progressBar.setAttribute("aria-label", tooltip);
+    const meter = ProgressMeter.create(targetDiv, {
+      value: bestReps,
+      max: targetReps,
+      label: t("table.target.progressTooltip", counts),
+    });
+    if (meter.classList.contains("is-done")) targetDiv.addClass("is-done");
   }
 }

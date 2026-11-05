@@ -1,4 +1,5 @@
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
+import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { ProtocolFilterCallback } from "@app/features/dashboard/types";
 import { DateUtils } from "@app/utils/DateUtils";
@@ -58,7 +59,7 @@ export class ProtocolDistribution {
     plugin: SettingsPort | undefined,
     options: ProtocolDistributionOptions,
   ): void {
-    const days = options.days ?? 30;
+    const days = options.days ?? dashboardBlock.defaults.protocolDays;
     const onFilterChange = (protocol: string | null) =>
       options.onFilterChange?.(protocol);
 

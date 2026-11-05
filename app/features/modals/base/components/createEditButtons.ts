@@ -31,6 +31,11 @@ export interface EditButtonsOptions<P> {
   /** The block's id; without one the block is found by `target.matchWithoutId` */
   id?: string;
   collectParams: () => P;
+  /**
+   * Checks the form before Update writes it: false keeps the modal open (the
+   * fields show what to fix)
+   */
+  validate?: () => boolean;
   /** Parameters the form no longer offers: Update removes them from the block */
   retiredParams?: (keyof P)[];
   buttonText: string;
@@ -65,6 +70,7 @@ export function createEditButtons<P extends { id?: string }>(
   Button.onClick(cancelBtn, () => modal.close());
 
   Button.onClick(updateBtn, () => {
+    if (options.validate && !options.validate()) return;
     const formNow = options.collectParams();
     const changes = changedParams(formAtOpen, formNow);
     for (const key of options.target.invalidKeys ?? []) {

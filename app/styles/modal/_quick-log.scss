@@ -2,16 +2,14 @@
 
 /* Shared mobile logging styles for create/edit modals */
 .workout-log-recent-label {
-  font-weight: var(--workout-font-weight-semibold);
   color: var(--text-muted);
-  font-size: var(--workout-font-sm);
+  font-size: var(--workout-font-xs);
 }
 
 .workout-log-recent-section {
   display: flex;
   flex-direction: column;
-  gap: var(--workout-space-sm);
-  margin-bottom: var(--workout-space-lg);
+  gap: var(--workout-space-2xs);
 }
 
 .workout-log-recent-chips {
@@ -20,43 +18,6 @@
   gap: var(--workout-space-sm);
   overflow-x: auto;
   padding: var(--workout-space-xs) 0;
-}
-
-.workout-log-recent-chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--workout-space-sm) var(--workout-space-lg);
-  border-radius: var(--workout-radius-full);
-  border: var(--workout-border-thin) solid
-    var(--workout-border-color);
-  background: var(--background-secondary);
-  color: var(--text-normal);
-  font-size: var(--workout-font-sm);
-  font-weight: var(--workout-font-weight-medium);
-  cursor: pointer;
-  white-space: nowrap;
-  flex-shrink: 0;
-  min-height: var(--workout-chip-min-height);
-  transition: var(--workout-transition);
-
-  &:hover {
-    background: var(--interactive-hover);
-    border-color: var(--interactive-accent);
-  }
-
-  &:active {
-    transform: scale(0.95);
-    background: var(--workout-accent-fill);
-    color: var(--text-on-accent);
-  }
-}
-
-@media (max-width: variables.$breakpoint-tablet) {
-  .workout-log-recent-chip {
-    min-height: 40px;
-    padding: var(--workout-space-sm) var(--workout-space-lg);
-  }
 }
 
 /* Create/edit log: why the set can't be saved, under the field to fix */
@@ -70,17 +31,3 @@
   border-color: var(--workout-text-error);
 }
 
-/* Edit log: deleting is rare, so it is a small icon at the start of the
-   save bar, with save and cancel pushed to the end */
-.workout-buttons-container button.workout-log-delete {
-  margin-inline-end: auto;
-  align-self: center;
-  color: var(--workout-text-error);
-}
-
-// A finger-sized target on phones; the icon itself stays small
-body.is-mobile .workout-buttons-container button.workout-log-delete {
-  min-width: 44px;
-  min-height: 44px;
-  justify-content: center;
-}

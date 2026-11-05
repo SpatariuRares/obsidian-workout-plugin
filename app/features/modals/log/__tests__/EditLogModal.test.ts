@@ -137,10 +137,11 @@ describe("EditLogModal", () => {
 
     await save();
 
-    const error = contentEl.querySelector(".workout-field-error")!;
+    const error = contentEl.querySelector("#workout-log-field-error")!;
     expect(error.textContent).toBe(t("modal.notices.validMissingField", { field: "Reps" }));
     expect(error.getAttribute("role")).toBe("alert");
-    expect(reps.closest(".workout-input-with-adjust")!.nextElementSibling).toBe(error);
+    expect(reps.closest(".workout-number-field-box")!.nextElementSibling).toBe(error);
+    expect(reps.closest(".workout-number-field")!.classList.contains("is-invalid")).toBe(true);
     expect(reps.getAttribute("aria-invalid")).toBe("true");
     expect(document.activeElement).toBe(reps);
     expect(updateWorkoutLogEntry).not.toHaveBeenCalled();
@@ -148,7 +149,8 @@ describe("EditLogModal", () => {
     reps.value = "5";
     reps.dispatchEvent(new Event("input"));
 
-    expect(contentEl.querySelector(".workout-field-error")).toBeNull();
+    expect(contentEl.querySelector("#workout-log-field-error")).toBeNull();
+    expect(reps.closest(".workout-number-field")!.classList.contains("is-invalid")).toBe(false);
     expect(reps.hasAttribute("aria-invalid")).toBe(false);
   });
 
@@ -176,10 +178,10 @@ describe("EditLogModal", () => {
     const dropSet = { ...original, protocol: WorkoutProtocol.DROP_SET };
     const { contentEl, save, updateWorkoutLogEntry } = await openModal(dropSet);
 
-    const option = [...contentEl.querySelectorAll("option")].find(
-      (o) => o.value === WorkoutProtocol.DROP_SET,
+    const picked = [...contentEl.querySelectorAll(".workout-protocol-picker .workout-chip")].filter(
+      (chip) => chip.getAttribute("aria-pressed") === "true",
     );
-    expect(option?.textContent).toBe(t("modal.selectOptions.dropSet"));
+    expect(picked.map((chip) => chip.textContent)).toEqual([t("modal.selectOptions.dropSet")]);
 
     await save();
 

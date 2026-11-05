@@ -25,15 +25,18 @@ import { ChartTypeRegistry, TooltipItem } from "chart.js";
 export class ChartConfigBuilder {
   /**
    * Creates the plugins configuration for the chart
+   * @param title - Empty: no title (a card around the chart names it)
+   * @param seriesCount - The legend shows only to tell two or more series apart
    */
   static createPluginsConfig(
     title: string,
     colors: ChartColorPalette,
     dataType: string,
+    seriesCount = 2,
   ) {
     return {
       title: {
-        display: true,
+        display: title !== "",
         text: title,
         color: colors.text,
         font: {
@@ -47,7 +50,7 @@ export class ChartConfigBuilder {
         },
       },
       legend: {
-        display: true,
+        display: seriesCount > 1,
         position: "top" as const,
         labels: {
           color: colors.text,
@@ -168,7 +171,12 @@ export class ChartConfigBuilder {
         responsive: true,
         maintainAspectRatio: true,
         aspectRatio: ChartStyling.ASPECT_RATIO,
-        plugins: this.createPluginsConfig(title, colors, dataType),
+        plugins: this.createPluginsConfig(
+          title,
+          colors,
+          dataType,
+          datasets.length,
+        ),
         scales: this.createScalesConfig(colors, dataType),
         interaction: this.createInteractionConfig(),
       },
@@ -185,6 +193,8 @@ export class ChartConfigBuilder {
     colorScheme: ColorScheme,
   ): void {
     dataset.borderColor = colorScheme.main;
+    // Without it Chart.js fills with its own palette, not the theme
+    dataset.backgroundColor = colorScheme.light;
     dataset.pointBackgroundColor = colorScheme.point;
     dataset.pointBorderColor = colorScheme.pointBorder;
     dataset.pointRadius = ChartStyling.POINT_RADIUS;

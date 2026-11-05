@@ -71,10 +71,8 @@ Parametri, tipi, default (limit: 50, sortBy: date, sortOrder: desc, showAddButto
 
 | Metodo                        | Input                                  | Output                                      | Cosa fa                                                                      |
 | ----------------------------- | -------------------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------- |
-| `calculateBestRepsAtWeight()` | `targetWeight`, `WorkoutLogData[]`     | `number`                                    | Trova il massimo reps raggiunto a un peso specifico                          |
-| `checkTargetAchieved()`       | `targetWeight`, `targetReps`, `data[]` | `boolean`                                   | Controlla se l'ultimo allenamento al peso target ha raggiunto le reps target |
-| `calculateProgressPercent()`  | `bestReps`, `targetReps`               | `number` (0-100)                            | Percentuale di progresso (capped a 100)                                      |
-| `getProgressLevel()`          | `progressPercent`                      | `"complete" \| "high" \| "medium" \| "low"` | Classifica il livello: >=100 complete, >=90 high, >=50 medium, <50 low       |
+| `calculateBestRepsAtWeight()` | `targetWeight`, `WorkoutLogData[]`     | `number`                                    | Massimo reps in un set di lavoro (no warm-up/drop set) al peso target o più pesante |
+| `checkTargetAchieved()`       | `targetWeight`, `targetReps`, `data[]` | `boolean`                                   | Raggiunto quando quel massimo arriva alle reps target (stessa regola della barra) |
 
 **Perche' esiste**: Isola i calcoli dalla UI. Funzioni pure senza side effect, facilmente testabili (14 test).
 

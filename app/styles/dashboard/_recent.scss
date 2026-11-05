@@ -1,81 +1,63 @@
-@use "../variables";
-
 /* ============================================================================
-   DASHBOARD RECENT WORKOUTS
+   DASHBOARD RECENT WORKOUTS and the top exercises by volume
+   ============================================================================
+   Rows of a list under subtle borders: the name (ink) with its day under it
+   (meta), the figure at the right end (figure type, tabular, ink). No accent:
+   nothing in the list is done or picked.
    ============================================================================ */
 
-.workout-recent {
-  &-workouts-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  &-workouts-list &-workout-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--workout-space-md) 0;
-    border-bottom: var(--workout-border-thin) solid
-      var(--workout-border-subtle);
-    transition: var(--workout-transition);
-    margin: 0;
-
-    &:last-child {
-      border-bottom: none;
-    }
-
-    &:hover {
-      background: var(--background-modifier-hover);
-      margin: 0 calc(-1 * var(--workout-space-lg));
-      padding: var(--workout-space-md) var(--workout-space-lg);
-      border-radius: var(--workout-radius-md);
-    }
-    .workout-recent-date {
-      font-size: var(--workout-font-base);
-      color: var(--text-muted);
-      min-width: var(--workout-size-4xl);
-    }
-
-    .workout-recent-name {
-      flex: 1;
-      margin: 0 var(--workout-space-lg);
-      font-weight: var(--workout-font-weight-medium);
-      color: var(--text-normal);
-    }
-
-    .workout-recent-volume {
-      color: var(--workout-text-accent);
-      font-weight: var(--workout-font-weight-semibold);
-      font-size: var(--workout-font-base);
-    }
-  }
+/* Qualified to beat Obsidian's `.markdown-rendered ul` margins */
+.workout-dashboard ul.workout-recent-workouts-list,
+.workout-dashboard ul.workout-muscle-group-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.workout-exercise {
-  &-name {
-    font-weight: var(--workout-font-weight-medium);
+.workout-recent-workouts-list .workout-recent-workout-item,
+.workout-muscle-group-list .workout-muscle-group-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "name figure"
+    "day figure";
+  align-items: center;
+  column-gap: var(--workout-space-md);
+  margin: 0;
+  padding: var(--workout-space-sm) 0;
+  text-align: start;
+  border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .workout-list-item-secondary {
+    grid-area: day;
+    font-size: var(--workout-font-sm);
+    font-variant-numeric: tabular-nums;
+    color: var(--text-muted);
+  }
+
+  .workout-recent-name,
+  .workout-exercise-name {
+    grid-area: name;
+    min-width: 0;
+    overflow-wrap: anywhere;
     color: var(--text-normal);
   }
 
-  &-volume {
-    color: var(--text-muted);
-    font-size: var(--workout-font-base);
+  .workout-recent-volume,
+  .workout-exercise-volume {
+    grid-area: figure;
+    font-weight: var(--workout-font-weight-semibold);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: var(--text-normal);
   }
 }
 
-@media (max-width: variables.$breakpoint-tablet) {
-  .workout-recent-workout-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--workout-space-sm);
-  }
-
-  .workout-recent-date {
-    min-width: auto;
-  }
-
-  .workout-recent-name {
-    margin: 0;
-  }
+/* Only a name and its figure: one line */
+.workout-muscle-group-list .workout-muscle-group-item {
+  grid-template-areas: "name figure";
 }

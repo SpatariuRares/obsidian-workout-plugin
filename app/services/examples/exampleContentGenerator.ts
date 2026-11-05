@@ -13,7 +13,6 @@ import {
 } from "@app/features/timer/exampleTimerGenerator";
 import { timerPresetHelp } from "@app/features/timer/business/timerPresets";
 import {
-  generateExerciseLogBlock,
   generateExerciseOnlyLogBlock,
   generateWorkoutLogBlock,
   generateCombinedLogBlock,
@@ -69,13 +68,19 @@ ${chartSections}
 `;
 }
 
+/**
+ * A day's workout note: each exercise is one `workout-sets` block that
+ * carries its own rest (no `workout-timer` in the sections)
+ */
 export function generateWorkoutContent(): string {
   const workoutName = t("examples.workouts.lowerBodyA.name");
-  const squatMultiPower = t("examples.exercises.squatMultiPower.name");
-  const rdl = t("examples.exercises.rdl.name");
-  const legPress = t("examples.exercises.legPress45.name");
-  const legCurl = t("examples.exercises.legCurlSeated.name");
-  const calfMachine = t("examples.exercises.calfMachine.name");
+  const exercises = [
+    { name: t("examples.exercises.squatMultiPower.name"), sets: 4, reps: "8-10", rest: 180, note: true },
+    { name: t("examples.exercises.rdl.name"), sets: 4, reps: "8-12", rest: 180 },
+    { name: t("examples.exercises.legPress45.name"), sets: 4, reps: "10-15", rest: 120 },
+    { name: t("examples.exercises.legCurlSeated.name"), sets: 3, reps: "10-15", rest: 90 },
+    { name: t("examples.exercises.calfMachine.name"), sets: 4, reps: "15-20", rest: 60 },
+  ];
 
   return `## ${t("examples.workout.duration")}
 
@@ -89,47 +94,15 @@ ${generateWorkoutChartBlock(workoutName, { dateRange: 89 })}
 
 ${generateSessionBlock()}
 
-## ${squatMultiPower}:
+${exercises
+  .map(
+    ({ name, sets, reps, rest, note }) => `## ${name}:
 
-### ${t("examples.workout.setsReps", { sets: "4", reps: "8-10" })} ${t("examples.workout.recoverySuffix", { seconds: "180" })}
+### ${t("examples.workout.setsReps", { sets: String(sets), reps })} ${t("examples.workout.recoverySuffix", { seconds: String(rest) })}
 
-**${t("examples.workout.note")}**
-
-${generateCountdownTimerBlock("idSquatMultiPower", 180, squatMultiPower)}
-
-${generateExerciseLogBlock(squatMultiPower, workoutName, { sets: 4 })}
-
-## ${rdl}:
-
-### ${t("examples.workout.setsReps", { sets: "4", reps: "8-12" })} ${t("examples.workout.recoverySuffix", { seconds: "180" })}
-
-${generateCountdownTimerBlock("idRDL", 180, rdl)}
-
-${generateExerciseLogBlock(rdl, workoutName, { sets: 4 })}
-
-## ${legPress}:
-
-### ${t("examples.workout.setsReps", { sets: "4", reps: "10-15" })} ${t("examples.workout.recoverySuffix", { seconds: "120" })}
-
-${generateCountdownTimerBlock("idLegPress45", 120, legPress)}
-
-${generateExerciseLogBlock(legPress, workoutName, { sets: 4 })}
-
-## ${legCurl}:
-
-### ${t("examples.workout.setsReps", { sets: "3", reps: "10-15" })} ${t("examples.workout.recoverySuffix", { seconds: "90" })}
-
-${generateCountdownTimerBlock("idLegCurl", 90, legCurl)}
-
-${generateExerciseLogBlock(legCurl, workoutName, { sets: 3 })}
-
-## ${calfMachine}:
-
-### ${t("examples.workout.setsReps", { sets: "4", reps: "15-20" })} ${t("examples.workout.recoverySuffix", { seconds: "60" })}
-
-${generateCountdownTimerBlock("idCalfMachine", 60, calfMachine)}
-
-${generateExerciseLogBlock(calfMachine, workoutName, { sets: 4 })}
+${note ? `**${t("examples.workout.note")}**\n\n` : ""}${generateSetsBlock(name, { workout: workoutName, sets, rest })}`,
+  )
+  .join("\n\n")}
 `;
 }
 
@@ -389,7 +362,7 @@ ${poses
 
 ${generateCountdownTimerBlock(pose.id, restSeconds, pose.name)}
 
-${generateExerciseLogBlock(pose.name, workoutName, { sets: 3 })}`,
+${generateSetsBlock(pose.name, { workout: workoutName, sets: 3 })}`,
   )
   .join("\n\n")}
 

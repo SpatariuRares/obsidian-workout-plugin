@@ -9,36 +9,17 @@
     min-height: 0;
   }
 
+  // Top exercises by volume: its heading in label type over the list
   &-group-breakdown {
-    margin-top: var(--workout-space-xl);
-    padding-top: var(--workout-space-xl);
+    padding-top: var(--workout-space-sm);
     border-top: var(--workout-border-thin) solid
       var(--workout-border-subtle);
 
     h4 {
-      margin: 0 0 var(--workout-space-md) 0;
-      color: var(--text-normal);
-      font-size: var(--workout-font-base);
-      font-weight: var(--workout-font-weight-semibold);
-    }
-  }
-
-  &-group-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  &-group-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--workout-space-sm) 0;
-    border-bottom: var(--workout-border-thin) solid
-      var(--workout-border-subtle);
-
-    &:last-child {
-      border-bottom: none;
+      margin: 0 0 var(--workout-space-xs) 0;
+      color: var(--text-muted);
+      font-size: var(--workout-font-xs);
+      font-weight: normal;
     }
   }
 
@@ -91,22 +72,26 @@
 }
 
 .workout-heatmap {
+  // Period, side and measure: three ChipGroups (labels read, not shown) in
+  // one row that wraps a whole group at a time
   &-controls {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--workout-space-xl);
-    gap: var(--workout-space-lg);
     flex-wrap: wrap;
+    gap: var(--workout-space-sm) var(--workout-space-lg);
+
+    .workout-chip-group-chips {
+      overflow-x: visible;
+      padding-bottom: 0;
+    }
   }
 
+  // The body is inset into the card (page color plus border)
   &-canvas-container {
-    background: var(--background-secondary);
+    background: var(--background-primary);
     border: var(--workout-border-thin) solid
       var(--workout-border-color);
     border-radius: var(--workout-radius-lg);
-    padding: var(--workout-space-xl);
-    margin-bottom: var(--workout-space-xl);
+    padding: var(--workout-space-lg);
     text-align: center;
     position: relative;
 
@@ -120,7 +105,6 @@
       max-width: 100%;
       height: auto;
       border-radius: var(--workout-radius-sm);
-      background: var(--background-secondary);
     }
   }
 
@@ -134,12 +118,11 @@
   }
 
   &-info-panel {
-    background: var(--background-secondary);
+    background: var(--background-primary);
     border: var(--workout-border-thin) solid
       var(--workout-border-color);
     border-radius: var(--workout-radius-lg);
-    padding: var(--workout-space-lg);
-    margin-top: var(--workout-space-lg);
+    padding: var(--workout-space-md);
 
     h4 {
       margin: 0 0 var(--workout-space-md) 0;
@@ -157,10 +140,19 @@
 }
 
 @media (max-width: variables.$breakpoint-tablet) {
+  // Narrower chips (still 44px high), so period and side share the first
+  // row and the measure takes the second; each row fills the width
   .workout-heatmap-controls {
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--workout-space-md);
+    gap: var(--workout-space-sm);
+
+    .workout-chip-group {
+      flex: 1 1 auto;
+    }
+
+    .workout-chip-group-chips .workout-chip {
+      flex: 1 1 auto;
+      padding-inline: var(--workout-space-sm);
+    }
   }
 
   .workout-muscle-details {

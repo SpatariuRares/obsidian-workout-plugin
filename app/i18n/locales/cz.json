@@ -8,7 +8,6 @@
       "variationFromTo": " od {startValue} do {endValue}",
       "weightIncrementUnit": "Zvýšení váhy {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "Celková změna: ",
     "significantIncrease": "Nárůst z nuly",
     "trendLine": "Spojnice trendu",
     "typeNotAvailable": "Typ grafu \"{chartDataType}\" není pro cvičení typu {exerciseType} dostupný. Dostupné typy: {typeList}",
@@ -25,7 +24,16 @@
     "defaultTitle": "Trend {type}",
     "noTypesAvailable": "není dostupných žádných typů grafů",
     "noEligibleE1rm": "Žádné vhodné série pro odhad 1RM. Zaznamenejte kladnou váhu s 1–12 opakováními. Rozcvičkové série a série s poklesem váhy se nepočítají.",
-    "editChart": "Upravit graf"
+    "editChart": "Upravit graf",
+    "stats": {
+      "average": "Průměr",
+      "last3": "3 poslední",
+      "max": "Maks",
+      "min": "Min",
+      "recentTrend": "Nedávný trend",
+      "sessions": "Relace",
+      "vsPrevious": "oproti předchozímu"
+    }
   },
   "commands": {
     "addExerciseBlock": "Přidat blok cvičení",
@@ -53,11 +61,12 @@
     "minPerKm": "min/km",
     "notAvailable": "Není k dispozici",
     "sec": "s",
+    "undo": "Vrátit",
     "unknown": "Neznámé",
     "workout": "Trénink"
   },
   "convert": {
-    "currentType": "Současný typ:",
+    "currentType": "Aktuální typ",
     "errors": {
       "convertError": "Chyba při převodu dat o cvičení: {error}"
     },
@@ -78,7 +87,7 @@
     "success": "Úspěšně převedeno záznamů: {count}",
     "title": "Převést data o cvičení",
     "typeSelect": {
-      "convertTo": "Převést na:",
+      "convertTo": "Převést na",
       "updateFileType": "Aktualizovat typ souboru cvičení"
     }
   },
@@ -108,7 +117,7 @@
       "sharedName": "Stejný název cvičení jako {pages}: záznamy se ukládají pouze do jednoho z nich"
     },
     "muscleTags": {
-      "description": "Popis",
+      "description": "Štítky, které lze použít v hlavičce (frontmatter) stránky cviku. Kliknutím na štítek ho zkopírujete.",
       "title": "Štítky pro svaly",
       "tooltip": "Klikněte pro kopírování: {tag}",
       "totalCount": "Celkem k dispozici štítků: {count}"
@@ -129,7 +138,7 @@
       "columnProgression": "Postup",
       "columnProtocol": "Protokol",
       "columnVolumeChange": "Změna objemu",
-      "disclaimer": "Upozornění",
+      "disclaimer": "Korelace, nikoli důkaz: na tato čísla mají vliv také váha, odpočinek a spánek.",
       "noData": "Zatím není dost dat: každý protokol potřebuje alespoň 5 zaznamenaných sérií.",
       "title": "Účinnost protokolu",
       "subtitle": "Jak každý protokol fungoval ve všech zaznamenaných sériích."
@@ -174,6 +183,11 @@
         "sets": "Průměrný počet sérií: {value}",
         "reps": "Průměrný počet opakování: {value}"
       },
+      "controls": {
+        "period": "Období",
+        "side": "Strana",
+        "metric": "Metrika"
+      },
       "imbalance": {
         "backDominant": "Nerovnováha mezi přední a zadní částí: vaše zadní strana pracuje mnohem více než přední.",
         "frontDominant": "Nerovnováha mezi přední a zadní částí: vaše přední strana pracuje mnohem více než zadní."
@@ -186,9 +200,8 @@
       "moveUp": "Posunout {widget} nahoru",
       "moveDown": "Posunout {widget} dolů",
       "allHistory": "Prázdné: celá historie",
-      "recentWorkoutsLimit": "Počet nedávných tréninků:",
-      "volumeTrendDays": "Počet dní v trendu objemu:",
-      "gridColumns": "Sloupce:",
+      "recentWorkoutsLimit": "Tréninky v seznamu nedávných",
+      "volumeTrendDays": "Dny v trendu objemu",
       "layout": "Rozvržení",
       "layoutGrid": "Mřížka",
       "layoutList": "Seznam",
@@ -200,6 +213,7 @@
       "size": "{width} × {height}",
       "gridHint": "Přetažením widgetu jej přesunete a přetažením jeho rohu změníte velikost; zásobník níže ukazuje nejmenší velikost, na kterou se widget může zmenšit. Widget odeberete křížkem × nebo jeho přetažením do zásobníku. Klávesnicí: šipky přesouvají, Shift se šipkami mění velikost, Delete jej odebere.",
       "gridColumnsMeasured": "{columns} sloupců se vejde do šířky poznámky.",
+      "gridColumns": "Sloupce",
       "remove": "Odebrat {widget} z dashboardu"
     },
     "grid": {
@@ -230,37 +244,51 @@
       "edit": "Upravit widget",
       "removeConfirm": "Odebrat „{widget}“ z dashboardu?",
       "removeConfirmButton": "Odebrat",
-      "calendarWeeks": "Zobrazené týdny:",
+      "calendarWeeks": "Zobrazené týdny, počítané zpět od tohoto",
       "quickStatsPeriods": "Zobrazená období",
-      "quickStatsMetrics": "Zobrazené řádky",
+      "quickStatsMetrics": "Zobrazené hodnoty",
       "heatMapTimeFrame": "Výchozí období",
       "heatMapMetric": "Výchozí metrika",
-      "heatMapView": "Výchozí zobrazení",
-      "volumeTopLimit": "Cviky v žebříčku nejlepších:",
-      "protocolDays": "Počítané dny:",
-      "protocolMinEntries": "Série potřebné k porovnání protokolu:",
-      "durationRecentCount": "Porovnávané tréninky:",
-      "durationRestSeconds": "Odpočinek mezi sériemi v odhadu (sekundy):",
+      "heatMapView": "Výchozí strana",
+      "volumeTopLimit": "Zobrazené cviky",
+      "protocolDays": "Počítané dny",
+      "protocolMinEntries": "Minimální počet sérií na protokol",
+      "durationRecentCount": "Porovnávané tréninky",
+      "durationRestSeconds": "Odpočinek mezi sériemi v odhadu",
       "summaryMetrics": "Zobrazené karty",
       "calendarShowStats": "Zobrazit série a postup tohoto týdne",
       "heatMapShowImbalance": "Zobrazit panel nerovnováhy",
-      "volumeShowBreakdown": "Zobrazit seznam nejlepších cviků",
-      "protocolChartType": "Graf",
+      "volumeShowBreakdown": "Zobrazit cviky s nejvyšším objemem",
+      "protocolChartType": "Styl grafu",
       "chartPie": "Koláčový",
       "chartDoughnut": "Prstencový",
-      "protocolSortBy": "Seřazeno podle (nejlepší první)",
-      "durationShowTrend": "Zobrazit trend rozptylu",
+      "protocolSortBy": "Řadit podle",
+      "durationShowTrend": "Zobrazit trend přesnosti odhadu",
       "quickActionsShown": "Zobrazená tlačítka",
-      "fileErrorsMaxItems": "Zobrazené stránky (prázdné: všechny):",
-      "fileErrorsMaxTags": "Nejvíce štítků svalů na stránku:",
+      "fileErrorsMaxItems": "Zobrazené stránky",
+      "fileErrorsMaxTags": "Nejvyšší počet štítků svalů na stránku",
       "fileErrorsCheckSharedNames": "Označit stránky, které sdílejí název cviku",
-      "muscleTagsGroupByMuscle": "Seskupit štítky podle svalu"
+      "muscleTagsGroupByMuscle": "Seskupit štítky podle svalu",
+      "volumeTrendDays": "Počet dní v grafu objemu",
+      "recentWorkoutsLimit": "Zobrazené tréninky",
+      "all": "Vše",
+      "numberRange": "Zadejte celé číslo od {min} do {max}.",
+      "pickOne": "Vyberte alespoň jednu možnost, nebo widget odeberte.",
+      "units": {
+        "days": "dní",
+        "weeks": "týdnů",
+        "seconds": "s"
+      },
+      "editTitle": "Upravit {widget}",
+      "sortMostSets": "Nejvíce sérií",
+      "lastWidget": "Toto je jediný widget dashboardu, nelze ho tedy odebrat: smažte místo něj blok."
     }
   },
   "duration": {
     "estimatedDuration": "Odhadovaná doba",
     "lastSession": "Poslední trénink",
     "restTime": "Čas odpočinku",
+    "setCount": "{count} sérií",
     "setTime": "Čas série",
     "unableToAnalyze": "Soubor tréninku nelze analyzovat"
   },
@@ -378,7 +406,7 @@
       "importTitle": "8. Import ze Strong nebo Hevy",
       "importIntro": "Spusťte **{command}** z panelu příkazů a vyberte CSV, které aplikace exportovala. Série, které už jsou v deníku, se přeskočí a deník se nejprve zálohuje.",
       "setsTitle": "Záznamy aktivit na vašem telefonu",
-      "setsIntro": "Blok `workout-sets` zobrazuje dnešní sady jako řádky. Šedé čísla představují stejnou sadu z předchozího dne: označte řádek, abyste ji zaznamenali, nebo zadejte, co jste dělali. Klepnutím na šipku získáte protokol a poznámky pro danou sadu a můžete ji upravit.",
+      "setsIntro": "Blok `workout-sets` zobrazuje dnešní série jako řádky. Šedá čísla představují stejnou sérii z předchozího dne: zaškrtněte řádek, abyste ji zapsali tak, jak je, nebo zadejte, co jste skutečně udělali. Klepnutím na šipku otevřete protokol a poznámky dané série; zapsanou sérii lze upravit.",
       "codeBlockWorkoutSets": "Zaznamenejte si dnešní série postupně, řádek po řádku."
     },
     "fileNames": {
@@ -425,6 +453,24 @@
       "workoutsDesc": "Ukázkové šablony tréninků",
       "workoutsFolder": "**{folder}/**",
       "sessionIntro": "Tato poznámka má malý plán: jedno cvičení s jeho sériemi, cílem a odpočinkovým časovačem. Relace ukazuje sérii, kterou máte udělat; zaznamenejte ji a odpočinkový časovač se spustí.",
+      "tables": {
+        "latestTitle": "Poslední série cviku",
+        "latestIntro": "`exercise` vybere cvik a `limit` určí, kolik sérií tabulka zobrazí.",
+        "targetTitle": "Cíl a plánované série",
+        "targetIntro": "S `targetWeight` a `targetReps` tabulka ukazuje, jak blízko jste cíli; jakmile ho dosáhnete, odznak nabídne zapsat do bloku další váhu. `sets` je počet plánovaných sérií: bez `limit` tabulka zobrazí poslední dva tréninky a vedená relace je započítá. `workout` s `exactMatch: true` ponechá jen série daného cviku v tom tréninku.",
+        "workoutTitle": "Celý trénink",
+        "workoutIntro": "S `workout` a bez `exercise` tabulka vypíše každou sérii z daného tréninku. `dateRange: 14` ponechá posledních 14 dní.",
+        "columnsTitle": "Sloupce a řazení",
+        "columnsIntro": "`columns` určuje sloupce a jejich pořadí; `sortBy` a `sortOrder` pořadí řádků, zde nejtěžší série nahoře. `showAddButton: false` skryje tlačítko +, `showProtocol: false` by skryl odznaky protokolů."
+      },
+      "sets": {
+        "lastTimeTitle": "Stejné série jako minule",
+        "lastTimeIntro": "S `workout` pocházejí šedá čísla z posledního provedení tohoto cviku v daném tréninku. Bez něj blok použije název poznámky.",
+        "restTitle": "Odpočinkový časovač a cíle",
+        "restIntro": "`rest` je odpočinek po každé sérii v sekundách (`0` = bez časovače); bez něj blok použije `workout-timer` sekce. `targetWeight` a `targetReps` ukazují cíl a slouží jako nápověda při prvním provedení cviku.",
+        "restTimerTitle": "Možnosti odpočinkového časovače",
+        "restTimerIntro": "Blok obsahuje všechny možnosti svého odpočinkového časovače, takže poznámka dne nepotřebuje `workout-timer`: `timer.type` (`interval` používá `rest` jako práci každého kola, s `timer.rest` a `timer.rounds`), `timer.preset`, `timer.sound` a `timer.showControls`. ⋮ → Upravit odpočinkový časovač je zapíše za vás."
+      },
       "pagesIntro": "Prozkoumejte jednu funkci na stránce. Postupujte podle odkazů v daném pořadí, nebo vyberte funkci níže. Použijte tlačítka \"Zpět\" a \"Další\" pro přechod mezi poznámkami; prozkoumávejte každý příklad normálním způsobem.",
       "liveIntro": "Prozkoumejte všechny funkce níže s šesti týdny ukázkových tréninků. Jedná se o ukázková data; vyzkoušejte ovládací prvky a zjistěte, jak fungují vaše poznámky.",
       "tryLog": "Použijte tlačítko \"+\" pro přidání série. Tabulka, grafy a dashboard čtou stejný soubor CSV.",
@@ -600,7 +646,7 @@
       "deleteSet": "Smazat sérii",
       "updateDashboard": "Aktualizovat dashboard",
       "updateChart": "Aktualizovat graf",
-      "insertSets": "Sady pro vložení"
+      "insertSets": "Vložit série"
     },
     "canvasLayout": "Rozvržení",
     "canvasOptions": "Možnosti",
@@ -623,43 +669,38 @@
     },
     "confirmAction": "Potvrdit akci",
     "csvExercise": "CSV cvičení",
-    "customParameters": "Vlastní parametry:",
-    "customTitle": "Vlastní název:",
-    "dataLimit": "Limit dat (0 = vše):",
-    "dataType": "Datový typ:",
-    "dateRange": "Období (dny):",
-    "daysRange": "Rozsah dní (0 = vše):",
+    "customParameters": "Vlastní parametry",
+    "customTitle": "Vlastní název",
+    "dataLimit": "Limit dat (0 = vše)",
+    "dataType": "Typ dat",
     "delete": "Smazat",
-    "duration": "Doba (sekundy):",
     "editTag": "Upravit štítek",
-    "exerciseType": "Typ cvičení:",
     "exportTags": "Exportovat štítky",
     "fileName": "Název souboru",
-    "folderPath": "Cesta ke složce (volitelné):",
+    "folderPath": "Cesta ke složce (volitelné)",
     "importMerge": "Sloučit",
     "importReplace": "Nahradit vše",
     "importTags": "Importovat štítky",
     "labels": {
       "actions": "Akce",
       "currentFileInfo": "Aktuální soubor: {fileName}",
-      "exercise": "Cvičení:",
-      "reps": "Opakování:",
-      "targetReps": "Cílový počet opakování:",
-      "plannedSets": "Plánované série:",
-      "targetWeight": "Cílová hmotnost ({unit}):",
-      "volume": "Objem ({unit}):",
-      "weight": "Váha ({unit}):"
+      "exercise": "Cvičení",
+      "reps": "Opakování",
+      "targetReps": "Cílová opakování",
+      "plannedSets": "Plánované série",
+      "targetWeight": "Cílová hmotnost ({unit})",
+      "volume": "Objem ({unit})",
+      "weight": "Hmotnost ({unit})"
     },
     "layoutGrouped": "Seskupeno podle svalů",
     "layoutHorizontal": "Vodorovné uspořádání",
-    "layoutType": "Typ rozvržení:",
+    "layoutType": "Typ rozvržení",
     "layoutVertical": "Svislé uspořádání",
     "muscleGroup": "Skupina svalů",
     "newTag": "Nový štítek",
     "noTagsFound": "Vašemu hledání neodpovídají žádné štítky",
     "noTagsSelected": "Nejsou vybrány žádné štítky. Kliknutím na štítky níže je přidáte.",
-    "note": "Poznámka:",
-    "notes": "Poznámky (volitelné):",
+    "note": "Poznámka",
     "notices": {
       "auditConfirmRenameFile": "Přejmenovat tento soubor?\n\n{oldName} → {newName}",
       "auditMismatchCount": "Nalezeno možných neshod: {count}",
@@ -731,13 +772,13 @@
       "validationCombinedMode": "Pro typ „cvičení + trénink“ musíte vyplnit obě pole!",
       "dashboardUpdated": "Dashboard byl úspěšně aktualizován!",
       "dashboardUpdateFailed": "Nepodařilo se aktualizovat dashboard: nebyl nalezen v poznámce, nebo jiný dashboard bez ID má stejná nastavení. Otevřete poznámku znovu a zkuste to znovu.",
-      "setsInserted": "Sady byly přidány"
+      "setsInserted": "Série byly přidány"
     },
-    "parameterKey": "Klíč:",
-    "parameterLabel": "Název:",
+    "parameterKey": "Klíč",
+    "parameterLabel": "Popisek",
     "parameterRequired": "Povinné",
-    "parameterType": "Typ:",
-    "parameterUnit": "Jednotka (volitelná):",
+    "parameterType": "Typ",
+    "parameterUnit": "Jednotka (volitelné)",
     "placeholders": {
       "customTitle": "Ponechte prázdné pro automatický název",
       "enterTagName": "Zadejte název štítku (např. prsa, petto)",
@@ -757,10 +798,8 @@
       "sets": "4",
       "workout": "např. Trénink A, Trénink B, nebo použijte zaškrtávací políčko níže"
     },
-    "protocol": "Protokol:",
-    "recentExercises": "Nedávné:",
-    "restTime": "Doba odpočinku (sekundy):",
-    "rounds": "Kola:",
+    "protocol": "Protokol",
+    "recentExercises": "Nedávné",
     "save": "Uložit",
     "sections": {
       "advancedOptions": "Pokročilé možnosti",
@@ -797,15 +836,15 @@
       "yesNo": "Ano/Ne",
       "warmup": "Rozcvička"
     },
-    "sets": "Série:",
-    "similarTags": "Podobné štítky:",
+    "sets": "Série",
+    "similarTags": "Podobné štítky",
     "similarity": "Podobnost",
     "status": "Stav",
     "tag": "Štítek",
-    "tagsSelector": "Štítky svalů:",
-    "timerDuration": "Délka časovače (sekundy):",
-    "timerPreset": "Předvolba časovače:",
-    "timerType": "Typ časovače:",
+    "tagsSelector": "Štítky svalů",
+    "timerDuration": "Doba časovače (sekundy)",
+    "timerPreset": "Předvolba časovače",
+    "timerType": "Typ časovače",
     "titles": {
       "addExerciseBlock": "Přidat blok cvičení",
       "auditExerciseNames": "Zkontrolovat názvy cvičení",
@@ -825,25 +864,32 @@
       "muscleTagManager": "Spravovat štítky svalů",
       "editDashboard": "Upravit dashboard",
       "editChart": "Upravit graf tréninku",
-      "insertSets": "Přidejte sérii cviků"
+      "insertSets": "Vložit série tréninku"
     },
-    "workout": "Trénink (volitelné):",
-    "workoutFile": "Soubor tréninku:",
-    "workoutNameOptional": "Název tréninku (volitelné):",
     "importMergeAriaLabel": "Sloučit: přidat pouze nové štítky, zachovat stávající",
     "importReplaceAriaLabel": "Nahradit: přepsat všechny stávající štítky",
     "editItem": "Upravit {item}",
     "deleteItem": "Smazat {item}",
+    "duration": "Doba (sekundy)",
     "errors": {
       "missingElements": "Chybějící prvky",
       "validationCombinedMode": "U typu cvičení + trénink vyplňte obě pole"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Série: {sets}\n- Opakování: {reps}\n- Pauza: {restTime}s\n\n",
+    "exerciseType": "Typ cvičení",
     "noteTemplate": "**Poznámka: {note}**\n",
+    "notes": "Poznámky (volitelné)",
     "date": "Datum",
+    "dateRange": "Rozsah dat (dny)",
+    "daysRange": "Rozsah dnů (0 = vše)",
     "weightUnitToggle": "Jednotka pro tento záznam",
     "work": "Práce",
-    "rest": "Odpočinek"
+    "workout": "Trénink (volitelné)",
+    "workoutFile": "Soubor tréninku",
+    "workoutNameOptional": "Název tréninku (volitelné)",
+    "rest": "Odpočinek",
+    "restTime": "Doba odpočinku (sekundy)",
+    "rounds": "Kola"
   },
   "settings": {
     "buttons": {
@@ -952,7 +998,7 @@
     },
     "placeholders": {
       "presetName": "Zadejte název předvolby",
-      "protocolAbbreviation": "Například: gs",
+      "protocolAbbreviation": "Např. gs",
       "protocolName": "Zadejte název protokolu"
     },
     "sections": {
@@ -996,21 +1042,11 @@
     "beta": {
       "intro": "Nové funkce, které si můžete vyzkoušet, než budou dostupné všem. Jsou zatím nedostupné a mohou se ještě změnit.",
       "setSheet": {
-        "name": "Sady pro cvičení",
-        "desc": "Blok `workout-sets`: dnešní série jako řádky, které můžete vyplnit na svém telefonu, s hodnotami z předchozího dne jako vodítkem a časovačem odpočinku, který začne při každém tiknutí."
+        "name": "Série tréninku",
+        "desc": "Blok `workout-sets`: dnešní série jako řádky k vyplnění v telefonu, s hodnotami z předchozího dne jako nápovědou a odpočinkovým časovačem, který se spustí při každém zaškrtnutí."
       },
       "disabledBlock": "{feature} je funkce v beta verzi. Pro použití této funkce zapněte ji v Nastavení → Funkce v beta verzi."
     }
-  },
-  "stats": {
-    "max": "Max: ",
-    "min": "Min: ",
-    "recentLast3": " (poslední 3)",
-    "recentTrend": "Nedávný trend",
-    "recentVsPrev": " (vs předch.)",
-    "sessions": "Tréninky",
-    "average": "Průměr: ",
-    "title": "{dataTypeLabel} statistiky ({contextLabel}):"
   },
   "table": {
     "actions": "Akce",
@@ -1050,6 +1086,8 @@
     "notAvailable": "—",
     "refreshSuccess": "Tabulka obnovena",
     "target": {
+      "noSetsYet": "Zatím žádné série s {weight}",
+      "progress": "Nejlepší {best}/{target} opakování",
       "progressTooltip": "Nejlepší: {best} opakování / Cíl: {target} opakování",
       "repsSuffix": "opakování",
       "separator": " × "
@@ -1058,7 +1096,7 @@
     "refreshingTable": "Obnovování tabulky...",
     "setCount": "{count} sérií",
     "deleteSetMessage": "{set} bude odstraněno z vašich záznamů. Tuto akci nelze vrátit zpět.",
-    "deleteSetTitle": "Smazat tuto sadu?"
+    "deleteSetTitle": "Smazat tuto sérii?"
   },
   "timeperiods": {
     "month": "Měsíc",
@@ -1187,7 +1225,7 @@
         "mobileText": "Na telefonu tu ikona na liště není. Formulář záznamu otevřete z libovolné poznámky přes paletu příkazů."
       },
       "commands": {
-        "title": "Přidejte příkazy",
+        "title": "Příkazy pro vložení",
         "text": "Otevřete panel příkazů a spusťte příkaz pro vložení, abyste přidali tabulku, graf, časovač nebo dashboard do poznámky."
       },
       "end": {
@@ -1235,22 +1273,26 @@
     "empty": "Přidejte blok `workout-log` nebo `workout-sets` s cvičením do této poznámky, abyste ji mohli použít jako součást tréninku."
   },
   "sets": {
-    "editSet": "Upravit sadu {set}",
-    "addSet": "Přidat sadu",
+    "addSet": "Přidat sérii",
+    "removeSet": "Odebrat sérii",
     "protocol": "Protokol",
     "notes": "Poznámky",
-    "editBlock": "Upravit sady",
-    "blockUpdated": "Sady aktualizovány",
-    "blockUpdateFailed": "Neúspěšné provedení aktualizace sad: blok nebyl nalezen ve zadané poznámce. Otevřete poznámku znovu a zkuste to znovu.",
-    "workoutLabel": "Trénink:",
+    "editBlock": "Upravit série",
+    "editRestTimer": "Upravit odpočinkový časovač",
+    "blockUpdated": "Série aktualizovány",
+    "blockUpdateFailed": "Nepodařilo se aktualizovat série: blok nebyl v poznámce nalezen. Otevřete poznámku znovu a zkuste to znovu.",
+    "workoutLabel": "Trénink",
     "workoutPlaceholder": "Prázdné: {note}",
-    "restLabel": "Odpočívejte po každém setu (0 = časovač sekce)",
+    "restLabel": "Odpočinek po každé sérii (0 = časovač sekce)",
     "noExercise": "Přidejte `exercise:` do tohoto bloku, abyste zaznamenali jeho série.",
-    "progress": "{done}/{sets} sadů",
-    "lastTime": "Poslední případ ({date}): {sets}",
-    "setColumn": "Nastavit",
-    "fieldOfSet": "{field}, nastavte {set}",
-    "details": "Protokol a poznámky pro sadu {set}",
-    "logSet": "Nastavení protokolu {set}"
+    "progress": "{done}/{sets} sérií",
+    "lastTime": "Naposledy ({date}): {sets}",
+    "setColumn": "Série",
+    "fieldOfSet": "{field}, série {set}",
+    "details": "Protokol a poznámky k sérii {set}",
+    "logSet": "Zapsat sérii {set}",
+    "unlogSet": "Odebrat sérii {set} ze záznamu",
+    "setRemoved": "Série {set} odebrána",
+    "valueOfSet": "{field}, série {set}: {value}"
   }
 }

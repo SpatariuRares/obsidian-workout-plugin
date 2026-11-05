@@ -8,7 +8,6 @@
       "variationFromTo": " {startValue} değerinden {endValue} değerine",
       "weightIncrementUnit": "Ağırlık artışı {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "Genel değişim: ",
     "significantIncrease": "Sıfırdan artış",
     "trendLine": "Trend çizgisi",
     "typeNotAvailable": "\"{chartDataType}\" türündeki grafik, {exerciseType} türündeki egzersizler için kullanılamaz. Kullanılabilir türler: {typeList}",
@@ -25,7 +24,16 @@
     "defaultTitle": "{type} trendi",
     "noTypesAvailable": "kullanılabilir grafik türü yok",
     "noEligibleE1rm": "Tahmini 1RM için uygun set yok. Isınma setleri ve drop setler hariç, 1–12 tekrarlı ve pozitif ağırlıklı bir set kaydedin.",
-    "editChart": "Grafiği düzenle"
+    "editChart": "Grafiği düzenle",
+    "stats": {
+      "average": "Ortalama",
+      "last3": "son 3",
+      "max": "En yüksek",
+      "min": "En düşük",
+      "recentTrend": "Son eğilim",
+      "sessions": "Oturumlar",
+      "vsPrevious": "önceki döneme göre"
+    }
   },
   "commands": {
     "addExerciseBlock": "Egzersiz bloğu ekle",
@@ -50,14 +58,15 @@
     "convert": "Çevir",
     "exercise": "Egzersiz",
     "km": "km",
-    "minPerKm": "dakika/km",
+    "minPerKm": "dk/km",
     "notAvailable": "Mevcut değil",
     "sec": "sn",
+    "undo": "Geri al",
     "unknown": "Bilinmiyor",
     "workout": "Antrenman"
   },
   "convert": {
-    "currentType": "Mevcut tür:",
+    "currentType": "Mevcut tür",
     "errors": {
       "convertError": "Egzersiz verilerini dönüştürme hatası: {error}"
     },
@@ -78,7 +87,7 @@
     "success": "{count} kayıt başarıyla dönüştürüldü",
     "title": "Egzersiz verilerini dönüştür",
     "typeSelect": {
-      "convertTo": "Şuna dönüştür:",
+      "convertTo": "Şuna dönüştür",
       "updateFileType": "Egzersiz dosyasının türünü güncelle"
     }
   },
@@ -108,7 +117,7 @@
       "sharedName": "{pages} ile aynı egzersiz adı: kayıtlar bunlardan yalnızca birine gider."
     },
     "muscleTags": {
-      "description": "Açıklama",
+      "description": "Egzersiz sayfasının ön maddesinde (frontmatter) kullanabileceğiniz etiketler. Kopyalamak için birine tıklayın.",
       "title": "Kas etiketleri",
       "tooltip": "Kopyalamak için tıklayın: {tag}",
       "totalCount": "Toplam: {count} adet etiket mevcut"
@@ -129,7 +138,7 @@
       "columnProgression": "İlerleme",
       "columnProtocol": "Protokol",
       "columnVolumeChange": "Hacim değişimi",
-      "disclaimer": "Uyarı",
+      "disclaimer": "Korelasyon, kanıt değil: ağırlık, dinlenme ve uyku bu rakamları da değiştirir.",
       "noData": "Henüz yeterli veri yok: her protokol için en az 5 kayıtlı set gerekir.",
       "title": "Protokol etkinliği",
       "subtitle": "Her protokolün, kaydedilen tüm setlerde nasıl işlediği"
@@ -174,6 +183,11 @@
         "sets": "Ortalama set sayısı: {value}",
         "reps": "Ortalama tekrar sayısı: {value}"
       },
+      "controls": {
+        "period": "Dönem",
+        "side": "Taraf",
+        "metric": "Ölçü"
+      },
       "imbalance": {
         "backDominant": "Ön-arka dengesizlik: Sırt kaslarınız, ön kaslarınıza göre çok daha fazla çalışıyor.",
         "frontDominant": "Ön-arka dengesizlik: Ön tarafınız, arka tarafınızdan çok daha fazla çalışıyor."
@@ -186,9 +200,8 @@
       "moveUp": "{widget} öğesini yukarı taşı",
       "moveDown": "{widget} öğesini aşağı taşı",
       "allHistory": "Boş: tüm geçmiş",
-      "recentWorkoutsLimit": "Son listedeki antrenman sayısı:",
-      "volumeTrendDays": "Hacim trendindeki gün sayısı:",
-      "gridColumns": "Sütunlar:",
+      "recentWorkoutsLimit": "Son antrenmanlar listesindeki antrenman sayısı",
+      "volumeTrendDays": "Hacim eğilimindeki gün sayısı",
       "layout": "Düzen",
       "layoutGrid": "Izgara",
       "layoutList": "Liste",
@@ -200,13 +213,14 @@
       "size": "{width} × {height}",
       "gridHint": "Taşımak için bir widget'ı, boyutunu değiştirmek için köşesini sürükleyin; aşağıdaki alan her widget'ın alabileceği en küçük boyutu gösterir. Widget'ı × ile veya alana sürükleyerek kaldırın. Klavyeyle: oklar taşır, Shift ve oklar boyutlandırır, Delete kaldırır.",
       "gridColumnsMeasured": "{columns} sütun notun genişliğine sığıyor.",
-      "remove": "{widget} öğesini panodan kaldır"
+      "gridColumns": "Sütunlar",
+      "remove": "{widget} öğesini gösterge panelinden kaldır"
     },
     "grid": {
       "outside": "{widget} ızgaranın {columns} sütununun dışına taşıyor",
       "narrow": "{widget} en az {min} sütun gerektirir",
       "overlap": "{widget}, {other} ile çakışıyor",
-      "empty": "Izgarada henüz widget yok. Birkaç tane yerleştirmek için ⋮ menüsünde «Panoyu düzenle» seçeneğini açın."
+      "empty": "Izgarada henüz widget yok. Birkaç tane yerleştirmek için ⋮ menüsünde «Gösterge panelini düzenle» seçeneğini açın."
     },
     "trainingCalendar": {
       "title": "Antrenman takvimi",
@@ -230,37 +244,51 @@
       "edit": "Widget'ı düzenle",
       "removeConfirm": "\"{widget}\" gösterge panelinden kaldırılsın mı?",
       "removeConfirmButton": "Kaldır",
-      "calendarWeeks": "Gösterilen hafta sayısı:",
+      "calendarWeeks": "Gösterilen hafta sayısı (bu haftadan geriye doğru)",
       "quickStatsPeriods": "Gösterilen dönemler",
-      "quickStatsMetrics": "Gösterilen satırlar",
+      "quickStatsMetrics": "Gösterilen rakamlar",
       "heatMapTimeFrame": "Başlangıç dönemi",
-      "heatMapMetric": "Başlangıç metriği",
-      "heatMapView": "Başlangıç görünümü",
-      "volumeTopLimit": "Üst listedeki egzersiz sayısı:",
-      "protocolDays": "Sayılan gün sayısı:",
-      "protocolMinEntries": "Protokolün karşılaştırılması için gereken set sayısı:",
-      "durationRecentCount": "Karşılaştırılan antrenman sayısı:",
-      "durationRestSeconds": "Tahminde setler arası dinlenme (saniye):",
+      "heatMapMetric": "Başlangıç ölçüsü",
+      "heatMapView": "Başlangıç tarafı",
+      "volumeTopLimit": "Listelenen egzersiz sayısı",
+      "protocolDays": "Sayılan gün sayısı",
+      "protocolMinEntries": "Protokol başına en az set",
+      "durationRecentCount": "Karşılaştırılan antrenman sayısı",
+      "durationRestSeconds": "Tahmindeki setler arası dinlenme",
       "summaryMetrics": "Gösterilen kartlar",
       "calendarShowStats": "Seriyi ve bu haftanın ilerlemesini göster",
       "heatMapShowImbalance": "Dengesizlik panelini göster",
-      "volumeShowBreakdown": "En çok yapılan egzersizler listesini göster",
-      "protocolChartType": "Grafik",
+      "volumeShowBreakdown": "Hacme göre en çok yapılan egzersizleri göster",
+      "protocolChartType": "Grafik stili",
       "chartPie": "Pasta",
       "chartDoughnut": "Halka",
-      "protocolSortBy": "Sıralama (en iyi önce)",
-      "durationShowTrend": "Varyans trendini göster",
+      "protocolSortBy": "Sıralama ölçütü",
+      "durationShowTrend": "Tahmin doğruluğu eğilimini göster",
       "quickActionsShown": "Gösterilen düğmeler",
-      "fileErrorsMaxItems": "Listelenen sayfalar (boş: tümü):",
-      "fileErrorsMaxTags": "Bir sayfanın sahip olabileceği en fazla kas etiketi:",
+      "fileErrorsMaxItems": "Listelenen sayfalar",
+      "fileErrorsMaxTags": "Bir sayfanın en fazla kas etiketi sayısı",
       "fileErrorsCheckSharedNames": "Aynı egzersiz adını paylaşan sayfaları işaretle",
-      "muscleTagsGroupByMuscle": "Etiketleri kasa göre grupla"
+      "muscleTagsGroupByMuscle": "Etiketleri kasa göre grupla",
+      "volumeTrendDays": "Hacim grafiğindeki gün sayısı",
+      "recentWorkoutsLimit": "Gösterilen antrenman sayısı",
+      "all": "Tümü",
+      "numberRange": "{min} ile {max} arasında bir tam sayı girin.",
+      "pickOne": "En az birini seçin veya widget'ı kaldırın.",
+      "units": {
+        "days": "gün",
+        "weeks": "hafta",
+        "seconds": "sn"
+      },
+      "editTitle": "{widget} widget'ını düzenle",
+      "sortMostSets": "En çok set",
+      "lastWidget": "Bu, gösterge panelinin tek widget'ı olduğu için kaldırılamaz: bunun yerine bloğu silin."
     }
   },
   "duration": {
     "estimatedDuration": "Tahmini süre",
     "lastSession": "Son oturum",
     "restTime": "Dinlenme süresi",
+    "setCount": "{count} set",
     "setTime": "Set süresi",
     "unableToAnalyze": "Antrenman dosyası analiz edilemiyor"
   },
@@ -370,7 +398,7 @@
       "sessionTitle": "6. Rehberli antrenman",
       "sessionIntro": "Bir `workout-session` bloğu, notunun planında sizi adım adım yönlendirir: egzersizi olan her `workout-log` bloğu için bir adım; bu adımda `sets` ve hedefler ile aynı bölümün dinlenme zamanlayıcısı kullanılır. [[{workout}]] içinde deneyin.",
       "dashboardsTitle": "7. Panolar",
-      "dashboardsIntro": "Bir pano tüm widget'ları veya yalnızca `widgets` içinde listelenenleri, o sırayla gösterir. Bunları seçmek için panonun sağ üstündeki menüyü kullanın.",
+      "dashboardsIntro": "Bir gösterge paneli tüm widget'ları veya yalnızca `widgets` içinde listelenenleri, o sırayla gösterir. Bunları seçmek için gösterge panelinin sağ üstündeki menüyü kullanın.",
       "dashboardWidgetsTitle": "Seçilen widget'lar",
       "dashboardGridTitle": "Izgara düzeni",
       "dashboardGridIntro": "`layout: grid` ile her widget kendi satırındaki hücreleri kaplar: sütun, satır, genişlik ve yükseklik. Daha dar bir notta widget'lar okuma sırasına göre yeniden düzenlenir.",
@@ -378,8 +406,8 @@
       "importTitle": "8. Strong veya Hevy'den içe aktar",
       "importIntro": "Komut paletinden **{command}** komutunu çalıştırın ve uygulamanın dışa aktardığı CSV'yi seçin. Günlüğünüzde zaten bulunan setler atlanır ve günlük önce yedeklenir.",
       "setsTitle": "Telefonunuzdaki kayıtları yönetme",
-      "setsIntro": "`workout-sets` bloğu, güncel antrenman setlerini satırlar halinde gösterir. Gri renkli sayılar, önceki antrenmanda aynı setin gösterilmesini ifade eder: Bir satırı işaretleyerek mevcut durumunu kaydedebilir veya yaptığınızı yazabilirsiniz. Bir setin protokolü ve notları için oka dokunun ve kaydedilmiş bir seti düzenlemek için kullanın.",
-      "codeBlockWorkoutSets": "Bugünün antrenmanlarını, satır satır kaydet."
+      "setsIntro": "`workout-sets` bloğu, bugünkü setleri satır satır gösterir. Gri sayılar aynı setin geçen seferki değeridir: Bir satırı işaretleyerek değerleri olduğu gibi kaydedin ya da yaptığınızı yazın. Protokol ve notlar için oka, kaydedilmiş bir seti düzenlemek için satırına dokunun.",
+      "codeBlockWorkoutSets": "Bugünün setlerini satır satır kaydedin"
     },
     "fileNames": {
       "dashboard": "Gösterge paneli",
@@ -425,6 +453,24 @@
       "workoutsDesc": "Örnek antrenman şablonları",
       "workoutsFolder": "**{folder}/**",
       "sessionIntro": "Bu notta küçük bir plan var: setleri, hedefi ve dinlenme zamanlayıcısı olan bir egzersiz. Oturum yapılacak seti gösterir; kaydedin, dinlenme zamanlayıcısı başlar.",
+      "tables": {
+        "latestTitle": "Bir egzersizin son setleri",
+        "latestIntro": "`exercise` egzersizi, `limit` ise tabloda kaç setin gösterileceğini seçer.",
+        "targetTitle": "Hedef ve planlanan setler",
+        "targetIntro": "`targetWeight` ve `targetReps` ile tablo hedefe ne kadar yakın olduğunuzu gösterir; hedefe ulaştığınızda bir rozet, sonraki ağırlığı bloğa yazmayı önerir. `sets` planladığınız set sayısıdır: `limit` yoksa tablo son iki antrenmanı gösterir ve rehberli antrenman bunları sayar. `workout` ile `exactMatch: true` birlikte kullanılırsa, o antrenmandaki yalnızca bu egzersizin setlerini tutar.",
+        "workoutTitle": "Tüm bir antrenman",
+        "workoutIntro": "`workout` var ve `exercise` yoksa tablo o antrenmandaki tüm setleri listeler. `dateRange: 14` son 14 günü tutar.",
+        "columnsTitle": "Sütunlar ve sıralama",
+        "columnsIntro": "`columns` sütunları ve sırasını seçer; `sortBy` ve `sortOrder` satırların sırasını belirler, burada en ağır setler önce. `showAddButton: false` + düğmesini gizler, `showProtocol: false` ise protokol rozetlerini gizler."
+      },
+      "sets": {
+        "lastTimeTitle": "Geçen seferki setlerle aynı",
+        "lastTimeIntro": "`workout` ile gri sayılar, bu egzersizi o antrenmanda en son yaptığınız zamandan gelir. workout olmadan blok notun adını kullanır.",
+        "restTitle": "Dinlenme zamanlayıcısı ve hedefler",
+        "restIntro": "`rest`, her setten sonraki dinlenme süresidir (saniye, `0` = zamanlayıcı yok); yoksa blok bölümün `workout-timer` bloğunu kullanır. `targetWeight` ve `targetReps` hedefi gösterir ve bir egzersizi ilk kez yaptığınızda ipucu olur.",
+        "restTimerTitle": "Dinlenme zamanlayıcısı seçenekleri",
+        "restTimerIntro": "Blok, dinlenme zamanlayıcısının tüm seçeneklerini tutar; bu yüzden bir günün notunda `workout-timer` gerekmez: `timer.type` (`interval`, her turun çalışma süresi olarak `rest` değerini kullanır; `timer.rest` ve `timer.rounds` ile birlikte), `timer.preset`, `timer.sound` ve `timer.showControls`. ⋮ → Dinlenme zamanlayıcısını düzenle bunları sizin için yazar."
+      },
       "pagesIntro": "Her sayfada bir özelliği keşfedin. Bağlantıları sırayla takip edin veya aşağıdaki özelliklerden birini seçin. Notlar arasında geçiş yapmak için \"Geri\" ve \"İleri\" düğmelerini kullanın; her örneği keşfetmek için normal şekilde kaydırın.",
       "liveIntro": "Aşağıdaki tüm özellikleri, altı haftalık örnek antrenmanlarla keşfedin. Bunlar örnek verilerdir; kontrolleri deneyin ve notlarınızın nasıl çalıştığını görün.",
       "tryLog": "\"+\" düğmesiyle bir set ekleyin. Tablo, grafikler ve gösterge paneli aynı CSV dosyasını okur.",
@@ -623,43 +669,38 @@
     },
     "confirmAction": "Eylemi onayla",
     "csvExercise": "CSV egzersizi",
-    "customParameters": "Özel parametreler:",
-    "customTitle": "Özel başlık:",
-    "dataLimit": "Veri sınırı (0 = tümü):",
-    "dataType": "Veri türü:",
-    "dateRange": "Tarih aralığı (gün):",
-    "daysRange": "Gün aralığı (0 = tümü):",
+    "customParameters": "Özel parametreler",
+    "customTitle": "Özel başlık",
+    "dataLimit": "Veri sınırı (0 = tümü)",
+    "dataType": "Veri türü",
     "delete": "Sil",
-    "duration": "Süre (saniye):",
     "editTag": "Etiket düzenle",
-    "exerciseType": "Egzersiz türü:",
     "exportTags": "Etiketleri dışa aktar",
     "fileName": "Dosya adı",
-    "folderPath": "Klasör yolu (isteğe bağlı):",
+    "folderPath": "Klasör yolu (isteğe bağlı)",
     "importMerge": "Birleştir",
     "importReplace": "Tümünü değiştir",
     "importTags": "Etiketleri içe aktar",
     "labels": {
       "actions": "Eylemler",
       "currentFileInfo": "Geçerli dosya: {fileName}",
-      "exercise": "Egzersiz:",
-      "reps": "Tekrarlar:",
-      "targetReps": "Hedef tekrar:",
-      "plannedSets": "Planlanan setler:",
-      "targetWeight": "Hedef: ({unit}):",
-      "volume": "Hacim ({unit}):",
-      "weight": "Ağırlık ({unit}):"
+      "exercise": "Egzersiz",
+      "reps": "Tekrarlar",
+      "targetReps": "Hedef tekrar",
+      "plannedSets": "Planlanan setler",
+      "targetWeight": "Hedef ağırlık ({unit})",
+      "volume": "Hacim ({unit})",
+      "weight": "Ağırlık ({unit})"
     },
     "layoutGrouped": "Kas grubuna göre gruplanmış",
     "layoutHorizontal": "Yatay düzen",
-    "layoutType": "Düzen türü:",
+    "layoutType": "Düzen türü",
     "layoutVertical": "Dikey düzen",
     "muscleGroup": "Kas grubu",
     "newTag": "Yeni etiket",
     "noTagsFound": "Aramanızla eşleşen etiket yok",
     "noTagsSelected": "Hiçbir etiket seçilmedi. Aşağıdaki etiketleri tıklayarak ekleyin.",
-    "note": "Not:",
-    "notes": "Notlar (isteğe bağlı):",
+    "note": "Not",
     "notices": {
       "auditConfirmRenameFile": "Bu dosya yeniden adlandırılsın mı?\n\n{oldName} → {newName}",
       "auditMismatchCount": "{count} olası uyuşmazlık bulundu:",
@@ -731,20 +772,20 @@
       "validationCombinedMode": "'Egzersiz + antrenman' türü için her iki alanı da doldurun!",
       "dashboardUpdated": "Gösterge paneli başarıyla güncellendi!",
       "dashboardUpdateFailed": "Gösterge paneli güncellenemedi: not içinde bulunamadı veya kimliği olmayan başka bir gösterge panelinde aynı ayarlar var. Notu yeniden açıp tekrar deneyin.",
-      "setsInserted": "Kümeler eklendi"
+      "setsInserted": "Setler eklendi"
     },
-    "parameterKey": "Anahtar:",
-    "parameterLabel": "Etiket:",
+    "parameterKey": "Anahtar",
+    "parameterLabel": "Etiket",
     "parameterRequired": "Gerekli",
-    "parameterType": "Tür:",
-    "parameterUnit": "Birim (isteğe bağlı):",
+    "parameterType": "Tür",
+    "parameterUnit": "Birim (isteğe bağlı)",
     "placeholders": {
       "customTitle": "Otomatik başlık için boş bırakın",
       "enterTagName": "Etiket adını girin (örneğin, göğüs, petto)",
       "exerciseAutocomplete": "Egzersizleri görmek için yazmaya başlayın...",
       "folderPath": "örneğin Egzersizler veya kök klasör için boş bırakın",
       "note": "Burada maksimum çaba gösterin. Bu, temel egzersizinizdir.",
-      "notes": "Örneğin, İyi form, güçlü hissettim",
+      "notes": "Örneğin, iyi form, güçlü hissettim",
       "parameterKey": "örneğin, hız",
       "parameterLabel": "örneğin, Hız",
       "parameterUnit": "örneğin, km/sa",
@@ -757,10 +798,8 @@
       "sets": "4",
       "workout": "örn. Antrenman A, Antrenman B veya aşağıdaki kutuyu kullanın"
     },
-    "protocol": "Protokol:",
-    "recentExercises": "Son:",
-    "restTime": "Dinlenme süresi (saniye):",
-    "rounds": "Turlar:",
+    "protocol": "Protokol",
+    "recentExercises": "Son kullanılanlar",
     "save": "Kaydet",
     "sections": {
       "advancedOptions": "Gelişmiş seçenekler",
@@ -797,15 +836,15 @@
       "yesNo": "Evet/Hayır",
       "warmup": "Isınma"
     },
-    "sets": "Setler:",
-    "similarTags": "Benzer etiketler:",
+    "sets": "Setler",
+    "similarTags": "Benzer etiketler",
     "similarity": "Benzerlik",
     "status": "Durum",
     "tag": "Etiket",
-    "tagsSelector": "Kas etiketleri:",
-    "timerDuration": "Zamanlayıcı süresi (saniye):",
-    "timerPreset": "Zamanlayıcı ön ayarı:",
-    "timerType": "Zamanlayıcı türü:",
+    "tagsSelector": "Kas etiketleri",
+    "timerDuration": "Zamanlayıcı süresi (saniye)",
+    "timerPreset": "Zamanlayıcı ön ayarı",
+    "timerType": "Zamanlayıcı türü",
     "titles": {
       "addExerciseBlock": "Egzersiz bloğu ekle",
       "auditExerciseNames": "Egzersiz adlarını denetle",
@@ -827,23 +866,30 @@
       "editChart": "Antrenman grafiğini düzenle",
       "insertSets": "Egzersiz setlerini ekle"
     },
-    "workout": "Antrenman (isteğe bağlı):",
-    "workoutFile": "Antrenman dosyası:",
-    "workoutNameOptional": "Antrenman adı (isteğe bağlı):",
     "importMergeAriaLabel": "Birleştir: yalnızca yeni etiket ekle, mevcutları koru",
     "importReplaceAriaLabel": "Değiştir: tüm mevcut etiketlerin üzerine yaz",
     "editItem": "{item} düzenle",
     "deleteItem": "{item} sil",
+    "duration": "Süre (saniye)",
     "errors": {
       "missingElements": "Eksik öğeler",
       "validationCombinedMode": "'Egzersiz + antrenman' türü için her iki alanı da doldurun"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Setler: {sets}\n- Tekrarlar: {reps}\n- Dinlenme: {restTime} sn\n\n",
+    "exerciseType": "Egzersiz türü",
     "noteTemplate": "**Not: {note}**\n",
+    "notes": "Notlar (isteğe bağlı)",
     "date": "Tarih",
+    "dateRange": "Tarih aralığı (gün)",
+    "daysRange": "Gün aralığı (0 = tümü)",
     "weightUnitToggle": "Bu kaydın birimi",
     "work": "Çalışma",
-    "rest": "Dinlenme"
+    "workout": "Antrenman (isteğe bağlı)",
+    "workoutFile": "Antrenman dosyası",
+    "workoutNameOptional": "Antrenman adı (isteğe bağlı)",
+    "rest": "Dinlenme",
+    "restTime": "Dinlenme süresi (saniye)",
+    "rounds": "Turlar"
   },
   "settings": {
     "buttons": {
@@ -895,7 +941,7 @@
       "vibrateOnCompletion": "Zamanlayıcı bittiğinde, sesten bağımsız olarak kısa bir süre titreşim sağlar. Sayfaya dokunma ve uyumlu bir cihaz (örneğin Android) gerektirir. iOS'ta mevcut değildir; arka planda bildirimler gönderilmez.",
       "presetRestDesc": "Her turun sonunda yapılan dinlenme süresi (0, dinlenme yok anlamına gelir).",
       "noCustomProtocols": "Henüz herhangi bir protokol tanımlanmamış. \"Protokol ekle\" düğmesine tıklayarak bir tane oluşturabilirsiniz.",
-      "createExampleNotes": "Her özelliği denemek için örnek notlar ve altı haftalık örnek antrenman ekler. Zaten sahip olduğun notlar asla üzerine yazılmaz."
+      "createExampleNotes": "Her özelliği denemek için örnek notlar ve altı haftalık örnek antrenman ekler. Zaten sahip olduğunuz notlar asla üzerine yazılmaz."
     },
     "labels": {
       "csvPath": "CSV kayıt dosyası yolu",
@@ -994,23 +1040,13 @@
       "emom": "Dakikada bir: Her dakikanın başında tekrarınızı başlatın ve kalan sürede dinlenin, 10 tur."
     },
     "beta": {
-      "intro": "Herkese ulaşmadan önce denemek için yeni özellikler. Bu özellikler henüz kullanıma hazır değil, ancak siz bunları etkinleştirene kadar kullanılabilir durumda kalacak ve hala değişiklikler geçirebilir.",
+      "intro": "Herkese açılmadan önce denemeniz için yeni özellikler. Siz etkinleştirene kadar kapalıdırlar ve hâlâ değişebilirler.",
       "setSheet": {
         "name": "Egzersiz setleri",
         "desc": "`workout-sets` bloğu: Telefonunuzda doldurabileceğiniz günün antrenman setlerini, son antrenmanda elde ettiğiniz değerleri ipucu olarak ve her tıklama ile başlayan bir dinlenme zamanlayıcısını içerir."
       },
-      "disabledBlock": "{feature}, beta sürümündeki bir özelliktir. Bu özelliği kullanmak için, Ayarlar → Beta Özellikler bölümünde etkinleştirin."
+      "disabledBlock": "{feature}, beta sürümündeki bir özelliktir. Bu özelliği kullanmak için Ayarlar → Beta özellikleri bölümünden etkinleştirin."
     }
-  },
-  "stats": {
-    "max": "Maks: ",
-    "min": "Min: ",
-    "recentLast3": " (son 3)",
-    "recentTrend": "Son trend",
-    "recentVsPrev": " (öncekiyle)",
-    "sessions": "Oturumlar",
-    "average": "Ortalama: ",
-    "title": "{dataTypeLabel} istatistikleri ({contextLabel}):"
   },
   "table": {
     "actions": "Eylemler",
@@ -1050,6 +1086,8 @@
     "notAvailable": "Yok",
     "refreshSuccess": "Tablo yenilendi",
     "target": {
+      "noSetsYet": "{weight} ile henüz set yok",
+      "progress": "En iyi {best}/{target} tekrar",
       "progressTooltip": "En iyi: {best} tekrar / Hedef: {target} tekrar",
       "repsSuffix": "tekrar",
       "separator": " × "
@@ -1232,25 +1270,29 @@
     "next": "Sonraki",
     "rest": "Dinlenme",
     "done": "Antrenman tamamlandı. Bugün kaydedilen set: {sets}.",
-    "empty": "Add a `workout-log` or `workout-sets` block with an exercise to this note to follow it as a session."
+    "empty": "Bu nota, bir egzersizle birlikte bir `workout-log` veya `workout-sets` bloğu ekleyin; böylece onu bir antrenman oturumu olarak takip edebilirsiniz."
   },
   "sets": {
-    "editSet": "{set} kümesini düzenle",
-    "addSet": "Kodu ekle",
+    "addSet": "Set ekle",
+    "removeSet": "Seti kaldır",
     "protocol": "Protokol",
     "notes": "Notlar",
     "editBlock": "Setleri düzenle",
+    "editRestTimer": "Dinlenme zamanlayıcısını düzenle",
     "blockUpdated": "Setler güncellendi",
     "blockUpdateFailed": "Setlerin güncellenmesi başarısız oldu: Blok, notunda bulunamadı. Notu yeniden açın ve tekrar deneyin.",
-    "workoutLabel": "Egzersiz:",
+    "workoutLabel": "Antrenman",
     "workoutPlaceholder": "Boş: {note}",
     "restLabel": "Her setten sonra dinlenin (0 = bölümün zamanlayıcısı)",
     "noExercise": "Bu bloğa `exercise:` ekleyerek, bu egzersizin setlerini kaydetebilirsiniz.",
-    "progress": "{done}/{sets} kümesi",
+    "progress": "{done}/{sets} set",
     "lastTime": "Son kez ({date}): {sets}",
-    "setColumn": "Ayarla",
-    "fieldOfSet": "{field}, {set} ayarını yap",
+    "setColumn": "Set",
+    "fieldOfSet": "{field}, set {set}",
     "details": "Protokol ve notlar, set {set}",
-    "logSet": "Günlük kaydı kümesi {set}"
+    "logSet": "Set {set} kaydet",
+    "unlogSet": "Set {set} kaydını kayıtlardan kaldır",
+    "setRemoved": "Set {set} kaldırıldı",
+    "valueOfSet": "{field}, set {set}: {value}"
   }
 }

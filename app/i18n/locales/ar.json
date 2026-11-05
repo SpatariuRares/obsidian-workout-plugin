@@ -8,7 +8,6 @@
       "variationFromTo": " من {startValue} إلى {endValue}",
       "weightIncrementUnit": "زيادة الوزن {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "التغيّر الإجمالي: ",
     "significantIncrease": "ارتفاع من الصفر",
     "trendLine": "خط الاتجاه",
     "typeNotAvailable": "نوع الرسم \"{chartDataType}\" غير متاح لتمارين {exerciseType}. الأنواع المتاحة: {typeList}",
@@ -25,7 +24,16 @@
     "defaultTitle": "الاتجاه {type}",
     "noTypesAvailable": "لا توجد أنواع مخططات متاحة",
     "noEligibleE1rm": "لا توجد مجموعات مناسبة لتقدير الوزن الأقصى (1RM). سجل وزنًا إيجابيًا مع 1-12 تكرارًا، مع استثناء تمارين الإحماء ومجموعات التخفيض.",
-    "editChart": "تحرير المخطط"
+    "editChart": "تحرير المخطط",
+    "stats": {
+      "average": "المتوسط",
+      "last3": "آخر 3",
+      "max": "الأعلى",
+      "min": "الأدنى",
+      "recentTrend": "الاتجاه الأخير",
+      "sessions": "الجلسات",
+      "vsPrevious": "مقارنةً بالسابق"
+    }
   },
   "commands": {
     "addExerciseBlock": "إضافة كتلة تمرين",
@@ -53,11 +61,12 @@
     "minPerKm": "دقيقة/كم",
     "notAvailable": "غير متاح",
     "sec": "ثانية",
+    "undo": "تراجع",
     "unknown": "غير معروف",
     "workout": "تدريب"
   },
   "convert": {
-    "currentType": "النوع الحالي:",
+    "currentType": "النوع الحالي",
     "errors": {
       "convertError": "خطأ في تحويل بيانات التمرين: {error}"
     },
@@ -78,7 +87,7 @@
     "success": "تم تحويل {count} من إدخالات السجل بنجاح",
     "title": "تحويل بيانات التمرين",
     "typeSelect": {
-      "convertTo": "التحويل إلى:",
+      "convertTo": "التحويل إلى",
       "updateFileType": "تحديث نوع ملف التمرين"
     }
   },
@@ -108,7 +117,7 @@
       "sharedName": "نفس اسم التمرين كما في {pages}: يتم تسجيل السجلات في واحد فقط منهم."
     },
     "muscleTags": {
-      "description": "وصف",
+      "description": "العلامات التي يمكنك استخدامها في خصائص صفحة التمرين. انقر على علامة لنسخها.",
       "title": "علامات العضلات",
       "tooltip": "انقر لنسخ: {tag}",
       "totalCount": "المجموع: {count} علامات متاحة"
@@ -129,7 +138,7 @@
       "columnProgression": "التقدم",
       "columnProtocol": "البروتوكول",
       "columnVolumeChange": "تغيّر الحجم",
-      "disclaimer": "إخلاء المسؤولية",
+      "disclaimer": "ارتباط وليس دليلاً قاطعاً: الوزن والراحة والنوم تؤثر في هذه الأرقام أيضاً.",
       "noData": "لا توجد بيانات كافية بعد: يحتاج كل بروتوكول إلى 5 مجموعات مسجّلة على الأقل.",
       "title": "فعالية البروتوكول",
       "subtitle": "كيف عمل كل بروتوكول عبر جميع المجموعات المسجلة."
@@ -174,6 +183,11 @@
         "sets": "متوسط المجموعات: {value}",
         "reps": "متوسط التكرارات: {value}"
       },
+      "controls": {
+        "period": "الفترة",
+        "side": "الجانب",
+        "metric": "المقياس"
+      },
       "imbalance": {
         "backDominant": "عدم التوازن بين الجزء الأمامي والخلفي: الجزء الخلفي يعمل بشكل أكبر بكثير من الجزء الأمامي.",
         "frontDominant": "عدم التوازن بين الجزء الأمامي والخلفي: الجزء الأمامي يعمل بكثير أكثر من الجزء الخلفي."
@@ -186,9 +200,8 @@
       "moveUp": "نقل {widget} لأعلى",
       "moveDown": "نقل {widget} لأسفل",
       "allHistory": "فارغ: كل السجل",
-      "recentWorkoutsLimit": "عدد التدريبات في القائمة الأخيرة:",
-      "volumeTrendDays": "عدد الأيام في اتجاه الحجم:",
-      "gridColumns": "الأعمدة:",
+      "recentWorkoutsLimit": "التدريبات في القائمة الأخيرة",
+      "volumeTrendDays": "أيام اتجاه الحجم",
       "layout": "التخطيط",
       "layoutGrid": "شبكة",
       "layoutList": "قائمة",
@@ -200,6 +213,7 @@
       "size": "{width} × {height}",
       "gridHint": "اسحب أداة لتحريكها، واسحب زاويتها لتغيير حجمها؛ يُظهر الدرج أدناه أصغر حجم يمكن أن تأخذه كل أداة. أزل أداة بزر × أو بإسقاطها في الدرج. بلوحة المفاتيح: الأسهم للتحريك، وShift مع الأسهم لتغيير الحجم، وDelete للإزالة.",
       "gridColumnsMeasured": "{columns} أعمدة تتسع لعرض الملاحظة.",
+      "gridColumns": "الأعمدة",
       "remove": "إزالة {widget} من لوحة التحكم"
     },
     "grid": {
@@ -230,37 +244,51 @@
       "edit": "تعديل الأداة",
       "removeConfirm": "هل تريد إزالة \"{widget}\" من لوحة التحكم؟",
       "removeConfirmButton": "إزالة",
-      "calendarWeeks": "عدد الأسابيع المعروضة:",
+      "calendarWeeks": "عدد الأسابيع المعروضة، محسوبة تراجعاً من هذا الأسبوع",
       "quickStatsPeriods": "الفترات المعروضة",
-      "quickStatsMetrics": "الصفوف المعروضة",
+      "quickStatsMetrics": "الأرقام المعروضة",
       "heatMapTimeFrame": "الفترة الافتراضية",
       "heatMapMetric": "المقياس الافتراضي",
-      "heatMapView": "العرض الافتراضي",
-      "volumeTopLimit": "عدد التمارين في القائمة الأعلى:",
-      "protocolDays": "عدد الأيام المحسوبة:",
-      "protocolMinEntries": "عدد المجموعات اللازمة لمقارنة البروتوكول:",
-      "durationRecentCount": "عدد التدريبات المقارنة:",
-      "durationRestSeconds": "وقت الراحة بين المجموعات في التقدير (بالثواني):",
+      "heatMapView": "الجانب الافتراضي",
+      "volumeTopLimit": "عدد التمارين المعروضة",
+      "protocolDays": "الأيام المحسوبة",
+      "protocolMinEntries": "الحد الأدنى من المجموعات لكل بروتوكول",
+      "durationRecentCount": "التدريبات المقارنة",
+      "durationRestSeconds": "الراحة بين المجموعات في التقدير",
       "summaryMetrics": "البطاقات المعروضة",
       "calendarShowStats": "عرض السلاسل وتقدم هذا الأسبوع",
       "heatMapShowImbalance": "عرض لوحة عدم التوازن",
-      "volumeShowBreakdown": "عرض قائمة أعلى التمارين",
-      "protocolChartType": "المخطط",
+      "volumeShowBreakdown": "عرض أهم التمارين حسب الحجم",
+      "protocolChartType": "نمط الرسم البياني",
       "chartPie": "دائري",
       "chartDoughnut": "حلقي",
-      "protocolSortBy": "مرتّبة حسب (الأفضل أولاً)",
-      "durationShowTrend": "عرض اتجاه التباين",
+      "protocolSortBy": "الترتيب حسب",
+      "durationShowTrend": "عرض اتجاه دقة التقدير",
       "quickActionsShown": "الأزرار المعروضة",
-      "fileErrorsMaxItems": "الصفحات المدرجة (فارغ: الكل):",
-      "fileErrorsMaxTags": "أقصى عدد من علامات العضلات لكل صفحة:",
+      "fileErrorsMaxItems": "عدد الصفحات المعروضة",
+      "fileErrorsMaxTags": "أكبر عدد من علامات العضلات مسموح به في الصفحة",
       "fileErrorsCheckSharedNames": "الإبلاغ عن الصفحات التي تشترك في اسم تمرين",
-      "muscleTagsGroupByMuscle": "تجميع العلامات حسب العضلة"
+      "muscleTagsGroupByMuscle": "تجميع العلامات حسب العضلة",
+      "volumeTrendDays": "عدد الأيام في الرسم البياني للحجم",
+      "recentWorkoutsLimit": "عدد التدريبات المعروضة",
+      "all": "الكل",
+      "numberRange": "أدخل عدداً صحيحاً من {min} إلى {max}.",
+      "pickOne": "اختر عنصراً واحداً على الأقل، أو أزل الأداة.",
+      "units": {
+        "days": "أيام",
+        "weeks": "أسابيع",
+        "seconds": "ث"
+      },
+      "editTitle": "تعديل {widget}",
+      "sortMostSets": "الأكثر مجموعات",
+      "lastWidget": "هذه هي الأداة الوحيدة في لوحة التحكم، لذا لا يمكن إزالتها: احذف الكتلة بدلاً من ذلك."
     }
   },
   "duration": {
     "estimatedDuration": "المدة المقدرة",
     "lastSession": "آخر جلسة",
     "restTime": "وقت الراحة",
+    "setCount": "{count} مجموعة",
     "setTime": "وقت المجموعة",
     "unableToAnalyze": "تعذّر تحليل ملف التدريب"
   },
@@ -378,7 +406,7 @@
       "importTitle": "8. الاستيراد من Strong أو Hevy",
       "importIntro": "شغّل **{command}** من لوحة الأوامر، واختر ملف CSV الذي صدّره التطبيق. تُتخطى المجموعات الموجودة في سجلّك، ويُنشأ نسخة احتياطية من السجل أولًا.",
       "setsTitle": "تسجيل مجموعات على هاتفك",
-      "setsIntro": "A `workout-sets` block shows today's sets as rows. The grey numbers are the same set last time: tick a row to log them as they are, or type what you did. Tap the arrow for the set's protocol and notes, and a logged set to edit it.",
+      "setsIntro": "تعرض كتلة `workout-sets` مجموعات اليوم على شكل صفوف. الأرقام الرمادية هي المجموعة نفسها في المرة الماضية: حدّد صفًا لتسجيله كما هو، أو اكتب ما نفّذته. اضغط على السهم لبروتوكول المجموعة وملاحظاتها، واضغط على مجموعة مسجّلة لتعديلها.",
       "codeBlockWorkoutSets": "سجل مجموعات اليوم صفًا تلو الآخر."
     },
     "fileNames": {
@@ -425,6 +453,24 @@
       "workoutsDesc": "قوالب تمارين مثال",
       "workoutsFolder": "**{folder}/**",
       "sessionIntro": "تحتوي هذه الملاحظة على خطة صغيرة: تمرين واحد مع مجموعاته وهدفه ومؤقت الراحة. تعرض الجلسة المجموعة التي يجب تنفيذها؛ سجّلها فيبدأ مؤقت الراحة.",
+      "tables": {
+        "latestTitle": "آخر مجموعات تمرين",
+        "latestIntro": "يحدد `exercise` التمرين، و`limit` عدد المجموعات التي يعرضها الجدول.",
+        "targetTitle": "الهدف وعدد المجموعات المخططة",
+        "targetIntro": "مع `targetWeight` و`targetReps` يعرض الجدول مدى اقترابك من الهدف؛ وعند بلوغه تظهر شارة تعرض كتابة الوزن التالي في الكتلة. `sets` هو عدد المجموعات التي تخطط لها: بدون `limit` يعرض الجدول آخر تدريبين، وتحسبهما الجلسة الموجّهة. ويُبقي `workout` مع `exactMatch: true` مجموعات ذلك التمرين فقط في ذلك التدريب.",
+        "workoutTitle": "تدريب كامل",
+        "workoutIntro": "مع `workout` ومن دون `exercise` يعرض الجدول كل مجموعات ذلك التدريب. ويُبقي `dateRange: 14` آخر 14 يومًا.",
+        "columnsTitle": "الأعمدة والترتيب",
+        "columnsIntro": "يحدد `columns` الأعمدة وترتيبها، ويحدد `sortBy` و`sortOrder` ترتيب الصفوف، وهنا المجموعات الأثقل أولًا. يُخفي `showAddButton: false` زر +، ويُخفي `showProtocol: false` شارات البروتوكول."
+      },
+      "sets": {
+        "lastTimeTitle": "المجموعات نفسها كالمرة الماضية",
+        "lastTimeIntro": "مع `workout` تأتي الأرقام الرمادية من آخر مرة نفّذت فيها هذا التمرين في ذلك التدريب. وبدونه تستخدم الكتلة اسم الملاحظة.",
+        "restTitle": "مؤقت الراحة والأهداف",
+        "restIntro": "`rest` هي الراحة بعد كل مجموعة بالثواني (`0` = بلا مؤقت)؛ وبدونها تستخدم الكتلة `workout-timer` الخاص بالقسم. يعرض `targetWeight` و`targetReps` الهدف، وهما التلميح عند أول مرة تنفّذ فيها التمرين.",
+        "restTimerTitle": "خيارات مؤقت الراحة",
+        "restTimerIntro": "تحتوي الكتلة على كل خيارات مؤقت الراحة، لذلك لا تحتاج ملاحظة اليوم إلى `workout-timer`: `timer.type` (تستخدم `interval` القيمة `rest` زمناً للعمل في كل جولة، مع `timer.rest` و`timer.rounds`)، و`timer.preset` و`timer.sound` و`timer.showControls`. تكتبها لك القائمة ⋮ ← تحرير مؤقت الراحة."
+      },
       "pagesIntro": "استكشف ميزة واحدة في كل صفحة. اتبع الروابط بالترتيب، أو اختر الميزة أدناه. استخدم \"رجوع\" و \"التالي\" للتنقل بين الملاحظات؛ استخدم التمرير بشكل طبيعي لاستكشاف كل مثال.",
       "liveIntro": "استكشف جميع الميزات أدناه مع تدريبات نموذجية تغطي ستة أسابيع. هذه بيانات تجريبية؛ جرّب عناصر التحكم وشاهد كيف تعمل ملاحظاتك.",
       "tryLog": "استخدم الزر \"+\" لإضافة مجموعة. يقرأ الجدول والرسوم البيانية ولوحة التحكم نفس ملف CSV.",
@@ -600,7 +646,7 @@
       "deleteSet": "حذف المجموعة",
       "updateDashboard": "تحديث لوحة التحكم",
       "updateChart": "تحديث المخطط",
-      "insertSets": "مجموعات الإدخال"
+      "insertSets": "إدراج المجموعات"
     },
     "canvasLayout": "الترتيب",
     "canvasOptions": "الخيارات",
@@ -623,43 +669,38 @@
     },
     "confirmAction": "تأكيد الإجراء",
     "csvExercise": "تمرين CSV",
-    "customParameters": "المعلمات المخصصة:",
-    "customTitle": "العنوان المخصص:",
-    "dataLimit": "حد البيانات (0 = الكل):",
-    "dataType": "نوع البيانات:",
-    "dateRange": "نطاق التواريخ (أيام):",
-    "daysRange": "نطاق الأيام (0 = الكل):",
+    "customParameters": "معلمات مخصصة",
+    "customTitle": "عنوان مخصص",
+    "dataLimit": "حد البيانات (0 = الكل)",
+    "dataType": "نوع البيانات",
     "delete": "حذف",
-    "duration": "المدة (الثواني):",
     "editTag": "تعديل العلامة",
-    "exerciseType": "نوع التمرين:",
     "exportTags": "تصدير العلامات",
     "fileName": "اسم الملف",
-    "folderPath": "مسار المجلد (اختياري):",
+    "folderPath": "مسار المجلد (اختياري)",
     "importMerge": "دمج",
     "importReplace": "استبدال الكل",
     "importTags": "استيراد العلامات",
     "labels": {
       "actions": "الإجراءات",
       "currentFileInfo": "الملف الحالي: {fileName}",
-      "exercise": "تمرين:",
-      "reps": "التكرارات:",
-      "targetReps": "التكرارات المستهدفة:",
-      "plannedSets": "المجموعات المخططة:",
-      "targetWeight": "الوزن المستهدف ({unit}):",
-      "volume": "الحجم ({unit}):",
-      "weight": "الوزن ({unit}):"
+      "exercise": "التمرين",
+      "reps": "التكرارات",
+      "targetReps": "التكرارات المستهدفة",
+      "plannedSets": "المجموعات المخططة",
+      "targetWeight": "الوزن المستهدف ({unit})",
+      "volume": "الحجم ({unit})",
+      "weight": "الوزن ({unit})"
     },
     "layoutGrouped": "مجمّعة حسب العضلة",
     "layoutHorizontal": "التدفق الأفقي",
-    "layoutType": "نوع الترتيب:",
+    "layoutType": "نوع التخطيط",
     "layoutVertical": "التدفق العمودي",
     "muscleGroup": "مجموعة العضلات",
     "newTag": "علامة جديدة",
     "noTagsFound": "لا توجد علامات تطابق بحثك",
     "noTagsSelected": "لم يتم اختيار أي علامات. انقر على العلامات أدناه لإضافتها.",
-    "note": "ملاحظة:",
-    "notes": "ملاحظات (اختياري):",
+    "note": "الملاحظة",
     "notices": {
       "auditConfirmRenameFile": "هل تريد إعادة تسمية هذا الملف؟\n\n{oldName} → {newName}",
       "auditMismatchCount": "تم العثور على {count} تناقض:",
@@ -733,11 +774,11 @@
       "dashboardUpdateFailed": "تعذّر تحديث لوحة التحكم: لم يُعثر عليها في ملاحظتها، أو توجد لوحة أخرى بلا معرّف بالإعدادات نفسها. أعد فتح الملاحظة وحاول مرة أخرى.",
       "setsInserted": "تم إدخال المجموعات"
     },
-    "parameterKey": "المفتاح:",
-    "parameterLabel": "الاسم:",
+    "parameterKey": "المفتاح",
+    "parameterLabel": "التسمية",
     "parameterRequired": "مطلوب",
-    "parameterType": "النوع:",
-    "parameterUnit": "الوحدة (اختياري):",
+    "parameterType": "النوع",
+    "parameterUnit": "الوحدة (اختياري)",
     "placeholders": {
       "customTitle": "اتركه فارغًا للعنوان التلقائي",
       "enterTagName": "أدخل اسم العلامة (مثلًا: chest، petto)",
@@ -757,10 +798,8 @@
       "sets": "4",
       "workout": "مثلًا، تدريب A، تدريب B، أو استخدم علامة اختيار أدناه"
     },
-    "protocol": "بروتوكول:",
-    "recentExercises": "الأخيرة:",
-    "restTime": "وقت الراحة (ثواني):",
-    "rounds": "الجولات:",
+    "protocol": "البروتوكول",
+    "recentExercises": "الأخيرة",
     "save": "حفظ",
     "sections": {
       "advancedOptions": "خيارات متقدمة",
@@ -797,15 +836,15 @@
       "yesNo": "نعم/لا",
       "warmup": "الإحماء"
     },
-    "sets": "المجموعات:",
-    "similarTags": "علامات مشابهة:",
+    "sets": "المجموعات",
+    "similarTags": "علامات مشابهة",
     "similarity": "التشابه",
     "status": "الحالة",
     "tag": "العلامة",
-    "tagsSelector": "علامات العضلات:",
-    "timerDuration": "مدة المؤقت (ثوانٍ):",
-    "timerPreset": "الإعداد المسبق للمؤقت:",
-    "timerType": "نوع المؤقت:",
+    "tagsSelector": "علامات العضلات",
+    "timerDuration": "مدة المؤقت (ثوانٍ)",
+    "timerPreset": "إعداد المؤقت المسبق",
+    "timerType": "نوع المؤقت",
     "titles": {
       "addExerciseBlock": "إضافة كتلة تمرين",
       "auditExerciseNames": "مراجعة أسماء التمارين",
@@ -827,23 +866,30 @@
       "editChart": "تعديل مخطط التدريب",
       "insertSets": "إدراج مجموعات التمرين"
     },
-    "workout": "التدريب (اختياري):",
-    "workoutFile": "ملف التدريب:",
-    "workoutNameOptional": "اسم التدريب (اختياري):",
     "importMergeAriaLabel": "دمج: إضافة علامات جديدة فقط، الاحتفاظ بالموجودة",
     "importReplaceAriaLabel": "استبدال: الكتابة فوق جميع العلامات الموجودة",
     "editItem": "تعديل {item}",
     "deleteItem": "حذف {item}",
+    "duration": "المدة (ثوانٍ)",
     "errors": {
       "missingElements": "عناصر مفقودة",
       "validationCombinedMode": "لنوع \"التمرين + التدريب\"، املأ كلا الحقلين"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - المجموعات: {sets}\n- التكرارات: {reps}\n- الراحة: {restTime} ث\n\n",
+    "exerciseType": "نوع التمرين",
     "noteTemplate": "**ملاحظة: {note}**\n",
+    "notes": "ملاحظات (اختياري)",
     "date": "التاريخ",
+    "dateRange": "النطاق الزمني (أيام)",
+    "daysRange": "نطاق الأيام (0 = الكل)",
     "weightUnitToggle": "وحدة القياس لهذا السجل",
     "work": "العمل",
-    "rest": "الراحة"
+    "workout": "التدريب (اختياري)",
+    "workoutFile": "ملف التدريب",
+    "workoutNameOptional": "اسم التدريب (اختياري)",
+    "rest": "الراحة",
+    "restTime": "وقت الراحة (ثوانٍ)",
+    "rounds": "الجولات"
   },
   "settings": {
     "buttons": {
@@ -997,20 +1043,10 @@
       "intro": "ميزات جديدة لتجربتها قبل أن تكون جاهزة للجميع. ستكون معطلة حتى تقوم بتفعيلها، وقد تتغير لاحقًا.",
       "setSheet": {
         "name": "مجموعات التمرين",
-        "desc": "The `workout-sets` block: today's sets as rows to fill in on your phone, with the last time's values as hints and a rest timer that starts on each tick."
+        "desc": "كتلة `workout-sets`: مجموعات اليوم كصفوف تملؤها من هاتفك، مع قيم المرة الماضية كتلميحات ومؤقت راحة يبدأ مع كل تأشير."
       },
       "disabledBlock": "{feature} هي ميزة تجريبية. قم بتفعيلها في الإعدادات → ميزات تجريبية لاستخدام هذه الميزة."
     }
-  },
-  "stats": {
-    "max": "الحد الأقصى: ",
-    "min": "الحد الأدنى: ",
-    "recentLast3": " (آخر 3)",
-    "recentTrend": "الاتجاه الأخير",
-    "recentVsPrev": " (مقابل السابق)",
-    "sessions": "الجلسات",
-    "average": "المتوسط: ",
-    "title": "إحصائيات {dataTypeLabel} ({contextLabel}):"
   },
   "table": {
     "actions": "الإجراءات",
@@ -1050,6 +1086,8 @@
     "notAvailable": "غير متوفر",
     "refreshSuccess": "تم تحديث الجدول",
     "target": {
+      "noSetsYet": "لا توجد مجموعات بوزن {weight} بعد",
+      "progress": "الأفضل {best}/{target} تكرار",
       "progressTooltip": "أفضل: {best} تكرار / الهدف: {target} تكرار",
       "repsSuffix": "تكرار",
       "separator": " × "
@@ -1232,25 +1270,29 @@
     "next": "التالي",
     "rest": "راحة",
     "done": "اكتمل التدريب: تم تسجيل {sets} مجموعة اليوم.",
-    "empty": "Add a `workout-log` or `workout-sets` block with an exercise to this note to follow it as a session."
+    "empty": "أضف كتلة `workout-log` أو `workout-sets` تحتوي على تمرين إلى هذه الملاحظة لمتابعتها كجلسة."
   },
   "sets": {
-    "editSet": "تحرير المجموعة {set}",
     "addSet": "إضافة مجموعة",
+    "removeSet": "إزالة المجموعة",
     "protocol": "البروتوكول",
     "notes": "ملاحظات",
     "editBlock": "تحرير المجموعات",
+    "editRestTimer": "تحرير مؤقت الراحة",
     "blockUpdated": "تم تحديث المجموعات",
     "blockUpdateFailed": "فشلت عملية تحديث المجموعات: لم يتم العثور على العنصر في الملاحظة. أعد فتح الملاحظة وحاول مرة أخرى.",
-    "workoutLabel": "تمارين:",
+    "workoutLabel": "التدريب",
     "workoutPlaceholder": "فارغ: {note}",
     "restLabel": "الراحة بعد كل مجموعة (0 = مؤقت القسم)",
     "noExercise": "أضف `exercise:` إلى هذا القسم لتسجيل مجموعاته.",
-    "progress": "{done}/{sets} sets",
+    "progress": "{done}/{sets} مجموعة",
     "lastTime": "آخر مرة ({date}): {sets}",
-    "setColumn": "إعداد",
-    "fieldOfSet": "{field}، قم بتعيين {set}",
+    "setColumn": "المجموعة",
+    "fieldOfSet": "{field}، المجموعة {set}",
     "details": "البروتوكول والملاحظات الخاصة بالمجموعة {set}",
-    "logSet": "مجموعة السجلات {set}"
+    "logSet": "تسجيل المجموعة {set}",
+    "unlogSet": "إزالة المجموعة {set} من السجل",
+    "setRemoved": "تمت إزالة المجموعة {set}",
+    "valueOfSet": "{field}، المجموعة {set}: {value}"
   }
 }

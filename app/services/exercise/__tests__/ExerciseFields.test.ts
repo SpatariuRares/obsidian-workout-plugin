@@ -83,6 +83,13 @@ describe("readField", () => {
     expect(readField(fieldFor(param("weight")), "82.5")).toEqual({ value: 82.5 });
   });
 
+  it("should read a decimal comma, as a phone's decimal pad types it", () => {
+    expect(readField(fieldFor(param("weight")), "82,5")).toEqual({ value: 82.5 });
+    expect(readField(reps, "8,5")).toEqual({
+      error: t("modal.notices.validMustBeWholeNumber", { field: "Reps" }),
+    });
+  });
+
   it("should refuse a decimal where a whole number is expected", () => {
     expect(readField(reps, "8.5")).toEqual({
       error: t("modal.notices.validMustBeWholeNumber", { field: "Reps" }),

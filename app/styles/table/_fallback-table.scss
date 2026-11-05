@@ -29,15 +29,3 @@
     color: var(--text-normal);
   }
 }
-
-@media print {
-  .workout-charts-table-fallback {
-    .workout-charts-stats,
-    .workout-charts-trend-header {
-      border: var(--workout-border-thin) solid
-        var(--workout-border-color);
-      margin: var(--workout-space-md) 0;
-      padding: var(--workout-space-lg);
-    }
-  }
-}

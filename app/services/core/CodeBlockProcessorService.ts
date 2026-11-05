@@ -167,6 +167,7 @@ export class CodeBlockProcessorService {
           params,
           ctx.sourcePath,
           editAction,
+          this.locate(el, source, ctx),
         );
         ctx.addChild(sheet);
         await sheet.render();
@@ -210,9 +211,15 @@ export class CodeBlockProcessorService {
         ).open(),
       loadError: (error) =>
         t("codeBlocks.loadError.chart", { error }),
-      draw: async (body, params, syncMenu) => {
+      draw: async (body, params, syncMenu, editAction) => {
+        // The chart's card draws the ⋮ menu itself, with this edit action
         const render = () =>
-          this.embeddedChartView.render(body, params, ctx.sourcePath);
+          this.embeddedChartView.render(
+            body,
+            params,
+            ctx.sourcePath,
+            editAction,
+          );
         await render();
         // Also on an empty log: the chart fills in with the first set
         this.refreshOnLogChange(ctx, body, params, () =>
@@ -370,7 +377,7 @@ export class CodeBlockProcessorService {
     source: string,
     ctx: MarkdownPostProcessorContext,
     spec: {
-      schema: CodeBlockSchema<P>;
+      schema: CodeBlockSchema<P, Partial<P>>;
       withDefaults?: boolean;
       editLabel: string;
       edit: (

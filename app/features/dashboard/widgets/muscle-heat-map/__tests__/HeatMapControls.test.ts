@@ -28,7 +28,7 @@ describe("HeatMapControls metric toggle", () => {
     const { options, button } = setup();
 
     expect(options.metric).toBe("volume");
-    expect(button("volume").classList.contains("active")).toBe(true);
+    expect(button("volume").getAttribute("aria-pressed") === "true").toBe(true);
   });
 
   it.each(["sets", "reps"] as const)(
@@ -45,8 +45,8 @@ describe("HeatMapControls metric toggle", () => {
         expect.anything(),
         expect.anything(),
       );
-      expect(button(metric).classList.contains("active")).toBe(true);
-      expect(button("volume").classList.contains("active")).toBe(false);
+      expect(button(metric).getAttribute("aria-pressed") === "true").toBe(true);
+      expect(button("volume").getAttribute("aria-pressed") === "true").toBe(false);
     },
   );
 });
@@ -65,7 +65,7 @@ describe("HeatMapControls starting options", () => {
     );
 
     expect(options).toEqual({ timeFrame: "year", view: "back", metric: "sets" });
-    const active = [...container.querySelectorAll("button.active")].map(
+    const active = [...container.querySelectorAll('button[aria-pressed="true"]')].map(
       (b) => b.textContent,
     );
     expect(active).toEqual([

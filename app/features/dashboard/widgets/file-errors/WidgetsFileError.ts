@@ -1,4 +1,5 @@
 import { Feedback } from "@app/components/atoms/Feedback";
+import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import type {
   AppPort,
   SettingsPort,
@@ -48,8 +49,8 @@ export class WidgetsFileError {
 
     // Get exercise files with errors
     const rules = {
-      maxTags: params.fileErrorsMaxTags ?? 3,
-      checkSharedNames: params.fileErrorsCheckSharedNames ?? true,
+      maxTags: params.fileErrorsMaxTags ?? dashboardBlock.defaults.fileErrorsMaxTags,
+      checkSharedNames: params.fileErrorsCheckSharedNames ?? dashboardBlock.defaults.fileErrorsCheckSharedNames,
     };
     const allErrors = await this.validateExerciseFiles(plugin, rules);
     const fileErrors = allErrors.slice(0, params.fileErrorsMaxItems);

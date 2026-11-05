@@ -83,7 +83,7 @@ describe("TrainingCalendarWidget", () => {
     );
 
     const values = Array.from(
-      container.querySelectorAll(".workout-calendar-stat-value"),
+      container.querySelectorAll(".stat-card-value"),
     ).map((el) => el.textContent);
     expect(values).toEqual([
       t("dashboard.trainingCalendar.weeks", { count: 2 }),
@@ -93,7 +93,7 @@ describe("TrainingCalendarWidget", () => {
         goal: 2,
       }),
     ]);
-    expect(container.querySelector(".is-met")).toBeNull();
+    expect(container.querySelector(".is-up")).toBeNull();
   });
 
   it("should leave out the streaks when asked", () => {

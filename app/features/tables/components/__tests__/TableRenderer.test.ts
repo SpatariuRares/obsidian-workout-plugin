@@ -1,6 +1,7 @@
 /** @jest-environment jsdom */
 
-import { CONSTANTS, mapColumnIdentifiersToLabels } from "@app/constants";
+import { CONSTANTS } from "@app/constants";
+import { TableHeader } from "@app/features/tables/ui/TableHeader";
 import { TableRenderer } from "@app/features/tables/components/TableRenderer";
 
 import {
@@ -291,26 +292,21 @@ describe("TableRenderer", () => {
       expect(result).toBe(true);
     });
 
-    it("applies group-even/group-odd classes to rows", () => {
+    it("gives a day's line and sets one shade, the next day the other", () => {
       const container = document.createElement("div");
-      const headers = ["Date", "Reps"];
       const rows = [
-        createRow({
-          dateKey: "2024-01-15",
-          displayRow: ["10:00", "8"],
-        }),
+        createRow({ dateKey: "2024-01-15", displayRow: ["10:00", "8"] }),
+        createRow({ dateKey: "2024-01-15", displayRow: ["10:05", "8"] }),
+        createRow({ dateKey: "2024-01-12", displayRow: ["09:00", "6"] }),
       ];
 
-      TableRenderer.renderTable(container, headers, rows, {});
+      TableRenderer.renderTable(container, ["Date", "Reps"], rows, {});
 
-      const dataRows = container.querySelectorAll(
-        ".workout-same-day-log",
+      const shades = Array.from(container.querySelectorAll("tbody tr")).map((tr) =>
+        tr.classList.contains("workout-table-day-odd") ? "odd" : "even",
       );
-      expect(dataRows.length).toBe(1);
-      expect(
-        dataRows[0].classList.contains("group-even") ||
-          dataRows[0].classList.contains("group-odd"),
-      ).toBe(true);
+      // line, set, set | line, set
+      expect(shades).toEqual(["odd", "odd", "odd", "even", "even"]);
     });
 
     it("applies date cell class to first column", () => {
@@ -332,32 +328,43 @@ describe("TableRenderer", () => {
       expect(dateCell!.textContent).toBe("10:00");
     });
 
-    it("labels value cells with their column name for the mobile card layout", () => {
+    it("gives a column's header and cells the same class, and counts the value columns", () => {
       const container = document.createElement("div");
-      const repsCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS.value;
-      const actionsCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS.value;
-      const headers = ["Date", repsCol, actionsCol];
+      const COLUMNS = CONSTANTS.WORKOUT.TABLE.COLUMNS;
+      const headers = [
+        "Date",
+        COLUMNS.REPS.value,
+        COLUMNS.WEIGHT.value,
+        COLUMNS.VOLUME.value,
+        COLUMNS.NOTES.value,
+        COLUMNS.ACTIONS.value,
+      ];
       const rows = [
         createRow({
           dateKey: "2024-01-15",
-          displayRow: ["10:00", "8", ""],
+          displayRow: ["10:00", "8", "80", "640", "", ""],
         }),
       ];
 
       TableRenderer.renderTable(container, headers, rows, {});
 
-      const cells = container.querySelectorAll(
-        "tr.workout-same-day-log td",
-      );
-      expect(cells[1].getAttribute("data-label")).toBe(
-        mapColumnIdentifiersToLabels([repsCol])[0],
-      );
-      // The time and action cells explain themselves: no label
-      expect(cells[0].hasAttribute("data-label")).toBe(false);
-      expect(cells[2].hasAttribute("data-label")).toBe(false);
+      const classes = [
+        "workout-table-date-cell",
+        "workout-table-value-cell",
+        "workout-table-value-cell",
+        "workout-table-volume-cell",
+        "workout-table-notes-cell",
+        "workout-table-actions-cell",
+      ];
+      const td = Array.from(container.querySelectorAll("tr.workout-same-day-log td"));
+      expect(TableHeader.render).toHaveBeenLastCalledWith(expect.any(HTMLElement), headers, classes);
+      expect(td.map((cell) => cell.className)).toEqual(classes);
+      // Reps, weight and volume: the phone grid's number tracks
+      const table = container.querySelector<HTMLElement>(".workout-log-table")!;
+      expect(table.style.getPropertyValue("--workout-log-fields")).toBe("3");
     });
 
-    it("marks the notes column so it can wrap under the row on phones", () => {
+    it("marks the notes column so phones put it under the numbers", () => {
       const container = document.createElement("div");
       const notesCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value;
       const headers = ["Date", notesCol];
@@ -374,12 +381,9 @@ describe("TableRenderer", () => {
         ".workout-table-notes-cell",
       );
       expect(notesCell?.textContent).toBe("Felt strong");
-      expect(notesCell?.getAttribute("data-label")).toBe(
-        mapColumnIdentifiersToLabels([notesCol])[0],
-      );
     });
 
-    it("marks the exercise cell so it becomes the card title on phones", () => {
+    it("marks the exercise cell so phones put it above the numbers", () => {
       const container = document.createElement("div");
       const exerciseCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE.value;
       TableRenderer.renderTable(
@@ -398,7 +402,7 @@ describe("TableRenderer", () => {
       expect(cell?.textContent).toBe("Lying Leg Curl (Sdraiato)");
     });
 
-    it("marks N/A values so phones can hide them", () => {
+    it("marks N/A values so they are muted", () => {
       const container = document.createElement("div");
       const repsCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS.value;
       const durationCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value;
@@ -417,38 +421,6 @@ describe("TableRenderer", () => {
       const cells = container.querySelectorAll("tr.workout-same-day-log td");
       expect(cells[1].classList.contains("workout-table-na-cell")).toBe(false);
       expect(cells[2].classList.contains("workout-table-na-cell")).toBe(true);
-    });
-
-    describe("rows with a second line (notes or protocol badge)", () => {
-      const notesCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value;
-      const protocolCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value;
-      const DETAILS_CLASS = "workout-table-row-with-details";
-
-      const renderRow = (displayRow: string[]) => {
-        const container = document.createElement("div");
-        TableRenderer.renderTable(
-          container,
-          ["Date", notesCol, protocolCol],
-          [createRow({ dateKey: "2024-01-15", displayRow })],
-          {},
-        );
-        return container.querySelector("tr.workout-same-day-log");
-      };
-
-      it("marks a row that has notes", () => {
-        const tr = renderRow(["10:00", "Felt strong", WorkoutProtocol.STANDARD]);
-        expect(tr?.classList.contains(DETAILS_CLASS)).toBe(true);
-      });
-
-      it("marks a row that has a protocol badge", () => {
-        const tr = renderRow(["10:00", "", WorkoutProtocol.DROP_SET]);
-        expect(tr?.classList.contains(DETAILS_CLASS)).toBe(true);
-      });
-
-      it("does not mark a row with no notes and a standard set", () => {
-        const tr = renderRow(["10:00", "", WorkoutProtocol.STANDARD]);
-        expect(tr?.classList.contains(DETAILS_CLASS)).toBe(false);
-      });
     });
 
     it("applies volume cell class to volume column", () => {

@@ -1,18 +1,67 @@
-/* Target header */
+/* ============================================================================
+   TARGET (TargetSection): a block's goal, as its own panel in the card
+   ============================================================================
+   Inset into the card (page color, control border) so it reads as "this is
+   the goal": target icon and label, the best reps at that weight on the
+   right, the target in big figures, a progress meter under them. Once
+   reached the panel is done (accent border, full accent meter) and holds the
+   achievement row.
+   ============================================================================ */
+
 .workout-target-header {
-  padding: var(--workout-space-md) var(--workout-space-lg);
-  margin-top: var(--workout-space-md);
-  margin-bottom: var(--workout-space-md);
-  background: var(--background-secondary);
-  border-radius: var(--workout-radius-md);
-  font-size: var(--workout-font-base);
-  font-weight: var(--workout-font-weight-medium);
-  color: var(--text-normal);
-  text-align: center;
-  border-left: 3px solid var(--text-accent);
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+  padding: var(--workout-space-md);
+  background: var(--background-primary);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
+  border-radius: var(--workout-radius-lg);
+  font-variant-numeric: tabular-nums;
+
+  --workout-progress-meter-height: 8px;
+
+  &.is-done {
+    border-color: var(--workout-accent-fill);
+  }
 }
 
+.workout-target-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--workout-space-xs) var(--workout-space-sm);
+}
+
+.workout-target-icon {
+  display: inline-flex;
+  color: var(--workout-text-accent);
+
+  .workout-target-header.is-done & {
+    color: var(--workout-text-success);
+  }
+}
+
+.workout-target-label {
+  font-size: var(--workout-font-sm);
+  font-weight: var(--workout-font-weight-medium);
+  color: var(--text-muted);
+}
+
+.workout-target-progress {
+  margin-left: auto;
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+
+  .workout-target-header.is-done & {
+    font-weight: var(--workout-font-weight-semibold);
+    color: var(--workout-text-success);
+  }
+}
+
+// The goal in figures: the biggest thing in the panel
 .workout-target-text {
-  display: block;
-  margin-bottom: var(--workout-space-sm);
+  font-size: var(--workout-font-2xl);
+  font-weight: var(--workout-font-weight-semibold);
+  line-height: 1.2;
+  color: var(--text-normal);
 }

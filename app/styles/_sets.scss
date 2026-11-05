@@ -5,25 +5,9 @@
    Today's sets of one exercise as rows to fill in and tick, sized for thumbs
    ============================================================================ */
 
-.workout-sets {
-  display: flex;
-  flex-direction: column;
-  gap: var(--workout-space-sm);
-  background: var(--background-secondary);
-  border: var(--workout-border-thin) solid var(--workout-border-color);
-  border-radius: var(--workout-radius-xl);
-  padding: var(--workout-space-md);
-}
-
 .workout-sets-message,
 .workout-sets-meta {
   color: var(--text-muted);
-}
-
-// The target with its progress bar, as the table shows it, without its margins
-.workout-sets .workout-target-header {
-  margin: 0;
-  background: var(--background-primary);
 }
 
 .workout-sets-meta {
@@ -31,33 +15,11 @@
   font-variant-numeric: tabular-nums;
 }
 
-// Title | progress | ⋮ on one row: the menu stays in the top right corner
-.workout-sets-header {
-  display: flex;
-  align-items: center;
-  gap: var(--workout-space-sm);
-}
-
-.workout-sets-title {
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-
-.workout-sets-header > :not(.workout-sets-title) {
-  flex: none;
-}
-
-.workout-sets-exercise {
-  font-size: var(--workout-font-lg);
-  font-weight: var(--workout-font-weight-semibold);
-  color: var(--workout-text-accent);
-}
-
 .workout-sets-rows {
-  // Set number, one column per field, details toggle, tick
+  // Set number, one column per field, details toggle, tick (its column is
+  // wider than the tick: see .workout-sets-row-main > .workout-check-toggle)
   --workout-sets-columns: 2.25rem repeat(var(--workout-sets-fields, 2), minmax(0, 1fr))
-    2.5rem 3.25rem;
+    2.5rem 4rem;
 
   display: flex;
   flex-direction: column;
@@ -71,8 +33,7 @@
   align-items: center;
 }
 
-.workout-sets-columns,
-.workout-sets-label {
+.workout-sets-columns {
   font-size: var(--workout-font-xs);
   color: var(--text-muted);
 }
@@ -104,11 +65,6 @@
   padding: var(--workout-space-xs);
 }
 
-.workout-sets-row.is-logged .workout-sets-row-main {
-  cursor: pointer;
-  border-radius: var(--workout-radius-md);
-}
-
 .workout-sets-number {
   display: flex;
   flex-direction: column;
@@ -119,7 +75,7 @@
   font-variant-numeric: tabular-nums;
 
   .workout-protocol-badge {
-    font-size: var(--workout-font-2xs);
+    font-size: var(--workout-font-xs);
   }
 }
 
@@ -127,71 +83,26 @@
   min-width: 0;
 }
 
-.workout-sets-input,
 .workout-sets-value {
+  min-width: 0;
+  // Lined up with the text of a field (its box border and padding)
+  padding-left: calc(var(--workout-space-sm) + var(--workout-border-thin));
   font-size: var(--workout-font-lg);
   font-weight: var(--workout-font-weight-semibold);
   font-variant-numeric: tabular-nums;
-}
-
-.workout-sets-input {
-  width: 100%;
-  height: 2.75rem;
-
-  &::placeholder {
-    color: var(--text-faint);
-    font-weight: var(--workout-font-weight-medium);
-  }
-}
-
-.workout-sets-value {
-  min-width: 0;
-  padding-left: var(--workout-space-sm);
   overflow-wrap: anywhere;
 }
 
-.workout-sets-details-toggle {
-  position: relative;
-  justify-self: center;
-  width: var(--workout-touch-target-min, 44px);
-  height: var(--workout-touch-target-min, 44px);
-
-  svg {
-    transition: transform var(--workout-transition);
+// The row's chevron and tick, in their grid columns
+.workout-sets-row-main {
+  > .workout-disclosure-toggle {
+    justify-self: center;
   }
-}
 
-.workout-sets-row.is-open .workout-sets-details-toggle svg {
-  transform: rotate(180deg);
-}
-
-// Something other than the defaults is set in the hidden details
-.workout-sets-details-dot {
-  position: absolute;
-  top: var(--workout-space-xs);
-  right: var(--workout-space-xs);
-  width: 0.45rem;
-  height: 0.45rem;
-  border-radius: var(--workout-radius-round);
-  background: var(--workout-accent-fill);
-}
-
-.workout-sets-check {
-  display: grid;
-  place-items: center;
-  width: 3.25rem;
-  height: 2.75rem;
-  padding: 0;
-  border-radius: var(--workout-radius-lg);
-  border: var(--workout-border-medium) solid var(--workout-border-color);
-  background: var(--background-primary);
-  color: var(--text-faint);
-  cursor: pointer;
-
-  &.is-done {
-    border-color: var(--workout-accent-fill);
-    background: var(--workout-accent-fill);
-    color: var(--text-on-accent);
+  // Its column is wider than the tick, so a tap meant for the chevron
+  // can't land on it (a filled tick takes the set back)
+  > .workout-check-toggle {
+    justify-self: end;
   }
 }
 
@@ -206,31 +117,10 @@
   padding: 0 var(--workout-space-xs) var(--workout-space-md) 2.75rem;
 }
 
-// One scrolling row of chips, so the list stays short on a phone
-.workout-sets-chips {
-  display: flex;
-  gap: var(--workout-space-xs);
-  overflow-x: auto;
-  padding-bottom: var(--workout-space-2xs);
-
-  .workout-chip {
-    flex: none;
-  }
-}
-
-.workout-sets-notes {
-  width: 100%;
-  min-height: 3.5rem;
-  resize: vertical;
-}
-
-.workout-sets-footer {
-  display: flex;
-  justify-content: flex-end;
-}
-
-@media (hover: hover) {
-  .workout-sets-row.is-logged .workout-sets-row-main:hover {
-    background: var(--background-modifier-hover);
-  }
+// "Remove set" (DeleteButton), in the details of a row added with "Add
+// set": finger-sized like the details toggle, also on desktop
+.workout-sets-remove {
+  align-self: flex-start;
+  min-width: var(--workout-touch-target-min, 44px);
+  min-height: var(--workout-touch-target-min, 44px);
 }

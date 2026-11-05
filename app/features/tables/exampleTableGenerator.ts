@@ -1,22 +1,6 @@
 import { tableBlock } from "@app/features/tables/tableBlock";
-import { setsBlock } from "@app/features/tables/setsBlock";
+import { setsBlock, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
-
-export function generateExerciseLogBlock(
-  exercise: string,
-  workout: string,
-  opts?: { limit?: number; exactMatch?: boolean; sets?: number },
-): string {
-  return tableBlock.serialize({
-    id: generateCodeBlockId(),
-    exercise,
-    workout,
-    // With sets, the table shows the last two workouts by itself
-    limit: opts?.limit ?? (opts?.sets ? undefined : 12),
-    exactMatch: (opts?.exactMatch ?? true) || undefined,
-    sets: opts?.sets,
-  });
-}
 
 export function generateExerciseOnlyLogBlock(
   exercise: string,
@@ -49,7 +33,7 @@ export function generateCombinedLogBlock(
 /** A `workout-sets` block: the table made for logging on the phone */
 export function generateSetsBlock(
   exercise: string,
-  opts: { workout?: string; sets?: number; targetReps?: number; targetWeight?: number } = {},
+  opts: Pick<EmbeddedSetsParams, "workout" | "sets" | "targetReps" | "targetWeight" | "rest"> = {},
 ): string {
   return setsBlock.serialize({ id: generateCodeBlockId(), exercise, ...opts });
 }

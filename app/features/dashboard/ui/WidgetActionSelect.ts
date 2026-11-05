@@ -10,9 +10,9 @@ import { App } from "obsidian";
 import { t } from "@app/i18n";
 
 /**
- * WidgetActionSelect - the kebab menu at the right of a widget's title, like
- * the one on the dashboard itself. A widget without a title row gets it in
- * its top corner.
+ * WidgetActionSelect - the kebab menu at the right end of a widget card's top
+ * row, like the one on the dashboard itself. A widget without a top row gets
+ * it in its top corner.
  */
 export class WidgetActionSelect {
   static render(
@@ -26,10 +26,10 @@ export class WidgetActionSelect {
       matchWithoutId?: () => EditTarget["matchWithoutId"];
     },
   ): HTMLElement {
-    const title = widgetEl.querySelector<HTMLElement>(
-      ".workout-widget-title",
+    const header = widgetEl.querySelector<HTMLElement>(
+      ":scope > .workout-block-header",
     );
-    const menu = BlockMenu.render(title ?? widgetEl, [
+    const menu = BlockMenu.render(header ?? widgetEl, [
       {
         label: t("dashboard.widgetModal.edit"),
         icon: ICONS.ACTIONS.EDIT,
@@ -40,7 +40,7 @@ export class WidgetActionSelect {
           }).open(),
       },
     ]);
-    if (!title) menu.addClass("workout-widget-menu-corner");
+    if (!header) menu.addClass("workout-widget-menu-corner");
     return menu;
   }
 }

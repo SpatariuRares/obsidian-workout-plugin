@@ -1,11 +1,9 @@
 import { CONSTANTS, getColumnLabels } from "@app/constants";
 import {
-  EmbeddedChartParams,
   ChartDataset,
   CHART_DATA_TYPE,
 } from "@app/features/charts/types";
 import { t } from "@app/i18n";
-import { getDefaultChartTitle } from "@app/features/charts/config/ChartConstants";
 import { Icon } from "@app/components/atoms";
 import { ICONS } from "@app/constants/ui.constants";
 
@@ -53,25 +51,17 @@ export class ChartTableViews {
   }
 
   /**
-   * Creates a mobile-friendly table for displaying chart data.
-   * Hidden on desktop, shown on mobile via CSS.
+   * Creates a mobile-friendly table for displaying chart data, under the
+   * card's title. Hidden on desktop, shown on mobile via CSS.
    */
   static renderMobile(
     container: HTMLElement,
     labels: string[],
     datasets: ChartDataset[],
     chartType: CHART_DATA_TYPE,
-    params: EmbeddedChartParams,
   ): void {
     const mobileTableContainer = container.createDiv({
       cls: "workout-chart-mobile-table",
-    });
-
-    const title = params.title || getDefaultChartTitle(chartType);
-
-    mobileTableContainer.createEl("h3", {
-      text: title,
-      cls: "workout-mobile-table-title",
     });
 
     const table = mobileTableContainer.createEl("table");

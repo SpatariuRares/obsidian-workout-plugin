@@ -8,15 +8,17 @@ import { CONSTANTS } from "@app/constants";
 import { Icon } from "@app/components/atoms";
 
 /**
- * Renders trend header information for workout charts.
- * Displays trend direction, variation percentage, and visual indicators
- * to help users understand their workout progress.
+ * The trend row of a `workout-chart` card: direction, variation along the
+ * trend line (`trendOf`) and the range it covers.
  */
 export class TrendHeader {
   /**
-   * Renders a trend header with progress information.
-   * @param container - The HTML element to render the trend header in
-   * @param trendIndicators - Trend indicators containing direction, color, and icon
+   * Renders the trend as one row of the chart's card: icon, direction, the
+   * change along the trend line and the range it covers (muted). The row's
+   * tone follows whether the change is an improvement (`is-up`), not the
+   * sign: for pace a falling line is better.
+   * @param container - The HTML element to render the trend row in
+   * @param trendIndicators - Trend indicators containing direction and icon
    * @param volumeData - Array of numerical data for calculating variation
    * @param dataType - Optional data type for inverted logic (e.g., pace: lower is better)
    */
@@ -26,124 +28,78 @@ export class TrendHeader {
     volumeData: number[],
     dataType?: CHART_DATA_TYPE,
   ): void {
-    const trendHeader = container.createDiv({
-      cls: "workout-charts-trend-header",
-    });
-
     const { firstValue, lastValue, percentChange, direction: lineDirection } =
       this.calculateVariation(volumeData);
-    const variationData = this.formatVariationData(
-      firstValue,
-      lastValue,
-      percentChange,
-      trendIndicators.trendColor,
-      volumeData,
-      dataType,
-    );
+    const direction = this.improvement(lineDirection, dataType);
 
-    const h3 = trendHeader.createEl("h3", {
-      cls: "workout-charts-trend-header-h3",
+    const row = container.createDiv({
+      cls: `workout-chart-trend is-${direction}`,
+    });
+    Icon.create(row, {
+      name: trendIndicators.trendIcon,
+      className: "workout-chart-trend-icon",
+    });
+    row.createEl("strong", {
+      cls: "workout-chart-trend-direction",
+      text: trendIndicators.trendDirection,
     });
 
-    // Apply color class based on trend color
-    if (trendIndicators.trendColor.includes("green")) {
-      h3.classList.add("trend-color-green");
-    } else if (trendIndicators.trendColor.includes("red")) {
-      h3.classList.add("trend-color-red");
-    } else if (trendIndicators.trendColor.includes("orange")) {
-      h3.classList.add("trend-color-orange");
+    if (percentChange !== t("table.notAvailable") && percentChange !== "Infinity") {
+      TrendIndicator.create(row, {
+        percentage: Math.abs(parseFloat(percentChange)),
+        direction,
+        className: "workout-chart-trend-change",
+      });
     } else {
-      h3.classList.add("trend-color-accent");
+      // No percentage: "N/A", or a rise from zero ("Significant increase")
+      row.createSpan({
+        cls: "workout-chart-trend-change",
+        text:
+          percentChange === "Infinity"
+            ? t("charts.significantIncrease")
+            : t("table.notAvailable"),
+      });
     }
 
-    Icon.create(h3, { name: trendIndicators.trendIcon });
-    h3.appendText(
-      ` ${CONSTANTS.WORKOUT.LABELS.CHARTS.TREND_TITLE(dataType)} `,
-    );
-    h3.createEl("strong", { text: trendIndicators.trendDirection });
-
-    const p = trendHeader.createEl("p", {
-      cls: "workout-charts-trend-header-p",
-    });
-    p.createSpan({
-      text: t("charts.overallVariationPrefix"),
-    });
-
-    if (
-      variationData.text !== undefined &&
-      percentChange !== t("table.notAvailable")
-    ) {
-      // Determine trend direction based on percentage and data type
-      const percentValue = parseFloat(percentChange);
-      const isLowerBetter = dataType
-        ? FormatUtils.isLowerBetter(dataType)
-        : false;
-
-      // For inverted types (pace), negative change = improvement (up arrow)
-      // For normal types, positive change = improvement (up arrow)
-      let direction: "up" | "down" | "neutral";
-      if (lineDirection === "stable") {
-        direction = "neutral";
-      } else if (isLowerBetter) {
-        // Pace: a falling line = improving (faster)
-        direction = lineDirection === "down" ? "up" : "down";
-      } else {
-        direction = lineDirection;
-      }
-
-      // Use TrendIndicator molecule for variation display
-      TrendIndicator.create(p, {
-        percentage: Math.abs(percentValue),
-        direction: direction,
-        className: "workout-charts-trend-variation",
-      });
-    } else if (variationData.text !== undefined) {
-      // Fallback for non-percentage values (e.g., t("table.notAvailable"), "Aumento signif.")
-      const span = p.createSpan({
-        cls: "workout-charts-trend-variation",
-      });
-      span.textContent = variationData.text;
-      if (variationData.color) {
-        // Apply color class based on variation color
-        if (variationData.color.includes("green")) {
-          span.classList.add("trend-color-green");
-        } else if (variationData.color.includes("red")) {
-          span.classList.add("trend-color-red");
-        } else if (variationData.color.includes("orange")) {
-          span.classList.add("trend-color-orange");
-        } else {
-          span.classList.add("trend-color-accent");
-        }
-      }
+    const range = this.formatRange(firstValue, lastValue, volumeData, dataType);
+    if (range) {
+      row.createSpan({ cls: "workout-chart-trend-range", text: range });
     }
-    if (
-      firstValue !== undefined &&
-      lastValue !== undefined &&
-      volumeData.length >= 2
-    ) {
-      const formattedFirst = dataType
-        ? FormatUtils.formatValue(firstValue, dataType)
-        : firstValue.toFixed(1);
-      const formattedLast = dataType
-        ? FormatUtils.formatValue(lastValue, dataType)
-        : lastValue.toFixed(1);
-      p.append(
-        CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_FROM_TO_FORMATTED(
-          formattedFirst,
-          formattedLast,
-        ),
-      );
-    } else if (firstValue !== undefined && volumeData.length === 1) {
-      const formattedFirst = dataType
-        ? FormatUtils.formatValue(firstValue, dataType)
-        : firstValue.toFixed(1);
-      p.append(
-        CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_SINGLE_VALUE_FORMATTED(
-          formattedFirst,
-          dataType,
-        ),
+  }
+
+  /** Whether the line moves the good way: for pace a falling line is up */
+  private static improvement(
+    lineDirection: "up" | "down" | "stable",
+    dataType?: CHART_DATA_TYPE,
+  ): "up" | "down" | "neutral" {
+    if (lineDirection === "stable") return "neutral";
+    const isLowerBetter = dataType ? FormatUtils.isLowerBetter(dataType) : false;
+    if (!isLowerBetter) return lineDirection;
+    return lineDirection === "down" ? "up" : "down";
+  }
+
+  /** "from 491.3 kg to 646.5 kg", or the only value */
+  private static formatRange(
+    firstValue: number | undefined,
+    lastValue: number | undefined,
+    volumeData: number[],
+    dataType?: CHART_DATA_TYPE,
+  ): string {
+    const format = (value: number) =>
+      dataType ? FormatUtils.formatValue(value, dataType) : value.toFixed(1);
+    if (firstValue !== undefined && lastValue !== undefined && volumeData.length >= 2) {
+      return CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_FROM_TO_FORMATTED(
+        format(firstValue),
+        format(lastValue),
+      ).trim();
+    }
+    if (firstValue !== undefined && volumeData.length === 1) {
+      return CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_VALUE_LABEL_FORMATTED(
+        format(firstValue),
+        dataType,
       );
     }
+    return "";
   }
 
   /**
@@ -177,51 +133,5 @@ export class TrendHeader {
       percentChange,
       direction: trend?.direction ?? "stable",
     };
-  }
-
-  /**
-   * Formats the variation data for DOM rendering.
-   * @param firstValue - The first value in the dataset
-   * @param lastValue - The last value in the dataset
-   * @param percentChange - The calculated percentage change as a string
-   * @param trendColor - Color to use for the variation text
-   * @param volumeData - Array of numerical data points for context
-   * @param dataType - Optional data type for proper value formatting
-   * @returns Object with text and color for the variation
-   */
-  private static formatVariationData(
-    firstValue: number | undefined,
-    lastValue: number | undefined,
-    percentChange: string,
-    trendColor: string,
-    volumeData: number[],
-    dataType?: CHART_DATA_TYPE,
-  ): { text: string; color: string } {
-    if (
-      firstValue !== undefined &&
-      lastValue !== undefined &&
-      volumeData.length >= 2
-    ) {
-      const changeSign = parseFloat(percentChange) > 0 ? "+" : "";
-      return {
-        text:
-          percentChange === "Infinity"
-            ? t("charts.significantIncrease")
-            : `${changeSign}${percentChange}%`,
-        color: trendColor,
-      };
-    } else if (firstValue !== undefined && volumeData.length === 1) {
-      const formattedValue = dataType
-        ? FormatUtils.formatValue(firstValue, dataType)
-        : firstValue.toFixed(1);
-      return {
-        text: CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_VALUE_LABEL_FORMATTED(
-          formattedValue,
-          dataType,
-        ),
-        color: "",
-      };
-    }
-    return { text: t("table.notAvailable"), color: "" };
   }
 }

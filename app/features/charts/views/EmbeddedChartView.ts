@@ -9,7 +9,7 @@ import {
   CHART_TYPE,
 } from "@app/features/charts/types";
 import { TrendCalculator } from "@app/services/data/TrendCalculator";
-import { StatsBox } from "@app/features/dashboard/ui/StatsBox";
+import { StatsBox } from "@app/features/charts/ui/StatsBox";
 import {
   MobileTable,
   ChartFallbackTable,
@@ -26,6 +26,11 @@ import {
   TOUR_TARGETS,
   markTourTarget,
 } from "@app/features/tour/tourTargets";
+import { BlockCard } from "@app/components/molecules/BlockCard";
+import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
+import type { BlockMenuAction } from "@app/features/common/ui/BlockMenu";
+import { getDefaultChartTitle } from "@app/features/charts/config/ChartConstants";
+import { getTypeNames } from "@app/constants";
 
 export class EmbeddedChartView extends BaseView {
   /**
@@ -44,15 +49,17 @@ export class EmbeddedChartView extends BaseView {
    * Loads the log and draws the chart: on the first render and on every log
    * change, so a chart drawn on an empty log fills in with the first set.
    * @param sourcePath - The note the block is written in (its "first log" button)
+   * @param editAction - The block's edit action (CodeBlockProcessorService), in the card's ⋮ menu
    */
   async render(
     container: HTMLElement,
     params: EmbeddedChartParams,
     sourcePath?: string,
+    editAction?: BlockMenuAction,
   ): Promise<void> {
     const logData = (await this.plugin.getWorkoutLogData()) || [];
     container.empty();
-    await this.createChart(container, logData, params, sourcePath);
+    await this.createChart(container, logData, params, sourcePath, editAction);
   }
 
   async createChart(
@@ -60,6 +67,7 @@ export class EmbeddedChartView extends BaseView {
     logData: WorkoutLogData[],
     params: EmbeddedChartParams,
     sourcePath?: string,
+    editAction?: BlockMenuAction,
   ): Promise<void> {
     const loadingDiv = this.showLoadingIndicator(container);
     try {
@@ -133,6 +141,7 @@ export class EmbeddedChartView extends BaseView {
         volumeData,
         trendIndicators,
         params: resolvedParams,
+        editAction,
       });
     } catch (error) {
       this.handleError(container, error);
@@ -141,6 +150,11 @@ export class EmbeddedChartView extends BaseView {
     }
   }
 
+  /**
+   * The chart's card (DESIGN.md "Chart card"): title and ⋮ menu (go to the
+   * exercise, edit the block) on top, then the trend row, the chart (a table
+   * on phones), the stats row.
+   */
   private renderChartContent(
     container: HTMLElement,
     data: {
@@ -149,34 +163,35 @@ export class EmbeddedChartView extends BaseView {
       volumeData: number[];
       trendIndicators: TrendIndicators;
       params: EmbeddedChartParams;
+      editAction?: BlockMenuAction;
     },
   ): void {
-    const { labels, datasets, volumeData, trendIndicators, params } =
+    const { labels, datasets, volumeData, trendIndicators, params, editAction } =
       data;
+    const dataType = params.type || CHART_DATA_TYPE.VOLUME;
 
     container.empty();
-    const contentDiv = container.createDiv();
+    const subject = params.title || params.exercise || params.workout;
+    const { el: card, header } = BlockCard.create(container, {
+      title: subject || getDefaultChartTitle(dataType),
+      // The default title already names the type
+      meta: subject ? (getTypeNames()[dataType] ?? dataType) : undefined,
+      className: "workout-chart",
+    });
+    ExerciseActionSelect.render(header, {
+      exerciseName: params.exercise ?? "",
+      plugin: this.plugin,
+      edit: editAction,
+    });
 
     if (params.showTrend !== false && volumeData.length > 0) {
-      TrendHeader.render(
-        contentDiv,
-        trendIndicators,
-        volumeData,
-        params.type,
-      );
+      TrendHeader.render(card, trendIndicators, volumeData, params.type);
     }
 
     // Create mobile table (hidden on desktop, shown on mobile)
-    MobileTable.render(
-      contentDiv,
-      labels,
-      datasets,
-      params.type || CHART_DATA_TYPE.VOLUME,
-      params,
-    );
+    MobileTable.render(card, labels, datasets, dataType);
 
-    const chartContainer =
-      ChartRenderer.createChartContainer(contentDiv);
+    const chartContainer = ChartRenderer.createChartContainer(card);
     // Stable per-block ID: re-renders replace this block's chart only, and
     // two blocks with the same exercise/type no longer destroy each other
     chartContainer.id = `workout-chart-${getElementScopedId(container)}`;
@@ -186,11 +201,13 @@ export class EmbeddedChartView extends BaseView {
       ChartRenderer.addTrendLineToDatasets(datasets);
     }
 
+    // The card's title names the chart, so the canvas draws none
     const chartSuccess = ChartRenderer.renderChart(
       chartContainer,
       labels,
       datasets,
       params,
+      { showTitle: false },
     );
 
     if (!chartSuccess) {
@@ -198,13 +215,7 @@ export class EmbeddedChartView extends BaseView {
     }
 
     if (params.showStats !== false && volumeData.length > 0) {
-      StatsBox.render(
-        contentDiv,
-        labels,
-        volumeData,
-        params.chartType || CHART_TYPE.EXERCISE,
-        params.type || CHART_DATA_TYPE.VOLUME,
-      );
+      StatsBox.render(card, labels, volumeData, dataType);
     }
   }
 }

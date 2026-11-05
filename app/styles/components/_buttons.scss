@@ -179,21 +179,6 @@
     }
   }
 
-  // Modifier: add log layout
-  // One row: Add log takes the room (its long label wraps inside it) and
-  // the ⋮ menu stays next to it instead of dropping to a line of its own
-  &.workout-add-log-button-container {
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-
-    .workout-btn-primary {
-      @extend %workout-btn-big;
-      flex: 0 1 auto;
-      min-width: 0;
-    }
-  }
-
   // Modifier: vertical action buttons
   &.workout-action-buttons {
     flex-direction: column;
@@ -201,56 +186,17 @@
 }
 
 /* ----------------------------------------------------------------------------
-   Charts Modal Buttons
+   Primary anywhere
+   ----------------------------------------------------------------------------
+   A primary button is the accent fill wherever it is drawn, not only inside
+   .workout-buttons-container (outside one it fell back to Obsidian's grey
+   button). Two classes outrank Obsidian's `button:not(.clickable-icon)`.
    ---------------------------------------------------------------------------- */
 
-.workout-modal {
-  .workout-btn-primary,
-  .workout-btn-danger,
-  .workout-btn-warning {
-    @extend %workout-btn-giant;
-  }
-}
-
-/* ----------------------------------------------------------------------------
-   Single Context Buttons
-   ---------------------------------------------------------------------------- */
-
-.workout-achievement-badge .workout-update-target-button {
+.workout-btn.workout-btn-primary {
+  @extend %workout-btn-base;
   @extend %workout-btn-primary;
-}
-
-/* ----------------------------------------------------------------------------
-   Toggle Buttons
-   ---------------------------------------------------------------------------- */
-
-.workout-frame-toggle {
-  display: flex;
-  gap: var(--workout-space-xs);
-  border: var(--workout-border-thin) solid
-    var(--workout-border-color);
-  border-radius: var(--workout-radius-md);
-  padding: var(--workout-space-xs);
-  background: var(--background-secondary);
-
-  .workout-toggle-btn {
-    @extend %workout-btn-secondary;
-    padding: var(--workout-space-sm) var(--workout-space-lg);
-    color: var(--text-muted);
-    font-size: var(--workout-font-base);
-    border-radius: var(--button-radius, var(--workout-radius-sm));
-    font-weight: var(--workout-font-weight-medium);
-
-    &:hover {
-      background: var(--background-modifier-hover);
-      color: var(--text-normal);
-    }
-
-    &.active {
-      @extend %workout-btn-primary;
-      font-weight: var(--workout-font-weight-semibold);
-    }
-  }
+  box-shadow: none;
 }
 
 /* ----------------------------------------------------------------------------
@@ -438,22 +384,12 @@
 }
 
 @media print {
-  .workout-buttons-container.workout-add-log-button-container {
+  .workout-log .workout-log-actions {
     display: none;
   }
 }
 
 @media (max-width: variables.$breakpoint-tablet) {
-  .workout-frame-toggle {
-    justify-content: center;
-    width: 100%;
-  }
-
-  .workout-toggle-btn {
-    flex: 1;
-    padding: var(--workout-space-md) var(--workout-space-md);
-  }
-
   .workout-export-btn {
     width: 100%;
     justify-content: center;
@@ -469,9 +405,29 @@
   }
 }
 
-@media (max-width: variables.$breakpoint-mobile) {
-  .workout-toggle-btn {
-    padding: var(--workout-space-sm) var(--workout-space-md);
-    font-size: var(--workout-font-sm);
+/* ----------------------------------------------------------------------------
+   DELETE BUTTON (DeleteButton atom): the red trash icon
+   ---------------------------------------------------------------------------- */
+
+button.workout-delete-button {
+  justify-content: center;
+  color: var(--workout-text-error);
+
+  &:focus-visible {
+    outline: var(--workout-border-medium) solid var(--interactive-accent);
+    outline-offset: var(--workout-space-2xs);
   }
+}
+
+/* Removing is rare (a set, a widget): a small icon at the start of a
+   modal's action bar, with save and cancel pushed to the end */
+.workout-buttons-container button.workout-modal-actions-delete {
+  margin-inline-end: auto;
+  align-self: center;
+}
+
+// A finger-sized target on phones; the icon itself stays small
+body.is-mobile button.workout-delete-button {
+  min-width: var(--workout-touch-target-min, 44px);
+  min-height: var(--workout-touch-target-min, 44px);
 }

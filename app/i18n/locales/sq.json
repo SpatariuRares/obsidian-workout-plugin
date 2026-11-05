@@ -8,7 +8,6 @@
       "variationFromTo": " nga {startValue} në {endValue}",
       "weightIncrementUnit": "Rritja e peshës {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "Ndryshimi i përgjithshëm: ",
     "significantIncrease": "Rritje nga zero",
     "trendLine": "Vija e tendencës",
     "typeNotAvailable": "Lloji i grafikut \"{chartDataType}\" nuk është i disponueshëm për ushtrimet {exerciseType}. Llojet e disponueshme: {typeList}",
@@ -25,7 +24,16 @@
     "defaultTitle": "Tendenca {type}",
     "noTypesAvailable": "Nuk ka lloje grafikësh të disponueshme",
     "noEligibleE1rm": "Nuk ka seri të përshtatshme për 1RM të vlerësuar. Regjistroni një peshë pozitive me 1–12 përsëritje, duke përjashtuar seritë e ngrohjes dhe ato me ulje peshe.",
-    "editChart": "Redakto grafikun"
+    "editChart": "Redakto grafikun",
+    "stats": {
+      "average": "Mesatarja",
+      "last3": "3 të fundit",
+      "max": "Maks.",
+      "min": "Min.",
+      "recentTrend": "Tendenca e fundit",
+      "sessions": "Seancat",
+      "vsPrevious": "krahasuar me të mëparshmen"
+    }
   },
   "commands": {
     "addExerciseBlock": "Shto bllok ushtrimi",
@@ -53,11 +61,12 @@
     "minPerKm": "min/km",
     "notAvailable": "Nuk disponohet",
     "sec": "sek",
+    "undo": "Zhbëj",
     "unknown": "E panjohur",
     "workout": "Stërvitje"
   },
   "convert": {
-    "currentType": "Tipi aktual:",
+    "currentType": "Lloji aktual",
     "errors": {
       "convertError": "Gabim në konvertimin e të dhënave të ushtrimit: {error}"
     },
@@ -78,7 +87,7 @@
     "success": "{count} regjistrime u konvertuan me sukses",
     "title": "Konverto të dhënat e ushtrimit",
     "typeSelect": {
-      "convertTo": "Konverto në:",
+      "convertTo": "Konverto në",
       "updateFileType": "Përditëso llojin e skedarit të ushtrimit"
     }
   },
@@ -108,7 +117,7 @@
       "sharedName": "Emri i ushtrimit është i njëjtë me {pages}: regjistrimet shkojnë vetëm në një prej tyre."
     },
     "muscleTags": {
-      "description": "Përshkrim",
+      "description": "Etiketat që mund të përdorni te frontmatter-i i një faqeje ushtrimi. Klikoni një etiketë për ta kopjuar.",
       "title": "Etiketat për muskuj",
       "tooltip": "Klikoni për të kopjuar: {tag}",
       "totalCount": "Gjithsej: {count} etiketa të disponueshme"
@@ -129,7 +138,7 @@
       "columnProgression": "Progresi",
       "columnProtocol": "Protokol",
       "columnVolumeChange": "Ndryshimi i volumit",
-      "disclaimer": "Mohim përgjegjësie",
+      "disclaimer": "Korrelacion, jo provë: pesha, pushimi dhe gjumi ndryshojnë edhe këto shifra.",
       "noData": "Ende nuk ka mjaftueshëm të dhëna: çdo protokoll ka nevojë për të paktën 5 seri të regjistruara.",
       "title": "Efektiviteti i protokollit",
       "subtitle": "Si ka funksionuar çdo protokoll në të gjitha seritë e regjistruara"
@@ -174,9 +183,14 @@
         "sets": "Numri mesatar i serive: {value}",
         "reps": "Numri mesatar i përsëritjeve: {value}"
       },
+      "controls": {
+        "period": "Periudha",
+        "side": "Ana",
+        "metric": "Matja"
+      },
       "imbalance": {
-        "backDominant": "Diferencë mes pjesës front dhe back: pjesa e prapa e trupit punon shumë më shumë se pjesa e përpara.",
-        "frontDominant": "Diferencë mes pjesëve përpara dhe prapa: pjesa përpara është shumë më aktive se pjesa e prapa."
+        "backDominant": "Çekuilibër mes pjesës së përparme dhe asaj të pasme: pjesa e pasme e trupit punon shumë më shumë se ajo e përparme.",
+        "frontDominant": "Çekuilibër mes pjesës së përparme dhe asaj të pasme: pjesa e përparme punon shumë më shumë se ajo e pasme."
       }
     },
     "editDashboard": "Redakto panelin",
@@ -186,9 +200,8 @@
       "moveUp": "Lëviz {widget} lart",
       "moveDown": "Lëviz {widget} poshtë",
       "allHistory": "Bosh: e gjithë historia",
-      "recentWorkoutsLimit": "Numri i stërvitjeve në listën e fundit:",
-      "volumeTrendDays": "Numri i ditëve në trendin e vëllimit:",
-      "gridColumns": "Kolonat:",
+      "recentWorkoutsLimit": "Stërvitjet në listën e fundit",
+      "volumeTrendDays": "Ditët në tendencën e volumit",
       "layout": "Paraqitja",
       "layoutGrid": "Rrjetë",
       "layoutList": "Listë",
@@ -200,6 +213,7 @@
       "size": "{width} × {height}",
       "gridHint": "Tërhiq një widget për ta lëvizur dhe cepin e tij për ta ndryshuar madhësinë; zona më poshtë tregon madhësinë më të vogël që mund të ketë çdo widget. Hiqe një widget me × ose duke e tërhequr në zonë. Me tastierë: shigjetat lëvizin, Shift dhe shigjetat ndryshojnë madhësinë, Delete e heq.",
       "gridColumnsMeasured": "{columns} kolona përshtaten në gjerësinë e shënimit.",
+      "gridColumns": "Kolonat",
       "remove": "Hiq {widget} nga paneli"
     },
     "grid": {
@@ -230,37 +244,51 @@
       "edit": "Modifiko elementin",
       "removeConfirm": "Të hiqet \"{widget}\" nga paneli?",
       "removeConfirmButton": "Hiq",
-      "calendarWeeks": "Javët e shfaqura:",
+      "calendarWeeks": "Javët e shfaqura, të numëruara prapa nga kjo",
       "quickStatsPeriods": "Periudhat e shfaqura",
-      "quickStatsMetrics": "Rreshtat e shfaqur",
+      "quickStatsMetrics": "Shifrat e shfaqura",
       "heatMapTimeFrame": "Periudha fillestare",
-      "heatMapMetric": "Metrika fillestare",
-      "heatMapView": "Pamja fillestare",
-      "volumeTopLimit": "Ushtrimet në listën e kryesuesve:",
-      "protocolDays": "Ditët e numëruara:",
-      "protocolMinEntries": "Seritë e nevojshme për të krahasuar një protokoll:",
-      "durationRecentCount": "Stërvitjet e krahasuara:",
-      "durationRestSeconds": "Pushimi midis serive në vlerësim (sekonda):",
+      "heatMapMetric": "Matja fillestare",
+      "heatMapView": "Ana fillestare",
+      "volumeTopLimit": "Ushtrimet e listuara",
+      "protocolDays": "Ditët e numëruara",
+      "protocolMinEntries": "Numri minimal i serive për protokoll",
+      "durationRecentCount": "Stërvitjet e krahasuara",
+      "durationRestSeconds": "Pushimi mes serive në vlerësim",
       "summaryMetrics": "Kartat e shfaqura",
       "calendarShowStats": "Shfaq seritë e ditëve dhe progresin e kësaj jave",
       "heatMapShowImbalance": "Shfaq panelin e çekuilibrit",
-      "volumeShowBreakdown": "Shfaq listën e ushtrimeve kryesuese",
-      "protocolChartType": "Grafiku",
+      "volumeShowBreakdown": "Shfaq ushtrimet kryesore sipas volumit",
+      "protocolChartType": "Stili i grafikut",
       "chartPie": "Rrethor",
       "chartDoughnut": "Unazë",
-      "protocolSortBy": "Renditur sipas (më i miri i pari)",
-      "durationShowTrend": "Shfaq trendin e devijimit",
+      "protocolSortBy": "Rendit sipas",
+      "durationShowTrend": "Shfaq tendencën e saktësisë së vlerësimit",
       "quickActionsShown": "Butonat e shfaqur",
-      "fileErrorsMaxItems": "Faqet e listuara (bosh: të gjitha):",
-      "fileErrorsMaxTags": "Numri më i madh i etiketave të muskujve për faqe:",
+      "fileErrorsMaxItems": "Faqet e listuara",
+      "fileErrorsMaxTags": "Numri më i madh i etiketave të muskujve për një faqe",
       "fileErrorsCheckSharedNames": "Shëno faqet që ndajnë të njëjtin emër ushtrimi",
-      "muscleTagsGroupByMuscle": "Grupo etiketat sipas muskulit"
+      "muscleTagsGroupByMuscle": "Grupo etiketat sipas muskulit",
+      "volumeTrendDays": "Ditët në grafikun e volumit",
+      "recentWorkoutsLimit": "Stërvitjet e shfaqura",
+      "all": "Të gjitha",
+      "numberRange": "Shkruani një numër të plotë nga {min} deri në {max}.",
+      "pickOne": "Zgjidhni të paktën një, ose hiqni elementin.",
+      "units": {
+        "days": "ditë",
+        "weeks": "javë",
+        "seconds": "s"
+      },
+      "editTitle": "Redakto {widget}",
+      "sortMostSets": "Më shumë seri",
+      "lastWidget": "Ky është elementi i vetëm i panelit, prandaj nuk mund të hiqet: fshije bllokun."
     }
   },
   "duration": {
     "estimatedDuration": "Kohëzgjatja e vlerësuar",
     "lastSession": "Sesioni i fundit",
     "restTime": "Koha e pushimit",
+    "setCount": "{count} seri",
     "setTime": "Koha për seri",
     "unableToAnalyze": "Skedari i stërvitjes nuk mund të analizohet"
   },
@@ -358,7 +386,7 @@
       "trainingProtocolsTitle": "5. Protokollet e stërvitjes",
       "workoutChartTitle": "Grafiku i stërvitjes (të gjitha ushtrimet të kombinuara)",
       "e1rmChartTitle": "1RM i vlerësuar",
-      "e1rmIntro": "Vlerësimi më i mirë i çdo dite me formulën e Epley-t (pesha × (1 + përsëritjet / 30)), nga seritë prej 1 deri në 12 përsëritje. Seritë e ngrohjes dhe drop sets nuk llogariten.",
+      "e1rmIntro": "Vlerësimi më i mirë i çdo dite me formulën e Epley-t (pesha × (1 + përsëritjet / 30)), nga seritë prej 1 deri në 12 përsëritje. Seritë e ngrohjes dhe ato me ulje peshe nuk llogariten.",
       "presetTimersTitle": "Tabata dhe EMOM",
       "presetTimersIntro": "Një timer mund të ekzekutojë një preset të ruajtur me emër me `preset`. Tabata dhe EMOM janë të integruara; redakto ato ose shto të tuajat te Cilësimet → Paracaktimet e timerit.",
       "protocolColumn": "Protokolli",
@@ -378,8 +406,8 @@
       "importTitle": "8. Importo nga Strong ose Hevy",
       "importIntro": "Ekzekuto **{command}** nga paleta e komandave dhe zgjidh CSV-në që aplikacioni eksportoi. Seritë që janë tashmë në regjistrin tënd kapërcehen, dhe regjistri kopjohet së pari.",
       "setsTitle": "Shënimet për grupet në telefonin tuaj",
-      "setsIntro": "Një seksion me titull `workout-sets` tregon serit e ditës si radha. Numrat e argjyt janë serit të fundit: hap një radhë për të regjistruar atë siç është, ose shkruaj çfarë ke bërë. Kagj një buton për protokollen dhe notat e serit, dhe për të redaktuar një ser të regjistruar.",
-      "codeBlockWorkoutSets": "Log today's sets row by row"
+      "setsIntro": "Një bllok `workout-sets` shfaq seritë e ditës si rreshta. Numrat gri janë e njëjta seri herën e fundit: shëno një rresht për ta regjistruar ashtu siç është, ose shkruaj çfarë ke bërë. Prek shigjetën për protokollin dhe shënimet e serisë, dhe një seri të regjistruar për ta redaktuar.",
+      "codeBlockWorkoutSets": "Regjistro seritë e ditës rresht për rresht"
     },
     "fileNames": {
       "dashboard": "Paneli",
@@ -425,6 +453,24 @@
       "workoutsDesc": "Shabllone stërvitjesh shembull",
       "workoutsFolder": "**{folder}/**",
       "sessionIntro": "Ky shënim ka një plan të vogël: një ushtrim me seritë, objektivin dhe timerin e pushimit. Seanca tregon serinë që duhet bërë; regjistroje dhe timeri i pushimit fillon.",
+      "tables": {
+        "latestTitle": "Seritë e fundit të një ushtrimi",
+        "latestIntro": "`exercise` zgjedh ushtrimin dhe `limit` sa seri shfaq tabela.",
+        "targetTitle": "Objektivi dhe seritë e planifikuara",
+        "targetIntro": "Me `targetWeight` dhe `targetReps` tabela tregon sa je afër objektivit; kur e arrin, një etiketë të ofron të shkruash peshën e radhës te blloku. `sets` është sa seri planifikon: pa `limit` tabela shfaq dy stërvitjet e fundit, dhe një seancë e udhëzuar i numëron ato. `workout` me `exactMatch: true` mban vetëm seritë e atij ushtrimi në atë stërvitje.",
+        "workoutTitle": "Një stërvitje e tërë",
+        "workoutIntro": "Me `workout` dhe pa `exercise` tabela liston çdo ser të asaj stërvitjeje. `dateRange: 14` mban 14 ditët e fundit.",
+        "columnsTitle": "Kolonat dhe renditja",
+        "columnsIntro": "`columns` zgjedh kolonat dhe radhën e tyre; `sortBy` dhe `sortOrder` radhën e rreshtave, këtu seritë më të rënda të parat. `showAddButton: false` fshih butonin +, dhe `showProtocol: false` do të fshihte etiketat e protokolleve."
+      },
+      "sets": {
+        "lastTimeTitle": "Të njëjtat seri si herën e fundit",
+        "lastTimeIntro": "Me `workout` numrat gri vijnë nga hera e fundit që e bëre këtë ushtrim në atë stërvitje. Pa të, blloku përdor emrin e shënimit.",
+        "restTitle": "Timeri i pushimit dhe objektivat",
+        "restIntro": "`rest` është pushimi pas çdo serie, në sekonda (`0` = pa timer); pa të, blloku përdor `workout-timer` të seksionit. `targetWeight` dhe `targetReps` shfaqin objektivin, dhe janë sugjerimi herën e parë që bën një ushtrim.",
+        "restTimerTitle": "Opsionet e timerit të pushimit",
+        "restTimerIntro": "Blloku mban çdo opsion të timerit të pushimit, kështu që një shënim ditor nuk ka nevojë për `workout-timer`: `timer.type` (`interval` e përdor `rest` si punën e çdo raundi, me `timer.rest` dhe `timer.rounds`), `timer.preset`, `timer.sound` dhe `timer.showControls`. ⋮ → Redakto timerin e pushimit i shkruan ato për ju."
+      },
       "pagesIntro": "Eksploroni një funksion në çdo faqe. Ndiqni lidhjet me radhë, ose zgjidhni një funksion më poshtë. Përdorni butonat \"Prapa\" dhe \"Tjetra\" për të lëvizur mes shënimeve; lëvizni normalisht për të eksploruar çdo shembull.",
       "liveIntro": "Eksploroni çdo funksion më poshtë me stërvitje shembull për gjashtë javë. Këto janë të dhëna demonstrative; provoni kontrollet dhe shihni si funksionojnë shënimet tuaja.",
       "tryLog": "Përdorni butonin + për të shtuar një seri. Tabela, grafikët dhe paneli lexojnë të njëjtin skedar CSV.",
@@ -600,7 +646,7 @@
       "deleteSet": "Fshi serinë",
       "updateDashboard": "Përditëso panelin",
       "updateChart": "Përditëso grafikun",
-      "insertSets": "Setet e shtrimit"
+      "insertSets": "Shto seritë"
     },
     "canvasLayout": "Paraqitja",
     "canvasOptions": "Opsione",
@@ -623,43 +669,38 @@
     },
     "confirmAction": "Konfirmo veprimin",
     "csvExercise": "Ushtrim CSV",
-    "customParameters": "Parametrat e personalizuar:",
-    "customTitle": "Titull i personalizuar:",
-    "dataLimit": "Kufiri i të dhënave (0 = të gjitha):",
-    "dataType": "Tip i të dhënave:",
-    "dateRange": "Intervali i datave (ditë):",
-    "daysRange": "Intervali i ditëve (0 = të gjitha):",
+    "customParameters": "Parametra të personalizuar",
+    "customTitle": "Titull i personalizuar",
+    "dataLimit": "Kufiri i të dhënave (0 = të gjitha)",
+    "dataType": "Lloji i të dhënave",
     "delete": "Fshi",
-    "duration": "Kohëzgjatja (sekonda):",
     "editTag": "Redakto etiketën",
-    "exerciseType": "Lloji i ushtrimit:",
     "exportTags": "Eksporto etiketat",
     "fileName": "Emri i skedarit",
-    "folderPath": "Shtegu i dosjes (opsional):",
+    "folderPath": "Shtegu i dosjes (opsionale)",
     "importMerge": "Bashko",
     "importReplace": "Zëvendëso të gjitha",
     "importTags": "Importo etiketat",
     "labels": {
       "actions": "Veprime",
       "currentFileInfo": "Skedari aktual: {fileName}",
-      "exercise": "Ushtrimi:",
-      "reps": "Përsëritjet:",
-      "targetReps": "Përsëritjet e synuara:",
-      "plannedSets": "Seritë e planifikuara:",
-      "targetWeight": "Objektivi: ({unit}):",
-      "volume": "Volumi ({unit}):",
-      "weight": "Pesha ({unit}):"
+      "exercise": "Ushtrimi",
+      "reps": "Përsëritjet",
+      "targetReps": "Përsëritjet e objektivit",
+      "plannedSets": "Seritë e planifikuara",
+      "targetWeight": "Pesha e objektivit ({unit})",
+      "volume": "Volumi ({unit})",
+      "weight": "Pesha ({unit})"
     },
     "layoutGrouped": "Grupuar sipas muskujve",
     "layoutHorizontal": "Rrjedhë horizontale",
-    "layoutType": "Lloji i paraqitjes:",
+    "layoutType": "Lloji i paraqitjes",
     "layoutVertical": "Rrjedhë vertikale",
     "muscleGroup": "Grupi muskulor",
     "newTag": "Etiketë e re",
     "noTagsFound": "Nuk u gjet asnjë etiketë që përputhet me kërkimin tuaj",
     "noTagsSelected": "Nuk është zgjedhur asnjë etiketë. Klikoni etiketat më poshtë për t'i shtuar.",
-    "note": "Shënim:",
-    "notes": "Shënime (opsionale):",
+    "note": "Shënimi",
     "notices": {
       "auditConfirmRenameFile": "Të riemërtohet ky skedar?\n\n{oldName} → {newName}",
       "auditMismatchCount": "U gjetën {count} mospërputhje të mundshme:",
@@ -731,13 +772,13 @@
       "validationCombinedMode": "Për tipin 'ushtrim + stërvitje' duhet të plotësoni të dyja fushat!",
       "dashboardUpdated": "Paneli u përditësua me sukses!",
       "dashboardUpdateFailed": "Përditësimi i panelit dështoi: ai nuk u gjet në shënimin e tij, ose një tjetër panel pa ID ka të njëjtat cilësime. Hapeni përsëri shënimin dhe provoni përsëri.",
-      "setsInserted": "Grupet janë krijuar"
+      "setsInserted": "Seritë u shtuan"
     },
-    "parameterKey": "Çelësi:",
-    "parameterLabel": "Etiketa:",
+    "parameterKey": "Çelësi",
+    "parameterLabel": "Etiketa",
     "parameterRequired": "E detyrueshme",
-    "parameterType": "Lloj:",
-    "parameterUnit": "Njësia (opsionale):",
+    "parameterType": "Lloji",
+    "parameterUnit": "Njësia (opsionale)",
     "placeholders": {
       "customTitle": "Lëreni bosh për titull automatik",
       "enterTagName": "Vendosni emrin e etiketës (p.sh., gjoks, petto)",
@@ -757,10 +798,8 @@
       "sets": "4",
       "workout": "p.sh. Stërvitja A, Stërvitja B, ose përdorni kutinë e zgjedhjes më poshtë"
     },
-    "protocol": "Protokol:",
-    "recentExercises": "Të fundit:",
-    "restTime": "Koha e pushimit (sekonda):",
-    "rounds": "Raundet:",
+    "protocol": "Protokolli",
+    "recentExercises": "Të fundit",
     "save": "Ruaj",
     "sections": {
       "advancedOptions": "Opsione të avancuara",
@@ -797,15 +836,15 @@
       "yesNo": "Po/Jo",
       "warmup": "Ngrohja"
     },
-    "sets": "Seri:",
-    "similarTags": "Etiketa të ngjashme:",
+    "sets": "Seritë",
+    "similarTags": "Etiketa të ngjashme",
     "similarity": "Ngjashmëria",
     "status": "Statusi",
     "tag": "Etiketë",
-    "tagsSelector": "Etiketat për muskujt:",
-    "timerDuration": "Kohëzgjatja e timerit (sekonda):",
-    "timerPreset": "Paracaktimi i timerit:",
-    "timerType": "Lloji i timerit:",
+    "tagsSelector": "Etiketat e muskujve",
+    "timerDuration": "Kohëzgjatja e timerit (sekonda)",
+    "timerPreset": "Paracaktimi i timerit",
+    "timerType": "Lloji i timerit",
     "titles": {
       "addExerciseBlock": "Shto bllok ushtrimi",
       "auditExerciseNames": "Kontrollo emrat e ushtrimeve",
@@ -819,31 +858,38 @@
       "insertChart": "Shto grafik stërvitjeje",
       "insertDashboard": "Shto panel stërvitjeje",
       "insertDuration": "Shto kohëzgjatjen e stërvitjes",
-      "insertSession": "Fut seancë të udhëzuar",
+      "insertSession": "Shto seancë të udhëzuar",
       "insertTable": "Shto tabelë regjistrimi stërvitjeje",
       "insertTimer": "Shto timer stërvitjeje",
       "muscleTagManager": "Menaxho etiketat e muskujve",
       "editDashboard": "Redakto panelin",
       "editChart": "Redakto grafikun",
-      "insertSets": "Shtypni për të vendosur seritë e stërvitjes"
+      "insertSets": "Shto seritë e stërvitjes"
     },
-    "workout": "Stërvitja (opsionale):",
-    "workoutFile": "Skedari i stërvitjes:",
-    "workoutNameOptional": "Emri i stërvitjes (opsional):",
     "importMergeAriaLabel": "Bashko: shto vetëm etiketa të reja, ruaj ato ekzistuese",
     "importReplaceAriaLabel": "Zëvendëso: mbishkruaj të gjitha etiketat ekzistuese",
     "editItem": "Redakto {item}",
     "deleteItem": "Fshi {item}",
+    "duration": "Kohëzgjatja (sekonda)",
     "errors": {
       "missingElements": "Mungojnë elemente",
       "validationCombinedMode": "Për tipin ushtrim + stërvitje, plotësoni të dyja fushat"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Seri: {sets}\n- Përsëritje: {reps}\n- Pushim: {restTime}s\n\n",
+    "exerciseType": "Lloji i ushtrimit",
     "noteTemplate": "**Shënim: {note}**\n",
+    "notes": "Shënime (opsionale)",
     "date": "Data",
+    "dateRange": "Intervali i datave (ditë)",
+    "daysRange": "Intervali i ditëve (0 = të gjitha)",
     "weightUnitToggle": "Njësia për këtë regjistrim",
     "rest": "Pushim",
-    "work": "Punë"
+    "restTime": "Koha e pushimit (sekonda)",
+    "rounds": "Raundet",
+    "work": "Punë",
+    "workout": "Stërvitja (opsionale)",
+    "workoutFile": "Skedari i stërvitjes",
+    "workoutNameOptional": "Emri i stërvitjes (opsionale)"
   },
   "settings": {
     "buttons": {
@@ -994,23 +1040,13 @@
       "emom": "Çdo minutë, në fillim të minutës: filloni serinë në fillim të çdo minute dhe pushoni për pjesën që mbetet, 10 raunde."
     },
     "beta": {
-      "intro": "Funksionet të reja për të provuar para se të jen gati për të gjithë. Ato janë të ndezura derësnëse ju i aktivizoni, dhe ende mund të ndryshojnë.",
+      "intro": "Funksione të reja për t'i provuar para se të jenë gati për të gjithë. Ato janë të fikura derisa t'i aktivizoni, dhe ende mund të ndryshojnë.",
       "setSheet": {
-        "name": "Seri stërdhuese",
-        "desc": "Bloku `workout-sets`: serit e sotme si rreshta për të kompletuar në telefon, me vlerat e seancës të fundit si këshillë dhe një timer për pauzë që fillon në çdo klik."
+        "name": "Seritë e stërvitjes",
+        "desc": "Bloku `workout-sets`: seritë e sotme si rreshta për t'i plotësuar në telefon, me vlerat e herës së fundit si sugjerim dhe një timer pushimi që fillon në çdo klik."
       },
-      "disabledBlock": "{feature} është një funksion i provës. Aktivizojeni në \"Settings\" → \"Funksionet e provës\" për të përdorur këtë blok."
+      "disabledBlock": "{feature} është një funksion beta. Aktivizojeni te Cilësimet → Funksionet beta për ta përdorur këtë bllok."
     }
-  },
-  "stats": {
-    "max": "Maks: ",
-    "min": "Min: ",
-    "recentLast3": " (3 të fundit)",
-    "recentTrend": "Tendenca e fundit",
-    "recentVsPrev": " (vs para.)",
-    "sessions": "Sesionet",
-    "average": "Mesatarja: ",
-    "title": "{dataTypeLabel} statistikat ({contextLabel}):"
   },
   "table": {
     "actions": "Veprime",
@@ -1029,7 +1065,7 @@
     },
     "columns": {
       "distanceUnit": "Dist ({distanceUnit})",
-      "duration": "Dur",
+      "duration": "Koh.",
       "heartRate": "Rrahjet",
       "pace": "Ritmi",
       "reps": "Rep",
@@ -1050,6 +1086,8 @@
     "notAvailable": "N/A",
     "refreshSuccess": "Tabela u rifreskua",
     "target": {
+      "noSetsYet": "Asnjë seri me {weight} ende",
+      "progress": "Më i miri {best}/{target} përsëritje",
       "progressTooltip": "Më i miri: {best} përsëritje / Objektivi: {target} përsëritje",
       "repsSuffix": "përsëritje",
       "separator": " × "
@@ -1121,7 +1159,7 @@
       "log": "Gabim gjatë ngarkimit të regjistrit: {error}",
       "timer": "Gabim gjatë ngarkimit të timerit: {error}",
       "dashboard": "Gabim gjatë ngarkimit të panelit: {error}",
-      "sets": "Gabim në ngarkimin e set-eve: {error}"
+      "sets": "Gabim gjatë ngarkimit të serive: {error}"
     },
     "validation": {
       "title": "Parametra të pavlefshëm:",
@@ -1232,25 +1270,29 @@
     "next": "Tjetra",
     "rest": "Pushim",
     "done": "Stërvitja u përfundua. Seri të regjistruara sot: {sets}.",
-    "empty": "Shto një seksion me titull `workout-log` ose `workout-sets` me një veprim, në këtë notë, për të ndjekur seancën."
+    "empty": "Shto një bllok `workout-log` ose `workout-sets` me një ushtrim në këtë shënim, për ta ndjekur si seancë."
   },
   "sets": {
-    "editSet": "Redakto setin {set}",
-    "addSet": "Shto set",
+    "addSet": "Shto seri",
+    "removeSet": "Hiq serinë",
     "protocol": "Protokol",
     "notes": "Shënime",
-    "editBlock": "Redakto setet",
-    "blockUpdated": "Seret janë përditësuar",
-    "blockUpdateFailed": "Nuk u mor sukses në përditësimin e set-eve: bloku nuk u gjet në notën e tij. Hapur përsëri notën dhe provoni përsëri.",
-    "workoutLabel": "Trajnimi:",
-    "workoutPlaceholder": "Vacant: {note}",
-    "restLabel": "Pa re pas secilës serije (0 = timeri i seksionit)",
-    "noExercise": "Shto `exercise:` në këtë seksion për të regjistruar seritë e tij.",
-    "progress": "{done}/{sets} grupet",
+    "editBlock": "Redakto seritë",
+    "editRestTimer": "Redakto timerin e pushimit",
+    "blockUpdated": "Seritë u përditësuan",
+    "blockUpdateFailed": "Përditësimi i serive dështoi: blloku nuk u gjet në shënimin e tij. Hapeni përsëri shënimin dhe provoni përsëri.",
+    "workoutLabel": "Stërvitja",
+    "workoutPlaceholder": "Bosh: {note}",
+    "restLabel": "Pushimi pas çdo serie (0 = timeri i seksionit)",
+    "noExercise": "Shto `exercise:` në këtë bllok për të regjistruar seritë e tij.",
+    "progress": "{done}/{sets} seri",
     "lastTime": "Herë e fundit ({date}): {sets}",
-    "setColumn": "Krijo",
-    "fieldOfSet": "{field}, ndërtoje {set}",
-    "details": "Protokoli dhe notat e setit {set}",
-    "logSet": "Rekord i regjistruar {set}"
+    "setColumn": "Seria",
+    "fieldOfSet": "{field}, seria {set}",
+    "details": "Protokolli dhe shënimet e serisë {set}",
+    "logSet": "Regjistro serinë {set}",
+    "unlogSet": "Hiq serinë {set} nga regjistri",
+    "setRemoved": "Seria {set} u hoq",
+    "valueOfSet": "{field}, seria {set}: {value}"
   }
 }

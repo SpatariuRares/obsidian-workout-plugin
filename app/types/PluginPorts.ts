@@ -29,7 +29,8 @@ export interface WorkoutDataPort {
   getWorkoutLogData(): Promise<WorkoutLogData[]>;
   clearLogDataCache(): void;
   createCSVLogFile(): Promise<void>;
-  addWorkoutLogEntry(entry: LogEntryInput): Promise<void>;
+  /** `timestamp` puts back a set just deleted, in its place (undo) */
+  addWorkoutLogEntry(entry: LogEntryInput, options?: { timestamp?: number }): Promise<void>;
   updateWorkoutLogEntry(
     originalLog: WorkoutLogData,
     updatedEntry: LogEntryInput,

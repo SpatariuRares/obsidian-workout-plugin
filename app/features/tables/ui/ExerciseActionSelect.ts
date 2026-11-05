@@ -18,12 +18,14 @@ export interface ExerciseActionSelectProps {
   plugin: WorkoutPluginContext;
   /** The block's edit action; without it the menu only goes to the exercise */
   edit?: BlockMenuAction;
+  /** The block's other actions, after its edit action (e.g. its rest timer's) */
+  more?: BlockMenuAction[];
 }
 
 export class ExerciseActionSelect {
   static render(
     container: HTMLElement,
-    { exerciseName, plugin, edit }: ExerciseActionSelectProps,
+    { exerciseName, plugin, edit, more = [] }: ExerciseActionSelectProps,
     signal?: AbortSignal,
   ): HTMLElement {
     const actions: BlockMenuAction[] = [];
@@ -35,6 +37,7 @@ export class ExerciseActionSelect {
       });
     }
     if (edit) actions.push(edit);
+    actions.push(...more);
     return BlockMenu.render(container, actions, signal);
   }
 }

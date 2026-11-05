@@ -208,8 +208,8 @@ export class TimerConfigurationSection {
       );
       if (durationLabel) {
         durationLabel.textContent = isInterval
-          ? `${t("modal.work")} (s)`
-          : `${t("modal.duration")} (s)`;
+          ? t("modal.work")
+          : t("modal.duration");
       }
       for (const intervalOnly of [roundsContainer, restContainer]) {
         if (isInterval) {

@@ -66,8 +66,16 @@ export type WidgetSetting =
         | "fileErrorsMaxItems"
         | "fileErrorsMaxTags";
       label(): string;
+      /**
+       * What the form accepts. `min` is the schema's; `max` only keeps the
+       * form sensible, so a block already holding more still reads
+       */
       min: number;
-      max?: number;
+      max: number;
+      /** What − and + add or take away */
+      step: number;
+      /** Shown at the end of the field ("days") */
+      unit?(): string;
     }
   | {
       kind: "choice";
@@ -166,6 +174,8 @@ export const DASHBOARD_WIDGETS: Record<
         label: () => t("dashboard.widgetModal.calendarWeeks"),
         min: 1,
         max: 53,
+        step: 4,
+        unit: () => t("dashboard.widgetModal.units.weeks"),
       },
       {
         kind: "toggle",
@@ -241,16 +251,6 @@ export const DASHBOARD_WIDGETS: Record<
       },
       {
         kind: "choice",
-        key: "heatMapMetric",
-        label: () => t("dashboard.widgetModal.heatMapMetric"),
-        options: ["volume", "sets", "reps"].map((metric) => ({
-          value: metric,
-          label: () => t(`dashboard.muscleHeatMap.metrics.${metric}`),
-        })),
-        default: "volume",
-      },
-      {
-        kind: "choice",
         key: "heatMapView",
         label: () => t("dashboard.widgetModal.heatMapView"),
         options: [
@@ -258,6 +258,16 @@ export const DASHBOARD_WIDGETS: Record<
           { value: "back", label: () => t("general.back") },
         ],
         default: "front",
+      },
+      {
+        kind: "choice",
+        key: "heatMapMetric",
+        label: () => t("dashboard.widgetModal.heatMapMetric"),
+        options: ["volume", "sets", "reps"].map((metric) => ({
+          value: metric,
+          label: () => t(`dashboard.muscleHeatMap.metrics.${metric}`),
+        })),
+        default: "volume",
       },
       {
         kind: "toggle",
@@ -281,20 +291,25 @@ export const DASHBOARD_WIDGETS: Record<
       {
         kind: "number",
         key: "volumeTrendDays",
-        label: () => t("dashboard.modal.volumeTrendDays"),
+        label: () => t("dashboard.widgetModal.volumeTrendDays"),
         min: 1,
-      },
-      {
-        kind: "number",
-        key: "volumeTopLimit",
-        label: () => t("dashboard.widgetModal.volumeTopLimit"),
-        min: 1,
+        max: 365,
+        step: 7,
+        unit: () => t("dashboard.widgetModal.units.days"),
       },
       {
         kind: "toggle",
         key: "volumeShowBreakdown",
         label: () => t("dashboard.widgetModal.volumeShowBreakdown"),
         default: true,
+      },
+      {
+        kind: "number",
+        key: "volumeTopLimit",
+        label: () => t("dashboard.widgetModal.volumeTopLimit"),
+        min: 1,
+        max: 20,
+        step: 1,
       },
     ],
     minColumns: 2,
@@ -309,8 +324,10 @@ export const DASHBOARD_WIDGETS: Record<
       {
         kind: "number",
         key: "recentWorkoutsLimit",
-        label: () => t("dashboard.modal.recentWorkoutsLimit"),
+        label: () => t("dashboard.widgetModal.recentWorkoutsLimit"),
         min: 1,
+        max: 50,
+        step: 1,
       },
     ],
     minColumns: 1,
@@ -325,6 +342,9 @@ export const DASHBOARD_WIDGETS: Record<
         key: "protocolDays",
         label: () => t("dashboard.widgetModal.protocolDays"),
         min: 1,
+        max: 365,
+        step: 7,
+        unit: () => t("dashboard.widgetModal.units.days"),
       },
       {
         kind: "choice",
@@ -363,6 +383,8 @@ export const DASHBOARD_WIDGETS: Record<
         key: "protocolMinEntries",
         label: () => t("dashboard.widgetModal.protocolMinEntries"),
         min: 1,
+        max: 100,
+        step: 1,
       },
       {
         kind: "choice",
@@ -379,7 +401,7 @@ export const DASHBOARD_WIDGETS: Record<
           },
           {
             value: "entryCount",
-            label: () => t("dashboard.protocolEffectiveness.columnEntries"),
+            label: () => t("dashboard.widgetModal.sortMostSets"),
           },
         ],
         default: "progressionRate",
@@ -402,12 +424,17 @@ export const DASHBOARD_WIDGETS: Record<
         key: "durationRecentCount",
         label: () => t("dashboard.widgetModal.durationRecentCount"),
         min: 1,
+        max: 50,
+        step: 1,
       },
       {
         kind: "number",
         key: "durationRestSeconds",
         label: () => t("dashboard.widgetModal.durationRestSeconds"),
         min: 0,
+        max: 600,
+        step: 15,
+        unit: () => t("dashboard.widgetModal.units.seconds"),
       },
       {
         kind: "toggle",
@@ -454,22 +481,26 @@ export const DASHBOARD_WIDGETS: Record<
     label: () => t("dashboard.fileErrors.title"),
     settings: [
       {
+        kind: "toggle",
+        key: "fileErrorsCheckSharedNames",
+        label: () => t("dashboard.widgetModal.fileErrorsCheckSharedNames"),
+        default: true,
+      },
+      {
         kind: "number",
         key: "fileErrorsMaxItems",
         label: () => t("dashboard.widgetModal.fileErrorsMaxItems"),
         min: 1,
+        max: 100,
+        step: 1,
       },
       {
         kind: "number",
         key: "fileErrorsMaxTags",
         label: () => t("dashboard.widgetModal.fileErrorsMaxTags"),
         min: 1,
-      },
-      {
-        kind: "toggle",
-        key: "fileErrorsCheckSharedNames",
-        label: () => t("dashboard.widgetModal.fileErrorsCheckSharedNames"),
-        default: true,
+        max: 20,
+        step: 1,
       },
     ],
     minColumns: 1,

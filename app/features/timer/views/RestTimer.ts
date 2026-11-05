@@ -34,8 +34,13 @@ export class RestTimer {
     return this.timerFor(rest).isTimerRunning();
   }
 
-  /** Draws the rest's timer, without a menu (the menu belongs to its block) */
+  /**
+   * Draws the rest's timer as a strip (`.workout-timer-strip`), without a
+   * menu (the menu belongs to its block)
+   */
   draw(container: HTMLElement, rest: EmbeddedTimerParams): void {
+    // One line inside the block, not the timer block's big phone layout
+    container.addClass("workout-timer-strip");
     this.timerFor(rest).createTimer(container, rest);
   }
 
@@ -44,6 +49,11 @@ export class RestTimer {
     const timer = this.timerFor(rest);
     timer.reset();
     timer.start();
+  }
+
+  /** The set that started the rest was taken back: the rest stops */
+  cancel(rest: EmbeddedTimerParams): void {
+    this.timerFor(rest).reset();
   }
 
   /** Shared timers belong to activeTimers, destroyed with the plugin */

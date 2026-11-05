@@ -1,71 +1,63 @@
-/* Achievement badge */
+/* Target reached: the last row of the target's panel
+   (news + next weight with its button | ×) */
 .workout-achievement-badge {
   display: flex;
-  // On a phone the suggestion and its button go under the text
+  align-items: flex-start;
+  gap: var(--workout-space-sm);
+  padding-top: var(--workout-space-sm);
+  border-top: var(--workout-border-thin) solid var(--workout-border-subtle);
+}
+
+.workout-achievement-message {
+  display: flex;
+  flex: 1 1 auto;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--workout-space-md);
-  padding: var(--workout-space-md) var(--workout-space-lg);
-  margin-top: var(--workout-space-sm);
-  margin-bottom: var(--workout-space-md);
-  /* Raw --text-success gives white text ~2.5:1 */
-  background: color-mix(in srgb, var(--text-success) 60%, black);
-  color: var(--text-on-accent);
-  border-radius: var(--workout-radius-md);
-  border-left: var(--workout-border-accent) solid
-    var(--interactive-accent);
-  box-shadow: var(--workout-shadow-sm);
-  animation: slideIn 0.3s ease-out;
+  gap: var(--workout-space-sm) var(--workout-space-md);
+  min-width: 0;
+  min-height: var(--workout-touch-target-min);
+}
+
+.workout-achievement-icon {
+  display: inline-flex;
+  color: var(--workout-text-success);
 }
 
 .workout-achievement-text {
-  flex: 1;
-  min-width: 0;
   font-weight: var(--workout-font-weight-semibold);
-  font-size: var(--workout-font-base);
+  color: var(--workout-text-success);
 }
 
-.workout-achievement-dismiss {
-  background: transparent;
-  border: none;
-  color: var(--text-on-accent);
-  font-size: var(--workout-font-2xl);
-  line-height: 1;
-  cursor: pointer;
-  padding: 0 var(--workout-space-sm);
-  opacity: 0.7;
-  transition: var(--workout-transition);
-
-  &:hover {
-    opacity: 1;
-  }
-}
-
-/* Weight suggestion */
+/* The next weight and the button that writes it into the block */
 .workout-weight-suggestion {
   display: flex;
+  flex: 1 1 100%;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--workout-space-md);
-  flex: 1;
+  justify-content: space-between;
+  gap: var(--workout-space-sm) var(--workout-space-md);
 }
 
 .workout-suggestion-text {
   font-size: var(--workout-font-sm);
-  color: var(--text-on-accent);
-  opacity: 0.9;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
 }
 
-/* button styles moved to modal/_buttons.scss */
+.workout-achievement-badge .workout-achievement-dismiss {
+  flex: none;
+  justify-content: center;
+  min-width: var(--workout-touch-target-min);
+  min-height: var(--workout-touch-target-min);
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-muted);
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  @media (hover: hover) {
+    &:hover {
+      background: var(--background-modifier-hover);
+      color: var(--text-normal);
+    }
   }
 }

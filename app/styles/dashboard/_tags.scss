@@ -4,10 +4,9 @@
 
 .workout-muscle-tags-widget {
   .workout-widget-description {
-    margin: 0 0 var(--workout-space-lg) 0;
+    margin: 0;
     color: var(--text-muted);
     font-size: var(--workout-font-sm);
-    line-height: 1.5;
   }
 }
 
@@ -17,7 +16,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--workout-space-md);
-  margin-bottom: var(--workout-space-lg);
 }
 
 .workout-muscle-group-card {
@@ -51,7 +49,6 @@
       minmax(var(--workout-tag-min-width), 1fr)
     );
     gap: var(--workout-space-sm);
-    margin-bottom: var(--workout-space-lg);
   }
 
   &-tag-badge {
@@ -59,7 +56,7 @@
     align-items: center;
     gap: var(--workout-space-xs);
     padding: var(--workout-space-sm) var(--workout-space-md);
-    background: var(--background-secondary);
+    background: var(--background-primary);
     border: var(--workout-border-thin) solid
       var(--workout-border-color);
     border-radius: var(--workout-radius-md);
@@ -68,11 +65,15 @@
     font-size: var(--workout-font-sm);
     color: var(--text-normal);
 
-    &:hover {
-      background: var(--background-modifier-hover);
-      border-color: var(--interactive-accent);
-      transform: translateY(-2px);
-      box-shadow: var(--workout-shadow-sm);
+    @media (hover: hover) {
+      &:hover {
+        border-color: var(--interactive-accent);
+      }
+    }
+
+    &:focus-visible {
+      outline: var(--workout-border-medium) solid var(--interactive-accent);
+      outline-offset: var(--workout-space-2xs);
     }
 
     &.workout-copied {
@@ -97,15 +98,13 @@
   }
 
   &-tags-info {
-    padding-top: var(--workout-space-md);
+    padding-top: var(--workout-space-sm);
     border-top: var(--workout-border-thin) solid
       var(--workout-border-subtle);
-    text-align: center;
   }
 
   &-tags-count {
     color: var(--text-muted);
     font-size: var(--workout-font-sm);
-    font-style: italic;
   }
 }

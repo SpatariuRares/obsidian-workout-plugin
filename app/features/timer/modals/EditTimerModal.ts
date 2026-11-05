@@ -18,14 +18,14 @@ import { t } from "@app/i18n";
  * code block on submit (matched by ID).
  */
 export class EditTimerModal extends InsertTimerModal {
-  private readonly initialParams: EmbeddedTimerParams;
+  protected readonly initialParams: EmbeddedTimerParams;
 
   /** @param where - The note the block is written in, and how to find it without an id */
   constructor(
     app: App,
     plugin: WorkoutPluginContext,
     params: EmbeddedTimerParams,
-    private readonly where: EditTarget,
+    protected readonly where: EditTarget,
   ) {
     super(app, plugin);
     this.initialParams = params;

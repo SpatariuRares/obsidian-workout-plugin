@@ -8,7 +8,6 @@
       "variationFromTo": " {startValue} से {endValue} तक",
       "weightIncrementUnit": "वज़न में वृद्धि {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "कुल बदलाव: ",
     "significantIncrease": "शून्य से बढ़त",
     "trendLine": "ट्रेंड लाइन",
     "typeNotAvailable": "\"{chartDataType}\" प्रकार का चार्ट {exerciseType} व्यायाम के लिए उपलब्ध नहीं है। उपलब्ध प्रकार: {typeList}",
@@ -25,7 +24,16 @@
     "defaultTitle": "ट्रेंड {type}",
     "noTypesAvailable": "कोई चार्ट प्रकार उपलब्ध नहीं",
     "noEligibleE1rm": "अनुमानित 1RM के लिए कोई उपयुक्त सेट उपलब्ध नहीं हैं। वार्म-अप और ड्रॉप सेट को छोड़कर, 1–12 रेप्स के साथ एक सकारात्मक वजन लॉग करें।",
-    "editChart": "चार्ट संपादित करें"
+    "editChart": "चार्ट संपादित करें",
+    "stats": {
+      "average": "औसत",
+      "last3": "पिछले 3",
+      "max": "अधिकतम",
+      "min": "न्यूनतम",
+      "recentTrend": "हाल का ट्रेंड",
+      "sessions": "सत्र",
+      "vsPrevious": "पिछले की तुलना में"
+    }
   },
   "commands": {
     "addExerciseBlock": "व्यायाम ब्लॉक जोड़ें",
@@ -53,11 +61,12 @@
     "minPerKm": "मिनट/किमी",
     "notAvailable": "उपलब्ध नहीं",
     "sec": "सेकंड",
+    "undo": "पूर्ववत करें",
     "unknown": "अज्ञात",
     "workout": "वर्कआउट"
   },
   "convert": {
-    "currentType": "वर्तमान प्रकार:",
+    "currentType": "वर्तमान प्रकार",
     "errors": {
       "convertError": "व्यायाम डेटा को रूपांतरित करने में त्रुटि: {error}"
     },
@@ -71,14 +80,14 @@
     "preview": {
       "noEntries": "इस व्यायाम के लिए कोई लॉग प्रविष्टि नहीं मिली",
       "title": "पूर्वावलोकन",
-      "willConvertMany": "{count} लॉग प्रविष्टियाँ परिवर्तित की जाएंगी",
+      "willConvertMany": "{count} लॉग प्रविष्टियाँ परिवर्तित की जाएँगी",
       "willConvertOne": "1 लॉग प्रविष्टि परिवर्तित की जाएगी"
     },
     "sectionExercise": "व्यायाम",
     "success": "सफलतापूर्वक {count} लॉग प्रविष्टियाँ परिवर्तित की गईं।",
     "title": "व्यायाम डेटा को रूपांतरित करें",
     "typeSelect": {
-      "convertTo": "इसमें बदलें:",
+      "convertTo": "इसमें बदलें",
       "updateFileType": "व्यायाम फ़ाइल प्रकार को अपडेट करें"
     }
   },
@@ -108,7 +117,7 @@
       "tooManyTags": "बहुत अधिक मांसपेशी टैग ({count}, अधिकतम {max})"
     },
     "muscleTags": {
-      "description": "विवरण",
+      "description": "व्यायाम पेज के फ़्रंटमैटर में उपयोग किए जा सकने वाले टैग। कॉपी करने के लिए किसी एक पर क्लिक करें।",
       "title": "मांसपेशी टैग",
       "tooltip": "कॉपी करने के लिए क्लिक करें: {tag}",
       "totalCount": "कुल: {count} टैग उपलब्ध"
@@ -129,7 +138,7 @@
       "columnProgression": "प्रगति",
       "columnProtocol": "प्रोटोकॉल",
       "columnVolumeChange": "मात्रा में बदलाव",
-      "disclaimer": "अस्वीकरण",
+      "disclaimer": "यह सिर्फ़ संबंध है, प्रमाण नहीं: वज़न, आराम और नींद भी इन आंकड़ों को बदलते हैं।",
       "noData": "अभी पर्याप्त डेटा नहीं है: हर प्रोटोकॉल के लिए कम से कम 5 दर्ज सेट चाहिए।",
       "title": "प्रोटोकॉल की प्रभावशीलता",
       "subtitle": "प्रत्येक प्रोटोकॉल ने सभी लॉग किए गए सेटों में कैसे काम किया"
@@ -174,6 +183,11 @@
         "sets": "औसत सेट: {value}",
         "reps": "औसत रेप्स: {value}"
       },
+      "controls": {
+        "period": "अवधि",
+        "side": "पक्ष",
+        "metric": "माप"
+      },
       "imbalance": {
         "backDominant": "आगे-पीछे का असंतुलन: आपकी पीठ, आपके सामने की तुलना में बहुत अधिक काम करती है।",
         "frontDominant": "आगे-पीछे का असंतुलन: आपकी आगे की मांसपेशियां आपकी पीछे की मांसपेशियों की तुलना में कहीं अधिक सक्रिय हैं।"
@@ -186,9 +200,8 @@
       "moveUp": "{widget} को ऊपर ले जाएँ",
       "moveDown": "{widget} को नीचे ले जाएँ",
       "allHistory": "खाली: पूरा इतिहास",
-      "recentWorkoutsLimit": "हाल की सूची में वर्कआउट की संख्या:",
-      "volumeTrendDays": "मात्रा के ट्रेंड में दिनों की संख्या:",
-      "gridColumns": "कॉलम:",
+      "recentWorkoutsLimit": "हाल की सूची में वर्कआउट",
+      "volumeTrendDays": "मात्रा ट्रेंड में दिन",
       "layout": "लेआउट",
       "layoutGrid": "ग्रिड",
       "layoutList": "सूची",
@@ -200,6 +213,7 @@
       "size": "{width} × {height}",
       "gridHint": "विजेट को खींचकर स्थानांतरित करें और उसके कोने को खींचकर आकार बदलें; नीचे का स्टैश दिखाता है कि हर विजेट सबसे छोटा कितना हो सकता है। विजेट को उसके × से या स्टैश पर छोड़कर हटाएँ। कीबोर्ड से: तीर स्थानांतरित करते हैं, Shift और तीर आकार बदलते हैं, Delete उसे हटाता है।",
       "gridColumnsMeasured": "नोट की चौड़ाई में {columns} कॉलम आते हैं।",
+      "gridColumns": "कॉलम",
       "remove": "{widget} को डैशबोर्ड से हटाएँ"
     },
     "grid": {
@@ -223,44 +237,58 @@
     },
     "widgetModal": {
       "calendarShowStats": "स्ट्रीक और इस हफ़्ते की प्रगति दिखाएं",
-      "calendarWeeks": "दिखाए गए हफ़्ते:",
       "chartDoughnut": "डोनट",
+      "protocolSortBy": "इसके अनुसार क्रमबद्ध करें",
+      "durationShowTrend": "अनुमान की सटीकता का रुझान दिखाएं",
       "chartPie": "पाई",
-      "durationRecentCount": "तुलना किए गए वर्कआउट:",
-      "durationRestSeconds": "अनुमान में सेटों के बीच आराम (सेकंड):",
-      "durationShowTrend": "वेरिएंस ट्रेंड दिखाएं",
       "edit": "विजेट संपादित करें",
       "fileErrorsCheckSharedNames": "वे पृष्ठ चिह्नित करें जिनका व्यायाम नाम एक जैसा है",
-      "fileErrorsMaxItems": "सूचीबद्ध पृष्ठ (खाली: सभी):",
-      "fileErrorsMaxTags": "एक पृष्ठ में अधिकतम मांसपेशी टैग:",
-      "heatMapMetric": "शुरुआती मीट्रिक",
       "heatMapShowImbalance": "असंतुलन वाला पैनल दिखाएं",
+      "volumeShowBreakdown": "मात्रा के अनुसार शीर्ष व्यायाम दिखाएं",
+      "protocolChartType": "चार्ट शैली",
       "heatMapTimeFrame": "शुरुआती अवधि",
-      "heatMapView": "शुरुआती दृश्य",
+      "heatMapMetric": "शुरुआती माप",
+      "heatMapView": "शुरुआती पक्ष",
+      "volumeTopLimit": "सूचीबद्ध व्यायाम",
+      "protocolDays": "गिने गए दिन",
+      "protocolMinEntries": "हर प्रोटोकॉल के लिए न्यूनतम सेट",
+      "durationRecentCount": "तुलना किए गए वर्कआउट",
+      "durationRestSeconds": "अनुमान में सेट के बीच आराम",
       "muscleTagsGroupByMuscle": "टैग को मांसपेशी के अनुसार समूहित करें",
+      "volumeTrendDays": "मात्रा चार्ट में दिन",
+      "recentWorkoutsLimit": "दिखाए गए वर्कआउट",
+      "all": "सभी",
+      "numberRange": "{min} से {max} के बीच एक पूर्ण संख्या लिखें।",
+      "pickOne": "कम से कम एक चुनें, या विजेट हटा दें।",
+      "units": {
+        "days": "दिन",
+        "weeks": "हफ़्ते",
+        "seconds": "s"
+      },
+      "editTitle": "{widget} संपादित करें",
+      "sortMostSets": "सबसे ज़्यादा सेट",
+      "lastWidget": "यह डैशबोर्ड का इकलौता विजेट है, इसलिए इसे हटाया नहीं जा सकता: इसके बजाय ब्लॉक हटाएं।",
       "noSettings": "इस विजेट की अपनी कोई सेटिंग नहीं है।",
-      "protocolChartType": "चार्ट",
-      "protocolDays": "गिने गए दिन:",
-      "protocolMinEntries": "तुलना के लिए प्रोटोकॉल को कम से कम कितने सेट चाहिए:",
-      "protocolSortBy": "इसके अनुसार क्रमबद्ध (सबसे अच्छा पहले)",
       "quickActionsShown": "दिखाए गए बटन",
-      "quickStatsMetrics": "दिखाई गई पंक्तियाँ",
+      "fileErrorsMaxItems": "सूचीबद्ध पेज",
+      "fileErrorsMaxTags": "एक पेज पर अधिकतम मांसपेशी टैग",
       "quickStatsPeriods": "दिखाई गई अवधियाँ",
+      "quickStatsMetrics": "दिखाए गए आंकड़े",
       "remove": "डैशबोर्ड से विजेट हटाएं",
       "removeConfirm": "\"{widget}\" को डैशबोर्ड से हटाएं?",
       "removeConfirmButton": "हटाएं",
+      "calendarWeeks": "दिखाए गए हफ़्ते, इस हफ़्ते से पीछे की ओर गिने गए",
       "removed": "विजेट डैशबोर्ड से हटा दिया गया।",
       "summaryMetrics": "दिखाए गए कार्ड",
       "update": "विजेट अपडेट करें",
-      "updated": "विजेट सफलतापूर्वक अपडेट हुआ!",
-      "volumeShowBreakdown": "शीर्ष व्यायामों की सूची दिखाएं",
-      "volumeTopLimit": "शीर्ष सूची में व्यायाम:"
+      "updated": "विजेट सफलतापूर्वक अपडेट हुआ!"
     }
   },
   "duration": {
     "estimatedDuration": "अनुमानित अवधि",
     "lastSession": "अंतिम सत्र",
     "restTime": "आराम का समय",
+    "setCount": "{count} सेट",
     "setTime": "सेट का समय",
     "unableToAnalyze": "वर्कआउट फ़ाइल का विश्लेषण करने में असमर्थ"
   },
@@ -358,7 +386,7 @@
       "trainingProtocolsTitle": "5. प्रशिक्षण प्रोटोकॉल",
       "workoutChartTitle": "वर्कआउट चार्ट (सभी व्यायाम संयुक्त)",
       "e1rmChartTitle": "अनुमानित 1RM",
-      "e1rmIntro": "Epley फ़ॉर्मूले (वज़न × (1 + reps / 30)) से हर दिन का सबसे अच्छा अनुमान, 1 से 12 reps वाले सेट से। वार्म-अप और ड्रॉप सेट नहीं गिने जाते।",
+      "e1rmIntro": "Epley फ़ॉर्मूले (वज़न × (1 + reps / 30)) से हर दिन का सबसे अच्छा अनुमान, 1 से 12 रेप्स वाले सेट से। वार्म-अप और ड्रॉप सेट नहीं गिने जाते।",
       "presetTimersTitle": "Tabata और EMOM",
       "presetTimersIntro": "टाइमर `preset` से नाम के अनुसार सहेजा हुआ प्रीसेट चला सकता है। Tabata और EMOM पहले से बने हुए हैं; इन्हें संपादित करें या सेटिंग्स → टाइमर प्रीसेट में अपने खुद के जोड़ें।",
       "protocolColumn": "प्रोटोकॉल",
@@ -377,8 +405,8 @@
       "trainingCalendarIntro": "ट्रेनिंग कैलेंडर एक साल के प्रशिक्षण दिन और यह दिखाता है कि आपने लगातार कितने हफ़्तों में साप्ताहिक लक्ष्य पूरा किया (सेटिंग्स → साप्ताहिक लक्ष्य)।",
       "importTitle": "8. Strong या Hevy से आयात करें",
       "importIntro": "कमांड पैलेट से **{command}** चलाएँ और ऐप द्वारा निर्यात की गई CSV चुनें। आपके लॉग में पहले से मौजूद सेट छोड़ दिए जाते हैं, और लॉग का पहले बैकअप लिया जाता है।",
-      "setsTitle": "अपने फोन पर लॉग इन सेटिंग्स",
-      "setsIntro": "A `workout-sets` block shows today's sets as rows. The grey numbers are the same set last time: tick a row to log them as they are, or type what you did. Tap the arrow for the set's protocol and notes, and a logged set to edit it.",
+      "setsTitle": "फ़ोन पर सेट लॉग करना",
+      "setsIntro": "`workout-sets` ब्लॉक आज के सेट को पंक्तियों के रूप में दिखाता है। धूसर संख्याएँ पिछली बार के वही सेट हैं: किसी पंक्ति पर टिक करें ताकि वे जैसे हैं वैसे लॉग हो जाएँ, या लिखें कि आपने क्या किया। सेट का प्रोटोकॉल और नोट्स देखने के लिए तीर पर टैप करें, और संपादित करने के लिए लॉग किए गए सेट पर टैप करें।",
       "codeBlockWorkoutSets": "आज के सेट को पंक्ति दर पंक्ति लॉग करें।"
     },
     "fileNames": {
@@ -425,6 +453,24 @@
       "workoutsDesc": "उदाहरण वर्कआउट टेम्पलेट",
       "workoutsFolder": "**{folder}/**",
       "sessionIntro": "इस नोट में एक छोटी योजना है: एक व्यायाम, उसके सेट, लक्ष्य और रेस्ट टाइमर। सत्र वह सेट दिखाता है जो करना है; उसे दर्ज करें और रेस्ट टाइमर शुरू हो जाएगा।",
+      "tables": {
+        "latestTitle": "किसी व्यायाम के नवीनतम सेट",
+        "latestIntro": "`exercise` व्यायाम चुनता है और `limit` बताता है कि तालिका कितने सेट दिखाए।",
+        "targetTitle": "लक्ष्य और योजनाबद्ध सेट",
+        "targetIntro": "`targetWeight` और `targetReps` के साथ तालिका दिखाती है कि आप लक्ष्य के कितने करीब हैं; लक्ष्य तक पहुँचते ही एक बैज ब्लॉक में अगला वजन लिखने की पेशकश करता है। `sets` बताता है कि आप कितने सेट की योजना बनाते हैं: `limit` के बिना तालिका पिछले दो वर्कआउट दिखाती है, और निर्देशित सत्र उन्हें गिनता है। `workout` के साथ `exactMatch: true` उस वर्कआउट में केवल उसी व्यायाम के सेट रखता है।",
+        "workoutTitle": "पूरा वर्कआउट",
+        "workoutIntro": "`workout` के साथ और `exercise` के बिना तालिका उस वर्कआउट का हर सेट दिखाती है। `dateRange: 14` पिछले 14 दिन रखता है।",
+        "columnsTitle": "कॉलम और छँटाई",
+        "columnsIntro": "`columns` कॉलम और उनका क्रम चुनता है; `sortBy` और `sortOrder` पंक्तियों का क्रम, यहाँ सबसे भारी सेट पहले। `showAddButton: false` + बटन छिपाता है और `showProtocol: false` प्रोटोकॉल बैज छिपा देगा।"
+      },
+      "sets": {
+        "lastTimeTitle": "पिछली बार जैसे ही सेट",
+        "lastTimeIntro": "`workout` के साथ धूसर संख्याएँ उस वर्कआउट में इस व्यायाम की पिछली बार की हैं। इसके बिना ब्लॉक नोट का नाम इस्तेमाल करता है।",
+        "restTitle": "आराम टाइमर और लक्ष्य",
+        "restIntro": "`rest` हर सेट के बाद का आराम है, सेकंड में (`0` = कोई टाइमर नहीं); इसके बिना ब्लॉक अनुभाग के `workout-timer` का उपयोग करता है। `targetWeight` और `targetReps` लक्ष्य दिखाते हैं, और किसी व्यायाम को पहली बार करते समय संकेत का काम करते हैं।",
+        "restTimerTitle": "आराम टाइमर के विकल्प",
+        "restTimerIntro": "ब्लॉक में उसके आराम टाइमर के सभी विकल्प होते हैं, इसलिए दिन के नोट को `workout-timer` की ज़रूरत नहीं है: `timer.type` (`interval` में `rest` हर राउंड का काम होता है, `timer.rest` और `timer.rounds` के साथ), `timer.preset`, `timer.sound` और `timer.showControls`। ⋮ → आराम टाइमर संपादित करें इन्हें आपके लिए लिख देता है।"
+      },
       "pagesIntro": "प्रत्येक पृष्ठ पर एक सुविधा का पता लगाएं। लिंक का क्रम में पालन करें, या नीचे दी गई सुविधा का चयन करें। नोट्स के बीच जाने के लिए \"पिछला\" और \"अगला\" बटन का उपयोग करें; प्रत्येक उदाहरण का पता लगाने के लिए सामान्य रूप से स्क्रॉल करें।",
       "liveIntro": "नीचे दिए गए सभी सुविधाओं का उपयोग छह हफ़्तों के उदाहरण वर्कआउट के साथ करें। ये डेमो डेटा हैं; नियंत्रणों को आज़माएं और देखें कि आपके नोट्स कैसे काम करते हैं।",
       "tryLog": "'+' बटन का उपयोग करके एक सेट जोड़ें। तालिका, चार्ट और डैशबोर्ड सभी एक ही CSV फ़ाइल को पढ़ते हैं।",
@@ -623,43 +669,38 @@
     },
     "confirmAction": "कार्रवाई की पुष्टि करें",
     "csvExercise": "CSV व्यायाम",
-    "customParameters": "कस्टम पैरामीटर:",
-    "customTitle": "कस्टम शीर्षक:",
-    "dataLimit": "डेटा सीमा (0 = सभी):",
-    "dataType": "डेटा प्रकार:",
-    "dateRange": "तारीख सीमा (दिन):",
-    "daysRange": "दिनों की अवधि (0 = सभी):",
+    "customParameters": "कस्टम पैरामीटर",
+    "customTitle": "कस्टम शीर्षक",
+    "dataLimit": "डेटा सीमा (0 = सभी)",
+    "dataType": "डेटा प्रकार",
     "delete": "हटाएं",
-    "duration": "अवधि (सेकंड):",
     "editTag": "टैग संपादित करें",
-    "exerciseType": "व्यायाम का प्रकार:",
     "exportTags": "टैग निर्यात करें",
     "fileName": "फ़ाइल का नाम",
-    "folderPath": "फ़ोल्डर पथ (वैकल्पिक):",
+    "folderPath": "फ़ोल्डर पथ (वैकल्पिक)",
     "importMerge": "विलय",
     "importReplace": "सभी को बदलें",
     "importTags": "टैग आयात करें",
     "labels": {
       "actions": "क्रियाएं",
       "currentFileInfo": "वर्तमान फ़ाइल: {fileName}",
-      "exercise": "व्यायाम:",
-      "reps": "रेप्स:",
-      "targetReps": "लक्ष्य रेप्स:",
-      "plannedSets": "नियोजित सेट:",
-      "targetWeight": "लक्ष्य: ({unit}):",
-      "volume": "मात्रा ({unit}):",
-      "weight": "वजन ({unit}):"
+      "exercise": "व्यायाम",
+      "reps": "रेप्स",
+      "targetReps": "लक्ष्य रेप्स",
+      "plannedSets": "योजनाबद्ध सेट",
+      "targetWeight": "लक्ष्य वजन ({unit})",
+      "volume": "मात्रा ({unit})",
+      "weight": "वजन ({unit})"
     },
     "layoutGrouped": "मांसपेशियों के अनुसार समूहीकृत",
     "layoutHorizontal": "क्षैतिज प्रवाह",
-    "layoutType": "लेआउट प्रकार:",
+    "layoutType": "लेआउट प्रकार",
     "layoutVertical": "ऊर्ध्वाधर प्रवाह",
     "muscleGroup": "मांसपेशियों का समूह",
     "newTag": "नया टैग",
     "noTagsFound": "आपकी खोज से कोई टैग मेल नहीं खाता",
     "noTagsSelected": "कोई टैग नहीं चुना गया। नीचे दिए गए टैग पर क्लिक करके उन्हें जोड़ें।",
-    "note": "ध्यान दें:",
-    "notes": "टिप्पणियाँ (वैकल्पिक):",
+    "note": "नोट",
     "notices": {
       "auditConfirmRenameFile": "क्या इस फ़ाइल का नाम बदलना है?\n\n{oldName} → {newName}",
       "auditMismatchCount": "{count} संभावित असंगतियाँ मिलीं:",
@@ -671,8 +712,8 @@
       "auditRenameSuccess": "नाम बदला गया ({count} फ़ाइलें अपडेट हुईं)",
       "auditScanError": "स्कैन में त्रुटि: {error}",
       "auditScanning": "व्यायाम फ़ाइलें स्कैन की जा रही हैं...",
-      "canvasExportError": "कैनवस निर्यात त्रुटि: {error}",
-      "canvasExported": "कैनवस निर्यात किया गया ({path})",
+      "canvasExportError": "कैनवास निर्यात त्रुटि: {error}",
+      "canvasExported": "कैनवास निर्यात किया गया ({path})",
       "confirmUpdateTarget": "क्या लक्ष्य को {targetWeight}{weightUnit} पर अपडेट करें?",
       "dismissAchievement": "उपलब्धि खारिज करें",
       "exerciseBlockInserted": "व्यायाम ब्लॉक डाला गया",
@@ -733,11 +774,11 @@
       "dashboardUpdateFailed": "डैशबोर्ड अपडेट नहीं हो सका: यह अपने नोट में नहीं मिला, या बिना id वाला कोई दूसरा डैशबोर्ड इन्हीं सेटिंग्स के साथ मौजूद है। नोट दोबारा खोलें और फिर से कोशिश करें।",
       "setsInserted": "सेट डाले गए"
     },
-    "parameterKey": "कुंजी:",
-    "parameterLabel": "लेबल:",
+    "parameterKey": "कुंजी",
+    "parameterLabel": "लेबल",
     "parameterRequired": "आवश्यक",
-    "parameterType": "प्रकार:",
-    "parameterUnit": "इकाई (वैकल्पिक):",
+    "parameterType": "प्रकार",
+    "parameterUnit": "इकाई (वैकल्पिक)",
     "placeholders": {
       "customTitle": "यदि आप स्वचालित शीर्षक चाहते हैं, तो खाली छोड़ दें।",
       "enterTagName": "टैग का नाम दर्ज करें (उदाहरण के लिए, chest, petto)",
@@ -757,10 +798,8 @@
       "sets": "4",
       "workout": "उदाहरण के लिए: वर्कआउट ए, ट्रेनिंग बी, या नीचे दिए गए चेकबॉक्स का उपयोग करें।"
     },
-    "protocol": "प्रोटोकॉल:",
-    "recentExercises": "हाल के:",
-    "restTime": "आराम का समय (सेकंड):",
-    "rounds": "राउंड:",
+    "protocol": "प्रोटोकॉल",
+    "recentExercises": "हाल के",
     "save": "सहेजें",
     "sections": {
       "advancedOptions": "उन्नत विकल्प",
@@ -797,15 +836,15 @@
       "yesNo": "हाँ/नहीं",
       "warmup": "वार्म-अप"
     },
-    "sets": "सेट्स:",
-    "similarTags": "समान टैग:",
+    "sets": "सेट",
+    "similarTags": "मिलते-जुलते टैग",
     "similarity": "समानता",
     "status": "स्थिति",
     "tag": "टैग",
-    "tagsSelector": "मांसपेशी टैग:",
-    "timerDuration": "टाइमर की अवधि (सेकंड):",
-    "timerPreset": "टाइमर प्रीसेट:",
-    "timerType": "टाइमर का प्रकार:",
+    "tagsSelector": "मांसपेशी टैग",
+    "timerDuration": "टाइमर अवधि (सेकंड)",
+    "timerPreset": "टाइमर प्रीसेट",
+    "timerType": "टाइमर प्रकार",
     "titles": {
       "addExerciseBlock": "व्यायाम ब्लॉक जोड़ें",
       "auditExerciseNames": "व्यायाम के नाम जाँचें",
@@ -827,23 +866,30 @@
       "editChart": "वर्कआउट चार्ट संपादित करें",
       "insertSets": "वर्कआउट सेट डालें"
     },
-    "workout": "वर्कआउट (वैकल्पिक):",
-    "workoutFile": "वर्कआउट फ़ाइल:",
-    "workoutNameOptional": "वर्कआउट का नाम (वैकल्पिक):",
     "importMergeAriaLabel": "विलय करें: केवल नए टैग जोड़ें, मौजूदा रखें",
     "importReplaceAriaLabel": "बदलें: सभी मौजूदा टैग ओवरराइट करें",
     "editItem": "{item} संपादित करें",
     "deleteItem": "{item} हटाएं",
+    "duration": "अवधि (सेकंड)",
     "errors": {
       "missingElements": "तत्व गायब हैं",
       "validationCombinedMode": "व्यायाम + वर्कआउट प्रकार के लिए दोनों फ़ील्ड भरें"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - सेट: {sets}\n- रेप्स: {reps}\n- आराम: {restTime} सेकंड\n\n",
+    "exerciseType": "व्यायाम प्रकार",
     "noteTemplate": "**नोट: {note}**\n",
+    "notes": "टिप्पणियाँ (वैकल्पिक)",
     "date": "तिथि",
+    "dateRange": "तारीख़ सीमा (दिन)",
+    "daysRange": "दिनों की सीमा (0 = सभी)",
     "weightUnitToggle": "इस प्रविष्टि के लिए इकाई",
     "work": "काम",
-    "rest": "आराम"
+    "workout": "वर्कआउट (वैकल्पिक)",
+    "workoutFile": "वर्कआउट फ़ाइल",
+    "workoutNameOptional": "वर्कआउट का नाम (वैकल्पिक)",
+    "rest": "आराम",
+    "restTime": "आराम का समय (सेकंड)",
+    "rounds": "राउंड"
   },
   "settings": {
     "buttons": {
@@ -853,7 +899,7 @@
       "createFiles": "फ़ाइलें बनाएँ",
       "done": "पूर्ण!",
       "failed": "असफल",
-      "generateTemplates": "टेम्प्लेट जेनरेट करें",
+      "generateTemplates": "टेम्पलेट जेनरेट करें",
       "generated": "जनरेटेड!",
       "generating": "जनरेटिंग...",
       "overwriting": "ओवरराइट हो रहा है...",
@@ -904,7 +950,7 @@
       "defaultTimerPreset": "डिफ़ॉल्ट टाइमर प्रीसेट",
       "exerciseBlockTemplate": "व्यायाम ब्लॉक टेम्पलेट",
       "exerciseFolder": "व्यायाम फ़ोल्डर का पथ",
-      "generateDefaultTemplates": "डिफ़ॉल्ट टेम्प्लेट जेनरेट करें",
+      "generateDefaultTemplates": "डिफ़ॉल्ट टेम्पलेट जेनरेट करें",
       "presetDuration": "अवधि (सेकंड)",
       "presetName": "प्रीसेट का नाम",
       "presetRounds": "राउंड",
@@ -928,7 +974,7 @@
       "presetRest": "आराम"
     },
     "messages": {
-      "confirmDeletePreset": "क्या आप वाकई इस प्रीसेट को डिलीट करना चाहते हैं?",
+      "confirmDeletePreset": "क्या आप वाकई इस प्रीसेट को हटाना चाहते हैं?",
       "confirmDeleteProtocol": "क्या आप निश्चित रूप से इस प्रोटोकॉल को हटाना चाहते हैं?",
       "csvFilesCreated": "CSV फ़ाइलें सफलतापूर्वक बनाई गईं!",
       "presetDeleted": "प्रीसेट हटा दिया गया",
@@ -961,7 +1007,7 @@
       "maintenance": "रखरखाव",
       "quickLog": "मोबाइल लॉगिंग",
       "setupAndData": "स्थापना और डेटा",
-      "templates": "टेम्प्लेट",
+      "templates": "टेम्पलेट",
       "timerPresets": "टाइमर प्रीसेट",
       "trainingParameters": "प्रशिक्षण पैरामीटर",
       "gettingStarted": "शुरू करना",
@@ -997,20 +1043,10 @@
       "intro": "उन नई सुविधाओं को आज़माने के लिए जो अभी सभी के लिए उपलब्ध नहीं हैं। ये सुविधाएँ तब तक बंद रहेंगी जब तक आप उन्हें चालू नहीं कर देते, और उनमें अभी भी बदलाव हो सकते हैं।",
       "setSheet": {
         "name": "वर्कआउट सेट",
-        "desc": "The `workout-sets` block: today's sets as rows to fill in on your phone, with the last time's values as hints and a rest timer that starts on each tick."
+        "desc": "`workout-sets` ब्लॉक: आज के सेट पंक्तियों के रूप में, जिन्हें आप फ़ोन पर भरते हैं, पिछली बार के मान संकेत के रूप में, और एक आराम टाइमर जो हर टिक पर शुरू होता है।"
       },
       "disabledBlock": "{feature} एक बीटा सुविधा है। इस सुविधा का उपयोग करने के लिए, इसे सेटिंग्स → बीटा सुविधाओं में चालू करें।"
     }
-  },
-  "stats": {
-    "max": "अधिकतम: ",
-    "min": "न्यूनतम: ",
-    "recentLast3": " (अंतिम 3)",
-    "recentTrend": "हाल का ट्रेंड",
-    "recentVsPrev": " (पिछले से)",
-    "sessions": "सत्र",
-    "average": "औसत: ",
-    "title": "{dataTypeLabel} आँकड़े ({contextLabel}):"
   },
   "table": {
     "actions": "क्रियाएं",
@@ -1050,6 +1086,8 @@
     "notAvailable": "लागू नहीं",
     "refreshSuccess": "तालिका रीफ़्रेश हुई",
     "target": {
+      "noSetsYet": "{weight} पर अभी कोई सेट नहीं",
+      "progress": "सर्वश्रेष्ठ {best}/{target} रेप्स",
       "progressTooltip": "सर्वश्रेष्ठ: {best} रेप्स / लक्ष्य: {target} रेप्स",
       "repsSuffix": "रेप्स",
       "separator": " × "
@@ -1232,25 +1270,29 @@
     "next": "अगला",
     "rest": "आराम",
     "done": "वर्कआउट पूरा: आज {sets} सेट दर्ज किए गए।",
-    "empty": "Add a `workout-log` or `workout-sets` block with an exercise to this note to follow it as a session."
+    "empty": "इस नोट में किसी व्यायाम वाला `workout-log` या `workout-sets` ब्लॉक जोड़ें, ताकि इसे एक सत्र के रूप में फ़ॉलो किया जा सके।"
   },
   "sets": {
-    "editSet": "सेट संपादित करें {set}",
     "addSet": "सेट जोड़ें",
+    "removeSet": "सेट हटाएं",
     "protocol": "प्रोटोकॉल",
     "notes": "टिप्पणियाँ",
     "editBlock": "सेट संपादित करें",
+    "editRestTimer": "आराम टाइमर संपादित करें",
     "blockUpdated": "सेट अपडेट किए गए",
     "blockUpdateFailed": "सेट अपडेट करने में विफल: ब्लॉक नोट में नहीं मिला। नोट को फिर से खोलें और फिर से प्रयास करें।",
-    "workoutLabel": "वर्कआउट:",
+    "workoutLabel": "वर्कआउट",
     "workoutPlaceholder": "खाली: {note}",
     "restLabel": "प्रत्येक सेट के बाद आराम करें (0 = अनुभाग का टाइमर)",
     "noExercise": "इस ब्लॉक में `exercise:` जोड़ें ताकि इसके सेट को लॉग किया जा सके।",
     "progress": "{done}/{sets} सेट",
     "lastTime": "पिछली बार ({date}): {sets}",
     "setColumn": "सेट",
-    "fieldOfSet": "{field}, {set} सेट करें",
+    "fieldOfSet": "{field}, सेट {set}",
     "details": "प्रोटोकॉल और नोट्स, सेट {set}",
-    "logSet": "लॉग सेट {set}"
+    "logSet": "लॉग सेट {set}",
+    "unlogSet": "लॉग से सेट {set} हटाएं",
+    "setRemoved": "सेट {set} हटाया गया",
+    "valueOfSet": "{field}, सेट {set}: {value}"
   }
 }

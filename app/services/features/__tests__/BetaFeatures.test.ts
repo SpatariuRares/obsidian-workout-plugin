@@ -1,4 +1,8 @@
-import { BETA_FEATURES, betaEnabled } from "@app/services/features/BetaFeatures";
+import {
+  BETA_FEATURES,
+  betaEnabled,
+  newInstallBetaFeatures,
+} from "@app/services/features/BetaFeatures";
 import { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
 import en from "@app/i18n/locales/en.json";
 
@@ -11,6 +15,13 @@ describe("betaEnabled", () => {
 
   it("treats settings saved before beta features existed as all off", () => {
     expect(betaEnabled({} as never, "setSheet")).toBe(false);
+  });
+
+  it("turns every beta feature on for a new install", () => {
+    const betaFeatures = newInstallBetaFeatures();
+    for (const feature of BETA_FEATURES) {
+      expect(betaEnabled({ betaFeatures }, feature)).toBe(true);
+    }
   });
 
   it("has a name and a description for every beta feature", () => {

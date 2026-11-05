@@ -8,7 +8,6 @@
       "variationFromTo": " fra {startValue} til {endValue}",
       "weightIncrementUnit": "Økning i vekt {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "Total endring: ",
     "significantIncrease": "Opp fra null",
     "trendLine": "Trendlinje",
     "typeNotAvailable": "Diagramtype \"{chartDataType}\" er ikke tilgjengelig for {exerciseType} øvelser. Tilgjengelige typer: {typeList}",
@@ -25,7 +24,16 @@
     "defaultTitle": "Trend {type}",
     "noTypesAvailable": "Ingen diagramtyper tilgjengelig",
     "noEligibleE1rm": "Ingen egnede sett for estimert 1RM. Logg en positiv vekt med 1–12 repetisjoner, ekskludert oppvarming og dropsett.",
-    "editChart": "Rediger diagram"
+    "editChart": "Rediger diagram",
+    "stats": {
+      "average": "Gjennomsnitt",
+      "last3": "siste 3",
+      "max": "Maks",
+      "min": "Min",
+      "recentTrend": "Nylig trend",
+      "sessions": "Økter",
+      "vsPrevious": "mot forrige"
+    }
   },
   "commands": {
     "addExerciseBlock": "Legg til øvelsesblokk",
@@ -53,11 +61,12 @@
     "minPerKm": "min/km",
     "notAvailable": "Ikke tilgjengelig",
     "sec": "sek",
+    "undo": "Angre",
     "unknown": "Ukjent",
     "workout": "Trening"
   },
   "convert": {
-    "currentType": "Nåværende type:",
+    "currentType": "Nåværende type",
     "errors": {
       "convertError": "Feil ved konvertering av øvelsesdata: {error}"
     },
@@ -78,7 +87,7 @@
     "success": "{count} loggposter ble konvertert",
     "title": "Konverter øvelsesdata",
     "typeSelect": {
-      "convertTo": "Konverter til:",
+      "convertTo": "Konverter til",
       "updateFileType": "Oppdater filtype for øvelsen"
     }
   },
@@ -108,7 +117,7 @@
       "sharedName": "Samme øvelsesnavn som {pages}: loggene går bare til én av dem."
     },
     "muscleTags": {
-      "description": "Beskrivelse",
+      "description": "Tagger du kan bruke i frontmatter på en øvelsesside. Klikk på en for å kopiere den.",
       "title": "Muskeltagger",
       "tooltip": "Klikk for å kopiere: {tag}",
       "totalCount": "Totalt: {count} tagger tilgjengelige"
@@ -129,7 +138,7 @@
       "columnProgression": "Framgang",
       "columnProtocol": "Protokoll",
       "columnVolumeChange": "Endring i volum",
-      "disclaimer": "Ansvarsfraskrivelse",
+      "disclaimer": "Korrelasjon, ikke bevis: vekt, hvile og søvn påvirker også disse tallene.",
       "noData": "Ikke nok data ennå: hver protokoll trenger minst 5 loggførte sett.",
       "title": "Effektivitet av protokoller",
       "subtitle": "Hvordan hver protokoll har fungert i alle registrerte sett"
@@ -174,6 +183,11 @@
         "sets": "Gjennomsnittlig antall sett: {value}",
         "reps": "Gjennomsnittlig antall repetisjoner: {value}"
       },
+      "controls": {
+        "period": "Periode",
+        "side": "Side",
+        "metric": "Måling"
+      },
       "imbalance": {
         "backDominant": "Ubalanse mellom for- og bakside: ryggen din er mye mer aktiv enn forsiden din",
         "frontDominant": "Ubalanse mellom for- og bakside: forsiden din fungerer mye mer enn baksiden din"
@@ -186,9 +200,8 @@
       "moveUp": "Flytt {widget} opp",
       "moveDown": "Flytt {widget} ned",
       "allHistory": "Tom: hele historikken",
-      "recentWorkoutsLimit": "Antall økter i den siste listen:",
-      "volumeTrendDays": "Antall dager i volumtrenden:",
-      "gridColumns": "Kolonner:",
+      "recentWorkoutsLimit": "Treninger i listen over nylige",
+      "volumeTrendDays": "Dager i volumtrenden",
       "layout": "Oppsett",
       "layoutGrid": "Rutenett",
       "layoutList": "Liste",
@@ -200,6 +213,7 @@
       "size": "{width} × {height}",
       "gridHint": "Dra en widget for å flytte den, og hjørnet for å endre størrelsen. Under er skuffen som viser minste størrelse for hver widget. Fjern en widget med × eller ved å slippe den på skuffen. Med tastaturet: piltastene flytter, Shift og piltastene endrer størrelse, Delete fjerner den.",
       "gridColumnsMeasured": "{columns} kolonner passer i notatets bredde.",
+      "gridColumns": "Kolonner",
       "remove": "Fjern {widget} fra dashbordet"
     },
     "grid": {
@@ -230,37 +244,51 @@
       "edit": "Rediger widget",
       "removeConfirm": "Fjerne «{widget}» fra dashbordet?",
       "removeConfirmButton": "Fjern",
-      "calendarWeeks": "Viste uker:",
+      "calendarWeeks": "Viste uker, regnet bakover fra denne",
       "quickStatsPeriods": "Viste perioder",
-      "quickStatsMetrics": "Viste rader",
+      "quickStatsMetrics": "Viste tall",
       "heatMapTimeFrame": "Startperiode",
       "heatMapMetric": "Startmåling",
-      "heatMapView": "Startvisning",
-      "volumeTopLimit": "Øvelser på topplisten:",
-      "protocolDays": "Dager som telles:",
-      "protocolMinEntries": "Sett en protokoll må ha for å sammenlignes:",
-      "durationRecentCount": "Økter som sammenlignes:",
-      "durationRestSeconds": "Hvile mellom sett i estimatet (sekunder):",
+      "heatMapView": "Startside",
+      "volumeTopLimit": "Viste øvelser",
+      "protocolDays": "Dager som telles",
+      "protocolMinEntries": "Minst antall sett per protokoll",
+      "durationRecentCount": "Treninger som sammenlignes",
+      "durationRestSeconds": "Hvile mellom sett i estimatet",
       "summaryMetrics": "Viste kort",
       "calendarShowStats": "Vis seriene og fremdriften denne uken",
       "heatMapShowImbalance": "Vis ubalanse-panelet",
-      "volumeShowBreakdown": "Vis listen over toppøvelser",
-      "protocolChartType": "Diagram",
+      "volumeShowBreakdown": "Vis øvelsene med mest volum",
+      "protocolChartType": "Diagramstil",
       "chartPie": "Kake",
       "chartDoughnut": "Donut",
-      "protocolSortBy": "Sortert etter (best først)",
-      "durationShowTrend": "Vis avvikstrenden",
+      "protocolSortBy": "Sorter etter",
+      "durationShowTrend": "Vis trenden for estimatets nøyaktighet",
       "quickActionsShown": "Viste knapper",
-      "fileErrorsMaxItems": "Sider som vises (tom: alle):",
-      "fileErrorsMaxTags": "Flest muskeltagger en side kan ha:",
+      "fileErrorsMaxItems": "Viste sider",
+      "fileErrorsMaxTags": "Flest muskeltagger en side kan ha",
       "fileErrorsCheckSharedNames": "Marker sider som deler et øvelsesnavn",
-      "muscleTagsGroupByMuscle": "Grupper taggene etter muskel"
+      "muscleTagsGroupByMuscle": "Grupper taggene etter muskel",
+      "volumeTrendDays": "Dager i volumdiagrammet",
+      "recentWorkoutsLimit": "Viste treninger",
+      "all": "Alle",
+      "numberRange": "Skriv inn et heltall fra {min} til {max}.",
+      "pickOne": "Velg minst én, eller fjern widgeten.",
+      "units": {
+        "days": "dager",
+        "weeks": "uker",
+        "seconds": "s"
+      },
+      "editTitle": "Rediger {widget}",
+      "sortMostSets": "Flest sett",
+      "lastWidget": "Dette er dashbordets eneste widget, så den kan ikke fjernes: slett blokken i stedet."
     }
   },
   "duration": {
     "estimatedDuration": "Estimert varighet",
     "lastSession": "Siste økt",
     "restTime": "Hviletid",
+    "setCount": "{count} sett",
     "setTime": "Tid per sett",
     "unableToAnalyze": "Kan ikke analysere treningsfil"
   },
@@ -323,7 +351,7 @@
         "name": "Kriger II"
       },
       "treePose": {
-        "name": "Trærposen"
+        "name": "Trestillingen"
       }
     },
     "featureShowcase": {
@@ -358,7 +386,7 @@
       "trainingProtocolsTitle": "5. Treningsprotokoller",
       "workoutChartTitle": "Treningsdiagram (alle øvelser samlet)",
       "e1rmChartTitle": "Estimert 1RM",
-      "e1rmIntro": "Det beste estimatet for hver dag med Epley-formelen (vekt × (1 + repetisjoner / 30)), fra sett med 1 til 12 repetisjoner. Oppvarmingssett og drop sets teller ikke.",
+      "e1rmIntro": "Det beste estimatet for hver dag med Epley-formelen (vekt × (1 + repetisjoner / 30)), fra sett med 1 til 12 repetisjoner. Oppvarmingssett og dropsett teller ikke.",
       "presetTimersTitle": "Tabata og EMOM",
       "presetTimersIntro": "En timer kan kjøre en lagret forhåndsinnstilling etter navn med `preset`. Tabata og EMOM er innebygd; rediger dem, eller legg til dine egne under Innstillinger → Timer-forhåndsinnstillinger.",
       "protocolColumn": "Protokoll",
@@ -377,8 +405,8 @@
       "trainingCalendarIntro": "Treningskalenderen viser et år med treningsdager og hvor mange uker på rad du har nådd ukemålet ditt (Innstillinger → Ukentlig mål).",
       "importTitle": "8. Importer fra Strong eller Hevy",
       "importIntro": "Kjør **{command}** fra kommandopaletten og velg CSV-filen appen eksporterte. Sett som allerede er i loggen din, hoppes over, og loggen sikkerhetskopieres først.",
-      "setsTitle": "Vis eksempler på loggingsett på telefonen din",
-      "setsIntro": "A `workout-sets` block shows today's sets as rows. The grey numbers are the same set last time: tick a row to log them as they are, or type what you did. Tap the arrow for the set's protocol and notes, and a logged set to edit it.",
+      "setsTitle": "Logg sett på telefonen",
+      "setsIntro": "En `workout-sets`-blokk viser dagens sett som rader. De grå tallene er samme sett sist: kryss av en rad for å logge den slik den er, eller skriv inn det du gjorde. Trykk på pilen for protokoll og notater for settet, og på et logget sett for å redigere det.",
       "codeBlockWorkoutSets": "Logg treningssettet for i dag, rad for rad."
     },
     "fileNames": {
@@ -425,6 +453,24 @@
       "workoutsDesc": "Eksempler på treningsplaner",
       "workoutsFolder": "**{folder}/**",
       "sessionIntro": "Dette notatet har en liten plan: én øvelse med settene, målet og hviletimeren. Økten viser settet du skal gjøre; før det inn, så starter hviletimeren.",
+      "tables": {
+        "latestTitle": "Siste sett for en øvelse",
+        "latestIntro": "`exercise` velger øvelsen og `limit` hvor mange sett tabellen viser.",
+        "targetTitle": "Mål og planlagte sett",
+        "targetIntro": "Med `targetWeight` og `targetReps` viser tabellen hvor nær du er målet; når du når det, tilbyr et merke å skrive neste vekt inn i blokken. `sets` er hvor mange sett du planlegger: uten `limit` viser tabellen de to siste treningene, og en veiledet økt teller dem. `workout` med `exactMatch: true` beholder bare settene for den øvelsen i den treningen.",
+        "workoutTitle": "En hel trening",
+        "workoutIntro": "Med `workout` og uten `exercise` lister tabellen alle sett i den treningen. `dateRange: 14` beholder de siste 14 dagene.",
+        "columnsTitle": "Kolonner og sortering",
+        "columnsIntro": "`columns` velger kolonnene og rekkefølgen deres; `sortBy` og `sortOrder` rekkefølgen på radene, her de tyngste settene først. `showAddButton: false` skjuler +-knappen, og `showProtocol: false` skjuler protokollmerkene."
+      },
+      "sets": {
+        "lastTimeTitle": "Samme sett som sist",
+        "lastTimeIntro": "Med `workout` kommer de grå tallene fra forrige gang du gjorde denne øvelsen i den treningen. Uten den bruker blokken notatets navn.",
+        "restTitle": "Hviletimer og mål",
+        "restIntro": "`rest` er hvilen etter hvert sett, i sekunder (`0` = ingen timer); uten den bruker blokken seksjonens `workout-timer`. `targetWeight` og `targetReps` viser målet, og er hintet første gang du gjør en øvelse.",
+        "restTimerTitle": "Alternativer for hviletimer",
+        "restTimerIntro": "Blokken har alle alternativene til hviletimeren, så et notat for en dag trenger ingen `workout-timer`: `timer.type` (`interval` bruker `rest` som arbeidstid i hver runde, med `timer.rest` og `timer.rounds`), `timer.preset`, `timer.sound` og `timer.showControls`. ⋮ → Rediger hviletimer skriver dem for deg."
+      },
       "pagesIntro": "Utforsk én funksjon per side. Følg lenkene i rekkefølge, eller velg en funksjon nedenfor. Bruk \"Tilbake\" og \"Neste\" for å navigere mellom notatene; scroll normalt for å utforske hvert eksempel.",
       "liveIntro": "Utforsk alle funksjonene nedenfor med seks uker med eksempler på treningsøkter. Dette er demonstrasjonsdata; prøv kontrollene og se hvordan notene dine fungerer.",
       "tryLog": "Bruk \"+\" knappen for å legge til et sett. Tabellen, diagrammene og dashboardet bruker samme CSV-fil.",
@@ -532,7 +578,7 @@
       "tagReferenceFailed": "Feil ved generering av tag-referanse: {error}",
       "csvLoadError": "Feil ved lasting av CSV-data: {error}",
       "csvCreateError": "Feil ved oppretting av CSV-fil: {error}",
-      "blockIdsError": "Feil ved tillegg av blokk-IDer: {error}",
+      "blockIdsError": "Feil ved tillegg av blokk-ID-er: {error}",
       "csvFilesError": "Feil ved oppretting av CSV-filer: {error}",
       "muscleTagsCsvError": "Feil ved oppretting av CSV for muskeltagg: {error}",
       "muscleTagsLoadError": "Feil ved lasting av muskeltagg: {error}",
@@ -600,7 +646,7 @@
       "deleteSet": "Slett sett",
       "updateDashboard": "Oppdater dashbord",
       "updateChart": "Oppdater diagram",
-      "insertSets": "Sett for innsetting"
+      "insertSets": "Legg til sett"
     },
     "canvasLayout": "Oppsett",
     "canvasOptions": "Alternativer",
@@ -623,43 +669,38 @@
     },
     "confirmAction": "Bekreft handling",
     "csvExercise": "CSV-øvelse",
-    "customParameters": "Tilpassede parametere:",
-    "customTitle": "Tilpasset tittel:",
-    "dataLimit": "Datagrense (0 = alle):",
-    "dataType": "Datatype:",
-    "dateRange": "Datointervall (dager):",
-    "daysRange": "Dagsintervall (0 = alle):",
+    "customParameters": "Egne parametere",
+    "customTitle": "Egen tittel",
+    "dataLimit": "Datagrense (0 = alle)",
+    "dataType": "Datatype",
     "delete": "Slett",
-    "duration": "Varighet (sekunder):",
     "editTag": "Rediger tag",
-    "exerciseType": "Øvelsestype:",
     "exportTags": "Eksporter tagger",
     "fileName": "Filnavn",
-    "folderPath": "Sti til mappe (valgfritt):",
+    "folderPath": "Mappesti (valgfri)",
     "importMerge": "Slå sammen",
     "importReplace": "Erstatt alle",
     "importTags": "Importer tagger",
     "labels": {
       "actions": "Handlinger",
       "currentFileInfo": "Gjeldende fil: {fileName}",
-      "exercise": "Øvelse:",
-      "reps": "Repetisjoner:",
-      "targetReps": "Målrepetisjoner:",
-      "plannedSets": "Planlagte sett:",
-      "targetWeight": "Mål: ({unit}):",
-      "volume": "Volum ({unit}):",
-      "weight": "Vekt ({unit}):"
+      "exercise": "Øvelse",
+      "reps": "Repetisjoner",
+      "targetReps": "Målrepetisjoner",
+      "plannedSets": "Planlagte sett",
+      "targetWeight": "Målvekt ({unit})",
+      "volume": "Volum ({unit})",
+      "weight": "Vekt ({unit})"
     },
     "layoutGrouped": "Gruppert etter muskel",
     "layoutHorizontal": "Horisontalt oppsett",
-    "layoutType": "Oppsettstype:",
+    "layoutType": "Oppsettstype",
     "layoutVertical": "Vertikalt oppsett",
     "muscleGroup": "Muskelgruppe",
     "newTag": "Ny tag",
     "noTagsFound": "Ingen tagger samsvarer med søket ditt",
     "noTagsSelected": "Ingen tagger valgt. Klikk på taggene nedenfor for å legge dem til.",
-    "note": "Merk:",
-    "notes": "Merknader (valgfritt):",
+    "note": "Notat",
     "notices": {
       "auditConfirmRenameFile": "Gi nytt navn til denne filen?\n\n{oldName} → {newName}",
       "auditMismatchCount": "Fant {count} potensielle avvik:",
@@ -733,11 +774,11 @@
       "dashboardUpdateFailed": "Kunne ikke oppdatere dashbordet: det ble ikke funnet i notatet, eller et annet dashbord uten ID har de samme innstillingene. Åpne notatet på nytt og prøv igjen.",
       "setsInserted": "Sett lagt til"
     },
-    "parameterKey": "Nøkkel:",
-    "parameterLabel": "Etikett:",
+    "parameterKey": "Nøkkel",
+    "parameterLabel": "Etikett",
     "parameterRequired": "Obligatorisk",
-    "parameterType": "Type:",
-    "parameterUnit": "Enhet (valgfritt):",
+    "parameterType": "Type",
+    "parameterUnit": "Enhet (valgfri)",
     "placeholders": {
       "customTitle": "La stå tomt for automatisk tittel",
       "enterTagName": "Skriv inn tag-navn (f.eks. bryst, petto)",
@@ -757,10 +798,8 @@
       "sets": "4",
       "workout": "f.eks. Treningsøkt A, Trening B, eller bruk avkrytningsfeltet nedenfor"
     },
-    "protocol": "Protokoll:",
-    "recentExercises": "Nylig:",
-    "restTime": "Hviletid (sekunder):",
-    "rounds": "Runder:",
+    "protocol": "Protokoll",
+    "recentExercises": "Nylige",
     "save": "Lagre",
     "sections": {
       "advancedOptions": "Avanserte alternativer",
@@ -797,15 +836,15 @@
       "yesNo": "Ja/nei",
       "warmup": "Oppvarming"
     },
-    "sets": "Sett:",
-    "similarTags": "Liknende tagger:",
+    "sets": "Sett",
+    "similarTags": "Lignende tagger",
     "similarity": "Likhet",
     "status": "Status",
     "tag": "Tagg",
-    "tagsSelector": "Muskeltagger:",
-    "timerDuration": "Timerens varighet (sekunder):",
-    "timerPreset": "Timer-forhåndsinnstilling:",
-    "timerType": "Timertype:",
+    "tagsSelector": "Muskeltagger",
+    "timerDuration": "Timervarighet (sekunder)",
+    "timerPreset": "Timer-forhåndsinnstilling",
+    "timerType": "Timertype",
     "titles": {
       "addExerciseBlock": "Legg til øvelsesblokk",
       "auditExerciseNames": "Gå gjennom øvelsesnavn",
@@ -827,23 +866,30 @@
       "editChart": "Rediger treningsdiagram",
       "insertSets": "Legg til treningssett"
     },
-    "workout": "Trening (valgfritt):",
-    "workoutFile": "Treningsfil:",
-    "workoutNameOptional": "Navn på treningsøkten (valgfritt):",
     "importMergeAriaLabel": "Slå sammen: legg til kun nye tagger, behold eksisterende",
     "importReplaceAriaLabel": "Erstatt: overskriv alle eksisterende tagger",
     "editItem": "Rediger {item}",
     "deleteItem": "Slett {item}",
+    "duration": "Varighet (sekunder)",
     "errors": {
       "missingElements": "Manglende elementer",
       "validationCombinedMode": "For typen øvelse + trening må begge feltene fylles ut"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Sett: {sets}\n- Repetisjoner: {reps}\n- Pause: {restTime}s\n\n",
+    "exerciseType": "Øvelsestype",
     "noteTemplate": "**Merk: {note}**\n",
+    "notes": "Merknader (valgfri)",
     "date": "Dato",
+    "dateRange": "Datoperiode (dager)",
+    "daysRange": "Dagsperiode (0 = alle)",
     "weightUnitToggle": "Enhet for denne oppføringen",
     "rest": "Hvile",
-    "work": "Arbeid"
+    "restTime": "Hviletid (sekunder)",
+    "rounds": "Runder",
+    "work": "Arbeid",
+    "workout": "Trening (valgfri)",
+    "workoutFile": "Treningsfil",
+    "workoutNameOptional": "Treningsnavn (valgfritt)"
   },
   "settings": {
     "buttons": {
@@ -1002,16 +1048,6 @@
       "disabledBlock": "{feature} er en beta-funksjon. Slå den på i Innstillinger → Beta-funksjoner for å bruke denne funksjonen."
     }
   },
-  "stats": {
-    "max": "Maks: ",
-    "min": "Min: ",
-    "recentLast3": " (siste 3)",
-    "recentTrend": "Nylig trend",
-    "recentVsPrev": " (vs forrige)",
-    "sessions": "Økter",
-    "average": "Gjennomsnitt: ",
-    "title": "{dataTypeLabel} statistikk ({contextLabel}):"
-  },
   "table": {
     "actions": "Handlinger",
     "columnLabels": {
@@ -1050,6 +1086,8 @@
     "notAvailable": "I/T",
     "refreshSuccess": "Tabellen er oppdatert",
     "target": {
+      "noSetsYet": "Ingen sett på {weight} ennå",
+      "progress": "Beste {best}/{target} repetisjoner",
       "progressTooltip": "Beste: {best} repetisjoner / Mål: {target} repetisjoner",
       "repsSuffix": "repetisjoner",
       "separator": " × "
@@ -1227,30 +1265,34 @@
     "target": "Mål: {target}",
     "targetReps": "{reps} repetisjoner",
     "targetWeight": "{weight} {unit}",
-    "logSet": "Registrer sett",
+    "logSet": "Logg sett",
     "previous": "Forrige",
     "next": "Neste",
     "rest": "Hvile",
     "done": "Trening ferdig. Sett registrert i dag: {sets}.",
-    "empty": "Add a `workout-log` or `workout-sets` block with an exercise to this note to follow it as a session."
+    "empty": "Legg til en `workout-log`- eller `workout-sets`-blokk med en øvelse i dette notatet for å følge det som en økt."
   },
   "sets": {
-    "editSet": "Rediger sett {set}",
     "addSet": "Legg til sett",
+    "removeSet": "Fjern sett",
     "protocol": "Protokoll",
     "notes": "Merknader",
     "editBlock": "Rediger sett",
+    "editRestTimer": "Rediger hviletimer",
     "blockUpdated": "Sett oppdatert",
-    "blockUpdateFailed": "Feilet ved oppdatering av settene: blokken ble ikke funnet i notatet. Åpne notatet på nytt og prøv igjen.",
-    "workoutLabel": "Trening:",
+    "blockUpdateFailed": "Kunne ikke oppdatere settene: blokken ble ikke funnet i notatet. Åpne notatet på nytt og prøv igjen.",
+    "workoutLabel": "Trening",
     "workoutPlaceholder": "Tomt: {note}",
-    "restLabel": "Hvile etter hver serie (0 = tidsinnstilling for seksjonen)",
-    "noExercise": "Legg til `exercise:` i dette området for å logge antall sett.",
+    "restLabel": "Hvile etter hvert sett (0 = seksjonens timer)",
+    "noExercise": "Legg til `exercise:` i denne blokken for å logge settene.",
     "progress": "{done}/{sets} sett",
     "lastTime": "Siste gang ({date}): {sets}",
     "setColumn": "Sett",
     "fieldOfSet": "{field}, sett {set}",
     "details": "Protokoll og notater for sett {set}",
-    "logSet": "Logg satt {set}"
+    "logSet": "Logg sett {set}",
+    "unlogSet": "Fjern sett {set} fra loggen",
+    "setRemoved": "Sett {set} fjernet",
+    "valueOfSet": "{field}, sett {set}: {value}"
   }
 }

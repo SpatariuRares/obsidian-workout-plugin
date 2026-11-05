@@ -5,7 +5,7 @@ import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMo
 import { t } from "@app/i18n";
 
 const titles = (container: HTMLElement) =>
-  [...container.querySelectorAll(".workout-summary-card .workout-card-title")].map(
+  [...container.querySelectorAll(".workout-summary-card .stat-card-label")].map(
     (el) => el.textContent,
   );
 

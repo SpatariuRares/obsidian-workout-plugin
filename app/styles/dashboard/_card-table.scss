@@ -22,9 +22,10 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: var(--workout-space-xs) var(--workout-space-sm);
       padding: var(--workout-space-md);
-      background: var(--background-secondary);
-      border: var(--workout-border-thin) solid var(--workout-border-subtle);
-      border-radius: var(--workout-radius-md);
+      // Inset into the widget card: page color plus border, never a shadow
+      background: var(--background-primary);
+      border: var(--workout-border-thin) solid var(--workout-border-color);
+      border-radius: var(--workout-radius-lg);
     }
 
     td {
@@ -33,11 +34,20 @@
       border: none;
       text-align: start;
       background: none;
+      font-weight: var(--workout-font-weight-semibold);
+      font-variant-numeric: tabular-nums;
+    }
+
+    // Beats each widget's right-aligned figure columns on the desk
+    td,
+    td[data-label] {
+      text-align: start;
     }
 
     td:first-child {
       grid-column: 1 / -1;
       margin-bottom: var(--workout-space-2xs);
+      font-weight: normal;
     }
 
     td[data-label]::before {

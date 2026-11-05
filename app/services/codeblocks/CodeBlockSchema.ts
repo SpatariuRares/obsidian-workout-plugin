@@ -78,8 +78,15 @@ export type ParamsOf<Fields extends Record<string, FieldSpec>> = {
   -readonly [K in keyof Fields]?: FieldValue<Fields[K]>;
 };
 
+/** The parameters that have a default, each with its type (never unset) */
+export type DefaultsOf<Fields extends Record<string, FieldSpec>> = {
+  -readonly [K in keyof Fields as Fields[K] extends { default: unknown }
+    ? K
+    : never]: FieldValue<Fields[K]>;
+};
+
 /** The parameter type of a schema, e.g. `BlockParams<typeof tableBlock>` */
-export type BlockParams<S> = S extends CodeBlockSchema<infer P> ? P : never;
+export type BlockParams<S> = S extends CodeBlockSchema<infer P, infer _D> ? P : never;
 
 export interface ParseResult<P> {
   /** Only the parameters written in the block, typed */
@@ -90,11 +97,11 @@ export interface ParseResult<P> {
   invalidKeys: string[];
 }
 
-export interface CodeBlockSchema<P> {
+export interface CodeBlockSchema<P, D = P> {
   /** The code block language, e.g. `workout-log` */
   readonly type: string;
   /** Parameters that have a default, with that default */
-  readonly defaults: P;
+  readonly defaults: D;
   /**
    * Read a block body (the text between the fences). Comments (`#`),
    * blank lines and unknown keys are skipped; a repeated key keeps its
@@ -125,7 +132,7 @@ export function changedParams<P extends object>(before: P, after: P): P {
 
 export function defineCodeBlock<
   const Fields extends Record<string, FieldSpec>,
->(type: string, fields: Fields): CodeBlockSchema<ParamsOf<Fields>> {
+>(type: string, fields: Fields): CodeBlockSchema<ParamsOf<Fields>, DefaultsOf<Fields>> {
   type P = ParamsOf<Fields>;
   const keys = Object.keys(fields);
 
@@ -136,7 +143,7 @@ export function defineCodeBlock<
 
   return {
     type,
-    defaults: defaults as P,
+    defaults: defaults as DefaultsOf<Fields>,
 
     parse(source) {
       const params: Record<string, unknown> = {};

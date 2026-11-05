@@ -26,7 +26,7 @@ function field(props: {
 }
 
 describe("AdjustField molecule", () => {
-  it("shows the label with its unit and the starting value", () => {
+  it("shows the label, the unit at the end of the field and the starting value", () => {
     const { parent, input } = field({
       value: 30,
       min: 1,
@@ -34,9 +34,10 @@ describe("AdjustField molecule", () => {
       step: 7,
       unit: "d",
     });
-    expect(
-      parent.querySelector(".workout-field-label")?.textContent,
-    ).toBe("Days (d)");
+    const label = parent.querySelector<HTMLLabelElement>(".workout-field-label")!;
+    expect(label.textContent).toBe("Days");
+    expect(label.htmlFor).toBe(input.id);
+    expect(parent.querySelector(".workout-number-field-unit")?.textContent).toBe("d");
     expect(input.value).toBe("30");
   });
 

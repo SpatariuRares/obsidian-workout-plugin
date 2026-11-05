@@ -38,6 +38,9 @@ jest.mock("@app/components/atoms", () => ({
       },
     ),
   },
+  Icon: {
+    create: jest.fn((parent: HTMLElement) => parent.createSpan()),
+  },
   Text: {
     createSpan: jest.fn(
       (parent: HTMLElement, text: string, className?: string) => {

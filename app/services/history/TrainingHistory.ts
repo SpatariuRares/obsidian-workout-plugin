@@ -526,7 +526,8 @@ function sortTime(session: Session): number {
   return session.start ?? setTime(session.sets[0]);
 }
 
-function countsForRecord(log: WorkoutLogData): boolean {
+/** A working set: a weight, and not a warm-up or a drop set (the PR rule) */
+export function countsForRecord(log: WorkoutLogData): boolean {
   const protocol = protocolId(log.protocol);
   return (
     Number.isFinite(log.weight) &&

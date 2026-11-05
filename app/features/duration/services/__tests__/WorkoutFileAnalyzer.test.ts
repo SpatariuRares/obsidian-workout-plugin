@@ -197,6 +197,26 @@ describe("WorkoutFileAnalyzer", () => {
       expect(r.totalRestTime).toBe(160);
     });
 
+    it("should count a workout-sets block's planned sets and its own rest", async () => {
+      const md = "## A\n```workout-sets\nexercise: Squat\nsets: 4\nrest: 180\n```";
+      const r = await analyze(md);
+      expect(r.setCount).toBe(4);
+      expect(r.totalRestTime).toBe(4 * 180);
+    });
+
+    it("should rest a workout-sets block on the section's timer, else the default preset", async () => {
+      const withTimer = await analyze(
+        "## A\n### 2 sets\n```workout-timer\nduration: 60\n```\n```workout-sets\nexercise: Squat\n```",
+      );
+      expect(withTimer.totalRestTime).toBe(120);
+
+      const alone = await analyze("## A\n### 2 sets\n```workout-sets\nexercise: Squat\n```");
+      expect(alone.totalRestTime).toBe(2 * 30);
+
+      const none = await analyze("## A\n### 2 sets\n```workout-sets\nexercise: Squat\nrest: 0\n```");
+      expect(none.totalRestTime).toBe(0);
+    });
+
     it("should not read reps out of a code block", async () => {
       const md = "## A\n```workout-log\nid: ax5bc\nlimit: 3\n```";
       const r = await analyze(md, { setDuration: 40 });

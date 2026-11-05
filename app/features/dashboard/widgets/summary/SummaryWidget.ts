@@ -5,7 +5,7 @@ import {
   SUMMARY_METRIC_IDS,
 } from "@app/features/dashboard/types";
 import { calculateSummaryMetrics } from "@app/features/dashboard/widgets/summary/business/calculateSummaryMetrics";
-import { DashboardCard } from "@app/components/molecules";
+import { StatCard } from "@app/components/molecules";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
 import { ICONS } from "@app/constants/ui.constants";
@@ -26,9 +26,7 @@ export class SummaryWidget {
       className: "workout-summary-widget",
     });
 
-    const summaryEl = widgetEl.createDiv({
-      cls: "workout-summary-grid",
-    });
+    const summaryEl = StatCard.row(widgetEl, "workout-summary-grid");
 
     const metrics = calculateSummaryMetrics(
       data,
@@ -83,11 +81,10 @@ export class SummaryWidget {
     value: string,
     icon: string,
   ): void {
-    DashboardCard.create(container, {
+    StatCard.create(container, {
       icon,
-      title,
+      label: title,
       value,
-      variant: "summary",
       className: "workout-summary-card",
     });
   }

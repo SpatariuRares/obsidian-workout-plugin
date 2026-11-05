@@ -5,26 +5,6 @@
    ============================================================================ */
 
 .workout-calendar {
-  &-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--workout-space-md) var(--workout-space-xl);
-    margin-bottom: var(--workout-space-md);
-  }
-
-  &-stat-label {
-    font-size: var(--workout-font-xs);
-    color: var(--text-muted);
-  }
-
-  &-stat-value {
-    font-weight: var(--workout-font-weight-semibold);
-
-    &.is-met {
-      color: var(--workout-text-success);
-    }
-  }
-
   &-grid {
     --workout-calendar-cell: 11px;
 
@@ -83,7 +63,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: var(--workout-space-xxs, 2px);
+    gap: var(--workout-space-2xs);
     margin-top: var(--workout-space-sm);
     font-size: var(--workout-font-xs);
     color: var(--text-muted);

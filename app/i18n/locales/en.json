@@ -8,7 +8,6 @@
       "variationFromTo": " from {startValue} to {endValue}",
       "weightIncrementUnit": "Weight increment {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "Overall change: ",
     "significantIncrease": "Up from zero",
     "trendLine": "Trend line",
     "typeNotAvailable": "Chart type \"{chartDataType}\" is not available for {exerciseType} exercises. Available types: {typeList}",
@@ -25,7 +24,16 @@
     "defaultTitle": "Trend {type}",
     "noTypesAvailable": "no chart types available",
     "noEligibleE1rm": "No eligible sets for estimated 1RM. Log a positive weight with 1–12 reps, excluding warm-up and drop sets.",
-    "editChart": "Edit chart"
+    "editChart": "Edit chart",
+    "stats": {
+      "average": "Average",
+      "last3": "last 3",
+      "max": "Max",
+      "min": "Min",
+      "recentTrend": "Recent trend",
+      "sessions": "Sessions",
+      "vsPrevious": "vs previous"
+    }
   },
   "commands": {
     "addExerciseBlock": "Add exercise block",
@@ -53,11 +61,12 @@
     "minPerKm": "min/km",
     "notAvailable": "Not available",
     "sec": "sec",
+    "undo": "Undo",
     "unknown": "Unknown",
     "workout": "Workout"
   },
   "convert": {
-    "currentType": "Current type:",
+    "currentType": "Current type",
     "errors": {
       "convertError": "Error converting exercise data: {error}"
     },
@@ -78,7 +87,7 @@
     "success": "Successfully converted {count} log entries",
     "title": "Convert exercise data",
     "typeSelect": {
-      "convertTo": "Convert to:",
+      "convertTo": "Convert to",
       "updateFileType": "Update exercise file type"
     }
   },
@@ -108,7 +117,7 @@
       "tooManyTags": "Too many muscle tags ({count}, at most {max})"
     },
     "muscleTags": {
-      "description": "Description",
+      "description": "Tags you can use in an exercise page's frontmatter. Click one to copy it.",
       "title": "Muscle tags",
       "tooltip": "Click to copy: {tag}",
       "totalCount": "Total: {count} tags available"
@@ -129,7 +138,7 @@
       "columnProgression": "Progression",
       "columnProtocol": "Protocol",
       "columnVolumeChange": "Volume change",
-      "disclaimer": "Disclaimer",
+      "disclaimer": "Correlation, not proof: weight, rest and sleep change these figures too.",
       "noData": "Not enough data yet: each protocol needs at least 5 logged sets.",
       "subtitle": "How each protocol has worked across all logged sets",
       "title": "Protocol effectiveness"
@@ -177,6 +186,11 @@
         "volume": "Average volume: {value} {unit}",
         "sets": "Average sets: {value}",
         "reps": "Average reps: {value}"
+      },
+      "controls": {
+        "period": "Period",
+        "side": "Side",
+        "metric": "Measure"
       }
     },
     "editDashboard": "Edit dashboard",
@@ -186,14 +200,14 @@
       "moveUp": "Move {widget} up",
       "moveDown": "Move {widget} down",
       "allHistory": "Empty: all history",
-      "recentWorkoutsLimit": "Workouts in the recent list:",
-      "volumeTrendDays": "Days in the volume trend:",
+      "recentWorkoutsLimit": "Workouts in the recent list",
+      "volumeTrendDays": "Days in the volume trend",
       "layout": "Layout",
       "layoutList": "List",
       "layoutGrid": "Grid",
       "gridHint": "Drag a widget to move it and its corner to resize it; the stash below shows the smallest size each widget can take. Take a widget off with its × or by dropping it on the stash. With the keyboard: arrows move, Shift and arrows resize, Delete takes it off.",
       "gridColumnsMeasured": "{columns} columns fit the note's width.",
-      "gridColumns": "Columns:",
+      "gridColumns": "Columns",
       "stash": "Not on the dashboard",
       "stashEmpty": "Every widget is on the dashboard",
       "tile": "{widget}: column {column}, row {row}, {width} wide, {height} tall",
@@ -230,37 +244,51 @@
       "edit": "Edit widget",
       "removeConfirm": "Remove \"{widget}\" from the dashboard?",
       "removeConfirmButton": "Remove",
-      "calendarWeeks": "Weeks shown:",
+      "calendarWeeks": "Weeks shown, counted back from this one",
       "quickStatsPeriods": "Periods shown",
-      "quickStatsMetrics": "Rows shown",
+      "quickStatsMetrics": "Figures shown",
       "heatMapTimeFrame": "Starting period",
-      "heatMapMetric": "Starting metric",
-      "heatMapView": "Starting view",
-      "volumeTopLimit": "Exercises in the top list:",
-      "protocolDays": "Days counted:",
-      "protocolMinEntries": "Sets a protocol needs to be compared:",
-      "durationRecentCount": "Workouts compared:",
-      "durationRestSeconds": "Rest between sets in the estimate (seconds):",
+      "heatMapMetric": "Starting measure",
+      "heatMapView": "Starting side",
+      "volumeTopLimit": "Exercises listed",
+      "protocolDays": "Days counted",
+      "protocolMinEntries": "Minimum sets per protocol",
+      "durationRecentCount": "Workouts compared",
+      "durationRestSeconds": "Rest between sets in the estimate",
       "summaryMetrics": "Cards shown",
       "calendarShowStats": "Show the streaks and this week's progress",
       "heatMapShowImbalance": "Show the imbalance panel",
-      "volumeShowBreakdown": "Show the top exercises list",
-      "protocolChartType": "Chart",
+      "volumeShowBreakdown": "Show top exercises by volume",
+      "protocolChartType": "Chart style",
       "chartPie": "Pie",
       "chartDoughnut": "Doughnut",
-      "protocolSortBy": "Ordered by (best first)",
-      "durationShowTrend": "Show the variance trend",
+      "protocolSortBy": "Sort by",
+      "durationShowTrend": "Show the estimate accuracy trend",
       "quickActionsShown": "Buttons shown",
-      "fileErrorsMaxItems": "Pages listed (empty: all):",
-      "fileErrorsMaxTags": "Most muscle tags a page may have:",
+      "fileErrorsMaxItems": "Pages listed",
+      "fileErrorsMaxTags": "Most muscle tags a page may have",
       "fileErrorsCheckSharedNames": "Flag pages that share an exercise name",
-      "muscleTagsGroupByMuscle": "Group the tags by muscle"
+      "muscleTagsGroupByMuscle": "Group the tags by muscle",
+      "volumeTrendDays": "Days in the volume chart",
+      "recentWorkoutsLimit": "Workouts shown",
+      "all": "All",
+      "numberRange": "Enter a whole number from {min} to {max}.",
+      "pickOne": "Pick at least one, or remove the widget.",
+      "units": {
+        "days": "days",
+        "weeks": "weeks",
+        "seconds": "s"
+      },
+      "editTitle": "Edit {widget}",
+      "sortMostSets": "Most sets",
+      "lastWidget": "This is the dashboard's only widget, so it can't be removed: delete the block instead."
     }
   },
   "duration": {
     "estimatedDuration": "Estimated duration",
     "lastSession": "Last session",
     "restTime": "Rest time",
+    "setCount": "{count} sets",
     "setTime": "Set time",
     "unableToAnalyze": "Unable to analyze workout file"
   },
@@ -434,7 +462,25 @@
       "welcome": "Welcome! This folder contains example files to help you learn all the features.",
       "workoutsDesc": "Example workout templates",
       "workoutsFolder": "**{folder}/**",
-      "sessionIntro": "This note has a small plan: one exercise with its sets, target and rest timer. The session shows the set to do; log it and the rest timer starts."
+      "sessionIntro": "This note has a small plan: one exercise with its sets, target and rest timer. The session shows the set to do; log it and the rest timer starts.",
+      "tables": {
+        "latestTitle": "Latest sets of an exercise",
+        "latestIntro": "`exercise` picks the exercise and `limit` how many sets the table shows.",
+        "targetTitle": "Target and planned sets",
+        "targetIntro": "With `targetWeight` and `targetReps` the table shows how close you are to the target; once you reach it, a badge offers to write the next weight into the block. `sets` is how many sets you plan: without `limit` the table shows the last two workouts, and a guided session counts them. `workout` with `exactMatch: true` keeps only the sets of that exercise in that workout.",
+        "workoutTitle": "A whole workout",
+        "workoutIntro": "With `workout` and no `exercise` the table lists every set of that workout. `dateRange: 14` keeps the last 14 days.",
+        "columnsTitle": "Columns and sorting",
+        "columnsIntro": "`columns` chooses the columns and their order; `sortBy` and `sortOrder` the order of the rows, here the heaviest sets first. `showAddButton: false` hides the + button and `showProtocol: false` would hide the protocol badges."
+      },
+      "sets": {
+        "lastTimeTitle": "Same sets as last time",
+        "lastTimeIntro": "With `workout` the grey numbers come from the last time you did this exercise in that workout. Without it the block uses the note's name.",
+        "restTitle": "Rest timer and targets",
+        "restIntro": "`rest` is the rest after each set, in seconds (`0` = no timer); without it the block uses the section's `workout-timer`. `targetWeight` and `targetReps` show the target, and are the hint the first time you do an exercise.",
+        "restTimerTitle": "Rest timer options",
+        "restTimerIntro": "The block holds every option of its rest timer, so a day's note needs no `workout-timer`: `timer.type` (`interval` uses `rest` as the work of each round, with `timer.rest` and `timer.rounds`), `timer.preset`, `timer.sound` and `timer.showControls`. ⋮ → Edit rest timer writes them for you."
+      }
     },
     "hiit": {
       "cyclingCooldownTitle": "Cycling Cool-down",
@@ -623,16 +669,16 @@
     },
     "confirmAction": "Confirm action",
     "csvExercise": "CSV exercise",
-    "customParameters": "Custom parameters:",
-    "customTitle": "Custom title:",
-    "dataLimit": "Data limit (0 = all):",
-    "dataType": "Data type:",
+    "customParameters": "Custom parameters",
+    "customTitle": "Custom title",
+    "dataLimit": "Data limit (0 = all)",
+    "dataType": "Data type",
     "date": "Date",
-    "dateRange": "Date range (days):",
-    "daysRange": "Days range (0 = all):",
+    "dateRange": "Date range (days)",
+    "daysRange": "Days range (0 = all)",
     "delete": "Delete",
     "deleteItem": "Delete {item}",
-    "duration": "Duration (seconds):",
+    "duration": "Duration (seconds)",
     "editItem": "Edit {item}",
     "editTag": "Edit tag",
     "errors": {
@@ -640,10 +686,10 @@
       "validationCombinedMode": "For the exercise + workout type, fill in both fields"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Sets: {sets}\n- Reps: {reps}\n- Rest: {restTime}s\n\n",
-    "exerciseType": "Exercise type:",
+    "exerciseType": "Exercise type",
     "exportTags": "Export tags",
     "fileName": "File name",
-    "folderPath": "Folder path (optional):",
+    "folderPath": "Folder path (optional)",
     "importMerge": "Merge",
     "importMergeAriaLabel": "Merge: add new tags only, keep existing",
     "importReplace": "Replace all",
@@ -652,25 +698,25 @@
     "labels": {
       "actions": "Actions",
       "currentFileInfo": "Current file: {fileName}",
-      "exercise": "Exercise:",
-      "reps": "Reps:",
-      "targetReps": "Target reps:",
-      "plannedSets": "Planned sets:",
-      "targetWeight": "Target: ({unit}):",
-      "volume": "Volume ({unit}):",
-      "weight": "Weight ({unit}):"
+      "exercise": "Exercise",
+      "reps": "Reps",
+      "targetReps": "Target reps",
+      "plannedSets": "Planned sets",
+      "targetWeight": "Target weight ({unit})",
+      "volume": "Volume ({unit})",
+      "weight": "Weight ({unit})"
     },
     "layoutGrouped": "Grouped by muscle",
     "layoutHorizontal": "Horizontal flow",
-    "layoutType": "Layout type:",
+    "layoutType": "Layout type",
     "layoutVertical": "Vertical flow",
     "muscleGroup": "Muscle group",
     "newTag": "New tag",
     "noTagsFound": "No tags match your search",
     "noTagsSelected": "No tags selected. Click on tags below to add them.",
-    "note": "Note:",
+    "note": "Note",
     "noteTemplate": "**Note: {note}**\n",
-    "notes": "Notes (optional):",
+    "notes": "Notes (optional)",
     "notices": {
       "newRecord": "New record: {weight} {unit} (+{increase} {unit})",
       "auditConfirmRenameFile": "Rename this file?\n\n{oldName} → {newName}",
@@ -744,11 +790,11 @@
       "dashboardUpdateFailed": "Failed to update dashboard: it was not found in its note, or another dashboard without an id has the same settings. Reopen the note and try again.",
       "setsInserted": "Sets inserted"
     },
-    "parameterKey": "Key:",
-    "parameterLabel": "Label:",
+    "parameterKey": "Key",
+    "parameterLabel": "Label",
     "parameterRequired": "Required",
-    "parameterType": "Type:",
-    "parameterUnit": "Unit (optional):",
+    "parameterType": "Type",
+    "parameterUnit": "Unit (optional)",
     "placeholders": {
       "customTitle": "Leave empty for automatic title",
       "enterTagName": "Enter tag name (e.g., chest, petto)",
@@ -768,11 +814,11 @@
       "sets": "4",
       "workout": "e.g. Workout A, Training B, or use checkbox below"
     },
-    "protocol": "Protocol:",
-    "recentExercises": "Recent:",
+    "protocol": "Protocol",
+    "recentExercises": "Recent",
     "rest": "Rest",
-    "restTime": "Rest time (seconds):",
-    "rounds": "Rounds:",
+    "restTime": "Rest time (seconds)",
+    "rounds": "Rounds",
     "save": "Save",
     "sections": {
       "advancedOptions": "Advanced options",
@@ -809,15 +855,15 @@
       "twentyones": "Twentyones",
       "yesNo": "Yes/No"
     },
-    "sets": "Sets:",
-    "similarTags": "Similar tags:",
+    "sets": "Sets",
+    "similarTags": "Similar tags",
     "similarity": "Similarity",
     "status": "Status",
     "tag": "Tag",
-    "tagsSelector": "Muscle tags:",
-    "timerDuration": "Timer duration (seconds):",
-    "timerPreset": "Timer preset:",
-    "timerType": "Timer type:",
+    "tagsSelector": "Muscle tags",
+    "timerDuration": "Timer duration (seconds)",
+    "timerPreset": "Timer preset",
+    "timerType": "Timer type",
     "titles": {
       "addExerciseBlock": "Add exercise block",
       "auditExerciseNames": "Audit exercise names",
@@ -841,9 +887,9 @@
     },
     "weightUnitToggle": "Unit for this entry",
     "work": "Work",
-    "workout": "Workout (optional):",
-    "workoutFile": "Workout file:",
-    "workoutNameOptional": "Workout name (optional):"
+    "workout": "Workout (optional)",
+    "workoutFile": "Workout file",
+    "workoutNameOptional": "Workout name (optional)"
   },
   "settings": {
     "buttons": {
@@ -1002,16 +1048,6 @@
       "disabledBlock": "{feature} is a beta feature. Turn it on in Settings → Beta features to use this block."
     }
   },
-  "stats": {
-    "average": "Average: ",
-    "max": "Max: ",
-    "min": "Min: ",
-    "recentLast3": " (last 3)",
-    "recentTrend": "Recent trend",
-    "recentVsPrev": " (vs prev.)",
-    "sessions": "Sessions",
-    "title": "{dataTypeLabel} statistics ({contextLabel}):"
-  },
   "table": {
     "actions": "Actions",
     "columnLabels": {
@@ -1054,6 +1090,8 @@
     "refreshingTable": "Refreshing table...",
     "setCount": "{count} sets",
     "target": {
+      "noSetsYet": "No sets at {weight} yet",
+      "progress": "Best {best}/{target} reps",
       "progressTooltip": "Best: {best} reps / Target: {target} reps",
       "repsSuffix": "reps",
       "separator": " × "
@@ -1242,14 +1280,18 @@
     "fieldOfSet": "{field}, set {set}",
     "details": "Protocol and notes of set {set}",
     "logSet": "Log set {set}",
-    "editSet": "Edit set {set}",
+    "unlogSet": "Remove set {set} from the log",
+    "setRemoved": "Set {set} removed",
+    "valueOfSet": "{field}, set {set}: {value}",
     "addSet": "Add set",
+    "removeSet": "Remove set",
     "protocol": "Protocol",
     "notes": "Notes",
     "editBlock": "Edit sets",
+    "editRestTimer": "Edit rest timer",
     "blockUpdated": "Sets updated",
     "blockUpdateFailed": "Failed to update the sets: the block was not found in its note. Reopen the note and try again.",
-    "workoutLabel": "Workout:",
+    "workoutLabel": "Workout",
     "workoutPlaceholder": "Empty: {note}",
     "restLabel": "Rest after each set (0 = the section's timer)"
   }

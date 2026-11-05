@@ -58,10 +58,12 @@ button.workout-icon-dropdown-btn {
   display: flex;
 }
 
-// Individual menu items
-.workout-icon-dropdown-item {
+// Individual menu items, icons and labels in one column. Qualified with the
+// tag to beat Obsidian's `button` rule, which centres each item's content
+button.workout-icon-dropdown-item {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: var(--workout-space-sm);
   width: 100%;
   padding: var(--workout-space-sm) var(--workout-space-md);

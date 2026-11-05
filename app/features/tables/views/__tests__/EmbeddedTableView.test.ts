@@ -424,12 +424,35 @@ describe("EmbeddedTableView", () => {
       );
     });
 
-    it("does not render exercise action select when no exercise", async () => {
+    it("keeps the ⋮ menu, with edit only, when the block names no exercise", async () => {
       const container = document.createElement("div");
 
       await view.createTable(container, [createLog()], {});
 
-      expect(ExerciseActionSelect.render).not.toHaveBeenCalled();
+      expect(ExerciseActionSelect.render).toHaveBeenCalledWith(
+        expect.any(HTMLElement),
+        expect.objectContaining({ exerciseName: "" }),
+        expect.any(AbortSignal),
+      );
+    });
+
+    it("is a block card: title and ⋮, Add log, then the table", async () => {
+      const container = document.createElement("div");
+
+      await view.createTable(container, [createLog()], { exercise: "Bench Press" });
+
+      const card = container.querySelector(".workout-block-card.workout-log")!;
+      const header = card.querySelector(".workout-block-header")!;
+      expect(header.querySelector(".workout-block-title")?.textContent).toBe("Bench Press");
+      expect((ExerciseActionSelect.render as jest.Mock).mock.calls[0][0]).toBe(header);
+      expect(Array.from(card.children).map((child) => child.className)).toEqual([
+        "workout-block-header",
+        "button-container workout-log-actions",
+        "workout-table-container",
+      ]);
+      expect((LogCallouts.renderAddLogButton as jest.Mock).mock.calls[0][0]).toBe(
+        card.children[1],
+      );
     });
 
     it("renders fallback message when table rendering fails", async () => {

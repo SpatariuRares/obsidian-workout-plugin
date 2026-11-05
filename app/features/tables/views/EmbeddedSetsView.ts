@@ -1,14 +1,17 @@
-import { MarkdownRenderChild, Notice, setIcon } from "obsidian";
+import { MarkdownRenderChild, Notice } from "obsidian";
 import { BaseView } from "@app/features/common/views/BaseView";
-import { EditLogModal } from "@app/features/modals/log/EditLogModal";
 import { describeSet } from "@app/features/modals/log/LogHistory";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 import { TableRowProcessor } from "@app/features/tables/business/TableRowProcessor";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import type { BlockMenuAction } from "@app/features/common/ui/BlockMenu";
+import type { BlockLocation } from "@app/services/editor/CodeBlockEditorService";
+import { EditRestTimerModal } from "@app/features/tables/modals/EditRestTimerModal";
 import { renderTargetSection } from "@app/features/tables/ui/TargetSection";
 import { toEntry } from "@app/features/modals/base/logic/LogEntryDraft";
+import { toLogEntryInput } from "@app/services/data/WorkoutLogCodec";
 import {
+  draftFromSet,
   emptyDraft,
   rowProtocol,
   rowToFormData,
@@ -29,15 +32,27 @@ import {
   protocolId,
 } from "@app/services/protocols/ProtocolCatalog";
 import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
-import { Chip } from "@app/components/atoms/Chip";
+import { DeleteButton } from "@app/components/atoms/DeleteButton";
 import { ProtocolBadge, type BadgeProtocol } from "@app/components/atoms/ProtocolBadge";
+import { CheckToggle } from "@app/components/atoms/CheckToggle";
+import { DisclosureToggle } from "@app/components/atoms/DisclosureToggle";
+import { LiveRegion, type LiveRegionResult } from "@app/components/atoms/LiveRegion";
+import { NumberField } from "@app/components/molecules/NumberField";
+import { ProtocolPicker } from "@app/components/molecules/ProtocolPicker";
+import { NotesField } from "@app/components/molecules/NotesField";
+import { UndoNotice } from "@app/components/molecules/UndoNotice";
+import { BlockCard } from "@app/components/molecules/BlockCard";
 import { ICONS, mapColumnIdentifiersToLabels } from "@app/constants";
 import { DateUtils } from "@app/utils/DateUtils";
 import { DomUtils } from "@app/utils/DomUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { PathUtils } from "@app/utils/PathUtils";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
-import { WorkoutProtocol, type WorkoutLogData } from "@app/types/WorkoutLogData";
+import {
+  WorkoutProtocol,
+  type LogEntryInput,
+  type WorkoutLogData,
+} from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { parametersOrNone } from "@app/services/exercise/ExerciseDefinitionService";
 import { readNotePlan } from "@app/features/session/business/sessionPlan";
@@ -69,12 +84,14 @@ export class EmbeddedSetsView extends BaseView {
    * once, then on every log change (EventAwareRenderChild), like a table.
    * @param sourcePath - The note the block is written in: its workout and the sets' origin
    * @param editAction - The block's edit action (CodeBlockProcessorService), in its ⋮ menu
+   * @param location - Where the block is written, for its rest timer's edit action
    */
   createSets(
     container: HTMLElement,
     params: EmbeddedSetsParams,
     sourcePath: string,
     editAction?: BlockMenuAction,
+    location?: BlockLocation,
   ): SetSheet {
     return this.track(
       new SetSheet(
@@ -84,6 +101,7 @@ export class EmbeddedSetsView extends BaseView {
         params,
         sourcePath,
         editAction,
+        location,
         (error) => this.handleError(container, error),
       ),
     );
@@ -106,6 +124,21 @@ interface Drawn {
   planned: number;
 }
 
+/** Names of a sheet's controls, to focus them again after a redraw */
+const FOCUS = {
+  addSet: "add-set",
+  field: (row: number, index: number) => `row-${row}-field-${index}`,
+  check: (row: number) => `row-${row}-check`,
+  details: (row: number) => `row-${row}-details`,
+  protocol: (row: number) => `row-${row}-protocol`,
+};
+
+/** A row's field to fill in, and how to show its error */
+interface RowField {
+  input: HTMLInputElement;
+  setError: (message?: string) => void;
+}
+
 export class SetSheet extends MarkdownRenderChild {
   private readonly workout: string;
   /** Drafts of the rows to fill in, in row order */
@@ -116,6 +149,16 @@ export class SetSheet extends MarkdownRenderChild {
   /** Row number being logged, so a second tap doesn't log it twice */
   private saving?: number;
   private renders = 0;
+  /** What render draws into; the live region beside it is never redrawn */
+  private bodyEl?: HTMLElement;
+  private live?: LiveRegionResult;
+  /**
+   * Focus keys to try after the next draw, first found wins: a redraw on a
+   * log change would otherwise drop the focus on the note
+   */
+  private focusAfterRender: string[] = [];
+  /** Say the progress after the next draw (a set was logged or taken back) */
+  private announceAfterRender = false;
 
   constructor(
     containerEl: HTMLElement,
@@ -124,6 +167,7 @@ export class SetSheet extends MarkdownRenderChild {
     private params: EmbeddedSetsParams,
     private sourcePath: string,
     private editAction: BlockMenuAction | undefined,
+    private location: BlockLocation | undefined,
     private onError: (error: unknown) => void,
   ) {
     super(containerEl);
@@ -134,15 +178,25 @@ export class SetSheet extends MarkdownRenderChild {
     this.restTimer.destroy();
   }
 
+  /** The emptied element to draw into, next to the block's live region */
+  private body(): HTMLElement {
+    // Made once; again only if something emptied the block (an error message)
+    if (this.bodyEl?.parentElement !== this.containerEl) {
+      this.containerEl.empty();
+      this.bodyEl = this.containerEl.createDiv();
+      this.live = LiveRegion.create(this.containerEl);
+    }
+    this.bodyEl.empty();
+    return this.bodyEl;
+  }
+
   async render(): Promise<void> {
     const render = ++this.renders;
     const exercise = this.params.exercise;
     try {
       if (!betaEnabled(this.plugin.settings, "setSheet")) {
         // Drawn again on settings:changed, so turning it on shows the sheet
-        this.containerEl.empty();
-        const sheet = this.containerEl.createDiv({ cls: "workout-sets" });
-        this.renderHeader(sheet, exercise);
+        const sheet = this.renderCard(exercise);
         sheet.createDiv({
           cls: "workout-sets-message",
           text: t("settings.beta.disabledBlock", { feature: t("settings.beta.setSheet.name") }),
@@ -150,8 +204,7 @@ export class SetSheet extends MarkdownRenderChild {
         return;
       }
       if (!exercise) {
-        this.containerEl.empty();
-        this.renderHeader(this.containerEl.createDiv({ cls: "workout-sets" }));
+        this.renderCard();
         return;
       }
 
@@ -188,13 +241,8 @@ export class SetSheet extends MarkdownRenderChild {
         planned: plannedSets(input),
       };
 
-      this.containerEl.empty();
-      const sheet = this.containerEl.createDiv({ cls: "workout-sets" });
-      this.renderHeader(
-        sheet,
-        exercise,
-        t("sets.progress", { done: todaysSets.length, sets: drawn.planned }),
-      );
+      const progress = t("sets.progress", { done: todaysSets.length, sets: drawn.planned });
+      const sheet = this.renderCard(exercise, progress, drawn.rest);
       if (drawn.rest) {
         this.restTimer.draw(sheet.createDiv({ cls: "workout-sets-rest" }), drawn.rest);
       }
@@ -218,40 +266,69 @@ export class SetSheet extends MarkdownRenderChild {
       this.renderColumns(table, drawn.labels);
       for (const row of rows) this.renderRow(table, row, drawn);
 
-      const footer = sheet.createDiv({ cls: "workout-sets-footer" });
-      const add = Button.create(footer, {
+      const add = Button.create(BlockCard.footer(sheet), {
         text: t("sets.addSet"),
         icon: ICONS.ACTIONS.ADD,
         variant: BUTTONVARIANT.SECONDARY,
       });
+      DomUtils.setFocusKey(add, FOCUS.addSet);
       Button.onClick(add, () => {
         this.extraRows++;
+        this.focusAfterRender = [FOCUS.field(rows.length + 1, 0), FOCUS.check(rows.length + 1)];
         void this.render();
       });
+
+      const focus = this.focusAfterRender;
+      this.focusAfterRender = [];
+      focus.some((key) => DomUtils.focusByKey(sheet, key));
+      if (this.announceAfterRender) {
+        this.announceAfterRender = false;
+        this.live?.announce(progress);
+      }
     } catch (error) {
       this.onError(error);
     }
   }
 
   /**
-   * The block's top row: the exercise (or what to add) and, always in the
-   * top right corner, the ⋮ menu `workout-log` has: go to the exercise and
-   * edit this block. The menu sits on the row, so it never wraps under the
-   * title on a narrow phone.
+   * The block's card, with its top row: the exercise (or what to add) and,
+   * always in the top right corner, the ⋮ menu `workout-log` has: go to the
+   * exercise and edit this block.
    * @param progress - Text before the menu ("2/4 sets")
    */
-  private renderHeader(sheet: HTMLElement, exercise?: string, progress?: string): void {
-    const header = sheet.createDiv({ cls: "workout-sets-header" });
-    header.createDiv({
-      cls: exercise ? "workout-sets-title workout-sets-exercise" : "workout-sets-title workout-sets-message",
-      text: exercise ?? t("sets.noExercise"),
+  /** @param rest - The timer the block rests on, edited from its ⋮ menu */
+  private renderCard(
+    exercise?: string,
+    progress?: string,
+    rest?: EmbeddedTimerParams,
+  ): HTMLElement {
+    const { el, header } = BlockCard.create(this.body(), {
+      title: exercise ?? t("sets.noExercise"),
+      titleIsMessage: !exercise,
+      meta: progress,
+      className: "workout-sets",
     });
-    if (progress) header.createDiv({ cls: "workout-sets-meta", text: progress });
     ExerciseActionSelect.render(header, {
       exerciseName: exercise ?? "",
       plugin: this.plugin,
       edit: this.editAction,
+      more: rest ? [this.restTimerAction(rest)] : [],
     });
+    return el;
+  }
+
+  /** Every option of the rest timer, written into this block */
+  private restTimerAction(rest: EmbeddedTimerParams): BlockMenuAction {
+    return {
+      label: t("sets.editRestTimer"),
+      icon: ICONS.TIMER.DURATION,
+      run: () => {
+        new EditRestTimerModal(this.plugin.app, this.plugin, this.params, rest, {
+          sourcePath: this.sourcePath,
+          matchWithoutId: this.location?.matchWithoutId(),
+        }).open();
+      },
+    };
   }
 
   /** "Last time (31/10): 80 kg × 8 · 80 kg × 7" */
@@ -290,50 +367,47 @@ export class SetSheet extends MarkdownRenderChild {
     if (open) el.addClass("is-open");
     const main = el.createDiv({ cls: "workout-sets-row-main" });
     this.renderNumber(main, row.number, drawn.protocols.resolve(rowProtocol(row, draft)));
-    const inputs = drawn.parameters.map((param, index) =>
-      this.renderInput(main, row, draft, param, drawn.labels[index]),
+    const log = () => void this.logRow(row, drawn, el, fields);
+    const fields = drawn.parameters.map((param, index) =>
+      this.renderInput(main, row, draft, param, drawn.labels[index], index, log),
     );
 
-    const details = main.createEl("button", {
-      cls: "workout-sets-details-toggle clickable-icon",
-      attr: {
-        type: "button",
-        "aria-label": t("sets.details", { set: row.number }),
-        "aria-expanded": String(open),
-      },
-    });
-    setIcon(details, "chevron-down");
-    if (
-      rowProtocol(row, draft) !== protocolId(WorkoutProtocol.STANDARD) ||
-      draft.notes.trim()
-    ) {
-      details.createSpan({ cls: "workout-sets-details-dot" });
-    }
-    details.addEventListener("click", () => {
-      this.openRow = open ? undefined : row.number;
-      void this.render();
+    this.renderDetailsToggle(
+      main,
+      row.number,
+      open,
+      rowProtocol(row, draft) !== protocolId(WorkoutProtocol.STANDARD) || !!draft.notes.trim(),
+    );
+    CheckToggle.create(main, {
+      done: false,
+      label: t("sets.logSet", { set: row.number }),
+      focusKey: FOCUS.check(row.number),
+      onClick: log,
     });
 
-    const check = main.createEl("button", {
-      cls: "workout-sets-check",
-      attr: { type: "button", "aria-label": t("sets.logSet", { set: row.number }) },
-    });
-    setIcon(check, "check");
-    check.addEventListener("click", () => void this.logRow(row, drawn, el, inputs));
-    for (const input of inputs) {
-      input.addEventListener("keydown", (event) => {
-        // Keys typed here are the field's, not the editor's around the block
-        event.stopPropagation();
-        if (event.key === "Enter") {
-          event.preventDefault();
-          void this.logRow(row, drawn, el, inputs);
-        }
+    if (open) {
+      this.renderDetails(el, row.number, drawn.protocols, rowProtocol(row, draft), draft.notes, {
+        onProtocol: (protocol) => {
+          draft.protocol = protocol;
+          this.focusAfterRender = [`${FOCUS.protocol(row.number)}-${protocol}`];
+          void this.render();
+        },
+        onNotes: (notes) => {
+          draft.notes = notes;
+        },
+        // Only a row added with "Add set" goes away; the planned ones stay
+        onRemove: row.number > Math.max(drawn.planned, drawn.todayCount)
+          ? () => this.removeRow(row, drawn)
+          : undefined,
       });
     }
-
-    if (open) this.renderDetails(el, row, draft, drawn.protocols);
   }
 
+  /**
+   * A logged set: its values as the table shows them, the details to change
+   * its protocol and notes, and the tick to take it back (it is deleted from
+   * the log and its row goes back to fill in, with its values).
+   */
   private renderLoggedRow(
     el: HTMLElement,
     row: SetRow,
@@ -341,34 +415,71 @@ export class SetSheet extends MarkdownRenderChild {
     drawn: Drawn,
   ): void {
     el.addClass("is-logged");
-    const main = el.createDiv({
-      cls: "workout-sets-row-main",
-      attr: {
-        role: "button",
-        tabindex: "0",
-        "aria-label": t("sets.editSet", { set: row.number }),
-      },
-    });
+    const open = this.openRow === row.number;
+    if (open) el.addClass("is-open");
+    const main = el.createDiv({ cls: "workout-sets-row-main" });
     this.renderNumber(main, row.number, drawn.protocols.resolve(set.protocol));
     // The values as the table shows them (weight as entered, N/A…)
-    for (const value of TableRowProcessor.displayRow(set, drawn.columns)) {
-      main.createDiv({ cls: "workout-sets-value", text: value });
-    }
-    main.createSpan();
-    const check = main.createSpan({ cls: "workout-sets-check is-done" });
-    setIcon(check, "check");
-    if (set.notes) {
+    TableRowProcessor.displayRow(set, drawn.columns).forEach((value, index) => {
+      const cell = main.createDiv({ cls: "workout-sets-value" });
+      cell.createSpan({ text: value, attr: { "aria-hidden": "true" } });
+      // The column headers are hidden from screen readers: each value says its field
+      cell.createSpan({
+        cls: "workout-visually-hidden",
+        text: t("sets.valueOfSet", { field: drawn.labels[index], set: row.number, value }),
+      });
+    });
+    this.renderDetailsToggle(
+      main,
+      row.number,
+      open,
+      protocolId(set.protocol) !== protocolId(WorkoutProtocol.STANDARD) || !!set.notes?.trim(),
+    );
+    CheckToggle.create(main, {
+      done: true,
+      label: t("sets.unlogSet", { set: row.number }),
+      focusKey: FOCUS.check(row.number),
+      onClick: () => void this.unlogRow(row, set, drawn),
+    });
+
+    if (open) {
+      const save = (change: Partial<LogEntryInput>) =>
+        this.plugin
+          .updateWorkoutLogEntry(set, { ...toLogEntryInput(set), ...change })
+          .catch((error: unknown) => this.notifyError(error));
+      this.renderDetails(el, row.number, drawn.protocols, protocolId(set.protocol), set.notes ?? "", {
+        onProtocol: (protocol) => {
+          this.focusAfterRender = [`${FOCUS.protocol(row.number)}-${protocol}`];
+          void save({ protocol });
+        },
+        onNotes: (notes) => {
+          if (notes.trim() !== (set.notes ?? "").trim()) void save({ notes: notes.trim() });
+        },
+        notesOn: "change",
+      });
+    } else if (set.notes) {
       el.createDiv({ cls: "workout-sets-note workout-sets-meta", text: set.notes });
     }
+  }
 
-    const edit = () =>
-      new EditLogModal(this.plugin.app, this.plugin, set).open();
-    main.addEventListener("click", edit);
-    main.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        edit();
-      }
+  /** The chevron that shows the row's protocol and notes */
+  private renderDetailsToggle(
+    main: HTMLElement,
+    number: number,
+    open: boolean,
+    hasDetails: boolean,
+  ): void {
+    const key = FOCUS.details(number);
+    DisclosureToggle.create(main, {
+      expanded: open,
+      label: t("sets.details", { set: number }),
+      marked: hasDetails,
+      focusKey: key,
+      onToggle: () => {
+        this.openRow = open ? undefined : number;
+        this.focusAfterRender = [key];
+        void this.render();
+      },
     });
   }
 
@@ -379,82 +490,113 @@ export class SetSheet extends MarkdownRenderChild {
     );
   }
 
+  /**
+   * A row's field: a checkbox for a yes/no parameter, else a NumberField
+   * with last time's value as its suggestion
+   * @param onEnter - Enter in the field logs the row
+   */
   private renderInput(
     main: HTMLElement,
     row: SetRow,
     draft: SetDraft,
     param: ParameterDefinition,
     column: string,
-  ): HTMLInputElement {
-    const cell = main.createDiv({ cls: "workout-sets-field" });
+    index: number,
+    onEnter: () => void,
+  ): RowField {
     const label = t("sets.fieldOfSet", { field: column, set: row.number });
+    const focusKey = FOCUS.field(row.number, index);
     if (param.type === "boolean") {
+      const cell = main.createDiv({ cls: "workout-sets-field" });
       const box = cell.createEl("input", {
         attr: { type: "checkbox", "aria-label": label },
       });
+      DomUtils.setFocusKey(box, focusKey);
       box.checked = draft.values[param.key] === "true";
       box.addEventListener("change", () => {
         draft.values[param.key] = box.checked ? "true" : "";
       });
-      return box;
+      return {
+        input: box,
+        setError: (message) => box.toggleAttribute("aria-invalid", !!message),
+      };
     }
 
-    const field = fieldFor(param);
-    const input = cell.createEl("input", {
-      cls: "workout-sets-input",
-      attr: {
-        type: "text",
-        inputmode:
-          param.type === "number" ? (field.integer ? "numeric" : "decimal") : "text",
-        enterkeyhint: "done",
-        autocomplete: "off",
-        "aria-label": label,
-        placeholder: row.placeholders[param.key] ?? "",
+    return NumberField.create(main, {
+      className: "workout-sets-field",
+      label,
+      value: draft.values[param.key],
+      suggestion: row.placeholders[param.key],
+      integer: param.type === "number" && fieldFor(param).integer,
+      focusKey,
+      onInput: (value) => {
+        draft.values[param.key] = value;
       },
+      onEnter,
     });
-    input.value = draft.values[param.key] ?? "";
-    input.addEventListener("input", () => {
-      draft.values[param.key] = input.value;
-      input.removeAttribute("aria-invalid");
-    });
-    return input;
   }
 
-  /** The row's protocol chips and notes */
+  /**
+   * The row's protocol chips and notes
+   * @param notesOn - When the notes are handed over: on each key (a draft),
+   * or once they are left ("change", a logged set saved to the log)
+   * @param onRemove - Shows "Remove set", for a row the user added
+   */
   private renderDetails(
     el: HTMLElement,
-    row: SetRow,
-    draft: SetDraft,
+    number: number,
     catalog: ProtocolCatalog,
+    current: string,
+    notesValue: string,
+    {
+      onProtocol,
+      onNotes,
+      notesOn = "input",
+      onRemove,
+    }: {
+      onProtocol: (protocol: string) => void;
+      onNotes: (notes: string) => void;
+      notesOn?: "input" | "change";
+      onRemove?: () => void;
+    },
   ): void {
     const details = el.createDiv({ cls: "workout-sets-details" });
-    details.createDiv({ cls: "workout-sets-label", text: t("sets.protocol") });
-    const chips = details.createDiv({ cls: "workout-sets-chips" });
-    const current = rowProtocol(row, draft);
     const protocols = catalog.all();
     // A suggestion no longer in the settings list still shows (and stays)
     if (!protocols.some((p) => p.id === current)) protocols.push(catalog.resolve(current));
-    for (const protocol of protocols) {
-      Chip.create(chips, {
-        text: protocol.name,
-        selected: protocol.id === current,
-        onClick: () => {
-          draft.protocol = protocol.id;
-          void this.render();
-        },
+    ProtocolPicker.create(details, {
+      label: t("sets.protocol"),
+      options: protocols,
+      selected: current,
+      onPick: onProtocol,
+      focusKeyPrefix: FOCUS.protocol(number),
+    });
+    NotesField.create(details, {
+      label: t("sets.notes"),
+      value: notesValue,
+      saveOn: notesOn,
+      onChange: onNotes,
+    });
+
+    if (onRemove) {
+      DeleteButton.create(details, {
+        label: t("sets.removeSet"),
+        onClick: onRemove,
+        className: "workout-sets-remove",
       });
     }
+  }
 
-    details.createDiv({ cls: "workout-sets-label", text: t("sets.notes") });
-    const notes = details.createEl("textarea", {
-      cls: "workout-sets-notes",
-      attr: { rows: "2", "aria-label": t("sets.notes") },
-    });
-    notes.value = draft.notes;
-    notes.addEventListener("keydown", (event) => event.stopPropagation());
-    notes.addEventListener("input", () => {
-      draft.notes = notes.value;
-    });
+  /**
+   * Takes back a row added with "Add set", with what was typed in it; the
+   * rows after it keep their drafts. Nothing is logged, so nothing to undo.
+   */
+  private removeRow(row: SetRow, drawn: Drawn): void {
+    this.drafts.splice(row.number - 1 - drawn.todayCount, 1);
+    this.extraRows = Math.max(this.extraRows - 1, 0);
+    this.openRow = undefined;
+    this.focusAfterRender = [FOCUS.addSet];
+    void this.render();
   }
 
   /** Logs a row: its typed values, else its placeholders */
@@ -462,7 +604,7 @@ export class SetSheet extends MarkdownRenderChild {
     row: SetRow,
     drawn: Drawn,
     el: HTMLElement,
-    inputs: HTMLInputElement[],
+    fields: RowField[],
   ): Promise<void> {
     const exercise = this.params.exercise;
     if (!exercise || this.saving !== undefined) return;
@@ -472,19 +614,16 @@ export class SetSheet extends MarkdownRenderChild {
       workout: this.workout,
       parameters: drawn.parameters,
     });
-    el.querySelector(".workout-field-error")?.remove();
+    for (const field of fields) field.setError();
+    el.querySelector(":scope > .workout-field-error")?.remove();
     if ("error" in result) {
-      const index = drawn.parameters.findIndex((p) => p.key === result.error.field);
-      const input = inputs[index];
-      el.createDiv({
-        cls: "workout-field-error",
-        text: result.error.message,
-        attr: { role: "alert" },
-      });
-      if (input) {
-        input.setAttribute("aria-invalid", "true");
-        input.focus();
+      const field = fields[drawn.parameters.findIndex((p) => p.key === result.error.field)];
+      field?.setError(result.error.message);
+      // A NumberField shows its own message; a checkbox or no field, under the row
+      if (field?.input.type !== "text") {
+        el.createDiv({ cls: "workout-field-error", text: result.error.message, attr: { role: "alert" } });
       }
+      field?.input.focus();
       return;
     }
 
@@ -496,6 +635,9 @@ export class SetSheet extends MarkdownRenderChild {
     if (this.openRow === row.number) this.openRow = undefined;
     else if (this.openRow !== undefined && this.openRow > row.number) this.openRow--;
     this.saving = row.number;
+    // After the log:added redraw: the next row to fill in, else "Add set"
+    this.focusAfterRender = [FOCUS.field(row.number + 1, 0), FOCUS.check(row.number + 1), FOCUS.addSet];
+    this.announceAfterRender = true;
     try {
       await this.plugin.addWorkoutLogEntry(
         toEntry(result.data, {
@@ -509,11 +651,101 @@ export class SetSheet extends MarkdownRenderChild {
       if (drawn.rest && rowsLeft > 0) this.restTimer.restart(drawn.rest);
     } catch (error) {
       Object.assign(this, before);
-      new Notice(t("modal.notices.genericError", { error: ErrorUtils.getErrorMessage(error) }));
+      this.focusAfterRender = [];
+      this.announceAfterRender = false;
+      this.notifyError(error);
       await this.render();
     } finally {
       this.saving = undefined;
     }
+  }
+
+  /**
+   * Takes a logged set back: deletes it from the log, and its values become
+   * the first row to fill in, so ticking it again logs the same set. A
+   * notice offers to undo, which puts the very set back (same timestamp, so
+   * the same place in the set order).
+   */
+  private async unlogRow(row: SetRow, set: WorkoutLogData, drawn: Drawn): Promise<void> {
+    if (this.saving !== undefined) return;
+    // The inverse of logRow: the draft is in place before the log:deleted
+    // redraw, and a set beyond the plan keeps its row
+    const before = { drafts: [...this.drafts], extraRows: this.extraRows, openRow: this.openRow };
+    const draft = draftFromSet(set, drawn.parameters);
+    const keepsRow = drawn.todayCount > drawn.planned;
+    this.drafts.unshift(draft);
+    if (keepsRow) this.extraRows++;
+    // The logged rows after it move up one; the freed row is the last logged one
+    if (this.openRow === row.number) this.openRow = drawn.todayCount;
+    else if (this.openRow !== undefined && this.openRow > row.number && this.openRow <= drawn.todayCount) {
+      this.openRow--;
+    }
+    this.saving = row.number;
+    // After the log:deleted redraw: the row it went back to
+    this.focusAfterRender = [FOCUS.field(drawn.todayCount, 0), FOCUS.check(drawn.todayCount)];
+    this.announceAfterRender = true;
+    try {
+      await this.plugin.deleteWorkoutLogEntry(set);
+    } catch (error) {
+      Object.assign(this, before);
+      this.focusAfterRender = [];
+      this.announceAfterRender = false;
+      this.notifyError(error);
+      await this.render();
+      return;
+    } finally {
+      this.saving = undefined;
+    }
+    // The rest running now was started by this set when it was the last one
+    if (drawn.rest && row.number === drawn.todayCount && this.restTimer.isRunning(drawn.rest)) {
+      this.restTimer.cancel(drawn.rest);
+    }
+    this.offerUndo(row.number, set, {
+      // Ticked again in the meantime: the set is back already
+      canUndo: () => this.drafts.includes(draft),
+      takeBack: () => {
+        this.drafts.splice(this.drafts.indexOf(draft), 1);
+        if (keepsRow) this.extraRows = Math.max(this.extraRows - 1, 0);
+        this.openRow = undefined;
+      },
+      giveBack: () => {
+        this.drafts.unshift(draft);
+        if (keepsRow) this.extraRows++;
+      },
+    });
+  }
+
+  /**
+   * "Set 2 removed · Undo". Undo puts the deleted set back as it was
+   * (entered weight and unit, protocol, notes, timestamp) and takes its row's
+   * draft back; if that fails the draft stays, so nothing typed is lost.
+   */
+  private offerUndo(
+    number: number,
+    set: WorkoutLogData,
+    draft: { canUndo: () => boolean; takeBack: () => void; giveBack: () => void },
+  ): void {
+    UndoNotice.show({
+      message: t("sets.setRemoved", { set: number }),
+      onUndo: () => {
+        if (!draft.canUndo()) return;
+        // Out of the drafts before the add, as in logRow: the log:added
+        // redraw shows the set logged, not also as a row to fill in
+        draft.takeBack();
+        this.announceAfterRender = true;
+        this.plugin
+          .addWorkoutLogEntry(toLogEntryInput(set), { timestamp: set.timestamp })
+          .catch(async (error: unknown) => {
+            draft.giveBack();
+            this.notifyError(error);
+            await this.render();
+          });
+      },
+    });
+  }
+
+  private notifyError(error: unknown): void {
+    new Notice(t("modal.notices.genericError", { error: ErrorUtils.getErrorMessage(error) }));
   }
 
   /** The draft of a row to fill in, kept across redraws */

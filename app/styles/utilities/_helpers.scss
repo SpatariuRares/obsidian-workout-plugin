@@ -29,3 +29,16 @@
 .workout-gap-2 {
   gap: var(--workout-space-sm);
 }
+
+/* Read by screen readers, not shown (LiveRegion, a value's full label) */
+.workout-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

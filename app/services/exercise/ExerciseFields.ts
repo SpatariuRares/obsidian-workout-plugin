@@ -93,7 +93,8 @@ export function readField(
   }
   if (field.type === "string") return { value: text };
 
-  const num = Number(text);
+  // A phone's decimal pad types the locale's separator ("82,5")
+  const num = Number(text.replace(",", "."));
   if (!Number.isFinite(num)) {
     return { error: t("modal.notices.validMustBeNumber", { field: field.label }) };
   }

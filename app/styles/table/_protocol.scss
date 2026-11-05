@@ -1,11 +1,5 @@
 @use "../variables";
 
-/* Protocol column */
-.workout-table-protocol-cell {
-  text-align: center;
-  padding: var(--workout-space-xs) var(--workout-space-sm);
-}
-
 /* Protocol badge base */
 .workout-protocol-badge {
   display: inline-block;
@@ -20,43 +14,44 @@
 
 /* Protocol badge colors - using Obsidian CSS variables for theme compatibility */
 .workout-protocol-badge-drop {
-  background: rgba(var(--color-red-rgb, 255, 82, 82), 0.15);
+  background: color-mix(in srgb, var(--color-red) 15%, transparent);
   color: var(--workout-text-error);
   border: var(--workout-border-thin) solid
-    rgba(var(--color-red-rgb, 255, 82, 82), 0.3);
+    color-mix(in srgb, var(--color-red) 30%, transparent);
 }
 
 .workout-protocol-badge-myo {
-  background: rgba(var(--color-purple-rgb, 163, 102, 255), 0.15);
+  background: color-mix(in srgb, var(--color-purple) 15%, transparent);
   color: var(--workout-text-accent);
   border: var(--workout-border-thin) solid
-    rgba(var(--color-purple-rgb, 163, 102, 255), 0.3);
+    color-mix(in srgb, var(--color-purple) 30%, transparent);
 }
 
 .workout-protocol-badge-rp {
-  background: rgba(var(--color-orange-rgb, 255, 153, 0), 0.15);
+  background: color-mix(in srgb, var(--color-orange) 15%, transparent);
   color: var(--workout-text-warning);
   border: var(--workout-border-thin) solid
-    rgba(var(--color-orange-rgb, 255, 153, 0), 0.3);
+    color-mix(in srgb, var(--color-orange) 30%, transparent);
 }
 
 .workout-protocol-badge-superset {
-  background: rgba(var(--color-blue-rgb, 66, 165, 245), 0.15);
+  background: color-mix(in srgb, var(--color-blue) 15%, transparent);
   color: var(--workout-text-accent);
   border: var(--workout-border-thin) solid
-    rgba(var(--color-blue-rgb, 66, 165, 245), 0.3);
+    color-mix(in srgb, var(--color-blue) 30%, transparent);
 }
 
 .workout-protocol-badge-21 {
-  background: rgba(var(--color-green-rgb, 76, 175, 80), 0.15);
+  background: color-mix(in srgb, var(--color-green) 15%, transparent);
   color: var(--workout-text-success);
   border: var(--workout-border-thin) solid
-    rgba(var(--color-green-rgb, 76, 175, 80), 0.3);
+    color-mix(in srgb, var(--color-green) 30%, transparent);
 }
 
-/* Custom protocol badge - uses inline styles for color, inherits base badge structure */
+/* Custom protocol badge - inline color from settings; the border follows its text */
 .workout-protocol-badge-custom {
-  border: var(--workout-border-thin) solid rgba(0, 0, 0, 0.2);
+  border: var(--workout-border-thin) solid
+    color-mix(in srgb, currentColor 30%, transparent);
 }
 
 @media (max-width: variables.$breakpoint-mobile) {

@@ -4,7 +4,6 @@ import { MobileTable } from "@app/features/charts/components/ChartTableViews";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { t } from "@app/i18n";
-import { getDefaultChartTitle } from "@app/features/charts/config/ChartConstants";
 
 describe("MobileTable", () => {
   it("renders a mobile table with data", () => {
@@ -24,7 +23,6 @@ describe("MobileTable", () => {
       labels,
       datasets,
       CHART_DATA_TYPE.VOLUME,
-      {},
     );
 
     const table = container.querySelector("table");
@@ -37,56 +35,6 @@ describe("MobileTable", () => {
     const cells = rows[0].querySelectorAll("td");
     expect(cells[0].textContent).toBe("Jan 1");
     expect(cells[1].textContent).toBe("100.5");
-  });
-
-  it("uses custom title from params", () => {
-    const container = createObsidianContainer();
-
-    MobileTable.render(
-      container,
-      ["Jan 1"],
-      [
-        {
-          label: "Volume",
-          data: [100],
-          backgroundColor: "",
-          borderColor: "",
-        },
-      ],
-      CHART_DATA_TYPE.VOLUME,
-      { title: "My Custom Chart" },
-    );
-
-    const title = container.querySelector(
-      ".workout-mobile-table-title",
-    );
-    expect(title?.textContent).toBe("My Custom Chart");
-  });
-
-  it("generates default title from chart type", () => {
-    const container = createObsidianContainer();
-
-    MobileTable.render(
-      container,
-      ["Jan 1"],
-      [
-        {
-          label: "Weight",
-          data: [80],
-          backgroundColor: "",
-          borderColor: "",
-        },
-      ],
-      CHART_DATA_TYPE.WEIGHT,
-      {},
-    );
-
-    const title = container.querySelector(
-      ".workout-mobile-table-title",
-    );
-    expect(title?.textContent).toBe(
-      getDefaultChartTitle(CHART_DATA_TYPE.WEIGHT),
-    );
   });
 
   it("skips null/undefined data values", () => {
@@ -104,7 +52,6 @@ describe("MobileTable", () => {
         },
       ],
       CHART_DATA_TYPE.VOLUME,
-      {},
     );
 
     const rows = container.querySelectorAll("tbody tr");
@@ -132,7 +79,6 @@ describe("MobileTable", () => {
         },
       ],
       CHART_DATA_TYPE.VOLUME,
-      {},
     );
 
     const rows = container.querySelectorAll("tbody tr");
@@ -150,7 +96,6 @@ describe("MobileTable", () => {
       ["Jan 1"],
       [],
       CHART_DATA_TYPE.VOLUME,
-      {},
     );
 
     const rows = container.querySelectorAll("tbody tr");
@@ -175,7 +120,6 @@ describe("MobileTable", () => {
         },
       ],
       CHART_DATA_TYPE.VOLUME,
-      {},
     );
 
     const rows = container.querySelectorAll("tbody tr");
@@ -200,7 +144,6 @@ describe("MobileTable", () => {
         },
       ],
       CHART_DATA_TYPE.VOLUME,
-      {},
     );
 
     // When all datasets are trend lines, it falls back to first

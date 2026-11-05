@@ -8,7 +8,6 @@
       "variationFromTo": " od {startValue} do {endValue}",
       "weightIncrementUnit": "Zwiększenie wagi {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "Zmiana ogółem: ",
     "significantIncrease": "Wzrost od zera",
     "trendLine": "Linia trendu",
     "typeNotAvailable": "Rodzaj wykresu \"{chartDataType}\" nie jest dostępny dla ćwiczeń typu {exerciseType}. Dostępne rodzaje: {typeList}",
@@ -24,8 +23,17 @@
     },
     "defaultTitle": "Trend {type}",
     "noTypesAvailable": "Brak dostępnych typów wykresów",
-    "noEligibleE1rm": "Brak dostępnych serii do szacowanego 1RM. Zarejestruj dodatnią wagę z 1–12 powtórzeniami, pomijając serie rozgrzewkowe i drop sety.",
-    "editChart": "Edytuj wykres"
+    "noEligibleE1rm": "Brak dostępnych serii do szacowanego 1RM. Zapisz dodatnią wagę z 1–12 powtórzeniami, pomijając serie rozgrzewkowe i drop sety.",
+    "editChart": "Edytuj wykres",
+    "stats": {
+      "average": "Średnia",
+      "last3": "ostatnie 3",
+      "max": "Maks.",
+      "min": "Min.",
+      "recentTrend": "Ostatni trend",
+      "sessions": "Sesje",
+      "vsPrevious": "wobec poprzednich"
+    }
   },
   "commands": {
     "addExerciseBlock": "Dodaj blok ćwiczeń",
@@ -53,11 +61,12 @@
     "minPerKm": "min/km",
     "notAvailable": "Niedostępne",
     "sec": "sek",
+    "undo": "Cofnij",
     "unknown": "Nieznane",
     "workout": "Trening"
   },
   "convert": {
-    "currentType": "Aktualny typ:",
+    "currentType": "Obecny typ",
     "errors": {
       "convertError": "Błąd podczas konwersji danych dotyczących ćwiczeń: {error}"
     },
@@ -75,10 +84,10 @@
       "willConvertOne": "1 wpis zostanie przekonwertowany"
     },
     "sectionExercise": "Ćwiczenie",
-    "success": "Pomyślnie przekonwertowano wpisów dziennika: {count}",
+    "success": "Pomyślnie przekonwertowano {count} wpisów dziennika",
     "title": "Przekonwertuj dane dotyczące ćwiczeń",
     "typeSelect": {
-      "convertTo": "Konwertuj na:",
+      "convertTo": "Konwertuj na",
       "updateFileType": "Zaktualizuj typ pliku ćwiczeń"
     }
   },
@@ -108,7 +117,7 @@
       "sharedName": "Ta sama nazwa ćwiczenia co w {pages}: logi trafiają tylko do jednej z tych stron."
     },
     "muscleTags": {
-      "description": "Opis",
+      "description": "Tagi, których możesz użyć we frontmatterze strony ćwiczenia. Kliknij tag, aby go skopiować.",
       "title": "Tagi mięśni",
       "tooltip": "Kliknij, aby skopiować: {tag}",
       "totalCount": "Całkowita liczba dostępnych tagów: {count}"
@@ -129,7 +138,7 @@
       "columnProgression": "Postęp",
       "columnProtocol": "Protokół",
       "columnVolumeChange": "Zmiana objętości",
-      "disclaimer": "Zastrzeżenie",
+      "disclaimer": "Korelacja, nie dowód: ciężar, odpoczynek i sen też wpływają na te wyniki.",
       "noData": "Za mało danych: każdy protokół wymaga co najmniej 5 zapisanych serii.",
       "title": "Skuteczność protokołu",
       "subtitle": "Jak każdy protokół sprawdza się we wszystkich zapisanych seriach."
@@ -174,9 +183,14 @@
         "sets": "Średnia liczba serii: {value}",
         "reps": "Średnia liczba powtórzeń: {value}"
       },
+      "controls": {
+        "period": "Okres",
+        "side": "Strona",
+        "metric": "Miara"
+      },
       "imbalance": {
-        "backDominant": "Nierównowaga: Twoja grupa mięśniowa tylna pracuje znacznie bardziej niż grupa mięśniowa przednia.",
-        "frontDominant": "Nierównowaga: Twoja przednia część mięśni jest znacznie bardziej obciążona niż tylna."
+        "backDominant": "Nierównowaga: tylne partie mięśni pracują znacznie bardziej niż przednie.",
+        "frontDominant": "Nierównowaga: przednie partie mięśni pracują znacznie bardziej niż tylne."
       }
     },
     "editDashboard": "Edytuj panel kontrolny",
@@ -186,9 +200,8 @@
       "moveUp": "Przesuń {widget} w górę",
       "moveDown": "Przesuń {widget} w dół",
       "allHistory": "Pusto: cała historia",
-      "recentWorkoutsLimit": "Liczba ostatnich treningów na liście:",
-      "volumeTrendDays": "Liczba dni w trendzie objętości:",
-      "gridColumns": "Kolumny:",
+      "volumeTrendDays": "Dni w trendzie objętości",
+      "recentWorkoutsLimit": "Treningi na liście ostatnich",
       "layout": "Układ",
       "layoutGrid": "Siatka",
       "layoutList": "Lista",
@@ -200,13 +213,14 @@
       "size": "{width} × {height}",
       "gridHint": "Przeciągnij widżet, aby go przesunąć, a jego róg, aby zmienić rozmiar; schowek poniżej pokazuje najmniejszy rozmiar, do jakiego może się zmniejszyć każdy widżet. Usuń widżet przyciskiem × albo przeciągając go do schowka. Klawiaturą: strzałki przesuwają, Shift i strzałki zmieniają rozmiar, Delete usuwa.",
       "gridColumnsMeasured": "W szerokości notatki mieści się {columns} kol.",
-      "remove": "Usuń {widget} z pulpitu"
+      "gridColumns": "Kolumny",
+      "remove": "Usuń {widget} z panelu kontrolnego"
     },
     "grid": {
       "outside": "{widget} wychodzi poza siatkę ({columns} kol.)",
       "narrow": "{widget} wymaga minimum {min} kol.",
       "overlap": "{widget} nakłada się na {other}",
-      "empty": "Na siatce nie ma jeszcze żadnego widżetu. Otwórz „Edytuj pulpit” w menu ⋮, aby dodać jakieś."
+      "empty": "Na siatce nie ma jeszcze żadnego widżetu. Otwórz „Edytuj panel kontrolny” w menu ⋮, aby dodać jakieś."
     },
     "trainingCalendar": {
       "title": "Kalendarz treningów",
@@ -225,42 +239,56 @@
       "noSettings": "Ten widżet nie ma własnych ustawień.",
       "update": "Zaktualizuj widżet",
       "updated": "Widżet został zaktualizowany!",
-      "remove": "Usuń widżet z pulpitu",
-      "removed": "Widżet został usunięty z pulpitu.",
+      "remove": "Usuń widżet z panelu kontrolnego",
+      "removed": "Widżet został usunięty z panelu kontrolnego.",
       "edit": "Edytuj widżet",
-      "removeConfirm": "Usunąć „{widget}” z pulpitu?",
+      "removeConfirm": "Usunąć „{widget}” z panelu kontrolnego?",
       "removeConfirmButton": "Usuń",
-      "calendarWeeks": "Pokazane tygodnie:",
+      "calendarWeeks": "Pokazane tygodnie, liczone wstecz od tego",
       "quickStatsPeriods": "Pokazane okresy",
-      "quickStatsMetrics": "Pokazane wiersze",
+      "quickStatsMetrics": "Pokazane liczby",
       "heatMapTimeFrame": "Okres startowy",
-      "heatMapMetric": "Metryka startowa",
-      "heatMapView": "Widok startowy",
-      "volumeTopLimit": "Ćwiczenia na liście najlepszych:",
-      "protocolDays": "Liczone dni:",
-      "protocolMinEntries": "Serie potrzebne, by porównać protokół:",
-      "durationRecentCount": "Porównywane treningi:",
-      "durationRestSeconds": "Odpoczynek między seriami w szacunku (sekundy):",
+      "heatMapMetric": "Miara startowa",
+      "heatMapView": "Strona startowa",
+      "volumeTopLimit": "Wymienione ćwiczenia",
+      "durationRecentCount": "Porównywane treningi",
+      "durationRestSeconds": "Odpoczynek między seriami w szacowaniu",
+      "protocolDays": "Liczone dni",
+      "protocolMinEntries": "Najmniej serii na protokół",
       "summaryMetrics": "Pokazane karty",
       "calendarShowStats": "Pokaż passy i postęp w tym tygodniu",
       "heatMapShowImbalance": "Pokaż panel nierównowagi",
-      "volumeShowBreakdown": "Pokaż listę najczęściej wykonywanych ćwiczeń",
-      "protocolChartType": "Wykres",
+      "volumeShowBreakdown": "Pokaż najlepsze ćwiczenia według objętości",
+      "protocolChartType": "Styl wykresu",
       "chartPie": "Kołowy",
       "chartDoughnut": "Pierścieniowy",
-      "protocolSortBy": "Uporządkowane według (najlepsze pierwsze)",
-      "durationShowTrend": "Pokaż trend wariancji",
+      "protocolSortBy": "Sortuj według",
+      "durationShowTrend": "Pokaż trend dokładności szacowania",
       "quickActionsShown": "Pokazane przyciski",
-      "fileErrorsMaxItems": "Wypisane strony (puste: wszystkie):",
-      "fileErrorsMaxTags": "Najwięcej tagów mięśni na stronie:",
+      "fileErrorsMaxItems": "Wymienione strony",
+      "fileErrorsMaxTags": "Najwięcej tagów mięśni na stronie",
       "fileErrorsCheckSharedNames": "Oznacz strony o tej samej nazwie ćwiczenia",
-      "muscleTagsGroupByMuscle": "Grupuj tagi według mięśni"
+      "muscleTagsGroupByMuscle": "Grupuj tagi według mięśni",
+      "volumeTrendDays": "Dni na wykresie objętości",
+      "recentWorkoutsLimit": "Pokazane treningi",
+      "all": "Wszystkie",
+      "numberRange": "Wpisz liczbę całkowitą od {min} do {max}.",
+      "pickOne": "Wybierz co najmniej jedną opcję albo usuń widżet.",
+      "units": {
+        "days": "dni",
+        "weeks": "tygodnie",
+        "seconds": "s"
+      },
+      "editTitle": "Edytuj {widget}",
+      "sortMostSets": "Najwięcej serii",
+      "lastWidget": "To jedyny widżet panelu kontrolnego, więc nie można go usunąć: usuń zamiast tego blok."
     }
   },
   "duration": {
     "estimatedDuration": "Szacowany czas trwania",
     "lastSession": "Ostatnia sesja",
     "restTime": "Czas odpoczynku",
+    "setCount": "Serie: {count}",
     "setTime": "Czas serii",
     "unableToAnalyze": "Nie można przeanalizować pliku treningowego"
   },
@@ -369,8 +397,8 @@
       "codeBlockWorkoutSession": "Prowadzi według planu notatki, serię po serii",
       "sessionTitle": "6. Sesja z przewodnikiem",
       "sessionIntro": "Blok `workout-session` przeprowadzi Cię przez plan jego notatki: jeden krok na każdy blok `workout-log` z ćwiczeniem, z jego `sets` i celami, oraz timer odpoczynku z tej samej sekcji. Wypróbuj w [[{workout}]].",
-      "dashboardsTitle": "7. Pulpity",
-      "dashboardsIntro": "Pulpit pokazuje wszystkie widżety albo tylko te wymienione w `widgets`, w tej kolejności. Użyj menu w prawym górnym rogu pulpitu, aby je wybrać.",
+      "dashboardsTitle": "7. Panele kontrolne",
+      "dashboardsIntro": "Panel kontrolny pokazuje wszystkie widżety albo tylko te wymienione w `widgets`, w tej kolejności. Użyj menu w prawym górnym rogu panelu kontrolnego, aby je wybrać.",
       "dashboardWidgetsTitle": "Wybrane widżety",
       "dashboardGridTitle": "Układ siatki",
       "dashboardGridIntro": "Z `layout: grid` każdy widżet zajmuje komórki swojego wiersza: kolumnę, wiersz, szerokość i wysokość. W węższej notatce widżety są ponownie upakowane w kolejności czytania.",
@@ -379,7 +407,7 @@
       "importIntro": "Uruchom **{command}** z palety poleceń i wybierz plik CSV wyeksportowany przez aplikację. Serie, które są już w dzienniku, zostaną pominięte, a dziennik zostanie najpierw skopiowany.",
       "setsTitle": "Zapisywanie zestawów na swoim telefonie",
       "setsIntro": "Blok `workout-sets` wyświetla dzisiejsze serie jako wiersze. Szare liczby oznaczają tę samą serię z poprzedniej sesji: zaznacz wiersz, aby zapisać, co zrobiłeś, lub wpisz to. Dotknij strzałki, aby zobaczyć protokół i notatki dla danej serii, a także edytować zapisaną serię.",
-      "codeBlockWorkoutSets": "Zapisz dzisiejsze serie, po kolei."
+      "codeBlockWorkoutSets": "Zapisz dzisiejsze serie wiersz po wierszu"
     },
     "fileNames": {
       "dashboard": "Panel kontrolny",
@@ -425,7 +453,25 @@
       "workoutsDesc": "Przykładowe szablony treningowe",
       "workoutsFolder": "**{folder}/**",
       "sessionIntro": "Ta notatka ma mały plan: jedno ćwiczenie z jego seriami, celem i timerem odpoczynku. Sesja pokazuje serię do zrobienia; zapisz ją, a timer odpoczynku ruszy.",
-      "pagesIntro": "Zapoznaj się z jedną funkcją na stronie. Śledź linki w odpowiedniej kolejności, lub wybierz funkcję poniżej. Użyj przycisków \"Wstecz\" i \"Dalej\", aby przechodzić między notatkami; przewijaj normalnie, aby zapoznać się z każdym przykładem.",
+      "sets": {
+        "lastTimeTitle": "Te same serie co ostatnio",
+        "lastTimeIntro": "Z `workout` szare liczby pochodzą z ostatniego razu, gdy wykonywałeś to ćwiczenie w tym treningu. Bez niego blok używa nazwy notatki.",
+        "restTitle": "Timer odpoczynku i cele",
+        "restIntro": "`rest` to odpoczynek po każdej serii, w sekundach (`0` = bez timera); bez niego blok używa `workout-timer` z sekcji. `targetWeight` i `targetReps` pokazują cel i są podpowiedzią przy pierwszym wykonaniu ćwiczenia.",
+        "restTimerTitle": "Opcje timera odpoczynku",
+        "restTimerIntro": "Blok zawiera wszystkie opcje swojego timera odpoczynku, więc notatka dnia nie potrzebuje `workout-timer`: `timer.type` (`interval` używa `rest` jako pracy w każdej rundzie, z `timer.rest` i `timer.rounds`), `timer.preset`, `timer.sound` i `timer.showControls`. ⋮ → Edytuj timer odpoczynku zapisze je za Ciebie."
+      },
+      "tables": {
+        "latestTitle": "Ostatnie serie ćwiczenia",
+        "latestIntro": "`exercise` wybiera ćwiczenie, a `limit` liczbę serii w tabeli.",
+        "targetTitle": "Cel i planowane serie",
+        "targetIntro": "Z `targetWeight` i `targetReps` tabela pokazuje, jak blisko celu jesteś; gdy go osiągniesz, odznaka proponuje wpisanie następnego ciężaru do bloku. `sets` to liczba planowanych serii: bez `limit` tabela pokazuje dwa ostatnie treningi, a sesja z przewodnikiem je liczy. `workout` z `exactMatch: true` zostawia tylko serie tego ćwiczenia w tym treningu.",
+        "workoutTitle": "Cały trening",
+        "workoutIntro": "Z `workout` i bez `exercise` tabela pokazuje każdą serię tego treningu. `dateRange: 14` zostawia ostatnie 14 dni.",
+        "columnsTitle": "Kolumny i sortowanie",
+        "columnsIntro": "`columns` wybiera kolumny i ich kolejność; `sortBy` i `sortOrder` kolejność wierszy, tutaj najcięższe serie najpierw. `showAddButton: false` ukrywa przycisk +, a `showProtocol: false` ukryłoby odznaki protokołów."
+      },
+      "pagesIntro": "Zapoznaj się z jedną funkcją na stronie. Śledź linki w odpowiedniej kolejności, lub wybierz funkcję poniżej. Użyj przycisków „Wstecz” i „Dalej”, aby przechodzić między notatkami; przewijaj normalnie, aby zapoznać się z każdym przykładem.",
       "liveIntro": "Poznaj wszystkie funkcje na przykładowych treningach z sześciu tygodni. To dane demonstracyjne; wypróbuj sterowanie i sprawdź, jak działają Twoje notatki.",
       "tryLog": "Użyj przycisku \"+\", aby dodać serię. Tabela, wykresy i panel kontrolny odczytują ten sam plik CSV.",
       "continueWithWorkout": "Otwórz [[{workout}]], aby spróbować kompletnego treningu z tabelami ćwiczeń i timerami odpoczynku.",
@@ -600,7 +646,7 @@
       "deleteSet": "Usuń serię",
       "updateDashboard": "Zaktualizuj panel kontrolny",
       "updateChart": "Zaktualizuj wykres",
-      "insertSets": "Zestawy do wstawiania"
+      "insertSets": "Dodaj serie"
     },
     "canvasLayout": "Układ",
     "canvasOptions": "Opcje",
@@ -623,43 +669,38 @@
     },
     "confirmAction": "Potwierdź działanie",
     "csvExercise": "Ćwiczenie z pliku CSV",
-    "customParameters": "Parametry niestandardowe:",
-    "customTitle": "Własny tytuł:",
-    "dataLimit": "Limit danych (0 = wszystkie):",
-    "dataType": "Typ danych:",
-    "dateRange": "Zakres dat (dni):",
-    "daysRange": "Zakres dni (0 = wszystkie):",
+    "dataType": "Typ danych",
+    "dataLimit": "Limit danych (0 = wszystkie)",
+    "customTitle": "Własny tytuł",
+    "customParameters": "Własne parametry",
     "delete": "Usuń",
-    "duration": "Czas trwania (sekundy):",
     "editTag": "Edytuj tag",
-    "exerciseType": "Rodzaj ćwiczenia:",
     "exportTags": "Eksportuj tagi",
     "fileName": "Nazwa pliku",
-    "folderPath": "Ścieżka do folderu (opcjonalnie):",
+    "folderPath": "Ścieżka folderu (opcjonalnie)",
     "importMerge": "Scaluj",
     "importReplace": "Zastąp wszystko",
     "importTags": "Importuj tagi",
     "labels": {
       "actions": "Akcje",
       "currentFileInfo": "Bieżący plik: {fileName}",
-      "exercise": "Ćwiczenie:",
-      "reps": "Powtórzenia:",
-      "targetReps": "Docelowe powtórzenia:",
-      "plannedSets": "Planowane serie:",
-      "targetWeight": "Cel ({unit}):",
-      "volume": "Objętość ({unit}):",
-      "weight": "Waga ({unit}):"
+      "weight": "Waga ({unit})",
+      "volume": "Objętość ({unit})",
+      "targetWeight": "Waga docelowa ({unit})",
+      "plannedSets": "Planowane serie",
+      "targetReps": "Docelowe powtórzenia",
+      "reps": "Powtórzenia",
+      "exercise": "Ćwiczenie"
     },
     "layoutGrouped": "Zgrupowane według mięśnia",
     "layoutHorizontal": "Układ poziomy",
-    "layoutType": "Typ układu:",
+    "layoutType": "Typ układu",
     "layoutVertical": "Układ pionowy",
     "muscleGroup": "Grupa mięśni",
     "newTag": "Nowy tag",
     "noTagsFound": "Brak pasujących tagów do Twojego wyszukiwania",
     "noTagsSelected": "Brak wybranych tagów. Kliknij na tagi poniżej, aby je dodać.",
-    "note": "Uwaga:",
-    "notes": "Uwagi (opcjonalne):",
+    "note": "Notatka",
     "notices": {
       "auditConfirmRenameFile": "Zmienić nazwę tego pliku?\n\n{oldName} → {newName}",
       "auditMismatchCount": "Znaleziono {count} niezgodności:",
@@ -718,7 +759,7 @@
       "chartInserted": "Wykres został pomyślnie wstawiony!",
       "chartUpdated": "Wykres został pomyślnie zaktualizowany!",
       "chartUpdateFailed": "Nie udało się zaktualizować wykresu: nie znaleziono go w notatce albo inny wykres bez identyfikatora ma takie same ustawienia. Otwórz notatkę ponownie i spróbuj jeszcze raz.",
-      "dashboardInserted": "Panel został pomyślnie wstawiony!",
+      "dashboardInserted": "Panel kontrolny został pomyślnie wstawiony!",
       "exerciseNameRequired": "Proszę podać nazwę ćwiczenia.",
       "exerciseSectionCreated": "Sekcja ćwiczeń została pomyślnie utworzona!",
       "tableInserted": "Tabela została pomyślnie dodana!",
@@ -731,13 +772,13 @@
       "validationCombinedMode": "Dla typu 'ćwiczenia + trening' musisz wypełnić oba pola!",
       "dashboardUpdated": "Panel kontrolny został pomyślnie zaktualizowany!",
       "dashboardUpdateFailed": "Nie udało się zaktualizować panelu kontrolnego: nie znaleziono go w notatce albo inny panel bez identyfikatora ma takie same ustawienia. Otwórz notatkę ponownie i spróbuj jeszcze raz.",
-      "setsInserted": "Zestawy dodane"
+      "setsInserted": "Dodano serie"
     },
-    "parameterKey": "Klucz:",
-    "parameterLabel": "Etykieta:",
+    "parameterLabel": "Etykieta",
+    "parameterKey": "Klucz",
     "parameterRequired": "Wymagane",
-    "parameterType": "Typ:",
-    "parameterUnit": "Jednostka (opcjonalnie):",
+    "parameterUnit": "Jednostka (opcjonalnie)",
+    "parameterType": "Typ",
     "placeholders": {
       "customTitle": "Pozostaw puste, aby automatycznie ustawić tytuł",
       "enterTagName": "Wprowadź nazwę tagu (np. klatka, petto)",
@@ -757,10 +798,8 @@
       "sets": "4",
       "workout": "np. Trening A, Trening B, lub użyj pola wyboru poniżej"
     },
-    "protocol": "Protokół:",
-    "recentExercises": "Ostatnie:",
-    "restTime": "Czas odpoczynku (sekundy):",
-    "rounds": "Rundy:",
+    "recentExercises": "Ostatnie",
+    "protocol": "Protokół",
     "save": "Zapisz",
     "sections": {
       "advancedOptions": "Opcje zaawansowane",
@@ -797,15 +836,15 @@
       "yesNo": "Tak/nie",
       "warmup": "Rozgrzewka"
     },
-    "sets": "Serie:",
-    "similarTags": "Podobne tagi:",
+    "similarTags": "Podobne tagi",
+    "sets": "Serie",
     "similarity": "Podobieństwo",
     "status": "Status",
     "tag": "Tag",
-    "tagsSelector": "Tagi mięśni:",
-    "timerDuration": "Czas trwania timera (sekundy):",
-    "timerPreset": "Ustawienie timera:",
-    "timerType": "Typ timera:",
+    "timerType": "Typ timera",
+    "timerPreset": "Predefiniowane ustawienie timera",
+    "timerDuration": "Czas timera (sekundy)",
+    "tagsSelector": "Tagi mięśni",
     "titles": {
       "addExerciseBlock": "Dodaj blok ćwiczeń",
       "auditExerciseNames": "Sprawdź nazwy ćwiczeń",
@@ -825,25 +864,32 @@
       "muscleTagManager": "Zarządzaj tagami mięśni",
       "editDashboard": "Edytuj panel kontrolny",
       "editChart": "Edytuj wykres treningu",
-      "insertSets": "Dodaj zestaw ćwiczeń"
+      "insertSets": "Dodaj serie treningu"
     },
-    "workout": "Trening (opcjonalnie):",
-    "workoutFile": "Plik treningowy:",
-    "workoutNameOptional": "Nazwa treningu (opcjonalnie):",
     "importMergeAriaLabel": "Scal: dodaj tylko nowe tagi, zachowaj istniejące",
     "importReplaceAriaLabel": "Zastąp: nadpisz wszystkie istniejące tagi",
     "editItem": "Edytuj {item}",
     "deleteItem": "Usuń {item}",
+    "duration": "Czas trwania (sekundy)",
     "errors": {
       "missingElements": "Brakujące elementy",
       "validationCombinedMode": "Dla typu ćwiczenie + trening wypełnij oba pola"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Serie: {sets}\n- Powtórzenia: {reps}\n- Odpoczynek: {restTime}s\n\n",
+    "exerciseType": "Typ ćwiczenia",
     "noteTemplate": "**Uwaga: {note}**\n",
+    "notes": "Notatki (opcjonalnie)",
     "date": "Data",
+    "daysRange": "Zakres dni (0 = wszystkie)",
+    "dateRange": "Zakres dat (dni)",
     "weightUnitToggle": "Jednostka dla tego wpisu",
     "rest": "Odpoczynek",
-    "work": "Praca"
+    "rounds": "Rundy",
+    "restTime": "Czas odpoczynku (sekundy)",
+    "work": "Praca",
+    "workoutNameOptional": "Nazwa treningu (opcjonalnie)",
+    "workoutFile": "Plik treningu",
+    "workout": "Trening (opcjonalnie)"
   },
   "settings": {
     "buttons": {
@@ -869,7 +915,7 @@
       "confirmOverwriteMuscleTags": "Plik CSV z tagami mięśni już istnieje. Czy chcesz go zastąpić wartościami domyślnymi? To spowoduje usunięcie wszystkich niestandardowych tagów.",
       "csvFolder": "Folder, w którym będą przechowywane pliki CSV z logami treningów i tagami mięśni.",
       "defaultExactMatch": "Gdy jest włączone, filtrowanie ćwiczeń domyślnie wykorzystuje dokładne dopasowanie nazwy. Wyłącz, aby używać nieprecyzyjnego dopasowania.",
-      "defaultRepsPerSet": "Założona liczba powtórzeń, jeśli nie została określona. Jeśli wynosi 0, używany jest 'Rezerwowy czas trwania serii'.",
+      "defaultRepsPerSet": "Przyjęta liczba powtórzeń, gdy nie jest podana. Jeśli wynosi 0, używana jest „Rezerwowy czas trwania serii”.",
       "defaultTimerPreset": "Wybierz domyślne ustawienie dla nowych timerów",
       "exerciseBlockTemplate": "Szablon dla bloków ćwiczeń. Dostępne zmienne: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Ścieżka do folderu zawierającego strony ćwiczeń",
@@ -996,21 +1042,11 @@
     "beta": {
       "intro": "Nowe funkcje, które można wypróbować przed ich oficjalnym udostępnieniem. Są one wyłączone domyślnie i mogą ulec zmianie.",
       "setSheet": {
-        "name": "Zestawy ćwiczeń",
+        "name": "Serie treningu",
         "desc": "Blok `workout-sets`: dzisiejsze serie wyświetlane jako wiersze, które można wypełnić na swoim telefonie, z wartościami z poprzedniej sesji jako wskazówkami oraz timera odpoczynku, który rozpoczyna się przy każdym kliknięciu."
       },
-      "disabledBlock": "{feature} to funkcja beta. Włącz ją w ustawieniach → Funkcjach beta, aby korzystać z tej funkcji."
+      "disabledBlock": "{feature} to funkcja beta. Włącz ją w ustawieniach → Funkcje beta, aby używać tego bloku."
     }
-  },
-  "stats": {
-    "max": "Maks: ",
-    "min": "Min: ",
-    "recentLast3": " (ostatnie 3)",
-    "recentTrend": "Ostatni trend",
-    "recentVsPrev": " (vs poprz.)",
-    "sessions": "Sesje",
-    "average": "Średnia: ",
-    "title": "Statystyki {dataTypeLabel} ({contextLabel}):"
   },
   "table": {
     "actions": "Akcje",
@@ -1050,6 +1086,8 @@
     "notAvailable": "b.d.",
     "refreshSuccess": "Odświeżono tabelę",
     "target": {
+      "progress": "Najlepiej {best}/{target} powtórzeń",
+      "noSetsYet": "Jeszcze nie ma serii z {weight}",
       "progressTooltip": "Najlepsze: {best} powtórzeń / Cel: {target} powtórzeń",
       "repsSuffix": "powt.",
       "separator": " × "
@@ -1121,7 +1159,7 @@
       "log": "Błąd ładowania dziennika: {error}",
       "timer": "Błąd ładowania timera: {error}",
       "dashboard": "Błąd ładowania panelu kontrolnego: {error}",
-      "sets": "Błąd podczas ładowania zestawów: {error}"
+      "sets": "Błąd podczas ładowania serii: {error}"
     },
     "validation": {
       "title": "Nieprawidłowe parametry:",
@@ -1235,22 +1273,26 @@
     "empty": "Dodaj blok `workout-log` lub `workout-sets` z ćwiczeniem do tej notatki, aby móc ją traktować jako sesję."
   },
   "sets": {
-    "editSet": "Edytuj zestaw {set}",
-    "addSet": "Dodaj zestaw",
+    "addSet": "Dodaj serię",
+    "removeSet": "Usuń serię",
     "protocol": "Protokół",
     "notes": "Notatki",
-    "editBlock": "Edytuj zbiory",
-    "blockUpdated": "Zestawy zaktualizowane",
-    "blockUpdateFailed": "Nie udało się zaktualizować zestawów: blok nie został znaleziony w notatce. Otwórz notatkę ponownie i spróbuj jeszcze raz.",
-    "workoutLabel": "Trening:",
+    "editBlock": "Edytuj serie",
+    "editRestTimer": "Edytuj timer odpoczynku",
+    "blockUpdated": "Serie zaktualizowane",
+    "blockUpdateFailed": "Nie udało się zaktualizować serii: blok nie został znaleziony w notatce. Otwórz notatkę ponownie i spróbuj jeszcze raz.",
+    "workoutLabel": "Trening",
     "workoutPlaceholder": "Puste: {note}",
-    "restLabel": "Odpocznij po każdym zestawie (0 = timer sekcji)",
+    "restLabel": "Odpoczynek po każdej serii (0 = timer sekcji)",
     "noExercise": "Dodaj `exercise:` do tego bloku, aby rejestrować wykonane serie.",
-    "progress": "{done}/{sets} zestawów",
+    "progress": "{done}/{sets} serii",
     "lastTime": "Ostatni raz ({date}): {sets}",
-    "setColumn": "Ustaw",
-    "fieldOfSet": "{field}, ustaw {set}",
-    "details": "Protokół i notatki dotyczące zestawu {set}",
-    "logSet": "Zestaw dzienników {set}"
+    "setColumn": "Seria",
+    "fieldOfSet": "{field}, seria {set}",
+    "details": "Protokół i notatki dotyczące serii {set}",
+    "logSet": "Zapisz serię {set}",
+    "valueOfSet": "{field}, seria {set}: {value}",
+    "setRemoved": "Usunięto serię {set}",
+    "unlogSet": "Usuń serię {set} z dziennika"
   }
 }

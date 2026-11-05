@@ -604,6 +604,10 @@ export const ICONS = {
     MOVE_DOWN: "arrow-down",
     DRAG: "grip-vertical",
     REMOVE: "x",
+    DECREASE: "minus",
+    INCREASE: "plus",
+    DONE: "check",
+    EXPAND: "chevron-down",
   },
   STATUS: {
     INFO: "info",
@@ -629,6 +633,9 @@ export const ICONS = {
     HEART_RATE: "heart",
     STREAK: "flame",
     RECORDS: "award",
+  },
+  TABLE: {
+    TARGET: "target",
   },
   TREND: {
     UP: "trending-up",

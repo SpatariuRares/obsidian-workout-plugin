@@ -17,10 +17,10 @@
   height: 0;
   padding-bottom: 75%; /* 4:3 aspect ratio (3/4 = 0.75) */
   overflow: hidden;
+  // Inset into the card, not lifted (DESIGN.md "Inset Not Lifted")
+  border: var(--workout-border-thin) solid var(--workout-border-color);
   border-radius: var(--workout-radius-lg);
   background: var(--background-primary);
-  box-shadow: var(--workout-shadow-md);
-  margin-top: var(--workout-space-lg);
 
   &.has-fixed-height {
     height: var(--workout-chart-height);
@@ -34,6 +34,53 @@
     width: 100%;
     height: 100%;
     border-radius: var(--workout-radius-lg);
+  }
+}
+
+/* The card's trend row: icon, direction, change, range (muted) */
+.workout-chart-trend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--workout-space-sm);
+  row-gap: var(--workout-space-2xs);
+  color: var(--text-normal);
+
+  // Icon and change carry the tone: an improvement in success text
+  .workout-chart-trend-icon,
+  .workout-chart-trend-change {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--workout-space-2xs);
+  }
+
+  .workout-chart-trend-change {
+    font-weight: var(--workout-font-weight-semibold);
+    font-variant-numeric: tabular-nums;
+  }
+
+  &.is-up {
+    .workout-chart-trend-icon,
+    .workout-chart-trend-change {
+      color: var(--workout-text-success);
+    }
+  }
+
+  &.is-neutral {
+    .workout-chart-trend-icon,
+    .workout-chart-trend-change {
+      color: var(--text-muted);
+    }
+  }
+
+  .workout-chart-trend-direction {
+    font-weight: var(--workout-font-weight-semibold);
+  }
+
+  .workout-chart-trend-range {
+    font-size: var(--workout-font-sm);
+    font-variant-numeric: tabular-nums;
+    color: var(--text-muted);
   }
 }
 

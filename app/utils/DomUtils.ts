@@ -24,6 +24,26 @@ export class DomUtils {
   }
 
   /**
+   * Names an element so it can be focused again after its parent is drawn
+   * anew (a block redrawn on every log change loses the focused element)
+   */
+  static setFocusKey(element: HTMLElement, key: string): void {
+    element.dataset.focusKey = key;
+  }
+
+  /**
+   * Focuses the element named `key` inside `root`, without scrolling it.
+   * @returns Whether one was found
+   */
+  static focusByKey(root: HTMLElement, key: string): boolean {
+    const target = Array.from(root.querySelectorAll<HTMLElement>("[data-focus-key]")).find(
+      (el) => el.dataset.focusKey === key,
+    );
+    target?.focus({ preventScroll: true });
+    return !!target;
+  }
+
+  /**
    * Keeps the focused form field inside `root` visible above the on-screen
    * keyboard (iOS overlays the keyboard instead of resizing the page).
    * Pads `root` by the keyboard height so fields near the bottom can scroll

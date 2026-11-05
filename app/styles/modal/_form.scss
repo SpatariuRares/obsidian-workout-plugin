@@ -10,14 +10,41 @@
 .workout-charts-form-group {
   display: flex;
   flex-direction: column;
-  gap: var(--workout-space-md);
+  gap: var(--workout-space-2xs);
   position: relative;
+}
 
-  label {
-    font-weight: var(--workout-font-weight-semibold);
-    color: var(--text-normal);
-    font-size: var(--workout-font-base);
+/* Field labels are labels (DESIGN.md "Label": 0.8em, muted), above their
+   field; a checkbox's label is the text of the option, so it stays body */
+.workout-charts-form-group > label,
+.workout-form-field-label,
+.workout-field-label {
+  color: var(--text-muted);
+  font-size: var(--workout-font-xs);
+  font-weight: var(--font-normal);
+}
+
+.workout-charts-checkbox-group > label {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--text-normal);
+  font-size: var(--workout-font-base);
+  cursor: pointer;
+}
+
+// Label above its input, the input as wide as the form
+.workout-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-2xs);
+  min-width: 0;
+
+  .workout-form-field-input {
+    width: 100%;
   }
+}
+
+.workout-charts-form-group {
 
   input[type="text"],
   input[type="number"],
@@ -48,6 +75,12 @@
       rgba(var(--interactive-accent-rgb), 0.2);
   }
 
+  // A checkbox has no border to turn accent: a full ring, as on buttons
+  input[type="checkbox"]:focus-visible {
+    outline: var(--workout-border-medium) solid var(--interactive-accent);
+    outline-offset: var(--workout-space-2xs);
+  }
+
   input::placeholder {
     color: var(--text-muted);
   }
@@ -55,7 +88,7 @@
 
 .workout-parameters-container {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--workout-space-md);
   width: 100%;
   align-items: start;
@@ -81,7 +114,7 @@
 @media (max-width: variables.$breakpoint-tablet) {
   .workout-modal {
     .workout-parameters-container {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .workout-charts-form-group {
@@ -122,7 +155,12 @@
         min-width: var(--workout-checkbox-size);
       }
 
+      // The label is tied to its box: the whole 44px row ticks it
       label {
+        display: flex;
+        align-items: center;
+        align-self: stretch;
+        min-height: var(--workout-touch-target-min);
         font-size: var(--workout-font-base);
         line-height: 1.4;
       }
@@ -141,8 +179,9 @@
   .workout-modal {
     .workout-parameters-container {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      // Labels can differ in height (Weight has a unit picker); keep inputs on one line
-      align-items: end;
+      // Labels are one height (_adjust), so an error under one field
+      // doesn't move the field next to it
+      align-items: start;
     }
   }
 }

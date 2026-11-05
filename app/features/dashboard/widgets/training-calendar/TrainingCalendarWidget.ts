@@ -7,6 +7,7 @@ import {
   trainingCalendar,
 } from "@app/features/dashboard/widgets/training-calendar/business/trainingCalendar";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
+import { StatCard } from "@app/components/molecules";
 import { FormatUtils } from "@app/utils/FormatUtils";
 import { t } from "@app/i18n";
 
@@ -40,9 +41,7 @@ export class TrainingCalendarWidget {
     const thisWeek = training.weekProgress(today, weeklyGoal);
 
     if (showStats) {
-      const statsEl = widgetEl.createDiv({
-        cls: "workout-calendar-stats",
-      });
+      const statsEl = StatCard.row(widgetEl, "workout-calendar-stats");
       this.stat(
         statsEl,
         t("dashboard.trainingCalendar.currentStreak"),
@@ -97,16 +96,11 @@ export class TrainingCalendarWidget {
     value: string,
     met = false,
   ): void {
-    const statEl = container.createDiv({
-      cls: "workout-calendar-stat",
-    });
-    statEl.createDiv({
-      cls: "workout-calendar-stat-label",
-      text: label,
-    });
-    statEl.createDiv({
-      cls: `workout-calendar-stat-value${met ? " is-met" : ""}`,
-      text: value,
+    StatCard.create(container, {
+      label,
+      value,
+      // The weekly goal reached is an improvement, toned like one
+      className: met ? "is-up" : undefined,
     });
   }
 

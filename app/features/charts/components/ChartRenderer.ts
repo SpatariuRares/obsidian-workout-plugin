@@ -62,6 +62,7 @@ export class ChartRenderer {
    * @param datasets - Array of datasets to display in the chart
    * @param dataType - Type of chart data (volume, weight, reps)
    * @param params - Chart parameters including title and display options
+   * @param showTitle - Draw the title in the canvas (false when a card names the chart)
    * @returns Chart.js configuration object
    */
   private static createChartConfig(
@@ -69,8 +70,9 @@ export class ChartRenderer {
     datasets: ChartDataset[],
     dataType: CHART_DATA_TYPE,
     params: EmbeddedChartParams,
+    showTitle: boolean,
   ): ChartConfiguration {
-    const title = params.title || getDefaultChartTitle(dataType);
+    const title = showTitle ? params.title || getDefaultChartTitle(dataType) : "";
     const colors = ChartColors.getChartColors();
     const colorScheme = ChartColors.getColorSchemeForType(dataType);
 
@@ -128,6 +130,7 @@ export class ChartRenderer {
    * @param labels - Array of labels for the x-axis (dates)
    * @param datasets - Array of datasets to display in the chart
    * @param params - Chart parameters including title and display options
+   * @param options.showTitle - Draw the title in the canvas (default true)
    * @returns True if chart was successfully rendered, false if Chart.js is not available
    */
   static renderChart(
@@ -135,6 +138,7 @@ export class ChartRenderer {
     labels: string[],
     datasets: ChartDataset[],
     params: EmbeddedChartParams,
+    { showTitle = true }: { showTitle?: boolean } = {},
   ): boolean {
     const hasFixedHeight = ChartContainer.applyHeight(
       chartContainer,
@@ -146,6 +150,7 @@ export class ChartRenderer {
       datasets,
       params.type || CHART_DATA_TYPE.VOLUME,
       params,
+      showTitle,
     );
     if (hasFixedHeight && chartConfig.options) {
       // Fill the fixed-height container instead of keeping the aspect ratio

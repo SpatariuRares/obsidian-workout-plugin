@@ -3,10 +3,13 @@
 /* ============================================================================
    CHIP COMPONENT
    ============================================================================
-   Touch-friendly selection chips used for quick selection
+   Touch-friendly selection chips used for quick selection. `button.` and
+   two classes for the selected one outrank Obsidian's
+   `button:not(.clickable-icon)`, which otherwise drew a grey button (and no
+   accent fill on the picked chip).
    ============================================================================ */
 
-.workout-chip {
+button.workout-chip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -22,20 +25,28 @@
   white-space: nowrap;
   flex-shrink: 0;
   min-height: var(--workout-chip-min-height);
+  box-shadow: none;
   transition: var(--workout-transition);
   user-select: none;
 
-  &:hover {
-    background: var(--interactive-hover);
-    border-color: var(--interactive-accent);
+  @media (hover: hover) {
+    &:hover {
+      background: var(--interactive-hover);
+      border-color: var(--interactive-accent);
+    }
   }
 
   &:active {
     transform: scale(0.95);
   }
 
-  // Selected state - uses primary button colors
-  &-selected {
+  &:focus-visible {
+    outline: var(--workout-border-medium) solid var(--interactive-accent);
+    outline-offset: var(--workout-space-2xs);
+  }
+
+  // Picked: the accent fill ("done or picked")
+  &.workout-chip-selected {
     background: var(--workout-accent-fill);
     color: var(--text-on-accent);
     border-color: var(--interactive-accent);
@@ -48,8 +59,8 @@
 }
 
 @media (max-width: variables.$breakpoint-tablet) {
-  .workout-chip {
-    min-height: 40px;
+  button.workout-chip {
+    min-height: var(--workout-touch-target-min);
     padding: var(--workout-space-sm) var(--workout-space-lg);
   }
 }

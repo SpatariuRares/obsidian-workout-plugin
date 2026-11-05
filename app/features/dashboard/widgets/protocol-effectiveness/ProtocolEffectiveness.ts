@@ -1,4 +1,5 @@
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { ProtocolBadge } from "@app/components/atoms";
 import type { SettingsPort } from "@app/types/PluginPorts";
@@ -8,12 +9,6 @@ import {
   ProtocolCatalog,
   protocolId,
 } from "@app/services/protocols/ProtocolCatalog";
-
-/**
- * Minimum number of entries required to show statistics for a protocol.
- * Ensures statistical relevance of the displayed data.
- */
-const DEFAULT_MIN_ENTRIES_FOR_STATS = 5;
 
 /**
  * Protocol effectiveness statistics
@@ -58,7 +53,7 @@ export class ProtocolEffectiveness {
     const stats = this.calculateEffectivenessStats(
       data,
       plugin,
-      params.protocolMinEntries ?? DEFAULT_MIN_ENTRIES_FOR_STATS,
+      params.protocolMinEntries ?? dashboardBlock.defaults.protocolMinEntries,
       params.protocolSortBy ?? "progressionRate",
     );
 
@@ -295,7 +290,7 @@ export class ProtocolEffectiveness {
       });
       ProtocolBadge.create(protocolCell, {
         text: stat.label,
-        className: "workout-protocol-effectiveness-badge",
+        className: "workout-protocol-badge workout-protocol-effectiveness-badge",
         color: stat.color,
       });
 

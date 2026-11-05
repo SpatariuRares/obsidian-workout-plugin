@@ -1,18 +1,11 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import { Icon } from "@app/components/atoms";
 import { ICONS } from "@app/constants/ui.constants";
-
-/**
- * Number of recent workouts to display in the comparison
- */
-const DEFAULT_RECENT_WORKOUT_COUNT = 5;
-
-/** Default rest duration between sets in seconds */
-const DEFAULT_REST_BETWEEN_SETS_SECONDS = 90;
 
 /** Threshold (% points) below which variance trend is considered improving */
 const VARIANCE_IMPROVEMENT_THRESHOLD = 5;
@@ -84,8 +77,8 @@ export class DurationComparison {
     const sessions = this.calculateWorkoutSessions(
       data,
       estimate.setDuration,
-      params.durationRestSeconds ?? DEFAULT_REST_BETWEEN_SETS_SECONDS,
-      params.durationRecentCount ?? DEFAULT_RECENT_WORKOUT_COUNT,
+      params.durationRestSeconds ?? dashboardBlock.defaults.durationRestSeconds,
+      params.durationRecentCount ?? dashboardBlock.defaults.durationRecentCount,
     );
 
     // Check if there's enough data
@@ -101,7 +94,7 @@ export class DurationComparison {
     this.renderComparisonTable(widgetEl, sessions);
 
     // Calculate and render variance trend
-    if (sessions.length >= 2 && (params.durationShowTrend ?? true)) {
+    if (sessions.length >= 2 && (params.durationShowTrend ?? dashboardBlock.defaults.durationShowTrend)) {
       const trend = this.calculateVarianceTrend(sessions);
       this.renderVarianceTrend(widgetEl, trend);
     }

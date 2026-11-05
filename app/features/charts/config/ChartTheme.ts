@@ -22,8 +22,6 @@ export interface ColorScheme {
  */
 export interface ChartColorPalette {
   primary: ColorScheme;
-  secondary: ColorScheme;
-  accent: ColorScheme;
   trend: ColorScheme;
   grid: string;
   text: string;
@@ -37,71 +35,72 @@ export interface ChartColorPalette {
 
 /**
  * Manages color extraction and conversion for charts.
- * Integrates with Obsidian's theme system using CSS variables.
+ * Integrates with Obsidian's theme system using CSS variables, the way
+ * DESIGN.md uses them: one series in the theme accent on an inset surface,
+ * muted ink for axes and the trend line, the subtle border for the grid.
  */
 export class ChartColors {
   private static readonly FALLBACK_COLORS = {
     primary: "#6366F1",
     primaryHover: "#4338CA",
-    success: "#10B981",
-    successHover: "#059669",
-    warning: "#F59E0B",
-    warningHover: "#D97706",
-    error: "#EF4444",
-    errorHover: "#DC2626",
-    white: "#FFFFFF",
+    muted: "#5c5c5c",
     gray: "#374151",
     border: "rgba(156, 163, 175, 0.2)",
     backgroundPrimary: "rgba(255, 255, 255, 0.95)",
     backgroundSecondary: "rgba(17, 24, 39, 0.95)",
   };
 
+  /** The design system's token first, Obsidian's variable for older styles */
+  private static readonly GRID_VARS = ["workout-border-subtle", "background-modifier-border"];
+  private static readonly BORDER_VARS = ["workout-border-color", "background-modifier-border"];
+
   /**
-   * Gets a CSS variable value with fallback
+   * A theme color as the canvas can draw it. Themes write colors as
+   * `hsl()` or `color-mix()` (and the `--workout-*` tokens mix them), so the
+   * browser resolves them on a probe element; where it can't (tests), the
+   * variable's own value is used, made transparent when it is a hex color.
    * @param varName - CSS variable name (without -- prefix)
-   * @param fallback - Fallback value if variable is not defined
-   * @returns The CSS variable value or fallback
+   * @param fallback - Used when the theme doesn't define the variable
+   * @param alpha - Opacity, 1 = opaque
    */
   private static getCSSVar(
     varName: string,
     fallback: string,
+    alpha = 1,
   ): string {
     // Obsidian defines its theme variables on body.theme-*, not on :root
-    const style = getComputedStyle(document.body);
-    const value = style.getPropertyValue(`--${varName}`).trim();
-    return value || fallback;
+    const value = getComputedStyle(document.body)
+      .getPropertyValue(`--${varName}`)
+      .trim();
+    if (!value) return this.withAlpha(fallback, alpha);
+    return this.resolveOnProbe(varName, alpha) || this.withAlpha(value, alpha);
   }
 
-  /**
-   * Creates a color scheme with main, light, dark, point, and border colors
-   * @param mainVar - CSS variable for main color
-   * @param mainFallback - Fallback for main color
-   * @param hoverVar - CSS variable for hover/dark color
-   * @param hoverFallback - Fallback for hover color
-   * @param lightOpacity - Opacity for light variant (default: 0.2)
-   * @returns Complete color scheme
-   */
-  private static createColorScheme(
-    mainVar: string,
-    mainFallback: string,
-    hoverVar: string,
-    hoverFallback: string,
-    lightOpacity: number = 0.2,
-  ): ColorScheme {
-    const main = this.getCSSVar(mainVar, mainFallback);
-    const dark = this.getCSSVar(hoverVar, hoverFallback);
-    const point = this.getCSSVar(
-      "text-on-accent",
-      this.FALLBACK_COLORS.white,
-    );
+  private static resolveOnProbe(varName: string, alpha: number): string {
+    // Inside body, where the theme variables and --workout-* tokens live
+    const probe = document.body.createSpan();
+    try {
+      probe.style.color =
+        alpha < 1
+          ? `color-mix(in srgb, var(--${varName}) ${Math.round(alpha * 100)}%, transparent)`
+          : `var(--${varName})`;
+      return (probe.style.color && getComputedStyle(probe).color) || "";
+    } finally {
+      probe.remove();
+    }
+  }
 
-    return {
-      main,
-      light: hexToRgba(main, lightOpacity),
-      dark,
-      point,
-      pointBorder: dark,
-    };
+  private static withAlpha(value: string, alpha: number): string {
+    return alpha < 1 && value.startsWith("#") ? hexToRgba(value, alpha) : value;
+  }
+
+  /** The first variable the theme defines, so a token falls back to Obsidian's */
+  private static firstDefined(...varNames: string[]): string {
+    const style = getComputedStyle(document.body);
+    return (
+      varNames.find((name) => style.getPropertyValue(`--${name}`).trim()) ??
+      varNames[varNames.length - 1]
+    );
   }
 
   /**
@@ -110,81 +109,54 @@ export class ChartColors {
    * @returns Complete chart color palette
    */
   static getChartColors(): ChartColorPalette {
+    const { FALLBACK_COLORS: fallback } = this;
+    const accent = this.getCSSVar("interactive-accent", fallback.primary);
+    const muted = this.getCSSVar("text-muted", fallback.muted);
+    const page = this.getCSSVar("background-primary", fallback.backgroundPrimary);
+    const gridVar = this.firstDefined(...this.GRID_VARS);
+
     return {
-      primary: this.createColorScheme(
-        "interactive-accent",
-        this.FALLBACK_COLORS.primary,
-        "interactive-accent-hover",
-        this.FALLBACK_COLORS.primaryHover,
+      primary: {
+        main: accent,
+        light: this.getCSSVar("interactive-accent", fallback.primary, 0.15),
+        dark: accent,
+        // Points are inset like the card's controls: page color, accent ring
+        point: page,
+        pointBorder: accent,
+      },
+      trend: {
+        main: muted,
+        light: "transparent",
+        dark: muted,
+        point: muted,
+        pointBorder: muted,
+      },
+      // Lines behind the data: fainter than a border (the token is a 3:1
+      // control border, Obsidian's a lighter one)
+      grid: this.getCSSVar(
+        gridVar,
+        fallback.border,
+        gridVar === "background-modifier-border" ? 0.25 : 0.4,
       ),
-      secondary: this.createColorScheme(
-        "text-success",
-        this.FALLBACK_COLORS.success,
-        "text-success-hover",
-        this.FALLBACK_COLORS.successHover,
-      ),
-      accent: this.createColorScheme(
-        "text-warning",
-        this.FALLBACK_COLORS.warning,
-        "text-warning-hover",
-        this.FALLBACK_COLORS.warningHover,
-      ),
-      trend: this.createColorScheme(
-        "text-error",
-        this.FALLBACK_COLORS.error,
-        "text-error-hover",
-        this.FALLBACK_COLORS.errorHover,
-      ),
-      grid: hexToRgba(
-        this.getCSSVar(
-          "background-modifier-border",
-          this.FALLBACK_COLORS.border,
-        ),
-        0.25,
-      ),
-      text: this.getCSSVar("text-normal", this.FALLBACK_COLORS.gray),
-      background: this.getCSSVar(
-        "background-primary",
-        this.FALLBACK_COLORS.backgroundPrimary,
-      ),
+      text: muted,
+      background: page,
       tooltip: {
-        background: hexToRgba(
-          this.getCSSVar(
-            "background-secondary",
-            this.FALLBACK_COLORS.backgroundSecondary,
-          ),
-          0.95,
-        ),
+        background: this.getCSSVar("background-secondary", fallback.backgroundSecondary),
         border: this.getCSSVar(
-          "interactive-accent",
-          this.FALLBACK_COLORS.primary,
+          this.firstDefined(...this.BORDER_VARS),
+          fallback.border,
         ),
-        text: this.getCSSVar(
-          "text-normal",
-          this.FALLBACK_COLORS.white,
-        ),
+        text: this.getCSSVar("text-normal", fallback.gray),
       },
     };
   }
 
   /**
-   * Gets the appropriate color scheme based on chart type
-   * @param dataType - Type of chart data (volume, weight, reps)
-   * @returns Color scheme object
+   * The series' color scheme. Every type uses the accent: a chart shows one
+   * series, and the accent is the only color the design system draws data in.
+   * @param _dataType - Type of chart data (kept for callers)
    */
-  static getColorSchemeForType(
-    dataType: CHART_DATA_TYPE,
-  ): ColorScheme {
-    const colors = this.getChartColors();
-    switch (dataType) {
-      case CHART_DATA_TYPE.VOLUME:
-        return colors.primary;
-      case CHART_DATA_TYPE.WEIGHT:
-        return colors.secondary;
-      case CHART_DATA_TYPE.REPS:
-        return colors.accent;
-      default:
-        return colors.primary;
-    }
+  static getColorSchemeForType(_dataType: CHART_DATA_TYPE): ColorScheme {
+    return this.getChartColors().primary;
   }
 }

@@ -2,6 +2,7 @@ import { normalizePath } from "obsidian";
 import { t } from "@app/i18n";
 import { examplePaths } from "@app/services/examples/ExamplePaths";
 import { tableBlock } from "@app/features/tables/tableBlock";
+import { setsBlock } from "@app/features/tables/setsBlock";
 import { chartBlock } from "@app/features/charts/chartBlock";
 import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { TIMER_TYPE } from "@app/features/timer/types";
@@ -26,16 +27,65 @@ export function gettingStartedPages() {
       showStats: true,
       showTrendLine: true,
     });
+  const workout = t("examples.workouts.lowerBodyA.name");
+  const rdl = t("examples.exercises.rdl.name");
+  /** Several blocks on one page, each under its own heading and explanation */
+  const variants = (...list: { title: string; intro: string; block: string }[]) =>
+    list
+      .map((variant) => `## ${variant.title}\n\n${variant.intro}\n\n${variant.block}`)
+      .join("\n\n");
   const sections = [
     {
       name: "01 Tables",
       title: t("tour.noteTable"),
       intro: t("examples.gettingStarted.tryLog"),
-      block: tableBlock.serialize({
-        id: generateCodeBlockId(),
-        exercise,
-        limit: 8,
-      }),
+      block: variants(
+        {
+          title: t("examples.gettingStarted.tables.latestTitle"),
+          intro: t("examples.gettingStarted.tables.latestIntro"),
+          block: tableBlock.serialize({
+            id: generateCodeBlockId(),
+            exercise,
+            limit: 8,
+          }),
+        },
+        {
+          title: t("examples.gettingStarted.tables.targetTitle"),
+          intro: t("examples.gettingStarted.tables.targetIntro"),
+          block: tableBlock.serialize({
+            id: generateCodeBlockId(),
+            exercise,
+            workout,
+            exactMatch: true,
+            sets: 4,
+            targetWeight: 85,
+            targetReps: 8,
+          }),
+        },
+        {
+          title: t("examples.gettingStarted.tables.workoutTitle"),
+          intro: t("examples.gettingStarted.tables.workoutIntro"),
+          block: tableBlock.serialize({
+            id: generateCodeBlockId(),
+            workout,
+            dateRange: 14,
+            limit: 20,
+          }),
+        },
+        {
+          title: t("examples.gettingStarted.tables.columnsTitle"),
+          intro: t("examples.gettingStarted.tables.columnsIntro"),
+          block: tableBlock.serialize({
+            id: generateCodeBlockId(),
+            exercise,
+            columns: ["date", "weight", "reps", "volume"],
+            sortBy: "weight",
+            sortOrder: "desc",
+            limit: 10,
+            showAddButton: false,
+          }),
+        },
+      ),
     },
     {
       name: "02 Strength charts",
@@ -119,14 +169,55 @@ export function gettingStartedPages() {
           duration: 90,
           exercise,
         }),
-        tableBlock.serialize({
+        setsBlock.serialize({
           id: generateCodeBlockId(),
           exercise,
-          limit: 8,
           sets: 3,
           targetReps: 8,
         }),
       ].join("\n\n"),
+    },
+    {
+      name: "11 Workout sets",
+      title: t("examples.featureShowcase.setsTitle"),
+      intro: t("examples.featureShowcase.setsIntro"),
+      block: variants(
+        {
+          title: t("examples.gettingStarted.sets.lastTimeTitle"),
+          intro: t("examples.gettingStarted.sets.lastTimeIntro"),
+          block: setsBlock.serialize({
+            id: generateCodeBlockId(),
+            exercise,
+            workout,
+            sets: 4,
+          }),
+        },
+        {
+          title: t("examples.gettingStarted.sets.restTitle"),
+          intro: t("examples.gettingStarted.sets.restIntro"),
+          block: setsBlock.serialize({
+            id: generateCodeBlockId(),
+            exercise: rdl,
+            workout,
+            sets: 3,
+            targetWeight: 65,
+            targetReps: 10,
+            rest: 120,
+          }),
+        },
+        {
+          title: t("examples.gettingStarted.sets.restTimerTitle"),
+          intro: t("examples.gettingStarted.sets.restTimerIntro"),
+          block: setsBlock.serialize({
+            id: generateCodeBlockId(),
+            exercise,
+            workout,
+            sets: 3,
+            rest: 90,
+            "timer.sound": false,
+          }),
+        },
+      ),
     },
   ];
   const index = examplePaths

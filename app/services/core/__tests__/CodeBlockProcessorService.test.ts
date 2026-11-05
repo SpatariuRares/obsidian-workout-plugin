@@ -313,7 +313,7 @@ describe("CodeBlockProcessorService", () => {
       );
     });
 
-    it("draws the chart with its parameters and note", async () => {
+    it("draws the chart with its parameters, note and edit action", async () => {
       const el = createObsidianContainer();
       const ctx = {
         addChild: jest.fn(),
@@ -326,6 +326,7 @@ describe("CodeBlockProcessorService", () => {
         blockBody(el),
         expect.objectContaining({ exercise: "Bench Press" }),
         "test/path.md",
+        expect.objectContaining({ label: t("charts.editChart") }),
       );
     });
 

@@ -571,7 +571,7 @@ describe("EditWidgetModal", () => {
       id: "d1",
     });
 
-    contentEl.querySelector<HTMLInputElement>("input")!.value = "8";
+    contentEl.querySelector<HTMLInputElement>(".workout-number-field-input")!.value = "8";
     button(t("dashboard.widgetModal.update"))!.click();
     await flush();
 
@@ -586,9 +586,13 @@ describe("EditWidgetModal", () => {
       "heatMap",
       { id: "d1" },
     );
-    const selects = contentEl.querySelectorAll("select");
-    selects[0].value = "month";
-    selects[1].value = "volume"; // its default: not written
+    const chip = (text: string) =>
+      [...contentEl.querySelectorAll<HTMLButtonElement>(".workout-chip")].find(
+        (c) => c.textContent === text,
+      )!;
+    chip(t("timeperiods.month")).click();
+    chip(t("dashboard.muscleHeatMap.metrics.sets")).click();
+    chip(t("dashboard.muscleHeatMap.metrics.volume")).click(); // back to its default: not written
     button(t("dashboard.widgetModal.update"))!.click();
     await flush();
 
@@ -622,9 +626,10 @@ describe("EditWidgetModal", () => {
       { id: "d1" },
     );
     const [maxItems, maxTags] = [
-      ...contentEl.querySelectorAll<HTMLInputElement>("input[type=number]"),
+      ...contentEl.querySelectorAll<HTMLInputElement>(".workout-number-field-input"),
     ];
     expect(maxItems.value).toBe("");
+    expect(maxItems.placeholder).toBe(t("dashboard.widgetModal.all"));
     expect(maxTags.value).toBe("3");
     maxItems.value = "10";
     button(t("dashboard.widgetModal.update"))!.click();
@@ -639,15 +644,77 @@ describe("EditWidgetModal", () => {
       "quickStats",
       { id: "d1" },
     );
-    const boxes = [
-      ...contentEl.querySelectorAll<HTMLInputElement>("input[type=checkbox]"),
-    ];
-    boxes[1].checked = false; // month
+    const month = [...contentEl.querySelectorAll<HTMLButtonElement>(".workout-chip")].find(
+      (c) => c.textContent === t("dashboard.quickStats.month"),
+    )!;
+    expect(month.getAttribute("aria-pressed")).toBe("true");
+    month.click();
     button(t("dashboard.widgetModal.update"))!.click();
     await flush();
 
     expect(state.content).toContain("quickStatsPeriods: [week, year]");
     expect(state.content).not.toContain("quickStatsMetrics");
+  });
+
+  it("keeps a number out of its limits from being written, saying why under it", async () => {
+    const note0 = note("```workout-dashboard", "id: d1", "recentWorkoutsLimit: 8", "```");
+    const { state, contentEl, button } = open(note0, "recentWorkouts", {
+      id: "d1",
+      recentWorkoutsLimit: 8,
+    });
+    const input = contentEl.querySelector<HTMLInputElement>(".workout-number-field-input")!;
+    input.value = "0";
+    button(t("dashboard.widgetModal.update"))!.click();
+    await flush();
+
+    expect(state.content).toBe(note0);
+    expect(input.getAttribute("aria-invalid")).toBe("true");
+    expect(contentEl.querySelector(".workout-number-field-error")?.textContent).toBe(
+      t("dashboard.widgetModal.numberRange", { min: 1, max: 50 }),
+    );
+  });
+
+  it("keeps a value above the form's max that the block already holds", async () => {
+    const note0 = note(
+      "```workout-dashboard",
+      "id: d1",
+      "recentWorkoutsLimit: 120",
+      "volumeTrendDays: 30",
+      "```",
+    );
+    const { state, contentEl, button } = open(note0, "recentWorkouts", {
+      id: "d1",
+      recentWorkoutsLimit: 120,
+    });
+    button(t("dashboard.widgetModal.update"))!.click();
+    await flush();
+
+    expect(contentEl.querySelector(".workout-number-field-error")?.textContent ?? "").toBe("");
+    expect(state.content).toBe(note0);
+  });
+
+  it("asks for at least one option instead of writing an empty list", async () => {
+    const note0 = note("```workout-dashboard", "id: d1", "```");
+    const { state, contentEl, button } = open(note0, "quickActions", { id: "d1" });
+    for (const chip of contentEl.querySelectorAll<HTMLButtonElement>(".workout-chip")) chip.click();
+    button(t("dashboard.widgetModal.update"))!.click();
+    await flush();
+
+    expect(state.content).toBe(note0);
+    expect(contentEl.querySelector(".workout-chip-group-error")?.textContent).toBe(
+      t("dashboard.widgetModal.pickOne"),
+    );
+  });
+
+  it("ties a toggle's label to its checkbox", () => {
+    const { contentEl } = open(note("```workout-dashboard", "id: d1", "```"), "volume", {
+      id: "d1",
+    });
+    const box = contentEl.querySelector<HTMLInputElement>("input[type=checkbox]")!;
+
+    expect(contentEl.querySelector(`label[for="${box.id}"]`)?.textContent).toBe(
+      t("dashboard.widgetModal.volumeShowBreakdown"),
+    );
   });
 
   it("removes the widget from a list, writing the ones left", async () => {

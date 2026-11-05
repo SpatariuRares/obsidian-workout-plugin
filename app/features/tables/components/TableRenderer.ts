@@ -12,8 +12,21 @@ import { TableHeader } from "@app/features/tables/ui/TableHeader";
 import { SpacerStat, ProtocolBadge } from "@app/components/atoms";
 import { SpacerRowCalculator } from "@app/features/tables/business/SpacerRowCalculator";
 import { ProtocolCatalog } from "@app/services/protocols/ProtocolCatalog";
-import { CONSTANTS, mapColumnIdentifiersToLabels } from "@app/constants";
+import { CONSTANTS } from "@app/constants";
+import { DomUtils } from "@app/utils/DomUtils";
 import { t } from "@app/i18n";
+
+/** The class of a column that holds a set's value (reps, weight, a field) */
+const VALUE_CELL = "workout-table-value-cell";
+
+/** Columns that are not a number of the set: on phones they leave its row */
+const OFF_THE_NUMBERS_ROW = new Set([
+  "workout-table-date-cell",
+  "workout-table-actions-cell",
+  "workout-table-protocol-cell",
+  "workout-table-notes-cell",
+  "workout-table-exercise-cell",
+]);
 
 export class TableRenderer {
   /**
@@ -52,11 +65,20 @@ export class TableRenderer {
         cls: "workout-log-table",
       });
 
-      TableHeader.render(table, headers);
+      const columns = this.columnClasses(headers);
+      // Phones: each set is a grid row: the time, one track per number
+      // (values and volume), the edit button
+      DomUtils.setCssProps(table, {
+        "--workout-log-fields": String(
+          Math.max(columns.filter((cls) => !OFF_THE_NUMBERS_ROW.has(cls)).length, 1),
+        ),
+      });
+
+      TableHeader.render(table, headers, columns);
 
       const tbody = table.createEl("tbody");
 
-      this.applyRowGroupingOptimized(tbody, rows, headers, plugin, signal);
+      this.applyRowGroupingOptimized(tbody, rows, headers, columns, plugin, signal);
 
       return true;
     } catch {
@@ -77,19 +99,43 @@ export class TableRenderer {
   }
 
   /**
+   * Each column's cell class, the same in the header and the rows: the time,
+   * the actions, the cells phones move off the row of numbers (exercise,
+   * protocol, notes) and the volume; every other column is a value.
+   */
+  private static columnClasses(headers: string[]): string[] {
+    const COLUMNS = CONSTANTS.WORKOUT.TABLE.COLUMNS;
+    const special = new Map<string, string>([
+      [fieldKey(COLUMNS.ACTIONS.value), "workout-table-actions-cell"],
+      [fieldKey(COLUMNS.VOLUME.value), "workout-table-volume-cell"],
+      [fieldKey(COLUMNS.PROTOCOL.value), "workout-table-protocol-cell"],
+      [fieldKey(COLUMNS.NOTES.value), "workout-table-notes-cell"],
+      [fieldKey(COLUMNS.EXERCISE.value), "workout-table-exercise-cell"],
+    ]);
+    return headers.map((header, index) =>
+      index === 0
+        ? "workout-table-date-cell"
+        : (special.get(fieldKey(header)) ?? VALUE_CELL),
+    );
+  }
+
+  /**
    * Optimized row grouping with better performance
    */
   private static applyRowGroupingOptimized(
     tbody: HTMLElement,
     rows: TableRow[],
     headers: string[],
+    columns: string[],
     plugin?: WorkoutPluginContext,
     signal?: AbortSignal,
   ): void {
     if (rows.length === 0) return;
 
     let currentDateKey = "";
-    let groupIndex = 0;
+    // Every row of a day (its line included) shares one shade, alternating
+    // between days, so a day's sets read as one group
+    let dayClass = "workout-table-day-even";
     const columnCount = rows[0].displayRow.length;
 
     // Group rows by date for calculating aggregates
@@ -109,7 +155,7 @@ export class TableRenderer {
       const spacerData = SpacerRowCalculator.calculate(groupRows);
 
       const spacerRow = tbody.createEl("tr", {
-        cls: "workout-table-spacer",
+        cls: `workout-table-spacer ${dayClass}`,
       });
 
       // First cell: formatted date
@@ -129,24 +175,8 @@ export class TableRenderer {
       });
     };
 
-    // Find the special columns by field key, however their header is written
-    const COLUMNS = CONSTANTS.WORKOUT.TABLE.COLUMNS;
-    const columnOf = (column: { value: string }) =>
-      headers.findIndex(
-        (header) => fieldKey(header) === fieldKey(column.value),
-      );
-    const protocolColumnIndex = columnOf(COLUMNS.PROTOCOL);
-    const volumeColumnIndex = columnOf(COLUMNS.VOLUME);
-    const actionsColumnIndex = columnOf(COLUMNS.ACTIONS);
-    const notesColumnIndex = columnOf(COLUMNS.NOTES);
-    const exerciseColumnIndex = columnOf(COLUMNS.EXERCISE);
+    const protocolColumnIndex = columns.indexOf("workout-table-protocol-cell");
     const notAvailable = t("table.notAvailable");
-    // On phones the header row is hidden and each row becomes a card, so
-    // value cells carry their column name (rendered via CSS attr())
-    const columnLabels = mapColumnIdentifiersToLabels(headers);
-    const labelAttr = (cellIndex: number) => ({
-      "data-label": columnLabels[cellIndex] ?? "",
-    });
 
     const protocols = new ProtocolCatalog(plugin?.settings?.customProtocols);
 
@@ -158,60 +188,29 @@ export class TableRenderer {
 
       // New group - show spacer BEFORE the group
       if (dateKey !== currentDateKey) {
+        dayClass =
+          dayClass === "workout-table-day-even" ? "workout-table-day-odd" : "workout-table-day-even";
         createSpacerRow(dateKey);
         currentDateKey = dateKey;
-        groupIndex++;
       }
 
-      const tr = tbody.createEl("tr", {
-        cls: `workout-same-day-log ${groupIndex % 2 === 0 ? "group-even" : "group-odd"}`,
-      });
+      const tr = tbody.createEl("tr", { cls: `workout-same-day-log ${dayClass}` });
 
       row.displayRow.forEach((cell, cellIndex) => {
-        if (cellIndex === 0) {
-          tr.createEl("td", { cls: "workout-table-date-cell", text: cell });
-        } else if (cellIndex === actionsColumnIndex) {
-          const td = tr.createEl("td", { cls: "workout-table-actions-cell" });
+        const cls = columns[cellIndex] ?? VALUE_CELL;
+        if (cls === "workout-table-actions-cell") {
+          const td = tr.createEl("td", { cls });
           TableActions.renderActionButtons(td, row.originalLog, plugin, signal);
-        } else if (cellIndex === volumeColumnIndex) {
-          tr.createEl("td", {
-            cls: "workout-table-volume-cell",
-            text: cell,
-            attr: labelAttr(cellIndex),
-          });
-        } else if (cellIndex === protocolColumnIndex) {
-          const td = tr.createEl("td", { cls: "workout-table-protocol-cell" });
-          ProtocolBadge.forProtocol(td, protocol);
-        } else if (cellIndex === notesColumnIndex) {
-          tr.createEl("td", {
-            cls: "workout-table-notes-cell",
-            text: cell,
-            attr: labelAttr(cellIndex),
-          });
-        } else if (cellIndex === exerciseColumnIndex) {
-          // Phones: the card's title, on its own line above the numbers
-          tr.createEl("td", {
-            cls: "workout-table-exercise-cell",
-            text: cell,
-            attr: labelAttr(cellIndex),
-          });
+        } else if (cls === "workout-table-protocol-cell") {
+          ProtocolBadge.forProtocol(tr.createEl("td", { cls }), protocol);
         } else {
-          // Phones hide N/A values: a strength set in a table that also
-          // shows cardio has no duration, and the card has no room to say so
+          // A value the set does not have (duration of a strength set) is muted
           tr.createEl("td", {
-            cls: cell === notAvailable ? "workout-table-na-cell" : undefined,
+            cls: cell === notAvailable ? `${cls} workout-table-na-cell` : cls,
             text: cell,
-            attr: labelAttr(cellIndex),
           });
         }
       });
-
-      // On phones notes and the protocol badge go on a second line; the
-      // class tells CSS which rows need that line break
-      const hasBadge =
-        protocolColumnIndex >= 0 && protocol.abbreviation !== "";
-      const hasDetails = cellAt(notesColumnIndex) !== "" || hasBadge;
-      tr.classList.toggle("workout-table-row-with-details", hasDetails);
     });
   }
 }

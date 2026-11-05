@@ -1,0 +1,36 @@
+@use "../variables";
+
+/* ============================================================================
+   CHIP GROUP (ChipGroup, ProtocolPicker): a labelled group of chips, one
+   scrolling row
+   ============================================================================ */
+
+.workout-chip-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-2xs);
+  min-width: 0;
+}
+
+.workout-chip-group-label {
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+}
+
+// One row that scrolls sideways, so a long list stays short on a phone
+.workout-chip-group-chips {
+  display: flex;
+  gap: var(--workout-space-xs);
+  overflow-x: auto;
+  padding-bottom: var(--workout-space-2xs);
+
+  .workout-chip {
+    flex: none;
+  }
+}
+
+// A widget's settings: a few options, all of them in sight, wrapping
+.workout-widget-setting-chips .workout-chip-group-chips {
+  flex-wrap: wrap;
+  overflow-x: visible;
+}

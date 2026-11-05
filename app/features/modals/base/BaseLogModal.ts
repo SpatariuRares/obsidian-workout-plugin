@@ -19,10 +19,6 @@ import { fillDynamicInputsFromCustomFields } from "@app/utils/form/FormUtils";
 import { RecentExercisesService } from "@app/features/modals/base/services/RecentExercisesService";
 import { t } from "@app/i18n";
 import { trainingDay } from "@app/services/history/TrainingHistory";
-import {
-  ProtocolCatalog,
-  protocolId,
-} from "@app/services/protocols/ProtocolCatalog";
 
 /**
  * Abstract base class for workout log modals.
@@ -201,20 +197,7 @@ export abstract class BaseLogModal extends ModalBase {
     ) {
       formElements.dateInput.value = trainingDay(data.date);
     }
-    if (data.protocol && formElements.protocolSelect) {
-      const select = formElements.protocolSelect;
-      const id = protocolId(data.protocol);
-      // A set logged with a protocol no longer in the settings list (e.g. a
-      // deleted drop set) keeps it: without an option the select would be
-      // empty and saving would turn the set into standard
-      if (!Array.from(select.options).some((o) => o.value === id)) {
-        const info = new ProtocolCatalog(
-          this.plugin.settings.customProtocols,
-        ).resolve(id);
-        select.createEl("option", { text: info.name, value: id });
-      }
-      select.value = id;
-    }
+    if (data.protocol) formElements.protocol?.set(data.protocol);
 
     // Pre-fill custom fields
     fillDynamicInputsFromCustomFields(
@@ -313,15 +296,20 @@ export abstract class BaseLogModal extends ModalBase {
     });
     message.id = "workout-log-field-error";
     input.setAttribute("aria-describedby", message.id);
-    // After the +/- row for numbers, so the message sits under the whole control
-    (input.closest(".workout-input-with-adjust") ?? input).after(message);
+    // Under a number's whole box (− value +), which shows the error border
+    const box = input.closest(".workout-number-field-box");
+    input.closest(".workout-number-field")?.addClass("is-invalid");
+    (box ?? input).after(message);
     input.addEventListener("input", () => this.clearFieldError(), { once: true });
     input.focus();
   }
 
   private clearFieldError(): void {
     const { contentEl } = this;
-    contentEl.querySelector(".workout-field-error")?.remove();
+    contentEl.querySelector("#workout-log-field-error")?.remove();
+    contentEl
+      .querySelectorAll(".workout-number-field.is-invalid")
+      .forEach((el) => el.removeClass("is-invalid"));
     contentEl.querySelectorAll("[aria-invalid]").forEach((el) => {
       el.removeAttribute("aria-invalid");
       el.removeAttribute("aria-describedby");

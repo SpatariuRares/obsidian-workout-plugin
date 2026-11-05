@@ -19,13 +19,20 @@ export interface LogFormData {
   customFields?: Record<string, string | number | boolean>;
 }
 
+/** The protocol picked in the log form's chips */
+export interface ProtocolChoice {
+  readonly value: string;
+  /** Picks it, adding a chip for a protocol no longer in the settings */
+  set(id: string): void;
+}
+
 export interface LogFormElements {
   exerciseElements: ExerciseAutocompleteElements;
-  notesInput: HTMLInputElement;
+  notesInput: HTMLInputElement | HTMLTextAreaElement;
   workoutInput: HTMLInputElement;
   currentWorkoutToggle?: HTMLInputElement;
   dateInput?: HTMLInputElement;
-  protocolSelect?: HTMLSelectElement;
+  protocol?: ProtocolChoice;
   dynamicFieldInputs: Map<string, HTMLInputElement>;
   parametersContainer: HTMLElement; // Container for dynamic parameter fields
 }

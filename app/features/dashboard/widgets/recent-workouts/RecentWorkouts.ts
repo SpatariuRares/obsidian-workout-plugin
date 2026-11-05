@@ -1,4 +1,5 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { getRecentWorkouts } from "@app/features/dashboard/widgets/recent-workouts/business/getRecentWorkouts";
 import { ListItem } from "@app/components/molecules";
@@ -20,7 +21,7 @@ export class RecentWorkouts {
 
     const recentWorkouts = getRecentWorkouts(
       data,
-      params.recentWorkoutsLimit ?? 5,
+      params.recentWorkoutsLimit ?? dashboardBlock.defaults.recentWorkoutsLimit,
     );
 
     const listEl = ListItem.createList(recentEl, {

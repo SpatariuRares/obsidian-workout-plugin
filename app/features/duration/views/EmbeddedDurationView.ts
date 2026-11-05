@@ -7,6 +7,7 @@ import { EmbeddedDurationParams } from "@app/features/duration/types";
 import { WorkoutFileAnalyzer } from "@app/features/duration/services/WorkoutFileAnalyzer";
 import { DurationRenderer } from "@app/features/duration/renderers/DurationRenderer";
 import { resolveWorkoutPath } from "@app/utils/path-resolver";
+import { PathUtils } from "@app/utils/PathUtils";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 /**
@@ -51,8 +52,12 @@ export class EmbeddedDurationView extends BaseView {
       const analysis =
         await this.analyzer.analyzeWorkoutFile(targetPath);
 
-      // Render the duration info card
-      this.renderer.renderDurationCard(container, analysis);
+      // The card names the note it estimates when it is another one
+      this.renderer.renderDurationCard(
+        container,
+        analysis,
+        targetPath === currentFilePath ? undefined : PathUtils.noteName(targetPath),
+      );
     } catch (error) {
       this.handleError(container, error);
     }

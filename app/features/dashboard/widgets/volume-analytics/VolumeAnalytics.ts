@@ -1,4 +1,5 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
 
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
@@ -24,7 +25,7 @@ export class VolumeAnalytics {
     params: EmbeddedDashboardParams,
     options: { chartId?: string } = {},
   ): void {
-    const trendDays = params.volumeTrendDays ?? 30;
+    const trendDays = params.volumeTrendDays ?? dashboardBlock.defaults.volumeTrendDays;
 
     const analyticsEl = WidgetContainer.create(container, {
       title: t("dashboard.volumeAnalytics.title"),

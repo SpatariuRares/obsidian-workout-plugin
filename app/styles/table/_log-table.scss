@@ -1,44 +1,67 @@
 @use "../variables";
 
-/* Log table */
+/* ============================================================================
+   WORKOUT LOG: the logged sets of a workout-log block (a BlockCard)
+   ============================================================================
+   At the desk a quiet table on the card: labels muted, numbers in figure
+   type, one line per day. On phones every set is one grid row like a
+   workout-sets row: time | one track per number | edit.
+   Cell classes come from TableRenderer (the same on th and td).
+   ============================================================================ */
+
+// Add log, under the title: a new set shows up as the table's first row
+// (scoped to the block: the log modal's save bar has the same class)
+.workout-log .workout-buttons-container.workout-log-actions {
+  justify-content: flex-start;
+}
+
+.workout-log .workout-table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .workout-log-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--workout-font-sm);
-  background: var(--background-primary);
-  border-radius: var(--workout-radius-lg);
-  overflow: hidden;
+  font-variant-numeric: tabular-nums;
 
-  thead tr {
-    background: var(--background-secondary);
-    border-bottom: var(--workout-border-medium) solid
-      var(--workout-border-subtle);
+  // Obsidian outlines every cell of a table in a note: rows are separated
+  // by their own border only
+  th,
+  td {
+    border: none;
   }
 
   th {
-    padding: var(--workout-space-xs) var(--workout-space-xs);
-    white-space: nowrap;
+    vertical-align: bottom;
+    padding: var(--workout-space-xs) var(--workout-space-sm);
     text-align: left;
-    font-weight: var(--workout-font-weight-semibold);
-    color: var(--text-normal);
-    border-bottom: var(--workout-border-thin) solid
-      var(--workout-border-subtle);
-    font-size: var(--workout-font-base);
+    white-space: nowrap;
+    font-size: var(--workout-font-xs);
+    font-weight: normal;
+    color: var(--text-muted);
+    background: none;
   }
 
-  tbody tr {
-    border-bottom: var(--workout-border-thin) solid
-      var(--workout-border-subtle);
+  thead tr {
+    border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
+  }
+
+  td {
+    padding: var(--workout-space-sm);
+    vertical-align: middle;
+    white-space: nowrap;
+    color: var(--text-normal);
+  }
+
+  tr.workout-same-day-log {
+    border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
     transition: var(--workout-transition);
 
-    &:nth-child(even) {
-      background: var(--background-secondary);
-    }
     /* Inset shadow tints the row without replacing its background */
     @media (hover: hover) {
       &:hover {
-        box-shadow: inset 0 0 0 100vmax
-          var(--background-modifier-hover);
+        box-shadow: inset 0 0 0 100vmax var(--background-modifier-hover);
       }
     }
   }
@@ -46,150 +69,211 @@
   td a {
     color: var(--workout-text-accent);
     text-decoration: none;
-    transition: var(--workout-transition);
     font-weight: var(--workout-font-weight-medium);
 
     &:hover {
-      color: var(--workout-text-accent);
       text-decoration: underline;
     }
   }
+
+  // The set's numbers in figure type; the time and what it lacks muted
+  td.workout-table-value-cell,
+  td.workout-table-volume-cell {
+    font-weight: var(--workout-font-weight-semibold);
+  }
+
+  td.workout-table-date-cell,
+  td.workout-table-na-cell,
+  td.workout-table-notes-cell {
+    font-weight: normal;
+    color: var(--text-muted);
+  }
+
+  td.workout-table-notes-cell {
+    white-space: normal;
+  }
+
+  .workout-table-protocol-cell {
+    text-align: center;
+  }
+
+  .workout-table-actions-cell {
+    padding-block: 0;
+    text-align: right;
+  }
 }
 
-/* Obsidian gives tables a 16px block margin (.markdown-rendered table): inside
-   the outlined container it showed as empty bands above and below the rows */
+/* Obsidian gives tables a 16px block margin (.markdown-rendered table): on
+   the card it showed as empty bands above and below the rows */
 .markdown-rendered .workout-table-container table.workout-log-table {
   margin: 0;
 }
 
-.workout-same-day-log {
-  background: var(--background-modifier-border-focus);
+/* Days: every row of a day (its line included) has one shade, and the shade
+   changes from one day to the next, never from row to row, so the sets of a
+   day read as one group. TableRenderer sets the classes. */
+.workout-log-table tr.workout-table-day-even {
+  background: linear-gradient(
+      var(--background-modifier-hover),
+      var(--background-modifier-hover)
+    ),
+    var(--background-secondary);
 }
 
-.workout-new-day-log {
-  background: transparent;
+/* A day's line: its date and totals, under a control border that separates
+   it from the day before (the first day has none) */
+.workout-table-spacer {
+  border-top: var(--workout-border-thin) solid var(--workout-border-color);
+
+  thead + tbody > &:first-child {
+    border-top: none;
+  }
+
+  td {
+    padding: var(--workout-space-md) var(--workout-space-sm) var(--workout-space-xs);
+  }
 }
 
-/* Phones: each log row becomes a compact card (no horizontal scroll, actions
-   always reachable). Labels come from data-label set by TableRenderer. */
+.workout-table-spacer-date-cell {
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-normal);
+}
+
+.workout-table-spacer-summary-cell {
+  color: var(--text-muted);
+
+  .workout-spacer-stat {
+    display: inline-flex;
+    align-items: center;
+    margin-right: var(--workout-space-md);
+
+    strong {
+      color: var(--text-normal);
+      font-weight: var(--workout-font-weight-semibold);
+    }
+  }
+}
+
+.workout-table-actions {
+  display: flex;
+  gap: var(--workout-space-sm);
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Phones: a set is one grid row. The header is the row of column labels
+   (once, like workout-sets); the exercise goes above the numbers, protocol
+   badge and notes under them */
 @media (max-width: variables.$breakpoint-tablet) {
-  .workout-table-content-container .workout-table-container {
-    overflow-x: visible;
+  .workout-log .workout-log-table {
+    display: block;
 
-    .workout-log-table {
+    thead,
+    tbody {
       display: block;
-      font-size: var(--font-ui-medium, 1em);
+    }
 
-      thead {
-        display: none;
-      }
+    tr {
+      display: grid;
+      // A number track is never narrower than its figure (the figures don't
+      // wrap, and Obsidian would cut them with an ellipsis): only short
+      // nowrap numbers set it, the exercise and notes wrap anywhere
+      grid-template-columns:
+        3.5rem repeat(var(--workout-log-fields, 2), minmax(min-content, 1fr))
+        var(--workout-touch-target-min);
+      column-gap: var(--workout-space-sm);
+      align-items: center;
+      padding: var(--workout-space-xs);
+    }
 
-      tbody {
-        display: block;
-      }
+    th,
+    td {
+      min-width: 0;
+      padding: 0;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
 
-      tr {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: var(--workout-space-sm) var(--workout-space-xs);
-        padding: var(--workout-space-sm);
-      }
+    // A label wraps between words, never inside one ("Volum-e"): a word
+    // wider than its column ends with an ellipsis
+    th {
+      align-self: end;
+      border: none;
+      overflow: hidden;
+      overflow-wrap: normal;
+      text-overflow: ellipsis;
+    }
+
+    th.workout-table-exercise-cell,
+    th.workout-table-protocol-cell,
+    th.workout-table-notes-cell {
+      display: none;
+    }
+
+    // Its column holds the edit buttons, which say what they do
+    th.workout-table-actions-cell {
+      visibility: hidden;
+    }
+
+    thead tr {
+      border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
+    }
+
+    tr.workout-same-day-log {
+      min-height: 3.5rem;
 
       td {
-        display: block;
-        padding: 0;
-        border: none;
-        white-space: normal;
+        grid-row: 2;
 
         &:empty {
           display: none;
         }
-
-        /* Value cells share the row; long labels wrap at spaces instead of
-           pushing the action buttons onto a second line */
-        &[data-label] {
-          flex: 1 1 0;
-          min-width: 0;
-        }
-
-        &[data-label]::before {
-          content: attr(data-label);
-          display: block;
-          font-size: var(--workout-font-xs);
-          font-weight: normal;
-          color: var(--text-muted);
-        }
       }
 
-      .workout-table-date-cell {
-        font-size: var(--workout-font-sm);
-        font-weight: normal;
-        color: var(--text-muted);
+      // A figure never breaks ("742.|5"): only words wrap
+      td.workout-table-value-cell,
+      td.workout-table-volume-cell {
+        font-size: var(--workout-font-lg);
+        white-space: nowrap;
+        overflow-wrap: normal;
+        overflow: visible;
+        text-overflow: clip;
       }
 
-      .workout-table-date-cell,
-      .workout-table-actions-cell {
-        flex: none;
-      }
-
-      /* The exercise is the card's title, on its own line: shared with the
-         numbers it got a narrow column, one word per line, cut off */
       td.workout-table-exercise-cell {
-        order: -1;
-        flex: 1 1 100%;
+        grid-row: 1;
+        grid-column: 1 / -1;
+        padding-top: var(--workout-space-xs);
         font-weight: var(--workout-font-weight-semibold);
-
-        &::before {
-          display: none;
-        }
-      }
-
-      /* A value the set does not have (duration of a strength set) */
-      td.workout-table-na-cell {
-        display: none;
-      }
-
-      /* Protocol badge and notes go on a second line under the numbers:
-         squeezed into the first line they broke words letter by letter.
-         The ::after item is a full-width line break, added only to rows
-         that have something to show there (TableRenderer marks them). */
-      tr.workout-table-row-with-details::after {
-        content: "";
-        order: 1;
-        flex-basis: 100%;
-        height: 0;
       }
 
       td.workout-table-protocol-cell {
-        order: 2;
-        flex: none;
+        grid-row: 3;
+        grid-column: 1;
+        text-align: left;
+        padding-bottom: var(--workout-space-xs);
       }
 
       td.workout-table-notes-cell {
-        order: 3;
-        flex: 1 1 auto;
+        grid-row: 3;
+        grid-column: 2 / -1;
+        padding-bottom: var(--workout-space-xs);
       }
 
-      .workout-table-actions {
-        gap: var(--workout-space-xs);
+      td.workout-table-actions-cell {
+        justify-self: end;
       }
+    }
 
-      .workout-table-spacer {
-        flex-wrap: wrap;
-        gap: var(--workout-space-md);
+    tr.workout-table-spacer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: var(--workout-space-xs) var(--workout-space-md);
+      padding: var(--workout-space-md) var(--workout-space-xs) var(--workout-space-xs);
 
-        .workout-table-spacer-date-cell {
-          background: none;
-          font-size: var(--workout-font-base);
-          font-weight: var(--workout-font-weight-semibold);
-          color: var(--workout-text-accent);
-        }
-
-        .workout-table-spacer-summary-cell {
-          background: none;
-          font-size: var(--workout-font-sm);
-        }
+      td {
+        padding: 0;
       }
     }
   }
@@ -206,8 +290,8 @@
   margin-block: var(--workout-space-sm) var(--workout-space-md);
 }
 
-/* Phones: tapping a set's card edits it (TableActions). The pencil button
-   stays as the visible cue that the card opens; the card lights up on press */
+/* Phones: tapping a set's row edits it (TableActions). The pencil button
+   stays as the visible cue that the row opens; the row lights up on press */
 tr.workout-table-row-tappable {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;

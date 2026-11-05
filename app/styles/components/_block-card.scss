@@ -1,0 +1,64 @@
+/* ============================================================================
+   BLOCK CARD (BlockCard): a block's surface and its top row
+   ============================================================================
+   workout-log, workout-sets and workout-session are cards on the note; a
+   block's own stylesheet only places what is inside.
+   ============================================================================ */
+
+.workout-block-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
+  border-radius: var(--workout-radius-xl);
+  padding: var(--workout-space-md);
+}
+
+// Title | meta | ⋮ on one row: the menu stays in the top right corner
+.workout-block-header {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+
+  &:empty {
+    display: none;
+  }
+
+  > :not(.workout-block-title) {
+    flex: none;
+  }
+
+  // The menu stays at the right end also when there is no title
+  > :last-child:not(.workout-block-title) {
+    margin-left: auto;
+  }
+}
+
+.workout-block-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: var(--workout-font-lg);
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--workout-text-accent);
+
+  &.is-message {
+    font-size: inherit;
+    font-weight: normal;
+    color: var(--text-muted);
+  }
+}
+
+.workout-block-meta {
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.workout-block-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--workout-space-sm);
+}

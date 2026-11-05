@@ -303,6 +303,17 @@ describe("WorkoutLogFile", () => {
       jest.restoreAllMocks();
     });
 
+    it("puts a deleted set back with its own timestamp, without a record notice", async () => {
+      const { logFile, storage } = setup(
+        csv(HEADER, "2026-02-01,Squat,5,80,400,,Leg Day,1000,,standard"),
+      );
+
+      await logFile.add({ ...squat, weight: 120, notes: "PR" }, { timestamp: 2000 });
+
+      expect(lines(storage)[2]).toBe("2026-02-01,Squat,5,120,600,,Leg Day,2000,PR,standard,kg");
+      expect(Notice).not.toHaveBeenCalled();
+    });
+
     it("keeps the unit the set was entered in", async () => {
       const { logFile } = setup(csv(HEADER), "kg");
 

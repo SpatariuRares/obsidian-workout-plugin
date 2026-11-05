@@ -1,12 +1,11 @@
 @use "../variables";
 
-/* Mobile table */
+/* Mobile table: the chart's days on phones, inset into the card like the chart */
 .workout-chart-mobile-table {
   display: none;
-  margin-top: var(--workout-space-lg);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
   border-radius: var(--workout-radius-lg);
   background: var(--background-primary);
-  box-shadow: var(--workout-shadow-md);
   overflow: hidden;
 
   table {
@@ -15,44 +14,37 @@
     font-size: var(--workout-font-base);
   }
 
-  th {
-    background: var(--background-secondary);
-    padding: var(--workout-space-md) var(--workout-space-sm);
+  th,
+  td {
+    padding: var(--workout-space-sm) var(--workout-space-md);
     text-align: left;
-    border-bottom: var(--workout-border-medium) solid
-      var(--workout-border-subtle);
-    font-weight: var(--workout-font-weight-semibold);
-    color: var(--text-normal);
-    font-size: var(--workout-font-sm);
+    border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
+  }
+
+  // Numbers line up on the right, the date on the left
+  th:last-child,
+  td:last-child {
+    text-align: right;
+  }
+
+  th {
+    font-size: var(--workout-font-xs);
+    font-weight: normal;
+    color: var(--text-muted);
   }
 
   td {
-    padding: var(--workout-space-sm) var(--workout-space-sm);
-    border-bottom: var(--workout-border-thin) solid
-      var(--workout-border-subtle);
+    font-variant-numeric: tabular-nums;
     color: var(--text-normal);
-    font-size: var(--workout-font-sm);
   }
 
-  tr {
-    &:nth-child(even) {
-      background: var(--background-secondary);
-    }
-    &:hover {
-      background: var(--background-modifier-hover);
-    }
+  td:last-child {
+    font-weight: var(--workout-font-weight-semibold);
   }
-}
 
-.workout-mobile-table-title {
-  margin: 0;
-  padding: var(--workout-space-lg);
-  font-size: var(--workout-font-lg);
-  font-weight: var(--workout-font-weight-semibold);
-  color: var(--text-normal);
-  border-bottom: var(--workout-border-thin) solid
-    var(--workout-border-subtle);
-  background: var(--background-secondary);
+  tr:last-child td {
+    border-bottom: none;
+  }
 }
 
 .workout-date-group-header {

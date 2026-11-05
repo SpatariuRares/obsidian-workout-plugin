@@ -1,107 +1,54 @@
+import { countsForRecord } from "@app/services/history/TrainingHistory";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
-const PROGRESS_COMPLETE_THRESHOLD = 100;
-const PROGRESS_HIGH_THRESHOLD = 90;
-const PROGRESS_MEDIUM_THRESHOLD = 50;
+/** Weights are kept to 2 decimals after a kg/lb conversion */
+const WEIGHT_TOLERANCE = 0.01;
 
 /**
  * TargetCalculator - Business logic for target weight/reps calculations
  *
- * Provides pure calculation methods for:
- * - Finding best reps at a target weight
- * - Checking if target has been achieved
- * - Calculating progress percentages
+ * One rule for the progress and for "reached": the sets that count toward a
+ * target are working sets (warm-ups and drop sets don't, like PRs) at the
+ * target weight or heavier, since 90kg × 8 also beats 85kg × 8.
  */
 export class TargetCalculator {
   /**
-   * Find the best (maximum) reps achieved at a specific weight
-   * @param targetWeight - The weight to filter by
+   * The most reps done in one working set at the target weight or heavier
+   * @param targetWeight - The weight to reach
    * @param data - Workout log entries
-   * @returns Best reps at target weight, or 0 if no entries found
+   * @returns Best reps, or 0 if no set counts yet
    */
   static calculateBestRepsAtWeight(
     targetWeight: number,
     data: WorkoutLogData[],
   ): number {
-    try {
-      const entriesAtTargetWeight = data.filter(
-        (entry) => entry.weight === targetWeight,
-      );
-
-      if (entriesAtTargetWeight.length === 0) {
-        return 0;
+    let best = 0;
+    for (const entry of data) {
+      if (
+        countsForRecord(entry) &&
+        entry.weight >= targetWeight - WEIGHT_TOLERANCE &&
+        entry.reps > best
+      ) {
+        best = entry.reps;
       }
-
-      return Math.max(
-        ...entriesAtTargetWeight.map((entry) => entry.reps),
-      );
-    } catch {
-      return 0;
     }
+    return best;
   }
 
   /**
-   * Check if the target has been achieved (latest entry at target weight meets target reps)
+   * Whether a working set at the target weight or heavier reached the target reps
    * @param targetWeight - The target weight
    * @param targetReps - The target reps to achieve
    * @param data - Workout log entries
-   * @returns True if target achieved, false otherwise
    */
   static checkTargetAchieved(
     targetWeight: number,
     targetReps: number,
     data: WorkoutLogData[],
   ): boolean {
-    try {
-      const entriesAtTargetWeight = data.filter(
-        (entry) => entry.weight === targetWeight,
-      );
-
-      if (entriesAtTargetWeight.length === 0) {
-        return false;
-      }
-
-      // Sort by timestamp/date to get most recent
-      const sortedEntries = entriesAtTargetWeight.sort((a, b) => {
-        const dateA = a.timestamp || new Date(a.date).getTime();
-        const dateB = b.timestamp || new Date(b.date).getTime();
-        return dateB - dateA;
-      });
-
-      const latestEntry = sortedEntries[0];
-      return latestEntry.reps >= targetReps;
-    } catch {
-      return false;
-    }
-  }
-
-  /**
-   * Calculate progress percentage towards target reps
-   * @param bestReps - Best reps achieved
-   * @param targetReps - Target reps
-   * @returns Progress percentage (0-100, capped at 100)
-   */
-  static calculateProgressPercent(
-    bestReps: number,
-    targetReps: number,
-  ): number {
-    if (targetReps <= 0) {
-      return 0;
-    }
-    return Math.min((bestReps / targetReps) * 100, 100);
-  }
-
-  /**
-   * Get progress level classification based on percentage
-   * @param progressPercent - Progress percentage (0-100)
-   * @returns Progress level: 'complete' | 'high' | 'medium' | 'low'
-   */
-  static getProgressLevel(
-    progressPercent: number,
-  ): "complete" | "high" | "medium" | "low" {
-    if (progressPercent >= PROGRESS_COMPLETE_THRESHOLD) return "complete";
-    if (progressPercent >= PROGRESS_HIGH_THRESHOLD) return "high";
-    if (progressPercent >= PROGRESS_MEDIUM_THRESHOLD) return "medium";
-    return "low";
+    return (
+      targetReps > 0 &&
+      this.calculateBestRepsAtWeight(targetWeight, data) >= targetReps
+    );
   }
 }

@@ -15,6 +15,15 @@ describe("example workout note as a guided session", () => {
     expect(types).toContain("workout-session");
   });
 
+  it("writes each exercise as one workout-sets block with its own rest, without timers", () => {
+    const types = readWorkoutNote(content).blocks.map((block) => block.type);
+
+    expect(types).not.toContain("workout-timer");
+    expect(readSessionPlan(content).map((step) => step.restBlock?.type)).toEqual(
+      Array(5).fill("workout-sets"),
+    );
+  });
+
   it("plans each exercise with the sets and rest its section describes", () => {
     const steps = readSessionPlan(content);
 

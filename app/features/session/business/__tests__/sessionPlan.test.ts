@@ -85,9 +85,50 @@ describe("readSessionPlan", () => {
       "## Bench\n\n```workout-sets\nexercise: Bench\nsets: 3\ntargetReps: 10\n```",
     );
 
-    expect(steps).toEqual([
+    expect(steps).toMatchObject([
       { exercise: "Bench", sets: 3, targetReps: 10, targetWeight: undefined, rest: {} },
     ]);
+  });
+
+  it("rests on a workout-sets block's own timer, before the section's", () => {
+    const [bench, row] = readSessionPlan(
+      [
+        "## Bench",
+        "```workout-sets",
+        "exercise: Bench",
+        "rest: 20",
+        "timer.type: interval",
+        "timer.rest: 10",
+        "timer.rounds: 8",
+        "```",
+        "## Row",
+        "```workout-timer",
+        "duration: 90",
+        "```",
+        "```workout-sets",
+        "exercise: Row",
+        "```",
+      ].join("\n"),
+    );
+
+    expect(bench.rest).toEqual({ type: "interval", duration: 20, rest: 10, rounds: 8 });
+    expect(row.rest).toEqual({ duration: 90 });
+  });
+
+  it("edits the rest in the step's workout-sets block, else in the section's timer", () => {
+    const [squat, legPress] = readSessionPlan(note);
+    expect(squat.restBlock).toMatchObject({
+      type: "workout-timer",
+      params: { duration: 120 },
+      match: { body: "duration: 120", lines: { start: 14, end: 16 } },
+    });
+    expect(legPress.restBlock).toBeUndefined();
+
+    const [bench] = readSessionPlan(
+      "## Bench\n```workout-log\nexercise: Bench\n```\n```workout-timer\nduration: 60\n```\n```workout-sets\nexercise: Bench\n```",
+    );
+    expect(bench.restBlock).toMatchObject({ type: "workout-sets", params: { exercise: "Bench" } });
+    expect(bench.rest).toEqual({ duration: 60 });
   });
 
   it("joins a section's table and sets of one exercise into one step", () => {

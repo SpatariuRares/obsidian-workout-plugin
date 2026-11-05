@@ -8,7 +8,6 @@
       "variationFromTo": " dari {startValue} hingga {endValue}",
       "weightIncrementUnit": "Penambahan berat {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "Perubahan keseluruhan: ",
     "significantIncrease": "Naik dari nol",
     "trendLine": "Garis tren",
     "typeNotAvailable": "Jenis grafik \"{chartDataType}\" tidak tersedia untuk latihan {exerciseType}. Jenis yang tersedia: {typeList}",
@@ -25,7 +24,16 @@
     "defaultTitle": "Tren {type}",
     "noTypesAvailable": "Tidak ada jenis grafik yang tersedia",
     "noEligibleE1rm": "Tidak ada set yang memenuhi syarat untuk estimasi 1RM. Catat beban positif dengan 1–12 repetisi. Pemanasan dan set penurunan beban tidak termasuk.",
-    "editChart": "Sunting grafik"
+    "editChart": "Sunting grafik",
+    "stats": {
+      "average": "Rata-rata",
+      "last3": "3 terakhir",
+      "max": "Maks",
+      "min": "Min",
+      "recentTrend": "Tren terbaru",
+      "sessions": "Sesi",
+      "vsPrevious": "dibanding sebelumnya"
+    }
   },
   "commands": {
     "addExerciseBlock": "Tambah blok latihan",
@@ -53,11 +61,12 @@
     "minPerKm": "menit/km",
     "notAvailable": "Tidak tersedia",
     "sec": "detik",
+    "undo": "Urungkan",
     "unknown": "Tidak diketahui",
     "workout": "Latihan"
   },
   "convert": {
-    "currentType": "Jenis saat ini:",
+    "currentType": "Jenis saat ini",
     "errors": {
       "convertError": "Kesalahan saat mengonversi data latihan: {error}"
     },
@@ -78,7 +87,7 @@
     "success": "Konversi berhasil untuk {count} entri log",
     "title": "Konversi data latihan",
     "typeSelect": {
-      "convertTo": "Konversi ke:",
+      "convertTo": "Konversi ke",
       "updateFileType": "Perbarui jenis file latihan"
     }
   },
@@ -108,7 +117,7 @@
       "sharedName": "Nama latihan sama dengan {pages}: log hanya masuk ke salah satunya."
     },
     "muscleTags": {
-      "description": "Deskripsi",
+      "description": "Tag yang bisa dipakai di frontmatter halaman latihan. Klik satu untuk menyalinnya.",
       "title": "Tag otot",
       "tooltip": "Klik untuk menyalin: {tag}",
       "totalCount": "Total: {count} tag tersedia"
@@ -129,10 +138,10 @@
       "columnProgression": "Kemajuan",
       "columnProtocol": "Protokol",
       "columnVolumeChange": "Perubahan volume",
-      "disclaimer": "Penafian",
+      "disclaimer": "Korelasi, bukan bukti: berat, istirahat, dan tidur juga memengaruhi angka-angka ini.",
       "noData": "Data belum cukup: setiap protokol perlu minimal 5 set yang dicatat.",
       "title": "Efektivitas protokol",
-      "subtitle": "Bagaimana setiap protokol telah bekerja pada semua set yang tercatat"
+      "subtitle": "Bagaimana setiap protokol bekerja pada semua set yang tercatat"
     },
     "quickActions": {
       "addWorkoutLog": "Tambah catatan latihan",
@@ -174,6 +183,11 @@
         "sets": "Rata-rata set: {value}",
         "reps": "Rata-rata repetisi: {value}"
       },
+      "controls": {
+        "period": "Periode",
+        "side": "Sisi",
+        "metric": "Ukuran"
+      },
       "imbalance": {
         "backDominant": "Ketidakseimbangan depan-belakang: bagian belakang Anda bekerja jauh lebih banyak daripada bagian depan Anda.",
         "frontDominant": "Ketidakseimbangan depan-belakang: bagian depan Anda bekerja jauh lebih banyak daripada bagian belakang."
@@ -186,9 +200,8 @@
       "moveUp": "Pindahkan {widget} ke atas",
       "moveDown": "Pindahkan {widget} ke bawah",
       "allHistory": "Kosong: semua riwayat",
-      "recentWorkoutsLimit": "Jumlah latihan di daftar terbaru:",
-      "volumeTrendDays": "Jumlah hari dalam tren volume:",
-      "gridColumns": "Kolom:",
+      "recentWorkoutsLimit": "Latihan dalam daftar terbaru",
+      "volumeTrendDays": "Hari dalam tren volume",
       "layout": "Tata letak",
       "layoutGrid": "Kisi",
       "layoutList": "Daftar",
@@ -200,6 +213,7 @@
       "size": "{width} × {height}",
       "gridHint": "Seret widget untuk memindahkannya dan sudutnya untuk mengubah ukuran; area di bawah menunjukkan ukuran terkecil tiap widget. Lepas widget dengan tanda × atau seret ke area itu. Dengan keyboard: panah memindahkan, Shift dan panah mengubah ukuran, Delete menghapusnya.",
       "gridColumnsMeasured": "{columns} kolom muat di lebar catatan.",
+      "gridColumns": "Kolom",
       "remove": "Hapus {widget} dari dasbor"
     },
     "grid": {
@@ -230,37 +244,51 @@
       "edit": "Sunting widget",
       "removeConfirm": "Hapus \"{widget}\" dari dasbor?",
       "removeConfirmButton": "Hapus",
-      "calendarWeeks": "Minggu yang ditampilkan:",
+      "calendarWeeks": "Jumlah minggu, dihitung mundur dari minggu ini",
       "quickStatsPeriods": "Periode yang ditampilkan",
-      "quickStatsMetrics": "Baris yang ditampilkan",
+      "quickStatsMetrics": "Angka yang ditampilkan",
       "heatMapTimeFrame": "Periode awal",
-      "heatMapMetric": "Metrik awal",
-      "heatMapView": "Tampilan awal",
-      "volumeTopLimit": "Latihan dalam daftar teratas:",
-      "protocolDays": "Hari yang dihitung:",
-      "protocolMinEntries": "Set minimum agar protokol dapat dibandingkan:",
-      "durationRecentCount": "Latihan yang dibandingkan:",
-      "durationRestSeconds": "Istirahat antar set dalam estimasi (detik):",
+      "heatMapMetric": "Ukuran awal",
+      "heatMapView": "Sisi awal",
+      "volumeTopLimit": "Latihan yang ditampilkan",
+      "protocolDays": "Hari yang dihitung",
+      "protocolMinEntries": "Set minimum per protokol",
+      "durationRecentCount": "Latihan yang dibandingkan",
+      "durationRestSeconds": "Istirahat antar set dalam perkiraan",
       "summaryMetrics": "Kartu yang ditampilkan",
       "calendarShowStats": "Tampilkan streak dan progres minggu ini",
       "heatMapShowImbalance": "Tampilkan panel ketidakseimbangan",
-      "volumeShowBreakdown": "Tampilkan daftar latihan teratas",
-      "protocolChartType": "Grafik",
+      "volumeShowBreakdown": "Tampilkan latihan teratas menurut volume",
+      "protocolChartType": "Gaya grafik",
       "chartPie": "Pie",
       "chartDoughnut": "Donat",
-      "protocolSortBy": "Diurutkan berdasarkan (terbaik dahulu)",
-      "durationShowTrend": "Tampilkan tren varians",
+      "protocolSortBy": "Urutkan berdasarkan",
+      "durationShowTrend": "Tampilkan tren akurasi perkiraan",
       "quickActionsShown": "Tombol yang ditampilkan",
-      "fileErrorsMaxItems": "Halaman yang dicantumkan (kosong: semua):",
-      "fileErrorsMaxTags": "Tag otot terbanyak per halaman:",
+      "fileErrorsMaxItems": "Halaman yang ditampilkan",
+      "fileErrorsMaxTags": "Tag otot terbanyak yang boleh dimiliki sebuah halaman",
       "fileErrorsCheckSharedNames": "Tandai halaman yang berbagi nama latihan",
-      "muscleTagsGroupByMuscle": "Kelompokkan tag menurut otot"
+      "muscleTagsGroupByMuscle": "Kelompokkan tag menurut otot",
+      "volumeTrendDays": "Jumlah hari di grafik volume",
+      "recentWorkoutsLimit": "Latihan yang ditampilkan",
+      "all": "Semua",
+      "numberRange": "Masukkan bilangan bulat dari {min} sampai {max}.",
+      "pickOne": "Pilih minimal satu, atau hapus widget-nya.",
+      "units": {
+        "days": "hari",
+        "weeks": "minggu",
+        "seconds": "dtk"
+      },
+      "editTitle": "Sunting {widget}",
+      "sortMostSets": "Set terbanyak",
+      "lastWidget": "Ini satu-satunya widget di dasbor, jadi tidak bisa dihapus: hapus blok-nya saja."
     }
   },
   "duration": {
     "estimatedDuration": "Durasi yang diperkirakan",
     "lastSession": "Sesi terakhir",
     "restTime": "Waktu istirahat",
+    "setCount": "{count} set",
     "setTime": "Waktu per set",
     "unableToAnalyze": "Tidak dapat menganalisis file latihan"
   },
@@ -331,7 +359,7 @@
       "byExerciseTitle": "Berdasarkan Latihan",
       "byWorkoutTitle": "Berdasarkan Sesi Latihan",
       "cardioExerciseTitle": "Latihan Kardio (Jarak + Kecepatan)",
-      "chartsIntro": "Grafik memvisualisasikan kemajuanmu seiring waktu. Jenis yang tersedia: `volume`, `weight`, `e1rm`, `reps`, `duration`, `distance`, `heartRate`, `pace`.",
+      "chartsIntro": "Grafik menampilkan kemajuan Anda seiring waktu. Jenis yang tersedia: `volume`, `weight`, `e1rm`, `reps`, `duration`, `distance`, `heartRate`, `pace`.",
       "chartsTitle": "1. Grafik",
       "codeBlockWorkoutChart": "Visualisasikan kemajuan dari waktu ke waktu",
       "codeBlockWorkoutDashboard": "Ikhtisar statistik lengkap",
@@ -352,9 +380,9 @@
       "tablesTitle": "2. Tabel",
       "timedExerciseTitle": "Latihan dengan Batas Waktu (Durasi)",
       "timersTitle": "3. Timer",
-      "tip": "**Tips**: Untuk dasbor pribadi Anda, lihat [[{dashboard}]]",
+      "tip": "**Tip**: Untuk dasbor pribadi Anda, lihat [[{dashboard}]]",
       "title": "Contoh-contoh Fitur",
-      "trainingProtocolsIntro": "Setiap set dapat memiliki protokol, yang ditampilkan sebagai lencana di tabel. Ubah atau tambahkan protokolmu sendiri di Pengaturan → Protokol.",
+      "trainingProtocolsIntro": "Setiap set dapat memiliki protokol, yang ditampilkan sebagai lencana di tabel. Ubah atau tambahkan protokol Anda sendiri di Pengaturan → Protokol.",
       "trainingProtocolsTitle": "5. Protokol Pelatihan",
       "workoutChartTitle": "Grafik Latihan (Semua Latihan Digabungkan)",
       "e1rmChartTitle": "Perkiraan 1RM",
@@ -374,11 +402,11 @@
       "dashboardWidgetsTitle": "Widget yang dipilih",
       "dashboardGridTitle": "Tata letak grid",
       "dashboardGridIntro": "Dengan `layout: grid`, setiap widget menempati sel barisnya: kolom, baris, lebar, dan tinggi. Di catatan yang lebih sempit, widget disusun ulang sesuai urutan baca.",
-      "trainingCalendarIntro": "Kalender latihan menampilkan setahun hari latihan dan berapa minggu berturut-turut kamu mencapai target mingguan (Pengaturan → Target mingguan).",
+      "trainingCalendarIntro": "Kalender latihan menampilkan setahun hari latihan dan berapa minggu berturut-turut Anda mencapai target mingguan (Pengaturan → Target mingguan).",
       "importTitle": "8. Impor dari Strong atau Hevy",
       "importIntro": "Jalankan **{command}** dari palet perintah lalu pilih CSV yang diekspor aplikasi. Set yang sudah ada di log dilewati, dan log dicadangkan terlebih dahulu.",
       "setsTitle": "Mencatat set di ponsel Anda",
-      "setsIntro": "Sebuah blok `workout-sets` menampilkan set yang tersedia hari ini dalam bentuk baris. Angka abu-abu tersebut adalah set yang sama dari sebelumnya: pilih baris untuk mencatatnya seperti apa, atau ketik apa yang Anda lakukan. Ketuk panah untuk protokol dan catatan set, dan untuk mengedit set yang sudah dicatat.",
+      "setsIntro": "Sebuah blok `workout-sets` menampilkan set hari ini dalam bentuk baris. Angka abu-abu adalah set yang sama pada latihan sebelumnya: centang baris untuk mencatatnya apa adanya, atau ketik apa yang Anda lakukan. Ketuk panah untuk protokol dan catatan set, dan untuk mengedit set yang sudah dicatat.",
       "codeBlockWorkoutSets": "Catat setiap set yang dilakukan hari ini, satu per satu."
     },
     "fileNames": {
@@ -419,12 +447,30 @@
       "step3": "Coba latihan dari folder **{workouts}**",
       "step4": "Buat latihan Anda sendiri di **{exercises}**",
       "tableHeaderDescription": "Deskripsi",
-      "tableHeaderFileFolder": "Berkas/Folder",
+      "tableHeaderFileFolder": "File/Folder",
       "title": "Memulai dengan Plugin The Gym",
       "welcome": "Selamat datang! Folder ini berisi file contoh untuk membantu Anda mempelajari semua fitur.",
       "workoutsDesc": "Contoh templat latihan",
       "workoutsFolder": "**{folder}/**",
       "sessionIntro": "Catatan ini punya rencana kecil: satu latihan dengan set, target, dan timer istirahatnya. Sesi menampilkan set yang harus dikerjakan; catat, dan timer istirahat akan mulai.",
+      "tables": {
+        "latestTitle": "Set terbaru sebuah latihan",
+        "latestIntro": "`exercise` memilih latihannya dan `limit` menentukan berapa set yang ditampilkan tabel.",
+        "targetTitle": "Target dan jumlah set rencana",
+        "targetIntro": "Dengan `targetWeight` dan `targetReps`, tabel menampilkan seberapa dekat Anda dengan target; saat target tercapai, sebuah lencana menawarkan untuk menulis berat berikutnya ke dalam blok. `sets` adalah jumlah set yang Anda rencanakan: tanpa `limit`, tabel menampilkan dua latihan terakhir, dan sesi terpandu menghitungnya. `workout` dengan `exactMatch: true` hanya menyimpan set latihan itu di sesi tersebut.",
+        "workoutTitle": "Seluruh sesi latihan",
+        "workoutIntro": "Dengan `workout` dan tanpa `exercise`, tabel menampilkan setiap set dari sesi itu. `dateRange: 14` menyimpan 14 hari terakhir.",
+        "columnsTitle": "Kolom dan pengurutan",
+        "columnsIntro": "`columns` memilih kolom dan urutannya; `sortBy` dan `sortOrder` mengatur urutan baris, di sini set terberat lebih dulu. `showAddButton: false` menyembunyikan tombol +, dan `showProtocol: false` akan menyembunyikan lencana protokol."
+      },
+      "sets": {
+        "lastTimeTitle": "Set yang sama seperti terakhir",
+        "lastTimeIntro": "Dengan `workout`, angka abu-abu berasal dari terakhir kali Anda melakukan latihan ini di sesi itu. Tanpanya, blok memakai nama catatan.",
+        "restTitle": "Timer istirahat dan target",
+        "restIntro": "`rest` adalah istirahat setelah setiap set, dalam detik (`0` = tanpa timer); tanpanya, blok memakai `workout-timer` bagian ini. `targetWeight` dan `targetReps` menampilkan target, dan menjadi petunjuk saat pertama kali melakukan latihan.",
+        "restTimerTitle": "Opsi timer istirahat",
+        "restTimerIntro": "Blok ini memuat semua opsi timer istirahatnya, jadi catatan hari latihan tidak perlu `workout-timer`: `timer.type` (`interval` memakai `rest` sebagai kerja tiap ronde, dengan `timer.rest` dan `timer.rounds`), `timer.preset`, `timer.sound`, dan `timer.showControls`. ⋮ → Sunting timer istirahat menuliskannya untuk Anda."
+      },
       "pagesIntro": "Jelajahi satu fitur per halaman. Ikuti tautan dalam urutan, atau pilih fitur di bawah ini. Gunakan tombol \"Kembali\" dan \"Berikutnya\" untuk berpindah antar catatan; gulir secara normal untuk menjelajahi setiap contoh.",
       "liveIntro": "Jelajahi setiap fitur di bawah ini dengan latihan contoh selama enam minggu. Ini adalah data demo; coba kontrolnya dan lihat bagaimana catatan Anda berfungsi.",
       "tryLog": "Gunakan tombol \"+\" untuk menambahkan satu set. Tabel, grafik, dan dasbor membaca file CSV yang sama.",
@@ -473,7 +519,7 @@
     "usesSeparateLog": "Anda sudah memiliki log latihan, jadi file tersebut tidak dimodifikasi. Contoh-contoh menggunakan file log mereka sendiri.",
     "yoga": {
       "intro": "Flow pagi singkat berisi tahan posisi berwaktu. Mulai sesi terpandu, tahan setiap pose, lalu catat berapa lama Anda menahannya: timer istirahat mulai sendiri.",
-      "holds": "{holds} tahanan × {seconds} dtk",
+      "holds": "{holds} tahan × {seconds} dtk",
       "progressTitle": "Kemajuan"
     }
   },
@@ -623,43 +669,38 @@
     },
     "confirmAction": "Konfirmasi tindakan",
     "csvExercise": "Latihan di CSV",
-    "customParameters": "Parameter khusus:",
-    "customTitle": "Judul khusus:",
-    "dataLimit": "Batas data (0 = semua):",
-    "dataType": "Tipe data:",
-    "dateRange": "Rentang tanggal (hari):",
-    "daysRange": "Rentang hari (0 = semua):",
+    "customParameters": "Parameter kustom",
+    "customTitle": "Judul kustom",
+    "dataLimit": "Batas data (0 = semua)",
+    "dataType": "Jenis data",
     "delete": "Hapus",
-    "duration": "Durasi (detik):",
     "editTag": "Sunting tag",
-    "exerciseType": "Jenis latihan:",
     "exportTags": "Ekspor tag",
-    "fileName": "Nama berkas",
-    "folderPath": "Jalur folder (opsional):",
+    "fileName": "Nama file",
+    "folderPath": "Jalur folder (opsional)",
     "importMerge": "Gabungkan",
     "importReplace": "Ganti semua",
     "importTags": "Impor tag",
     "labels": {
       "actions": "Tindakan",
       "currentFileInfo": "File saat ini: {fileName}",
-      "exercise": "Latihan:",
-      "reps": "Repetisi:",
-      "targetReps": "Target repetisi:",
-      "plannedSets": "Set yang direncanakan:",
-      "targetWeight": "Target: ({unit}):",
-      "volume": "Volume ({unit}):",
-      "weight": "Berat ({unit}):"
+      "exercise": "Latihan",
+      "reps": "Repetisi",
+      "targetReps": "Target repetisi",
+      "plannedSets": "Set yang direncanakan",
+      "targetWeight": "Target berat ({unit})",
+      "volume": "Volume ({unit})",
+      "weight": "Berat ({unit})"
     },
     "layoutGrouped": "Dikategorikan berdasarkan otot",
     "layoutHorizontal": "Aliran horizontal",
-    "layoutType": "Jenis tata letak:",
+    "layoutType": "Jenis tata letak",
     "layoutVertical": "Aliran vertikal",
     "muscleGroup": "Kelompok otot",
     "newTag": "Tag baru",
     "noTagsFound": "Tidak ada tag yang cocok dengan pencarian Anda",
     "noTagsSelected": "Tidak ada tag yang dipilih. Klik pada tag di bawah ini untuk menambahkannya.",
-    "note": "Catatan:",
-    "notes": "Catatan (opsional):",
+    "note": "Catatan",
     "notices": {
       "auditConfirmRenameFile": "Ganti nama file ini?\n\n{oldName} → {newName}",
       "auditMismatchCount": "Ditemukan {count} ketidaksesuaian:",
@@ -733,11 +774,11 @@
       "timerUpdateFailed": "Gagal memperbarui timer: timer tidak ditemukan di catatannya. Buka kembali catatan lalu coba lagi.",
       "setsInserted": "Set telah ditambahkan"
     },
-    "parameterKey": "Kunci:",
-    "parameterLabel": "Label:",
+    "parameterKey": "Kunci",
+    "parameterLabel": "Label",
     "parameterRequired": "Diperlukan",
-    "parameterType": "Jenis:",
-    "parameterUnit": "Satuan (opsional):",
+    "parameterType": "Jenis",
+    "parameterUnit": "Satuan (opsional)",
     "placeholders": {
       "customTitle": "Biarkan kosong untuk judul otomatis",
       "enterTagName": "Masukkan nama tag (misalnya, dada, petto)",
@@ -757,10 +798,8 @@
       "sets": "4",
       "workout": "Contohnya: Latihan A, Latihan B, atau gunakan kotak centang di bawah"
     },
-    "protocol": "Protokol:",
-    "recentExercises": "Terbaru:",
-    "restTime": "Waktu istirahat (detik):",
-    "rounds": "Putaran:",
+    "protocol": "Protokol",
+    "recentExercises": "Terbaru",
     "save": "Simpan",
     "sections": {
       "advancedOptions": "Opsi lanjutan",
@@ -797,15 +836,15 @@
       "yesNo": "Ya/Tidak",
       "warmup": "Pemanasan"
     },
-    "sets": "Set:",
-    "similarTags": "Tag serupa:",
+    "sets": "Set",
+    "similarTags": "Tag serupa",
     "similarity": "Kemiripan",
     "status": "Status",
     "tag": "Tag",
-    "tagsSelector": "Tag otot:",
-    "timerDuration": "Durasi timer (detik):",
-    "timerPreset": "Preset timer:",
-    "timerType": "Jenis timer:",
+    "tagsSelector": "Tag otot",
+    "timerDuration": "Durasi timer (detik)",
+    "timerPreset": "Preset timer",
+    "timerType": "Jenis timer",
     "titles": {
       "addExerciseBlock": "Tambahkan blok latihan",
       "auditExerciseNames": "Audit nama latihan",
@@ -825,32 +864,39 @@
       "muscleTagManager": "Kelola tag otot",
       "editDashboard": "Sunting dasbor",
       "editChart": "Sunting grafik latihan",
-      "insertSets": "Masukkan rangkaian latihan"
+      "insertSets": "Sisipkan set latihan"
     },
-    "workout": "Latihan (opsional):",
-    "workoutFile": "File latihan:",
-    "workoutNameOptional": "Nama latihan (opsional):",
     "importMergeAriaLabel": "Gabung: tambah hanya tag baru, pertahankan yang ada",
     "importReplaceAriaLabel": "Ganti: timpa semua tag yang ada",
     "editItem": "Sunting {item}",
     "deleteItem": "Hapus {item}",
+    "duration": "Durasi (detik)",
     "errors": {
       "missingElements": "Elemen tidak ditemukan",
       "validationCombinedMode": "Untuk jenis latihan + sesi latihan, isi kedua kolom"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Set: {sets}\n- Repetisi: {reps}\n- Istirahat: {restTime} dtk\n\n",
+    "exerciseType": "Jenis latihan",
     "noteTemplate": "**Catatan: {note}**\n",
+    "notes": "Catatan (opsional)",
     "date": "Tanggal",
+    "dateRange": "Rentang tanggal (hari)",
+    "daysRange": "Rentang hari (0 = semua)",
     "weightUnitToggle": "Satuan untuk entri ini",
     "work": "Kerja",
-    "rest": "Istirahat"
+    "workout": "Latihan (opsional)",
+    "workoutFile": "File latihan",
+    "workoutNameOptional": "Nama latihan (opsional)",
+    "rest": "Istirahat",
+    "restTime": "Waktu istirahat (detik)",
+    "rounds": "Putaran"
   },
   "settings": {
     "buttons": {
       "addPreset": "Tambahkan preset",
       "addProtocol": "Tambahkan protokol",
       "cancel": "Batal",
-      "createFiles": "Buat berkas",
+      "createFiles": "Buat file",
       "done": "Selesai!",
       "failed": "Gagal",
       "generateTemplates": "Buat templat",
@@ -930,7 +976,7 @@
     "messages": {
       "confirmDeletePreset": "Apakah Anda yakin ingin menghapus preset ini?",
       "confirmDeleteProtocol": "Apakah Anda yakin ingin menghapus protokol ini?",
-      "csvFilesCreated": "Berkas CSV berhasil dibuat!",
+      "csvFilesCreated": "File CSV berhasil dibuat!",
       "presetDeleted": "Preset dihapus",
       "presetNameExists": "Preset dengan nama ini sudah ada",
       "presetNameRequired": "Nama preset diperlukan",
@@ -976,7 +1022,7 @@
       "editProtocol": "Sunting protokol"
     },
     "validation": {
-      "csvFolderNotFound": "Folder tidak ditemukan di vault. Jalankan Setup CSV untuk membuatnya.",
+      "csvFolderNotFound": "Folder tidak ditemukan di vault. Jalankan Siapkan file CSV untuk membuatnya.",
       "csvPathEmpty": "Jalur tidak boleh kosong",
       "mustBeNonNegative": "Harus berupa 0 atau lebih besar",
       "mustBePositive": "Harus lebih besar dari 0"
@@ -994,23 +1040,13 @@
       "emom": "Setiap menit penuh: mulai repetisi Anda di awal setiap menit dan istirahat selama sisa waktunya, 10 putaran."
     },
     "beta": {
-      "intro": "Fitur-fitur baru yang dapat Anda coba sebelum dirilis untuk semua pengguna. Fitur-fitur ini bersifat sementara dan akan dinonaktifkan hingga Anda mengaktifkannya, dan mungkin masih dapat berubah.",
+      "intro": "Fitur baru yang bisa Anda coba sebelum siap untuk semua pengguna. Fitur ini nonaktif sampai Anda mengaktifkannya dan masih mungkin berubah.",
       "setSheet": {
         "name": "Set latihan",
         "desc": "Blok `workout-sets`: set hari ini ditampilkan sebagai baris yang dapat Anda isi di ponsel, dengan nilai dari waktu sebelumnya sebagai petunjuk, dan timer istirahat yang dimulai setiap kali."
       },
       "disabledBlock": "{feature} adalah fitur beta. Aktifkan fitur ini di Pengaturan → Fitur Beta untuk menggunakan blok ini."
     }
-  },
-  "stats": {
-    "max": "Maks: ",
-    "min": "Min: ",
-    "recentLast3": " (3 terakhir)",
-    "recentTrend": "Tren terbaru",
-    "recentVsPrev": " (vs sebelumnya)",
-    "sessions": "Sesi",
-    "average": "Rata-rata: ",
-    "title": "{dataTypeLabel} statistik ({contextLabel}):"
   },
   "table": {
     "actions": "Tindakan",
@@ -1050,6 +1086,8 @@
     "notAvailable": "T/A",
     "refreshSuccess": "Tabel diperbarui",
     "target": {
+      "noSetsYet": "Belum ada set di {weight}",
+      "progress": "Terbaik {best}/{target} repetisi",
       "progressTooltip": "Terbaik: {best} repetisi / Target: {target} repetisi",
       "repsSuffix": "repetisi",
       "separator": " × "
@@ -1204,7 +1242,7 @@
   "import": {
     "chooseFile": "Pilih file CSV",
     "notAnExport": "File ini bukan ekspor dari Strong atau Hevy.",
-    "noSets": "Tidak ada set data yang dapat dibaca dari file ini. Pastikan bahwa file tersebut adalah file CSV yang diekspor oleh aplikasi, tanpa perubahan.",
+    "noSets": "Tidak ada set yang dapat dibaca dari file ini. Pastikan bahwa file tersebut adalah file CSV yang diekspor oleh aplikasi, tanpa perubahan.",
     "readError": "Tidak dapat membaca file: {error}",
     "source": "Ekspor dari {source}",
     "setsFound": "Set yang ada dalam file: {count}",
@@ -1235,22 +1273,26 @@
     "empty": "Tambahkan blok `workout-log` atau `workout-sets` dengan latihan ke catatan ini untuk melacaknya sebagai bagian dari sesi."
   },
   "sets": {
-    "editSet": "Edit set {set}",
     "addSet": "Tambahkan set",
+    "removeSet": "Hapus set",
     "protocol": "Protokol",
     "notes": "Catatan",
-    "editBlock": "Edit kumpulan",
+    "editBlock": "Sunting set",
+    "editRestTimer": "Sunting timer istirahat",
     "blockUpdated": "Set telah diperbarui",
     "blockUpdateFailed": "Gagal memperbarui set: blok tidak ditemukan dalam catatan. Buka kembali catatan dan coba lagi.",
-    "workoutLabel": "Latihan:",
+    "workoutLabel": "Latihan",
     "workoutPlaceholder": "Kosong: {note}",
     "restLabel": "Istirahat setelah setiap set (0 = timer bagian ini)",
-    "noExercise": "Tambahkan `exercise:` ke blok ini untuk mencatat jumlah setnya.",
-    "progress": "{done}/{sets} grup",
+    "noExercise": "Tambahkan `exercise:` ke blok ini untuk mencatat setnya.",
+    "progress": "{done}/{sets} set",
     "lastTime": "Terakhir ({date}): {sets}",
-    "setColumn": "Atur",
-    "fieldOfSet": "{field}, atur {set}",
+    "setColumn": "Set",
+    "fieldOfSet": "{field}, set {set}",
     "details": "Protokol dan catatan untuk set {set}",
-    "logSet": "Pengaturan log {set}"
+    "logSet": "Catat set {set}",
+    "unlogSet": "Hapus set {set} dari log",
+    "setRemoved": "Set {set} dihapus",
+    "valueOfSet": "{field}, set {set}: {value}"
   }
 }

@@ -1,6 +1,6 @@
-import { App, setIcon } from "obsidian";
+import { App } from "obsidian";
+import { DeleteButton } from "@app/components/atoms/DeleteButton";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
-import { ICONS } from "@app/constants/ui.constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import {
   applyBlockEdit,
@@ -24,6 +24,17 @@ import {
   BUTTONVARIANT,
 } from "@app/components/atoms/Button";
 import { t } from "@app/i18n";
+import {
+  AdjustField,
+  ChipGroup,
+  parseNumber,
+} from "@app/components/molecules";
+
+interface SettingControl {
+  read: () => unknown;
+  /** Shows what to fix under the field; false keeps Update from writing */
+  check?: () => boolean;
+}
 
 /**
  * EditWidgetModal - the settings of one widget of a dashboard, opened from
@@ -32,8 +43,8 @@ import { t } from "@app/i18n";
  * `grid.<widget>` line).
  */
 export class EditWidgetModal extends ModalBase {
-  /** Each setting's form control, read as the value to write (undefined: leave unset) */
-  private readonly readers = new Map<string, () => unknown>();
+  /** Each setting's form control: the value to write (undefined: leave unset) and its check */
+  private readonly controls = new Map<string, SettingControl>();
 
   constructor(
     app: App,
@@ -48,12 +59,14 @@ export class EditWidgetModal extends ModalBase {
     const { contentEl } = this;
     contentEl.addClass("workout-modal");
     const widget = DASHBOARD_WIDGETS[this.widgetId];
-    contentEl.createEl("h2", { text: widget.label() });
+    contentEl.createEl("h2", {
+      text: t("dashboard.widgetModal.editTitle", { widget: widget.label() }),
+    });
 
     const settings = widget.settings ?? [];
     const form = this.createStyledMainContainer(contentEl);
     for (const setting of settings) {
-      this.readers.set(
+      this.controls.set(
         setting.key,
         this.createControl(this.createFormGroup(form), setting),
       );
@@ -65,29 +78,33 @@ export class EditWidgetModal extends ModalBase {
       });
     }
 
+    const removal = this.removal();
+    if (!removal) {
+      // Say why there is no remove button, instead of leaving it out
+      form.createEl("p", {
+        text: t("dashboard.widgetModal.lastWidget"),
+        cls: "setting-item-description",
+      });
+    }
+
     const actions = Button.createModalActions(form);
     const options: EditButtonsOptions<EmbeddedDashboardParams> = {
       schema: dashboardBlock,
       target: this.target,
       id: this.params.id,
       collectParams: () => this.collectParams(),
+      validate: () => this.validate(),
       buttonText: t("dashboard.widgetModal.update"),
       successMessage: t("dashboard.widgetModal.updated"),
       failureMessage: t("modal.notices.dashboardUpdateFailed"),
     };
     // Removing is rare: a small trash icon at the start of the bar (as in
     // the log form), and it still asks to confirm
-    const removal = this.removal();
     if (removal) {
-      const remove = actions.createEl("button", {
-        cls: "clickable-icon workout-log-delete",
-        attr: {
-          type: "button",
-          "aria-label": t("dashboard.widgetModal.remove"),
-        },
-      });
-      setIcon(remove, ICONS.ACTIONS.DELETE);
-      remove.addEventListener("click", () =>
+      DeleteButton.create(actions, {
+        label: t("dashboard.widgetModal.remove"),
+        className: "workout-modal-actions-delete",
+        onClick: () =>
         new ConfirmModal(
           this.app,
           t("dashboard.widgetModal.removeConfirm", {
@@ -108,7 +125,7 @@ export class EditWidgetModal extends ModalBase {
             destructive: true,
           },
         ).open(),
-      );
+      });
     }
 
     if (settings.length > 0) {
@@ -130,91 +147,128 @@ export class EditWidgetModal extends ModalBase {
   /**
    * The control for one setting, opened on the block's value (or the
    * default). Its reader gives the value to write, or undefined when it is
-   * the default, so a setting left alone is not written into the block.
+   * the default, so a setting left alone is not written into the block; its
+   * check shows under the field what Update can't write.
    */
   private createControl(
     group: HTMLElement,
     setting: WidgetSetting,
-  ): () => unknown {
+  ): SettingControl {
     const current = (this.params as Record<string, unknown>)[setting.key];
 
     if (setting.kind === "number") {
       const fallback = (dashboardBlock.defaults as Record<string, unknown>)[
         setting.key
       ];
-      const input = this.createNumberInput(
-        group,
-        setting.label(),
-        typeof current === "number"
-          ? String(current)
-          : typeof fallback === "number"
-            ? String(fallback)
-            : "",
-        setting.min,
-        setting.max,
-      );
-      return () => {
-        const typed = Number(input.value.trim());
-        const valid =
-          input.value.trim() !== "" &&
-          Number.isFinite(typed) &&
-          typed >= setting.min &&
-          (setting.max === undefined || typed <= setting.max);
-        return valid && typed !== fallback ? typed : undefined;
+      // No default: the setting is a limit that may stay unset ("All")
+      const optional = typeof fallback !== "number";
+      const field = AdjustField.createField(group, {
+        label: setting.label(),
+        value:
+          typeof current === "number"
+            ? current
+            : typeof fallback === "number"
+              ? fallback
+              : undefined,
+        min: setting.min,
+        max: setting.max,
+        step: setting.step,
+        unit: setting.unit?.(),
+        suggestion: optional ? t("dashboard.widgetModal.all") : undefined,
+      });
+      const typed = () => parseNumber(field.input.value);
+      return {
+        read: () => {
+          const value = typed();
+          return Number.isFinite(value) && value !== fallback ? value : undefined;
+        },
+        check: () => {
+          const value = typed();
+          const empty = field.input.value.trim() === "";
+          // The form's max is for a new value: one the block already
+          // holds (written by hand) stays writable
+          const valid = empty
+            ? optional
+            : value === current ||
+              (Number.isInteger(value) &&
+                value >= setting.min &&
+                value <= setting.max);
+          field.setError(
+            valid
+              ? undefined
+              : t("dashboard.widgetModal.numberRange", {
+                  min: setting.min,
+                  max: setting.max,
+                }),
+          );
+          return valid;
+        },
       };
     }
 
     if (setting.kind === "choice") {
-      const select = this.createSelect(
-        group,
-        setting.label(),
-        setting.options.map((o) => ({ text: o.label(), value: o.value })),
-      );
-      select.value =
-        typeof current === "string" ? current : setting.default;
-      return () =>
-        select.value === setting.default ? undefined : select.value;
+      let picked = typeof current === "string" ? current : setting.default;
+      ChipGroup.create(group, {
+        label: setting.label(),
+        options: setting.options.map((o) => ({ id: o.value, label: o.label() })),
+        selected: picked,
+        className: "workout-widget-setting-chips",
+        onPick: (id) => {
+          picked = id;
+        },
+      });
+      return { read: () => (picked === setting.default ? undefined : picked) };
     }
 
     if (setting.kind === "toggle") {
+      // The group itself is the checkbox row (no group nested in a group)
+      group.addClass("workout-charts-checkbox-group");
       const box = this.createCheckbox(
-        this.createCheckboxGroup(group),
+        group,
         setting.label(),
         typeof current === "boolean" ? current : setting.default,
       );
-      return () => (box.checked === setting.default ? undefined : box.checked);
+      return {
+        read: () => (box.checked === setting.default ? undefined : box.checked),
+      };
     }
 
-    group.createEl("label", {
-      text: setting.label(),
-      cls: "workout-form-field-label",
-    });
-    const checked = new Set(
-      Array.isArray(current)
-        ? current
+    const chips = ChipGroup.createMulti(group, {
+      label: setting.label(),
+      options: setting.options.map((o) => ({ id: o.value, label: o.label() })),
+      selected: Array.isArray(current)
+        ? (current as string[])
         : setting.options.map((o) => o.value),
-    );
-    const boxes = setting.options.map((option) => ({
-      value: option.value,
-      box: this.createCheckbox(
-        this.createCheckboxGroup(group),
-        option.label(),
-        checked.has(option.value),
-      ),
-    }));
-    return () => {
-      const picked = boxes.filter((b) => b.box.checked).map((b) => b.value);
-      // Every option, or none (a table with nothing in it): the default
-      return picked.length === 0 || picked.length === boxes.length
-        ? undefined
-        : picked;
+      className: "workout-widget-setting-chips",
+    });
+    return {
+      // Every option is the default, written as nothing
+      read: () => {
+        const picked = chips.picked();
+        return picked.length === setting.options.length ? undefined : picked;
+      },
+      // None would be an empty widget: removing it is the way to hide it
+      check: () => {
+        const valid = chips.picked().length > 0;
+        chips.setError(valid ? undefined : t("dashboard.widgetModal.pickOne"));
+        return valid;
+      },
     };
+  }
+
+  /** Every field's check, all run so each shows its own error */
+  private validate(): boolean {
+    let valid = true;
+    for (const control of this.controls.values()) {
+      if (control.check && !control.check()) valid = false;
+    }
+    return valid;
   }
 
   /** The widget's settings as the form has them */
   private collectParams(): EmbeddedDashboardParams {
     const params: Record<string, unknown> = {};
-    for (const [key, read] of this.readers) params[key] = read();
+    for (const [key, control] of this.controls) params[key] = control.read();
     return params;
   }
 

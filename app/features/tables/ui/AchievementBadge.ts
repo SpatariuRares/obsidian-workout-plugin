@@ -1,5 +1,6 @@
 import { App, Notice } from "obsidian";
-import { Button, BUTTONVARIANT, Text } from "@app/components/atoms";
+import { Button, BUTTONVARIANT, Icon, Text } from "@app/components/atoms";
+import { ICONS } from "@app/constants/ui.constants";
 import { TargetCalculator } from "@app/features/tables/business/TargetCalculator";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { t } from "@app/i18n";
@@ -9,8 +10,9 @@ import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 /**
  * AchievementBadge - UI component for displaying achievement celebrations
  *
- * Renders a badge when target is achieved, with weight suggestion
- * and dismiss functionality.
+ * A row inset into the block's card once the target is reached: the news
+ * in success text, the next weight with the button that writes it into the
+ * block, and a dismiss (×) at the right end.
  */
 export interface AchievementBadgeProps {
   app: App;
@@ -75,8 +77,13 @@ export class AchievementBadge {
       cls: "workout-achievement-badge",
     });
 
+    const message = badgeDiv.createDiv({ cls: "workout-achievement-message" });
+    Icon.create(message, {
+      name: ICONS.STATUS.SUCCESS,
+      className: "workout-achievement-icon",
+    });
     Text.createSpan(
-      badgeDiv,
+      message,
       t("modal.notices.targetAchieved"),
       "workout-achievement-text",
     );
@@ -85,7 +92,7 @@ export class AchievementBadge {
     const suggestedWeight = targetWeight + weightIncrement;
     const { updateButton } = this.renderWeightSuggestion(
       app,
-      badgeDiv,
+      message,
       suggestedWeight,
       weightUnit,
       callbacks.onUpdateTarget,
@@ -94,7 +101,7 @@ export class AchievementBadge {
 
     // Add dismiss button
     const dismissButton = Button.create(badgeDiv, {
-      text: "×",
+      icon: ICONS.ACTIONS.REMOVE,
       className: "workout-achievement-dismiss",
       variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("modal.notices.dismissAchievement"),
@@ -130,13 +137,13 @@ export class AchievementBadge {
    */
   private static renderWeightSuggestion(
     app: App,
-    badgeDiv: HTMLElement,
+    message: HTMLElement,
     suggestedWeight: number,
     weightUnit: string,
     onUpdateTarget: (newWeight: number) => Promise<void>,
     signal?: AbortSignal,
   ): { suggestionDiv: HTMLElement; updateButton: HTMLButtonElement } {
-    const suggestionDiv = badgeDiv.createDiv({
+    const suggestionDiv = message.createDiv({
       cls: "workout-weight-suggestion",
     });
 
@@ -151,6 +158,7 @@ export class AchievementBadge {
 
     const updateButton = Button.create(suggestionDiv, {
       text: t("modal.buttons.updateTargetWeight"),
+      className: "workout-update-target-button",
       ariaLabel: t("modal.buttons.updateTargetWeight"),
       variant: BUTTONVARIANT.PRIMARY,
     });

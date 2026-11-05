@@ -1,7 +1,7 @@
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 import { Platform } from "obsidian";
-import { LogFormElements } from "@app/types/ModalTypes";
+import type { LogFormElements, ProtocolChoice } from "@app/types/ModalTypes";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
@@ -13,7 +13,12 @@ import { Chip } from "@app/components/atoms";
 import { FileSuggest } from "@app/features/common/suggest/FileSuggest";
 import { t } from "@app/i18n";
 import { LogHistory } from "@app/features/modals/log/LogHistory";
-import { ProtocolCatalog } from "@app/services/protocols/ProtocolCatalog";
+import {
+  ProtocolCatalog,
+  protocolId,
+} from "@app/services/protocols/ProtocolCatalog";
+import { NotesField, ProtocolPicker } from "@app/components/molecules";
+import { DomUtils } from "@app/utils/DomUtils";
 
 export class LogFormRenderer {
   constructor(
@@ -113,27 +118,14 @@ export class LogFormRenderer {
         },
       );
 
-    // Protocol dropdown
-    const allProtocols = new ProtocolCatalog(
-      this.plugin.settings.customProtocols,
-    )
-      .all()
-      .map((p) => ({ text: p.name, value: p.id }));
+    const protocol = this.createProtocolChoice(formContainer);
 
-    const protocolSelect = modal.createSelectField(
-      formContainer,
-      t("modal.protocol"),
-      allProtocols,
-    );
-    protocolSelect.value = WorkoutProtocol.STANDARD;
-
-    // Notes input
-    const notesInput = modal.createTextField(
-      formContainer,
-      t("modal.notes"),
-      t("modal.placeholders.notes"),
-      "",
-    );
+    const notesInput = NotesField.create(formContainer, {
+      label: t("modal.notes"),
+      value: "",
+      onChange: () => {},
+    });
+    notesInput.placeholder = t("modal.placeholders.notes");
 
     // Optional Date input
     let dateInput: HTMLInputElement | undefined;
@@ -206,7 +198,7 @@ export class LogFormRenderer {
       workoutInput,
       currentWorkoutToggle,
       dateInput,
-      protocolSelect,
+      protocol,
       dynamicFieldInputs,
       parametersContainer,
     };
@@ -227,6 +219,50 @@ export class LogFormRenderer {
       );
     }
     return formElements;
+  }
+
+  /**
+   * The set's protocol as chips (ProtocolPicker), standard picked. Picking
+   * draws the chips again with the focus kept on the picked one.
+   */
+  private createProtocolChoice(parent: HTMLElement): ProtocolChoice {
+    const catalog = new ProtocolCatalog(this.plugin.settings.customProtocols);
+    const options = catalog.all().map((p) => ({ id: p.id, name: p.name }));
+    const holder = parent.createDiv({ cls: "workout-log-protocol" });
+    let selected: string = WorkoutProtocol.STANDARD;
+
+    const draw = (focus: boolean) => {
+      holder.empty();
+      ProtocolPicker.create(holder, {
+        label: t("modal.protocol"),
+        options,
+        selected,
+        onPick: (id) => {
+          selected = id;
+          draw(true);
+        },
+        focusKeyPrefix: "protocol",
+      });
+      // eslint-disable-next-line i18next/no-literal-string -- focus key, not UI text
+      if (focus) DomUtils.focusByKey(holder, `protocol-${selected}`);
+    };
+    draw(false);
+
+    return {
+      get value() {
+        return selected;
+      },
+      set(raw: string) {
+        const id = protocolId(raw);
+        // A set logged with a protocol no longer in the settings (e.g. a
+        // deleted drop set) keeps it: otherwise saving would make it standard
+        if (!options.some((o) => o.id === id)) {
+          options.push({ id, name: catalog.resolve(id).name });
+        }
+        selected = id;
+        draw(false);
+      },
+    };
   }
 
   /**
@@ -267,7 +303,6 @@ export class LogFormRenderer {
     recentExercises.forEach((exercise) => {
       Chip.create(chipContainer, {
         text: exercise,
-        className: "workout-log-recent-chip",
         ariaLabel: exercise,
         onClick: () => {
           exerciseInput.value = exercise;
@@ -371,8 +406,6 @@ export class LogFormRenderer {
     );
 
     // Auto-fill protocol
-    if (lastEntry.protocol && formElements.protocolSelect) {
-      formElements.protocolSelect.value = lastEntry.protocol;
-    }
+    if (lastEntry.protocol) formElements.protocol?.set(lastEntry.protocol);
   }
 }

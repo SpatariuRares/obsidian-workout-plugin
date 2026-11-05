@@ -1,0 +1,114 @@
+@use "../variables";
+
+/* ============================================================================
+   FIELDS: NumberField and NotesField
+   ============================================================================
+   Inset from the card in both themes (--background-primary on the card's
+   --background-secondary, a border at about 3:1). The suggestion in an empty
+   NumberField is logged as it is, so it stays readable (--text-muted, ≥4.5:1)
+   and lighter than a typed value. Selectors are two classes deep to outrank
+   Obsidian's input[type="text"] and textarea rules.
+   ============================================================================ */
+
+.workout-number-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-2xs);
+  min-width: 0;
+}
+
+.workout-number-field .workout-number-field-box {
+  display: flex;
+  align-items: center;
+  height: 2.75rem;
+  min-width: 0;
+  border: var(--workout-border-thin) solid var(--workout-border-color);
+  border-radius: var(--input-radius, var(--workout-radius-md));
+  background: var(--background-primary);
+
+  &:focus-within {
+    border-color: var(--interactive-accent);
+    outline: var(--workout-border-thin) solid var(--interactive-accent);
+  }
+}
+
+.workout-number-field.is-invalid .workout-number-field-box {
+  border-color: var(--workout-text-error);
+  outline-color: var(--workout-text-error);
+}
+
+.workout-number-field .workout-number-field-input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  padding: 0 var(--workout-space-sm);
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-normal);
+  font-size: var(--workout-font-lg);
+  font-weight: var(--workout-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+
+  &:focus,
+  &:focus-visible {
+    border: none;
+    box-shadow: none;
+    outline: none;
+  }
+
+  &::placeholder {
+    color: var(--text-muted);
+    font-weight: var(--font-normal);
+    opacity: 1;
+  }
+}
+
+.workout-number-field-unit {
+  flex: none;
+  padding-inline-end: var(--workout-space-sm);
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+}
+
+// "−2.5" / "+2.5": at least a 44px target, as wide as its figure
+.workout-number-field .workout-number-field-step {
+  flex: none;
+  min-width: var(--workout-touch-target-min);
+  width: auto;
+  height: 100%;
+  padding: 0 var(--workout-space-xs);
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  font-weight: var(--workout-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.workout-number-field-error {
+  font-size: var(--workout-font-xs);
+}
+
+.workout-notes-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-2xs);
+}
+
+.workout-notes-field-label {
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+}
+
+.workout-notes-field .workout-notes-field-input {
+  width: 100%;
+  min-height: 3.5rem;
+  resize: vertical;
+  background: var(--background-primary);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
+
+  &:focus-visible {
+    border-color: var(--interactive-accent);
+  }
+}

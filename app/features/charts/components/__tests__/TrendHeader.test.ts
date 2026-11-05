@@ -19,36 +19,39 @@ describe("TrendHeader", () => {
   const baseIndicators: TrendIndicators = {
     trendDirection: "Up",
     trendColor: "green",
-    trendIcon: "^",
+    trendIcon: "trending-up",
   };
+
+  const rowOf = (container: HTMLElement) =>
+    container.querySelector(".workout-chart-trend") as HTMLElement;
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("renders header styling and uses TrendIndicator for positive change", () => {
+  it("renders one row with the direction, the change and the range", () => {
     const container = createObsidianContainer();
 
     TrendHeader.render(container, baseIndicators, [10, 20]);
 
-    const header = container.querySelector(
-      ".workout-charts-trend-header",
-    ) as HTMLElement;
-    const title = header.querySelector("h3") as HTMLElement;
-
-    expect(title.classList.contains("trend-color-green")).toBe(true);
-    expect(title.querySelector("strong")?.textContent).toBe(
-      baseIndicators.trendDirection,
-    );
-
-    const indicatorCreate = TrendIndicator.create as jest.Mock;
-    expect(indicatorCreate).toHaveBeenCalledWith(
-      expect.anything(),
+    const row = rowOf(container);
+    expect(row.classList.contains("is-up")).toBe(true);
+    expect(
+      row.querySelector(".workout-chart-trend-direction")?.textContent,
+    ).toBe(baseIndicators.trendDirection);
+    expect(TrendIndicator.create).toHaveBeenCalledWith(
+      row,
       expect.objectContaining({
         direction: "up",
         percentage: 100,
-        className: "workout-charts-trend-variation",
+        className: "workout-chart-trend-change",
       }),
+    );
+    expect(row.querySelector(".workout-chart-trend-range")?.textContent).toBe(
+      CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_FROM_TO_FORMATTED(
+        "10.0",
+        "20.0",
+      ).trim(),
     );
   });
 
@@ -58,8 +61,7 @@ describe("TrendHeader", () => {
     // Last value is below the first, but the trend line rises 5.4%
     TrendHeader.render(container, baseIndicators, [100, 150, 160, 170, 99]);
 
-    const indicatorCreate = TrendIndicator.create as jest.Mock;
-    expect(indicatorCreate).toHaveBeenCalledWith(
+    expect(TrendIndicator.create).toHaveBeenCalledWith(
       expect.anything(),
       expect.objectContaining({ direction: "up", percentage: 5.4 }),
     );
@@ -68,131 +70,61 @@ describe("TrendHeader", () => {
   it("treats lower values as improvement for pace data", () => {
     const container = createObsidianContainer();
 
-    TrendHeader.render(
-      container,
-      baseIndicators,
-      [5, 4],
-      CHART_DATA_TYPE.PACE,
-    );
+    TrendHeader.render(container, baseIndicators, [5, 4], CHART_DATA_TYPE.PACE);
 
-    const indicatorCreate = TrendIndicator.create as jest.Mock;
-    expect(indicatorCreate).toHaveBeenCalledWith(
+    expect(rowOf(container).classList.contains("is-up")).toBe(true);
+    expect(TrendIndicator.create).toHaveBeenCalledWith(
       expect.anything(),
-      expect.objectContaining({
-        direction: "up",
-        percentage: 20,
-      }),
+      expect.objectContaining({ direction: "up", percentage: 20 }),
     );
   });
 
-  it("applies trend color classes for red, orange, and default colors", () => {
-    const cases = [
-      { color: "red", expectedClass: "trend-color-red" },
-      { color: "orange", expectedClass: "trend-color-orange" },
-      { color: "blue", expectedClass: "trend-color-accent" },
-    ];
+  it("marks a falling line as down and a flat one as neutral", () => {
+    const falling = createObsidianContainer();
+    TrendHeader.render(falling, baseIndicators, [20, 10]);
+    expect(rowOf(falling).classList.contains("is-down")).toBe(true);
 
-    cases.forEach(({ color, expectedClass }) => {
-      const container = createObsidianContainer();
-
-      TrendHeader.render(
-        container,
-        { ...baseIndicators, trendColor: color },
-        [10, 20],
-      );
-
-      const title = container.querySelector(
-        ".workout-charts-trend-header-h3",
-      ) as HTMLElement;
-
-      expect(title.classList.contains(expectedClass)).toBe(true);
-    });
+    const flat = createObsidianContainer();
+    TrendHeader.render(flat, baseIndicators, [10, 10]);
+    expect(rowOf(flat).classList.contains("is-neutral")).toBe(true);
   });
 
-  it("renders not available text when no data exists", () => {
+  it("says not available when there is no data", () => {
     const container = createObsidianContainer();
 
     TrendHeader.render(container, baseIndicators, []);
 
-    const indicatorCreate = TrendIndicator.create as jest.Mock;
-    expect(indicatorCreate).not.toHaveBeenCalled();
-
-    const variation = container.querySelector(
-      ".workout-charts-trend-variation",
-    ) as HTMLElement;
-    expect(variation).toBeTruthy();
-    expect(variation.textContent).toBe(t("table.notAvailable"));
+    expect(TrendIndicator.create).not.toHaveBeenCalled();
+    expect(
+      container.querySelector(".workout-chart-trend-change")?.textContent,
+    ).toBe(t("table.notAvailable"));
+    expect(container.querySelector(".workout-chart-trend-range")).toBeNull();
   });
 
-  it("appends single value variation text", () => {
+  it("says a rise from zero in words", () => {
+    const container = createObsidianContainer();
+
+    TrendHeader.render(container, baseIndicators, [0, 10]);
+
+    expect(TrendIndicator.create).not.toHaveBeenCalled();
+    expect(
+      container.querySelector(".workout-chart-trend-change")?.textContent,
+    ).toBe(t("charts.significantIncrease"));
+  });
+
+  it("shows the only value as the range", () => {
     const container = createObsidianContainer();
 
     TrendHeader.render(container, baseIndicators, [12.34]);
 
-    const indicatorCreate = TrendIndicator.create as jest.Mock;
-    expect(indicatorCreate).toHaveBeenCalledWith(
+    expect(TrendIndicator.create).toHaveBeenCalledWith(
       expect.anything(),
-      expect.objectContaining({
-        direction: "neutral",
-        percentage: 0,
-      }),
+      expect.objectContaining({ direction: "neutral", percentage: 0 }),
     );
-
-    const expectedVariation =
-      CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_SINGLE_VALUE_FORMATTED(
-        "12.3",
-      );
-
-    const paragraph = container.querySelector(
-      ".workout-charts-trend-header-p",
-    ) as HTMLElement;
-    expect(paragraph.textContent).toContain(expectedVariation);
-  });
-
-  it("applies variation color classes in fallback mode", () => {
-    const calculateSpy = jest.spyOn(
-      TrendHeader as unknown as {
-        calculateVariation: (volumeData: number[]) => {
-          firstValue?: number;
-          lastValue?: number;
-          percentChange: string;
-        };
-      },
-      "calculateVariation",
+    expect(
+      container.querySelector(".workout-chart-trend-range")?.textContent,
+    ).toBe(
+      CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_VALUE_LABEL_FORMATTED("12.3"),
     );
-
-    calculateSpy.mockReturnValue({
-      firstValue: 10,
-      lastValue: 20,
-      percentChange: t("table.notAvailable"),
-    });
-
-    const cases = [
-      { color: "green", expectedClass: "trend-color-green" },
-      { color: "red", expectedClass: "trend-color-red" },
-      { color: "orange", expectedClass: "trend-color-orange" },
-      { color: "blue", expectedClass: "trend-color-accent" },
-    ];
-
-    cases.forEach(({ color, expectedClass }) => {
-      const container = createObsidianContainer();
-
-      TrendHeader.render(
-        container,
-        { ...baseIndicators, trendColor: color },
-        [10, 20],
-      );
-
-      const indicatorCreate = TrendIndicator.create as jest.Mock;
-      expect(indicatorCreate).not.toHaveBeenCalled();
-
-      const variation = container.querySelector(
-        ".workout-charts-trend-variation",
-      ) as HTMLElement;
-      expect(variation).toBeTruthy();
-      expect(variation.classList.contains(expectedClass)).toBe(true);
-    });
-
-    calculateSpy.mockRestore();
   });
 });

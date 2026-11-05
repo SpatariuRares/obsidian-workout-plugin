@@ -13,6 +13,7 @@ import {
 import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 import { BaseView } from "@app/features/common/views/BaseView";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
+import { BlockCard } from "@app/components/molecules/BlockCard";
 import { Button } from "@app/components";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import { t } from "@app/i18n";
@@ -113,26 +114,14 @@ export class EmbeddedTableView extends BaseView {
     const { headers, rows, filterResult, params } = tableData;
 
     const signal = this.newSignal(container);
-    container.empty();
-
-    const contentDiv = container.createDiv({
-      cls: "workout-table-content-container",
-    });
-
-    // Render action buttons (Add Log + Goto Exercise)
+    const card = this.renderCard(container, params, where, signal);
     if (params.showAddButton !== false) {
-      this.renderActionButtons(
-        contentDiv,
-        params,
-        filterResult,
-        signal,
-        where,
-      );
+      this.renderAddLog(card, params, filterResult.filteredData, signal, where);
     }
 
     // Target with its progress bar, and the badge once it is reached
     renderTargetSection(
-      contentDiv,
+      card,
       {
         plugin: this.plugin,
         params,
@@ -145,9 +134,7 @@ export class EmbeddedTableView extends BaseView {
       signal,
     );
 
-    // Render the table
-    const tableContainer =
-      TableRenderer.createTableContainer(contentDiv);
+    const tableContainer = TableRenderer.createTableContainer(card);
     const tableSuccess = TableRenderer.renderTable(
       tableContainer,
       headers,
@@ -182,10 +169,7 @@ export class EmbeddedTableView extends BaseView {
     where: TableWhere,
   ): void {
     const signal = this.newSignal(container);
-    container.empty();
-    const contentDiv = container.createDiv({
-      cls: "workout-table-content-container",
-    });
+    const card = this.renderCard(container, params, where, signal);
 
     const showAddButton = params.showAddButton !== false;
     const firstLog =
@@ -194,63 +178,68 @@ export class EmbeddedTableView extends BaseView {
         .filteredData.length === 0;
 
     if (showAddButton) {
-      this.renderActionButtons(
-        contentDiv,
-        params,
-        { filteredData: logData },
-        signal,
-        where,
-        firstLog,
-      );
+      this.renderAddLog(card, params, logData, signal, where, firstLog);
     }
     if (!firstLog) {
-      LogCallouts.renderNoMatchMessage(contentDiv);
+      LogCallouts.renderNoMatchMessage(card);
     }
-
   }
 
   /**
-   * Renders the Add Log and Goto Exercise buttons
+   * The block's card, with its top row: the exercise (else the workout) and,
+   * always in the top right corner, the ⋮ menu: go to the exercise and edit
+   * this block (only edit when the block names no exercise).
    */
-  private renderActionButtons(
-    contentDiv: HTMLElement,
+  private renderCard(
+    container: HTMLElement,
     params: EmbeddedTableParams,
-    filterResult: { filteredData: WorkoutLogData[] },
+    where: TableWhere,
+    signal: AbortSignal,
+  ): HTMLElement {
+    container.empty();
+    const { el, header } = BlockCard.create(container, {
+      title: params.exercise || params.workout,
+      className: "workout-log",
+    });
+    ExerciseActionSelect.render(
+      header,
+      { exerciseName: params.exercise ?? "", plugin: this.plugin, edit: where.editAction },
+      signal,
+    );
+    return el;
+  }
+
+  /**
+   * The row under the title: Add log, prefilled from the exercise's last set.
+   * On top, not at the end: a new set shows up as the table's first row
+   * @param sets - The sets the prefill is taken from
+   * @param firstLog - Nothing logged for the block yet: "Create first log"
+   */
+  private renderAddLog(
+    card: HTMLElement,
+    params: EmbeddedTableParams,
+    sets: WorkoutLogData[],
     signal: AbortSignal,
     where: TableWhere,
     firstLog = false,
   ): void {
     const currentPageLink =
       PathUtils.toWikiLink(where.sourcePath) || this.getActivePageLink();
-    const exerciseName =
-      params.exercise || t("modal.sections.workout");
-
-    const buttonContainer = Button.createContainer(contentDiv);
-    buttonContainer.addClass("workout-add-log-button-container");
-
     const latestEntry = params.exercise
-      ? new TrainingHistory(filterResult.filteredData).lastSet(
-          params.exercise,
-        )
+      ? new TrainingHistory(sets).lastSet(params.exercise)
       : undefined;
 
+    const actions = Button.createContainer(card);
+    actions.addClass("workout-log-actions");
     LogCallouts.renderAddLogButton(
-      buttonContainer,
-      exerciseName,
+      actions,
+      params.exercise || t("modal.sections.workout"),
       currentPageLink,
       this.plugin,
       signal,
       latestEntry,
       firstLog,
     );
-
-    if (params.exercise) {
-      ExerciseActionSelect.render(
-        buttonContainer,
-        { exerciseName: params.exercise, plugin: this.plugin, edit: where.editAction },
-        signal,
-      );
-    }
   }
 
   public async refreshTable(

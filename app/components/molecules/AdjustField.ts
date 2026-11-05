@@ -1,26 +1,26 @@
 /**
  * AdjustField Molecule
- * A labelled number input with − / + buttons that step it within its limits.
+ * A labelled whole number for a form: the visible label above a
+ * NumberField with − / + that step it within its limits.
  */
 
 import {
-  Button,
-  BUTTONSIZE,
-  BUTTONVARIANT,
-} from "@app/components/atoms/Button";
-import { Input } from "@app/components/atoms/Input";
-import { INPUT_TYPE } from "@app/types/InputTypes";
-import { t } from "@app/i18n";
+  NumberField,
+  type NumberFieldResult,
+} from "@app/components/molecules/NumberField";
 
 export interface AdjustFieldProps {
   label: string;
-  value: number;
+  /** Unset: the field opens empty, showing `suggestion` */
+  value?: number;
   min: number;
   max: number;
   /** What − and + add or take away */
   step: number;
-  /** Shown after the label, e.g. "s" */
+  /** Shown at the end of the field, e.g. "s" */
   unit?: string;
+  /** Muted text in the empty field ("All" for a limit that is optional) */
+  suggestion?: string;
 }
 
 export class AdjustField {
@@ -29,7 +29,15 @@ export class AdjustField {
     parent: HTMLElement,
     props: AdjustFieldProps,
   ): HTMLInputElement {
-    return this.fill(
+    return this.createField(parent, props).input;
+  }
+
+  /** As `create`, with the field's `setError` for a form that checks it */
+  static createField(
+    parent: HTMLElement,
+    props: AdjustFieldProps,
+  ): NumberFieldResult {
+    return this.fillField(
       parent.createDiv({ cls: "workout-field-with-adjust" }),
       props,
     );
@@ -38,61 +46,30 @@ export class AdjustField {
   /** Fill a container the caller already made; returns the number input */
   static fill(
     container: HTMLElement,
-    { label, value, min, max, step, unit }: AdjustFieldProps,
+    props: AdjustFieldProps,
   ): HTMLInputElement {
-    container.createDiv({
+    return this.fillField(container, props).input;
+  }
+
+  private static fillField(
+    container: HTMLElement,
+    { label, value, min, max, step, unit, suggestion }: AdjustFieldProps,
+  ): NumberFieldResult {
+    const labelEl = container.createEl("label", {
       cls: "workout-field-label",
-      text: unit ? `${label} (${unit})` : label,
+      text: label,
     });
-
-    const inputContainer = container.createDiv({
-      cls: "workout-input-with-adjust",
-    });
-
-    const minusBtn = Button.create(inputContainer, {
-      text: t("modal.buttons.adjustMinus") + step,
-      className: "workout-adjust-btn workout-adjust-minus",
-      ariaLabel: t("modal.buttons.decreaseBy", {
-        label,
-        increment: step,
-      }),
-      variant: BUTTONVARIANT.SECONDARY,
-      size: BUTTONSIZE.SMALL,
-    });
-    minusBtn.type = "button";
-
-    const input = Input.create(inputContainer, {
-      type: INPUT_TYPE.NUMBER,
-      className: "workout-charts-input",
+    const field = NumberField.create(container, {
+      label,
+      value: value === undefined ? "" : String(value),
+      suggestion,
+      integer: true,
+      unit,
+      step,
       min,
       max,
-      step: 1,
-      value,
     });
-
-    const plusBtn = Button.create(inputContainer, {
-      text: t("modal.buttons.adjustPlus") + step,
-      className: "workout-adjust-btn workout-adjust-plus",
-      ariaLabel: t("modal.buttons.increaseBy", {
-        label,
-        increment: step,
-      }),
-      variant: BUTTONVARIANT.SECONDARY,
-      size: BUTTONSIZE.SMALL,
-    });
-    plusBtn.type = "button";
-
-    const move = (delta: number) => {
-      const current = parseInt(input.value) || 0;
-      input.value = Math.min(
-        max,
-        Math.max(min, current + delta),
-      ).toString();
-      input.dispatchEvent(new Event("input"));
-    };
-    Button.onClick(minusBtn, () => move(-step));
-    Button.onClick(plusBtn, () => move(step));
-
-    return input;
+    labelEl.htmlFor = field.input.id;
+    return field;
   }
 }

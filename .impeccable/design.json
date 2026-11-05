@@ -1,0 +1,255 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-05T00:00:00Z",
+  "title": "Design System: Workout Planner",
+  "extensions": {
+    "colorMeta": {
+      "page": {
+        "role": "neutral",
+        "displayName": "Page",
+        "canonical": "var(--background-primary)"
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "Card",
+        "canonical": "var(--background-secondary)"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "var(--text-normal)"
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Muted ink",
+        "canonical": "var(--text-muted)"
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Theme accent",
+        "canonical": "var(--interactive-accent)"
+      },
+      "accent-fill": {
+        "role": "primary",
+        "displayName": "Accent fill",
+        "canonical": "var(--workout-accent-fill)"
+      },
+      "accent-text": {
+        "role": "primary",
+        "displayName": "Accent text",
+        "canonical": "var(--workout-text-accent)"
+      },
+      "border-control": {
+        "role": "neutral",
+        "displayName": "Control border",
+        "canonical": "var(--workout-border-color)"
+      },
+      "border-subtle": {
+        "role": "neutral",
+        "displayName": "Subtle border",
+        "canonical": "var(--workout-border-subtle)"
+      },
+      "error-text": {
+        "role": "semantic",
+        "displayName": "Error text",
+        "canonical": "var(--workout-text-error)"
+      },
+      "success-text": {
+        "role": "semantic",
+        "displayName": "Success text",
+        "canonical": "var(--workout-text-success)"
+      }
+    },
+    "typographyMeta": {
+      "title": {
+        "displayName": "Title",
+        "purpose": "A block's exercise name, in accent text."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "Typed and logged values; tabular numerals."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Column headers and field labels, muted."
+      },
+      "clock": {
+        "displayName": "Clock",
+        "purpose": "Rest countdown digits."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-sm",
+        "value": "0 2px 8px rgba(0, 0, 0, 0.1)",
+        "purpose": "Small floating elements."
+      },
+      {
+        "name": "shadow-md",
+        "value": "0 4px 12px rgba(0, 0, 0, 0.1)",
+        "purpose": "Dropdowns."
+      },
+      {
+        "name": "shadow-lg",
+        "value": "0 8px 24px rgba(0, 0, 0, 0.15)",
+        "purpose": "Autocomplete, tour cards."
+      }
+    ],
+    "motion": [
+      {
+        "name": "transition",
+        "value": "all 0.2s ease",
+        "purpose": "State changes (hover, chevron turn); none under prefers-reduced-motion for the chevron."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "484px"
+      },
+      {
+        "name": "tablet",
+        "value": "768px"
+      },
+      {
+        "name": "xl",
+        "value": "1200px"
+      },
+      {
+        "name": "huge",
+        "value": "1600px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "NumberField",
+      "kind": "input",
+      "refersTo": "number-field",
+      "description": "A number typed with a thumb; the muted suggestion is logged when left empty.",
+      "html": "<div class=\"ds-number-field\"><input class=\"ds-number-field-input\" inputmode=\"decimal\" placeholder=\"82.5\" aria-label=\"Weight (kg), set 2\"></div>",
+      "css": ".ds-number-field{display:flex;align-items:center;height:44px;border:1px solid var(--workout-border-color,#8a8a8a);border-radius:6px;background:var(--background-primary,#fff)} .ds-number-field:focus-within{border-color:var(--interactive-accent,#9873f7);outline:1px solid var(--interactive-accent,#9873f7)} .ds-number-field-input{flex:1;min-width:0;height:100%;padding:0 8px;border:none;background:transparent;color:var(--text-normal,#000);font-size:1.1em;font-weight:600;font-variant-numeric:tabular-nums} .ds-number-field-input:focus{outline:none} .ds-number-field-input::placeholder{color:var(--text-muted,#5c5c5c);font-weight:400;opacity:1}"
+    },
+    {
+      "name": "CheckToggle (to do)",
+      "kind": "button",
+      "refersTo": "check-toggle",
+      "description": "Logs the row.",
+      "html": "<button class=\"ds-check\" aria-label=\"Log set 2\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg></button>",
+      "css": ".ds-check{display:grid;place-items:center;width:52px;height:44px;padding:0;border-radius:8px;border:2px solid var(--workout-border-color,#8a8a8a);background:var(--background-primary,#fff);color:var(--text-muted,#5c5c5c);cursor:pointer} .ds-check:focus-visible{outline:2px solid var(--interactive-accent,#9873f7);outline-offset:2px}"
+    },
+    {
+      "name": "CheckToggle (done)",
+      "kind": "button",
+      "refersTo": "check-toggle-done",
+      "description": "A logged set; a tap takes it back, with Undo.",
+      "html": "<button class=\"ds-check-done\" aria-label=\"Remove set 1 from the log\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg></button>",
+      "css": ".ds-check-done{display:grid;place-items:center;width:52px;height:44px;padding:0;border-radius:8px;border:2px solid var(--workout-accent-fill,#7a5cc5);background:var(--workout-accent-fill,#7a5cc5);color:var(--text-on-accent,#fff);cursor:pointer} .ds-check-done:focus-visible{outline:2px solid var(--interactive-accent,#9873f7);outline-offset:2px}"
+    },
+    {
+      "name": "DisclosureToggle",
+      "kind": "button",
+      "refersTo": "disclosure-toggle",
+      "description": "Shows a row's protocol and notes; the dot says something is set.",
+      "html": "<button class=\"ds-disclosure\" aria-expanded=\"false\" aria-label=\"Protocol and notes of set 2\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m6 9 6 6 6-6\"/></svg><span class=\"ds-disclosure-dot\"></span></button>",
+      "css": ".ds-disclosure{position:relative;display:grid;place-items:center;width:44px;height:44px;border:none;background:transparent;color:var(--text-muted,#5c5c5c);cursor:pointer;border-radius:6px} .ds-disclosure:hover{background:var(--background-modifier-hover,rgba(0,0,0,.05))} .ds-disclosure:focus-visible{outline:2px solid var(--interactive-accent,#9873f7);outline-offset:2px} .ds-disclosure[aria-expanded=true] svg{transform:rotate(180deg)} .ds-disclosure svg{transition:transform .2s ease} .ds-disclosure-dot{position:absolute;top:25%;right:25%;width:7px;height:7px;border-radius:50%;background:var(--workout-accent-fill,#7a5cc5)}"
+    },
+    {
+      "name": "ChipGroup (ProtocolPicker)",
+      "kind": "chip",
+      "refersTo": "chip-selected",
+      "description": "A labelled group of chips, one picked, one scrolling row: a set's protocol, the heat map's period, side and measure.",
+      "html": "<div class=\"ds-picker\"><div class=\"ds-picker-label\" id=\"ds-p\">Protocol</div><div class=\"ds-picker-chips\" role=\"group\" aria-labelledby=\"ds-p\"><button class=\"ds-chip ds-chip-on\" aria-pressed=\"true\">Standard</button><button class=\"ds-chip\" aria-pressed=\"false\">Warm-up</button><button class=\"ds-chip\" aria-pressed=\"false\">Drop set</button></div></div>",
+      "css": ".ds-picker{display:flex;flex-direction:column;gap:2px} .ds-picker-label{font-size:.8em;color:var(--text-muted,#5c5c5c)} .ds-picker-chips{display:flex;gap:4px;overflow-x:auto} .ds-chip{flex:none;min-height:36px;padding:8px 16px;border-radius:9999px;border:1px solid var(--workout-border-color,#8a8a8a);background:var(--background-secondary,#f6f6f6);color:var(--text-normal,#000);font-size:.85em;font-weight:500;cursor:pointer} .ds-chip:hover{border-color:var(--interactive-accent,#9873f7)} .ds-chip:focus-visible{outline:2px solid var(--interactive-accent,#9873f7);outline-offset:2px} .ds-chip-on{background:var(--workout-accent-fill,#7a5cc5);color:var(--text-on-accent,#fff);border-color:var(--interactive-accent,#9873f7)}"
+    },
+    {
+      "name": "Rest strip",
+      "kind": "custom",
+      "refersTo": "timer-strip",
+      "description": "A block's rest on one line: digits left, controls right.",
+      "html": "<div class=\"ds-strip\"><span class=\"ds-strip-time\">01:05</span><button class=\"ds-strip-btn\" aria-label=\"Start timer\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m6 3 14 9-14 9z\"/></svg></button></div>",
+      "css": ".ds-strip{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 4px 4px 12px;border-radius:8px;background:var(--background-primary,#fff)} .ds-strip-time{font-family:var(--font-monospace,monospace);font-size:1.8em;font-weight:600;color:var(--workout-text-accent,#6040ab);font-variant-numeric:tabular-nums} .ds-strip-btn{display:grid;place-items:center;min-width:44px;min-height:44px;border-radius:8px;border:1px solid var(--workout-border-color,#8a8a8a);background:var(--background-secondary,#f6f6f6);color:var(--text-normal,#000);cursor:pointer} .ds-strip-btn:focus-visible{outline:2px solid var(--interactive-accent,#9873f7);outline-offset:2px}"
+    },
+    {
+      "name": "UndoNotice",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "What happened on the left, Undo at the right end.",
+      "html": "<div class=\"ds-notice\"><span>Set 1 removed</span><button class=\"ds-notice-undo\">Undo</button></div>",
+      "css": ".ds-notice{display:flex;align-items:center;justify-content:space-between;gap:12px;width:320px;padding:12px 20px;border-radius:8px;background:var(--background-secondary,#f6f6f6);color:var(--text-normal,#000);box-shadow:0 4px 12px rgba(0,0,0,.1)} .ds-notice-undo{flex:none;padding:8px 14px;border:none;border-radius:6px;background:var(--workout-accent-fill,#7a5cc5);color:var(--text-on-accent,#fff);font-weight:600;cursor:pointer} .ds-notice-undo:focus-visible{outline:2px solid var(--interactive-accent,#9873f7);outline-offset:2px}"
+    },
+    {
+      "name": "BlockCard",
+      "kind": "container",
+      "refersTo": "block-card",
+      "description": "A block's card: accent title, muted meta and the ⋮ menu in the top right corner, its parts one under the other.",
+      "html": "<div class=\"ds-block-card\"><div class=\"ds-block-header\"><div class=\"ds-block-title\">Bench Press</div><div class=\"ds-block-meta\">2/4 sets</div><button class=\"ds-block-menu\" aria-label=\"Block menu\">⋮</button></div></div>",
+      "css": ".ds-block-card{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--workout-border-color,#8a8a8a);border-radius:12px;background:var(--background-secondary,#f6f6f6)} .ds-block-header{display:flex;align-items:center;gap:8px} .ds-block-title{flex:1;min-width:0;font-size:1.1em;font-weight:600;color:var(--workout-text-accent,#6040ab)} .ds-block-meta{font-size:.85em;color:var(--text-muted,#5c5c5c);font-variant-numeric:tabular-nums} .ds-block-menu{flex:none;min-width:44px;min-height:44px;border:none;background:none;color:var(--text-muted,#5c5c5c)}"
+    },
+    {
+      "name": "ProgressMeter",
+      "kind": "custom",
+      "refersTo": "progress-meter",
+      "description": "The target panel: icon, label and best reps on top, the target in big figures, a thin meter (muted on the way, accent once done).",
+      "html": "<div class=\"ds-target\"><div class=\"ds-target-row\"><span class=\"ds-target-icon\">◎</span><span class=\"ds-target-label\">Target:</span><span class=\"ds-target-progress\">Best 6/8 reps</span></div><div class=\"ds-target-value\">85kg × 8 reps</div><div class=\"ds-meter\" role=\"progressbar\" aria-label=\"Best: 6 reps / Target: 8 reps\" aria-valuemin=\"0\" aria-valuemax=\"8\" aria-valuenow=\"6\"><div class=\"ds-meter-fill\" style=\"width:75%\"></div></div></div>",
+      "css": ".ds-target{display:flex;flex-direction:column;gap:8px;width:320px;padding:12px;border:1px solid var(--workout-border-color,#8a8a8a);border-radius:8px;background:var(--background-primary,#fff);font-variant-numeric:tabular-nums} .ds-target-row{display:flex;align-items:center;gap:8px} .ds-target-icon{color:var(--workout-text-accent,#6040ab)} .ds-target-label{font-size:.85em;font-weight:500;color:var(--text-muted,#5c5c5c)} .ds-target-progress{margin-left:auto;font-size:.85em;color:var(--text-muted,#5c5c5c)} .ds-target-value{font-size:1.5em;font-weight:600;line-height:1.2;color:var(--text-normal,#000)} .ds-meter{height:8px;border-radius:9999px;background:var(--background-modifier-border,#e0e0e0);overflow:hidden} .ds-meter-fill{height:100%;border-radius:inherit;background:var(--text-muted,#5c5c5c)}"
+    },
+    {
+      "name": "StatCard",
+      "kind": "display",
+      "refersTo": "stat-card",
+      "description": "One figure of a summary row (StatCard.row): muted label, tabular figure, muted detail. An improvement is success text. Used by workout-chart's stats and workout-duration's breakdown.",
+      "html": "<div class=\"ds-stat-row\"><div class=\"ds-stat\"><span class=\"ds-stat-label\">Max</span><div class=\"ds-stat-value\">820.0 kg</div><span class=\"ds-stat-detail\">05/11/2026</span></div><div class=\"ds-stat is-up\"><span class=\"ds-stat-label\">Recent trend</span><div class=\"ds-stat-value\">+77.5 kg</div><span class=\"ds-stat-detail\">last 3</span></div></div>",
+      "css": ".ds-stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(7.5rem,100%),1fr));gap:12px 16px;padding-top:12px;border-top:1px solid var(--workout-border-subtle,#b8b8b8)} .ds-stat{display:flex;flex-direction:column;gap:2px;min-width:0} .ds-stat-label{font-size:0.8em;color:var(--text-muted,#5c5c5c)} .ds-stat-value{font-size:1.1em;font-weight:600;font-variant-numeric:tabular-nums;color:var(--text-normal,#000)} .ds-stat-detail{font-size:0.85em;font-variant-numeric:tabular-nums;color:var(--text-muted,#5c5c5c)} .ds-stat.is-up .ds-stat-value{color:var(--workout-text-success,#045d27)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The gym notebook",
+    "overview": "A training diary that fills in with a thumb: the next set is already written in grey (last time), one tap on the tick logs it. The theme leads; the plugin adds only what the task needs. Tactile and sure at the gym (sets, session, timer), quiet and precise at the desk (tables, charts, dashboards, settings).",
+    "keyCharacteristics": [
+      "Theme first: Obsidian variables and --workout-* tokens, never a literal color",
+      "One tap per set: the suggestion is the value",
+      "Done is filled, to do is outlined",
+      "Every control at least 44x44px on a phone",
+      "Undo instead of confirm for one-tap actions"
+    ],
+    "rules": [
+      {
+        "name": "The Body Token Rule",
+        "body": "Theme-derived tokens are declared on body, not :root.",
+        "section": "colors"
+      },
+      {
+        "name": "The Suggestion Is Ink Rule",
+        "body": "A suggestion that gets logged uses --text-muted (>=4.5:1), never --text-faint; it differs from a typed value by weight and color.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Figures Rule",
+        "body": "Numbers compared down a column use tabular-nums.",
+        "section": "typography"
+      },
+      {
+        "name": "The Inset Not Lifted Rule",
+        "body": "A control inside a card is inset (page color plus border), never lifted with a shadow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do take every color from an Obsidian variable or a --workout-* token",
+      "Do keep controls at least 44x44px on phones with a :focus-visible ring",
+      "Do focus kit controls again after a redraw (focusKey, DomUtils.focusByKey)",
+      "Do announce silent changes through a LiveRegion",
+      "Do offer Undo for a one-tap removal"
+    ],
+    "donts": [
+      "Don't use --text-faint for text anyone reads",
+      "Don't use --background-primary for a surface that must stand out",
+      "Don't use :has()",
+      "Don't use a bare 1fr grid track",
+      "Don't confirm an action you can undo",
+      "Don't draw the standalone timer layout inside a block",
+      "Don't build a block's controls by hand when the kit has them"
+    ]
+  }
+}

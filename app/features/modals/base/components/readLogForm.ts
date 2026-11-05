@@ -50,7 +50,7 @@ export function readLogForm(
       notes: form.notesInput.value.trim(),
       date: form.dateInput?.value || undefined,
       protocol:
-        form.protocolSelect?.value || WorkoutProtocol.STANDARD,
+        form.protocol?.value || WorkoutProtocol.STANDARD,
       customFields,
     },
   };

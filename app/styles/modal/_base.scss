@@ -27,23 +27,25 @@
   }
 }
 
+/* A group of fields: a card on the modal (like a BlockCard on the note),
+   its fields inset with the page color. The heading is a title, no rule */
 .workout-modal-section {
-  padding: var(--workout-space-lg);
+  padding: var(--workout-space-md);
   background-color: var(--background-secondary);
-  border-radius: var(--workout-radius-lg);
+  border-radius: var(--workout-radius-xl);
   border: var(--workout-border-thin) solid
     var(--workout-border-color);
   display: flex;
   flex-direction: column;
-  gap: var(--workout-space-lg);
+  gap: var(--workout-space-md);
 
   h3 {
     margin: 0;
+    padding: 0;
+    border: none;
     font-size: var(--workout-font-lg);
+    font-weight: var(--workout-font-weight-semibold);
     color: var(--text-normal);
-    border-bottom: var(--workout-border-thin) solid
-      var(--workout-border-subtle);
-    padding-bottom: var(--workout-space-sm);
   }
 }
 
@@ -60,6 +62,18 @@
   /* Covers the modal's bottom padding, where the form would show through */
   box-shadow: 0 var(--workout-space-lg) 0
     var(--modal-background, var(--background-primary));
+
+  // Save and cancel are one size, at least a 44px target
+  .workout-btn {
+    min-height: var(--workout-touch-target-min);
+    padding: var(--workout-space-sm) var(--workout-space-xl);
+    font-size: var(--workout-font-base);
+  }
+
+  .workout-btn:focus-visible {
+    outline: var(--workout-border-medium) solid var(--interactive-accent);
+    outline-offset: var(--workout-space-2xs);
+  }
 }
 
 body.is-mobile .workout-modal-actions {

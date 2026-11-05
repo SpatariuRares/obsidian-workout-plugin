@@ -8,7 +8,6 @@
       "variationFromTo": " {startValue}에서 {endValue}까지",
       "weightIncrementUnit": "무게 증가 {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "전체 변화: ",
     "significantIncrease": "0에서 증가",
     "trendLine": "추세선",
     "typeNotAvailable": "\"{chartDataType}\" 유형의 차트는 {exerciseType} 운동에 사용할 수 없습니다. 사용 가능한 유형: {typeList}",
@@ -25,7 +24,16 @@
     "defaultTitle": "추세 {type}",
     "noTypesAvailable": "사용 가능한 차트 유형이 없습니다",
     "noEligibleE1rm": "1RM 추정에 사용할 수 있는 세트가 없습니다. 워밍업과 드롭 세트를 제외하고, 1–12회 반복하는 양의 무게를 기록하세요.",
-    "editChart": "차트 편집"
+    "editChart": "차트 편집",
+    "stats": {
+      "average": "평균",
+      "last3": "최근 3회",
+      "max": "최고",
+      "min": "최저",
+      "recentTrend": "최근 추세",
+      "sessions": "세션",
+      "vsPrevious": "이전 대비"
+    }
   },
   "commands": {
     "addExerciseBlock": "운동 블록 추가",
@@ -53,11 +61,12 @@
     "minPerKm": "분/km",
     "notAvailable": "사용할 수 없음",
     "sec": "초",
+    "undo": "실행 취소",
     "unknown": "알 수 없음",
     "workout": "운동 루틴"
   },
   "convert": {
-    "currentType": "현재 유형:",
+    "currentType": "현재 유형",
     "errors": {
       "convertError": "운동 데이터 변환 오류: {error}"
     },
@@ -78,7 +87,7 @@
     "success": "{count} 로그 항목이 성공적으로 변환되었습니다.",
     "title": "운동 데이터 변환",
     "typeSelect": {
-      "convertTo": "변환 유형:",
+      "convertTo": "변환 대상",
       "updateFileType": "운동 파일 유형 업데이트"
     }
   },
@@ -108,7 +117,7 @@
       "sharedName": "{pages}와(과) 운동 이름이 같습니다: 로그는 그중 한 곳에만 저장됩니다."
     },
     "muscleTags": {
-      "description": "설명",
+      "description": "운동 페이지 상단 속성(프런트매터)에 쓸 수 있는 태그입니다. 태그를 클릭하면 복사됩니다.",
       "title": "근육 태그",
       "tooltip": "복사하려면 클릭: {tag}",
       "totalCount": "총: {count}개의 태그 사용 가능"
@@ -129,7 +138,7 @@
       "columnProgression": "향상",
       "columnProtocol": "프로토콜",
       "columnVolumeChange": "볼륨 변화",
-      "disclaimer": "면책 조항",
+      "disclaimer": "상관관계일 뿐 증명은 아닙니다: 체중, 휴식, 수면도 이 수치를 바꿉니다.",
       "noData": "아직 데이터가 부족합니다. 프로토콜마다 기록된 세트가 5개 이상 필요합니다.",
       "title": "프로토콜 효과",
       "subtitle": "기록된 모든 세트에서 각 프로토콜의 성과"
@@ -174,6 +183,11 @@
         "sets": "평균 세트 수: {value}",
         "reps": "평균 반복 횟수: {value}"
       },
+      "controls": {
+        "period": "기간",
+        "side": "면",
+        "metric": "측정 항목"
+      },
       "imbalance": {
         "backDominant": "전면-후면 불균형: 후면 근육이 전면 근육보다 훨씬 많이 사용됩니다.",
         "frontDominant": "전면-후면 불균형: 전면 근육이 후면 근육보다 훨씬 더 많이 사용됩니다."
@@ -186,9 +200,8 @@
       "moveUp": "{widget}을(를) 위로 이동",
       "moveDown": "{widget}을(를) 아래로 이동",
       "allHistory": "비어 있음: 전체 기록",
-      "recentWorkoutsLimit": "최근 목록의 운동 수:",
-      "volumeTrendDays": "볼륨 추세의 일 수:",
-      "gridColumns": "열:",
+      "recentWorkoutsLimit": "최근 목록의 운동 루틴 수",
+      "volumeTrendDays": "볼륨 추이의 일수",
       "layout": "레이아웃",
       "layoutGrid": "그리드",
       "layoutList": "목록",
@@ -200,6 +213,7 @@
       "size": "{width} × {height}",
       "gridHint": "위젯을 드래그해 옮기고, 모서리를 드래그해 크기를 조절하세요. 아래 보관함에는 각 위젯이 가질 수 있는 가장 작은 크기가 표시됩니다. × 버튼이나 보관함으로 드래그해 위젯을 뺄 수 있습니다. 키보드: 화살표로 이동, Shift와 화살표로 크기 조절, Delete로 제거합니다.",
       "gridColumnsMeasured": "{columns}개 열이 노트 너비에 맞습니다.",
+      "gridColumns": "열",
       "remove": "대시보드에서 {widget} 빼기"
     },
     "grid": {
@@ -230,37 +244,51 @@
       "edit": "위젯 편집",
       "removeConfirm": "대시보드에서 \"{widget}\"을(를) 제거할까요?",
       "removeConfirmButton": "제거",
-      "calendarWeeks": "표시할 주 수:",
+      "calendarWeeks": "이번 주부터 거슬러 올라가 표시할 주 수",
       "quickStatsPeriods": "표시할 기간",
-      "quickStatsMetrics": "표시할 행",
+      "quickStatsMetrics": "표시할 수치",
       "heatMapTimeFrame": "시작 기간",
-      "heatMapMetric": "시작 지표",
-      "heatMapView": "시작 보기",
-      "volumeTopLimit": "상위 목록의 운동 수:",
-      "protocolDays": "집계할 일수:",
-      "protocolMinEntries": "프로토콜을 비교하는 데 필요한 세트 수:",
-      "durationRecentCount": "비교할 운동 수:",
-      "durationRestSeconds": "추정에 쓸 세트 간 휴식 시간 (초):",
+      "heatMapMetric": "시작 측정 항목",
+      "heatMapView": "시작 면",
+      "volumeTopLimit": "나열할 운동 종목 수",
+      "protocolDays": "집계할 일수",
+      "protocolMinEntries": "프로토콜별 최소 세트 수",
+      "durationRecentCount": "비교할 운동 루틴 수",
+      "durationRestSeconds": "추정에 쓸 세트 사이 휴식 시간",
       "summaryMetrics": "표시할 카드",
       "calendarShowStats": "연속 기록과 이번 주 진행 상황 표시",
       "heatMapShowImbalance": "근육 불균형 패널 표시",
-      "volumeShowBreakdown": "상위 운동 목록 표시",
-      "protocolChartType": "차트",
+      "volumeShowBreakdown": "볼륨 상위 운동 종목 표시",
+      "protocolChartType": "차트 스타일",
       "chartPie": "원형",
       "chartDoughnut": "도넛형",
-      "protocolSortBy": "정렬 기준 (좋은 순)",
-      "durationShowTrend": "편차 추세 표시",
+      "protocolSortBy": "정렬 기준",
+      "durationShowTrend": "추정 정확도 추세 표시",
       "quickActionsShown": "표시할 버튼",
-      "fileErrorsMaxItems": "나열할 페이지 수 (비우면 전체):",
-      "fileErrorsMaxTags": "페이지당 근육 태그 최대 개수:",
+      "fileErrorsMaxItems": "표시할 페이지 수",
+      "fileErrorsMaxTags": "페이지당 근육 태그 최대 개수",
       "fileErrorsCheckSharedNames": "운동 이름이 같은 페이지 표시",
-      "muscleTagsGroupByMuscle": "태그를 근육별로 묶기"
+      "muscleTagsGroupByMuscle": "태그를 근육별로 묶기",
+      "volumeTrendDays": "볼륨 차트의 일수",
+      "recentWorkoutsLimit": "표시할 운동 루틴 수",
+      "all": "전체",
+      "numberRange": "{min}부터 {max}까지의 정수를 입력하세요.",
+      "pickOne": "하나 이상 선택하거나 위젯을 제거하세요.",
+      "units": {
+        "days": "일",
+        "weeks": "주",
+        "seconds": "초"
+      },
+      "editTitle": "{widget} 편집",
+      "sortMostSets": "세트 수 많은 순",
+      "lastWidget": "이 대시보드의 마지막 위젯이라 제거할 수 없습니다. 대신 블록을 삭제하세요."
     }
   },
   "duration": {
     "estimatedDuration": "예상 소요 시간",
     "lastSession": "마지막 세션",
     "restTime": "휴식 시간",
+    "setCount": "{count}세트",
     "setTime": "세트 시간",
     "unableToAnalyze": "운동 파일 분석 불가"
   },
@@ -378,7 +406,7 @@
       "importTitle": "8. Strong 또는 Hevy에서 가져오기",
       "importIntro": "명령 팔레트에서 **{command}**를 실행하고 앱이 내보낸 CSV를 선택하세요. 기록에 이미 있는 세트는 건너뛰며, 기록은 먼저 백업됩니다.",
       "setsTitle": "스마트폰에서 로그를 기록",
-      "setsIntro": "`workout-sets` 블록은 오늘의 세트를 행 형태로 보여줍니다. 회색 숫자는 이전 세트와 동일하며, 행을 선택하여 그대로 기록하거나, 수행한 내용을 입력합니다. 세트의 프로토콜 및 메모를 보려면 화살표를 탭하고, 기록된 세트를 편집할 수 있습니다.",
+      "setsIntro": "`workout-sets` 블록은 오늘의 세트를 행 형태로 보여줍니다. 회색 숫자는 지난번 같은 세트의 값입니다. 행을 선택하여 그대로 기록하거나, 수행한 내용을 입력하세요. 화살표를 탭하면 세트의 프로토콜과 메모를 보고, 기록된 세트를 탭하면 편집할 수 있습니다.",
       "codeBlockWorkoutSets": "오늘의 운동 세트 목록을 한 번에 기록"
     },
     "fileNames": {
@@ -425,6 +453,24 @@
       "workoutsDesc": "예시 운동 템플릿",
       "workoutsFolder": "**{folder}/**",
       "sessionIntro": "이 노트에는 간단한 계획이 있습니다: 세트, 목표, 휴식 타이머가 있는 운동 하나입니다. 세션은 해야 할 세트를 보여 줍니다. 기록하면 휴식 타이머가 시작됩니다.",
+      "tables": {
+        "latestTitle": "운동 종목의 최근 세트",
+        "latestIntro": "`exercise`는 운동 종목을, `limit`는 표에 보이는 세트 수를 정합니다.",
+        "targetTitle": "목표와 계획한 세트",
+        "targetIntro": "`targetWeight`와 `targetReps`를 지정하면 표에 목표까지 얼마나 가까운지 나타납니다. 목표에 도달하면 배지가 나타나 다음 무게를 블록에 적어 넣을 수 있습니다. `sets`는 계획한 세트 수입니다. `limit`가 없으면 표는 최근 두 운동 루틴을 보여 주며, 가이드 세션도 이를 셉니다. `workout`과 `exactMatch: true`를 함께 지정하면 그 운동 루틴의 해당 운동 종목 세트만 남깁니다.",
+        "workoutTitle": "운동 루틴 전체",
+        "workoutIntro": "`workout`을 지정하고 `exercise`를 지정하지 않으면 표는 그 운동 루틴의 모든 세트를 보여 줍니다. `dateRange: 14`는 최근 14일을 남깁니다.",
+        "columnsTitle": "열과 정렬",
+        "columnsIntro": "`columns`는 열과 그 순서를 정합니다. `sortBy`와 `sortOrder`는 행의 순서를 정하며, 여기서는 무거운 세트가 먼저 나옵니다. `showAddButton: false`는 + 버튼을 숨기고, `showProtocol: false`는 프로토콜 배지를 숨깁니다."
+      },
+      "sets": {
+        "lastTimeTitle": "지난번과 같은 세트",
+        "lastTimeIntro": "`workout`을 지정하면 회색 숫자는 그 운동 루틴에서 이 운동 종목을 마지막으로 했을 때의 값입니다. 지정하지 않으면 블록은 노트의 이름을 사용합니다.",
+        "restTitle": "휴식 타이머와 목표",
+        "restIntro": "`rest`는 각 세트 후의 휴식 시간(초)입니다 (`0` = 타이머 없음). 지정하지 않으면 블록은 섹션의 `workout-timer`를 사용합니다. `targetWeight`와 `targetReps`는 목표를 보여 주며, 운동을 처음 할 때의 힌트가 됩니다.",
+        "restTimerTitle": "휴식 타이머 옵션",
+        "restTimerIntro": "블록에 휴식 타이머의 모든 옵션이 들어 있으므로 하루치 노트에는 `workout-timer`가 필요 없습니다. `timer.type`(`interval`은 `rest`를 각 라운드의 운동 시간으로 사용하며, `timer.rest`와 `timer.rounds`를 함께 씁니다), `timer.preset`, `timer.sound`, `timer.showControls`. ⋮ → 휴식 타이머 편집을 누르면 이 값들이 자동으로 기록됩니다."
+      },
       "pagesIntro": "페이지마다 기능 하나씩 살펴보세요. 링크를 순서대로 따라가거나 아래에서 원하는 기능을 고르세요. \"이전\"과 \"다음\"으로 노트 사이를 이동하고, 일반적으로 스크롤하며 각 예제를 살펴보세요.",
       "liveIntro": "아래의 모든 기능을 6주간의 예시 운동으로 살펴보세요. 데모 데이터이므로 컨트롤을 직접 사용해 보고 노트가 어떻게 작동하는지 확인해 보세요.",
       "tryLog": "\"+\" 버튼을 사용하여 세트를 추가합니다. 표, 차트 및 대시보드는 동일한 CSV 파일을 읽습니다.",
@@ -623,43 +669,38 @@
     },
     "confirmAction": "작업 확인",
     "csvExercise": "CSV 운동 종목",
-    "customParameters": "사용자 정의 매개변수:",
-    "customTitle": "사용자 지정 제목:",
-    "dataLimit": "데이터 개수 제한 (0 = 전체):",
-    "dataType": "데이터 유형:",
-    "dateRange": "날짜 범위 (일):",
-    "daysRange": "기간 (일, 0 = 전체):",
+    "customParameters": "사용자 지정 매개변수",
+    "customTitle": "사용자 지정 제목",
+    "dataLimit": "데이터 개수 제한 (0 = 전체)",
+    "dataType": "데이터 유형",
     "delete": "삭제",
-    "duration": "지속 시간 (초):",
     "editTag": "태그 편집",
-    "exerciseType": "운동 유형:",
     "exportTags": "태그 내보내기",
     "fileName": "파일 이름",
-    "folderPath": "폴더 경로 (선택 사항):",
+    "folderPath": "폴더 경로 (선택 사항)",
     "importMerge": "병합",
     "importReplace": "모든 것을 대체",
     "importTags": "태그 가져오기",
     "labels": {
       "actions": "액션",
       "currentFileInfo": "현재 파일: {fileName}",
-      "exercise": "운동 종목:",
-      "reps": "반복 횟수:",
-      "targetReps": "목표 반복 횟수:",
-      "plannedSets": "계획된 세트:",
-      "targetWeight": "목표: ({unit}):",
-      "volume": "볼륨 ({unit}):",
-      "weight": "무게 ({unit}):"
+      "exercise": "운동 종목",
+      "reps": "반복 횟수",
+      "targetReps": "목표 반복 횟수",
+      "plannedSets": "계획한 세트",
+      "targetWeight": "목표 무게 ({unit})",
+      "volume": "볼륨 ({unit})",
+      "weight": "무게 ({unit})"
     },
     "layoutGrouped": "근육별로 그룹화",
     "layoutHorizontal": "수평 방향 흐름",
-    "layoutType": "레이아웃 유형:",
+    "layoutType": "레이아웃 유형",
     "layoutVertical": "수직 흐름",
     "muscleGroup": "근육 그룹",
     "newTag": "새로운 태그",
     "noTagsFound": "검색 결과에 일치하는 태그가 없습니다.",
     "noTagsSelected": "태그가 선택되지 않았습니다. 아래 태그를 클릭하여 추가하세요.",
-    "note": "참고:",
-    "notes": "참고 사항 (선택 사항):",
+    "note": "노트",
     "notices": {
       "auditConfirmRenameFile": "이 파일의 이름을 변경하시겠습니까?\n\n{oldName} → {newName}",
       "auditMismatchCount": "{count}개의 불일치 발견:",
@@ -733,11 +774,11 @@
       "dashboardUpdateFailed": "대시보드를 업데이트하지 못했습니다. 노트에서 찾을 수 없거나, ID가 없는 다른 대시보드가 같은 설정을 가지고 있습니다. 노트를 다시 열고 다시 시도하세요.",
       "setsInserted": "세트가 삽입되었습니다"
     },
-    "parameterKey": "키:",
-    "parameterLabel": "레이블:",
+    "parameterKey": "키",
+    "parameterLabel": "라벨",
     "parameterRequired": "필수",
-    "parameterType": "유형:",
-    "parameterUnit": "단위 (선택 사항):",
+    "parameterType": "유형",
+    "parameterUnit": "단위 (선택 사항)",
     "placeholders": {
       "customTitle": "자동으로 제목을 생성하려면 비워두세요.",
       "enterTagName": "태그 이름 입력 (예: 가슴, 흉근)",
@@ -757,10 +798,8 @@
       "sets": "4",
       "workout": "예: 운동 루틴 A, 훈련 B, 또는 아래 체크박스 사용"
     },
-    "protocol": "프로토콜:",
-    "recentExercises": "최근:",
-    "restTime": "휴식 시간 (초):",
-    "rounds": "라운드:",
+    "protocol": "프로토콜",
+    "recentExercises": "최근",
     "save": "저장",
     "sections": {
       "advancedOptions": "고급 옵션",
@@ -797,15 +836,15 @@
       "yesNo": "예/아니요",
       "warmup": "워밍업"
     },
-    "sets": "세트:",
-    "similarTags": "유사 태그:",
+    "sets": "세트",
+    "similarTags": "비슷한 태그",
     "similarity": "유사도",
     "status": "상태",
     "tag": "태그",
-    "tagsSelector": "근육 관련 태그:",
-    "timerDuration": "타이머 지속 시간 (초):",
-    "timerPreset": "타이머 프리셋:",
-    "timerType": "타이머 유형:",
+    "tagsSelector": "근육 태그",
+    "timerDuration": "타이머 시간 (초)",
+    "timerPreset": "타이머 프리셋",
+    "timerType": "타이머 유형",
     "titles": {
       "addExerciseBlock": "운동 블록 추가",
       "auditExerciseNames": "운동 이름 점검",
@@ -827,23 +866,30 @@
       "editChart": "차트 편집",
       "insertSets": "운동 세트 추가"
     },
-    "workout": "운동 루틴 (선택 사항):",
-    "workoutFile": "운동 루틴 파일:",
-    "workoutNameOptional": "운동 루틴 이름 (선택 사항):",
     "importMergeAriaLabel": "병합: 새 태그만 추가, 기존 태그 유지",
     "importReplaceAriaLabel": "대체: 기존 태그 모두 덮어쓰기",
     "editItem": "{item} 편집",
     "deleteItem": "{item} 삭제",
+    "duration": "시간 (초)",
     "errors": {
       "missingElements": "누락된 요소",
       "validationCombinedMode": "운동 종목 + 운동 루틴 유형에서는 두 필드를 모두 입력하세요"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - 세트: {sets}\n- 반복: {reps}\n- 휴식: {restTime}초\n\n",
+    "exerciseType": "운동 유형",
     "noteTemplate": "**참고: {note}**\n",
+    "notes": "메모 (선택 사항)",
     "date": "날짜",
+    "dateRange": "날짜 범위 (일)",
+    "daysRange": "기간 (일, 0 = 전체)",
     "weightUnitToggle": "이 항목의 단위",
     "rest": "휴식",
-    "work": "운동"
+    "restTime": "휴식 시간 (초)",
+    "rounds": "라운드",
+    "work": "운동",
+    "workout": "운동 루틴 (선택 사항)",
+    "workoutFile": "운동 파일",
+    "workoutNameOptional": "운동 루틴 이름 (선택 사항)"
   },
   "settings": {
     "buttons": {
@@ -999,18 +1045,8 @@
         "name": "운동 세트",
         "desc": "`workout-sets` 블록: 오늘 운동 세트를 폰에서 채울 수 있도록 행으로 표시하고, 이전 세트의 값을 참고 자료로 제공하며, 각 틱마다 시작되는 휴식 타이머를 포함합니다."
       },
-      "disabledBlock": "{feature}는 베타 기능입니다. 이 기능을 사용하려면 설정 → 베타 기능에서 활성화하십시오."
+      "disabledBlock": "{feature}는 베타 기능입니다. 이 기능을 사용하려면 설정 → 베타 기능에서 활성화하세요."
     }
-  },
-  "stats": {
-    "max": "최대: ",
-    "min": "최소: ",
-    "recentLast3": " (최근 3회)",
-    "recentTrend": "최근 추세",
-    "recentVsPrev": " (이전 대비)",
-    "sessions": "세션",
-    "average": "평균: ",
-    "title": "{dataTypeLabel} 통계 ({contextLabel}):"
   },
   "table": {
     "actions": "액션",
@@ -1050,6 +1086,8 @@
     "notAvailable": "없음",
     "refreshSuccess": "표를 새로 고쳤습니다",
     "target": {
+      "noSetsYet": "{weight}에서의 세트가 아직 없습니다",
+      "progress": "최고 {best}/{target}회",
       "progressTooltip": "최고: {best}회 / 목표: {target}회",
       "repsSuffix": "회",
       "separator": " × "
@@ -1121,7 +1159,7 @@
       "log": "로그 로드 오류: {error}",
       "timer": "타이머 로드 오류: {error}",
       "dashboard": "대시보드 로드 오류: {error}",
-      "sets": "세트 로딩 오류: {error}"
+      "sets": "세트 로드 오류: {error}"
     },
     "validation": {
       "title": "유효하지 않은 매개변수:",
@@ -1148,7 +1186,7 @@
     "next": "다음",
     "skip": "건너뛰기",
     "done": "완료",
-    "progress": "{total} 중 {current}",
+    "progress": "{current}/{total}",
     "noteName": "가이드 투어",
     "noteIntro": "이 페이지에서 플러그인의 각 부분을 안내합니다. 이 노트는 언제든 편집하거나 삭제할 수 있습니다.",
     "noteTable": "내 세트",
@@ -1232,25 +1270,29 @@
     "next": "다음",
     "rest": "휴식",
     "done": "운동 완료: 오늘 기록한 세트 {sets}개.",
-    "empty": "Add a `workout-log` or `workout-sets` block with an exercise to this note to follow it as a session."
+    "empty": "`workout-log` 또는 `workout-sets` 블록을 운동 종목과 함께 이 노트에 추가하면 세션으로 따라갈 수 있습니다."
   },
   "sets": {
-    "editSet": "Edit set {set}",
     "addSet": "세트 추가",
+    "removeSet": "세트 제거",
     "protocol": "프로토콜",
     "notes": "참고 사항",
     "editBlock": "세트 편집",
+    "editRestTimer": "휴식 타이머 편집",
     "blockUpdated": "세트가 업데이트되었습니다",
     "blockUpdateFailed": "세트 업데이트에 실패했습니다: 해당 블록이 노트에 없습니다. 노트를 다시 열고 시도해 보세요.",
-    "workoutLabel": "운동:",
+    "workoutLabel": "운동 루틴",
     "workoutPlaceholder": "비어 있음: {note}",
     "restLabel": "세트 사이에 휴식 (0 = 섹션의 타이머)",
-    "noExercise": "이 블록에 `exercise:`를 추가하여 세트 수를 기록합니다.",
+    "noExercise": "이 블록에 `exercise:`를 추가하면 세트를 기록할 수 있습니다.",
     "progress": "{done}/{sets} 세트",
     "lastTime": "마지막 ({date}): {sets}",
-    "setColumn": "설정",
-    "fieldOfSet": "{field}, {set} 설정",
+    "setColumn": "세트",
+    "fieldOfSet": "{field}, 세트 {set}",
     "details": "세트 {set}의 프로토콜 및 메모",
-    "logSet": "로그 세트 {set}"
+    "logSet": "로그 세트 {set}",
+    "unlogSet": "로그에서 세트 {set} 삭제",
+    "setRemoved": "세트 {set}을(를) 제거했습니다",
+    "valueOfSet": "{field}, 세트 {set}: {value}"
   }
 }

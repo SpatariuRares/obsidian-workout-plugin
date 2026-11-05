@@ -11,16 +11,17 @@ import type { LogEntryInput, WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { defaultProtocolEntries } from "@app/services/protocols/ProtocolCatalog";
 import { t } from "@app/i18n";
+import { Notice } from "obsidian";
 
-const editedSets: unknown[] = [];
-jest.mock("@app/features/modals/log/EditLogModal", () => ({
-  EditLogModal: class {
-    constructor(_app: unknown, _plugin: unknown, set: unknown) {
-      editedSets.push(set);
-    }
-    open() {}
-  },
-}));
+// Obsidian's global: a fragment with createEl/createSpan
+(globalThis as unknown as Record<string, unknown>).createFragment = () => createObsidianContainer();
+/** The "set removed" notice's content, and whether it was hidden */
+const notices: { message: HTMLElement; hidden: boolean }[] = [];
+(Notice as unknown as jest.Mock).mockImplementation((message: unknown) => {
+  const shown = { message: message as HTMLElement, hidden: false };
+  if (message instanceof HTMLElement) notices.push(shown);
+  return { hide: () => (shown.hidden = true) };
+});
 
 interface TimerState {
   params: unknown;
@@ -36,7 +37,9 @@ jest.mock("@app/features/timer/views/EmbeddedTimerView", () => ({
     createTimer(_el: HTMLElement, params: unknown) {
       this.state.params = params;
     }
-    reset() {}
+    reset() {
+      this.state.started = 0;
+    }
     start() {
       this.state.started++;
     }
@@ -76,6 +79,8 @@ function setup(
 ) {
   const eventBus = new WorkoutEventBus();
   const added: LogEntryInput[] = [];
+  const updated: LogEntryInput[] = [];
+  const deleted: WorkoutLogData[] = [];
   const reads = { count: 0 };
   const plugin = {
     app: { vault: { getAbstractFileByPath: () => null } },
@@ -95,20 +100,36 @@ function setup(
     getExerciseDefinitionService: () => ({
       getParametersForExercise: async () => STRENGTH,
     }),
-    addWorkoutLogEntry: async (entry: LogEntryInput) => {
+    addWorkoutLogEntry: async (entry: LogEntryInput, options: { timestamp?: number } = {}) => {
       added.push(entry);
+      const timestamp = options.timestamp ?? Date.now() + added.length;
       rows.push({
-        ...entry,
         date: new Date().toISOString(),
+        ...entry,
         volume: entry.reps * entry.weight,
-        timestamp: Date.now() + added.length,
+        timestamp,
       } as WorkoutLogData);
+      rows.sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0));
       eventBus.emit({
         type: "log:added",
         payload: {
           entry: rows[rows.length - 1],
           context: { exercise: entry.exercise, workout: entry.workout },
         },
+      });
+    },
+    updateWorkoutLogEntry: async (previous: WorkoutLogData, entry: LogEntryInput) => {
+      updated.push(entry);
+      const next = { ...previous, ...entry } as WorkoutLogData;
+      rows[rows.indexOf(previous)] = next;
+      eventBus.emit({ type: "log:updated", payload: { previous, updated: next } });
+    },
+    deleteWorkoutLogEntry: async (entry: WorkoutLogData) => {
+      deleted.push(entry);
+      rows.splice(rows.indexOf(entry), 1);
+      eventBus.emit({
+        type: "log:deleted",
+        payload: { entry, context: { exercise: entry.exercise, workout: entry.workout } },
       });
     },
   } as unknown as WorkoutPluginContext;
@@ -128,7 +149,7 @@ function setup(
   new EventAwareRenderChild(el, eventBus, { exercise: params.exercise, exactMatch: true }, () =>
     child.render(),
   ).load();
-  return { el, view, child, added, eventBus, reads };
+  return { el, view, child, added, updated, deleted, eventBus, reads };
 }
 
 const flush = async () => {
@@ -137,16 +158,16 @@ const flush = async () => {
 const rowsOf = (el: HTMLElement) =>
   Array.from(el.querySelectorAll<HTMLElement>(".workout-sets-row"));
 const inputsOf = (row: HTMLElement) =>
-  Array.from(row.querySelectorAll<HTMLInputElement>(".workout-sets-input"));
+  Array.from(row.querySelectorAll<HTMLInputElement>(".workout-number-field-input"));
 const check = (row: HTMLElement) =>
-  row.querySelector<HTMLButtonElement>("button.workout-sets-check")!;
+  row.querySelector<HTMLButtonElement>("button.workout-check-toggle")!;
 const type = (input: HTMLInputElement, value: string) => {
   input.value = value;
   input.dispatchEvent(new Event("input"));
 };
 
 beforeEach(() => {
-  editedSets.length = 0;
+  notices.length = 0;
   timers.length = 0;
 });
 
@@ -239,7 +260,7 @@ describe("EmbeddedSetsView", () => {
     const { el, added } = setup([], { exercise: "Bench Press", sets: 1, targetReps: 8, targetWeight: 80 });
     await flush();
 
-    rowsOf(el)[0].querySelector<HTMLButtonElement>(".workout-sets-details-toggle")!.click();
+    rowsOf(el)[0].querySelector<HTMLButtonElement>(".workout-disclosure-toggle")!.click();
     await flush();
     const chips = Array.from(rowsOf(el)[0].querySelectorAll<HTMLButtonElement>(".workout-chip"));
     expect(chips[0].getAttribute("aria-pressed")).toBe("true");
@@ -282,14 +303,199 @@ describe("EmbeddedSetsView", () => {
     expect(rowsOf(el)).toHaveLength(3);
   });
 
-  it("opens the edit form when a logged set is tapped", async () => {
-    const logged = set(80, 8);
-    const { el } = setup([logged]);
+  it("removes a row added with the add button, keeping the drafts of the others", async () => {
+    const { el, added } = setup([], { exercise: "Bench Press", sets: 1 });
+    await flush();
+    const addSet = () =>
+      Array.from(el.querySelectorAll("button"))
+        .find((b) => b.textContent?.includes(t("sets.addSet")))!
+        .click();
+    const removeButton = (row: HTMLElement) =>
+      row.querySelector<HTMLButtonElement>(`button[aria-label="${t("sets.removeSet")}"]`) ??
+      undefined;
+    const openDetails = async (row: HTMLElement) => {
+      row.querySelector<HTMLButtonElement>(".workout-disclosure-toggle")!.click();
+      await flush();
+    };
+    addSet();
+    await flush();
+    addSet();
+    await flush();
+    const third = inputsOf(rowsOf(el)[2]);
+    third[0].value = "5";
+    third[0].dispatchEvent(new Event("input"));
+
+    // A planned row has no remove
+    await openDetails(rowsOf(el)[0]);
+    expect(removeButton(rowsOf(el)[0])).toBeUndefined();
+
+    await openDetails(rowsOf(el)[1]);
+    removeButton(rowsOf(el)[1])!.click();
     await flush();
 
-    rowsOf(el)[0].querySelector<HTMLElement>(".workout-sets-row-main")!.click();
+    expect(rowsOf(el)).toHaveLength(2);
+    expect(inputsOf(rowsOf(el)[1])[0].value).toBe("5");
+    expect(added).toEqual([]);
+  });
 
-    expect(editedSets).toEqual([logged]);
+  it("takes a logged set back with its tick: deleted, and its row to fill in with its values", async () => {
+    const logged = set(80, 8);
+    const { el, added, deleted } = setup([logged]);
+    await flush();
+
+    check(rowsOf(el)[0]).click();
+    await flush();
+
+    expect(deleted).toEqual([logged]);
+    expect(rowsOf(el)).toHaveLength(3);
+    expect(rowsOf(el)[0].classList.contains("is-logged")).toBe(false);
+    expect(inputsOf(rowsOf(el)[0]).map((input) => input.value)).toEqual(["8", "80"]);
+
+    check(rowsOf(el)[0]).click();
+    await flush();
+    expect(added[0]).toMatchObject({ reps: 8, weight: 80 });
+  });
+
+  it("offers to undo a removed set, putting the very set back in its place", async () => {
+    const first = set(80, 8, today, { timestamp: 1, protocol: "warmup", notes: "easy" });
+    const second = set(85, 6, today, { timestamp: 2 });
+    const { el, added, deleted } = setup([first, second]);
+    await flush();
+
+    check(rowsOf(el)[0]).click();
+    await flush();
+    expect(deleted).toEqual([first]);
+    expect(notices[0].message.textContent).toContain(t("sets.setRemoved", { set: 1 }));
+
+    notices[0].message.querySelector<HTMLButtonElement>("button")!.click();
+    await flush();
+
+    expect(notices[0].hidden).toBe(true);
+    expect(added[0]).toMatchObject({ reps: 8, weight: 80, protocol: "warmup", notes: "easy" });
+    const rows = rowsOf(el);
+    expect(rows.filter((row) => row.classList.contains("is-logged"))).toHaveLength(2);
+    expect(rows[0].textContent).toContain("80");
+    // The draft went back with the set: one row to fill in, empty
+    expect(rows).toHaveLength(3);
+    expect(inputsOf(rows[2]).map((input) => input.value)).toEqual(["", ""]);
+  });
+
+  it("does nothing on undo when the row was ticked again", async () => {
+    const { el, added } = setup([set(80, 8)]);
+    await flush();
+
+    check(rowsOf(el)[0]).click();
+    await flush();
+    check(rowsOf(el)[0]).click();
+    await flush();
+    notices[0].message.querySelector<HTMLButtonElement>("button")!.click();
+    await flush();
+
+    expect(added).toHaveLength(1);
+  });
+
+  it("stops the rest the removed set started", async () => {
+    const { el } = setup([], { exercise: "Bench Press", sets: 3, targetReps: 8, targetWeight: 80, rest: 60 });
+    await flush();
+
+    check(rowsOf(el)[0]).click();
+    await flush();
+    expect(timers[0].started).toBe(1);
+    check(rowsOf(el)[0]).click();
+    await flush();
+
+    expect(timers[0].started).toBe(0);
+  });
+
+  describe("focus and screen readers", () => {
+    it("moves the focus to the next row after a tick, and back to the row taken back", async () => {
+      const { el } = setup([], { exercise: "Bench Press", sets: 3, targetReps: 8, targetWeight: 80 });
+      document.body.appendChild(el);
+      await flush();
+
+      check(rowsOf(el)[0]).click();
+      await flush();
+      expect(document.activeElement).toBe(inputsOf(rowsOf(el)[1])[0]);
+
+      check(rowsOf(el)[0]).click();
+      await flush();
+      expect(document.activeElement).toBe(inputsOf(rowsOf(el)[0])[0]);
+      el.remove();
+    });
+
+    it("keeps the focus on the chevron that opened the details", async () => {
+      const { el } = setup([], { exercise: "Bench Press", sets: 2 });
+      document.body.appendChild(el);
+      await flush();
+
+      rowsOf(el)[1].querySelector<HTMLButtonElement>(".workout-disclosure-toggle")!.click();
+      await flush();
+
+      expect(document.activeElement).toBe(
+        rowsOf(el)[1].querySelector(".workout-disclosure-toggle"),
+      );
+      el.remove();
+    });
+
+    it("says the progress after a tick, from a region the redraw keeps", async () => {
+      jest.useFakeTimers({ doNotFake: ["setTimeout"] });
+      const { el } = setup([], { exercise: "Bench Press", sets: 3, targetReps: 8, targetWeight: 80 });
+      await flush();
+      const live = el.querySelector('[role="status"]')!;
+
+      check(rowsOf(el)[0]).click();
+      await flush();
+      await new Promise((r) => setTimeout(r, 60));
+
+      expect(el.querySelector('[role="status"]')).toBe(live);
+      expect(live.textContent).toBe(t("sets.progress", { done: 1, sets: 3 }));
+      jest.useRealTimers();
+    });
+
+    it("says each logged value with its field, since the headers are hidden", async () => {
+      const { el } = setup([set(80, 8)]);
+      await flush();
+
+      const values = Array.from(rowsOf(el)[0].querySelectorAll(".workout-sets-value"));
+      expect(values.map((v) => v.querySelector(".workout-visually-hidden")!.textContent)).toEqual([
+        t("sets.valueOfSet", { field: "Reps", set: 1, value: "8" }),
+        t("sets.valueOfSet", { field: "Weight (kg)", set: 1, value: "80" }),
+      ]);
+      expect(el.querySelector(".workout-sets-columns")!.getAttribute("aria-hidden")).toBe("true");
+    });
+
+    it("groups the protocol chips under their label", async () => {
+      const { el } = setup([], { exercise: "Bench Press", sets: 1 });
+      await flush();
+
+      rowsOf(el)[0].querySelector<HTMLButtonElement>(".workout-disclosure-toggle")!.click();
+      await flush();
+
+      const group = rowsOf(el)[0].querySelector('[role="group"]')!;
+      const label = el.querySelector(`#${group.getAttribute("aria-labelledby")}`);
+      expect(label!.textContent).toBe(t("sets.protocol"));
+      expect(group.querySelectorAll(".workout-chip").length).toBeGreaterThan(1);
+    });
+  });
+
+  it("changes a logged set's protocol and notes in its details, without a modal", async () => {
+    const { el, updated } = setup([set(80, 8)]);
+    await flush();
+
+    const logged = rowsOf(el)[0];
+    logged.querySelector<HTMLButtonElement>(".workout-disclosure-toggle")!.click();
+    await flush();
+    Array.from(rowsOf(el)[0].querySelectorAll<HTMLButtonElement>(".workout-chip"))[2].click();
+    await flush();
+    expect(updated[0].protocol).not.toBe("standard");
+    expect(updated[0]).toMatchObject({ reps: 8, weight: 80 });
+
+    const notes = rowsOf(el)[0].querySelector<HTMLTextAreaElement>("textarea")!;
+    notes.value = "felt heavy";
+    notes.dispatchEvent(new Event("change"));
+    await flush();
+    expect(updated[1]).toMatchObject({ notes: "felt heavy", protocol: updated[0].protocol });
+    expect(rowsOf(el)[0].classList.contains("is-logged")).toBe(true);
   });
 
   it("shows a set logged in the other unit as entered, like the table", async () => {
@@ -309,25 +515,33 @@ describe("EmbeddedSetsView", () => {
     await flush();
 
     expect(el.querySelector(".workout-target-header")).not.toBeNull();
-    expect(el.querySelector(".workout-progress-fill")).not.toBeNull();
+    expect(el.querySelector(".workout-progress-meter")).not.toBeNull();
   });
 
   const menuItems = (el: HTMLElement) =>
     Array.from(el.querySelectorAll<HTMLButtonElement>(".workout-icon-dropdown-item"));
 
-  it("has the table's ⋮ menu in its top row: edit this block, go to the exercise", async () => {
+  it("has the table's ⋮ menu in its top row: go to the exercise, edit this block and its rest timer", async () => {
     const editBlock = jest.fn();
     const { el } = setup([], { exercise: "Bench Press" }, editBlock);
     await flush();
 
-    const header = el.querySelector(".workout-sets-header")!;
+    const header = el.querySelector(".workout-block-header")!;
     expect(header.lastElementChild?.classList.contains("workout-block-menu")).toBe(true);
     expect(menuItems(el).map((item) => item.textContent)).toEqual([
       t("table.gotoExercise"),
       t("sets.editBlock"),
+      t("sets.editRestTimer"),
     ]);
     menuItems(el)[1].click();
     expect(editBlock).toHaveBeenCalled();
+  });
+
+  it("has no rest timer to edit with rest: 0", async () => {
+    const { el } = setup([], { exercise: "Bench Press", rest: 0 }, jest.fn());
+    await flush();
+
+    expect(menuItems(el).map((item) => item.textContent)).not.toContain(t("sets.editRestTimer"));
   });
 
   it("keeps the ⋮ menu with edit when the block names no exercise", async () => {

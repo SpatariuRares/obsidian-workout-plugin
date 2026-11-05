@@ -33,7 +33,7 @@
   --workout-size-10xl: 500px;
   --workout-size-11xl: 600px;
   --workout-chip-min-height: 36px; /* Default chip height (desktop) */
-  --workout-progress-bar-height: 20px; /* Table progress bar height */
+  --workout-progress-meter-height: 6px; /* ProgressMeter bar */
   /* Touch Targets & Interactive Sizes */
   --workout-touch-target-min: 44px; /* WCAG minimum touch target height */
   --workout-touch-target-width: 56px; /* Minimum width for weight/action buttons */
@@ -70,7 +70,6 @@
   /* Border Widths - Using Obsidian native variables with fallbacks */
   --workout-border-thin: var(--border-width, 1px);
   --workout-border-medium: var(--input-border-width, 2px);
-  --workout-border-accent: 4px; /* Thick left border for accent/highlight strips */
   /* Transitions */
   --workout-transition: all 0.2s ease;
   /* Alert Colors */
@@ -127,13 +126,6 @@ body {
   --workout-border-subtle: color-mix(
     in srgb,
     var(--text-muted) 40%,
-    var(--background-secondary)
-  );
-  /* Day header row in log tables: an accent tint, so it differs in hue from
-     both row shades (a grey header matched the tinted rows at 1.02:1) */
-  --workout-table-day-bg: color-mix(
-    in srgb,
-    var(--interactive-accent) 20%,
     var(--background-secondary)
   );
   /* Fill behind --text-on-accent: the raw accent gives white text 3.4:1 */
@@ -321,6 +313,19 @@ body.theme-dark {
   gap: var(--workout-space-sm);
 }
 
+/* Read by screen readers, not shown (LiveRegion, a value's full label) */
+.workout-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ============================================================================
    INPUTS & FORMS
    ============================================================================ */
@@ -472,12 +477,12 @@ body.theme-dark {
 /* ----------------------------------------------------------------------------
    1. BASE PLACEHOLDERS & MIXINS
    ---------------------------------------------------------------------------- */
-.workout-table-action-btn, .workout-timer-btn, .workout-quick-log-weight-btn, .workout-quick-log-confirm-btn, .workout-quick-log-cancel-btn, .workout-adjust-btn, .workout-frame-toggle .workout-toggle-btn, .workout-buttons-container .workout-btn-secondary, .workout-timer-btn-start-stop, .workout-frame-toggle .workout-toggle-btn.active, .workout-achievement-badge .workout-update-target-button, .workout-buttons-container .workout-btn-primary, .workout-buttons-container .workout-btn {
+.workout-table-action-btn, .workout-timer-btn, .workout-quick-log-weight-btn, .workout-quick-log-confirm-btn, .workout-quick-log-cancel-btn, .workout-adjust-btn, .workout-buttons-container .workout-btn-secondary, .workout-timer-btn-start-stop, .workout-btn.workout-btn-primary, .workout-buttons-container .workout-btn-primary, .workout-buttons-container .workout-btn {
   cursor: pointer;
   transition: var(--workout-transition);
 }
 
-.workout-buttons-container .workout-btn {
+.workout-btn.workout-btn-primary, .workout-buttons-container .workout-btn {
   border: none;
   border-radius: var(--button-radius, var(--workout-radius-md));
   font-weight: var(--workout-font-weight-semibold);
@@ -487,16 +492,16 @@ body.theme-dark {
 /* ----------------------------------------------------------------------------
    2. VARIANT PLACEHOLDERS (Colors)
    ---------------------------------------------------------------------------- */
-.workout-timer-btn-start-stop, .workout-quick-log-confirm-btn, .workout-frame-toggle .workout-toggle-btn.active, .workout-achievement-badge .workout-update-target-button, .workout-buttons-container .workout-btn-primary {
+.workout-timer-btn-start-stop, .workout-quick-log-confirm-btn, .workout-btn.workout-btn-primary, .workout-buttons-container .workout-btn-primary {
   background: var(--workout-accent-fill);
   color: var(--text-on-accent);
 }
-.workout-timer-btn-start-stop:hover, .workout-quick-log-confirm-btn:hover, .workout-frame-toggle .workout-toggle-btn.active:hover, .workout-achievement-badge .workout-update-target-button:hover, .workout-buttons-container .workout-btn-primary:hover {
+.workout-timer-btn-start-stop:hover, .workout-quick-log-confirm-btn:hover, .workout-btn.workout-btn-primary:hover, .workout-buttons-container .workout-btn-primary:hover {
   background: var(--workout-accent-fill-hover);
   color: var(--text-on-accent);
 }
 
-.workout-quick-log-cancel-btn, .workout-frame-toggle .workout-toggle-btn, .workout-buttons-container .workout-btn-secondary {
+.workout-quick-log-cancel-btn, .workout-buttons-container .workout-btn-secondary {
   background: var(--interactive-normal);
   color: var(--text-on-normal);
 }
@@ -525,14 +530,12 @@ body.theme-dark {
 /* ----------------------------------------------------------------------------
    3. SIZE PLACEHOLDERS
    ---------------------------------------------------------------------------- */
-.workout-timer-btn, .workout-buttons-container.workout-add-log-button-container .workout-btn-primary {
+.workout-timer-btn {
   padding: var(--workout-space-lg) var(--workout-space-2xl);
   font-size: var(--workout-font-lg);
 }
 
-.workout-quick-log-confirm-btn, .workout-quick-log-cancel-btn, .workout-modal .workout-btn-primary,
-.workout-modal .workout-btn-danger,
-.workout-modal .workout-btn-warning {
+.workout-quick-log-confirm-btn, .workout-quick-log-cancel-btn {
   padding: var(--workout-space-xl) var(--workout-space-3xl);
   font-size: var(--workout-font-xl);
 }
@@ -557,49 +560,19 @@ body.theme-dark {
 .workout-buttons-container .workout-btn-warning:hover:hover {
   transform: translateY(-1px);
 }
-.workout-buttons-container.workout-add-log-button-container {
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: space-between;
-}
-.workout-buttons-container.workout-add-log-button-container .workout-btn-primary {
-  flex: 0 1 auto;
-  min-width: 0;
-}
 .workout-buttons-container.workout-action-buttons {
   flex-direction: column;
 }
 
 /* ----------------------------------------------------------------------------
-   Charts Modal Buttons
+   Primary anywhere
+   ----------------------------------------------------------------------------
+   A primary button is the accent fill wherever it is drawn, not only inside
+   .workout-buttons-container (outside one it fell back to Obsidian's grey
+   button). Two classes outrank Obsidian's `button:not(.clickable-icon)`.
    ---------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------
-   Single Context Buttons
-   ---------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------
-   Toggle Buttons
-   ---------------------------------------------------------------------------- */
-.workout-frame-toggle {
-  display: flex;
-  gap: var(--workout-space-xs);
-  border: var(--workout-border-thin) solid var(--workout-border-color);
-  border-radius: var(--workout-radius-md);
-  padding: var(--workout-space-xs);
-  background: var(--background-secondary);
-}
-.workout-frame-toggle .workout-toggle-btn {
-  padding: var(--workout-space-sm) var(--workout-space-lg);
-  color: var(--text-muted);
-  font-size: var(--workout-font-base);
-  border-radius: var(--button-radius, var(--workout-radius-sm));
-  font-weight: var(--workout-font-weight-medium);
-}
-.workout-frame-toggle .workout-toggle-btn:hover {
-  background: var(--background-modifier-hover);
-  color: var(--text-normal);
-}
-.workout-frame-toggle .workout-toggle-btn.active {
-  font-weight: var(--workout-font-weight-semibold);
+.workout-btn.workout-btn-primary {
+  box-shadow: none;
 }
 
 /* ----------------------------------------------------------------------------
@@ -748,19 +721,11 @@ body.theme-dark {
 }
 
 @media print {
-  .workout-buttons-container.workout-add-log-button-container {
+  .workout-log .workout-log-actions {
     display: none;
   }
 }
 @media (max-width: 768px) {
-  .workout-frame-toggle {
-    justify-content: center;
-    width: 100%;
-  }
-  .workout-toggle-btn {
-    flex: 1;
-    padding: var(--workout-space-md) var(--workout-space-md);
-  }
   .workout-export-btn {
     width: 100%;
     justify-content: center;
@@ -773,12 +738,30 @@ body.theme-dark {
     font-size: var(--workout-font-base);
   }
 }
-@media (max-width: 484px) {
-  .workout-toggle-btn {
-    padding: var(--workout-space-sm) var(--workout-space-md);
-    font-size: var(--workout-font-sm);
-  }
+/* ----------------------------------------------------------------------------
+   DELETE BUTTON (DeleteButton atom): the red trash icon
+   ---------------------------------------------------------------------------- */
+button.workout-delete-button {
+  justify-content: center;
+  color: var(--workout-text-error);
 }
+button.workout-delete-button:focus-visible {
+  outline: var(--workout-border-medium) solid var(--interactive-accent);
+  outline-offset: var(--workout-space-2xs);
+}
+
+/* Removing is rare (a set, a widget): a small icon at the start of a
+   modal's action bar, with save and cancel pushed to the end */
+.workout-buttons-container button.workout-modal-actions-delete {
+  margin-inline-end: auto;
+  align-self: center;
+}
+
+body.is-mobile button.workout-delete-button {
+  min-width: var(--workout-touch-target-min, 44px);
+  min-height: var(--workout-touch-target-min, 44px);
+}
+
 /* ============================================================================
    WORKOUT CHARTS PLUGIN - STYLES
    Modern styles using Obsidian CSS Variables
@@ -789,9 +772,12 @@ body.theme-dark {
 /* ============================================================================
    CHIP COMPONENT
    ============================================================================
-   Touch-friendly selection chips used for quick selection
+   Touch-friendly selection chips used for quick selection. `button.` and
+   two classes for the selected one outrank Obsidian's
+   `button:not(.clickable-icon)`, which otherwise drew a grey button (and no
+   accent fill on the picked chip).
    ============================================================================ */
-.workout-chip {
+button.workout-chip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -806,29 +792,36 @@ body.theme-dark {
   white-space: nowrap;
   flex-shrink: 0;
   min-height: var(--workout-chip-min-height);
+  box-shadow: none;
   transition: var(--workout-transition);
   user-select: none;
 }
-.workout-chip:hover {
-  background: var(--interactive-hover);
-  border-color: var(--interactive-accent);
+@media (hover: hover) {
+  button.workout-chip:hover {
+    background: var(--interactive-hover);
+    border-color: var(--interactive-accent);
+  }
 }
-.workout-chip:active {
+button.workout-chip:active {
   transform: scale(0.95);
 }
-.workout-chip-selected {
+button.workout-chip:focus-visible {
+  outline: var(--workout-border-medium) solid var(--interactive-accent);
+  outline-offset: var(--workout-space-2xs);
+}
+button.workout-chip.workout-chip-selected {
   background: var(--workout-accent-fill);
   color: var(--text-on-accent);
   border-color: var(--interactive-accent);
 }
-.workout-chip-selected:hover {
+button.workout-chip.workout-chip-selected:hover {
   background: var(--workout-accent-fill-hover);
   border-color: var(--interactive-accent-hover);
 }
 
 @media (max-width: 768px) {
-  .workout-chip {
-    min-height: 40px;
+  button.workout-chip {
+    min-height: var(--workout-touch-target-min);
     padding: var(--workout-space-sm) var(--workout-space-lg);
   }
 }
@@ -892,57 +885,53 @@ body.theme-dark {
 /* ============================================================================
    STATS & INFO BOXES
    ============================================================================ */
-.workout-charts-stats {
-  margin-top: var(--workout-space-2xl);
-  padding: var(--workout-space-xl);
-  background: var(--background-secondary);
-  border-radius: var(--workout-radius-xl);
-  font-size: var(--workout-font-base);
-  border: var(--workout-border-thin) solid var(--workout-border-color);
-  color: var(--text-normal);
-  box-shadow: var(--workout-shadow-md);
+/* StatCard.row: the summary row on a card, under a subtle border */
+.stat-card-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(7.5rem, 100%), 1fr));
+  gap: var(--workout-space-md) var(--workout-space-lg);
+  padding-top: var(--workout-space-md);
+  border-top: var(--workout-border-thin) solid var(--workout-border-subtle);
 }
-.workout-charts-stats .workout-charts-stats-title {
-  font-size: var(--workout-font-lg);
-}
-.workout-charts-stats .workout-charts-stats-list {
-  margin-top: var(--workout-space-md);
-  margin-bottom: var(--workout-space-xs);
-  list-style-type: square;
-  padding-left: var(--workout-space-2xl);
-}
-.workout-charts-stats .workout-charts-stats-list .workout-stat-item {
-  margin: 0;
+
+/* StatCard: label, figure, detail (workout-chart, workout-duration) */
+.stat-card {
   display: flex;
-  flex-direction: row;
-  gap: var(--workout-space-sm);
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: var(--workout-space-2xs);
+  min-width: 0;
 }
-.workout-charts-trend-header {
-  padding: var(--workout-space-xl);
-  margin-bottom: var(--workout-space-xl);
-  background: var(--background-secondary);
-  border-radius: var(--workout-radius-xl);
-  text-align: center;
-  border: var(--workout-border-thin) solid var(--workout-border-color);
-  box-shadow: var(--workout-shadow-md);
-  color: var(--text-normal);
-}
-.workout-charts-trend-header .workout-charts-trend-header-h3 {
-  margin: 0;
-  font-size: var(--workout-font-xl);
-  font-weight: var(--workout-font-weight-bold);
-  color: var(--text-normal);
-}
-.workout-charts-trend-header .workout-charts-trend-header-p {
-  margin: var(--workout-space-sm) 0 0 0;
-  font-size: var(--workout-font-base);
+
+.stat-card-label {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-xs);
+  font-size: var(--workout-font-xs);
   color: var(--text-muted);
 }
-.workout-charts-trend-variation {
-  font-weight: var(--workout-font-weight-bold);
-  color: var(--workout-text-accent);
+
+.stat-card-value {
+  font-size: var(--workout-font-lg);
+  font-weight: var(--workout-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-normal);
+  overflow-wrap: anywhere;
 }
+
+.stat-card-detail {
+  font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+.stat-card.is-up .stat-card-value {
+  color: var(--workout-text-success);
+}
+
+.stat-card.is-neutral .stat-card-value {
+  color: var(--text-muted);
+}
+
 .workout-charts-info {
   padding: var(--workout-space-lg) var(--workout-space-xl);
   margin: var(--workout-space-lg) 0;
@@ -1059,9 +1048,10 @@ button.workout-icon-dropdown-btn:focus-visible {
   display: flex;
 }
 
-.workout-icon-dropdown-item {
+button.workout-icon-dropdown-item {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: var(--workout-space-sm);
   width: 100%;
   padding: var(--workout-space-sm) var(--workout-space-md);
@@ -1075,15 +1065,15 @@ button.workout-icon-dropdown-btn:focus-visible {
   box-shadow: none;
   transition: var(--workout-transition);
 }
-.workout-icon-dropdown-item:hover {
+button.workout-icon-dropdown-item:hover {
   background-color: var(--background-modifier-hover);
   color: var(--text-normal);
 }
-.workout-icon-dropdown-item:focus-visible {
+button.workout-icon-dropdown-item:focus-visible {
   outline: 2px solid var(--interactive-accent);
   outline-offset: -2px;
 }
-.workout-icon-dropdown-item[aria-checked=true]::before {
+button.workout-icon-dropdown-item[aria-checked=true]::before {
   content: "✓";
   color: var(--workout-text-accent);
   font-size: var(--workout-font-sm);
@@ -1116,6 +1106,333 @@ button.workout-icon-dropdown-btn:focus-visible {
 .workout-file-error-message > .workout-icon {
   margin-inline-end: var(--workout-space-2xs, 2px);
   color: var(--text-muted);
+}
+
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
+/* ============================================================================
+   TOGGLES: the tick (CheckToggle) and the chevron (DisclosureToggle)
+   ============================================================================
+   Row controls sized for a thumb. Their focus ring is drawn here, since a
+   bare button inside a block gets none from the theme.
+   ============================================================================ */
+.workout-check-toggle:focus-visible,
+.workout-disclosure-toggle:focus-visible {
+  outline: var(--workout-border-medium) solid var(--interactive-accent);
+  outline-offset: var(--workout-space-2xs);
+}
+
+.workout-check-toggle {
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 2.75rem;
+  padding: 0;
+  border-radius: var(--workout-radius-lg);
+  border: var(--workout-border-medium) solid var(--workout-border-color);
+  background: var(--background-primary);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.workout-check-toggle.is-done {
+  border-color: var(--workout-accent-fill);
+  background: var(--workout-accent-fill);
+  color: var(--text-on-accent);
+}
+
+.workout-disclosure-toggle {
+  position: relative;
+  width: var(--workout-touch-target-min);
+  height: var(--workout-touch-target-min);
+}
+.workout-disclosure-toggle svg {
+  transition: transform var(--workout-transition);
+}
+.workout-disclosure-toggle.is-expanded svg {
+  transform: rotate(180deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .workout-disclosure-toggle svg {
+    transition: none;
+  }
+}
+
+.workout-disclosure-toggle-dot {
+  position: absolute;
+  top: 25%;
+  right: 25%;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: var(--workout-radius-round);
+  background: var(--workout-accent-fill);
+}
+
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
+/* ============================================================================
+   FIELDS: NumberField and NotesField
+   ============================================================================
+   Inset from the card in both themes (--background-primary on the card's
+   --background-secondary, a border at about 3:1). The suggestion in an empty
+   NumberField is logged as it is, so it stays readable (--text-muted, ≥4.5:1)
+   and lighter than a typed value. Selectors are two classes deep to outrank
+   Obsidian's input[type="text"] and textarea rules.
+   ============================================================================ */
+.workout-number-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-2xs);
+  min-width: 0;
+}
+
+.workout-number-field .workout-number-field-box {
+  display: flex;
+  align-items: center;
+  height: 2.75rem;
+  min-width: 0;
+  border: var(--workout-border-thin) solid var(--workout-border-color);
+  border-radius: var(--input-radius, var(--workout-radius-md));
+  background: var(--background-primary);
+}
+.workout-number-field .workout-number-field-box:focus-within {
+  border-color: var(--interactive-accent);
+  outline: var(--workout-border-thin) solid var(--interactive-accent);
+}
+
+.workout-number-field.is-invalid .workout-number-field-box {
+  border-color: var(--workout-text-error);
+  outline-color: var(--workout-text-error);
+}
+
+.workout-number-field .workout-number-field-input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  padding: 0 var(--workout-space-sm);
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-normal);
+  font-size: var(--workout-font-lg);
+  font-weight: var(--workout-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+.workout-number-field .workout-number-field-input:focus, .workout-number-field .workout-number-field-input:focus-visible {
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+.workout-number-field .workout-number-field-input::placeholder {
+  color: var(--text-muted);
+  font-weight: var(--font-normal);
+  opacity: 1;
+}
+
+.workout-number-field-unit {
+  flex: none;
+  padding-inline-end: var(--workout-space-sm);
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+}
+
+.workout-number-field .workout-number-field-step {
+  flex: none;
+  min-width: var(--workout-touch-target-min);
+  width: auto;
+  height: 100%;
+  padding: 0 var(--workout-space-xs);
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  font-weight: var(--workout-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.workout-number-field-error {
+  font-size: var(--workout-font-xs);
+}
+
+.workout-notes-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-2xs);
+}
+
+.workout-notes-field-label {
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+}
+
+.workout-notes-field .workout-notes-field-input {
+  width: 100%;
+  min-height: 3.5rem;
+  resize: vertical;
+  background: var(--background-primary);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
+}
+.workout-notes-field .workout-notes-field-input:focus-visible {
+  border-color: var(--interactive-accent);
+}
+
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
+/* ============================================================================
+   CHIP GROUP (ChipGroup, ProtocolPicker): a labelled group of chips, one
+   scrolling row
+   ============================================================================ */
+.workout-chip-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-2xs);
+  min-width: 0;
+}
+
+.workout-chip-group-label {
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+}
+
+.workout-chip-group-chips {
+  display: flex;
+  gap: var(--workout-space-xs);
+  overflow-x: auto;
+  padding-bottom: var(--workout-space-2xs);
+}
+.workout-chip-group-chips .workout-chip {
+  flex: none;
+}
+
+.workout-widget-setting-chips .workout-chip-group-chips {
+  flex-wrap: wrap;
+  overflow-x: visible;
+}
+
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
+/* ============================================================================
+   UNDO NOTICE: what happened on the left, Undo at the right end
+   ============================================================================ */
+.workout-undo-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--workout-space-md);
+}
+
+.workout-undo-notice-message {
+  flex: 1;
+}
+
+.workout-undo-notice-button {
+  flex: none;
+}
+
+/* ============================================================================
+   BLOCK CARD (BlockCard): a block's surface and its top row
+   ============================================================================
+   workout-log, workout-sets and workout-session are cards on the note; a
+   block's own stylesheet only places what is inside.
+   ============================================================================ */
+.workout-block-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
+  border-radius: var(--workout-radius-xl);
+  padding: var(--workout-space-md);
+}
+
+.workout-block-header {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+}
+.workout-block-header:empty {
+  display: none;
+}
+.workout-block-header > :not(.workout-block-title) {
+  flex: none;
+}
+.workout-block-header > :last-child:not(.workout-block-title) {
+  margin-left: auto;
+}
+
+.workout-block-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: var(--workout-font-lg);
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--workout-text-accent);
+}
+.workout-block-title.is-message {
+  font-size: inherit;
+  font-weight: normal;
+  color: var(--text-muted);
+}
+
+.workout-block-meta {
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.workout-block-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--workout-space-sm);
+}
+
+/* ============================================================================
+   PROGRESS METER (ProgressMeter): how far something is from done
+   ============================================================================
+   A thin bar: neutral ink on the way, accent fill once done. No traffic
+   lights: being short of a target is not an error.
+   ============================================================================ */
+.workout-progress-meter {
+  height: var(--workout-progress-meter-height);
+  border-radius: var(--workout-radius-full);
+  background: var(--background-modifier-border);
+  overflow: hidden;
+}
+
+.workout-progress-meter-fill {
+  width: var(--workout-progress-value, 0%);
+  height: 100%;
+  border-radius: inherit;
+  background: var(--text-muted);
+  transition: width 0.3s ease;
+}
+.workout-progress-meter.is-done .workout-progress-meter-fill {
+  background: var(--workout-accent-fill);
+}
+@media (prefers-reduced-motion: reduce) {
+  .workout-progress-meter-fill {
+    transition: none;
+  }
 }
 
 /* Table styles entrypoint (split into app/styles/table/*) */
@@ -1178,14 +1495,6 @@ button.workout-icon-dropdown-btn:focus-visible {
   color: var(--text-normal);
 }
 
-@media print {
-  .workout-charts-table-fallback .workout-charts-stats,
-  .workout-charts-table-fallback .workout-charts-trend-header {
-    border: var(--workout-border-thin) solid var(--workout-border-color);
-    margin: var(--workout-space-md) 0;
-    padding: var(--workout-space-lg);
-  }
-}
 /* ============================================================================
    WORKOUT CHARTS PLUGIN - STYLES
    Modern styles using Obsidian CSS Variables
@@ -1193,274 +1502,229 @@ button.workout-icon-dropdown-btn:focus-visible {
    This stylesheet uses a modular approach with component-based CSS files.
    All components follow Obsidian's theming system for consistent appearance.
    ============================================================================ */
-/* Workout table (general) */
-.workout-table-content-container {
-  margin: var(--workout-space-sm) 0;
+/* ============================================================================
+   WORKOUT LOG: the logged sets of a workout-log block (a BlockCard)
+   ============================================================================
+   At the desk a quiet table on the card: labels muted, numbers in figure
+   type, one line per day. On phones every set is one grid row like a
+   workout-sets row: time | one track per number | edit.
+   Cell classes come from TableRenderer (the same on th and td).
+   ============================================================================ */
+.workout-log .workout-buttons-container.workout-log-actions {
+  justify-content: flex-start;
 }
-.workout-table-content-container .workout-table-container {
+
+.workout-log .workout-table-container {
   width: 100%;
   overflow-x: auto;
-  margin-top: var(--workout-space-lg);
-  border-radius: var(--workout-radius-lg);
-  background: var(--background-secondary);
-  border: var(--workout-border-thin) solid var(--workout-border-color);
-}
-.workout-table-content-container .workout-table-container .workout-log-table td {
-  color: var(--text-normal);
-  vertical-align: middle;
-  white-space: nowrap;
-}
-.workout-table-content-container .workout-table-container .workout-log-table {
-  /* Every row sits on --background-secondary so the table always stands
-     out from the page (--background-primary); even day groups add the
-     theme's hover tint on top to keep groups apart in every theme */
-}
-.workout-table-content-container .workout-table-container .workout-log-table tr.group-odd {
-  background: var(--background-secondary);
-}
-.workout-table-content-container .workout-table-container .workout-log-table tr.group-even {
-  background: linear-gradient(var(--background-modifier-hover), var(--background-modifier-hover)), var(--background-secondary);
-}
-.workout-table-content-container .workout-table-container .workout-table-spacer {
-  background: var(--workout-table-day-bg);
-  border-bottom: var(--workout-border-medium) solid var(--interactive-accent);
-  height: auto;
-  font-size: var(--workout-font-sm);
-  font-weight: 500;
-}
-.workout-table-content-container .workout-table-link {
-  cursor: pointer;
-  font-weight: var(--workout-font-weight-medium);
-  color: var(--workout-text-accent);
-}
-.workout-table-content-container .workout-table-date-cell {
-  font-weight: var(--workout-font-weight-semibold);
-  color: var(--workout-text-accent);
-}
-.workout-table-content-container .workout-table-volume-cell {
-  font-weight: var(--workout-font-weight-bold);
-  color: var(--workout-text-accent);
-}
-.workout-table-content-container .workout-table-actions {
-  display: flex;
-  gap: var(--workout-space-sm);
-  justify-content: center;
-  align-items: center;
-}
-.workout-table-content-container .workout-table-actions-cell {
-  text-align: center;
-  padding: var(--workout-space-xs) var(--workout-space-sm);
-}
-.workout-table-content-container .workout-table-spacer-date-cell {
-  padding: var(--workout-space-xs) var(--workout-space-sm);
-  text-align: center;
-  font-weight: 600;
-  color: var(--workout-text-accent);
-  /* The row's accent tint marks the day; cells stay transparent */
-  background: transparent;
-}
-.workout-table-content-container .workout-table-spacer-summary-cell {
-  padding: var(--workout-space-xs) var(--workout-space-md);
-  text-align: left;
-  background: transparent;
-}
-.workout-table-content-container .workout-table-spacer-summary-cell .workout-spacer-stat {
-  display: inline-block;
-  margin-right: var(--workout-space-md);
-  color: var(--text-normal);
-}
-.workout-table-content-container .workout-table-spacer-summary-cell .workout-spacer-stat strong {
-  color: var(--workout-text-accent);
-  font-weight: 600;
-}
-.workout-table-content-container .workout-table-footer {
-  font-size: var(--workout-font-xs);
-  color: var(--text-muted);
-  margin-top: var(--workout-space-md);
-  padding: var(--workout-space-sm);
-  background-color: var(--background-secondary);
-  border-radius: var(--workout-radius-sm);
 }
 
-/* ============================================================================
-   WORKOUT CHARTS PLUGIN - STYLES
-   Modern styles using Obsidian CSS Variables
-
-   This stylesheet uses a modular approach with component-based CSS files.
-   All components follow Obsidian's theming system for consistent appearance.
-   ============================================================================ */
-/* Log table */
 .workout-log-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--workout-font-sm);
-  background: var(--background-primary);
-  border-radius: var(--workout-radius-lg);
-  overflow: hidden;
+  font-variant-numeric: tabular-nums;
 }
-.workout-log-table thead tr {
-  background: var(--background-secondary);
-  border-bottom: var(--workout-border-medium) solid var(--workout-border-subtle);
+.workout-log-table th,
+.workout-log-table td {
+  border: none;
 }
 .workout-log-table th {
-  padding: var(--workout-space-xs) var(--workout-space-xs);
-  white-space: nowrap;
+  vertical-align: bottom;
+  padding: var(--workout-space-xs) var(--workout-space-sm);
   text-align: left;
-  font-weight: var(--workout-font-weight-semibold);
-  color: var(--text-normal);
-  border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
-  font-size: var(--workout-font-base);
+  white-space: nowrap;
+  font-size: var(--workout-font-xs);
+  font-weight: normal;
+  color: var(--text-muted);
+  background: none;
 }
-.workout-log-table tbody tr {
+.workout-log-table thead tr {
+  border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
+}
+.workout-log-table td {
+  padding: var(--workout-space-sm);
+  vertical-align: middle;
+  white-space: nowrap;
+  color: var(--text-normal);
+}
+.workout-log-table tr.workout-same-day-log {
   border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
   transition: var(--workout-transition);
-}
-.workout-log-table tbody tr:nth-child(even) {
-  background: var(--background-secondary);
-}
-.workout-log-table tbody tr {
   /* Inset shadow tints the row without replacing its background */
 }
 @media (hover: hover) {
-  .workout-log-table tbody tr:hover {
+  .workout-log-table tr.workout-same-day-log:hover {
     box-shadow: inset 0 0 0 100vmax var(--background-modifier-hover);
   }
 }
 .workout-log-table td a {
   color: var(--workout-text-accent);
   text-decoration: none;
-  transition: var(--workout-transition);
   font-weight: var(--workout-font-weight-medium);
 }
 .workout-log-table td a:hover {
-  color: var(--workout-text-accent);
   text-decoration: underline;
 }
+.workout-log-table td.workout-table-value-cell,
+.workout-log-table td.workout-table-volume-cell {
+  font-weight: var(--workout-font-weight-semibold);
+}
+.workout-log-table td.workout-table-date-cell,
+.workout-log-table td.workout-table-na-cell,
+.workout-log-table td.workout-table-notes-cell {
+  font-weight: normal;
+  color: var(--text-muted);
+}
+.workout-log-table td.workout-table-notes-cell {
+  white-space: normal;
+}
+.workout-log-table .workout-table-protocol-cell {
+  text-align: center;
+}
+.workout-log-table .workout-table-actions-cell {
+  padding-block: 0;
+  text-align: right;
+}
 
-/* Obsidian gives tables a 16px block margin (.markdown-rendered table): inside
-   the outlined container it showed as empty bands above and below the rows */
+/* Obsidian gives tables a 16px block margin (.markdown-rendered table): on
+   the card it showed as empty bands above and below the rows */
 .markdown-rendered .workout-table-container table.workout-log-table {
   margin: 0;
 }
 
-.workout-same-day-log {
-  background: var(--background-modifier-border-focus);
+/* Days: every row of a day (its line included) has one shade, and the shade
+   changes from one day to the next, never from row to row, so the sets of a
+   day read as one group. TableRenderer sets the classes. */
+.workout-log-table tr.workout-table-day-even {
+  background: linear-gradient(var(--background-modifier-hover), var(--background-modifier-hover)), var(--background-secondary);
 }
 
-.workout-new-day-log {
-  background: transparent;
+/* A day's line: its date and totals, under a control border that separates
+   it from the day before (the first day has none) */
+.workout-table-spacer {
+  border-top: var(--workout-border-thin) solid var(--workout-border-color);
+}
+thead + tbody > .workout-table-spacer:first-child {
+  border-top: none;
+}
+.workout-table-spacer td {
+  padding: var(--workout-space-md) var(--workout-space-sm) var(--workout-space-xs);
 }
 
-/* Phones: each log row becomes a compact card (no horizontal scroll, actions
-   always reachable). Labels come from data-label set by TableRenderer. */
+.workout-table-spacer-date-cell {
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-normal);
+}
+
+.workout-table-spacer-summary-cell {
+  color: var(--text-muted);
+}
+.workout-table-spacer-summary-cell .workout-spacer-stat {
+  display: inline-flex;
+  align-items: center;
+  margin-right: var(--workout-space-md);
+}
+.workout-table-spacer-summary-cell .workout-spacer-stat strong {
+  color: var(--text-normal);
+  font-weight: var(--workout-font-weight-semibold);
+}
+
+.workout-table-actions {
+  display: flex;
+  gap: var(--workout-space-sm);
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Phones: a set is one grid row. The header is the row of column labels
+   (once, like workout-sets); the exercise goes above the numbers, protocol
+   badge and notes under them */
 @media (max-width: 768px) {
-  .workout-table-content-container .workout-table-container {
-    overflow-x: visible;
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table {
+  .workout-log .workout-log-table {
     display: block;
-    font-size: var(--font-ui-medium, 1em);
   }
-  .workout-table-content-container .workout-table-container .workout-log-table thead {
+  .workout-log .workout-log-table thead,
+  .workout-log .workout-log-table tbody {
+    display: block;
+  }
+  .workout-log .workout-log-table tr {
+    display: grid;
+    grid-template-columns: 3.5rem repeat(var(--workout-log-fields, 2), minmax(min-content, 1fr)) var(--workout-touch-target-min);
+    column-gap: var(--workout-space-sm);
+    align-items: center;
+    padding: var(--workout-space-xs);
+  }
+  .workout-log .workout-log-table th,
+  .workout-log .workout-log-table td {
+    min-width: 0;
+    padding: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .workout-log .workout-log-table th {
+    align-self: end;
+    border: none;
+    overflow: hidden;
+    overflow-wrap: normal;
+    text-overflow: ellipsis;
+  }
+  .workout-log .workout-log-table th.workout-table-exercise-cell,
+  .workout-log .workout-log-table th.workout-table-protocol-cell,
+  .workout-log .workout-log-table th.workout-table-notes-cell {
     display: none;
   }
-  .workout-table-content-container .workout-table-container .workout-log-table tbody {
-    display: block;
+  .workout-log .workout-log-table th.workout-table-actions-cell {
+    visibility: hidden;
   }
-  .workout-table-content-container .workout-table-container .workout-log-table tr {
+  .workout-log .workout-log-table thead tr {
+    border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
+  }
+  .workout-log .workout-log-table tr.workout-same-day-log {
+    min-height: 3.5rem;
+  }
+  .workout-log .workout-log-table tr.workout-same-day-log td {
+    grid-row: 2;
+  }
+  .workout-log .workout-log-table tr.workout-same-day-log td:empty {
+    display: none;
+  }
+  .workout-log .workout-log-table tr.workout-same-day-log td.workout-table-value-cell,
+  .workout-log .workout-log-table tr.workout-same-day-log td.workout-table-volume-cell {
+    font-size: var(--workout-font-lg);
+    white-space: nowrap;
+    overflow-wrap: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+  .workout-log .workout-log-table tr.workout-same-day-log td.workout-table-exercise-cell {
+    grid-row: 1;
+    grid-column: 1/-1;
+    padding-top: var(--workout-space-xs);
+    font-weight: var(--workout-font-weight-semibold);
+  }
+  .workout-log .workout-log-table tr.workout-same-day-log td.workout-table-protocol-cell {
+    grid-row: 3;
+    grid-column: 1;
+    text-align: left;
+    padding-bottom: var(--workout-space-xs);
+  }
+  .workout-log .workout-log-table tr.workout-same-day-log td.workout-table-notes-cell {
+    grid-row: 3;
+    grid-column: 2/-1;
+    padding-bottom: var(--workout-space-xs);
+  }
+  .workout-log .workout-log-table tr.workout-same-day-log td.workout-table-actions-cell {
+    justify-self: end;
+  }
+  .workout-log .workout-log-table tr.workout-table-spacer {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: var(--workout-space-sm) var(--workout-space-xs);
-    padding: var(--workout-space-sm);
+    align-items: baseline;
+    gap: var(--workout-space-xs) var(--workout-space-md);
+    padding: var(--workout-space-md) var(--workout-space-xs) var(--workout-space-xs);
   }
-  .workout-table-content-container .workout-table-container .workout-log-table td {
-    display: block;
+  .workout-log .workout-log-table tr.workout-table-spacer td {
     padding: 0;
-    border: none;
-    white-space: normal;
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table td:empty {
-    display: none;
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table td {
-    /* Value cells share the row; long labels wrap at spaces instead of
-       pushing the action buttons onto a second line */
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table td[data-label] {
-    flex: 1 1 0;
-    min-width: 0;
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table td[data-label]::before {
-    content: attr(data-label);
-    display: block;
-    font-size: var(--workout-font-xs);
-    font-weight: normal;
-    color: var(--text-muted);
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table .workout-table-date-cell {
-    font-size: var(--workout-font-sm);
-    font-weight: normal;
-    color: var(--text-muted);
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table .workout-table-date-cell,
-  .workout-table-content-container .workout-table-container .workout-log-table .workout-table-actions-cell {
-    flex: none;
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table {
-    /* The exercise is the card's title, on its own line: shared with the
-       numbers it got a narrow column, one word per line, cut off */
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table td.workout-table-exercise-cell {
-    order: -1;
-    flex: 1 1 100%;
-    font-weight: var(--workout-font-weight-semibold);
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table td.workout-table-exercise-cell::before {
-    display: none;
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table {
-    /* A value the set does not have (duration of a strength set) */
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table td.workout-table-na-cell {
-    display: none;
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table {
-    /* Protocol badge and notes go on a second line under the numbers:
-       squeezed into the first line they broke words letter by letter.
-       The ::after item is a full-width line break, added only to rows
-       that have something to show there (TableRenderer marks them). */
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table tr.workout-table-row-with-details::after {
-    content: "";
-    order: 1;
-    flex-basis: 100%;
-    height: 0;
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table td.workout-table-protocol-cell {
-    order: 2;
-    flex: none;
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table td.workout-table-notes-cell {
-    order: 3;
-    flex: 1 1 auto;
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table .workout-table-actions {
-    gap: var(--workout-space-xs);
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table .workout-table-spacer {
-    flex-wrap: wrap;
-    gap: var(--workout-space-md);
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table .workout-table-spacer .workout-table-spacer-date-cell {
-    background: none;
-    font-size: var(--workout-font-base);
-    font-weight: var(--workout-font-weight-semibold);
-    color: var(--workout-text-accent);
-  }
-  .workout-table-content-container .workout-table-container .workout-log-table .workout-table-spacer .workout-table-spacer-summary-cell {
-    background: none;
-    font-size: var(--workout-font-sm);
   }
   .workout-table-action-btn {
     min-width: var(--workout-touch-target-min);
@@ -1473,8 +1737,8 @@ button.workout-icon-dropdown-btn:focus-visible {
   margin-block: var(--workout-space-sm) var(--workout-space-md);
 }
 
-/* Phones: tapping a set's card edits it (TableActions). The pencil button
-   stays as the visible cue that the card opens; the card lights up on press */
+/* Phones: tapping a set's row edits it (TableActions). The pencil button
+   stays as the visible cue that the row opens; the row lights up on press */
 tr.workout-table-row-tappable {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -1484,129 +1748,131 @@ tr.workout-table-row-tappable:active {
   background: var(--background-modifier-active-hover);
 }
 
-/* Target header */
+/* ============================================================================
+   TARGET (TargetSection): a block's goal, as its own panel in the card
+   ============================================================================
+   Inset into the card (page color, control border) so it reads as "this is
+   the goal": target icon and label, the best reps at that weight on the
+   right, the target in big figures, a progress meter under them. Once
+   reached the panel is done (accent border, full accent meter) and holds the
+   achievement row.
+   ============================================================================ */
 .workout-target-header {
-  padding: var(--workout-space-md) var(--workout-space-lg);
-  margin-top: var(--workout-space-md);
-  margin-bottom: var(--workout-space-md);
-  background: var(--background-secondary);
-  border-radius: var(--workout-radius-md);
-  font-size: var(--workout-font-base);
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+  padding: var(--workout-space-md);
+  background: var(--background-primary);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
+  border-radius: var(--workout-radius-lg);
+  font-variant-numeric: tabular-nums;
+  --workout-progress-meter-height: 8px;
+}
+.workout-target-header.is-done {
+  border-color: var(--workout-accent-fill);
+}
+
+.workout-target-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--workout-space-xs) var(--workout-space-sm);
+}
+
+.workout-target-icon {
+  display: inline-flex;
+  color: var(--workout-text-accent);
+}
+.workout-target-header.is-done .workout-target-icon {
+  color: var(--workout-text-success);
+}
+
+.workout-target-label {
+  font-size: var(--workout-font-sm);
   font-weight: var(--workout-font-weight-medium);
-  color: var(--text-normal);
-  text-align: center;
-  border-left: 3px solid var(--text-accent);
+  color: var(--text-muted);
+}
+
+.workout-target-progress {
+  margin-left: auto;
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+}
+.workout-target-header.is-done .workout-target-progress {
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--workout-text-success);
 }
 
 .workout-target-text {
-  display: block;
-  margin-bottom: var(--workout-space-sm);
+  font-size: var(--workout-font-2xl);
+  font-weight: var(--workout-font-weight-semibold);
+  line-height: 1.2;
+  color: var(--text-normal);
 }
 
-/* Progress bar */
-.workout-progress-container {
-  margin-top: var(--workout-space-sm);
-}
-
-.workout-progress-bar {
-  width: 100%;
-  height: var(--workout-progress-bar-height);
-  background: var(--background-modifier-border);
-  border-radius: var(--workout-radius-sm);
-  overflow: hidden;
-  position: relative;
-  cursor: help;
-}
-
-.workout-progress-fill {
-  height: 100%;
-  transition: var(--workout-transition);
-  border-radius: var(--workout-radius-sm);
-}
-
-.workout-progress-low {
-  background: var(--text-error);
-}
-
-.workout-progress-medium {
-  background: var(--text-warning);
-}
-
-.workout-progress-high {
-  background: var(--text-success);
-}
-
-.workout-progress-complete {
-  background: var(--workout-accent-fill);
-}
-
-/* Achievement badge */
+/* Target reached: the last row of the target's panel
+   (news + next weight with its button | ×) */
 .workout-achievement-badge {
   display: flex;
+  align-items: flex-start;
+  gap: var(--workout-space-sm);
+  padding-top: var(--workout-space-sm);
+  border-top: var(--workout-border-thin) solid var(--workout-border-subtle);
+}
+
+.workout-achievement-message {
+  display: flex;
+  flex: 1 1 auto;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--workout-space-md);
-  padding: var(--workout-space-md) var(--workout-space-lg);
-  margin-top: var(--workout-space-sm);
-  margin-bottom: var(--workout-space-md);
-  /* Raw --text-success gives white text ~2.5:1 */
-  background: color-mix(in srgb, var(--text-success) 60%, black);
-  color: var(--text-on-accent);
-  border-radius: var(--workout-radius-md);
-  border-left: var(--workout-border-accent) solid var(--interactive-accent);
-  box-shadow: var(--workout-shadow-sm);
-  animation: slideIn 0.3s ease-out;
+  gap: var(--workout-space-sm) var(--workout-space-md);
+  min-width: 0;
+  min-height: var(--workout-touch-target-min);
+}
+
+.workout-achievement-icon {
+  display: inline-flex;
+  color: var(--workout-text-success);
 }
 
 .workout-achievement-text {
-  flex: 1;
-  min-width: 0;
   font-weight: var(--workout-font-weight-semibold);
-  font-size: var(--workout-font-base);
+  color: var(--workout-text-success);
 }
 
-.workout-achievement-dismiss {
-  background: transparent;
-  border: none;
-  color: var(--text-on-accent);
-  font-size: var(--workout-font-2xl);
-  line-height: 1;
-  cursor: pointer;
-  padding: 0 var(--workout-space-sm);
-  opacity: 0.7;
-  transition: var(--workout-transition);
-}
-.workout-achievement-dismiss:hover {
-  opacity: 1;
-}
-
-/* Weight suggestion */
+/* The next weight and the button that writes it into the block */
 .workout-weight-suggestion {
   display: flex;
+  flex: 1 1 100%;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--workout-space-md);
-  flex: 1;
+  justify-content: space-between;
+  gap: var(--workout-space-sm) var(--workout-space-md);
 }
 
 .workout-suggestion-text {
   font-size: var(--workout-font-sm);
-  color: var(--text-on-accent);
-  opacity: 0.9;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
 }
 
-/* button styles moved to modal/_buttons.scss */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+.workout-achievement-badge .workout-achievement-dismiss {
+  flex: none;
+  justify-content: center;
+  min-width: var(--workout-touch-target-min);
+  min-height: var(--workout-touch-target-min);
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-muted);
+}
+@media (hover: hover) {
+  .workout-achievement-badge .workout-achievement-dismiss:hover {
+    background: var(--background-modifier-hover);
+    color: var(--text-normal);
   }
 }
+
 /* ============================================================================
    WORKOUT CHARTS PLUGIN - STYLES
    Modern styles using Obsidian CSS Variables
@@ -1614,13 +1880,12 @@ tr.workout-table-row-tappable:active {
    This stylesheet uses a modular approach with component-based CSS files.
    All components follow Obsidian's theming system for consistent appearance.
    ============================================================================ */
-/* Mobile table */
+/* Mobile table: the chart's days on phones, inset into the card like the chart */
 .workout-chart-mobile-table {
   display: none;
-  margin-top: var(--workout-space-lg);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
   border-radius: var(--workout-radius-lg);
   background: var(--background-primary);
-  box-shadow: var(--workout-shadow-md);
   overflow: hidden;
 }
 .workout-chart-mobile-table table {
@@ -1628,36 +1893,30 @@ tr.workout-table-row-tappable:active {
   border-collapse: collapse;
   font-size: var(--workout-font-base);
 }
-.workout-chart-mobile-table th {
-  background: var(--background-secondary);
-  padding: var(--workout-space-md) var(--workout-space-sm);
+.workout-chart-mobile-table th,
+.workout-chart-mobile-table td {
+  padding: var(--workout-space-sm) var(--workout-space-md);
   text-align: left;
-  border-bottom: var(--workout-border-medium) solid var(--workout-border-subtle);
-  font-weight: var(--workout-font-weight-semibold);
-  color: var(--text-normal);
-  font-size: var(--workout-font-sm);
+  border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
+}
+.workout-chart-mobile-table th:last-child,
+.workout-chart-mobile-table td:last-child {
+  text-align: right;
+}
+.workout-chart-mobile-table th {
+  font-size: var(--workout-font-xs);
+  font-weight: normal;
+  color: var(--text-muted);
 }
 .workout-chart-mobile-table td {
-  padding: var(--workout-space-sm) var(--workout-space-sm);
-  border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
+  font-variant-numeric: tabular-nums;
   color: var(--text-normal);
-  font-size: var(--workout-font-sm);
 }
-.workout-chart-mobile-table tr:nth-child(even) {
-  background: var(--background-secondary);
-}
-.workout-chart-mobile-table tr:hover {
-  background: var(--background-modifier-hover);
-}
-
-.workout-mobile-table-title {
-  margin: 0;
-  padding: var(--workout-space-lg);
-  font-size: var(--workout-font-lg);
+.workout-chart-mobile-table td:last-child {
   font-weight: var(--workout-font-weight-semibold);
-  color: var(--text-normal);
-  border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
-  background: var(--background-secondary);
+}
+.workout-chart-mobile-table tr:last-child td {
+  border-bottom: none;
 }
 
 .workout-date-group-header {
@@ -1680,12 +1939,6 @@ tr.workout-table-row-tappable:active {
    This stylesheet uses a modular approach with component-based CSS files.
    All components follow Obsidian's theming system for consistent appearance.
    ============================================================================ */
-/* Protocol column */
-.workout-table-protocol-cell {
-  text-align: center;
-  padding: var(--workout-space-xs) var(--workout-space-sm);
-}
-
 /* Protocol badge base */
 .workout-protocol-badge {
   display: inline-block;
@@ -1700,38 +1953,38 @@ tr.workout-table-row-tappable:active {
 
 /* Protocol badge colors - using Obsidian CSS variables for theme compatibility */
 .workout-protocol-badge-drop {
-  background: rgba(var(--color-red-rgb, 255, 82, 82), 0.15);
+  background: color-mix(in srgb, var(--color-red) 15%, transparent);
   color: var(--workout-text-error);
-  border: var(--workout-border-thin) solid rgba(var(--color-red-rgb, 255, 82, 82), 0.3);
+  border: var(--workout-border-thin) solid color-mix(in srgb, var(--color-red) 30%, transparent);
 }
 
 .workout-protocol-badge-myo {
-  background: rgba(var(--color-purple-rgb, 163, 102, 255), 0.15);
+  background: color-mix(in srgb, var(--color-purple) 15%, transparent);
   color: var(--workout-text-accent);
-  border: var(--workout-border-thin) solid rgba(var(--color-purple-rgb, 163, 102, 255), 0.3);
+  border: var(--workout-border-thin) solid color-mix(in srgb, var(--color-purple) 30%, transparent);
 }
 
 .workout-protocol-badge-rp {
-  background: rgba(var(--color-orange-rgb, 255, 153, 0), 0.15);
+  background: color-mix(in srgb, var(--color-orange) 15%, transparent);
   color: var(--workout-text-warning);
-  border: var(--workout-border-thin) solid rgba(var(--color-orange-rgb, 255, 153, 0), 0.3);
+  border: var(--workout-border-thin) solid color-mix(in srgb, var(--color-orange) 30%, transparent);
 }
 
 .workout-protocol-badge-superset {
-  background: rgba(var(--color-blue-rgb, 66, 165, 245), 0.15);
+  background: color-mix(in srgb, var(--color-blue) 15%, transparent);
   color: var(--workout-text-accent);
-  border: var(--workout-border-thin) solid rgba(var(--color-blue-rgb, 66, 165, 245), 0.3);
+  border: var(--workout-border-thin) solid color-mix(in srgb, var(--color-blue) 30%, transparent);
 }
 
 .workout-protocol-badge-21 {
-  background: rgba(var(--color-green-rgb, 76, 175, 80), 0.15);
+  background: color-mix(in srgb, var(--color-green) 15%, transparent);
   color: var(--workout-text-success);
-  border: var(--workout-border-thin) solid rgba(var(--color-green-rgb, 76, 175, 80), 0.3);
+  border: var(--workout-border-thin) solid color-mix(in srgb, var(--color-green) 30%, transparent);
 }
 
-/* Custom protocol badge - uses inline styles for color, inherits base badge structure */
+/* Custom protocol badge - inline color from settings; the border follows its text */
 .workout-protocol-badge-custom {
-  border: var(--workout-border-thin) solid rgba(0, 0, 0, 0.2);
+  border: var(--workout-border-thin) solid color-mix(in srgb, currentColor 30%, transparent);
 }
 
 @media (max-width: 484px) {
@@ -1770,10 +2023,9 @@ tr.workout-table-row-tappable:active {
   height: 0;
   padding-bottom: 75%; /* 4:3 aspect ratio (3/4 = 0.75) */
   overflow: hidden;
+  border: var(--workout-border-thin) solid var(--workout-border-color);
   border-radius: var(--workout-radius-lg);
   background: var(--background-primary);
-  box-shadow: var(--workout-shadow-md);
-  margin-top: var(--workout-space-lg);
 }
 .workout-charts-container.has-fixed-height {
   height: var(--workout-chart-height);
@@ -1786,6 +2038,42 @@ tr.workout-table-row-tappable:active {
   width: 100%;
   height: 100%;
   border-radius: var(--workout-radius-lg);
+}
+
+/* The card's trend row: icon, direction, change, range (muted) */
+.workout-chart-trend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--workout-space-sm);
+  row-gap: var(--workout-space-2xs);
+  color: var(--text-normal);
+}
+.workout-chart-trend .workout-chart-trend-icon,
+.workout-chart-trend .workout-chart-trend-change {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--workout-space-2xs);
+}
+.workout-chart-trend .workout-chart-trend-change {
+  font-weight: var(--workout-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+.workout-chart-trend.is-up .workout-chart-trend-icon,
+.workout-chart-trend.is-up .workout-chart-trend-change {
+  color: var(--workout-text-success);
+}
+.workout-chart-trend.is-neutral .workout-chart-trend-icon,
+.workout-chart-trend.is-neutral .workout-chart-trend-change {
+  color: var(--text-muted);
+}
+.workout-chart-trend .workout-chart-trend-direction {
+  font-weight: var(--workout-font-weight-semibold);
+}
+.workout-chart-trend .workout-chart-trend-range {
+  font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
 }
 
 /* ============================================================================
@@ -2057,6 +2345,72 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
   right: 0;
 }
 
+/* Strip: the rest inside a block that logs sets (RestTimer.draw adds it),
+   one line with the digits left and the controls right, so the block's rows
+   stay in the first screen. The standalone timer block keeps its big centred
+   phone layout; the strip overrides it, on phones too */
+.workout-timer-strip {
+  background: var(--background-primary);
+  border-radius: var(--workout-radius-lg);
+  padding: var(--workout-space-xs) var(--workout-space-xs) var(--workout-space-xs) var(--workout-space-md);
+}
+.workout-timer-strip .workout-timer-row {
+  margin: 0;
+}
+
+.workout-timer-strip .workout-timer,
+body.is-mobile .workout-timer-strip .workout-timer {
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: var(--workout-space-sm);
+  padding-block: 0;
+}
+.workout-timer-strip .workout-timer .workout-timer-time,
+body.is-mobile .workout-timer-strip .workout-timer .workout-timer-time {
+  flex: 0 1 auto;
+  flex-direction: row;
+  min-width: 0;
+}
+.workout-timer-strip .workout-timer .workout-timer-time .workout-timer-time-display,
+body.is-mobile .workout-timer-strip .workout-timer .workout-timer-time .workout-timer-time-display {
+  font-size: var(--workout-font-2xl);
+  line-height: 1.2;
+  min-width: 0;
+  text-align: start;
+  font-variant-numeric: tabular-nums;
+}
+.workout-timer-strip .workout-timer .workout-timer-time .workout-timer-complete,
+body.is-mobile .workout-timer-strip .workout-timer .workout-timer-time .workout-timer-complete {
+  font-size: var(--workout-font-lg);
+}
+.workout-timer-strip .workout-timer .workout-timer-actions-group,
+body.is-mobile .workout-timer-strip .workout-timer .workout-timer-actions-group {
+  flex: none;
+  flex-wrap: nowrap;
+  gap: var(--workout-space-xs);
+}
+.workout-timer-strip .workout-timer .workout-timer-round-counter,
+body.is-mobile .workout-timer-strip .workout-timer .workout-timer-round-counter {
+  order: 0;
+  flex: none;
+  font-size: var(--workout-font-sm);
+}
+.workout-timer-strip .workout-timer .workout-timer-controls,
+body.is-mobile .workout-timer-strip .workout-timer .workout-timer-controls {
+  flex: none;
+  gap: var(--workout-space-xs);
+}
+.workout-timer-strip .workout-timer .workout-timer-controls .workout-timer-btn,
+body.is-mobile .workout-timer-strip .workout-timer .workout-timer-controls .workout-timer-btn {
+  flex: none;
+  min-width: var(--workout-touch-target-min, 44px);
+  min-height: var(--workout-touch-target-min, 44px);
+}
+.workout-timer-strip .workout-timer .workout-timer-controls .workout-timer-btn .workout-icon,
+body.is-mobile .workout-timer-strip .workout-timer .workout-timer-controls .workout-timer-btn .workout-icon {
+  --icon-size: 20px;
+}
+
 .workout-timer-error {
   padding: var(--workout-space-sm) var(--workout-space-md);
   background: var(--background-modifier-error);
@@ -2068,121 +2422,28 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
 }
 
 /* ============================================================================
-   WORKOUT CHARTS PLUGIN - STYLES
-   Modern styles using Obsidian CSS Variables
-
-   This stylesheet uses a modular approach with component-based CSS files.
-   All components follow Obsidian's theming system for consistent appearance.
+   DURATION ESTIMATOR (workout-duration)
+   A BlockCard: the estimate in big figures, its breakdown as a StatCard row.
    ============================================================================ */
-/* ============================================================================
-   DURATION ESTIMATOR STYLES
-   Info card style for workout duration estimation (distinct from timer countdown)
-   ============================================================================ */
-.workout-duration-card {
-  background: var(--background-primary);
-  border: var(--workout-border-thin) solid var(--workout-border-color);
-  border-radius: var(--workout-radius-xl);
-  padding: var(--workout-space-lg);
-  box-shadow: var(--workout-shadow-sm);
-  max-width: 320px;
+.workout-duration .workout-block-meta {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-align: right;
 }
 
-.workout-duration-header {
-  display: flex;
-  align-items: center;
-  gap: var(--workout-space-sm);
-  margin-bottom: var(--workout-space-md);
-}
-
-.workout-duration-icon {
-  font-size: var(--workout-font-xl);
-}
-
-.workout-duration-title {
-  font-size: var(--workout-font-base);
-  font-weight: var(--workout-font-weight-semibold);
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.workout-duration-main {
-  text-align: center;
-  padding: var(--workout-space-lg) 0;
-  border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
-  margin-bottom: var(--workout-space-md);
-}
-
-.workout-duration-value {
-  font-size: 2.5em;
+.workout-duration-total {
+  font-size: clamp(2rem, 9vw, 2.75rem);
+  line-height: 1.1;
   font-weight: var(--workout-font-weight-bold);
-  color: var(--workout-text-accent);
   font-variant-numeric: tabular-nums;
-}
-
-.workout-duration-breakdown {
-  display: flex;
-  flex-direction: column;
-  gap: var(--workout-space-sm);
-}
-
-.workout-duration-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--workout-space-xs) 0;
-}
-
-.workout-duration-label {
-  color: var(--text-muted);
-  font-size: var(--workout-font-sm);
-}
-
-.workout-duration-detail {
   color: var(--text-normal);
-  font-size: var(--workout-font-sm);
-  font-weight: var(--workout-font-weight-medium);
-  font-variant-numeric: tabular-nums;
 }
 
 .workout-duration-error {
   color: var(--workout-text-error);
-  font-size: var(--workout-font-sm);
-  padding: var(--workout-space-md);
-  background: rgba(var(--color-red-rgb), 0.1);
-  border-radius: var(--workout-radius-md);
-  text-align: center;
 }
 
-/* Debug section styling */
-.workout-duration-debug {
-  margin-top: var(--workout-space-lg);
-  padding-top: var(--workout-space-md);
-  border-top: var(--workout-border-thin) dashed var(--workout-border-subtle);
-}
-
-.workout-duration-debug-title {
-  font-size: var(--workout-font-xs);
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: var(--workout-space-sm);
-}
-
-.workout-duration-debug-content {
-  font-size: var(--workout-font-xs);
-  background: var(--background-secondary);
-  padding: var(--workout-space-sm);
-  border-radius: var(--workout-radius-sm);
-  overflow-x: auto;
-  margin: 0;
-}
-
-@media (max-width: 484px) {
-  .workout-duration-card {
-    max-width: 100%;
-  }
-}
 /* ============================================================================
    WORKOUT CHARTS PLUGIN - STYLES
    Modern styles using Obsidian CSS Variables
@@ -2194,33 +2455,10 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
    WORKOUT SESSION STYLES
    One exercise of the note's plan at a time: set, target, log, rest
    ============================================================================ */
-.workout-session {
-  display: flex;
-  flex-direction: column;
-  gap: var(--workout-space-sm);
-  background: var(--background-secondary);
-  border: var(--workout-border-thin) solid var(--workout-border-color);
-  border-radius: var(--workout-radius-xl);
-  padding: var(--workout-space-lg);
-}
-
-.workout-session-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--workout-space-sm);
-}
-
-.workout-session-exercise {
-  font-size: var(--workout-font-xl);
-  font-weight: var(--workout-font-weight-semibold);
-}
-
 .workout-session-set {
   font-size: var(--workout-font-lg);
   font-weight: var(--workout-font-weight-semibold);
-  color: var(--workout-text-accent);
+  font-variant-numeric: tabular-nums;
 }
 
 .workout-session-meta {
@@ -2253,24 +2491,9 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
    WORKOUT SETS STYLES
    Today's sets of one exercise as rows to fill in and tick, sized for thumbs
    ============================================================================ */
-.workout-sets {
-  display: flex;
-  flex-direction: column;
-  gap: var(--workout-space-sm);
-  background: var(--background-secondary);
-  border: var(--workout-border-thin) solid var(--workout-border-color);
-  border-radius: var(--workout-radius-xl);
-  padding: var(--workout-space-md);
-}
-
 .workout-sets-message,
 .workout-sets-meta {
   color: var(--text-muted);
-}
-
-.workout-sets .workout-target-header {
-  margin: 0;
-  background: var(--background-primary);
 }
 
 .workout-sets-meta {
@@ -2278,31 +2501,9 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
   font-variant-numeric: tabular-nums;
 }
 
-.workout-sets-header {
-  display: flex;
-  align-items: center;
-  gap: var(--workout-space-sm);
-}
-
-.workout-sets-title {
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-
-.workout-sets-header > :not(.workout-sets-title) {
-  flex: none;
-}
-
-.workout-sets-exercise {
-  font-size: var(--workout-font-lg);
-  font-weight: var(--workout-font-weight-semibold);
-  color: var(--workout-text-accent);
-}
-
 .workout-sets-rows {
   --workout-sets-columns: 2.25rem repeat(var(--workout-sets-fields, 2), minmax(0, 1fr))
-    2.5rem 3.25rem;
+    2.5rem 4rem;
   display: flex;
   flex-direction: column;
 }
@@ -2315,8 +2516,7 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
   align-items: center;
 }
 
-.workout-sets-columns,
-.workout-sets-label {
+.workout-sets-columns {
   font-size: var(--workout-font-xs);
   color: var(--text-muted);
 }
@@ -2345,11 +2545,6 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
   padding: var(--workout-space-xs);
 }
 
-.workout-sets-row.is-logged .workout-sets-row-main {
-  cursor: pointer;
-  border-radius: var(--workout-radius-md);
-}
-
 .workout-sets-number {
   display: flex;
   flex-direction: column;
@@ -2360,75 +2555,27 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
   font-variant-numeric: tabular-nums;
 }
 .workout-sets-number .workout-protocol-badge {
-  font-size: var(--workout-font-2xs);
+  font-size: var(--workout-font-xs);
 }
 
 .workout-sets-field {
   min-width: 0;
 }
 
-.workout-sets-input,
 .workout-sets-value {
+  min-width: 0;
+  padding-left: calc(var(--workout-space-sm) + var(--workout-border-thin));
   font-size: var(--workout-font-lg);
   font-weight: var(--workout-font-weight-semibold);
   font-variant-numeric: tabular-nums;
-}
-
-.workout-sets-input {
-  width: 100%;
-  height: 2.75rem;
-}
-.workout-sets-input::placeholder {
-  color: var(--text-faint);
-  font-weight: var(--workout-font-weight-medium);
-}
-
-.workout-sets-value {
-  min-width: 0;
-  padding-left: var(--workout-space-sm);
   overflow-wrap: anywhere;
 }
 
-.workout-sets-details-toggle {
-  position: relative;
+.workout-sets-row-main > .workout-disclosure-toggle {
   justify-self: center;
-  width: var(--workout-touch-target-min, 44px);
-  height: var(--workout-touch-target-min, 44px);
 }
-.workout-sets-details-toggle svg {
-  transition: transform var(--workout-transition);
-}
-
-.workout-sets-row.is-open .workout-sets-details-toggle svg {
-  transform: rotate(180deg);
-}
-
-.workout-sets-details-dot {
-  position: absolute;
-  top: var(--workout-space-xs);
-  right: var(--workout-space-xs);
-  width: 0.45rem;
-  height: 0.45rem;
-  border-radius: var(--workout-radius-round);
-  background: var(--workout-accent-fill);
-}
-
-.workout-sets-check {
-  display: grid;
-  place-items: center;
-  width: 3.25rem;
-  height: 2.75rem;
-  padding: 0;
-  border-radius: var(--workout-radius-lg);
-  border: var(--workout-border-medium) solid var(--workout-border-color);
-  background: var(--background-primary);
-  color: var(--text-faint);
-  cursor: pointer;
-}
-.workout-sets-check.is-done {
-  border-color: var(--workout-accent-fill);
-  background: var(--workout-accent-fill);
-  color: var(--text-on-accent);
+.workout-sets-row-main > .workout-check-toggle {
+  justify-self: end;
 }
 
 .workout-sets-note {
@@ -2442,32 +2589,12 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
   padding: 0 var(--workout-space-xs) var(--workout-space-md) 2.75rem;
 }
 
-.workout-sets-chips {
-  display: flex;
-  gap: var(--workout-space-xs);
-  overflow-x: auto;
-  padding-bottom: var(--workout-space-2xs);
-}
-.workout-sets-chips .workout-chip {
-  flex: none;
+.workout-sets-remove {
+  align-self: flex-start;
+  min-width: var(--workout-touch-target-min, 44px);
+  min-height: var(--workout-touch-target-min, 44px);
 }
 
-.workout-sets-notes {
-  width: 100%;
-  min-height: 3.5rem;
-  resize: vertical;
-}
-
-.workout-sets-footer {
-  display: flex;
-  justify-content: flex-end;
-}
-
-@media (hover: hover) {
-  .workout-sets-row.is-logged .workout-sets-row-main:hover {
-    background: var(--background-modifier-hover);
-  }
-}
 /* Modal styles entrypoint (split into app/styles/modal/*) */
 /* ============================================================================
    MODAL STYLES
@@ -2490,21 +2617,24 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
   max-width: var(--workout-size-11xl);
 }
 
+/* A group of fields: a card on the modal (like a BlockCard on the note),
+   its fields inset with the page color. The heading is a title, no rule */
 .workout-modal-section {
-  padding: var(--workout-space-lg);
+  padding: var(--workout-space-md);
   background-color: var(--background-secondary);
-  border-radius: var(--workout-radius-lg);
+  border-radius: var(--workout-radius-xl);
   border: var(--workout-border-thin) solid var(--workout-border-color);
   display: flex;
   flex-direction: column;
-  gap: var(--workout-space-lg);
+  gap: var(--workout-space-md);
 }
 .workout-modal-section h3 {
   margin: 0;
+  padding: 0;
+  border: none;
   font-size: var(--workout-font-lg);
+  font-weight: var(--workout-font-weight-semibold);
   color: var(--text-normal);
-  border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
-  padding-bottom: var(--workout-space-sm);
 }
 
 /* A modal's main buttons (Button.createModalActions) stay at the bottom of
@@ -2519,6 +2649,15 @@ body.is-mobile .workout-timer .workout-icon-dropdown {
   border-top: var(--workout-border-thin) solid var(--workout-border-subtle);
   /* Covers the modal's bottom padding, where the form would show through */
   box-shadow: 0 var(--workout-space-lg) 0 var(--modal-background, var(--background-primary));
+}
+.workout-modal-actions .workout-btn {
+  min-height: var(--workout-touch-target-min);
+  padding: var(--workout-space-sm) var(--workout-space-xl);
+  font-size: var(--workout-font-base);
+}
+.workout-modal-actions .workout-btn:focus-visible {
+  outline: var(--workout-border-medium) solid var(--interactive-accent);
+  outline-offset: var(--workout-space-2xs);
 }
 
 body.is-mobile .workout-modal-actions {
@@ -2542,14 +2681,38 @@ body.is-mobile .workout-modal-actions {
 .workout-charts-form-group {
   display: flex;
   flex-direction: column;
-  gap: var(--workout-space-md);
+  gap: var(--workout-space-2xs);
   position: relative;
 }
-.workout-charts-form-group label {
-  font-weight: var(--workout-font-weight-semibold);
+
+/* Field labels are labels (DESIGN.md "Label": 0.8em, muted), above their
+   field; a checkbox's label is the text of the option, so it stays body */
+.workout-charts-form-group > label,
+.workout-form-field-label,
+.workout-field-label {
+  color: var(--text-muted);
+  font-size: var(--workout-font-xs);
+  font-weight: var(--font-normal);
+}
+
+.workout-charts-checkbox-group > label {
+  flex: 1 1 auto;
+  min-width: 0;
   color: var(--text-normal);
   font-size: var(--workout-font-base);
+  cursor: pointer;
 }
+
+.workout-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-2xs);
+  min-width: 0;
+}
+.workout-form-field .workout-form-field-input {
+  width: 100%;
+}
+
 .workout-charts-form-group input[type=text],
 .workout-charts-form-group input[type=number],
 .workout-charts-form-group select {
@@ -2574,13 +2737,17 @@ body.is-mobile .workout-modal-actions {
   border-color: var(--interactive-accent);
   box-shadow: 0 0 0 var(--workout-border-medium) rgba(var(--interactive-accent-rgb), 0.2);
 }
+.workout-charts-form-group input[type=checkbox]:focus-visible {
+  outline: var(--workout-border-medium) solid var(--interactive-accent);
+  outline-offset: var(--workout-space-2xs);
+}
 .workout-charts-form-group input::placeholder {
   color: var(--text-muted);
 }
 
 .workout-parameters-container {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--workout-space-md);
   width: 100%;
   align-items: start;
@@ -2605,7 +2772,7 @@ body.is-mobile .workout-modal-actions {
 
 @media (max-width: 768px) {
   .workout-modal .workout-parameters-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .workout-modal .workout-charts-form-group input[type=text],
   .workout-modal .workout-charts-form-group input[type=number],
@@ -2643,6 +2810,10 @@ body.is-mobile .workout-modal-actions {
     min-width: var(--workout-checkbox-size);
   }
   .workout-modal .workout-charts-checkbox-group label {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    min-height: var(--workout-touch-target-min);
     font-size: var(--workout-font-base);
     line-height: 1.4;
   }
@@ -2656,7 +2827,7 @@ body.is-mobile .workout-modal-actions {
 @media (min-width: 768px) {
   .workout-modal .workout-parameters-container {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: end;
+    align-items: start;
   }
 }
 @media (min-width: 1200px) {
@@ -3025,50 +3196,30 @@ body.is-mobile .workout-modal-actions {
    This stylesheet uses a modular approach with component-based CSS files.
    All components follow Obsidian's theming system for consistent appearance.
    ============================================================================ */
-/* Quick adjust components */
+/* A labelled number in a form (AdjustField, the log form's fields): the
+   label above a NumberField, whose − / + and figure type come from the kit
+   (components/_fields). */
 .workout-field-with-adjust {
   display: flex;
   flex-direction: column;
-  gap: var(--workout-space-md);
+  gap: var(--workout-space-2xs);
   width: 100%;
+  min-width: 0;
 }
 .workout-field-with-adjust .workout-field-label {
   display: flex;
-  margin-bottom: var(--workout-space-sm);
-  font-weight: var(--workout-font-weight-semibold);
-  color: var(--text-normal);
-  font-size: var(--workout-font-base);
   align-items: center;
   gap: var(--workout-space-sm);
+  min-height: var(--workout-space-3xl);
 }
 .workout-field-with-adjust .workout-weight-unit-select {
-  font-weight: normal;
-}
-.workout-field-with-adjust .workout-input-with-adjust {
-  --workout-adjust-btn-width: clamp(4ch, 20%, 100px);
-  display: grid;
-  grid-template-columns: var(--workout-adjust-btn-width) minmax(0, 1fr) var(--workout-adjust-btn-width);
-  align-items: center;
-  gap: var(--workout-space-sm);
-  width: 100%;
-}
-.workout-field-with-adjust .workout-input-with-adjust .workout-adjust-btn {
-  width: 100%;
-  min-width: 4ch;
-  max-width: 100px;
-}
-.workout-field-with-adjust .workout-input-with-adjust .workout-charts-input {
-  width: 100%;
-  min-width: 5ch;
-  text-align: center;
+  font-size: var(--workout-font-xs);
 }
 
-@media (max-width: 768px) {
-  .workout-modal .workout-adjust-btn {
-    min-width: 4ch;
-    min-height: var(--workout-touch-target-min);
-  }
+body.is-mobile .workout-field-with-adjust .workout-field-label {
+  min-height: var(--workout-touch-target-min);
 }
+
 /* Audit modal */
 .workout-audit-success {
   color: var(--workout-text-success);
@@ -3144,16 +3295,14 @@ body.is-mobile .workout-modal-actions {
    ============================================================================ */
 /* Shared mobile logging styles for create/edit modals */
 .workout-log-recent-label {
-  font-weight: var(--workout-font-weight-semibold);
   color: var(--text-muted);
-  font-size: var(--workout-font-sm);
+  font-size: var(--workout-font-xs);
 }
 
 .workout-log-recent-section {
   display: flex;
   flex-direction: column;
-  gap: var(--workout-space-sm);
-  margin-bottom: var(--workout-space-lg);
+  gap: var(--workout-space-2xs);
 }
 
 .workout-log-recent-chips {
@@ -3164,39 +3313,6 @@ body.is-mobile .workout-modal-actions {
   padding: var(--workout-space-xs) 0;
 }
 
-.workout-log-recent-chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--workout-space-sm) var(--workout-space-lg);
-  border-radius: var(--workout-radius-full);
-  border: var(--workout-border-thin) solid var(--workout-border-color);
-  background: var(--background-secondary);
-  color: var(--text-normal);
-  font-size: var(--workout-font-sm);
-  font-weight: var(--workout-font-weight-medium);
-  cursor: pointer;
-  white-space: nowrap;
-  flex-shrink: 0;
-  min-height: var(--workout-chip-min-height);
-  transition: var(--workout-transition);
-}
-.workout-log-recent-chip:hover {
-  background: var(--interactive-hover);
-  border-color: var(--interactive-accent);
-}
-.workout-log-recent-chip:active {
-  transform: scale(0.95);
-  background: var(--workout-accent-fill);
-  color: var(--text-on-accent);
-}
-
-@media (max-width: 768px) {
-  .workout-log-recent-chip {
-    min-height: 40px;
-    padding: var(--workout-space-sm) var(--workout-space-lg);
-  }
-}
 /* Create/edit log: why the set can't be saved, under the field to fix */
 .workout-field-error {
   color: var(--workout-text-error);
@@ -3206,20 +3322,6 @@ body.is-mobile .workout-modal-actions {
 
 .workout-modal input[aria-invalid=true] {
   border-color: var(--workout-text-error);
-}
-
-/* Edit log: deleting is rare, so it is a small icon at the start of the
-   save bar, with save and cancel pushed to the end */
-.workout-buttons-container button.workout-log-delete {
-  margin-inline-end: auto;
-  align-self: center;
-  color: var(--workout-text-error);
-}
-
-body.is-mobile .workout-buttons-container button.workout-log-delete {
-  min-width: 44px;
-  min-height: 44px;
-  justify-content: center;
 }
 
 /* Conversion modal */
@@ -3512,7 +3614,8 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   margin-bottom: var(--workout-space-sm);
 }
 .workout-dashboard .workout-dashboard-header-titled {
-  margin-bottom: var(--workout-space-2xl);
+  align-items: center;
+  margin-bottom: var(--workout-space-lg);
 }
 .workout-dashboard .workout-dashboard-title {
   flex: 1;
@@ -3521,8 +3624,6 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   color: var(--text-normal);
   font-size: var(--workout-font-2xl);
   font-weight: var(--workout-font-weight-semibold);
-  border-bottom: var(--workout-border-medium) solid var(--interactive-accent);
-  padding-bottom: var(--workout-space-sm);
 }
 .workout-dashboard .workout-dashboard-grid {
   display: grid;
@@ -3601,9 +3702,6 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   .workout-dashboard .workout-dashboard-title {
     font-size: var(--workout-font-xl);
   }
-  .workout-dashboard .workout-dashboard-header-titled {
-    margin-bottom: var(--workout-space-lg);
-  }
 }
 /* ============================================================================
    WORKOUT CHARTS PLUGIN - STYLES
@@ -3614,82 +3712,48 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
    ============================================================================ */
 /* ============================================================================
    DASHBOARD WIDGETS
+   ============================================================================
+   Each widget is a BlockCard (card color, control border, xl radius, 12px
+   padding, 8px gap, title and ⋮ in its top row): this sheet only places what
+   the widgets hold. Flat, no hover lift: the desk is quiet.
    ============================================================================ */
 .workout-dashboard-widget {
-  background: var(--background-primary);
-  border: var(--workout-border-thin) solid var(--workout-border-color);
-  border-radius: var(--workout-radius-xl);
-  padding: var(--workout-space-lg);
-  box-shadow: var(--workout-shadow-sm);
-  transition: var(--workout-transition);
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  /* Compact widget - less padding, tighter layout */
-}
-.workout-dashboard-widget.compact {
-  padding: var(--workout-space-lg);
-  min-height: 0;
-}
-.workout-dashboard-widget {
-  /* Tall widget - more vertical space */
-}
-.workout-dashboard-widget.tall {
-  min-height: var(--workout-size-9xl);
-}
-.workout-dashboard-widget {
-  /* Auto-height widget - fits content exactly */
-}
-.workout-dashboard-widget.auto-height {
-  height: auto;
-  min-height: 0;
-}
-.workout-dashboard-widget:hover {
-  border-color: var(--interactive-accent);
-  box-shadow: var(--workout-shadow-md);
-}
-
-.workout-widget-title {
-  margin: 0 0 var(--workout-space-lg) 0;
-  color: var(--text-normal);
-  font-size: var(--workout-font-lg);
-  font-weight: var(--workout-font-weight-semibold);
-  display: flex;
-  align-items: center;
-  gap: var(--workout-space-sm);
-}
-
-@media (max-width: 768px) {
-  .workout-dashboard-widget {
-    padding: var(--workout-space-lg);
-  }
-  .workout-dashboard-chart-container {
-    display: none;
-  }
-  .workout-widget-title {
-    font-size: var(--workout-font-base);
-  }
-}
-@media (max-width: 484px) {
-  .workout-dashboard-widget {
-    padding: var(--workout-space-lg);
-  }
-  .workout-widget-title {
-    font-size: var(--workout-font-base);
-    margin-bottom: var(--workout-space-md);
-  }
-}
-/* A widget without a title row: its kebab sits in the top corner */
-.workout-dashboard-widget {
   position: relative;
+  width: 100%;
+  min-width: 0;
 }
 
+/* What the widget shows, under the title (meta type) */
+.workout-widget-subtitle {
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+}
+
+/* A StatCard.row right under the title (summary, calendar streaks) is the
+   widget's first row: nothing above it to set it apart from */
+.workout-dashboard-widget > .workout-block-header + .stat-card-row {
+  padding-top: 0;
+  border-top: none;
+}
+
+/* The card's gap spaces its parts: a message (all files valid) adds none */
+.workout-dashboard-widget > .workout-feedback-success {
+  margin: 0;
+}
+
+/* A widget without a title row: its kebab sits in the top corner */
 .workout-widget-menu-corner {
   position: absolute;
   top: var(--workout-space-sm);
   right: var(--workout-space-sm);
 }
 
+/* Phones: the volume chart is left out on purpose, its top list stays */
+@media (max-width: 768px) {
+  .workout-dashboard-chart-container {
+    display: none;
+  }
+}
 /* ============================================================================
    WORKOUT CHARTS PLUGIN - STYLES
    Modern styles using Obsidian CSS Variables
@@ -3700,149 +3764,10 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
 /* ============================================================================
    DASHBOARD SUMMARY & STATS
    ============================================================================ */
-/* Summary Grid */
-.workout-summary-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--workout-space-xs), 1fr));
-  gap: var(--workout-space-lg);
-}
-.workout-summary-card {
-  text-align: center;
-  padding: var(--workout-space-xl);
-  background: var(--background-secondary);
-  border-radius: var(--workout-radius-lg);
-  border: var(--workout-border-thin) solid var(--workout-border-color);
-  transition: var(--workout-transition);
-}
-@media (hover: hover) {
-  .workout-summary-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--workout-shadow-md);
-  }
-}
-
-/* Card Styles */
-.workout-card-header {
-  display: flex;
-  align-items: center;
-  gap: var(--workout-space-sm);
-  margin-bottom: var(--workout-space-lg);
-}
-.workout-card-icon {
-  font-size: var(--workout-font-2xl);
-  margin-bottom: var(--workout-space-sm);
-  display: block;
-}
-.workout-card-title {
-  margin: 0;
-  font-size: var(--workout-font-lg);
-  font-weight: var(--workout-font-weight-semibold);
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.workout-card-stats {
-  display: flex;
-  flex-direction: column;
-  gap: var(--workout-space-md);
-}
-.workout-card-value {
-  font-size: var(--workout-font-2xl);
-  font-weight: var(--workout-font-weight-bold);
-  color: var(--workout-text-accent);
-  margin-bottom: var(--workout-space-xs);
-}
-
-.workout-stat-item {
-  display: flex;
-  flex-direction: column;
-  gap: var(--workout-space-xs);
-}
-
-/* Stats Cards (Gradient) */
-.workout-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--workout-size-6xl), 1fr));
-  gap: var(--workout-space-lg);
-}
-.workout-stats-card {
-  padding: var(--workout-space-xl);
-  background: linear-gradient(135deg, var(--background-secondary) 0%, var(--background-primary) 100%);
-  border-radius: var(--workout-radius-xl);
-  border: var(--workout-border-thin) solid var(--workout-border-color);
-  transition: var(--workout-transition);
-  position: relative;
-  overflow: hidden;
-}
-.workout-stats-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--workout-space-xs);
-  background: linear-gradient(90deg, var(--interactive-accent), var(--interactive-accent-hover));
-  opacity: 0;
-  transition: var(--workout-transition);
-}
-.workout-stats-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--workout-shadow-lg);
-  border-color: var(--interactive-accent);
-}
-.workout-stats-card:hover::before {
-  opacity: 1;
-}
-.workout-stats-card .workout-card-icon {
-  font-size: var(--workout-font-2xl);
-  margin-bottom: var(--workout-space-sm);
-}
-.workout-stats-card .workout-card-title {
-  font-size: var(--workout-font-base);
-  color: var(--text-normal);
-  margin-bottom: var(--workout-space-md);
-  text-transform: none;
-  letter-spacing: normal;
-  opacity: 1;
-}
-
+/* Summary: two tiles a row on phones (four stacked filled a whole screen) */
 @media (max-width: 768px) {
-  /* 2x2 KPI tiles: four stacked cards filled a whole phone screen */
-  .workout-summary-grid {
+  .workout-dashboard .workout-summary-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--workout-space-sm);
-  }
-  .workout-summary-card {
-    padding: var(--workout-space-md) var(--workout-space-sm);
-  }
-  .workout-summary-card .workout-card-icon {
-    font-size: var(--workout-font-lg);
-    margin-bottom: var(--workout-space-2xs);
-  }
-  .workout-summary-card .workout-card-title {
-    font-size: var(--workout-font-xs);
-    letter-spacing: normal;
-  }
-  .workout-stats-grid {
-    grid-template-columns: 1fr;
-    gap: var(--workout-space-md);
-  }
-  .workout-stats-card {
-    padding: var(--workout-space-lg);
-  }
-  .workout-card-header {
-    margin-bottom: var(--workout-space-md);
-  }
-  .workout-card-icon {
-    font-size: var(--workout-font-xl);
-  }
-}
-@media (max-width: 484px) {
-  .workout-card-stats {
-    gap: var(--workout-space-md);
-  }
-  .workout-stats-card {
-    padding: var(--workout-space-lg);
   }
 }
 /* Quick stats: periods as columns, metrics as rows. Tabular figures keep the
@@ -3868,8 +3793,8 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
 }
 .workout-dashboard table.workout-quick-stats-table thead th {
   text-align: end;
-  font-size: var(--workout-font-sm);
-  font-weight: var(--workout-font-weight-semibold);
+  font-size: var(--workout-font-xs);
+  font-weight: normal;
   color: var(--text-muted);
 }
 .workout-dashboard table.workout-quick-stats-table tbody th {
@@ -3913,30 +3838,14 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   min-height: 0;
 }
 .workout-muscle-group-breakdown {
-  margin-top: var(--workout-space-xl);
-  padding-top: var(--workout-space-xl);
+  padding-top: var(--workout-space-sm);
   border-top: var(--workout-border-thin) solid var(--workout-border-subtle);
 }
 .workout-muscle-group-breakdown h4 {
-  margin: 0 0 var(--workout-space-md) 0;
-  color: var(--text-normal);
-  font-size: var(--workout-font-base);
-  font-weight: var(--workout-font-weight-semibold);
-}
-.workout-muscle-group-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.workout-muscle-group-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--workout-space-sm) 0;
-  border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
-}
-.workout-muscle-group-item:last-child {
-  border-bottom: none;
+  margin: 0 0 var(--workout-space-xs) 0;
+  color: var(--text-muted);
+  font-size: var(--workout-font-xs);
+  font-weight: normal;
 }
 .workout-muscle-click-area {
   pointer-events: auto;
@@ -3980,18 +3889,18 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
 
 .workout-heatmap-controls {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--workout-space-xl);
-  gap: var(--workout-space-lg);
   flex-wrap: wrap;
+  gap: var(--workout-space-sm) var(--workout-space-lg);
+}
+.workout-heatmap-controls .workout-chip-group-chips {
+  overflow-x: visible;
+  padding-bottom: 0;
 }
 .workout-heatmap-canvas-container {
-  background: var(--background-secondary);
+  background: var(--background-primary);
   border: var(--workout-border-thin) solid var(--workout-border-color);
   border-radius: var(--workout-radius-lg);
-  padding: var(--workout-space-xl);
-  margin-bottom: var(--workout-space-xl);
+  padding: var(--workout-space-lg);
   text-align: center;
   position: relative;
 }
@@ -4004,7 +3913,6 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   max-width: 100%;
   height: auto;
   border-radius: var(--workout-radius-sm);
-  background: var(--background-secondary);
 }
 .workout-heatmap-overlay {
   position: absolute;
@@ -4015,11 +3923,10 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   pointer-events: none;
 }
 .workout-heatmap-info-panel {
-  background: var(--background-secondary);
+  background: var(--background-primary);
   border: var(--workout-border-thin) solid var(--workout-border-color);
   border-radius: var(--workout-radius-lg);
-  padding: var(--workout-space-lg);
-  margin-top: var(--workout-space-lg);
+  padding: var(--workout-space-md);
 }
 .workout-heatmap-info-panel h4 {
   margin: 0 0 var(--workout-space-md) 0;
@@ -4035,9 +3942,14 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
 
 @media (max-width: 768px) {
   .workout-heatmap-controls {
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--workout-space-md);
+    gap: var(--workout-space-sm);
+  }
+  .workout-heatmap-controls .workout-chip-group {
+    flex: 1 1 auto;
+  }
+  .workout-heatmap-controls .workout-chip-group-chips .workout-chip {
+    flex: 1 1 auto;
+    padding-inline: var(--workout-space-sm);
   }
   .workout-muscle-details {
     position: static;
@@ -4047,85 +3959,75 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   }
 }
 /* ============================================================================
-   WORKOUT CHARTS PLUGIN - STYLES
-   Modern styles using Obsidian CSS Variables
-
-   This stylesheet uses a modular approach with component-based CSS files.
-   All components follow Obsidian's theming system for consistent appearance.
+   DASHBOARD RECENT WORKOUTS and the top exercises by volume
+   ============================================================================
+   Rows of a list under subtle borders: the name (ink) with its day under it
+   (meta), the figure at the right end (figure type, tabular, ink). No accent:
+   nothing in the list is done or picked.
    ============================================================================ */
-/* ============================================================================
-   DASHBOARD RECENT WORKOUTS
-   ============================================================================ */
-.workout-recent-workouts-list {
+/* Qualified to beat Obsidian's `.markdown-rendered ul` margins */
+.workout-dashboard ul.workout-recent-workouts-list,
+.workout-dashboard ul.workout-muscle-group-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.workout-recent-workouts-list .workout-recent-workout-item {
-  display: flex;
-  justify-content: space-between;
+
+.workout-recent-workouts-list .workout-recent-workout-item,
+.workout-muscle-group-list .workout-muscle-group-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "name figure" "day figure";
   align-items: center;
-  padding: var(--workout-space-md) 0;
-  border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
-  transition: var(--workout-transition);
+  column-gap: var(--workout-space-md);
   margin: 0;
+  padding: var(--workout-space-sm) 0;
+  text-align: start;
+  border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
 }
-.workout-recent-workouts-list .workout-recent-workout-item:last-child {
+.workout-recent-workouts-list .workout-recent-workout-item:last-child,
+.workout-muscle-group-list .workout-muscle-group-item:last-child {
   border-bottom: none;
 }
-.workout-recent-workouts-list .workout-recent-workout-item:hover {
-  background: var(--background-modifier-hover);
-  margin: 0 calc(-1 * var(--workout-space-lg));
-  padding: var(--workout-space-md) var(--workout-space-lg);
-  border-radius: var(--workout-radius-md);
-}
-.workout-recent-workouts-list .workout-recent-workout-item .workout-recent-date {
-  font-size: var(--workout-font-base);
+.workout-recent-workouts-list .workout-recent-workout-item .workout-list-item-secondary,
+.workout-muscle-group-list .workout-muscle-group-item .workout-list-item-secondary {
+  grid-area: day;
+  font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
   color: var(--text-muted);
-  min-width: var(--workout-size-4xl);
 }
-.workout-recent-workouts-list .workout-recent-workout-item .workout-recent-name {
-  flex: 1;
-  margin: 0 var(--workout-space-lg);
-  font-weight: var(--workout-font-weight-medium);
+.workout-recent-workouts-list .workout-recent-workout-item .workout-recent-name,
+.workout-recent-workouts-list .workout-recent-workout-item .workout-exercise-name,
+.workout-muscle-group-list .workout-muscle-group-item .workout-recent-name,
+.workout-muscle-group-list .workout-muscle-group-item .workout-exercise-name {
+  grid-area: name;
+  min-width: 0;
+  overflow-wrap: anywhere;
   color: var(--text-normal);
 }
-.workout-recent-workouts-list .workout-recent-workout-item .workout-recent-volume {
-  color: var(--workout-text-accent);
+.workout-recent-workouts-list .workout-recent-workout-item .workout-recent-volume,
+.workout-recent-workouts-list .workout-recent-workout-item .workout-exercise-volume,
+.workout-muscle-group-list .workout-muscle-group-item .workout-recent-volume,
+.workout-muscle-group-list .workout-muscle-group-item .workout-exercise-volume {
+  grid-area: figure;
   font-weight: var(--workout-font-weight-semibold);
-  font-size: var(--workout-font-base);
-}
-
-.workout-exercise-name {
-  font-weight: var(--workout-font-weight-medium);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   color: var(--text-normal);
 }
-.workout-exercise-volume {
-  color: var(--text-muted);
-  font-size: var(--workout-font-base);
+
+/* Only a name and its figure: one line */
+.workout-muscle-group-list .workout-muscle-group-item {
+  grid-template-areas: "name figure";
 }
 
-@media (max-width: 768px) {
-  .workout-recent-workout-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--workout-space-sm);
-  }
-  .workout-recent-date {
-    min-width: auto;
-  }
-  .workout-recent-name {
-    margin: 0;
-  }
-}
 /* ============================================================================
    DASHBOARD TAGS
    ============================================================================ */
 .workout-muscle-tags-widget .workout-widget-description {
-  margin: 0 0 var(--workout-space-lg) 0;
+  margin: 0;
   color: var(--text-muted);
   font-size: var(--workout-font-sm);
-  line-height: 1.5;
 }
 
 /* Grouped by muscle: a flex of cards, one per muscle, each holding a flex of
@@ -4134,7 +4036,6 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   display: flex;
   flex-wrap: wrap;
   gap: var(--workout-space-md);
-  margin-bottom: var(--workout-space-lg);
 }
 
 .workout-muscle-group-card {
@@ -4164,14 +4065,13 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(var(--workout-tag-min-width), 1fr));
   gap: var(--workout-space-sm);
-  margin-bottom: var(--workout-space-lg);
 }
 .workout-muscle-tag-badge {
   display: flex;
   align-items: center;
   gap: var(--workout-space-xs);
   padding: var(--workout-space-sm) var(--workout-space-md);
-  background: var(--background-secondary);
+  background: var(--background-primary);
   border: var(--workout-border-thin) solid var(--workout-border-color);
   border-radius: var(--workout-radius-md);
   cursor: pointer;
@@ -4179,11 +4079,14 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   font-size: var(--workout-font-sm);
   color: var(--text-normal);
 }
-.workout-muscle-tag-badge:hover {
-  background: var(--background-modifier-hover);
-  border-color: var(--interactive-accent);
-  transform: translateY(-2px);
-  box-shadow: var(--workout-shadow-sm);
+@media (hover: hover) {
+  .workout-muscle-tag-badge:hover {
+    border-color: var(--interactive-accent);
+  }
+}
+.workout-muscle-tag-badge:focus-visible {
+  outline: var(--workout-border-medium) solid var(--interactive-accent);
+  outline-offset: var(--workout-space-2xs);
 }
 .workout-muscle-tag-badge.workout-copied {
   background: var(--workout-accent-fill);
@@ -4205,14 +4108,12 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   text-overflow: ellipsis;
 }
 .workout-muscle-tags-info {
-  padding-top: var(--workout-space-md);
+  padding-top: var(--workout-space-sm);
   border-top: var(--workout-border-thin) solid var(--workout-border-subtle);
-  text-align: center;
 }
 .workout-muscle-tags-count {
   color: var(--text-muted);
   font-size: var(--workout-font-sm);
-  font-style: italic;
 }
 
 /* ============================================================================
@@ -4223,18 +4124,8 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   min-height: 280px;
 }
 
-.workout-widget-subtitle {
-  font-size: var(--workout-font-sm);
-  color: var(--text-muted);
-  margin-top: calc(-1 * var(--workout-space-md));
-  margin-bottom: var(--workout-space-md);
-}
-
 .workout-protocol-no-data {
-  text-align: center;
   color: var(--text-muted);
-  padding: var(--workout-space-xl);
-  font-style: italic;
 }
 
 .workout-protocol-chart-container {
@@ -4269,8 +4160,10 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   border-radius: var(--workout-radius-sm);
   transition: var(--workout-transition);
 }
-.workout-protocol-legend-item:hover {
-  background: var(--background-secondary);
+@media (hover: hover) {
+  .workout-protocol-legend-item:hover {
+    background: var(--background-modifier-hover);
+  }
 }
 
 .workout-protocol-legend-color {
@@ -4288,8 +4181,8 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
 
 .workout-protocol-legend-count {
   font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
   color: var(--text-muted);
-  font-weight: var(--workout-font-weight-medium);
 }
 
 /* ============================================================================
@@ -4301,8 +4194,7 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   align-items: center;
   gap: var(--workout-space-sm);
   padding: var(--workout-space-sm) var(--workout-space-md);
-  margin-bottom: var(--workout-space-md);
-  background: var(--background-secondary);
+  background: var(--background-primary);
   border-radius: var(--workout-radius-md);
   border-left: 3px solid var(--interactive-accent);
   /* FilterIndicator molecule child classes */
@@ -4345,7 +4237,7 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   user-select: none;
 }
 .workout-protocol-legend-item-active {
-  background: var(--background-secondary);
+  background: var(--background-modifier-hover);
   border-left: 3px solid var(--interactive-accent);
   padding-left: calc(var(--workout-space-sm) - 3px);
 }
@@ -4364,82 +4256,66 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
 }
 
 .workout-protocol-effectiveness-no-data {
-  text-align: center;
   color: var(--text-muted);
-  padding: var(--workout-space-xl);
-  font-style: italic;
 }
 
+/* What the figures can't say, as meta under the table */
 .workout-protocol-effectiveness-disclaimer {
-  margin-top: var(--workout-space-md);
-  padding: var(--workout-space-sm) var(--workout-space-md);
-  background: var(--background-secondary);
-  border-radius: var(--workout-radius-sm);
-  border-left: 3px solid var(--text-warning);
   font-size: var(--workout-font-sm);
   color: var(--text-muted);
-  font-style: italic;
 }
 
 .workout-protocol-effectiveness-table-container {
   overflow-x: auto;
 }
 
-.workout-protocol-effectiveness-table {
+/* Qualified to beat Obsidian's note table rules (a border around every cell) */
+.workout-dashboard table.workout-protocol-effectiveness-table {
   width: 100%;
+  margin: 0;
+  border: none;
   border-collapse: collapse;
-  font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
 }
-.workout-protocol-effectiveness-table th,
-.workout-protocol-effectiveness-table td {
-  padding: var(--workout-space-sm) var(--workout-space-md);
-  text-align: left;
+.workout-dashboard table.workout-protocol-effectiveness-table th,
+.workout-dashboard table.workout-protocol-effectiveness-table td {
+  padding: var(--workout-space-sm) var(--workout-space-xs);
+  text-align: start;
+  border: none;
   border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
+  background: none;
 }
-.workout-protocol-effectiveness-table th {
-  font-weight: var(--workout-font-weight-semibold);
+.workout-dashboard table.workout-protocol-effectiveness-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.workout-dashboard table.workout-protocol-effectiveness-table th {
+  font-weight: normal;
   color: var(--text-muted);
   font-size: var(--workout-font-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
-.workout-protocol-effectiveness-table tr:hover {
-  background: var(--background-secondary);
+.workout-dashboard table.workout-protocol-effectiveness-table th:not(:first-child) {
+  text-align: end;
 }
 
-.workout-protocol-effectiveness-protocol-cell {
-  /* Contains the badge */
-}
-
-.workout-protocol-effectiveness-badge {
-  display: inline-block;
-  padding: var(--workout-space-xs) var(--workout-space-sm);
-  border-radius: var(--workout-radius-sm);
-  font-size: var(--workout-font-xs);
+.workout-dashboard .workout-protocol-effectiveness-table .workout-protocol-effectiveness-entries-cell,
+.workout-dashboard .workout-protocol-effectiveness-table .workout-protocol-effectiveness-volume-cell,
+.workout-dashboard .workout-protocol-effectiveness-table .workout-protocol-effectiveness-progression-cell {
+  text-align: end;
   font-weight: var(--workout-font-weight-semibold);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
-.workout-protocol-effectiveness-entries-cell,
-.workout-protocol-effectiveness-volume-cell,
-.workout-protocol-effectiveness-progression-cell {
-  text-align: center;
-}
-
+/* Toned like StatCard: an improvement in success text, stable muted, a
+   decline stays ink (never red: a worse figure is not an error) */
 .workout-protocol-effectiveness-positive {
   color: var(--workout-text-success);
-  font-weight: var(--workout-font-weight-medium);
 }
 
 .workout-protocol-effectiveness-negative {
-  color: var(--workout-text-error);
-  font-weight: var(--workout-font-weight-medium);
+  color: var(--text-normal);
 }
 
 .workout-protocol-effectiveness-neutral {
   color: var(--text-muted);
-  font-weight: var(--workout-font-weight-medium);
 }
 
 /* ============================================================================
@@ -4450,103 +4326,90 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
 }
 
 .workout-duration-comparison-no-data {
-  text-align: center;
   color: var(--text-muted);
-  padding: var(--workout-space-xl);
-  font-style: italic;
 }
 
 .workout-duration-comparison-table-container {
   overflow-x: auto;
 }
 
-.workout-duration-comparison-table {
+/* Qualified to beat Obsidian's note table rules (a border around every cell) */
+.workout-dashboard table.workout-duration-comparison-table {
   width: 100%;
+  margin: 0;
+  border: none;
   border-collapse: collapse;
-  font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
 }
-.workout-duration-comparison-table th,
-.workout-duration-comparison-table td {
-  padding: var(--workout-space-sm) var(--workout-space-md);
-  text-align: left;
+.workout-dashboard table.workout-duration-comparison-table th,
+.workout-dashboard table.workout-duration-comparison-table td {
+  padding: var(--workout-space-sm) var(--workout-space-xs);
+  text-align: start;
+  border: none;
   border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
+  background: none;
 }
-.workout-duration-comparison-table th {
-  font-weight: var(--workout-font-weight-semibold);
+.workout-dashboard table.workout-duration-comparison-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.workout-dashboard table.workout-duration-comparison-table th {
+  font-weight: normal;
   color: var(--text-muted);
   font-size: var(--workout-font-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
-.workout-duration-comparison-table tr:hover {
-  background: var(--background-secondary);
-}
-
-.workout-duration-comparison-workout-cell {
-  /* Contains workout name and date */
+.workout-dashboard table.workout-duration-comparison-table th:not(:first-child) {
+  text-align: end;
 }
 
 .workout-duration-comparison-workout-name {
-  font-weight: var(--workout-font-weight-medium);
   color: var(--text-normal);
 }
 
 .workout-duration-comparison-workout-date {
-  font-size: var(--workout-font-xs);
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-.workout-duration-comparison-duration-cell {
-  text-align: center;
-  font-variant-numeric: tabular-nums;
   font-size: var(--workout-font-sm);
+  color: var(--text-muted);
 }
 
-.workout-duration-comparison-variance-cell {
-  text-align: center;
+.workout-dashboard .workout-duration-comparison-table .workout-duration-comparison-duration-cell,
+.workout-dashboard .workout-duration-comparison-table .workout-duration-comparison-variance-cell {
+  text-align: end;
+  font-weight: var(--workout-font-weight-semibold);
+  white-space: nowrap;
 }
 
-/* Variance indicators */
+/* An estimate within 10% in success text; further off stays ink (no amber
+   or red: a long session is not an error) */
 .workout-duration-comparison-variance-good {
   color: var(--workout-text-success);
-  font-weight: var(--workout-font-weight-medium);
 }
 
-.workout-duration-comparison-variance-moderate {
-  color: var(--workout-text-warning);
-  font-weight: var(--workout-font-weight-medium);
-}
-
+.workout-duration-comparison-variance-moderate,
 .workout-duration-comparison-variance-poor {
-  color: var(--workout-text-error);
-  font-weight: var(--workout-font-weight-medium);
+  color: var(--text-normal);
 }
 
 /* ============================================================================
    VARIANCE TREND SECTION
    ============================================================================ */
+/* Under a subtle border, like a StatCard row: label, message, meta */
 .workout-duration-comparison-trend {
-  margin-top: var(--workout-space-md);
-  padding: var(--workout-space-sm) var(--workout-space-md);
-  background: var(--background-secondary);
-  border-radius: var(--workout-radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-2xs);
+  padding-top: var(--workout-space-sm);
+  border-top: var(--workout-border-thin) solid var(--workout-border-subtle);
 }
 
 .workout-duration-comparison-trend-title {
   font-size: var(--workout-font-xs);
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: var(--workout-space-xs);
 }
 
 .workout-duration-comparison-trend-message {
   display: flex;
   align-items: center;
   gap: var(--workout-space-sm);
-  font-size: var(--workout-font-sm);
-  font-weight: var(--workout-font-weight-medium);
+  font-weight: var(--workout-font-weight-semibold);
 }
 
 .workout-duration-comparison-trend-icon {
@@ -4558,9 +4421,9 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
 }
 
 .workout-duration-comparison-trend-stat {
-  font-size: var(--workout-font-xs);
+  font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
   color: var(--text-muted);
-  margin-top: var(--workout-space-xs);
 }
 
 /* Trend direction colors */
@@ -4572,10 +4435,7 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
 }
 
 .workout-duration-comparison-trend-declining {
-  color: var(--workout-text-error);
-}
-.workout-duration-comparison-trend-declining .workout-duration-comparison-trend-icon {
-  color: var(--workout-text-error);
+  color: var(--text-normal);
 }
 
 .workout-duration-comparison-trend-stable {
@@ -4653,9 +4513,9 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--workout-space-xs) var(--workout-space-sm);
     padding: var(--workout-space-md);
-    background: var(--background-secondary);
-    border: var(--workout-border-thin) solid var(--workout-border-subtle);
-    border-radius: var(--workout-radius-md);
+    background: var(--background-primary);
+    border: var(--workout-border-thin) solid var(--workout-border-color);
+    border-radius: var(--workout-radius-lg);
   }
   .workout-dashboard table.workout-card-table td {
     display: block;
@@ -4663,10 +4523,17 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
     border: none;
     text-align: start;
     background: none;
+    font-weight: var(--workout-font-weight-semibold);
+    font-variant-numeric: tabular-nums;
+  }
+  .workout-dashboard table.workout-card-table td,
+  .workout-dashboard table.workout-card-table td[data-label] {
+    text-align: start;
   }
   .workout-dashboard table.workout-card-table td:first-child {
     grid-column: 1/-1;
     margin-bottom: var(--workout-space-2xs);
+    font-weight: normal;
   }
   .workout-dashboard table.workout-card-table td[data-label]::before {
     content: attr(data-label);
@@ -4689,22 +4556,6 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
 /* ============================================================================
    TRAINING CALENDAR (a year of training days, one column per week)
    ============================================================================ */
-.workout-calendar-stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--workout-space-md) var(--workout-space-xl);
-  margin-bottom: var(--workout-space-md);
-}
-.workout-calendar-stat-label {
-  font-size: var(--workout-font-xs);
-  color: var(--text-muted);
-}
-.workout-calendar-stat-value {
-  font-weight: var(--workout-font-weight-semibold);
-}
-.workout-calendar-stat-value.is-met {
-  color: var(--workout-text-success);
-}
 .workout-calendar-grid {
   --workout-calendar-cell: 11px;
   display: grid;
@@ -4743,7 +4594,7 @@ body.is-mobile .workout-buttons-container button.workout-log-delete {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--workout-space-xxs, 2px);
+  gap: var(--workout-space-2xs);
   margin-top: var(--workout-space-sm);
   font-size: var(--workout-font-xs);
   color: var(--text-muted);

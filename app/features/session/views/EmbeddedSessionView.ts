@@ -9,8 +9,12 @@ import {
   readNotePlan,
   stepOf,
   sessionProgress,
+  type RestBlock,
   type SessionStep,
 } from "@app/features/session/business/sessionPlan";
+import { BlockMenu, type BlockMenuAction } from "@app/features/common/ui/BlockMenu";
+import { EditRestTimerModal } from "@app/features/tables/modals/EditRestTimerModal";
+import { EditTimerModal } from "@app/features/timer/modals/EditTimerModal";
 import {
   TrainingHistory,
   localDay,
@@ -20,6 +24,7 @@ import type { LogFormData } from "@app/types/ModalTypes";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
+import { BlockCard } from "@app/components/molecules/BlockCard";
 import { ICONS } from "@app/constants";
 import { PathUtils } from "@app/utils/PathUtils";
 import { parametersOrNone } from "@app/services/exercise/ExerciseDefinitionService";
@@ -164,21 +169,20 @@ class SessionRenderChild extends MarkdownRenderChild {
 
       this.drawnPlan = JSON.stringify(steps);
       this.containerEl.empty();
-      const card = this.containerEl.createDiv({ cls: "workout-session" });
-      if (steps.length === 0) {
-        card.createDiv({ cls: "workout-session-message", text: t("session.empty") });
-        return false;
-      }
       if (!step) {
-        this.renderDone(card, todaysSets.length, steps.length);
+        const card = BlockCard.create(this.containerEl, { className: "workout-session" }).el;
+        if (steps.length === 0) {
+          card.createDiv({ cls: "workout-session-message", text: t("session.empty") });
+        } else {
+          this.renderDone(card, todaysSets.length, steps.length);
+        }
         return false;
       }
 
-      const header = card.createDiv({ cls: "workout-session-header" });
-      header.createDiv({ cls: "workout-session-exercise", text: step.exercise });
-      header.createDiv({
-        cls: "workout-session-meta",
-        text: t("session.exerciseOf", { current: index + 1, total: steps.length }),
+      const { el: card, header } = BlockCard.create(this.containerEl, {
+        title: step.exercise,
+        meta: t("session.exerciseOf", { current: index + 1, total: steps.length }),
+        className: "workout-session",
       });
 
       const setsDone = done[index].length;
@@ -216,11 +220,31 @@ class SessionRenderChild extends MarkdownRenderChild {
           ? this.restingStep
           : step;
       this.restTimer.draw(restEl.createDiv(), restStep.rest);
+      if (restStep.restBlock) {
+        BlockMenu.render(header, [this.restTimerAction(restStep, restStep.restBlock)]);
+      }
       return true;
     } catch (error) {
       this.onError(error);
       return false;
     }
+  }
+
+  /** Edits the rest shown where it is written (see RestBlock) */
+  private restTimerAction(step: SessionStep, block: RestBlock): BlockMenuAction {
+    const where = { sourcePath: this.sourcePath, matchWithoutId: block.match };
+    return {
+      label: t("sets.editRestTimer"),
+      icon: ICONS.TIMER.DURATION,
+      run: () => {
+        const { app } = this.plugin;
+        if (block.type === "workout-sets") {
+          new EditRestTimerModal(app, this.plugin, block.params, step.rest, where).open();
+        } else {
+          new EditTimerModal(app, this.plugin, block.params, where).open();
+        }
+      },
+    };
   }
 
   /** Every planned set is logged; Previous goes back to the last exercise */

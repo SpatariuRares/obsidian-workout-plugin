@@ -1,6 +1,7 @@
 // EditLogModal - extends BaseLogModal for editing existing workout logs
 
-import { App, Notice, setIcon } from "obsidian";
+import { App, Notice } from "obsidian";
+import { DeleteButton } from "@app/components/atoms/DeleteButton";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { BaseLogModal } from "@app/features/modals/base/BaseLogModal";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
@@ -63,15 +64,11 @@ export class EditLogModal extends BaseLogModal {
     container: HTMLElement,
     formElements: LogFormElements,
   ): void {
-    const deleteBtn = container.createEl("button", {
-      cls: "clickable-icon workout-log-delete",
-      attr: {
-        type: "button",
-        "aria-label": t("modal.buttons.deleteSet"),
-      },
+    DeleteButton.create(container, {
+      label: t("modal.buttons.deleteSet"),
+      onClick: () => this.confirmDelete(),
+      className: "workout-modal-actions-delete",
     });
-    setIcon(deleteBtn, "trash-2");
-    deleteBtn.addEventListener("click", () => this.confirmDelete());
     super.createButtons(container, formElements);
   }
 

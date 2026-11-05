@@ -39,7 +39,7 @@ export function renderTargetSection<P extends TargetParams>(
   const { plugin, params, schema, sourcePath, sets, onTargetUpdated } = props;
   const weightUnit = plugin.settings.weightUnit;
 
-  TargetHeader.render(container, {
+  const panel = TargetHeader.render(container, {
     targetWeight: params.targetWeight,
     targetReps: params.targetReps,
     filteredData: sets,
@@ -51,8 +51,9 @@ export function renderTargetSection<P extends TargetParams>(
     return;
   }
 
+  // Inside the target's panel: the news belongs to the goal it reached
   AchievementBadge.render(
-    container,
+    panel ?? container,
     {
       app: plugin.app,
       exercise,

@@ -1,0 +1,68 @@
+@use "../variables";
+
+/* ============================================================================
+   TOGGLES: the tick (CheckToggle) and the chevron (DisclosureToggle)
+   ============================================================================
+   Row controls sized for a thumb. Their focus ring is drawn here, since a
+   bare button inside a block gets none from the theme.
+   ============================================================================ */
+
+.workout-check-toggle,
+.workout-disclosure-toggle {
+  &:focus-visible {
+    outline: var(--workout-border-medium) solid var(--interactive-accent);
+    outline-offset: var(--workout-space-2xs);
+  }
+}
+
+// Outlined while to do, filled when done
+.workout-check-toggle {
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 2.75rem;
+  padding: 0;
+  border-radius: var(--workout-radius-lg);
+  border: var(--workout-border-medium) solid var(--workout-border-color);
+  background: var(--background-primary);
+  color: var(--text-muted);
+  cursor: pointer;
+
+  &.is-done {
+    border-color: var(--workout-accent-fill);
+    background: var(--workout-accent-fill);
+    color: var(--text-on-accent);
+  }
+}
+
+.workout-disclosure-toggle {
+  position: relative;
+  width: var(--workout-touch-target-min);
+  height: var(--workout-touch-target-min);
+
+  svg {
+    transition: transform var(--workout-transition);
+  }
+
+  &.is-expanded svg {
+    transform: rotate(180deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    svg {
+      transition: none;
+    }
+  }
+}
+
+// Something other than the defaults is set in the hidden details. Inside
+// the chevron's own box, so it reads as part of it on a phone too
+.workout-disclosure-toggle-dot {
+  position: absolute;
+  top: 25%;
+  right: 25%;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: var(--workout-radius-round);
+  background: var(--workout-accent-fill);
+}

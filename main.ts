@@ -38,6 +38,7 @@ import type { LogBulkChangedPayload } from "@app/services/events/WorkoutEventTyp
 import type { WeightUnit } from "@app/utils/WeightUnitUtils";
 import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
 import { withDefaultProtocols } from "@app/services/protocols/ProtocolCatalog";
+import { newInstallBetaFeatures } from "@app/services/features/BetaFeatures";
 import { withDefaultTimerPresets } from "@app/features/timer/business/timerPresets";
 
 // Extend Window interface for WorkoutPlannerAPI
@@ -306,6 +307,8 @@ export default class WorkoutChartsPlugin extends Plugin {
     const saved = (await this.loadData()) as Partial<WorkoutChartsSettings> | null;
     this.savedDataAtLoad = saved;
     this.settings = Object.assign({}, DEFAULT_SETTINGS, saved);
+    // Nothing saved yet: a new install, saved with the protocol defaults in onload()
+    if (!saved) this.settings.betaFeatures = newInstallBetaFeatures();
   }
 
   async saveSettings() {
@@ -356,8 +359,9 @@ export default class WorkoutChartsPlugin extends Plugin {
    */
   public async addWorkoutLogEntry(
     entry: LogEntryInput,
+    options?: { timestamp?: number },
   ): Promise<void> {
-    return this.workoutLogFile.add(entry);
+    return this.workoutLogFile.add(entry, options);
   }
 
   /**

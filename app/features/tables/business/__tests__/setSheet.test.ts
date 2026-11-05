@@ -1,4 +1,5 @@
 import {
+  draftFromSet,
   emptyDraft,
   restOf,
   rowProtocol,
@@ -153,7 +154,33 @@ describe("restOf", () => {
     expect(restOf({ exercise: "Squat" }, plan)).toEqual({});
   });
 
+  it("runs the block's own timer options, which win over the section's", () => {
+    expect(
+      restOf(
+        { exercise: "Bench Press", "timer.preset": "Tabata", "timer.sound": false },
+        plan,
+      ),
+    ).toEqual({ preset: "Tabata", sound: false });
+    expect(restOf({ exercise: "Bench Press", rest: 60, "timer.showControls": false }, plan)).toEqual({
+      type: "countdown",
+      duration: 60,
+      showControls: false,
+    });
+  });
+
   it("has no rest with rest: 0", () => {
     expect(restOf({ exercise: "Bench Press", rest: 0 }, plan)).toBeUndefined();
+  });
+});
+
+describe("draftFromSet", () => {
+  it("turns a logged set back into the row's draft, so ticking it again logs the same set", () => {
+    const logged = set(80, 8, { protocol: "Warmup", notes: "easy" });
+    const draft = draftFromSet(logged, STRENGTH);
+    expect(draft).toEqual({ values: { reps: "8", weight: "80" }, protocol: "warmup", notes: "easy" });
+
+    const row = { number: 1, placeholders: {} };
+    const result = rowToFormData(row, draft, { exercise: "Bench Press", workout: "Push", parameters: STRENGTH });
+    expect(result).toMatchObject({ data: { reps: 8, weight: 80, protocol: "warmup", notes: "easy" } });
   });
 });

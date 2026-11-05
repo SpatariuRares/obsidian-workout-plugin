@@ -8,7 +8,6 @@
       "variationFromTo": " 从 {startValue} 到 {endValue}",
       "weightIncrementUnit": "重量增量 {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "总体变化：",
     "significantIncrease": "从零开始增长",
     "trendLine": "趋势线",
     "typeNotAvailable": "图表类型“{chartDataType}”不适用于 {exerciseType} 类型的训练动作。可用类型：{typeList}",
@@ -25,7 +24,16 @@
     "defaultTitle": "趋势 {type}",
     "noTypesAvailable": "没有可用的图表类型",
     "noEligibleE1rm": "没有可计入预估 1RM 的组。请记录重量为正数、次数为 1–12 次的组，不包括热身组和递减组。",
-    "editChart": "编辑图表"
+    "editChart": "编辑图表",
+    "stats": {
+      "vsPrevious": "较上一期",
+      "sessions": "训练次数",
+      "recentTrend": "近期趋势",
+      "min": "最低",
+      "max": "最高",
+      "last3": "最近 3 次",
+      "average": "平均"
+    }
   },
   "commands": {
     "addExerciseBlock": "添加训练动作块",
@@ -53,11 +61,12 @@
     "minPerKm": "分钟/公里",
     "notAvailable": "不可用",
     "sec": "秒",
+    "undo": "撤销",
     "unknown": "未知",
     "workout": "训练"
   },
   "convert": {
-    "currentType": "当前类型：",
+    "currentType": "当前类型",
     "errors": {
       "convertError": "转换训练数据时出错：{error}"
     },
@@ -78,7 +87,7 @@
     "success": "成功转换 {count} 条记录",
     "title": "转换训练数据",
     "typeSelect": {
-      "convertTo": "转换为：",
+      "convertTo": "转换为",
       "updateFileType": "更新训练文件类型"
     }
   },
@@ -108,7 +117,7 @@
       "sharedName": "与 {pages} 的训练动作名称相同：记录只会归入其中一个页面。"
     },
     "muscleTags": {
-      "description": "描述",
+      "description": "可在训练动作页面属性中使用的标签。点击即可复制。",
       "title": "肌肉标签",
       "tooltip": "点击复制：{tag}",
       "totalCount": "总计：{count} 个标签可用"
@@ -129,7 +138,7 @@
       "columnProgression": "进展",
       "columnProtocol": "训练方案",
       "columnVolumeChange": "训练量变化",
-      "disclaimer": "免责声明",
+      "disclaimer": "这只是相关性，并不能证明因果：体重、休息和睡眠同样会影响这些数字。",
       "noData": "数据不足：每种训练方案至少需要记录 5 组。",
       "title": "训练方案效果",
       "subtitle": "每种训练方案在所有已记录组中的表现"
@@ -174,6 +183,11 @@
         "sets": "平均组数：{value}",
         "reps": "平均次数：{value}"
       },
+      "controls": {
+        "period": "时段",
+        "side": "侧面",
+        "metric": "指标"
+      },
       "imbalance": {
         "backDominant": "前后失衡：您的后侧训练量远高于前侧。",
         "frontDominant": "前后失衡：您的前侧训练量远高于后侧。"
@@ -186,9 +200,8 @@
       "moveUp": "上移 {widget}",
       "moveDown": "下移 {widget}",
       "allHistory": "留空：全部历史",
-      "recentWorkoutsLimit": "最近列表中的训练数：",
-      "volumeTrendDays": "训练量趋势中的天数：",
-      "gridColumns": "列数：",
+      "volumeTrendDays": "训练量趋势中的天数",
+      "recentWorkoutsLimit": "近期训练列表中的训练数",
       "layout": "布局",
       "layoutGrid": "网格",
       "layoutList": "列表",
@@ -200,6 +213,7 @@
       "size": "{width} × {height}",
       "gridHint": "拖动小组件即可移动，拖动其角落即可调整大小；下方的收纳区显示每个小组件可缩到的最小尺寸。点击 × 或将其拖到收纳区即可移除。使用键盘：方向键移动，Shift 加方向键调整大小，Delete 移除。",
       "gridColumnsMeasured": "{columns} 列符合笔记的宽度。",
+      "gridColumns": "列数",
       "remove": "将 {widget} 移出仪表盘"
     },
     "grid": {
@@ -230,37 +244,51 @@
       "edit": "编辑小组件",
       "removeConfirm": "要将“{widget}”移出仪表盘吗？",
       "removeConfirmButton": "移除",
-      "calendarWeeks": "显示的周数：",
+      "calendarWeeks": "显示的周数，从本周往前计算",
       "quickStatsPeriods": "显示的时段",
-      "quickStatsMetrics": "显示的行",
+      "quickStatsMetrics": "显示的数据",
       "heatMapTimeFrame": "初始时段",
       "heatMapMetric": "初始指标",
-      "heatMapView": "初始视图",
-      "volumeTopLimit": "最高训练动作列表中的动作数：",
-      "protocolDays": "统计的天数：",
-      "protocolMinEntries": "比较训练方案所需的最少组数：",
-      "durationRecentCount": "用于比较的训练次数：",
-      "durationRestSeconds": "估算中组间休息时间（秒）：",
+      "heatMapView": "初始侧面",
+      "volumeTopLimit": "列出的训练动作数",
+      "durationRecentCount": "参与比较的训练次数",
+      "durationRestSeconds": "估算中组间休息时间",
+      "protocolDays": "统计的天数",
+      "protocolMinEntries": "每种训练方案的最少组数",
       "summaryMetrics": "显示的卡片",
       "calendarShowStats": "显示连续训练和本周进度",
       "heatMapShowImbalance": "显示失衡面板",
-      "volumeShowBreakdown": "显示训练量最高的训练动作列表",
-      "protocolChartType": "图表",
+      "volumeShowBreakdown": "显示训练量最高的训练动作",
+      "protocolChartType": "图表样式",
       "chartPie": "饼图",
       "chartDoughnut": "环形图",
-      "protocolSortBy": "排序方式（最佳在前）",
-      "durationShowTrend": "显示差距趋势",
+      "protocolSortBy": "排序方式",
+      "durationShowTrend": "显示预估准确度趋势",
       "quickActionsShown": "显示的按钮",
-      "fileErrorsMaxItems": "列出的页面数（留空：全部）：",
-      "fileErrorsMaxTags": "每个页面最多的肌肉标签数：",
+      "fileErrorsMaxItems": "列出的页面数",
+      "fileErrorsMaxTags": "页面可包含的肌肉标签数上限",
       "fileErrorsCheckSharedNames": "标记与其他页面训练动作名称相同的页面",
-      "muscleTagsGroupByMuscle": "按肌肉分组标签"
+      "muscleTagsGroupByMuscle": "按肌肉分组标签",
+      "volumeTrendDays": "训练量图表中的天数",
+      "recentWorkoutsLimit": "显示的训练数",
+      "all": "全部",
+      "numberRange": "请输入 {min} 到 {max} 之间的整数。",
+      "pickOne": "至少选择一项，或将小组件移出仪表盘。",
+      "units": {
+        "days": "天",
+        "weeks": "周",
+        "seconds": "秒"
+      },
+      "editTitle": "编辑{widget}",
+      "sortMostSets": "组数最多",
+      "lastWidget": "这是仪表盘上唯一的小组件，无法移出：请改为删除代码块。"
     }
   },
   "duration": {
     "estimatedDuration": "预估时长",
     "lastSession": "上次训练",
     "restTime": "休息时间",
+    "setCount": "{count} 组",
     "setTime": "每组时间",
     "unableToAnalyze": "无法分析训练文件"
   },
@@ -331,7 +359,7 @@
       "byExerciseTitle": "按训练动作",
       "byWorkoutTitle": "按训练计划",
       "cardioExerciseTitle": "有氧运动（距离 + 配速）",
-      "chartsIntro": "图表展示你随时间变化的进展。可用类型：`volume`、`weight`、`e1rm`、`reps`、`duration`、`distance`、`heartRate`、`pace`。",
+      "chartsIntro": "图表展示您随时间变化的进展。可用类型：`volume`、`weight`、`e1rm`、`reps`、`duration`、`distance`、`heartRate`、`pace`。",
       "chartsTitle": "1. 图表",
       "codeBlockWorkoutChart": "可视化进度随时间的变化",
       "codeBlockWorkoutDashboard": "完整统计概览",
@@ -354,13 +382,13 @@
       "timersTitle": "3. 计时器",
       "tip": "**提示**：个人仪表盘请查看 [[{dashboard}]]",
       "title": "功能展示",
-      "trainingProtocolsIntro": "每组都可以设置一个训练方案，在表格中以徽章显示。你可以编辑这些方案，也可以在 设置 → 训练方案 中添加自己的。",
+      "trainingProtocolsIntro": "每组都可以设置一个训练方案，在表格中以徽章显示。您可以编辑这些方案，也可以在 设置 → 训练方案 中添加自己的。",
       "trainingProtocolsTitle": "5. 训练方案",
       "workoutChartTitle": "训练图表（所有训练动作合并）",
       "e1rmChartTitle": "预估的 1RM",
       "e1rmIntro": "按 Epley 公式（重量 ×（1 + 次数 / 30））计算每天的最佳估算，使用 1 到 12 次的组。热身组和递减组不计入。",
       "presetTimersTitle": "Tabata 和 EMOM",
-      "presetTimersIntro": "计时器可以通过 `preset` 按名称运行已保存的预设。Tabata 和 EMOM 已内置；你可以编辑它们，或在 设置 → 计时器预设 中添加自己的。",
+      "presetTimersIntro": "计时器可以通过 `preset` 按名称运行已保存的预设。Tabata 和 EMOM 已内置；您可以编辑它们，或在 设置 → 计时器预设 中添加自己的。",
       "protocolColumn": "训练方案",
       "badgeColumn": "徽章",
       "descriptionColumn": "描述",
@@ -368,7 +396,7 @@
       "purposeColumn": "用途",
       "codeBlockWorkoutSession": "按组跟随笔记中的计划",
       "sessionTitle": "6. 引导训练",
-      "sessionIntro": "`workout-session` 代码块会按照笔记中的计划逐步引导你：每个包含练习的 `workout-log` 代码块对应一步，包含其 `sets` 与目标，并使用同一章节中的休息计时器。在 [[{workout}]] 中试试。",
+      "sessionIntro": "`workout-session` 代码块会按照笔记中的计划逐步引导您：每个包含练习的 `workout-log` 代码块对应一步，包含其 `sets` 与目标，并使用同一章节中的休息计时器。在 [[{workout}]] 中试试。",
       "dashboardsTitle": "7. 仪表盘",
       "dashboardsIntro": "仪表盘会显示全部小组件，或只显示 `widgets` 中列出的小组件，并按该顺序排列。在仪表盘右上角的菜单中选择。",
       "dashboardWidgetsTitle": "已选小组件",
@@ -377,9 +405,9 @@
       "trainingCalendarIntro": "训练日历显示一年的训练日，以及连续达成每周目标的周数（设置 → 每周目标）。",
       "importTitle": "8. 从 Strong 或 Hevy 导入",
       "importIntro": "从命令面板运行 **{command}**，然后选择应用导出的 CSV。日志中已有的组会被跳过，日志会先备份。",
-      "setsTitle": "在您的手机上记录设置",
-      "setsIntro": "一个 `workout-sets` 块显示今天的训练计划，以行形式呈现。灰色数字表示上次的相同训练计划：勾选一行以记录，或者输入您执行的内容。点击该训练计划的协议和备注，以及已记录的训练计划以进行编辑。",
-      "codeBlockWorkoutSets": "今天记录每个训练组，逐行记录。"
+      "setsTitle": "在手机上记录组",
+      "setsIntro": "一个 `workout-sets` 代码块以行的形式显示今天的组。灰色数字是上次同一组的数值：勾选一行即可按原样记录，也可以输入您实际完成的数值。点击箭头可查看该组的训练方案和备注，点击已记录的组即可编辑。",
+      "codeBlockWorkoutSets": "逐行记录今天的组"
     },
     "fileNames": {
       "dashboard": "仪表盘",
@@ -416,7 +444,7 @@
       "quickActionsTitle": "快速操作",
       "step1": "打开 [[{dashboard}]] 查看您的统计数据",
       "step2": "查看 [[{featureShowcase}]] 了解所有可用功能",
-      "step3": "尝试从 **{workouts}** 文件夹中选择一个训练计划。",
+      "step3": "尝试从 **{workouts}** 文件夹中选择一个训练计划",
       "step4": "在 **{exercises}** 中创建您自己的训练动作",
       "tableHeaderDescription": "描述",
       "tableHeaderFileFolder": "文件/文件夹",
@@ -424,7 +452,25 @@
       "welcome": "欢迎！此文件夹包含示例文件，帮助您学习所有功能。",
       "workoutsDesc": "示例训练模板",
       "workoutsFolder": "**{folder}/**",
-      "sessionIntro": "此笔记包含一个简单计划：一个练习及其组、目标和休息计时器。训练会显示要做的组；记录后休息计时器开始。",
+      "sessionIntro": "此笔记包含一个简单计划：一个训练动作及其组、目标和休息计时器。引导训练会显示要做的组；记录后休息计时器开始。",
+      "sets": {
+        "restIntro": "`rest` 是每组之后的休息时间，单位为秒（`0` 表示不计时）；不设置时，代码块使用该章节中的 `workout-timer`。`targetWeight` 和 `targetReps` 显示目标，并在您第一次做这个动作时作为提示。",
+        "restTimerTitle": "休息计时器选项",
+        "restTimerIntro": "代码块包含其休息计时器的全部选项，因此训练日笔记无需 `workout-timer`：`timer.type`（`interval` 时 `rest` 为每轮的训练时长，并配合 `timer.rest` 和 `timer.rounds`）、`timer.preset`、`timer.sound` 和 `timer.showControls`。⋮ → 编辑休息计时器 会替您写入这些选项。",
+        "restTitle": "休息计时器与目标",
+        "lastTimeIntro": "设置 `workout` 后，灰色数字来自您上次在该训练中做这个动作的记录。不设置时，代码块使用笔记的名称。",
+        "lastTimeTitle": "与上次相同的组"
+      },
+      "tables": {
+        "columnsIntro": "`columns` 决定显示哪些列及其顺序；`sortBy` 和 `sortOrder` 决定行的顺序，这里是重量最大的组排在前面。`showAddButton: false` 会隐藏 + 按钮，`showProtocol: false` 会隐藏训练方案徽章。",
+        "columnsTitle": "列与排序",
+        "workoutIntro": "设置 `workout` 且不设置 `exercise` 时，表格列出该训练的每一组。`dateRange: 14` 保留最近 14 天的数据。",
+        "workoutTitle": "整次训练",
+        "targetIntro": "设置 `targetWeight` 和 `targetReps` 后，表格会显示您离目标还有多远；达成目标时，会出现一个徽章，可将下一次的重量写入代码块。`sets` 是计划的组数：不设置 `limit` 时，表格显示最近两次训练，引导训练也据此计数。设置 `workout` 并配合 `exactMatch: true` 时，只保留该训练中该动作的组。",
+        "targetTitle": "目标与计划组数",
+        "latestIntro": "`exercise` 选择训练动作，`limit` 决定表格显示多少组。",
+        "latestTitle": "某个训练动作的最新组"
+      },
       "pagesIntro": "逐个页面探索一个功能。按照链接的顺序进行，或者选择以下功能。使用“返回”和“下一步”按钮在笔记之间切换；正常滚动以探索每个示例。",
       "liveIntro": "探索以下所有功能，通过六周的示例训练计划。这些是演示数据；请尝试控制，并查看您的笔记是如何工作的。",
       "tryLog": "使用“+”按钮添加一组。表格、图表和仪表盘读取的是同一个 CSV 文件。",
@@ -530,11 +576,11 @@
     "csvNotFound": "未找到训练记录 CSV。请在设置中检查 CSV 文件夹。",
     "errors": {
       "tagReferenceFailed": "生成标签参考时出错：{error}",
-      "csvLoadError": "加载CSV数据时出错：{error}",
-      "csvCreateError": "创建CSV文件时出错：{error}",
-      "blockIdsError": "添加块ID时出错：{error}",
-      "csvFilesError": "创建CSV文件时出错：{error}",
-      "muscleTagsCsvError": "创建肌肉标签CSV时出错：{error}",
+      "csvLoadError": "加载 CSV 数据时出错：{error}",
+      "csvCreateError": "创建 CSV 文件时出错：{error}",
+      "blockIdsError": "添加代码块 ID 时出错：{error}",
+      "csvFilesError": "创建 CSV 文件时出错：{error}",
+      "muscleTagsCsvError": "创建肌肉标签 CSV 时出错：{error}",
       "muscleTagsLoadError": "加载肌肉标签时出错：{error}",
       "templateGenError": "生成模板失败：{error}",
       "workoutLogCreateError": "无法在路径 {path} 创建 CSV 文件，请检查设置中的路径。",
@@ -600,7 +646,7 @@
       "deleteSet": "删除组",
       "updateDashboard": "更新仪表盘",
       "updateChart": "更新图表",
-      "insertSets": "插入集合"
+      "insertSets": "插入组"
     },
     "canvasLayout": "布局",
     "canvasOptions": "选项",
@@ -623,43 +669,38 @@
     },
     "confirmAction": "确认操作",
     "csvExercise": "CSV 训练动作",
-    "customParameters": "自定义参数：",
-    "customTitle": "自定义标题：",
-    "dataLimit": "数据上限（0 = 全部）：",
-    "dataType": "数据类型：",
-    "dateRange": "日期范围（天）：",
-    "daysRange": "天数范围（0 = 全部）：",
+    "dataType": "数据类型",
+    "dataLimit": "数据上限（0 = 全部）",
+    "customTitle": "自定义标题",
+    "customParameters": "自定义参数",
     "delete": "删除",
-    "duration": "时长（秒）：",
     "editTag": "编辑标签",
-    "exerciseType": "训练动作类型：",
     "exportTags": "导出标签",
     "fileName": "文件名",
-    "folderPath": "文件夹路径（可选）：",
+    "folderPath": "文件夹路径（可选）",
     "importMerge": "合并",
     "importReplace": "替换所有",
     "importTags": "导入标签",
     "labels": {
       "actions": "操作",
       "currentFileInfo": "当前文件：{fileName}",
-      "exercise": "训练动作：",
-      "reps": "次数：",
-      "targetReps": "目标次数：",
-      "plannedSets": "计划组数：",
-      "targetWeight": "目标（{unit}）：",
-      "volume": "训练量（{unit}）：",
-      "weight": "重量（{unit}）："
+      "weight": "重量（{unit}）",
+      "volume": "训练量（{unit}）",
+      "targetWeight": "目标重量（{unit}）",
+      "plannedSets": "计划组数",
+      "targetReps": "目标次数",
+      "reps": "次数",
+      "exercise": "训练动作"
     },
     "layoutGrouped": "按肌肉分组",
     "layoutHorizontal": "水平布局",
-    "layoutType": "布局类型：",
+    "layoutType": "布局类型",
     "layoutVertical": "垂直布局",
     "muscleGroup": "肌肉群",
     "newTag": "新建标签",
     "noTagsFound": "未找到与搜索匹配的标签",
     "noTagsSelected": "未选择任何标签。点击下方标签添加。",
-    "note": "备注：",
-    "notes": "备注（可选）：",
+    "note": "备注",
     "notices": {
       "auditConfirmRenameFile": "要重命名此文件吗？\n\n{oldName} → {newName}",
       "auditMismatchCount": "发现 {count} 个潜在不匹配：",
@@ -731,13 +772,13 @@
       "validationCombinedMode": "对于“训练动作 + 训练计划”类型，您必须同时填写这两个字段！",
       "dashboardUpdated": "仪表盘已成功更新！",
       "dashboardUpdateFailed": "更新仪表盘失败：在其所在笔记中找不到该仪表盘，或另一个没有 id 的仪表盘具有相同设置。请重新打开笔记后再试。",
-      "setsInserted": "已插入"
+      "setsInserted": "已插入组"
     },
-    "parameterKey": "键：",
-    "parameterLabel": "显示名称：",
+    "parameterLabel": "标签",
+    "parameterKey": "键",
     "parameterRequired": "必填",
-    "parameterType": "类型：",
-    "parameterUnit": "单位（可选）：",
+    "parameterUnit": "单位（可选）",
+    "parameterType": "类型",
     "placeholders": {
       "customTitle": "留空以自动生成标题",
       "enterTagName": "请输入标签名称（例如：胸部、胸肌）",
@@ -757,10 +798,8 @@
       "sets": "4",
       "workout": "例如：训练 A、训练 B，或使用下方复选框"
     },
-    "protocol": "训练方案：",
-    "recentExercises": "最近：",
-    "restTime": "休息时间（秒）：",
-    "rounds": "轮数：",
+    "recentExercises": "最近使用",
+    "protocol": "训练方案",
     "save": "保存",
     "sections": {
       "advancedOptions": "高级选项",
@@ -793,19 +832,19 @@
       "superset": "超级组",
       "text": "文本",
       "timed": "计时",
-      "twentyones": "21次",
+      "twentyones": "21 次训练法",
       "yesNo": "是/否",
       "warmup": "热身"
     },
-    "sets": "组数：",
-    "similarTags": "相似标签：",
+    "similarTags": "相似标签",
+    "sets": "组数",
     "similarity": "相似度",
     "status": "状态",
     "tag": "标签",
-    "tagsSelector": "肌肉标签：",
-    "timerDuration": "计时器时长（秒）：",
-    "timerPreset": "计时器预设：",
-    "timerType": "计时器类型：",
+    "timerType": "计时器类型",
+    "timerPreset": "计时器预设",
+    "timerDuration": "计时时长（秒）",
+    "tagsSelector": "肌肉标签",
     "titles": {
       "addExerciseBlock": "添加训练动作块",
       "auditExerciseNames": "检查训练动作名称",
@@ -825,25 +864,32 @@
       "muscleTagManager": "管理肌肉标签",
       "editDashboard": "编辑仪表盘",
       "editChart": "编辑训练图表",
-      "insertSets": "添加锻炼计划"
+      "insertSets": "插入训练组"
     },
-    "workout": "训练（可选）：",
-    "workoutFile": "训练文件：",
-    "workoutNameOptional": "训练名称（可选）：",
     "importMergeAriaLabel": "合并：仅添加新标签，保留现有标签",
     "importReplaceAriaLabel": "替换：覆盖所有现有标签",
     "editItem": "编辑{item}",
     "deleteItem": "删除{item}",
+    "duration": "时长（秒）",
     "errors": {
       "missingElements": "缺少元素",
       "validationCombinedMode": "对于“训练动作 + 训练计划”类型，请填写两个字段"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - 组数：{sets}\n- 次数：{reps}\n- 休息：{restTime} 秒\n\n",
+    "exerciseType": "训练动作类型",
     "noteTemplate": "**备注：{note}**\n",
+    "notes": "备注（可选）",
     "date": "日期",
+    "daysRange": "天数范围（0 = 全部）",
+    "dateRange": "日期范围（天）",
     "weightUnitToggle": "此条目对应的单位",
     "rest": "休息",
-    "work": "工作"
+    "rounds": "轮数",
+    "restTime": "休息时间（秒）",
+    "work": "工作",
+    "workoutNameOptional": "训练名称（可选）",
+    "workoutFile": "训练文件",
+    "workout": "训练（可选）"
   },
   "settings": {
     "buttons": {
@@ -967,7 +1013,7 @@
       "gettingStarted": "入门",
       "timerDeviceCues": "计时器设备提示",
       "customProtocols": "训练方案",
-      "beta": "β 版本功能"
+      "beta": "测试版功能"
     },
     "tooltips": {
       "deletePreset": "删除预设",
@@ -984,7 +1030,7 @@
     "protocolHelp": {
       "warmup": "正式组之前的轻量组。它们不计入个人记录。",
       "dropSet": "力竭后立即降低重量并继续训练。递减组不计入个人记录。",
-      "myoReps": "一个激活组，然后是几组短暂的迷你组，组间休息几秒。",
+      "myoReps": "一个激活组，然后是几组短暂的迷您组，组间休息几秒。",
       "restPause": "力竭后休息几秒，然后再做几次。",
       "superset": "两个训练动作连续进行，中间不休息。",
       "twentyone": "先做 7 次下半程动作，再做 7 次上半程动作，最后完成 7 次完整动作。"
@@ -996,21 +1042,11 @@
     "beta": {
       "intro": "提供一些新功能，供您在它们正式发布前体验。这些功能目前处于测试阶段，您需要手动开启，并且可能会在后续版本中进行修改。",
       "setSheet": {
-        "name": "锻炼套装",
-        "desc": "`workout-sets` 块：今天的工作室设置，以行形式显示在您的手机上，前一天的值作为提示，并带有启动的休息计时器。"
+        "name": "训练组",
+        "desc": "`workout-sets` 代码块：以行的形式在手机上填写今天的组，上次的数值作为提示，每次勾选都会启动休息计时器。"
       },
-      "disabledBlock": "{feature} 是一种测试功能。要使用此功能，请在“设置”→“测试功能”中启用它。"
+      "disabledBlock": "{feature} 是测试版功能。要使用此代码块，请在“设置”→“测试版功能”中启用它。"
     }
-  },
-  "stats": {
-    "max": "最大值：",
-    "min": "最小值：",
-    "recentLast3": " （最近3次）",
-    "recentTrend": "近期趋势",
-    "recentVsPrev": " （与上次比）",
-    "sessions": "训练次数",
-    "average": "平均值：",
-    "title": "{dataTypeLabel} 统计信息（{contextLabel}）："
   },
   "table": {
     "actions": "操作",
@@ -1050,6 +1086,8 @@
     "notAvailable": "无",
     "refreshSuccess": "表格已刷新",
     "target": {
+      "progress": "最佳 {best}/{target} 次",
+      "noSetsYet": "{weight} 还没有记录过组",
       "progressTooltip": "最佳：{best} 次 / 目标：{target} 次",
       "repsSuffix": "次",
       "separator": " × "
@@ -1134,7 +1172,7 @@
     }
   },
   "welcome": {
-    "title": "欢迎使用健身插件",
+    "title": "欢迎使用训练插件",
     "intro": "记录您的每一组，然后通过图表、表格和仪表盘查看。您想从哪里开始？",
     "tryExamples": "使用示例数据",
     "startScratch": "从头开始",
@@ -1232,25 +1270,29 @@
     "next": "下一步",
     "rest": "休息",
     "done": "训练完成：今天已记录 {sets} 组。",
-    "empty": "Add a `workout-log` or `workout-sets` block with an exercise to this note to follow it as a session."
+    "empty": "在此笔记中添加带有训练动作的 `workout-log` 或 `workout-sets` 代码块，即可将其作为引导训练来跟随。"
   },
   "sets": {
-    "editSet": "编辑集合 {set}",
-    "addSet": "添加集合",
-    "protocol": "协议",
+    "addSet": "添加组",
+    "removeSet": "移除组",
+    "protocol": "训练方案",
     "notes": "备注",
-    "editBlock": "编辑集合",
-    "blockUpdated": "集合已更新",
-    "blockUpdateFailed": "未能更新集合：该区块未在笔记中找到。请重新打开笔记并尝试再次操作。",
-    "workoutLabel": "锻炼：",
+    "editBlock": "编辑组",
+    "editRestTimer": "编辑休息计时器",
+    "blockUpdated": "组已更新",
+    "blockUpdateFailed": "未能更新组：在笔记中找不到该代码块。请重新打开笔记后再试。",
+    "workoutLabel": "训练",
     "workoutPlaceholder": "为空：{note}",
-    "restLabel": "在每个组之间休息 (0 = 该部分的计时器)",
+    "restLabel": "每组之后休息（0 = 该部分的计时器）",
     "noExercise": "将 `exercise:` 添加到此块中，以便记录其训练组。",
     "progress": "{done}/{sets} 组",
-    "lastTime": "上次 ({date}): {sets}",
-    "setColumn": "设置",
-    "fieldOfSet": "{field}，设置 {set}",
-    "details": "协议和关于 {set} 集合的记录",
-    "logSet": "记录集 {set}"
+    "lastTime": "上次（{date}）：{sets}",
+    "setColumn": "组",
+    "fieldOfSet": "{field}，第 {set} 组",
+    "details": "第 {set} 组的训练方案和备注",
+    "logSet": "记录第 {set} 组",
+    "valueOfSet": "{field}，第 {set} 组：{value}",
+    "setRemoved": "已移除第 {set} 组",
+    "unlogSet": "从训练记录中移除第 {set} 组"
   }
 }

@@ -12,13 +12,19 @@ import {
 } from "@app/services/notes/WorkoutNote";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
+import {
+  blockRest,
+  setsBlock,
+  type EmbeddedSetsParams,
+} from "@app/features/tables/setsBlock";
 import { resolveTimer } from "@app/features/timer/business/resolveTimer";
 import {
   intervalPlan,
   intervalSeconds,
 } from "@app/features/timer/business/intervalSchedule";
-import { TIMER_TYPE } from "@app/features/timer/types";
+import { TIMER_TYPE, type EmbeddedTimerParams } from "@app/features/timer/types";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
+import { PathUtils } from "@app/utils/PathUtils";
 import type {
   AppPort,
   SettingsPort,
@@ -101,9 +107,7 @@ export class WorkoutFileAnalyzer {
     try {
       const logs = await this.plugin.getWorkoutLogData();
 
-      // Extract workout name from file path (basename without extension)
-      const workoutName =
-        filePath.split("/").pop()?.replace(".md", "") || "";
+      const workoutName = PathUtils.noteName(filePath);
 
       // Most recent session with a plausible duration
       const latest = new TrainingHistory(logs)
@@ -123,11 +127,30 @@ export class WorkoutFileAnalyzer {
   private timerSeconds(body: string): number {
     const parsed = timerBlock.parse(body);
     if (parsed.errors.length > 0) return 0;
-    const { params, error } = resolveTimer(parsed.params, this.plugin.settings);
+    return this.runSeconds(parsed.params);
+  }
+
+  /** Seconds a timer runs for (preset, defaults, rounds); 0 for a stopwatch */
+  private runSeconds(timer: EmbeddedTimerParams): number {
+    const { params, error } = resolveTimer(timer, this.plugin.settings);
     if (error || params.type === TIMER_TYPE.STOPWATCH) return 0;
     return params.type === TIMER_TYPE.INTERVAL
       ? intervalSeconds(intervalPlan(params))
       : params.duration ?? 0;
+  }
+
+  /**
+   * Seconds of the rests the section's workout-sets blocks run on their own
+   * (see restOf): their own timer, else the default preset when the section
+   * has no workout-timer (that one is counted with the section's timers)
+   */
+  private setsRestSeconds(sets: EmbeddedSetsParams[], sectionHasTimer: boolean): number[] {
+    return sets.map((params) => {
+      if (params.rest === 0) return 0;
+      const own = blockRest(params);
+      if (own) return this.runSeconds(own);
+      return sectionHasTimer ? 0 : this.runSeconds({});
+    });
   }
 
   /**
@@ -139,9 +162,14 @@ export class WorkoutFileAnalyzer {
   ): void {
     const timers = section.blocks.filter((b) => b.type === timerBlock.type);
     const logs = section.blocks.filter((b) => b.type === tableBlock.type);
+    const setsBlocks = section.blocks
+      .filter((b) => b.type === setsBlock.type)
+      .map((b) => setsBlock.parse(b.body))
+      .filter((read) => read.errors.length === 0)
+      .map((read) => read.params);
 
     // Skip parsing if section has no workout components
-    if (timers.length === 0 && logs.length === 0) return;
+    if (timers.length === 0 && logs.length === 0 && setsBlocks.length === 0) return;
 
     // Sets and reps are read from the heading and prose, never from code blocks
     const sectionContent = [section.heading ?? "", section.text].join("\n");
@@ -194,7 +222,11 @@ export class WorkoutFileAnalyzer {
       sets = parseInt(headerMatch[1], 10);
     }
 
-    // 2. Fallback to workout-log limit if sets not found
+    // 2. Fallback to the planned sets of a workout-sets block, then to the
+    // workout-log limit
+    if (sets === 0) {
+      sets = setsBlocks.find((params) => params.sets !== undefined)?.sets ?? 0;
+    }
     if (sets === 0) {
       const limit = logs
         .map((log) => tableBlock.parse(log.body).params.limit)
@@ -217,6 +249,12 @@ export class WorkoutFileAnalyzer {
     let timersFound = 0;
     for (const block of timers) {
       const seconds = this.timerSeconds(block.body);
+      if (seconds > 0) {
+        sectionTimerSum += seconds;
+        timersFound++;
+      }
+    }
+    for (const seconds of this.setsRestSeconds(setsBlocks, timers.length > 0)) {
       if (seconds > 0) {
         sectionTimerSum += seconds;
         timersFound++;

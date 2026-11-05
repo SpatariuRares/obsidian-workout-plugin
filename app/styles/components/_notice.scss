@@ -1,0 +1,21 @@
+@use "../variables";
+
+/* ============================================================================
+   UNDO NOTICE: what happened on the left, Undo at the right end
+   ============================================================================ */
+
+.workout-undo-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--workout-space-md);
+}
+
+// The notice's own message element, which otherwise fits its text
+.workout-undo-notice-message {
+  flex: 1;
+}
+
+.workout-undo-notice-button {
+  flex: none;
+}

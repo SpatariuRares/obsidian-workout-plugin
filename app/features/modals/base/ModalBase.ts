@@ -6,6 +6,8 @@ import { FormField } from "@app/components/molecules/FormField";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import { t } from "@app/i18n";
 
+
+let nextCheckboxId = 0;
 export abstract class ModalBase extends Modal {
   constructor(app: App) {
     super(app);
@@ -154,13 +156,11 @@ export abstract class ModalBase extends Modal {
       type: INPUT_TYPE.CHECKBOX,
     });
     if (checked) checkbox.checked = true;
-    if (id) {
-      checkbox.id = id;
-      const labelEl = container.createEl("label", { text: label });
-      labelEl.setAttribute("for", id);
-    } else {
-      container.createEl("label", { text: label });
-    }
+    // Always tied to its label: tapping the text ticks the box, and the box
+    // has a name
+    checkbox.id = id ?? `workout-checkbox-${++nextCheckboxId}`;
+    const labelEl = container.createEl("label", { text: label });
+    labelEl.setAttribute("for", checkbox.id);
     return checkbox;
   }
 

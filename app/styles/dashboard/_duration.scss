@@ -7,108 +7,99 @@
 }
 
 .workout-duration-comparison-no-data {
-  text-align: center;
   color: var(--text-muted);
-  padding: var(--workout-space-xl);
-  font-style: italic;
 }
 
 .workout-duration-comparison-table-container {
   overflow-x: auto;
 }
 
-.workout-duration-comparison-table {
+/* Qualified to beat Obsidian's note table rules (a border around every cell) */
+.workout-dashboard table.workout-duration-comparison-table {
   width: 100%;
+  margin: 0;
+  border: none;
   border-collapse: collapse;
-  font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
 
   th,
   td {
-    padding: var(--workout-space-sm) var(--workout-space-md);
-    text-align: left;
+    padding: var(--workout-space-sm) var(--workout-space-xs);
+    text-align: start;
+    border: none;
     border-bottom: var(--workout-border-thin) solid
       var(--workout-border-subtle);
+    background: none;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
   }
 
   th {
-    font-weight: var(--workout-font-weight-semibold);
+    font-weight: normal;
     color: var(--text-muted);
     font-size: var(--workout-font-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
   }
 
-  tr:hover {
-    background: var(--background-secondary);
+  // Figure columns: the label over the right-aligned figures
+  th:not(:first-child) {
+    text-align: end;
   }
-}
-
-.workout-duration-comparison-workout-cell {
-  /* Contains workout name and date */
 }
 
 .workout-duration-comparison-workout-name {
-  font-weight: var(--workout-font-weight-medium);
   color: var(--text-normal);
 }
 
 .workout-duration-comparison-workout-date {
-  font-size: var(--workout-font-xs);
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-.workout-duration-comparison-duration-cell {
-  text-align: center;
-  font-variant-numeric: tabular-nums;
   font-size: var(--workout-font-sm);
+  color: var(--text-muted);
 }
 
-.workout-duration-comparison-variance-cell {
-  text-align: center;
+.workout-dashboard .workout-duration-comparison-table {
+  .workout-duration-comparison-duration-cell,
+  .workout-duration-comparison-variance-cell {
+    text-align: end;
+    font-weight: var(--workout-font-weight-semibold);
+    white-space: nowrap;
+  }
 }
 
-/* Variance indicators */
+/* An estimate within 10% in success text; further off stays ink (no amber
+   or red: a long session is not an error) */
 .workout-duration-comparison-variance-good {
   color: var(--workout-text-success);
-  font-weight: var(--workout-font-weight-medium);
 }
 
-.workout-duration-comparison-variance-moderate {
-  color: var(--workout-text-warning);
-  font-weight: var(--workout-font-weight-medium);
-}
-
+.workout-duration-comparison-variance-moderate,
 .workout-duration-comparison-variance-poor {
-  color: var(--workout-text-error);
-  font-weight: var(--workout-font-weight-medium);
+  color: var(--text-normal);
 }
 
 /* ============================================================================
    VARIANCE TREND SECTION
    ============================================================================ */
 
+/* Under a subtle border, like a StatCard row: label, message, meta */
 .workout-duration-comparison-trend {
-  margin-top: var(--workout-space-md);
-  padding: var(--workout-space-sm) var(--workout-space-md);
-  background: var(--background-secondary);
-  border-radius: var(--workout-radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-2xs);
+  padding-top: var(--workout-space-sm);
+  border-top: var(--workout-border-thin) solid var(--workout-border-subtle);
 }
 
 .workout-duration-comparison-trend-title {
   font-size: var(--workout-font-xs);
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: var(--workout-space-xs);
 }
 
 .workout-duration-comparison-trend-message {
   display: flex;
   align-items: center;
   gap: var(--workout-space-sm);
-  font-size: var(--workout-font-sm);
-  font-weight: var(--workout-font-weight-medium);
+  font-weight: var(--workout-font-weight-semibold);
 }
 
 .workout-duration-comparison-trend-icon {
@@ -120,9 +111,9 @@
 }
 
 .workout-duration-comparison-trend-stat {
-  font-size: var(--workout-font-xs);
+  font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
   color: var(--text-muted);
-  margin-top: var(--workout-space-xs);
 }
 
 /* Trend direction colors */
@@ -135,11 +126,7 @@
 }
 
 .workout-duration-comparison-trend-declining {
-  color: var(--workout-text-error);
-
-  .workout-duration-comparison-trend-icon {
-    color: var(--workout-text-error);
-  }
+  color: var(--text-normal);
 }
 
 .workout-duration-comparison-trend-stable {

@@ -2,86 +2,46 @@
 
 /* ============================================================================
    DASHBOARD WIDGETS
+   ============================================================================
+   Each widget is a BlockCard (card color, control border, xl radius, 12px
+   padding, 8px gap, title and ⋮ in its top row): this sheet only places what
+   the widgets hold. Flat, no hover lift: the desk is quiet.
    ============================================================================ */
 
 .workout-dashboard-widget {
-  background: var(--background-primary);
-  border: var(--workout-border-thin) solid
-    var(--workout-border-color);
-  border-radius: var(--workout-radius-xl);
-  padding: var(--workout-space-lg);
-  box-shadow: var(--workout-shadow-sm);
-  transition: var(--workout-transition);
-
+  position: relative;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-
-  /* Compact widget - less padding, tighter layout */
-  &.compact {
-    padding: var(--workout-space-lg);
-    min-height: 0;
-  }
-
-  /* Tall widget - more vertical space */
-  &.tall {
-    min-height: var(--workout-size-9xl);
-  }
-
-  /* Auto-height widget - fits content exactly */
-  &.auto-height {
-    height: auto;
-    min-height: 0;
-  }
-
-  &:hover {
-    border-color: var(--interactive-accent);
-    box-shadow: var(--workout-shadow-md);
-  }
+  min-width: 0;
 }
 
-.workout-widget-title {
-  margin: 0 0 var(--workout-space-lg) 0;
-  color: var(--text-normal);
-  font-size: var(--workout-font-lg);
-  font-weight: var(--workout-font-weight-semibold);
-  display: flex;
-  align-items: center;
-  gap: var(--workout-space-sm);
+/* What the widget shows, under the title (meta type) */
+.workout-widget-subtitle {
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
 }
 
-@media (max-width: variables.$breakpoint-tablet) {
-  .workout-dashboard-widget {
-    padding: var(--workout-space-lg);
-  }
-
-  .workout-dashboard-chart-container {
-    display: none;
-  }
-
-  .workout-widget-title {
-    font-size: var(--workout-font-base);
-  }
+/* A StatCard.row right under the title (summary, calendar streaks) is the
+   widget's first row: nothing above it to set it apart from */
+.workout-dashboard-widget > .workout-block-header + .stat-card-row {
+  padding-top: 0;
+  border-top: none;
 }
 
-@media (max-width: variables.$breakpoint-mobile) {
-  .workout-dashboard-widget {
-    padding: var(--workout-space-lg);
-  }
-
-  .workout-widget-title {
-    font-size: var(--workout-font-base);
-    margin-bottom: var(--workout-space-md);
-  }
+/* The card's gap spaces its parts: a message (all files valid) adds none */
+.workout-dashboard-widget > .workout-feedback-success {
+  margin: 0;
 }
 
 /* A widget without a title row: its kebab sits in the top corner */
-.workout-dashboard-widget {
-  position: relative;
-}
-
 .workout-widget-menu-corner {
   position: absolute;
   top: var(--workout-space-sm);
   right: var(--workout-space-sm);
+}
+
+/* Phones: the volume chart is left out on purpose, its top list stays */
+@media (max-width: variables.$breakpoint-tablet) {
+  .workout-dashboard-chart-container {
+    display: none;
+  }
 }

@@ -75,7 +75,7 @@ describe("TargetHeader", () => {
     expect(result!.textContent).toContain(`10 ${repsSuffix}`);
   });
 
-  it("renders progress bar when both targets and matching data exist", () => {
+  it("renders the best reps and a progress meter when both targets and matching data exist", () => {
     const container = createObsidianContainer();
     const data = [createLog({ weight: 100, reps: 7 })];
 
@@ -87,13 +87,13 @@ describe("TargetHeader", () => {
     });
 
     expect(result).not.toBeNull();
-    const progressBar = result!.querySelector(
-      ".workout-progress-bar",
-    );
-    expect(progressBar).not.toBeNull();
+    expect(result!.querySelector(".workout-progress-meter")).not.toBeNull();
+    expect(
+      result!.querySelector(".workout-target-progress")!.textContent,
+    ).toBe(t("table.target.progress", { best: 7, target: 10 }));
   });
 
-  it("does not render progress bar when no data at target weight", () => {
+  it("says no set was done at the target weight yet, over an empty meter", () => {
     const container = createObsidianContainer();
     const data = [createLog({ weight: 60, reps: 10 })];
 
@@ -105,10 +105,12 @@ describe("TargetHeader", () => {
     });
 
     expect(result).not.toBeNull();
-    const progressBar = result!.querySelector(
-      ".workout-progress-bar",
-    );
-    expect(progressBar).toBeNull();
+    expect(
+      result!.querySelector(".workout-progress-meter")!.getAttribute("aria-valuenow"),
+    ).toBe("0");
+    expect(
+      result!.querySelector(".workout-target-progress")!.textContent,
+    ).toBe(t("table.target.noSetsYet", { weight: "100kg" }));
   });
 
   it("does not render progress bar when only weight is set", () => {
@@ -122,13 +124,11 @@ describe("TargetHeader", () => {
     });
 
     expect(result).not.toBeNull();
-    const progressBar = result!.querySelector(
-      ".workout-progress-bar",
-    );
-    expect(progressBar).toBeNull();
+    expect(result!.querySelector(".workout-progress-meter")).toBeNull();
+    expect(result!.querySelector(".workout-target-progress")).toBeNull();
   });
 
-  it("applies correct progress level class", () => {
+  it("marks the meter done once the target reps are reached", () => {
     const container = createObsidianContainer();
     const data = [createLog({ weight: 100, reps: 10 })];
 
@@ -139,16 +139,11 @@ describe("TargetHeader", () => {
       weightUnit: "kg",
     });
 
-    const progressFill = result!.querySelector(
-      ".workout-progress-fill",
-    );
-    expect(progressFill).not.toBeNull();
-    expect(
-      progressFill!.classList.contains("workout-progress-complete"),
-    ).toBe(true);
+    const meter = result!.querySelector(".workout-progress-meter");
+    expect(meter!.classList.contains("is-done")).toBe(true);
   });
 
-  it("sets progress bar width as percentage", () => {
+  it("fills the meter in proportion to the best reps", () => {
     const container = createObsidianContainer();
     const data = [createLog({ weight: 100, reps: 5 })];
 
@@ -159,14 +154,13 @@ describe("TargetHeader", () => {
       weightUnit: "kg",
     });
 
-    const progressFill = result!.querySelector(
-      ".workout-progress-fill",
+    const fill = result!.querySelector(
+      ".workout-progress-meter-fill",
     ) as HTMLElement;
-    expect(progressFill).not.toBeNull();
-    expect(progressFill.style.width).toBe("50%");
+    expect(fill.style.getPropertyValue("--workout-progress-value")).toBe("50%");
   });
 
-  it("sets tooltip on progress bar", () => {
+  it("names the meter for screen readers", () => {
     const container = createObsidianContainer();
     const data = [createLog({ weight: 100, reps: 8 })];
 
@@ -177,14 +171,9 @@ describe("TargetHeader", () => {
       weightUnit: "kg",
     });
 
-    const progressBar = result!.querySelector(
-      ".workout-progress-bar",
-    );
-    expect(progressBar).not.toBeNull();
-    expect(progressBar!.getAttribute("title")).toBe(
-      t("table.target.progressTooltip", { best: 8, target: 10 }),
-    );
-    expect(progressBar!.getAttribute("aria-label")).toBe(
+    const meter = result!.querySelector(".workout-progress-meter");
+    expect(meter!.getAttribute("role")).toBe("progressbar");
+    expect(meter!.getAttribute("aria-label")).toBe(
       t("table.target.progressTooltip", { best: 8, target: 10 }),
     );
   });

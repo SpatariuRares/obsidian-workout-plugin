@@ -368,7 +368,9 @@ Jóga funguje stejně: každá póza je cvik `timed`, takže se formulář ptá 
 
 ![Jógový tok na telefonu: vedená relace u Downward Dog, formulář záznamu, který se ptá jen na délku výdrže, a karta sérií s první zapsanou výdrží](assets/yoga.png)
 
-`type:` funguje stejně jako `exercise_type:`. Vlastní pole přidejte pod `parameters`, například kola pro švihadlo:
+Pro sport, který zaznamenává něco jiného (obtížnost lezení, počet pokusů, jestli jste cestu vylezli), si vytvořte vlastní typ v **Nastavení → Typy cvičení**: dejte mu název a vyberte jeho pole, vestavěná jako opakování a hmotnost, nebo nová (číslo, text nebo ano/ne). Pak se objeví v seznamu typů při vytváření cvičení a do stránky cvičení se zapíše `exercise_type: <your type>`. Vestavěné typy nelze změnit, ale **Duplikovat** vytvoří nový typ jako kopii některého z nich. Smazání typu ho jen přestane nabízet: cvičení, která ho používají, si ponechají svá pole a zaznamenané série.
+
+`type:` funguje stejně jako `exercise_type:`. Vlastní pole můžete přidat také jednotlivému cvičení pod `parameters`, například kola pro švihadlo:
 
 ```yaml
 ---

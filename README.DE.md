@@ -368,7 +368,9 @@ Yoga funktioniert genauso: Jede Pose ist eine `timed`-Übung, sodass das Formula
 
 ![Ein Yoga-Ablauf auf dem Handy: die geführte Einheit bei Herabschauender Hund, das Protokollformular, das nur nach der Haltedauer fragt, und die Satzkarte mit dem ersten protokollierten Halten](assets/yoga.png)
 
-`type:` funktioniert wie `exercise_type:`. Füge eigene Felder unter `parameters` hinzu, zum Beispiel Runden fürs Seilspringen:
+Für eine Sportart, die etwas anderes protokolliert (ein Kletter-Grad, Versuche, ob du sie geschafft hast), erstelle deinen eigenen Typ unter **Einstellungen → Übungstypen**: gib ihm einen Namen und wähle seine Felder, eingebaute wie Wiederholungen und Gewicht oder neue (Zahl, Text oder Ja/Nein). Er erscheint dann in der Typliste, wenn du eine Übung anlegst, und die Übungsseite erhält `exercise_type: <your type>`. Die eingebauten Typen lassen sich nicht ändern, aber mit **Duplizieren** startest du einen Typ aus einem davon. Einen Typ zu löschen beendet nur sein Angebot: Übungen, die ihn verwenden, behalten ihre Felder und erfassten Sätze.
+
+`type:` funktioniert wie `exercise_type:`. Du kannst einer einzelnen Übung außerdem Felder unter `parameters` hinzufügen, zum Beispiel Runden fürs Seilspringen:
 
 ```yaml
 ---

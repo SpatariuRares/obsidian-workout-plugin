@@ -368,7 +368,9 @@ Le yoga fonctionne de la même façon : chaque posture est un exercice `timed`, 
 
 ![Un flow de yoga sur téléphone : la séance guidée sur Chien tête en bas, le formulaire qui ne demande que la durée du maintien, et la carte de séries avec le premier maintien enregistré](assets/yoga.png)
 
-`type:` fonctionne comme `exercise_type:`. Ajoutez vos propres champs sous `parameters`, par exemple des tours pour la corde à sauter :
+Pour un sport qui enregistre autre chose (une cotation d'escalade, des tentatives, si vous l'avez réussie), créez votre propre type dans **Paramètres → Types d'exercices** : donnez-lui un nom et choisissez ses champs, parmi les champs intégrés comme les répétitions et le poids, ou de nouveaux champs (nombre, texte ou oui/non). Il apparaît ensuite dans la liste des types lorsque vous créez un exercice, qui écrit `exercise_type: <votre type>` dans la page. Les types intégrés ne peuvent pas être modifiés, mais **Dupliquer** en crée un à partir de l'un d'eux. Supprimer un type ne fait que l'arrêter d'être proposé : les exercices qui l'utilisent gardent leurs champs et leurs séries enregistrées.
+
+`type:` fonctionne comme `exercise_type:`. Vous pouvez aussi ajouter des champs à un seul exercice sous `parameters`, par exemple des tours pour la corde à sauter :
 
 ```yaml
 ---

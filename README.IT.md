@@ -368,7 +368,9 @@ Lo yoga funziona allo stesso modo: ogni posa è un esercizio `timed`, quindi il 
 
 ![Un flusso di yoga sul telefono: la sessione guidata su Downward Dog, il modulo di registrazione che chiede solo la durata della posa, e la scheda delle serie con la prima posa registrata](assets/yoga.png)
 
-`type:` funziona come `exercise_type:`. Aggiungi i tuoi campi sotto `parameters`, per esempio i giri per la corda:
+Per uno sport che registra altro (un grado di arrampicata, i tentativi, se l'hai chiusa), crea il tuo tipo in **Impostazioni → Tipi di esercizio**: dagli un nome e scegli i suoi campi, quelli integrati come ripetizioni e peso oppure nuovi (numero, testo o sì/no). Poi compare nell'elenco dei tipi quando crei un esercizio, che scrive `exercise_type: <il tuo tipo>` nella pagina. I tipi integrati non si possono modificare, ma **Duplica** ne crea uno a partire da un altro. Eliminare un tipo fa solo smettere di proporlo: gli esercizi che lo usano mantengono i loro campi e le serie registrate.
+
+`type:` funziona come `exercise_type:`. Puoi anche aggiungere campi a un solo esercizio sotto `parameters`, per esempio i giri per la corda:
 
 ```yaml
 ---

@@ -368,7 +368,9 @@ Yoga fungerer på samme måte: hver positur er en `timed`-øvelse, så skjemaet 
 
 ![En yogaflyt på telefonen: den veiledede økten på Downward Dog, loggskjemaet som bare spør om varigheten av holdet, og settkortet med det første holdet logget](assets/yoga.png)
 
-`type:` fungerer likt som `exercise_type:`. Legg til dine egne felt under `parameters`, for eksempel runder for hopptau:
+For en sport som logger noe annet (en klatregrad, forsøk, om du klarte den), lag din egen type under **Innstillinger → Øvelsestyper**: gi den et navn og velg feltene, innebygde som repetisjoner og vekt eller nye (tall, tekst eller ja/nei). Den vises da i typelisten når du oppretter en øvelse, som skriver `exercise_type: <din type>` på siden. De innebygde typene kan ikke endres, men **Dupliser** starter en type fra en av dem. Å slette en type stopper bare at den tilbys: øvelser som bruker den beholder feltene og de loggførte settene.
+
+`type:` fungerer likt som `exercise_type:`. Du kan også legge til felt på én øvelse under `parameters`, for eksempel runder for hopptau:
 
 ```yaml
 ---

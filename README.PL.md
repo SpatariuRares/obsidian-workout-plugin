@@ -368,7 +368,9 @@ Joga działa tak samo: każda pozycja to ćwiczenie `timed`, więc formularz pyt
 
 ![Przepływ jogi na telefonie: sesja z przewodnikiem przy Psie z głową w dół, formularz zapisu pytający tylko o czas utrzymania pozycji i karta serii z zapisanym pierwszym utrzymaniem](assets/yoga.png)
 
-`type:` działa tak samo jak `exercise_type:`. Dodaj własne pola pod `parameters`, na przykład rundy dla skakanki:
+Dla innego sportu, który zapisuje coś innego (stopień we wspinaczce, próby, czy udało się przejść trasę), zrób własny typ w **Ustawienia → Workout Planner → Typy ćwiczeń**: nadaj mu nazwę i wybierz pola, wbudowane, jak powtórzenia i ciężar, albo nowe (liczba, tekst lub tak/nie). Pojawi się potem na liście typów przy tworzeniu ćwiczenia, które zapisze w stronie `exercise_type: <twój typ>`. Wbudowanych typów nie da się zmienić, ale **Duplikuj** zaczyna nowy typ od istniejącego. Usunięcie typu tylko przestaje go proponować: ćwiczenia, które go używają, zachowują jego pola i zapisane serie.
+
+`type:` działa tak samo jak `exercise_type:`. Możesz też dodać pola do jednego ćwiczenia pod `parameters`, na przykład rundy dla skakanki:
 
 ```yaml
 ---

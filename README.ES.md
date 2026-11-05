@@ -368,7 +368,9 @@ El yoga funciona igual: cada postura es un ejercicio `timed`, así que el formul
 
 ![Un flujo de yoga en un móvil: la sesión guiada en Downward Dog, el formulario de registro que solo pide la duración de la postura, y la tarjeta de series con la primera postura registrada](assets/yoga.png)
 
-`type:` funciona igual que `exercise_type:`. Añade tus propios campos bajo `parameters`, por ejemplo rondas para la comba:
+Para un deporte que registra otra cosa (un grado de escalada, intentos, si lo encadenaste), crea tu propio tipo en **Configuración → Tipos de ejercicio**: ponle un nombre y elige sus campos, los integrados, como repeticiones y peso, o nuevos (número, texto o sí/no). Después aparece en la lista de tipos al crear un ejercicio, que escribe `exercise_type: <your type>` en la página. Los tipos integrados no se pueden cambiar, pero **Duplicar** crea un tipo a partir de uno. Eliminar un tipo solo deja de ofrecerlo: los ejercicios que lo usan conservan sus campos y sus series registradas.
+
+`type:` funciona igual que `exercise_type:`. También puedes añadir campos a un ejercicio concreto bajo `parameters`, por ejemplo rondas para la comba:
 
 ```yaml
 ---

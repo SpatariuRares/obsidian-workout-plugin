@@ -368,7 +368,9 @@ Yoga werkt op dezelfde manier: elke houding is een `timed`-oefening, dus het for
 
 ![Een yogaflow op een telefoon: de begeleide sessie bij Neerwaartse hond, het logformulier dat alleen de duur van de houding vraagt, en de setkaart met de eerste houding gelogd](assets/yoga.png)
 
-`type:` werkt hetzelfde als `exercise_type:`. Voeg je eigen velden toe onder `parameters`, bijvoorbeeld rondes voor touwspringen:
+Voor een sport die iets anders logt (een klimgraad, pogingen, of je hem gehaald hebt), maak je een eigen type onder **Instellingen → Oefeningstypen**: geef het een naam en kies de velden, ingebouwde zoals reps en gewicht of nieuwe (getal, tekst of ja/nee). Het verschijnt dan in de lijst met typen wanneer je een oefening maakt; de oefeningspagina krijgt dan `exercise_type: <jouw type>`. De ingebouwde typen kun je niet wijzigen, maar **Dupliceren** start een type vanaf een ingebouwd type. Een type verwijderen stopt alleen het aanbieden ervan: oefeningen die het gebruiken behouden hun velden en gelogde series.
+
+`type:` werkt hetzelfde als `exercise_type:`. Je kunt ook velden toevoegen aan één oefening onder `parameters`, bijvoorbeeld rondes voor touwspringen:
 
 ```yaml
 ---

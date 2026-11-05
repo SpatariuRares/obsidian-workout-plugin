@@ -368,7 +368,9 @@ Yoga bekerja dengan cara yang sama: setiap pose adalah latihan `timed`, sehingga
 
 ![Alur yoga di ponsel: sesi terpandu pada Downward Dog, formulir log yang hanya meminta durasi tahan, dan kartu set dengan tahanan pertama tercatat](assets/yoga.png)
 
-`type:` bekerja sama seperti `exercise_type:`. Tambahkan kolom Anda sendiri di bawah `parameters`, misalnya putaran untuk lompat tali:
+Untuk olahraga yang mencatat hal lain (grade panjat, percobaan, apakah Anda berhasil mendakinya), buat jenis Anda sendiri di **Pengaturan → Jenis latihan**: beri nama dan pilih bidangnya, bidang bawaan seperti repetisi dan berat, atau bidang baru (angka, teks, atau ya/tidak). Jenis itu lalu muncul dalam daftar jenis saat Anda membuat latihan, yang menulis `exercise_type: <jenis Anda>` di halaman. Jenis bawaan tidak dapat diubah, tetapi **Duplikat** memulai jenis dari salah satunya. Menghapus jenis hanya berhenti menawarkannya: latihan yang memakainya tetap menyimpan bidang dan set yang sudah dicatat.
+
+`type:` bekerja sama seperti `exercise_type:`. Anda juga bisa menambahkan kolom ke satu latihan di bawah `parameters`, misalnya putaran untuk lompat tali:
 
 ```yaml
 ---

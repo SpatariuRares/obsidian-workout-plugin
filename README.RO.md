@@ -368,7 +368,9 @@ Yoga funcționează la fel: fiecare poziție este un exercițiu `timed`, deci fo
 
 ![Un flux de yoga pe telefon: sesiunea ghidată la poziția Downward Dog, formularul care cere doar durata menținerii și cardul de serii cu prima menținere înregistrată](assets/yoga.png)
 
-`type:` funcționează la fel ca `exercise_type:`. Adaugă propriile câmpuri sub `parameters`, de exemplu runde pentru coarda de sărit:
+Pentru un sport care înregistrează altceva (gradul de dificultate la alpinism, încercări, dacă ai reușit traseul), creează-ți propriul tip în **Setări → Tipuri de exerciții**: dă-i un nume și alege-i câmpurile, cele integrate, precum repetările și greutatea, sau altele noi (număr, text sau da/nu). Apare apoi în lista de tipuri când creezi un exercițiu, care scrie `exercise_type: <your type>` în pagină. Tipurile integrate nu pot fi modificate, dar **Duplică** pornește un tip de la unul dintre ele. Ștergerea unui tip doar oprește oferirea lui: exercițiile care îl folosesc își păstrează câmpurile și seriile înregistrate.
+
+`type:` funcționează la fel ca `exercise_type:`. Poți adăuga câmpuri și unui singur exercițiu sub `parameters`, de exemplu runde pentru coarda de sărit:
 
 ```yaml
 ---

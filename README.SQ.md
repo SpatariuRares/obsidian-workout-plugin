@@ -368,7 +368,9 @@ Yoga funksionon në të njëjtën mënyrë: çdo pozë është një ushtrim `tim
 
 ![Një rrjedhë yoge në telefon: seanca e udhëzuar te Downward Dog, formulari i regjistrimit që pyet vetëm kohëzgjatjen e mbajtjes, dhe blloku i serive me mbajtjen e parë të regjistruar](assets/yoga.png)
 
-`type:` funksionon njësoj si `exercise_type:`. Shto fushat e tua nën `parameters`, për shembull raunde për litarin e kërcimit:
+Për një sport që regjistron diçka tjetër (një notë në alpinizëm, numri i përpjekjeve, dhe nëse e ke arritur), bëj llojin tënd në **Cilësimet → Llojet e ushtrimeve**: jepi një emër dhe zgjidh fushat e tij, ato të integruara si përsëritjet dhe pesha, ose të reja (numër, tekst ose po/jo). Më pas ai shfaqet te lista e llojeve kur krijon një ushtrim, dhe shkruan `exercise_type: <lloji yt>` te faqja. Llojet e integruara nuk mund të ndryshohen, por **Kopjo** nis një lloj nga një i tillë. Fshirja e një lloji vetëm ndalon ofrimin e tij: ushtrimet që e përdorin mbajnë fushat dhe seritë e tyre të regjistruara.
+
+`type:` funksionon njësoj si `exercise_type:`. Mund të shtosh fusha edhe te një ushtrim i vetëm nën `parameters`, për shembull raunde për litarin e kërcimit:
 
 ```yaml
 ---

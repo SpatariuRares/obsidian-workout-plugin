@@ -368,7 +368,9 @@ Yoga da aynı şekilde çalışır: her poz `timed` bir egzersizdir, yani form y
 
 ![Telefonda bir yoga akışı: Aşağı Bakan Köpek için rehberli antrenman, yalnızca tutuş süresini soran kayıt formu ve ilk tutuşu kaydedilmiş set kartı](assets/yoga.png)
 
-`type:`, `exercise_type:` ile aynı işe yarar. `parameters` altına kendi alanlarınızı ekleyin; örneğin ip atlama için tur sayısı:
+Farklı bir spor başka şeyler kaydediyorsa (bir tırmanış derecesi, denemeler, tamamlayıp tamamlamadığınız), **Ayarlar → Workout Planner → Egzersiz türleri** bölümünde kendi türünüzü yapın: bir ad verin ve alanlarını seçin; tekrar ve ağırlık gibi yerleşik alanlar ya da yeni alanlar (sayı, metin ya da evet/hayır). Egzersiz oluştururken tür listesinde görünür ve sayfaya `exercise_type:` satırı olarak yazılır. Yerleşik türler değiştirilemez, ancak **Çoğalt** ile birinden yeni bir tür başlatabilirsiniz. Bir türü silmek yalnızca onu önermeyi bırakır: o türü kullanan egzersizler alanlarını ve kayıtlı setlerini korur.
+
+`type:`, `exercise_type:` ile aynı işe yarar. Ayrıca tek bir egzersize `parameters` altında alan ekleyebilirsiniz; örneğin ip atlama için tur sayısı:
 
 ```yaml
 ---

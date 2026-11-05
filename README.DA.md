@@ -368,7 +368,9 @@ Yoga fungerer på samme måde: hver stilling er en `timed`-øvelse, så formular
 
 ![Et yogaflow på en telefon: den guidede session ved Downward Dog, logformularen der kun spørger om holdets varighed, og sætkortet med det første hold registreret](assets/yoga.png)
 
-`type:` virker på samme måde som `exercise_type:`. Tilføj dine egne felter under `parameters`, f.eks. runder til reb-hop:
+For en sport, der logger noget andet (en klatregrad, forsøg, om du gennemførte), lav din egen type under **Indstillinger → Øvelsestyper**: giv den et navn og vælg dens felter, indbyggede som gentagelser og vægt eller nye (tal, tekst eller ja/nej). Den dukker derefter op i typelisten, når du opretter en øvelse, som skriver `exercise_type: <your type>` på siden. De indbyggede typer kan ikke ændres, men **Duplikér** starter en type ud fra en af dem. Sletning af en type stopper kun med at tilbyde den: øvelser, der bruger den, beholder deres felter og loggede sæt.
+
+`type:` virker på samme måde som `exercise_type:`. Du kan også tilføje felter til én øvelse under `parameters`, f.eks. runder til reb-hop:
 
 ```yaml
 ---

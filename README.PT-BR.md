@@ -368,7 +368,9 @@ A ioga funciona da mesma forma: cada postura é um exercício `timed`, então o 
 
 ![Uma sequência de ioga no celular: a sessão guiada em Cachorro para baixo, o formulário de registro pedindo apenas a duração da postura, e o cartão de séries com a primeira postura registrada](assets/yoga.png)
 
-`type:` funciona da mesma forma que `exercise_type:`. Adicione seus próprios campos em `parameters`, por exemplo rodadas para o pular corda:
+Para um esporte que registra outras coisas (um grau de escalada, tentativas, se você enviou a via), crie seu próprio tipo em **Configurações → Tipos de exercício**: dê um nome a ele e escolha seus campos, os embutidos, como repetições e peso, ou novos (número, texto ou sim/não). Ele então aparece na lista de tipos ao criar um exercício, o que grava `exercise_type: <your type>` na página. Os tipos embutidos não podem ser alterados, mas **Duplicar** cria um tipo a partir de um deles. Excluir um tipo apenas deixa de oferecê-lo: os exercícios que o usam mantêm seus campos e as séries registradas.
+
+`type:` funciona da mesma forma que `exercise_type:`. Você também pode adicionar campos a um exercício específico em `parameters`, por exemplo rodadas para o pular corda:
 
 ```yaml
 ---

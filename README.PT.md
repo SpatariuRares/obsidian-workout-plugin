@@ -368,7 +368,9 @@ A ioga funciona da mesma forma: cada postura é um exercício `timed`, por isso 
 
 ![Fluxo de ioga num telemóvel: a sessão guiada em Downward Dog, o formulário de registo a pedir apenas a duração da postura, e o cartão de séries com a primeira postura registada](assets/yoga.png)
 
-`type:` funciona da mesma forma que `exercise_type:`. Acrescente os seus próprios campos em `parameters`, por exemplo rondas para a corda de saltar:
+Para uma modalidade que regista outra coisa (um grau de escalada, tentativas, se a encadeou), crie o seu tipo em **Definições → Tipos de exercício**: dê-lhe um nome e escolha os seus campos, os incluídos, como repetições e peso, ou novos (número, texto ou sim/não). Passa então a aparecer na lista de tipos ao criar um exercício, que escreve `exercise_type: <your type>` na página. Os tipos incluídos não podem ser alterados, mas **Duplicar** cria um tipo a partir de um deles. Eliminar um tipo apenas deixa de o oferecer: os exercícios que o usam mantêm os seus campos e as séries registadas.
+
+`type:` funciona da mesma forma que `exercise_type:`. Pode também acrescentar campos a um exercício em `parameters`, por exemplo rondas para a corda de saltar:
 
 ```yaml
 ---

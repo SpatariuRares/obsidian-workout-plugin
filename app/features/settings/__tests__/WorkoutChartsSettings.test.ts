@@ -3,6 +3,7 @@ import { withHelpers } from "obsidian";
 import type { App, SettingDefinitionItem } from "obsidian";
 import { WorkoutChartsSettingTab } from "@app/features/settings/WorkoutChartsSettings";
 import { t } from "@app/i18n";
+import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 
 jest.mock("@app/features/common/suggest/FolderSuggest", () => ({
   FolderSuggest: jest.fn(),
@@ -55,7 +56,7 @@ function makePlugin() {
     },
     saveSettings: jest.fn().mockResolvedValue(undefined),
     updateQuickLogRibbon: jest.fn(),
-    eventBus: { emit: jest.fn() },
+    eventBus: { emit: jest.fn(), on: jest.fn() },
     templateGeneratorService: { generateDefaultTemplates: jest.fn() },
   };
 }
@@ -129,16 +130,17 @@ describe("WorkoutChartsSettingTab definitions (settings search)", () => {
     );
   });
 
-  it("lists protocols and timer presets as lists with their entries", () => {
+  it("lists timer presets, protocols and exercise types as lists with their entries", () => {
     const { tab } = makeTab();
     const lists = (tab.getSettingDefinitions() as AnyItem[]).filter(
       (item) => item.type === "list",
     );
 
-    expect(lists.length).toBe(2);
+    expect(lists.length).toBe(3);
     expect(lists.map((l) => l.items?.map((i) => i.name))).toEqual([
       ["rest"],
       ["Myo"],
+      [],
     ]);
   });
 });
@@ -180,5 +182,17 @@ describe("WorkoutChartsSettingTab display() fallback (Obsidian before 1.13)", ()
 
     expect(update).toHaveBeenCalled();
     expect(display).not.toHaveBeenCalled();
+  });
+
+  it("draws the exercise types again when one is saved outside the tab", () => {
+    const eventBus = new WorkoutEventBus();
+    const { tab } = makeTab({ ...makePlugin(), eventBus } as unknown as ReturnType<typeof makePlugin>);
+    const update = jest.fn();
+    (tab as unknown as { update: () => void }).update = update;
+
+    eventBus.emit({ type: "settings:changed", payload: { key: "weightUnit", previousValue: "kg", newValue: "lb" } });
+    expect(update).not.toHaveBeenCalled();
+    eventBus.emit({ type: "settings:changed", payload: { key: "exerciseTypes", previousValue: [], newValue: [] } });
+    expect(update).toHaveBeenCalledTimes(1);
   });
 });

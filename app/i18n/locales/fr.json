@@ -622,7 +622,6 @@
       "wordTooltip": "Correspondance de mots - Score : {score}"
     },
     "buttons": {
-      "addParameter": "Ajouter un paramètre",
       "adjustMinus": "-",
       "adjustPlus": "+",
       "cancel": "Annuler",
@@ -635,7 +634,6 @@
       "insertExerciseBlock": "Insérer",
       "insertTable": "Insérer le tableau",
       "insertTimer": "Insérer un minuteur",
-      "removeParameter": "Supprimer",
       "renameFile": "Renommer le fichier",
       "renameInCsv": "Renommer dans le CSV",
       "update": "Mettre à jour l'entrée",
@@ -667,7 +665,6 @@
     },
     "confirmAction": "Confirmer l'action",
     "csvExercise": "Exercice CSV",
-    "customParameters": "Paramètres personnalisés",
     "customTitle": "Titre personnalisé",
     "dataLimit": "Limite de données (0 = tout)",
     "dataType": "Type de données",
@@ -771,9 +768,6 @@
       "dashboardUpdateFailed": "Échec de la mise à jour du tableau de bord : il est introuvable dans sa note, ou un autre tableau de bord sans identifiant a les mêmes réglages. Rouvrez la note et réessayez.",
       "setsInserted": "Séries ajoutées"
     },
-    "parameterRequired": "Obligatoire",
-    "parameterType": "Type",
-    "parameterUnit": "Unité (facultatif)",
     "protocol": "Protocole",
     "recentExercises": "Récents",
     "placeholders": {
@@ -782,9 +776,6 @@
       "exerciseAutocomplete": "Commencez à taper pour voir les exercices disponibles...",
       "folderPath": "ex. : Exercices, ou laisser vide pour la racine",
       "notes": "ex. : bonne exécution, sensation de force",
-      "parameterKey": "ex. : vitesse",
-      "parameterLabel": "ex. : Vitesse",
-      "parameterUnit": "ex. : km/h",
       "searchMuscleTags": "Rechercher des tags musculaires...",
       "searchTags": "Rechercher par tag ou groupe musculaire...",
       "selectMuscleGroup": "Sélectionner le groupe musculaire...",
@@ -862,8 +853,6 @@
     },
     "exerciseType": "Type d'exercice",
     "notes": "Remarques (facultatif)",
-    "parameterKey": "Clé",
-    "parameterLabel": "Libellé",
     "date": "Date",
     "dateRange": "Période (jours)",
     "daysRange": "Période en jours (0 = tout)",

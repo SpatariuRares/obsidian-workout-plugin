@@ -64,6 +64,8 @@ export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
   lastSeenVersion: "",
   /** Every beta feature off: updates don't change anything until the user opts in */
   betaFeatures: {},
+  /** Only the built-in types (ExerciseTypeCatalog) until the user makes one */
+  exerciseTypes: [],
 };
 
 /**

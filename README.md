@@ -368,7 +368,9 @@ Yoga works the same way: each pose is a `timed` exercise, so the form asks only 
 
 ![A yoga flow on a phone: the guided session on Downward Dog, the log form asking only for the hold's duration, and the sets card with the first hold logged](assets/yoga.png)
 
-`type:` works the same as `exercise_type:`. Add your own fields under `parameters`, for example rounds for jump rope:
+For a sport that logs something else (a climbing grade, attempts, whether you sent it), make your own type in **Settings → Exercise types**: give it a name and pick its fields, built-in ones like reps and weight or new ones (number, text or yes/no). It then shows up in the type list when you create an exercise, which writes `exercise_type: <your type>` in the page. The built-in types can't be changed, but **Duplicate** starts a type from one. Deleting a type only stops offering it: exercises that use it keep their fields and logged sets.
+
+`type:` works the same as `exercise_type:`. You can also add fields to one exercise under `parameters`, for example rounds for jump rope:
 
 ```yaml
 ---

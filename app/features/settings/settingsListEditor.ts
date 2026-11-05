@@ -46,7 +46,12 @@ export interface SettingsListEditorSpec<T> {
   persist: () => Promise<void>;
   /** Redraws the settings tab after the list changed */
   refresh: () => void;
-  messages: { confirmDelete: string; saved: string; deleted: string };
+  messages: {
+    /** Or the question for the entry `key` (what deleting it changes) */
+    confirmDelete: string | ((key: string) => string);
+    saved: string;
+    deleted: string;
+  };
 }
 
 /** The list definition of `spec`, with its add, edit and delete flows */
@@ -75,9 +80,10 @@ export function settingsListEditor<T>(
 
   const confirmDelete = (key: string | undefined) => {
     if (key === undefined) return;
+    const { confirmDelete: question } = spec.messages;
     new ConfirmModal(
       spec.app,
-      spec.messages.confirmDelete,
+      typeof question === "function" ? question(key) : question,
       async () => {
         spec.remove(key);
         await spec.persist();

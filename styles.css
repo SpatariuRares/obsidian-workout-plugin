@@ -2467,8 +2467,7 @@ body.is-mobile .workout-timer-strip .workout-timer .workout-timer-controls .work
 }
 
 .workout-sets-rows {
-  --workout-sets-columns: 2.25rem repeat(var(--workout-sets-fields, 2), minmax(0, 1fr))
-    2.5rem 4rem;
+  --workout-sets-columns: 2.25rem minmax(0, 1fr) 2.5rem 4rem;
   display: flex;
   flex-direction: column;
 }
@@ -2481,6 +2480,22 @@ body.is-mobile .workout-timer-strip .workout-timer .workout-timer-controls .work
   align-items: center;
 }
 
+.workout-sets-cells {
+  display: grid;
+  grid-template-columns: repeat(var(--workout-sets-fields, 2), minmax(0, 1fr));
+  gap: var(--workout-space-sm);
+  align-items: center;
+  min-width: 0;
+}
+
+.workout-sets-cell {
+  min-width: 0;
+}
+
+.workout-sets-cell-label {
+  display: none;
+}
+
 .workout-sets-columns {
   font-size: var(--workout-font-xs);
   color: var(--text-muted);
@@ -2490,9 +2505,13 @@ body.is-mobile .workout-timer-strip .workout-timer .workout-timer-controls .work
   align-items: end;
   padding: 0 var(--workout-space-xs) var(--workout-space-xs);
 }
-.workout-sets-columns > span {
+.workout-sets-columns > span,
+.workout-sets-columns .workout-sets-cells > span {
   min-width: 0;
   overflow-wrap: anywhere;
+}
+.workout-sets-columns .workout-sets-cells {
+  align-items: end;
 }
 .workout-sets-columns > span:first-child {
   text-align: center;
@@ -2560,6 +2579,29 @@ body.is-mobile .workout-timer-strip .workout-timer .workout-timer-controls .work
   min-height: var(--workout-touch-target-min, 44px);
 }
 
+@media (max-width: 484px) {
+  .workout-sets-rows.is-stacked .workout-sets-columns {
+    display: none;
+  }
+  .workout-sets-rows.is-stacked .workout-sets-cells {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: var(--workout-space-xs);
+    align-items: start;
+  }
+  .workout-sets-rows.is-stacked .workout-sets-cell-label {
+    display: block;
+    padding-left: calc(var(--workout-space-sm) + var(--workout-border-thin));
+    font-size: var(--workout-font-xs);
+    color: var(--text-muted);
+    overflow-wrap: anywhere;
+  }
+  .workout-sets-rows.is-stacked .workout-sets-row-main {
+    padding-block: var(--workout-space-sm);
+  }
+  .workout-sets-rows.is-stacked .workout-sets-value {
+    font-size: var(--workout-font-base);
+  }
+}
 /* Modal styles entrypoint (split into app/styles/modal/*) */
 /* ============================================================================
    MODAL STYLES
@@ -4594,6 +4636,69 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
   display: inline-flex;
   align-items: center;
   gap: var(--workout-space-xs);
+}
+
+/* ============================================================================
+   EXERCISE TYPE EDITOR
+   A type's fields, one card each: name and remove, then type, unit, required
+   ============================================================================ */
+.workout-exercise-type-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+  margin-bottom: var(--workout-space-md);
+}
+
+.workout-exercise-type-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-xs);
+  padding: var(--workout-space-sm);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
+  border-radius: var(--radius-m);
+  background: var(--background-secondary);
+}
+
+.workout-exercise-type-field-top {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-xs);
+}
+.workout-exercise-type-field-top .workout-exercise-type-field-name {
+  flex: 1;
+  min-width: 0;
+}
+
+.workout-exercise-type-field-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--workout-space-sm);
+}
+.workout-exercise-type-field-options .workout-exercise-type-field-unit {
+  width: 6rem;
+}
+
+.workout-exercise-type-field-unit-label,
+.workout-exercise-type-field-required {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--workout-space-xs);
+}
+
+.workout-exercise-type-removed {
+  color: var(--workout-text-warning);
+  font-size: var(--workout-font-sm);
+}
+
+.workout-exercise-type-add-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--workout-space-xs);
+}
+
+.workout-exercise-type-preview {
+  margin-top: var(--workout-space-xs);
 }
 
 .workout-tour {

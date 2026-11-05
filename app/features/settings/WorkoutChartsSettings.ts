@@ -19,6 +19,7 @@ import { DurationEstimationSettings } from "@app/features/duration/settings/Dura
 import { QuickLogSettings } from "@app/features/settings/components/QuickLogSettings";
 import { MaintenanceSettings } from "@app/features/settings/components/MaintenanceSettings";
 import { BetaFeaturesSettings } from "@app/features/settings/components/BetaFeaturesSettings";
+import { ExerciseTypesSettings } from "@app/features/settings/components/ExerciseTypesSettings";
 
 /** What the settings sections need from the plugin */
 type SettingsTabContext = Plugin &
@@ -35,6 +36,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
   private quickLog: QuickLogSettings;
   private timerPresets: TimerPresetsSettings;
   private customProtocols: CustomProtocolsSettings;
+  private exerciseTypes: ExerciseTypesSettings;
   private durationEstimation: DurationEstimationSettings;
   private templates: TemplatesSettings;
   private maintenance: MaintenanceSettings;
@@ -57,10 +59,16 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       plugin,
       refresh,
     );
+    this.exerciseTypes = new ExerciseTypesSettings(app, plugin, refresh);
     this.durationEstimation = new DurationEstimationSettings(plugin);
     this.templates = new TemplatesSettings(plugin);
     this.maintenance = new MaintenanceSettings(app, plugin);
     this.beta = new BetaFeaturesSettings(plugin);
+    // A type made outside the tab (the create-exercise form): Obsidian 1.13
+    // keeps the definitions it read until update(), so the list would miss it
+    plugin.eventBus.on("settings:changed", ({ key }) => {
+      if (key === "exerciseTypes") refresh();
+    });
   }
 
   /**
@@ -80,6 +88,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       ...this.quickLog.definitions(),
       ...this.timerPresets.definitions(),
       ...this.customProtocols.definitions(),
+      ...this.exerciseTypes.definitions(),
       // Training parameters
       ...this.durationEstimation.definitions(),
       // New features the user opts into

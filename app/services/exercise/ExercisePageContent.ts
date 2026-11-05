@@ -98,6 +98,8 @@ ${chartBlock.serialize({ exercise: TEMPLATE_EXERCISE })}
 export function fillExercisePageTemplate(
   template: string,
   definition: ExerciseDefinition,
+  /** The type's name, for a type the user made (built-in ones are known here) */
+  typeNameOf?: string,
 ): string {
   const { frontmatter, body } = splitFrontmatter(template);
   const fields: Record<string, unknown> = {};
@@ -106,7 +108,8 @@ export function fillExercisePageTemplate(
   }
   Object.assign(fields, exercisePageFrontmatter(definition));
 
-  const typeName = getExerciseTypeById(definition.typeId)?.name ?? definition.typeId;
+  const typeName =
+    getExerciseTypeById(definition.typeId)?.name ?? typeNameOf ?? definition.typeId;
   const filled = nameBlocks(body, definition.name).replace(
     /^Type:[ \t]*$/m,
     `Type: ${typeName}`,

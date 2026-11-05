@@ -172,6 +172,8 @@ Custom columns added dynamically per exercise type (duration, distance, heartRat
 | Cardio   | duration       | distance, heartRate |
 | Custom   | user-defined   | user-defined        |
 
+**Exercise type of your own**: a named group of fields made in Settings → Exercise types (e.g. Climbing: grade, attempts, sent), stored in `settings.exerciseTypes`, picked when an exercise page is made and named by its `exercise_type` (id or name). Its fields are built-in ones (reps, weight, duration, distance, heart rate, keeping their key) or new ones, whose key (the log column) comes from the field's name when it is made and never changes. The built-in types above are read only (Duplicate starts a type from one). Deleting a type only stops offering it: the pages that name it keep its fields and their logged sets (it stays in the list as `retired`). Removing a field from a type leaves its values in the log; new sets don't ask for it. A page's own `parameters:` still add to its type's fields.
+
 ### Workout Protocols (Built-in)
 
 | Protocol   | Abbreviation |

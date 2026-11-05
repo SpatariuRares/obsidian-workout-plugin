@@ -54,3 +54,69 @@
   align-items: center;
   gap: var(--workout-space-xs);
 }
+
+/* ============================================================================
+   EXERCISE TYPE EDITOR
+   A type's fields, one card each: name and remove, then type, unit, required
+   ============================================================================ */
+
+.workout-exercise-type-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+  margin-bottom: var(--workout-space-md);
+}
+
+.workout-exercise-type-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-xs);
+  padding: var(--workout-space-sm);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
+  border-radius: var(--radius-m);
+  background: var(--background-secondary);
+}
+
+.workout-exercise-type-field-top {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-xs);
+
+  .workout-exercise-type-field-name {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+.workout-exercise-type-field-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--workout-space-sm);
+
+  .workout-exercise-type-field-unit {
+    width: 6rem;
+  }
+}
+
+.workout-exercise-type-field-unit-label,
+.workout-exercise-type-field-required {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--workout-space-xs);
+}
+
+.workout-exercise-type-removed {
+  color: var(--workout-text-warning);
+  font-size: var(--workout-font-sm);
+}
+
+.workout-exercise-type-add-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--workout-space-xs);
+}
+
+.workout-exercise-type-preview {
+  margin-top: var(--workout-space-xs);
+}

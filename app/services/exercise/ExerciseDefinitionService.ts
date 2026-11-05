@@ -18,6 +18,7 @@ import {
   DEFAULT_EXERCISE_TYPE_ID,
   resolveExerciseTypeId,
 } from "@app/constants/exerciseTypes.constants";
+import { ExerciseTypeCatalog } from "@app/services/exercise/ExerciseTypeCatalog";
 import type {
   ExerciseLibrary,
   ExercisePage,
@@ -42,7 +43,7 @@ export async function parametersOrNone(
 export class ExerciseDefinitionService {
   constructor(
     private app: Pick<App, "vault" | "fileManager">,
-    private settings: Pick<WorkoutChartsSettings, "exerciseFolderPath">,
+    private settings: Pick<WorkoutChartsSettings, "exerciseFolderPath" | "exerciseTypes">,
     private exercises: ExerciseLibrary,
   ) {}
 
@@ -135,7 +136,7 @@ export class ExerciseDefinitionService {
     name: string,
   ): Promise<ParameterDefinition[]> {
     const definition = await this.getExerciseDefinition(name);
-    const exerciseType = getExerciseTypeById(
+    const exerciseType = this.catalog().resolve(
       definition?.typeId ?? DEFAULT_EXERCISE_TYPE_ID,
     );
 
@@ -158,12 +159,17 @@ export class ExerciseDefinitionService {
   ): Promise<ExerciseTypeDefinition> {
     const definition = await this.getExerciseDefinition(name);
     const typeId = definition?.typeId || DEFAULT_EXERCISE_TYPE_ID;
-    const exerciseType = getExerciseTypeById(typeId);
+    const exerciseType = this.catalog().resolve(typeId);
 
     // Fallback to strength type if not found
     return (
       exerciseType || getExerciseTypeById(DEFAULT_EXERCISE_TYPE_ID)!
     );
+  }
+
+  /** The types as the settings have them now (the list changes while the plugin runs) */
+  private catalog(): ExerciseTypeCatalog {
+    return new ExerciseTypeCatalog(this.settings.exerciseTypes ?? []);
   }
 }
 

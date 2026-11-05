@@ -4,12 +4,16 @@ import { ExerciseLibrary } from "@app/services/exercise/ExerciseLibrary";
 import { FakeVault } from "@app/services/exercise/__tests__/FakeVault";
 import { getExerciseTypeById } from "@app/constants/exerciseTypes.constants";
 import type { ExerciseDefinition } from "@app/types/ExerciseTypes";
+import type { CustomExerciseType } from "@app/types/WorkoutLogData";
 
 const FOLDER = "Exercises";
 
-function service(notes: ConstructorParameters<typeof FakeVault>[0] = {}) {
+function service(
+  notes: ConstructorParameters<typeof FakeVault>[0] = {},
+  exerciseTypes: CustomExerciseType[] = [],
+) {
   const vault = new FakeVault(notes);
-  const settings = { exerciseFolderPath: FOLDER };
+  const settings = { exerciseFolderPath: FOLDER, exerciseTypes };
   const library = new ExerciseLibrary(vault.app as never, settings);
   library.watch(() => {});
   const definitions = new ExerciseDefinitionService(
@@ -120,6 +124,29 @@ describe("ExerciseDefinitionService", () => {
 
       const params = await definitions.getParametersForExercise("Treadmill");
       expect(params.map((p) => p.key)).toEqual([...cardioKeys(), "incline"]);
+    });
+
+    it("should give the fields of a type made in the settings, also once deleted", async () => {
+      const climbing: CustomExerciseType = {
+        id: "climbing",
+        name: "Climbing",
+        parameters: [
+          { key: "grade", label: "Grade", type: "string", required: true },
+          { key: "attempts", label: "Attempts", type: "number", required: false },
+        ],
+      };
+      const types = [climbing];
+      const { definitions } = service(
+        { "Exercises/Lead.md": { exercise_type: "Climbing", parameters: [{ key: "bolts", type: "number" }] } },
+        types,
+      );
+
+      const keys = async () => (await definitions.getParametersForExercise("Lead")).map((p) => p.key);
+      expect(await keys()).toEqual(["grade", "attempts", "bolts"]);
+      // The settings list is read on every call: a type made or deleted counts at once
+      types[0] = { ...climbing, retired: true };
+      expect(await keys()).toEqual(["grade", "attempts", "bolts"]);
+      expect((await definitions.getExerciseType("Lead")).id).toBe("climbing");
     });
 
     it("should fall back to strength for an unknown type", async () => {

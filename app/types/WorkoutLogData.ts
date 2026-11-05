@@ -2,6 +2,7 @@
 import { TFile } from "obsidian";
 import { TimerPresetConfig } from "@app/types/WorkoutConfigTypes";
 import type { WeightUnit } from "@app/utils/WeightUnitUtils";
+import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 
 /**
  * Workout protocol enum for specialized training techniques.
@@ -137,6 +138,24 @@ export interface WorkoutChartsSettings {
   lastSeenVersion: string;
   /** Beta features the user turned on, by id (see BetaFeatures.ts); missing = off */
   betaFeatures: Record<string, boolean>;
+  /** Exercise types the user made (Settings → Exercise types); see ExerciseTypeCatalog */
+  exerciseTypes: CustomExerciseType[];
+}
+
+/**
+ * An exercise type the user made: the fields its exercises log. Pages name
+ * it by `exercise_type: <id>`.
+ */
+export interface CustomExerciseType {
+  /** Written in exercise pages; fixed once made */
+  id: string;
+  name: string;
+  parameters: ParameterDefinition[];
+  /**
+   * Deleted: no longer offered for new exercises, still read for the pages
+   * that name it, so their fields and logged sets stay as they are
+   */
+  retired?: boolean;
 }
 
 /**

@@ -62,6 +62,8 @@ export interface WorkoutLogData {
    */
   enteredWeight?: number;
   enteredUnit?: WeightUnit;
+  /** Id of the `workout-sets` block the set was logged from (see CSVWorkoutLogEntry) */
+  block?: string;
 }
 
 /**
@@ -82,6 +84,11 @@ export interface CSVWorkoutLogEntry {
   customFields?: Record<string, string | number | boolean>;
   /** Unit of `weight`/`volume` in this row; undefined for legacy rows (settings unit) */
   weightUnit?: WeightUnit;
+  /**
+   * Id of the `workout-sets` block the set was logged from (`blockId`
+   * column); undefined for sets logged elsewhere or before it existed
+   */
+  block?: string;
 }
 
 /**

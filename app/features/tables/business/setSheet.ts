@@ -65,7 +65,7 @@ export interface SetRow {
 export interface SheetInput {
   /** The fields a set of the exercise records */
   parameters: ParameterDefinition[];
-  /** Today's sets of the exercise in this workout, in set order */
+  /** Today's sets of the exercise in this workout (and block), in set order */
   today: WorkoutLogData[];
   /** The sets of the last earlier day the exercise was done, in set order */
   previous: WorkoutLogData[];
@@ -138,6 +138,8 @@ export interface RowContext {
   exercise: string;
   workout: string;
   parameters: ParameterDefinition[];
+  /** The block's id, stored with the set so it stays this block's */
+  block?: string;
 }
 
 /**
@@ -148,7 +150,7 @@ export interface RowContext {
 export function rowToFormData(
   row: SetRow,
   draft: SetDraft,
-  { exercise, workout, parameters }: RowContext,
+  { exercise, workout, parameters, block }: RowContext,
 ): { data: LogFormData } | { error: FormError } {
   const { fields, ...values } = readSetFields(
     parameters.map((param): [ParameterDefinition, string | boolean] => {
@@ -167,6 +169,7 @@ export function rowToFormData(
       ...values,
       notes: draft.notes.trim(),
       protocol: rowProtocol(row, draft),
+      block,
     },
   };
 }

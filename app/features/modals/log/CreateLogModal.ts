@@ -5,6 +5,7 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { BaseLogModal } from "@app/features/modals/base/BaseLogModal";
 import { LogFormData } from "@app/types/ModalTypes";
 import { toEntry } from "@app/features/modals/base/logic/LogEntryDraft";
+import { normalizeExercise } from "@app/services/events/WorkoutEventTypes";
 import { t } from "@app/i18n";
 
 export class CreateLogModal extends BaseLogModal {
@@ -59,7 +60,22 @@ export class CreateLogModal extends BaseLogModal {
 
   protected async handleSubmit(data: LogFormData): Promise<void> {
     await this.plugin.addWorkoutLogEntry(
-      toEntry(data, { now: new Date(), pageLink: this.currentPageLink }),
+      toEntry(
+        { ...data, block: this.blockOf(data) },
+        { now: new Date(), pageLink: this.currentPageLink },
+      ),
     );
+  }
+
+  /**
+   * The `workout-sets` block the form was opened for (a session step), while
+   * the set is still that block's exercise
+   */
+  private blockOf(data: LogFormData): string | undefined {
+    const initial = this.initialValues;
+    if (!initial?.block || initial.exercise === undefined) return undefined;
+    return normalizeExercise(initial.exercise) === normalizeExercise(data.exercise)
+      ? initial.block
+      : undefined;
   }
 }

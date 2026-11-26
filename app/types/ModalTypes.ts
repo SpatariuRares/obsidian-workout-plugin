@@ -17,6 +17,8 @@ export interface LogFormData {
   date?: string;
   protocol?: ProtocolId;
   customFields?: Record<string, string | number | boolean>;
+  /** Id of the `workout-sets` block the set is logged from */
+  block?: string;
 }
 
 /** The protocol picked in the log form's chips */

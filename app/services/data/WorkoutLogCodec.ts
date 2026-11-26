@@ -49,12 +49,25 @@ type StandardCSVColumn = (typeof STANDARD_CSV_COLUMNS)[number];
  */
 export const WEIGHT_UNIT_COLUMN = "weightUnit";
 
+/**
+ * Column holding the id of the `workout-sets` block a set was logged from,
+ * so two blocks of the same exercise in one workout keep their own sets.
+ * Read by header name and written after the custom columns, before
+ * `weightUnit`.
+ */
+export const BLOCK_COLUMN = "blockId";
+
 function isStandardColumn(column: string): boolean {
   return STANDARD_CSV_COLUMNS.includes(column as StandardCSVColumn);
 }
 
+/** Columns read by name that are not custom fields */
+function isNamedColumn(column: string): boolean {
+  return column === WEIGHT_UNIT_COLUMN || column === BLOCK_COLUMN;
+}
+
 export interface ParsedLog {
-  /** Non-standard header columns in file order, `weightUnit` included */
+  /** Non-standard header columns in file order, `blockId` and `weightUnit` included */
   customColumns: string[];
   entries: CSVWorkoutLogEntry[];
 }
@@ -63,7 +76,7 @@ export interface ParsedLog {
  * Parses the log CSV.
  *
  * - Standard columns are positional; other columns become customFields,
- *   except `weightUnit`, which is read by name
+ *   except `blockId` and `weightUnit`, which are read by name
  * - Rows with NaN reps/weight/volume, negative weight, no exercise, or
  *   reps <= 0 without a positive custom value are skipped
  * - A missing protocol reads as standard; custom ids are kept
@@ -83,10 +96,13 @@ export function parseLog(content: string): ParsedLog {
   const customColumns = header.filter(
     (col) => col && !isStandardColumn(col),
   );
-  const weightUnitIndex = header.indexOf(WEIGHT_UNIT_COLUMN);
+  const named: NamedColumns = {
+    weightUnit: header.indexOf(WEIGHT_UNIT_COLUMN),
+    block: header.indexOf(BLOCK_COLUMN),
+  };
   const customFieldColumns: Array<{ name: string; index: number }> = [];
   header.forEach((col, index) => {
-    if (col && !isStandardColumn(col) && col !== WEIGHT_UNIT_COLUMN) {
+    if (col && !isStandardColumn(col) && !isNamedColumn(col)) {
       customFieldColumns.push({ name: col, index });
     }
   });
@@ -96,17 +112,23 @@ export function parseLog(content: string): ParsedLog {
     const entry = parseRow(
       rows[i].map(unprotectFormula),
       customFieldColumns,
-      weightUnitIndex,
+      named,
     );
     if (entry) entries.push(entry);
   }
   return { customColumns, entries };
 }
 
+/** Where the columns read by name are; -1 when the header lacks one */
+interface NamedColumns {
+  weightUnit: number;
+  block: number;
+}
+
 function parseRow(
   values: string[],
   customFieldColumns: Array<{ name: string; index: number }>,
-  weightUnitIndex: number,
+  named: NamedColumns,
 ): CSVWorkoutLogEntry | null {
   if (values.length < 6) return null;
 
@@ -155,10 +177,12 @@ function parseRow(
       Object.keys(customFields).length > 0 ? customFields : undefined,
   };
   const unitValue =
-    weightUnitIndex >= 0 ? values[weightUnitIndex]?.trim() : undefined;
+    named.weightUnit >= 0 ? values[named.weightUnit]?.trim() : undefined;
   if (isWeightUnit(unitValue)) {
     entry.weightUnit = unitValue;
   }
+  const block = named.block >= 0 ? values[named.block]?.trim() : undefined;
+  if (block) entry.block = block;
   return entry;
 }
 
@@ -178,23 +202,29 @@ function parseCustomFieldValue(value: string): string | number | boolean {
 /**
  * Custom column order for a rewrite: the file's existing custom columns in
  * their order (kept even when every row is empty), then columns that only
- * the entries have, sorted, then `weightUnit` last.
+ * the entries have, sorted, then `blockId`, then `weightUnit` last.
  */
 function orderCustomColumns(
   existingColumns: string[],
   entries: CSVWorkoutLogEntry[],
 ): string[] {
-  const columns = existingColumns.filter(
-    (col) => col !== WEIGHT_UNIT_COLUMN,
-  );
+  const columns = existingColumns.filter((col) => !isNamedColumn(col));
   const fresh = new Set<string>();
   for (const entry of entries) {
     for (const key of Object.keys(entry.customFields ?? {})) {
-      if (!columns.includes(key) && !isStandardColumn(key)) fresh.add(key);
+      if (!columns.includes(key) && !isStandardColumn(key) && !isNamedColumn(key)) {
+        fresh.add(key);
+      }
     }
   }
   columns.push(...Array.from(fresh).sort());
 
+  if (
+    existingColumns.includes(BLOCK_COLUMN) ||
+    entries.some((entry) => entry.block)
+  ) {
+    columns.push(BLOCK_COLUMN);
+  }
   if (
     existingColumns.includes(WEIGHT_UNIT_COLUMN) ||
     entries.some((entry) => entry.weightUnit)
@@ -229,7 +259,9 @@ function entryToCSVLine(
     const value =
       column === WEIGHT_UNIT_COLUMN
         ? entry.weightUnit
-        : entry.customFields?.[column];
+        : column === BLOCK_COLUMN
+          ? entry.block
+          : entry.customFields?.[column];
     values.push(value === undefined || value === null ? "" : String(value));
   }
   return values.map(sanitizeCSVValue).join(",");
@@ -280,6 +312,7 @@ export function toWorkoutLogData(
     timestamp: entry.timestamp,
     protocol: entry.protocol,
     customFields: entry.customFields,
+    block: entry.block,
   };
 }
 
@@ -299,5 +332,6 @@ export function toLogEntryInput(log: WorkoutLogData): LogEntryInput {
     notes: log.notes,
     protocol: log.protocol,
     customFields: log.customFields ? { ...log.customFields } : undefined,
+    block: log.block,
   };
 }

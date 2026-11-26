@@ -78,6 +78,15 @@ describe("LogEntryDraft", () => {
   });
 
   describe("toEntry when editing", () => {
+    it("keeps the block the set was logged from, unless the exercise changes", () => {
+      const original = log({ block: "b1" });
+      const edit = (exercise: string) =>
+        toEntry({ ...unchanged(original), exercise }, { original, now: new Date() }).block;
+
+      expect(edit("squat")).toBe("b1");
+      expect(edit("Leg Press")).toBeUndefined();
+    });
+
     it("keeps the exact date when the user changes nothing, even after midnight", () => {
       const original = log({ date: "2026-03-09T23:30:00.000Z" });
 

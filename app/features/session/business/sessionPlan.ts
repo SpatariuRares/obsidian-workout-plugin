@@ -26,6 +26,11 @@ import { StringUtils } from "@app/utils/StringUtils";
 /** One exercise of the plan a workout note describes */
 export interface SessionStep {
   exercise: string;
+  /**
+   * Id of the step's `workout-sets` block: the sets logged from it (or for
+   * the step) carry it, so two steps of the same exercise keep their own
+   */
+  block?: string;
   /** Planned sets; undefined when the table doesn't say */
   sets?: number;
   targetReps?: number;
@@ -84,6 +89,7 @@ export function readSectionPlan(section: NoteSection): SessionStep[] {
 
     const same = stepOf(sectionSteps, params.exercise);
     if (same) {
+      if (isSets) same.block ??= params.id;
       same.sets ??= params.sets;
       same.targetReps ??= params.targetReps;
       same.targetWeight ??= params.targetWeight;
@@ -95,6 +101,7 @@ export function readSectionPlan(section: NoteSection): SessionStep[] {
     }
     sectionSteps.push({
       exercise: params.exercise,
+      block: isSets ? params.id : undefined,
       sets: params.sets,
       targetReps: params.targetReps,
       targetWeight: params.targetWeight,
@@ -196,9 +203,10 @@ export interface SessionProgress {
 }
 
 /**
- * Hands today's sets to the plan's steps: a set goes to the first step of
- * its exercise that still lacks sets (the last one takes any extra), and
- * warm-ups don't count as planned sets. The
+ * Hands today's sets to the plan's steps: a set logged from a step's
+ * `workout-sets` block goes to that step; any other set goes to the first
+ * step of its exercise that still lacks sets (the last one takes any
+ * extra), and warm-ups don't count as planned sets. The
  * current step is the first incomplete one: short of its planned sets, or,
  * without a plan, until a later step has a set.
  */
@@ -212,6 +220,18 @@ export function sessionProgress(
       continue;
     }
     const exercise = StringUtils.normalize(set.exercise);
+    const own =
+      set.block === undefined
+        ? -1
+        : steps.findIndex(
+            (step) =>
+              step.block === set.block &&
+              StringUtils.normalize(step.exercise) === exercise,
+          );
+    if (own >= 0) {
+      done[own].push(set);
+      continue;
+    }
     const candidates = steps
       .map((step, index) => ({ step, index }))
       .filter(({ step }) => StringUtils.normalize(step.exercise) === exercise);

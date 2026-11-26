@@ -252,4 +252,47 @@ describe("sessionProgress", () => {
   it("starts on the first step when nothing is logged today", () => {
     expect(sessionProgress([step("Squat", 3)], []).current).toBe(0);
   });
+
+  it("gives a set logged from a step's block to that step", () => {
+    const steps = [
+      { ...step("Leg Extension", 3), block: "b1" },
+      step("Hack squat", 3),
+      { ...step("Leg Extension", 3), block: "b2" },
+    ];
+    const fromBlock = (block?: string) => ({ ...set("Leg Extension"), block });
+
+    const { done, current } = sessionProgress(steps, [
+      fromBlock("b2"),
+      fromBlock("b2"),
+      fromBlock(),
+    ]);
+
+    expect(done.map((sets) => sets.length)).toEqual([1, 0, 2]);
+    expect(current).toBe(0);
+  });
+});
+
+describe("a step's block", () => {
+  it("is the id of the section's workout-sets block", () => {
+    const steps = readSessionPlan(
+      [
+        "## Leg extension",
+        "```workout-sets",
+        "id: b1",
+        "exercise: Leg Extension",
+        "sets: 3",
+        "```",
+        "## Leg extension drop set",
+        "```workout-log",
+        "exercise: Leg Extension",
+        "```",
+        "```workout-sets",
+        "id: b2",
+        "exercise: Leg Extension",
+        "```",
+      ].join("\n"),
+    );
+
+    expect(steps.map((s) => s.block)).toEqual(["b1", "b2"]);
+  });
 });

@@ -300,28 +300,44 @@ export class TrainingHistory {
 
   /**
    * The exercise's sets of one training day, in set order; with `workout`,
-   * only that workout's (case, spacing and quotes ignored).
+   * only that workout's (case, spacing and quotes ignored); with `block`,
+   * only the sets of that `workout-sets` block (see fromBlock).
    */
   setsOn(
     exercise: string,
     day: string,
-    { workout }: { workout?: string } = {},
+    { workout, block }: { workout?: string; block?: string } = {},
   ): WorkoutLogData[] {
     return this.setsOf(exercise).filter(
       (log) =>
         trainingDay(log.date) === day &&
-        (workout === undefined || sameWorkout(log.workout, workout)),
+        (workout === undefined || sameWorkout(log.workout, workout)) &&
+        fromBlock(log, block),
     );
   }
 
   /**
    * The last training day before `before` on which the exercise was done
-   * (in any workout), with that day's sets in set order.
+   * (in any workout), with that day's sets in set order. With `block`, the
+   * last day that `workout-sets` block was logged, with only its sets.
    */
   previousDay(
     exercise: string,
     before: string,
+    { block }: { block?: string } = {},
   ): { day: string; sets: WorkoutLogData[] } | undefined {
+    // A block's last time is the last day sets were logged from it, with
+    // only its sets; before its first set, the exercise's last day
+    if (block !== undefined) {
+      const own = this.setsOf(exercise)
+        .reverse()
+        .find((log) => log.block === block && trainingDay(log.date) < before);
+      if (own) {
+        const day = trainingDay(own.date);
+        const sets = this.setsOn(exercise, day).filter((log) => log.block === block);
+        return { day, sets };
+      }
+    }
     const last = this.lastSet(exercise, { before });
     if (!last) return undefined;
     const day = trainingDay(last.date);
@@ -487,6 +503,16 @@ export class TrainingHistory {
 /** A week needs at least one training day */
 function weeklyGoalOf(weeklyGoal: number): number {
   return Math.max(1, Math.floor(weeklyGoal) || 1);
+}
+
+/**
+ * Whether a set belongs to a `workout-sets` block: with no block asked,
+ * every set; else the sets logged from it and the ones logged from no
+ * block (elsewhere, or before sets carried their block), so the sets of
+ * two blocks of the same exercise in one workout stay apart.
+ */
+export function fromBlock(set: WorkoutLogData, block: string | undefined): boolean {
+  return block === undefined || set.block === undefined || set.block === block;
 }
 
 /**

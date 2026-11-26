@@ -671,6 +671,46 @@ describe("setsOn", () => {
   });
 });
 
+describe("sets of a workout-sets block", () => {
+  // Two blocks of Leg Extension in one workout: b1 (supersets), b2 (drop sets)
+  const history = new TrainingHistory([
+    set("2026-10-30T10:00:00Z", "Day 3", { weight: 40, block: "b1" }),
+    set("2026-10-30T10:30:00Z", "Day 3", { weight: 30, block: "b2" }),
+    set("2026-11-02T10:00:00Z", "Day 3", { weight: 45, block: "b1" }),
+    set("2026-11-02T10:10:00Z", "Day 3", { weight: 50 }),
+    set("2026-11-02T10:30:00Z", "Day 3", { weight: 35, block: "b2" }),
+  ]);
+
+  it("keeps today's sets of each block apart, with the sets logged from no block", () => {
+    const today = (block?: string) =>
+      history.setsOn("Squat", "2026-11-02", { workout: "Day 3", block }).map((s) => s.weight);
+
+    expect(today("b1")).toEqual([45, 50]);
+    expect(today("b2")).toEqual([50, 35]);
+    expect(today()).toEqual([45, 50, 35]);
+  });
+
+  it("gives a block's last time with only its sets", () => {
+    expect(history.previousDay("Squat", "2026-11-02", { block: "b2" })).toEqual({
+      day: "2026-10-30",
+      sets: [expect.objectContaining({ weight: 30 })],
+    });
+  });
+
+  it("falls back to the exercise's last day before the block's first set", () => {
+    expect(history.previousDay("Squat", "2026-11-02", { block: "new" })?.sets).toHaveLength(2);
+  });
+
+  it("ignores a block's sets of another exercise", () => {
+    const renamed = new TrainingHistory([
+      set("2026-10-30T10:00:00Z", "Day 3", { exercise: "Hack squat", block: "b1" }),
+      set("2026-10-31T10:00:00Z", "Day 3", { weight: 60 }),
+    ]);
+
+    expect(renamed.previousDay("Squat", "2026-11-02", { block: "b1" })?.day).toBe("2026-10-31");
+  });
+});
+
 describe("previousDay", () => {
   it("gives the last earlier day with the exercise and all its sets", () => {
     const history = new TrainingHistory([

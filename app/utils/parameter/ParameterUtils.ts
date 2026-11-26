@@ -11,7 +11,11 @@
  */
 
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
-import { STANDARD_CSV_COLUMNS } from "@app/services/data/WorkoutLogCodec";
+import {
+  BLOCK_COLUMN,
+  STANDARD_CSV_COLUMNS,
+  WEIGHT_UNIT_COLUMN,
+} from "@app/services/data/WorkoutLogCodec";
 import { StringUtils } from "@app/utils/StringUtils";
 
 /**
@@ -21,6 +25,9 @@ import { StringUtils } from "@app/utils/StringUtils";
 const RESERVED_PARAMETER_KEYS: readonly string[] = [
   // Standard CSV columns
   ...STANDARD_CSV_COLUMNS,
+  // Columns read by name
+  WEIGHT_UNIT_COLUMN,
+  BLOCK_COLUMN,
   // Computed/internal values
   "volume",
   "pace",

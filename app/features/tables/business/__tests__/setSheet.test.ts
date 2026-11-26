@@ -107,6 +107,13 @@ describe("rowToFormData", () => {
     });
   });
 
+  it("logs the set with the block's id", () => {
+    const [row] = setRows(input({ previous: [set(80, 8)] }));
+    const result = rowToFormData(row, emptyDraft(), { ...context, block: "b1" });
+
+    expect(result).toMatchObject({ data: { block: "b1" } });
+  });
+
   it("logs what was typed, with the protocol and notes picked", () => {
     const [row] = setRows(input({ previous: [set(80, 8)] }));
     const draft = {

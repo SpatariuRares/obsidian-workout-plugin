@@ -86,7 +86,7 @@ class SessionRenderChild extends MarkdownRenderChild {
     const { eventBus, app } = this.plugin;
     const refresh = () => void this.render();
     this.register(
-      eventBus.on("log:added", ({ context }) => void this.logged(context)),
+      eventBus.on("log:added", ({ entry, context }) => void this.logged(context, entry.block)),
     );
     this.register(eventBus.on("log:updated", refresh));
     this.register(eventBus.on("log:deleted", refresh));
@@ -108,17 +108,24 @@ class SessionRenderChild extends MarkdownRenderChild {
    * A set was logged. One of this workout's: back to the progress and rest
    * after it, unless it was the plan's last set.
    */
-  private async logged(context: {
-    exercise: string;
-    workout?: string;
-  }): Promise<void> {
+  private async logged(
+    context: {
+      exercise: string;
+      workout?: string;
+    },
+    block: string | undefined,
+  ): Promise<void> {
     if (!sameWorkout(context.workout, this.workout)) {
       await this.render();
       return;
     }
     this.position = undefined;
     const plan = await this.readPlan();
-    const step = plan ? stepOf(plan, context.exercise) : undefined;
+    // The step the set was logged for (its block), else the exercise's first
+    const step = plan
+      ? (plan.find((s) => block !== undefined && s.block === block) ??
+        stepOf(plan, context.exercise))
+      : undefined;
     if (step) this.restingStep = step;
     const restShown = await this.render(step !== undefined);
     if (step?.rest && restShown) this.restTimer.restart(step.rest);
@@ -195,7 +202,7 @@ class SessionRenderChild extends MarkdownRenderChild {
       if (target) {
         card.createDiv({ cls: "workout-session-meta", text: t("session.target", { target }) });
       }
-      const lastTime = history.previousDay(step.exercise, today);
+      const lastTime = history.previousDay(step.exercise, today, { block: step.block });
       if (lastTime) {
         card.createDiv({
           cls: "workout-session-meta",
@@ -204,7 +211,7 @@ class SessionRenderChild extends MarkdownRenderChild {
       }
 
       this.renderNavigation(card, index, steps.length, () =>
-        this.openLogForm(step, done[index], history),
+        this.openLogForm(step, done[index], lastTime?.sets ?? [], history),
       );
 
       const restingTimer = this.restingStep?.rest;
@@ -283,15 +290,19 @@ class SessionRenderChild extends MarkdownRenderChild {
 
   /**
    * The form starts from today's last set of the step; before the first one
-   * from the last set ever, with the planned reps and weight on top. The
+   * from its last time's last set (else the exercise's last set ever), with the planned reps and weight on top. The
    * workout is always this note's.
    */
   private openLogForm(
     step: SessionStep,
     doneToday: WorkoutLogData[],
+    lastTime: WorkoutLogData[],
     history: TrainingHistory,
   ): void {
-    const last = doneToday[doneToday.length - 1] ?? history.lastSet(step.exercise);
+    const last =
+      doneToday[doneToday.length - 1] ??
+      lastTime[lastTime.length - 1] ??
+      history.lastSet(step.exercise);
     const first = doneToday.length === 0;
     const prefill = prefillFromLast(last, {
       exercise: step.exercise,
@@ -300,6 +311,8 @@ class SessionRenderChild extends MarkdownRenderChild {
       targetReps: first ? step.targetReps : undefined,
       targetWeight: first ? step.targetWeight : undefined,
     });
+    // The set is this step's: logged with its block, it counts for it
+    if (step.block) prefill.block = step.block;
     new CreateLogModal(
       this.plugin.app,
       this.plugin,

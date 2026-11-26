@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | Eindeutige ID der Zeile (Millisekunden)      |
 | `notes`, `protocol`        | Freitext und Trainingstechnik                |
 
-Übungstypen mit eigenen Feldern (`duration`, `distance`, `heartRate` oder deine `parameters`) fügen Spalten am Ende hinzu. Die letzte Spalte, `weightUnit`, ist `kg` oder `lb`: die Einheit von `weight` und `volume` dieser Zeile. Ein leerer Wert bedeutet die Einheit aus den Einstellungen.
+Übungstypen mit eigenen Feldern (`duration`, `distance`, `heartRate` oder deine `parameters`) fügen Spalten am Ende hinzu. `blockId` enthält die `id` des `workout-sets`-Blocks, in dem ein Satz abgehakt wurde, damit zwei Blöcke derselben Übung in einem Training ihre eigenen Sätze behalten; bei Sätzen, die an anderer Stelle protokolliert wurden, ist er leer. Die letzte Spalte, `weightUnit`, ist `kg` oder `lb`: die Einheit von `weight` und `volume` dieser Zeile. Ein leerer Wert bedeutet die Einheit aus den Einstellungen.
 
 Wenn du die Datei von Hand bearbeitest, behalte die Kopfzeile bei und setze jeden Wert, der ein Komma, ein Anführungszeichen oder einen Zeilenumbruch enthält, in doppelte Anführungszeichen. Notizen, die mit `=`, `+`, `-` oder `@` beginnen, werden mit einem vorangestellten `'` gespeichert, damit Tabellenkalkulationen sie nicht als Formeln ausführen. Das Plugin blendet es wieder aus.
 

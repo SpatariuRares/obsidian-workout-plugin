@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | ID unic al rândului (milisecunde)    |
 | `notes`, `protocol`        | Text liber și tehnica de antrenament |
 
-Tipurile de exerciții cu câmpuri proprii (`duration`, `distance`, `heartRate` sau `parameters` tale) adaugă coloane la final. Ultima coloană, `weightUnit`, este `kg` sau `lb`: unitatea pentru `weight` și `volume` din rândul respectiv. O valoare goală înseamnă unitatea din setări.
+Tipurile de exerciții cu câmpuri proprii (`duration`, `distance`, `heartRate` sau `parameters` tale) adaugă coloane la final. `blockId` păstrează `id`-ul blocului `workout-sets` în care a fost bifată o serie, astfel încât două blocuri ale aceluiași exercițiu dintr-un antrenament să-și păstreze seriile; este goală pentru seriile înregistrate în altă parte. Ultima coloană, `weightUnit`, este `kg` sau `lb`: unitatea pentru `weight` și `volume` din rândul respectiv. O valoare goală înseamnă unitatea din setări.
 
 Dacă editezi fișierul manual, păstrează rândul de antet și pune între ghilimele duble orice valoare care conține virgulă, ghilimele sau salt de linie. Notele care încep cu `=`, `+`, `-` sau `@` sunt salvate cu un `'` la început, ca foile de calcul să nu le execute ca formule; pluginul îl ascunde din nou.
 

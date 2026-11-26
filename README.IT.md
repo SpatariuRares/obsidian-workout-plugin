@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | ID univoco della riga (millisecondi)     |
 | `notes`, `protocol`        | Testo libero e tecnica di allenamento    |
 
-I tipi di esercizio con campi propri (`duration`, `distance`, `heartRate`, o i tuoi `parameters`) aggiungono colonne in fondo. L'ultima colonna, `weightUnit`, è `kg` o `lb`: l'unità del `weight` e del `volume` di quella riga. Un valore vuoto indica l'unità delle impostazioni.
+I tipi di esercizio con campi propri (`duration`, `distance`, `heartRate`, o i tuoi `parameters`) aggiungono colonne in fondo. `blockId` contiene l'`id` del blocco `workout-sets` in cui è stata spuntata una serie, così due blocchi dello stesso esercizio in un allenamento mantengono le proprie serie; è vuoto per le serie registrate altrove. L'ultima colonna, `weightUnit`, è `kg` o `lb`: l'unità del `weight` e del `volume` di quella riga. Un valore vuoto indica l'unità delle impostazioni.
 
 Se modifichi il file a mano, mantieni la riga di intestazione e racchiudi tra virgolette doppie ogni valore che contiene una virgola, una virgoletta o un a capo. Le note che iniziano con `=`, `+`, `-` o `@` vengono salvate con un `'` iniziale, così i fogli di calcolo non le eseguono come formule; il plugin lo nasconde di nuovo.
 

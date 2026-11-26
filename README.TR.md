@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | Satırın benzersiz kimliği (milisaniye)  |
 | `notes`, `protocol`        | Serbest metin ve antrenman tekniği      |
 
-Kendi alanları olan egzersiz türleri (`duration`, `distance`, `heartRate` ya da `parameters`) sona sütunlar ekler. Son sütun olan `weightUnit`, `kg` ya da `lb` değerini alır: o satırdaki `weight` ve `volume` değerlerinin birimi. Boş değer, ayarlardaki birim anlamına gelir.
+Kendi alanları olan egzersiz türleri (`duration`, `distance`, `heartRate` ya da `parameters`) sona sütunlar ekler. `blockId`, bir setin işaretlendiği `workout-sets` bloğunun `id`'sini tutar; böylece bir antrenmanda aynı egzersizin iki bloğu kendi setlerini korur. Başka yerde kaydedilen setlerde boştur. Son sütun olan `weightUnit`, `kg` ya da `lb` değerini alır: o satırdaki `weight` ve `volume` değerlerinin birimi. Boş değer, ayarlardaki birim anlamına gelir.
 
 Dosyayı elle düzenlerseniz başlık satırını koruyun ve virgül, tırnak ya da satır sonu içeren her değeri çift tırnak içine alın. `=`, `+`, `-` ya da `@` ile başlayan notlar, elektronik tabloların bunları formül olarak çalıştırmaması için başına bir `'` eklenerek saklanır; eklenti bunu yeniden gizler.
 

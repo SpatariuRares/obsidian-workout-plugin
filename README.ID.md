@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | ID unik baris (milidetik)                  |
 | `notes`, `protocol`        | Teks bebas dan teknik latihan              |
 
-Jenis latihan dengan kolomnya sendiri (`duration`, `distance`, `heartRate`, atau `parameters` Anda) menambahkan kolom di akhir. Kolom terakhir, `weightUnit`, berisi `kg` atau `lb`: satuan dari `weight` dan `volume` pada baris tersebut. Nilai kosong berarti satuan di pengaturan.
+Jenis latihan dengan kolomnya sendiri (`duration`, `distance`, `heartRate`, atau `parameters` Anda) menambahkan kolom di akhir. `blockId` berisi `id` dari blok `workout-sets` tempat set dicentang, sehingga dua blok dari latihan yang sama dalam satu workout menyimpan set masing-masing; kosong untuk set yang dicatat di tempat lain. Kolom terakhir, `weightUnit`, berisi `kg` atau `lb`: satuan dari `weight` dan `volume` pada baris tersebut. Nilai kosong berarti satuan di pengaturan.
 
 Jika Anda menyunting file secara manual, pertahankan baris header, dan apit nilai yang mengandung koma, tanda kutip, atau pemutusan baris dengan tanda kutip ganda. Catatan yang diawali `=`, `+`, `-`, atau `@` disimpan dengan awalan `'` agar spreadsheet tidak menjalankannya sebagai rumus; plugin menyembunyikannya kembali.
 

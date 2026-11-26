@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | Jedinečné ID řádku (milisekundy)            |
 | `notes`, `protocol`        | Volný text a tréninková technika            |
 
-Typy cvičení s vlastními poli (`duration`, `distance`, `heartRate`, nebo vaše `parameters`) přidají sloupce na konec. Poslední sloupec, `weightUnit`, je `kg` nebo `lb`: jednotka hodnot `weight` a `volume` daného řádku. Prázdná hodnota znamená jednotku z nastavení.
+Typy cvičení s vlastními poli (`duration`, `distance`, `heartRate`, nebo vaše `parameters`) přidají sloupce na konec. `blockId` obsahuje `id` bloku `workout-sets`, ve kterém byla série odškrtnuta, takže dva bloky stejného cviku v jednom tréninku si drží vlastní série; u sérií zapsaných jinde je prázdný. Poslední sloupec, `weightUnit`, je `kg` nebo `lb`: jednotka hodnot `weight` a `volume` daného řádku. Prázdná hodnota znamená jednotku z nastavení.
 
 Když soubor upravujete ručně, ponechte řádek záhlaví a každou hodnotu s čárkou, uvozovkou nebo zalomením řádku uzavřete do dvojitých uvozovek. Poznámky začínající na `=`, `+`, `-` nebo `@` se ukládají s úvodním `'`, aby je tabulkové procesory nepočítaly jako vzorce; plugin ho zase skryje.
 

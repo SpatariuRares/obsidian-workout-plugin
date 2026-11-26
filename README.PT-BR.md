@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | ID único da linha (milissegundos)        |
 | `notes`, `protocol`        | Texto livre e técnica de treino          |
 
-Os tipos de exercício com campos próprios (`duration`, `distance`, `heartRate`, ou seus `parameters`) adicionam colunas no final. A última coluna, `weightUnit`, é `kg` ou `lb`: a unidade do `weight` e do `volume` daquela linha. Um valor vazio significa a unidade das configurações.
+Os tipos de exercício com campos próprios (`duration`, `distance`, `heartRate`, ou seus `parameters`) adicionam colunas no final. `blockId` guarda o `id` do bloco `workout-sets` em que uma série foi marcada, para que dois blocos do mesmo exercício em um treino mantenham as suas próprias séries; fica vazio para séries registradas em outro lugar. A última coluna, `weightUnit`, é `kg` ou `lb`: a unidade do `weight` e do `volume` daquela linha. Um valor vazio significa a unidade das configurações.
 
 Se você editar o arquivo à mão, mantenha a linha de cabeçalho e coloque entre aspas duplas qualquer valor que contenha vírgula, aspas ou quebra de linha. Observações que começam com `=`, `+`, `-` ou `@` são salvas com um `'` no início para que as planilhas não as executem como fórmulas; o plugin o oculta de novo.
 

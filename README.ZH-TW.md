@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | 該列的唯一 ID（毫秒）               |
 | `notes`, `protocol`        | 自由文字與訓練技巧                  |
 
-具有自己欄位的動作類型（`duration`、`distance`、`heartRate`，或你的 `parameters`）會在最後新增欄位。最後一欄 `weightUnit` 為 `kg` 或 `lb`：該列 `weight` 與 `volume` 的單位。留空則代表使用設定中的單位。
+具有自己欄位的動作類型（`duration`、`distance`、`heartRate`，或你的 `parameters`）會在最後新增欄位。`blockId` 儲存組被勾選所在 `workout-sets` 區塊的 `id`，因此同一次訓練中兩個同一動作的區塊會各自保留自己的組；由其他地方紀錄的組則為空白。最後一欄 `weightUnit` 為 `kg` 或 `lb`：該列 `weight` 與 `volume` 的單位。留空則代表使用設定中的單位。
 
 如果你手動編輯檔案，請保留標題列，並將任何包含逗號、雙引號或換行的值以雙引號括起。以 `=`、`+`、`-` 或 `@` 開頭的備註會以前導 `'` 儲存，讓試算表不會把它們當成公式執行；外掛會再把它隱藏起來。
 

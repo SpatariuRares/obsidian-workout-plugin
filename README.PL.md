@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | Unikalny identyfikator wiersza (milisekundy) |
 | `notes`, `protocol`        | Wolny tekst i technika treningowa            |
 
-Typy ćwiczeń z własnymi polami (`duration`, `distance`, `heartRate` lub twoje `parameters`) dodają kolumny na końcu. Ostatnia kolumna, `weightUnit`, to `kg` lub `lb`: jednostka `weight` i `volume` danego wiersza. Pusta wartość oznacza jednostkę z ustawień.
+Typy ćwiczeń z własnymi polami (`duration`, `distance`, `heartRate` lub twoje `parameters`) dodają kolumny na końcu. `blockId` zawiera `id` bloku `workout-sets`, w którym zaznaczono serię, dzięki czemu dwa bloki tego samego ćwiczenia w jednym treningu zachowują własne serie; dla serii zapisanych gdzie indziej jest pusty. Ostatnia kolumna, `weightUnit`, to `kg` lub `lb`: jednostka `weight` i `volume` danego wiersza. Pusta wartość oznacza jednostkę z ustawień.
 
 Jeśli edytujesz plik ręcznie, zachowaj wiersz nagłówka i ujmij w podwójne cudzysłowy każdą wartość zawierającą przecinek, cudzysłów lub znak nowej linii. Notatki zaczynające się od `=`, `+`, `-` lub `@` są zapisywane z wiodącym `'`, aby arkusze nie uruchamiały ich jako formuł; wtyczka ukrywa go ponownie.
 

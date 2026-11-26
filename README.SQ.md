@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | ID unike e rreshtit (milisekonda)            |
 | `notes`, `protocol`        | Tekst i lirë dhe teknika e stërvitjes        |
 
-Llojet e ushtrimeve me fushat e tyre (`duration`, `distance`, `heartRate`, ose `parameters` e tua) shtojnë kolona në fund. Kolona e fundit, `weightUnit`, është `kg` ose `lb`: njësia e `weight` dhe `volume` të atij rreshti. Një vlerë bosh do të thotë njësia nga cilësimet.
+Llojet e ushtrimeve me fushat e tyre (`duration`, `distance`, `heartRate`, ose `parameters` e tua) shtojnë kolona në fund. `blockId` mban `id`-në e bllokut `workout-sets` ku u shënua një seri, kështu që dy blloqe të të njëjtit ushtrim në një stërvitje mbajnë seritë e veta; është bosh për seritë e regjistruara diku tjetër. Kolona e fundit, `weightUnit`, është `kg` ose `lb`: njësia e `weight` dhe `volume` të atij rreshti. Një vlerë bosh do të thotë njësia nga cilësimet.
 
 Nëse e redakton skedarin me dorë, mbaje rreshtin e titujve, dhe mbyll çdo vlerë që përmban presje, thonjëza ose thyerje rreshti në thonjëza të dyfishta. Shënimet që fillojnë me `=`, `+`, `-` ose `@` ruhen me një `'` në fillim, që spreadsheet-et të mos i ekzekutojnë si formula; plugin-i e fsheh përsëri.
 

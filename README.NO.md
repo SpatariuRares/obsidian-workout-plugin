@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | Unik ID for raden (millisekunder)   |
 | `notes`, `protocol`        | Fritekst og treningsteknikk         |
 
-Øvelsestyper med egne felt (`duration`, `distance`, `heartRate`, eller dine `parameters`) legger til kolonner på slutten. Den siste kolonnen, `weightUnit`, er `kg` eller `lb`: enheten for den radens `weight` og `volume`. En tom verdi betyr enheten i innstillingene.
+Øvelsestyper med egne felt (`duration`, `distance`, `heartRate`, eller dine `parameters`) legger til kolonner på slutten. `blockId` holder `id`-en til `workout-sets`-blokken et sett ble krysset av i, slik at to blokker for samme øvelse i én økt beholder hvert sitt sett; den er tom for sett logget andre steder. Den siste kolonnen, `weightUnit`, er `kg` eller `lb`: enheten for den radens `weight` og `volume`. En tom verdi betyr enheten i innstillingene.
 
 Hvis du redigerer filen for hånd, behold overskriftsraden, og sett verdier som inneholder komma, anførselstegn eller linjeskift i doble anførselstegn. Notater som begynner med `=`, `+`, `-` eller `@` lagres med en innledende `'`, slik at regneark ikke kjører dem som formler. Plugin-en skjuler den igjen.
 

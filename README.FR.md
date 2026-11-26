@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | Identifiant unique de la ligne (millisecondes) |
 | `notes`, `protocol`        | Texte libre et technique d'entraînement |
 
-Les types d'exercices qui ont leurs propres champs (`duration`, `distance`, `heartRate`, ou vos `parameters`) ajoutent des colonnes à la fin. La dernière colonne, `weightUnit`, vaut `kg` ou `lb` : c'est l'unité du `weight` et du `volume` de cette ligne. Une valeur vide signifie l'unité des paramètres.
+Les types d'exercices qui ont leurs propres champs (`duration`, `distance`, `heartRate`, ou vos `parameters`) ajoutent des colonnes à la fin. `blockId` contient l'`id` du bloc `workout-sets` dans lequel une série a été cochée, afin que deux blocs du même exercice dans un entraînement gardent chacun leurs propres séries ; il est vide pour les séries enregistrées ailleurs. La dernière colonne, `weightUnit`, vaut `kg` ou `lb` : c'est l'unité du `weight` et du `volume` de cette ligne. Une valeur vide signifie l'unité des paramètres.
 
 Si vous modifiez le fichier à la main, conservez la ligne d'en-tête, et entourez de guillemets doubles toute valeur contenant une virgule, un guillemet ou un saut de ligne. Les notes qui commencent par `=`, `+`, `-` ou `@` sont enregistrées avec une `'` au début pour que les tableurs ne les exécutent pas comme des formules ; le plugin la masque à nouveau.
 

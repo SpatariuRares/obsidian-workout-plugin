@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | 행의 고유 ID(밀리초)                |
 | `notes`, `protocol`        | 자유 메모와 훈련 기법               |
 
-고유한 필드를 가진 운동 유형(`duration`, `distance`, `heartRate`, 또는 `parameters`)은 끝에 열을 추가합니다. 마지막 열인 `weightUnit`은 `kg` 또는 `lb`이며, 해당 행의 `weight`와 `volume` 단위입니다. 값이 비어 있으면 설정의 단위를 뜻합니다.
+고유한 필드를 가진 운동 유형(`duration`, `distance`, `heartRate`, 또는 `parameters`)은 끝에 열을 추가합니다. `blockId`에는 세트를 체크한 `workout-sets` 블록의 `id`가 들어가므로, 한 운동 루틴에서 같은 운동의 두 블록이 각자의 세트를 유지합니다. 다른 곳에서 기록한 세트는 비어 있습니다. 마지막 열인 `weightUnit`은 `kg` 또는 `lb`이며, 해당 행의 `weight`와 `volume` 단위입니다. 값이 비어 있으면 설정의 단위를 뜻합니다.
 
 파일을 직접 편집한다면 헤더 행을 유지하고, 쉼표, 따옴표, 줄바꿈이 들어 있는 값은 큰따옴표로 감싸세요. `=`, `+`, `-`, `@`로 시작하는 메모는 스프레드시트가 수식으로 실행하지 않도록 앞에 `'`를 붙여 저장되며, 플러그인은 이 `'`를 다시 숨깁니다.
 

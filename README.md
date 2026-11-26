@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | Unique ID of the row (milliseconds) |
 | `notes`, `protocol`        | Free text and training technique    |
 
-Exercise types with their own fields (`duration`, `distance`, `heartRate`, or your `parameters`) add columns at the end. The last column, `weightUnit`, is `kg` or `lb`: the unit of that row's `weight` and `volume`. An empty value means the unit in the settings.
+Exercise types with their own fields (`duration`, `distance`, `heartRate`, or your `parameters`) add columns at the end. `blockId` holds the `id` of the `workout-sets` block a set was ticked in, so two blocks of the same exercise in one workout keep their own sets; it is empty for sets logged elsewhere. The last column, `weightUnit`, is `kg` or `lb`: the unit of that row's `weight` and `volume`. An empty value means the unit in the settings.
 
 If you edit the file by hand, keep the header row, and wrap any value that contains a comma, quote or line break in double quotes. Notes starting with `=`, `+`, `-` or `@` are stored with a leading `'` so spreadsheets don't run them as formulas; the plugin hides it again.
 

@@ -916,7 +916,9 @@
       "vibrateOnCompletion": "在計時器結束時，會短暫震動，與聲音無關。需要點擊頁面，並使用支援的裝置（例如 Android）。在 iOS 系統上不可用；不會發送背景警示。",
       "presetRestDesc": "每輪運動後的休息秒數（0 表示不休息）。",
       "noCustomProtocols": "目前還沒有訓練法。點擊「新增訓練法」即可建立。",
-      "showWhatsNew": "查看外掛每個版本的變更內容。"
+      "showWhatsNew": "查看外掛每個版本的變更內容。",
+      "templateFolder": "指定包含範本檔案的資料夾路徑 (例如：exercise-page.md)。若欄位留空，則預設為「運動範本」。",
+      "generateDefaultTemplates": "在設定的範本資料夾中，產生預設的運動頁面範本和標籤參考。您可以自訂這些檔案，以更改語言和結構。"
     },
     "labels": {
       "csvPath": "CSV 紀錄檔路徑",
@@ -944,7 +946,8 @@
       "weeklyGoal": "每週目標",
       "keepScreenAwake": "在計時器運作時，保持螢幕開啟",
       "vibrateOnCompletion": "當計時器結束時，產生震動",
-      "presetRest": "休息"
+      "presetRest": "休息",
+      "templateFolder": "範本資料夾路徑"
     },
     "messages": {
       "confirmDeletePreset": "您確定要刪除這個預設嗎？",

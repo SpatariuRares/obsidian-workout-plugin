@@ -916,7 +916,9 @@
       "presetRestDesc": "Detik istirahat setelah menyelesaikan setiap putaran (0 untuk tidak ada istirahat).",
       "noCustomProtocols": "Belum ada protokol. Klik 'Tambahkan protokol' untuk membuatnya.",
       "weeklyGoal": "Jumlah hari latihan per minggu agar streak Anda tetap berjalan, di ringkasan dasbor dan kalender latihan.",
-      "showWhatsNew": "Lihat apa yang berubah di setiap versi plugin."
+      "showWhatsNew": "Lihat apa yang berubah di setiap versi plugin.",
+      "templateFolder": "Jalur ke folder yang berisi file templat (misalnya, exercise-page.md). Secara default, akan menggunakan 'Template Latihan' jika kolom ini dibiarkan kosong.",
+      "generateDefaultTemplates": "Buat templat halaman latihan default dan referensi tag di folder templat yang telah dikonfigurasi. Anda dapat menyesuaikan file-file ini untuk mengubah bahasa dan struktur."
     },
     "labels": {
       "csvPath": "Jalur file log CSV",
@@ -944,7 +946,8 @@
       "keepScreenAwake": "Jaga layar tetap menyala saat timer berjalan",
       "vibrateOnCompletion": "Bergetar saat timer selesai",
       "presetRest": "Istirahat",
-      "weeklyGoal": "Target mingguan"
+      "weeklyGoal": "Target mingguan",
+      "templateFolder": "Lokasi folder templat"
     },
     "messages": {
       "confirmDeletePreset": "Apakah Anda yakin ingin menghapus preset ini?",

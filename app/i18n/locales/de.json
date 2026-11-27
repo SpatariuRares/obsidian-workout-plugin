@@ -916,7 +916,9 @@
       "vibrateOnCompletion": "Kurz vibrieren, wenn ein Timer abläuft, unabhängig von Ton. Benötigt einen Klick auf der Seite und ein kompatibles Gerät (z. B. Android). Nicht verfügbar auf iOS; keine Benachrichtigungen im Hintergrund.",
       "presetRestDesc": "Sekunden Pause nach der Arbeit jeder Runde (0 für keine Pause).",
       "noCustomProtocols": "Noch keine Protokolle vorhanden. Klicke auf „Protokoll hinzufügen“, um eines zu erstellen.",
-      "showWhatsNew": "Sieh dir an, was sich in jeder Version des Plugins geändert hat."
+      "showWhatsNew": "Sieh dir an, was sich in jeder Version des Plugins geändert hat.",
+      "templateFolder": "Pfad zum Ordner, der die Vorlagen-Dateien enthält (z. B. exercise-page.md). Standardmäßig auf 'Workout Templates' gesetzt, wenn dieser leer gelassen wird.",
+      "generateDefaultTemplates": "Generiere eine Standard-Übungsseite-Vorlage und eine Referenz für Tags im konfigurierten Ordner für Vorlagen. Du kannst diese Dateien anpassen, um die Sprache und Struktur zu ändern."
     },
     "labels": {
       "csvPath": "Pfad der CSV-Protokolldatei",
@@ -944,7 +946,8 @@
       "weeklyGoal": "Wochenziel",
       "keepScreenAwake": "Bildschirm aktiv halten, während ein Timer läuft",
       "vibrateOnCompletion": "Vibration, wenn ein Timer abgelaufen ist",
-      "presetRest": "Pause"
+      "presetRest": "Pause",
+      "templateFolder": "Pfad zum Ordner für Vorlagen"
     },
     "messages": {
       "confirmDeletePreset": "Möchtest du diese Voreinstellung wirklich löschen?",

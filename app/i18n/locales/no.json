@@ -916,7 +916,9 @@
       "vibrateOnCompletion": "Vibrer kort når en timer er ferdig, uavhengig av lyd. Krever et trykk på siden og en støttet enhet (f.eks. Android). Ikke tilgjengelig på iOS; ingen varsler i bakgrunnen.",
       "presetRestDesc": "Antall sekunder med hvile etter arbeidsdelen i hver runde (0 for ingen hvile).",
       "noCustomProtocols": "Ingen protokoller er opprettet ennå. Klikk på «Legg til protokoll» for å opprette en.",
-      "showWhatsNew": "Se hva som er endret i hver versjon av pluginen."
+      "showWhatsNew": "Se hva som er endret i hver versjon av pluginen.",
+      "templateFolder": "Sti til mappen som inneholder malfilene (f.eks. exercise-page.md). Standardverdien er 'Treningsmaler' når feltet er tomt.",
+      "generateDefaultTemplates": "Generer mal for standard treningsside og referanse for tagger i den konfigurerte malmappen. Du kan tilpasse disse filene for å endre språk og struktur."
     },
     "labels": {
       "csvPath": "Sti til CSV-loggfil",
@@ -944,7 +946,8 @@
       "weeklyGoal": "Ukentlig mål",
       "keepScreenAwake": "Hold skjermen aktiv mens en timer kjører",
       "vibrateOnCompletion": "Vibrer når en timer er ferdig",
-      "presetRest": "Hvile"
+      "presetRest": "Hvile",
+      "templateFolder": "Sti til malmapp"
     },
     "messages": {
       "confirmDeletePreset": "Er du sikker på at du vil slette denne forhåndsinnstillingen?",

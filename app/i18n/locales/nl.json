@@ -916,7 +916,9 @@
       "vibrateOnCompletion": "Tril kort wanneer een timer afloopt, los van geluid. Vereist een aanraking op de pagina en een ondersteund apparaat (zoals Android). Niet beschikbaar op iOS; geen meldingen op de achtergrond.",
       "presetRestDesc": "Aantal seconden rust na het uitvoeren van elke ronde (0 voor geen rust).",
       "noCustomProtocols": "Er zijn nog geen protocollen. Klik op 'Protocol toevoegen' om er een aan te maken.",
-      "showWhatsNew": "Bekijk wat er per versie van de plugin is veranderd."
+      "showWhatsNew": "Bekijk wat er per versie van de plugin is veranderd.",
+      "templateFolder": "Pad naar de map met de templatebestanden (bijvoorbeeld: exercise-page.md). Standaardwaarde is 'Workout Templates' als deze leeg wordt gelaten.",
+      "generateDefaultTemplates": "Genereer een standaard sjabloon voor de oefenpagina en een referentie voor tags in de geconfigureerde map met sjablonen. U kunt deze bestanden aanpassen om de taal en structuur te wijzigen."
     },
     "labels": {
       "csvPath": "Pad naar het CSV-logbestand",
@@ -944,7 +946,8 @@
       "weeklyGoal": "Wekelijks doel",
       "keepScreenAwake": "Houd het scherm actief terwijl een timer loopt",
       "vibrateOnCompletion": "Tril als een timer is voltooid",
-      "presetRest": "Rust"
+      "presetRest": "Rust",
+      "templateFolder": "Pad naar de map met sjablonen"
     },
     "messages": {
       "confirmDeletePreset": "Weet je zeker dat je deze voorinstelling wilt verwijderen?",

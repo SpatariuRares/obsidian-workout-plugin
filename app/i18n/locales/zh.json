@@ -916,7 +916,9 @@
       "vibrateOnCompletion": "在计时器结束时，即使没有声音，也会短暂地震动。需要点击页面并使用支持的设备（例如 Android）。在 iOS 上不可用；不支持后台警报。",
       "presetRestDesc": "每轮工作后，休息的时间（0 表示不休息）。",
       "noCustomProtocols": "还没有训练方案。点击“添加方案”即可创建一个。",
-      "showWhatsNew": "了解插件每个版本的更改内容。"
+      "showWhatsNew": "了解插件每个版本的更改内容。",
+      "templateFolder": "指定包含模板文件的文件夹路径（例如：exercise-page.md）。如果留空，则默认为“锻炼模板”。",
+      "generateDefaultTemplates": "在配置的模板文件夹中，生成默认的锻炼页面模板和标签参考。您可以自定义这些文件，以更改语言和结构。"
     },
     "labels": {
       "csvPath": "CSV 记录文件路径",
@@ -944,7 +946,8 @@
       "weeklyGoal": "每周目标",
       "keepScreenAwake": "在计时器运行期间，保持屏幕开启",
       "vibrateOnCompletion": "当计时器完成时，振动",
-      "presetRest": "休息"
+      "presetRest": "休息",
+      "templateFolder": "模板文件夹路径"
     },
     "messages": {
       "confirmDeletePreset": "确定要删除此预设吗？",

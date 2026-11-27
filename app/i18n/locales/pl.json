@@ -916,7 +916,9 @@
       "vibrateOnCompletion": "Wibracja na krótko, gdy timer się skończy, niezależnie od dźwięku. Wymaga naciśnięcia na stronie i obsługującego urządzenia (np. Android). Nie jest dostępne na iOS; brak powiadomień w tle.",
       "presetRestDesc": "Sekundy odpoczynku po pracy w każdej rundzie (0 oznacza brak odpoczynku).",
       "noCustomProtocols": "Obecnie nie zdefiniowano żadnych protokołów. Kliknij przycisk „Dodaj protokół”, aby go utworzyć.",
-      "showWhatsNew": "Zobacz, co zmieniło się w każdej wersji wtyczki."
+      "showWhatsNew": "Zobacz, co zmieniło się w każdej wersji wtyczki.",
+      "templateFolder": "Ścieżka do folderu zawierającego pliki szablonów (np. exercise-page.md). Domyślnie ustawia się na 'Szablony treningowe', jeśli pozostawione puste.",
+      "generateDefaultTemplates": "Utwórz domyślny szablon strony ćwiczeń i odwołanie do tagów w skonfigurowanym folderze szablonów. Możesz dostosować te pliki, aby zmienić język i strukturę."
     },
     "labels": {
       "csvPath": "Ścieżka do pliku dziennika CSV",
@@ -944,7 +946,8 @@
       "weeklyGoal": "Cel tygodniowy",
       "keepScreenAwake": "Utrzymaj ekran włączony, gdy działa timer",
       "vibrateOnCompletion": "Wibracja po zakończeniu timera",
-      "presetRest": "Odpoczynek"
+      "presetRest": "Odpoczynek",
+      "templateFolder": "Ścieżka do folderu szablonów"
     },
     "messages": {
       "confirmDeletePreset": "Czy na pewno chcesz usunąć to ustawienie?",

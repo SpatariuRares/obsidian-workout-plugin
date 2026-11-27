@@ -916,7 +916,9 @@
       "vibrateOnCompletion": "Vibrație scurtă când un temporizator se termină, indiferent de sunet. Necesită un clic pe pagină și un dispozitiv compatibil (cum ar fi Android). Nu este disponibil pe iOS; nu există notificări în fundal.",
       "presetRestDesc": "Secunde de pauză după fiecare rundă de lucru (0 pentru fără pauză).",
       "noCustomProtocols": "Nu există protocoale definite. Apasă pe „Adaugă protocol” ca să creezi unul.",
-      "showWhatsNew": "Vezi ce s-a schimbat în fiecare versiune a pluginului."
+      "showWhatsNew": "Vezi ce s-a schimbat în fiecare versiune a pluginului.",
+      "templateFolder": "Calea către folderul care conține fișierele șabloanelor (de exemplu, exercise-page.md). Implicit, este setat la 'Șabloane de antrenament' atunci când este lăsat gol.",
+      "generateDefaultTemplates": "Generează șablonul implicit pentru pagina de exerciții și referința pentru etichete în folderul de șabloane configurat. Puteți personaliza aceste fișiere pentru a modifica limba și structura."
     },
     "labels": {
       "csvPath": "Cale către fișierul de jurnal CSV",
@@ -944,7 +946,8 @@
       "weeklyGoal": "Obiectiv săptămânal",
       "keepScreenAwake": "Păstrează ecranul activ cât timp funcționează un temporizator",
       "vibrateOnCompletion": "Vibrează la finalizarea unui temporizator",
-      "presetRest": "Pauză"
+      "presetRest": "Pauză",
+      "templateFolder": "Cale către folderul cu șabloane"
     },
     "messages": {
       "confirmDeletePreset": "Ești sigur(ă) că vrei să ștergi acest preset?",

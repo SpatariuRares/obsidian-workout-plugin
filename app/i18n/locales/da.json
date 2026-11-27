@@ -916,7 +916,9 @@
       "vibrateOnCompletion": "Vibrer kortvarigt, når en timer er færdig, uafhængigt af lyd. Kræver et tryk på siden og en kompatibel enhed (f.eks. Android). Ikke tilgængeligt på iOS; ingen notifikationer i baggrunden.",
       "presetRestDesc": "Sekunder med hvile efter arbejdet i hver runde (0 for ingen hvile).",
       "noCustomProtocols": "Ingen protokoller er defineret endnu. Klik på 'Tilføj protokol' for at oprette en.",
-      "showWhatsNew": "Se, hvad der er ændret i hver version af pluginet."
+      "showWhatsNew": "Se, hvad der er ændret i hver version af pluginet.",
+      "templateFolder": "Sti til mappen, der indeholder skabelonfiler (f.eks. exercise-page.md). Standardværdien er 'Træningsskabeloner', når den er tom.",
+      "generateDefaultTemplates": "Generer en standardmal for træningssider og henvisning til tags i den konfigurerede mappe med skabeloner. Du kan tilpasse disse filer for at ændre sprog og struktur."
     },
     "labels": {
       "csvPath": "Sti til CSV-logfil",
@@ -944,7 +946,8 @@
       "weeklyGoal": "Ugentligt mål",
       "keepScreenAwake": "Hold skærmen tændt, mens en timer kører",
       "vibrateOnCompletion": "Vibrer når en timer er færdig",
-      "presetRest": "Hvile"
+      "presetRest": "Hvile",
+      "templateFolder": "Sti til mappen med skabeloner"
     },
     "messages": {
       "confirmDeletePreset": "Er du sikker på, at du vil slette denne forudindstilling?",

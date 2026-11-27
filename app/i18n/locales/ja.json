@@ -916,7 +916,9 @@
       "vibrateOnCompletion": "タイマーが終了した際に、音とは別に短い振動が発生します。ページへのタップと、Androidなどの対応デバイスが必要です。iOSでは利用できません。バックグラウンドアラートは表示されません。",
       "presetRestDesc": "各ラウンドの作業後の休憩時間（0は休憩なし）。",
       "noCustomProtocols": "まだプロトコルは設定されていません。「プロトコルを追加」をクリックして、新しいプロトコルを作成してください。",
-      "showWhatsNew": "プラグインの各バージョンでの変更点を確認します。"
+      "showWhatsNew": "プラグインの各バージョンでの変更点を確認します。",
+      "templateFolder": "テンプレートファイルを含むフォルダへのパス (例: exercise-page.md)。 空欄の場合は、デフォルトで「ワークアウト テンプレート」に設定されます。",
+      "generateDefaultTemplates": "設定されたテンプレートフォルダに、デフォルトのエクササイズページのテンプレートとタグの参照を作成します。これらのファイルは、言語と構造を変更するためにカスタマイズできます。"
     },
     "labels": {
       "csvPath": "CSV形式のログファイルのパス",
@@ -944,7 +946,8 @@
       "weeklyGoal": "週間目標",
       "keepScreenAwake": "タイマーの動作中は画面をオンのままにする",
       "vibrateOnCompletion": "タイマーが終了したときに振動する",
-      "presetRest": "休憩"
+      "presetRest": "休憩",
+      "templateFolder": "テンプレートフォルダのパス"
     },
     "messages": {
       "confirmDeletePreset": "このプリセットを削除してもよろしいですか？",

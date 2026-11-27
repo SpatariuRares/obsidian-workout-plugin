@@ -916,7 +916,9 @@
       "vibrateOnCompletion": "Krátké vibrace po skončení časovače, bez ohledu na zvuk. Vyžaduje stisknutí na stránce a kompatibilní zařízení (např. Android). Není k dispozici pro iOS; bez upozornění na pozadí.",
       "presetRestDesc": "Sekundy odpočinku po každém kole (0 znamená žádný odpočinek).",
       "noCustomProtocols": "Zatím nejsou žádné protokoly. Klikněte na „Přidat protokol“ a vytvořte první.",
-      "showWhatsNew": "Podívejte se, co se změnilo v jednotlivých verzích pluginu."
+      "showWhatsNew": "Podívejte se, co se změnilo v jednotlivých verzích pluginu.",
+      "templateFolder": "Cesta k složce obsahující soubory šablon (např. exercise-page.md). Ve výchozím stavu se nastaví na 'Šablony cvičení', pokud je ponecháno prázdné.",
+      "generateDefaultTemplates": "Vytvořte šablonu stránky pro cvičení a odkaz na referenční tag v adresáři konfigurovaných šablon. Tyto soubory můžete upravit, abyste změnili jazyk a strukturu."
     },
     "labels": {
       "csvPath": "Cesta k souboru záznamů CSV",
@@ -944,7 +946,8 @@
       "weeklyGoal": "Týdenní cíl",
       "keepScreenAwake": "Udržet obrazovku aktivní, zatímco běží časovač",
       "vibrateOnCompletion": "Vibrovat, když časovač skončí",
-      "presetRest": "Odpočinek"
+      "presetRest": "Odpočinek",
+      "templateFolder": "Cesta k adresáři šablon"
     },
     "messages": {
       "confirmDeletePreset": "Opravdu chcete tuto předvolbu smazat?",

@@ -916,7 +916,9 @@
       "presetRestDesc": "Nombre de secondes de repos après le travail de chaque tour (0 pour aucun repos).",
       "noCustomProtocols": "Aucun protocole n'est défini pour le moment. Cliquez sur « Ajouter un protocole » pour en créer un.",
       "weeklyGoal": "Jours d'entraînement par semaine qui maintiennent votre série, dans le résumé du tableau de bord et le calendrier d'entraînement.",
-      "showWhatsNew": "Voir ce qui a changé dans chaque version du plugin."
+      "showWhatsNew": "Voir ce qui a changé dans chaque version du plugin.",
+      "templateFolder": "Chemin vers le dossier contenant les fichiers de modèle (par exemple, exercise-page.md). Par défaut, il s'agit de « Modèles d'entraînement » lorsque ce champ est laissé vide.",
+      "generateDefaultTemplates": "Générez un modèle de page d'exercice par défaut et une référence de balises dans le dossier des modèles configuré. Vous pouvez personnaliser ces fichiers pour modifier la langue et la structure."
     },
     "labels": {
       "csvPath": "Chemin du fichier journal CSV",
@@ -944,7 +946,8 @@
       "keepScreenAwake": "Maintenir l'écran allumé pendant que le minuteur est en cours",
       "vibrateOnCompletion": "Vibrer à la fin d'un minuteur",
       "presetRest": "Repos",
-      "weeklyGoal": "Objectif hebdomadaire"
+      "weeklyGoal": "Objectif hebdomadaire",
+      "templateFolder": "Chemin du dossier des modèles"
     },
     "messages": {
       "confirmDeletePreset": "Êtes-vous sûr de vouloir supprimer ce préréglage ?",

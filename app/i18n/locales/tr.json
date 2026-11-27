@@ -916,7 +916,9 @@
       "vibrateOnCompletion": "Zamanlayıcı bittiğinde, sesten bağımsız olarak kısa bir süre titreşim sağlar. Sayfaya dokunma ve uyumlu bir cihaz (örneğin Android) gerektirir. iOS'ta mevcut değildir; arka planda bildirimler gönderilmez.",
       "presetRestDesc": "Her turun sonunda yapılan dinlenme süresi (0, dinlenme yok anlamına gelir).",
       "noCustomProtocols": "Henüz herhangi bir protokol tanımlanmamış. \"Protokol ekle\" düğmesine tıklayarak bir tane oluşturabilirsiniz.",
-      "showWhatsNew": "Eklentinin her sürümünde neyin değiştiğini görün."
+      "showWhatsNew": "Eklentinin her sürümünde neyin değiştiğini görün.",
+      "templateFolder": "Şablon dosyalarının bulunduğu klasörün yolu (örneğin, exercise-page.md). Boş bırakıldığında varsayılan değer \"Egzersiz Şablonları\"dır.",
+      "generateDefaultTemplates": "Yapılandırılmış şablon klasöründe varsayılan egzersiz sayfa şablonunu ve etiket referansını oluşturun. Bu dosyaları, dil ve yapıyı değiştirmek için özelleştirebilirsiniz."
     },
     "labels": {
       "csvPath": "CSV kayıt dosyası yolu",
@@ -944,7 +946,8 @@
       "weeklyGoal": "Haftalık hedef",
       "keepScreenAwake": "Zamanlayıcı çalışırken ekranı açık tut",
       "vibrateOnCompletion": "Zamanlayıcı bittiğinde titreşim",
-      "presetRest": "Dinlenme"
+      "presetRest": "Dinlenme",
+      "templateFolder": "Şablonlar klasör yolu"
     },
     "messages": {
       "confirmDeletePreset": "Bu ön ayarı gerçekten silmek istiyor musunuz?",

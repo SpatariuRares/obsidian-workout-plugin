@@ -916,7 +916,9 @@
       "vibrateOnCompletion": "Vibrar brevemente cuando un temporizador finalice, independientemente del sonido. Requiere tocar la página y un dispositivo compatible (como Android). No disponible en iOS; sin notificaciones en segundo plano.",
       "presetRestDesc": "Segundos de descanso después del trabajo de cada ronda (0 para no hacer ninguna pausa).",
       "noCustomProtocols": "Aún no hay protocolos. Haz clic en «Añadir protocolo» para crear uno.",
-      "showWhatsNew": "Consulta qué ha cambiado en cada versión del plugin."
+      "showWhatsNew": "Consulta qué ha cambiado en cada versión del plugin.",
+      "templateFolder": "Ruta al directorio que contiene los archivos de plantilla (por ejemplo, exercise-page.md). Por defecto, se establece en 'Plantillas de Ejercicios' si se deja vacío.",
+      "generateDefaultTemplates": "Genera la plantilla predeterminada de página de ejercicios y la referencia de etiquetas en la carpeta de plantillas configurada. Puedes personalizar estos archivos para cambiar el idioma y la estructura."
     },
     "labels": {
       "csvPath": "Ruta del archivo de registro CSV",
@@ -944,7 +946,8 @@
       "weeklyGoal": "Objetivo semanal",
       "keepScreenAwake": "Mantener la pantalla encendida mientras se ejecuta un temporizador",
       "vibrateOnCompletion": "Vibrar al finalizar un temporizador",
-      "presetRest": "Descanso"
+      "presetRest": "Descanso",
+      "templateFolder": "Ruta a la carpeta de plantillas"
     },
     "messages": {
       "confirmDeletePreset": "¿Seguro que quieres eliminar este preajuste?",

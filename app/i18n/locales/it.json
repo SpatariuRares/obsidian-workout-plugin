@@ -916,7 +916,9 @@
       "vibrateOnCompletion": "Vibra brevemente quando un timer termina, indipendentemente dall'emissione di suoni. Richiede un tocco sulla pagina e un dispositivo compatibile (come Android). Non disponibile su iOS; nessuna notifica in background.",
       "presetRestDesc": "Secondi di riposo dopo il lavoro di ogni round (0 per nessun riposo).",
       "noCustomProtocols": "Nessun protocollo al momento. Clicca su «Aggiungi protocollo» per crearne uno.",
-      "showWhatsNew": "Scopri cosa è cambiato in ogni versione del plugin."
+      "showWhatsNew": "Scopri cosa è cambiato in ogni versione del plugin.",
+      "templateFolder": "Percorso alla cartella contenente i file del modello (ad esempio, exercise-page.md). Di default, utilizza \"Modelli di allenamento\" se lasciato vuoto.",
+      "generateDefaultTemplates": "Genera il modello predefinito per la pagina degli esercizi e la sezione di riferimento dei tag nella cartella dei modelli configurata. È possibile personalizzare questi file per modificare la lingua e la struttura."
     },
     "labels": {
       "csvPath": "Percorso file CSV registro",
@@ -944,7 +946,8 @@
       "weeklyGoal": "Obiettivo settimanale",
       "keepScreenAwake": "Mantieni lo schermo attivo durante l'esecuzione di un timer",
       "vibrateOnCompletion": "Vibra al completamento del timer",
-      "presetRest": "Riposo"
+      "presetRest": "Riposo",
+      "templateFolder": "Percorso della cartella dei modelli"
     },
     "messages": {
       "confirmDeletePreset": "Sei sicuro di voler eliminare questo preset?",

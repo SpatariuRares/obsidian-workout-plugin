@@ -916,7 +916,9 @@
       "vibrateOnCompletion": "Vibron shkurtimisht kur mbaron një timer, pavarësisht nga zëri. Kërkon një prekje në faqe dhe një pajisje të mbështetur (si Android). Nuk është i disponueshëm në iOS dhe nuk ka njoftime kur aplikacioni është në sfond.",
       "presetRestDesc": "Sekondat e pushimit pas punës së çdo raunde (0 për pa pushim).",
       "noCustomProtocols": "Aktualisht nuk ka protokole. Klikoni 'Shto protokol' për të krijuar një.",
-      "showWhatsNew": "Shihni çfarë ka ndryshuar në çdo version të pluginit."
+      "showWhatsNew": "Shihni çfarë ka ndryshuar në çdo version të pluginit.",
+      "templateFolder": "Rruga tek dosja që përmban faillët e template-it (p.sh., exercise-page.md). Vlera e parë është 'Workout Templates' kur lëvizë bosh.",
+      "generateDefaultTemplates": "Krijo një temë e paracaktuar për faqën e stilit dhe referencë të etiketave në folderin e temave të konfiguruar. Ju mund të personalizoni këto faqe për të ndryshuar gjuhën dhe strukturën."
     },
     "labels": {
       "csvPath": "Shtegu i skedarit të regjistrit CSV",
@@ -944,7 +946,8 @@
       "weeklyGoal": "Objektivi javor",
       "keepScreenAwake": "Mbaje ekranin aktiv ndërsa punon një timer",
       "vibrateOnCompletion": "Vibrim kur një timer përfundojë",
-      "presetRest": "Pushim"
+      "presetRest": "Pushim",
+      "templateFolder": "Rruga tek dosja me templat"
     },
     "messages": {
       "confirmDeletePreset": "Jeni të sigurt që doni ta fshini këtë paracaktim?",

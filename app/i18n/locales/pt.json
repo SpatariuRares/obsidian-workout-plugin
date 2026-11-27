@@ -916,7 +916,9 @@
       "vibrateOnCompletion": "Vibre brevemente quando um temporizador terminar, independentemente do som. Requer um toque na página e um dispositivo compatível (como o Android). Não disponível no iOS; sem notificações em segundo plano.",
       "presetRestDesc": "Segundos de descanso após o trabalho de cada ronda (0 para não haver descanso).",
       "noCustomProtocols": "Ainda não existem protocolos definidos. Clique em \"Adicionar protocolo\" para criar um.",
-      "showWhatsNew": "Veja o que mudou em cada versão do plugin."
+      "showWhatsNew": "Veja o que mudou em cada versão do plugin.",
+      "templateFolder": "Caminho para a pasta que contém os arquivos de modelo (por exemplo, exercise-page.md). O valor padrão é 'Modelos de Treino' quando deixado em branco.",
+      "generateDefaultTemplates": "Gere o modelo padrão da página de exercícios e a referência de etiquetas na pasta de modelos configurada. Você pode personalizar estes arquivos para alterar o idioma e a estrutura."
     },
     "labels": {
       "csvPath": "Caminho do ficheiro de registo CSV",
@@ -944,7 +946,8 @@
       "weeklyGoal": "Objetivo semanal",
       "keepScreenAwake": "Manter o ecrã ativo enquanto o temporizador estiver em execução",
       "vibrateOnCompletion": "Vibrar ao terminar um temporizador",
-      "presetRest": "Descanso"
+      "presetRest": "Descanso",
+      "templateFolder": "Caminho da pasta de modelos"
     },
     "messages": {
       "confirmDeletePreset": "Tem a certeza de que pretende eliminar esta predefinição?",

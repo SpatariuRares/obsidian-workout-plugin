@@ -150,6 +150,73 @@ describe("setRows", () => {
     expect(noPreviousWarmups[0]).toMatchObject({ warmup: true, placeholders: {} });
     expect(noPreviousWarmups[1]).toMatchObject({ warmup: false, placeholders: { reps: "8", weight: "100" } });
   });
+
+  it("applies block protocol to working rows for built-in and normalized custom protocols, falling back to standard when unset", () => {
+    for (const [raw, expected] of [
+      ["drop_set", "drop_set"],
+      ["myo_reps", "myo_reps"],
+      ["rest_pause", "rest_pause"],
+      ["twentyone", "twentyone"],
+      ["  Custom_Cluster  ", "custom_cluster"],
+    ] as const) {
+      const rows = setRows(input({ sets: 2, protocol: raw }));
+      expect(rows.map((r) => rowProtocol(r, emptyDraft()))).toEqual([expected, expected]);
+    }
+
+    const unset = setRows(input({ sets: 2 }));
+    expect(unset.map((r) => rowProtocol(r, emptyDraft()))).toEqual(["standard", "standard"]);
+    const standard = setRows(input({ sets: 2, protocol: "Standard" }));
+    expect(standard.map((r) => r.suggestedProtocol)).toEqual([undefined, undefined]);
+    expect(standard.map((r) => rowProtocol(r, emptyDraft()))).toEqual(["standard", "standard"]);
+  });
+
+  it("enforces manual > last time > block > standard precedence for working rows and keeps warm-ups as warmup", () => {
+    const previous = [
+      set(40, 10, { protocol: "warmup" }),
+      set(80, 10, { protocol: "myo_reps" }),
+      set(80, 8, { protocol: "standard" }),
+    ];
+    const rows = setRows(
+      input({
+        previous,
+        warmups: 2,
+        sets: 3,
+        protocol: "drop_set",
+      }),
+    );
+
+    expect(rows.map((r) => ({ warmup: !!r.warmup, protocol: rowProtocol(r, emptyDraft()) }))).toEqual([
+      { warmup: true, protocol: "warmup" },
+      { warmup: true, protocol: "warmup" },
+      { warmup: false, protocol: "myo_reps" },
+      { warmup: false, protocol: "drop_set" },
+      { warmup: false, protocol: "drop_set" },
+    ]);
+
+    // Manual pick overrides both last time's non-standard protocol and block protocol
+    expect(rowProtocol(rows[2], { ...emptyDraft(), protocol: "rest_pause" })).toBe("rest_pause");
+    expect(rowProtocol(rows[3], { ...emptyDraft(), protocol: "standard" })).toBe("standard");
+  });
+
+  it("does not invent a 21 reps placeholder when protocol is twentyone and keeps working rows off warmup when block protocol is warmup", () => {
+    const twentyoneRows = setRows(input({ sets: 1, protocol: "twentyone" }));
+    expect(twentyoneRows[0].placeholders).toEqual({});
+    expect(rowProtocol(twentyoneRows[0], emptyDraft())).toBe("twentyone");
+
+    const warmupBlockRows = setRows(
+      input({
+        warmups: 1,
+        sets: 2,
+        previous: [set(80, 8, { protocol: "drop_set" })],
+        protocol: "warmup",
+      }),
+    );
+    expect(warmupBlockRows.map((r) => rowProtocol(r, emptyDraft()))).toEqual([
+      "warmup",
+      "drop_set",
+      "standard",
+    ]);
+  });
 });
 
 describe("rowToFormData", () => {

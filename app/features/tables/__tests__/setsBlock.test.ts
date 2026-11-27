@@ -1,4 +1,5 @@
 import { blockRest, restParams, setsBlock } from "@app/features/tables/setsBlock";
+import { tableBlock } from "@app/features/tables/tableBlock";
 
 describe("the rest timer written in a workout-sets block", () => {
   it("reads rest and timer.* back as the timer they write", () => {
@@ -57,5 +58,31 @@ describe("the rest timer written in a workout-sets block", () => {
     });
 
     expect(setsBlock.parse("warmups: -1").invalidKeys).toEqual(["warmups"]);
+  });
+
+  it("round-trips built-in and custom protocol ids through parse, serialize, and patch without affecting tableBlock", () => {
+    for (const id of ["drop_set", "myo_reps", "rest_pause", "twentyone", "custom_cluster"]) {
+      const { params, errors } = setsBlock.parse(`exercise: Bench\nsets: 3\nprotocol: ${id}`);
+      expect(errors).toEqual([]);
+      expect(params).toEqual({ exercise: "Bench", sets: 3, protocol: id });
+
+      const serialized = setsBlock.serialize({ exercise: "Bench", sets: 3, protocol: id });
+      const body = serialized.replace(/^```workout-sets\n|\n```$/g, "");
+      expect(setsBlock.parse(body).params).toEqual({ exercise: "Bench", sets: 3, protocol: id });
+    }
+
+    const patched = setsBlock.patch("exercise: Bench\nsets: 3", { protocol: "myo_reps" });
+    expect(setsBlock.parse(patched).params).toEqual({
+      exercise: "Bench",
+      sets: 3,
+      protocol: "myo_reps",
+    });
+    expect(setsBlock.parse(setsBlock.patch(patched, { protocol: undefined })).params).toEqual({
+      exercise: "Bench",
+      sets: 3,
+    });
+    expect(tableBlock.parse("exercise: Bench\nprotocol: drop_set").params).toEqual({
+      exercise: "Bench",
+    });
   });
 });

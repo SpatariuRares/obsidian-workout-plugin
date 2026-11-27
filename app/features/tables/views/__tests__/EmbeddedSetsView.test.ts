@@ -819,4 +819,113 @@ describe("EmbeddedSetsView", () => {
       expect(inputsOf(afterUndo[1]).map((i) => i.value)).toEqual(["", "82.5"]);
     });
   });
+
+  describe("block protocol", () => {
+    beforeAll(() => LocalizationService.initialize({} as never));
+
+    const badgeText = (row: HTMLElement) =>
+      row.querySelector(".workout-sets-number .workout-protocol-badge")?.textContent;
+
+    it("renders protocol badges and logs the block protocol on tick without opening chevron", async () => {
+      for (const [protocol, expectedBadge] of [
+        ["drop_set", "DS"],
+        ["myo_reps", "MYO"],
+        ["rest_pause", "RP"],
+        ["twentyone", "21"],
+      ] as const) {
+        const { el, added } = setup([], {
+          exercise: "Bench Press",
+          sets: 2,
+          targetReps: 8,
+          targetWeight: 80,
+          protocol,
+        });
+        await flush();
+
+        const rows = rowsOf(el);
+        expect(rows.map(badgeText)).toEqual([expectedBadge, expectedBadge]);
+
+        check(rows[0]).click();
+        await flush();
+        expect(added[0].protocol).toBe(protocol);
+      }
+    });
+
+    it("resolves and logs custom protocols from ProtocolCatalog", async () => {
+      const { el, plugin, added } = setup([], {
+        exercise: "Bench Press",
+        sets: 1,
+        targetReps: 8,
+        targetWeight: 80,
+        protocol: "  Cluster_5  ",
+      });
+      plugin.settings.customProtocols = [
+        ...plugin.settings.customProtocols,
+        { id: "cluster_5", name: "Cluster 5", abbreviation: "C5", color: "#14b8a6" },
+      ];
+      await flush();
+
+      const rows = rowsOf(el);
+      const badge = rows[0].querySelector(".workout-sets-number .workout-protocol-badge");
+      expect(badge?.textContent).toBe("C5");
+      expect(badge?.classList.contains("workout-protocol-badge-custom")).toBe(true);
+
+      check(rows[0]).click();
+      await flush();
+      expect(added[0].protocol).toBe("cluster_5");
+    });
+
+    it("enforces manual > last time > block > standard precedence, preserves warm-ups, and avoids 21 reps fallback", async () => {
+      const { el, added } = setup(
+        [
+          set(40, 10, "2020-01-01", { protocol: "warmup" }),
+          set(80, 10, "2020-01-01", { protocol: "myo_reps" }),
+          set(80, 8, "2020-01-01", { protocol: "standard" }),
+        ],
+        {
+          exercise: "Bench Press",
+          warmups: 1,
+          sets: 3,
+          protocol: "drop_set",
+        },
+      );
+      await flush();
+
+      expect(rowsOf(el).map(badgeText)).toEqual(["WU", "MYO", "DS", "DS"]);
+
+      // Manual pick ("standard") overrides block protocol ("drop_set") on Working 2
+      rowsOf(el)[2].querySelector<HTMLButtonElement>(".workout-disclosure-toggle")!.click();
+      await flush();
+      const standardChip = rowsOf(el)[2].querySelectorAll<HTMLButtonElement>(".workout-chip")[0];
+      standardChip.click();
+      await flush();
+      expect(badgeText(rowsOf(el)[2])).toBeUndefined();
+
+      check(rowsOf(el)[0]).click();
+      await flush();
+      check(rowsOf(el)[1]).click();
+      await flush();
+      check(rowsOf(el)[2]).click();
+      await flush();
+      check(rowsOf(el)[3]).click();
+      await flush();
+
+      expect(added.map((entry) => entry.protocol)).toEqual([
+        "warmup",
+        "myo_reps",
+        "standard",
+        "drop_set",
+      ]);
+
+      // twentyone has no 21 reps placeholder fallback
+      const twentyOne = setup([], {
+        exercise: "Bicep Curl",
+        sets: 1,
+        protocol: "twentyone",
+      });
+      await flush();
+      expect(badgeText(rowsOf(twentyOne.el)[0])).toBe("21");
+      expect(inputsOf(rowsOf(twentyOne.el)[0]).map((i) => i.placeholder)).toEqual(["", ""]);
+    });
+  });
 });

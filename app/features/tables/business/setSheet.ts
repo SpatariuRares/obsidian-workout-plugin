@@ -64,7 +64,7 @@ export interface SetRow {
   logged?: WorkoutLogData;
   /** Grey hint per field key: the same set last time, else the target (working only) */
   placeholders: Record<string, string>;
-  /** Protocol of the same set last time (working), or warmup (warm-up rows) */
+  /** Protocol of the same set last time (working), else the block's working protocol, or warmup (warm-up rows) */
   suggestedProtocol?: string;
 }
 
@@ -79,6 +79,8 @@ export interface SheetInput {
   sets?: number;
   /** Planned warm-up sets (the block's `warmups`) */
   warmups?: number;
+  /** Default protocol for working sets (`warmup`/`standard`/unset do not override working rows) */
+  protocol?: string;
   targetReps?: number;
   targetWeight?: number;
   /** Working rows to fill in, beyond the plan, the user added */
@@ -122,6 +124,11 @@ export function setRows(input: SheetInput): SetRow[] {
     };
   });
 
+  const blockProtocol =
+    input.protocol && !isStandardProtocol(input.protocol) && !isWarmupProtocol(input.protocol)
+      ? protocolId(input.protocol)
+      : undefined;
+
   const workingRows: SetRow[] = Array.from({ length: workingTotal }, (_, index) => {
     const sameSet = previousWorking[index];
     return {
@@ -134,7 +141,7 @@ export function setRows(input: SheetInput): SetRow[] {
         true,
       ),
       suggestedProtocol:
-        sameSet && !isStandardProtocol(sameSet.protocol) ? protocolId(sameSet.protocol) : undefined,
+        sameSet && !isStandardProtocol(sameSet.protocol) ? protocolId(sameSet.protocol) : blockProtocol,
     };
   });
 

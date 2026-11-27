@@ -51,7 +51,7 @@ describe("versionsSince", () => {
 describe("release notes in en.json", () => {
   it("lists the bundled versions newest first, each with its notes", () => {
     const versions = releaseVersions();
-    expect(versions).toContain("3.0.0");
+    expect(versions).toContain("3.1.0");
     expect(versions.length).toBeLessThanOrEqual(MAX_RELEASES);
     expect([...versions].sort((a, b) => compareVersions(b, a))).toEqual(
       versions,
@@ -68,22 +68,22 @@ describe("release notes in en.json", () => {
 describe("unseenReleaseNotes", () => {
   it("shows the current version's notes after an update and records it", async () => {
     const { plugin, saveSettings } = makePlugin("2.11.0");
-    const releases = await unseenReleaseNotes(plugin, "3.0.0");
-    expect(releases.map((r) => r.version)).toEqual(["3.0.0"]);
-    expect(plugin.settings.lastSeenVersion).toBe("3.0.0");
+    const releases = await unseenReleaseNotes(plugin, "3.1.0");
+    expect(releases.map((r) => r.version)).toEqual(["3.1.0"]);
+    expect(plugin.settings.lastSeenVersion).toBe("3.1.0");
     expect(saveSettings).toHaveBeenCalled();
   });
   it("shows the installed version's notes on a fresh install", async () => {
     const { plugin } = makePlugin();
-    const releases = await unseenReleaseNotes(plugin, "3.0.0");
-    expect(releases.map((r) => r.version)).toEqual(["3.0.0"]);
-    expect(plugin.settings.lastSeenVersion).toBe("3.0.0");
+    const releases = await unseenReleaseNotes(plugin, "3.1.0");
+    expect(releases.map((r) => r.version)).toEqual(["3.1.0"]);
+    expect(plugin.settings.lastSeenVersion).toBe("3.1.0");
   });
   it("shows nothing on later loads of the same version", async () => {
     const { plugin, saveSettings } = makePlugin();
-    await unseenReleaseNotes(plugin, "3.0.0");
+    await unseenReleaseNotes(plugin, "3.1.0");
     saveSettings.mockClear();
-    expect(await unseenReleaseNotes(plugin, "3.0.0")).toEqual([]);
+    expect(await unseenReleaseNotes(plugin, "3.1.0")).toEqual([]);
     expect(saveSettings).not.toHaveBeenCalled();
   });
 });

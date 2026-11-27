@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | Unieke ID van de rij (milliseconden)        |
 | `notes`, `protocol`        | Vrije tekst en trainingstechniek            |
 
-Oefeningstypen met eigen velden (`duration`, `distance`, `heartRate`, of je `parameters`) voegen kolommen toe aan het eind. De laatste kolom, `weightUnit`, is `kg` of `lb`: de eenheid van het `weight` en `volume` van die rij. Een lege waarde betekent de eenheid uit de instellingen.
+Oefeningstypen met eigen velden (`duration`, `distance`, `heartRate`, of je `parameters`) voegen kolommen toe aan het eind. `blockId` bevat de `id` van het `workout-sets`-blok waarin een serie is aangevinkt, zodat twee blokken van dezelfde oefening in één training hun eigen series houden; het is leeg voor series die elders zijn gelogd. De laatste kolom, `weightUnit`, is `kg` of `lb`: de eenheid van het `weight` en `volume` van die rij. Een lege waarde betekent de eenheid uit de instellingen.
 
 Als je het bestand met de hand bewerkt, behoud dan de kopregel en zet elke waarde die een komma, aanhalingsteken of regeleinde bevat tussen dubbele aanhalingstekens. Notities die beginnen met `=`, `+`, `-` of `@` worden opgeslagen met een voorloopse `'`, zodat spreadsheets ze niet als formules uitvoeren; de plugin verbergt die weer.
 

@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | ID único de la fila (milisegundos)   |
 | `notes`, `protocol`        | Texto libre y técnica de entrenamiento |
 
-Los tipos de ejercicio con campos propios (`duration`, `distance`, `heartRate` o tus `parameters`) añaden columnas al final. La última columna, `weightUnit`, es `kg` o `lb`: la unidad del `weight` y el `volume` de esa fila. Un valor vacío significa la unidad de la configuración.
+Los tipos de ejercicio con campos propios (`duration`, `distance`, `heartRate` o tus `parameters`) añaden columnas al final. `blockId` guarda el `id` del bloque `workout-sets` en el que se marcó una serie, para que dos bloques del mismo ejercicio en un entrenamiento conserven cada uno sus series; está vacío en las series registradas desde otro lugar. La última columna, `weightUnit`, es `kg` o `lb`: la unidad del `weight` y el `volume` de esa fila. Un valor vacío significa la unidad de la configuración.
 
 Si editas el archivo a mano, conserva la fila de encabezados y encierra entre comillas dobles cualquier valor que contenga una coma, unas comillas o un salto de línea. Las notas que empiezan por `=`, `+`, `-` o `@` se guardan con un `'` inicial para que las hojas de cálculo no las ejecuten como fórmulas; el plugin lo oculta de nuevo.
 

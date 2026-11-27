@@ -15,6 +15,7 @@ import {
   type FieldValue,
 } from "@app/services/exercise/ExerciseFields";
 import { trainingDay } from "@app/services/history/TrainingHistory";
+import { normalizeExercise } from "@app/services/events/WorkoutEventTypes";
 
 const DEFAULT_ORIGIN = "[[Workout Charts Plugin]]";
 
@@ -149,7 +150,8 @@ export interface ToEntryContext {
 /**
  * The set the form saves. A new set is dated now. An edited set keeps its
  * exact timestamp unless the user picked another day; then it moves to that
- * day at the same local time.
+ * day at the same local time. An edited set keeps the `workout-sets` block
+ * it was logged from while it stays the same exercise.
  */
 export function toEntry(
   data: LogFormData,
@@ -166,7 +168,15 @@ export function toEntry(
     notes: data.notes || undefined,
     protocol: data.protocol || WorkoutProtocol.STANDARD,
     customFields: data.customFields,
+    block: data.block ?? keptBlock(data, original),
   };
+}
+
+function keptBlock(data: LogFormData, original: WorkoutLogData | undefined): string | undefined {
+  if (!original?.block) return undefined;
+  return normalizeExercise(original.exercise) === normalizeExercise(data.exercise)
+    ? original.block
+    : undefined;
 }
 
 function entryDate(

@@ -314,6 +314,36 @@ describe("WorkoutLogFile", () => {
       expect(Notice).not.toHaveBeenCalled();
     });
 
+    it("writes the block a set was logged from before the unit, and reads it back", async () => {
+      jest.spyOn(Date, "now").mockReturnValue(5000);
+      const { logFile, storage } = setup(csv(`${HEADER},duration`));
+
+      await logFile.add({ ...squat, block: "cg1cd628d87a74" });
+      await logFile.add({ ...squat, customFields: { duration: 30 } });
+
+      expect(lines(storage)).toEqual([
+        `${HEADER},duration,blockId,weightUnit`,
+        "2026-02-01,Squat,5,100,500,,Leg Day,5000,,standard,,cg1cd628d87a74,kg",
+        "2026-02-01,Squat,5,100,500,,Leg Day,5000,,standard,30,,kg",
+      ]);
+      const [first, second] = await logFile.read();
+      expect(first.block).toBe("cg1cd628d87a74");
+      expect(first.customFields).toBeUndefined();
+      expect(second.block).toBeUndefined();
+      jest.restoreAllMocks();
+    });
+
+    it("keeps a set's block when it is updated", async () => {
+      const { logFile, storage } = setup(
+        csv(`${HEADER},blockId,weightUnit`, "2026-02-01,Squat,5,80,400,,Leg Day,1000,,standard,b1,kg"),
+      );
+      const [log] = await logFile.read();
+
+      await logFile.update(log, { ...squat, weight: 90, block: log.block });
+
+      expect(lines(storage)[1]).toBe("2026-02-01,Squat,5,90,450,,Leg Day,1000,,standard,b1,kg");
+    });
+
     it("keeps the unit the set was entered in", async () => {
       const { logFile } = setup(csv(HEADER), "kg");
 

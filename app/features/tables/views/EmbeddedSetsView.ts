@@ -216,8 +216,11 @@ export class SetSheet extends MarkdownRenderChild {
 
       const today = localDay(new Date());
       const history = new TrainingHistory(logs);
-      const todaysSets = history.setsOn(exercise, today, { workout: this.workout });
-      const previous = history.previousDay(exercise, today);
+      // With an id, the block keeps its own sets: two blocks of the same
+      // exercise in one workout don't show each other's
+      const block = this.params.id;
+      const todaysSets = history.setsOn(exercise, today, { workout: this.workout, block });
+      const previous = history.previousDay(exercise, today, { block });
       const input = {
         parameters,
         today: todaysSets,
@@ -627,6 +630,7 @@ export class SetSheet extends MarkdownRenderChild {
       exercise,
       workout: this.workout,
       parameters: drawn.parameters,
+      block: this.params.id,
     });
     for (const field of fields) field.setError();
     el.querySelector(":scope > .workout-field-error")?.remove();

@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | 该行的唯一 ID（毫秒）        |
 | `notes`, `protocol`        | 自由文本和训练方法           |
 
-带有自身字段的训练动作类型（`duration`、`distance`、`heartRate`，或你的 `parameters`）会在末尾添加列。最后一列 `weightUnit` 为 `kg` 或 `lb`，即该行 `weight` 和 `volume` 的单位。留空则表示使用设置中的单位。
+带有自身字段的训练动作类型（`duration`、`distance`、`heartRate`，或你的 `parameters`）会在末尾添加列。`blockId` 保存你勾选该组所在的 `workout-sets` 代码块的 `id`，使同一次训练中两个相同训练动作的代码块各自保留自己的组；在其他地方记录的组则为空。最后一列 `weightUnit` 为 `kg` 或 `lb`，即该行 `weight` 和 `volume` 的单位。留空则表示使用设置中的单位。
 
 如果你手动编辑该文件，请保留标题行，并将任何包含逗号、引号或换行的值用双引号括起来。以 `=`、`+`、`-` 或 `@` 开头的备注会以前导 `'` 存储，以免电子表格将其当作公式运行；插件会再将其隐藏。
 

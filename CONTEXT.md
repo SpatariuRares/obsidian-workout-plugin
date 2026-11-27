@@ -64,8 +64,8 @@ timer.type: countdown # the rest timer's other options: timer.preset, timer.type
 
 **Set sheet** rules:
 
-- **Rows**: today's sets of the exercise in this workout come first, ticked; then rows to fill in up to `sets`. "Add set" adds one more row for this view only.
-- **Hints** (input placeholders): the same set number on the last earlier day the exercise was done (any workout), the last set of that day past its end, else the targets. Ticking a row with an empty field logs its hint, so "same as last time" is one tap.
+- **Rows**: today's sets of the exercise in this workout come first, ticked; then rows to fill in up to `sets`. A block with an `id` shows only the sets ticked in it (plus those logged from no block), so two blocks of the same exercise in one workout keep theirs apart. "Add set" adds one more row for this view only.
+- **Hints** (input placeholders): the same set number on the last earlier day the block was logged (before its first set: the day the exercise was last done, any workout), the last set of that day past its end, else the targets. Ticking a row with an empty field logs its hint, so "same as last time" is one tap.
 - **Protocol and notes**: the arrow opens a row's protocol chips (the settings list) and notes. A row starts with the protocol of the same set last time when that was not standard (a warm-up stays a warm-up). On a logged row they change the set in the log.
 - **Rest**: a rest timer at the top starts by itself when a set is ticked (not after the last row to fill in). The block can carry every option of that timer (`rest` is its length; `timer.*` the rest), so a day's note needs no `workout-timer`: ⋮ → "Edit rest timer" opens the timer form and writes them into the block. Without them it runs on the section's `workout-timer`, so both show one countdown.
 - **Ticking** logs the set at once (in the settings unit, origin = the note). Unticking a logged set deletes it and puts its values back in the first row to fill in; Undo (8 seconds) puts the very set back. What is typed in rows not ticked yet is kept while the note is open, never stored.
@@ -173,11 +173,11 @@ Standard columns:
 date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 ```
 
-Custom columns added dynamically per exercise type (duration, distance, heartRate, pace, the fields of a type of your own). Stored in `customFields`. `weightUnit` (`kg`/`lb`, empty = the settings unit) is always the last column: a set keeps the unit it was entered in and is converted to the settings unit when read.
+Custom columns added dynamically per exercise type (duration, distance, heartRate, pace, the fields of a type of your own). Stored in `customFields`. `blockId` (after the custom columns) is the `id` of the `workout-sets` block the set was logged from, empty for sets logged elsewhere. `weightUnit` (`kg`/`lb`, empty = the settings unit) is always the last column: a set keeps the unit it was entered in and is converted to the settings unit when read.
 
 **Workout log file** (`WorkoutLogFile`): the module that owns this CSV. It is the only place that knows the header, the column order, the row ⇄ entry conversion (both directions, including the entered weight unit) and volume. Everything else reads entries from it or asks it to add/update/delete/rename.
 
-**Column order rule**: standard columns in fixed order, then custom columns in the order the existing header has them, new custom columns appended, `weightUnit` always last. A column already in the header is never dropped, even when every row leaves it empty.
+**Column order rule**: standard columns in fixed order, then custom columns in the order the existing header has them, new custom columns appended, then `blockId`, `weightUnit` always last. A column already in the header is never dropped, even when every row leaves it empty.
 
 **Import**: a Strong or Hevy CSV export is read into sets (unit kept, timestamps spread over the session), sets already in the log are dropped, and the rest is written in one rewrite after a backup of the log.
 

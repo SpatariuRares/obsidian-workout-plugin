@@ -388,7 +388,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | その行の一意の ID（ミリ秒）               |
 | `notes`、`protocol`        | 自由記述のメモとトレーニング技法          |
 
-独自のフィールドを持つエクササイズの種類（`duration`、`distance`、`heartRate`、または `parameters` で定義したもの）は、末尾に列を追加します。最後の列 `weightUnit` は `kg` または `lb` です。その行の `weight` と `volume` の単位を示します。空の場合は、設定の単位になります。
+独自のフィールドを持つエクササイズの種類（`duration`、`distance`、`heartRate`、または `parameters` で定義したもの）は、末尾に列を追加します。`blockId` には、セットをチェックした `workout-sets` ブロックの `id` が入ります。これにより、同じワークアウト内で同じエクササイズの 2 つのブロックが、それぞれ自分のセットを保持します。ほかの場所で記録したセットでは空になります。最後の列 `weightUnit` は `kg` または `lb` です。その行の `weight` と `volume` の単位を示します。空の場合は、設定の単位になります。
 
 ファイルを手で編集する場合は、ヘッダー行を残し、カンマ、引用符、改行を含む値は二重引用符で囲んでください。`=`、`+`、`-`、`@` で始まるメモは、スプレッドシートで数式として扱われないように、先頭に `'` を付けて保存されます。プラグインは、その `'` を表示しないように隠します。
 

@@ -1260,6 +1260,12 @@
       "v3_1_0": "**What's new, in the plugin.** When you install or update the plugin, it shows what changed, once. Open it again any time with **Show what's new** in the command palette, or **Show changelog** under Settings → Workout Planner → Getting started.\n\n**Workout sets for everyone.** The `workout-sets` block is no longer a beta feature: it works without turning anything on, and **Insert workout sets** is always in the command palette."
     }
   },
+  "createExercisePageWizard": {
+    "steps": {
+      "nameAndType": "Name and type",
+      "musclesAndFolder": "Muscles and folder"
+    }
+  },
   "wizard": {
     "back": "Back",
     "next": "Next",
@@ -1275,6 +1281,13 @@
     },
     "table": {
       "planUnavailable": "Progressive overload targets only apply to a table of one exercise. Pick a specific exercise or exercise and workout to set them."
+    },
+    "chart": {
+      "steps": {
+        "chartType": "Chart type",
+        "data": "Data",
+        "display": "Display"
+      }
     }
   }
 }

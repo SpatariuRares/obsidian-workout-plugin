@@ -873,7 +873,31 @@
     "rest": "休憩",
     "rounds": "ラウンド数",
     "work": "作業",
-    "workout": "ワークアウト（任意）"
+    "workout": "ワークアウト（任意）",
+    "wizard": {
+      "exercises": "エクササイズ",
+      "exerciseSlot": "エクササイズ {letter}",
+      "chooseExerciseSlot": "エクササイズを選択してください {letter}",
+      "moveExerciseUp": "エクササイズ {letter} を上に移動する",
+      "moveExerciseDown": "{letter} を下に移動する",
+      "removeExercise": "エクササイズを削除する {letter}",
+      "addExercise": "エクササイズを追加",
+      "groupLabel": {
+        "superset": "Superset · {count}",
+        "triset": "トライセット · {count}",
+        "giantSet": "巨大セット · {count}"
+      },
+      "warmupSets": "ウォーミングアップセット",
+      "warmupRounds": "ウォーミングアップラウンド",
+      "warmupHelper": "作業セットと休憩タイマーから除外。",
+      "supersetTargetsNote": "過去の値を1つのエクササイズで確認することで、関連する情報を把握できます。",
+      "restBetweenLabel": "運動間の休憩",
+      "restRoundLabel": "休憩時間",
+      "restRoundFallbackHelper": "未設定: 練習リストから {duration} を使用",
+      "rhythmLabel": "ラウンドのタイミングパターン",
+      "rhythmNextRound": "次のラウンド",
+      "rhythmNextRoundNoTimer": "次のラウンド（タイマーなし）"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "次へ",
     "rest": "休憩",
     "done": "ワークアウト完了: 今日の記録は{sets}セットです。",
-    "empty": "このノートにエクササイズを持つ `workout-log` ブロックまたは `workout-sets` ブロックを追加すると、セッションとして進められます。"
+    "empty": "このノートにエクササイズを持つ `workout-log` ブロックまたは `workout-sets` ブロックを追加すると、セッションとして進められます。",
+    "roundOf": "ラウンド {round} の {rounds}",
+    "roundNumber": "ラウンド {round}",
+    "roundExerciseOf": "{current}回目における{total}のトレーニング"
   },
   "sets": {
     "addSet": "セットを追加",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "セクションのタイマー",
       "restValue": "{seconds}個を、各セットごとに",
       "workoutDefault": "{note} (このメモ)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds}ラウンド",
+    "round": "ラウンド {round}",
+    "warmupRound": "ウォーミングアップ {round}",
+    "warmupNumber": "W{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "ラウンドを追加",
+    "removeRound": "ラウンドを削除する"
   },
   "whatsNew": {
     "title": "新機能",

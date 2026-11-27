@@ -873,7 +873,31 @@
     "rest": "Odpoczynek",
     "rounds": "Rundy",
     "work": "Praca",
-    "workout": "Trening (opcjonalnie)"
+    "workout": "Trening (opcjonalnie)",
+    "wizard": {
+      "exercises": "Ćwiczenia",
+      "exerciseSlot": "Ćwiczenie {letter}",
+      "chooseExerciseSlot": "Wybierz ćwiczenie {letter}",
+      "moveExerciseUp": "Przenieś ćwiczenie {letter} w górę",
+      "moveExerciseDown": "Przesuń ćwiczenie {letter} w dół",
+      "removeExercise": "Usuń ćwiczenie {letter}",
+      "addExercise": "Dodaj ćwiczenie",
+      "groupLabel": {
+        "superset": "Superset · {count}",
+        "triset": "Triset · {count}",
+        "giantSet": "Duża kolekcja · {count}"
+      },
+      "warmupSets": "Zestawy rozgrzewkowe",
+      "warmupRounds": "Rundy rozgrzewkowe",
+      "warmupHelper": "Wyłączone dla zestawów pracy i timera odpoczynku.",
+      "supersetTargetsNote": "W poprzedniej iteracji wartości dla każdego ćwiczenia dostarczają wskazówek w ramach zestawu ćwiczeń.",
+      "restBetweenLabel": "Przerwa między ćwiczeniami",
+      "restRoundLabel": "Przerwa w cyklu",
+      "restRoundFallbackHelper": "Wyłączone: używa {duration} spośród ćwiczeń",
+      "rhythmLabel": "Rytm ćwiczeń",
+      "rhythmNextRound": "następny runda",
+      "rhythmNextRoundNoTimer": "następny runda (bez timera)"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "Dalej",
     "rest": "Odpoczynek",
     "done": "Trening zakończony. Dziś zapisane serie: {sets}.",
-    "empty": "Dodaj blok `workout-log` lub `workout-sets` z ćwiczeniem do tej notatki, aby śledzić ją jako sesję."
+    "empty": "Dodaj blok `workout-log` lub `workout-sets` z ćwiczeniem do tej notatki, aby śledzić ją jako sesję.",
+    "roundOf": "Runda {round} z {rounds}",
+    "roundNumber": "Runda {round}",
+    "roundExerciseOf": "Ćwiczenie {current} z serii {total} w rundzie"
   },
   "sets": {
     "addSet": "Dodaj serię",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "Timer dla tej sekcji",
       "restValue": "{seconds} po każdym zestawie",
       "workoutDefault": "{note} (ta notatka)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} rund",
+    "round": "Runda {round}",
+    "warmupRound": "Rozgrzewka {round}",
+    "warmupNumber": "W {set}",
+    "warmupSlot": "W {round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "Dodaj rundę",
+    "removeRound": "Usuń rundę"
   },
   "whatsNew": {
     "title": "Co nowego",

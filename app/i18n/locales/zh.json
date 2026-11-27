@@ -873,7 +873,31 @@
     "rest": "休息",
     "rounds": "轮数",
     "work": "工作",
-    "workout": "训练（可选）"
+    "workout": "训练（可选）",
+    "wizard": {
+      "exercises": "练习",
+      "exerciseSlot": "锻炼 {letter}",
+      "chooseExerciseSlot": "选择锻炼 {letter}",
+      "moveExerciseUp": "将 {letter} 移动到上方",
+      "moveExerciseDown": "将 {letter} 移动到下方",
+      "removeExercise": "移除练习 {letter}",
+      "addExercise": "添加练习",
+      "groupLabel": {
+        "superset": "超集 · {count}",
+        "triset": "三组 · {count}",
+        "giantSet": "巨型套装 · {count}"
+      },
+      "warmupSets": "热身组",
+      "warmupRounds": "热身轮",
+      "warmupHelper": "排除在工作集和休息计时器之外。",
+      "supersetTargetsNote": "上次的值，针对每个练习，提供了一个超集中的提示。",
+      "restBetweenLabel": "锻炼之间的休息时间",
+      "restRoundLabel": "休息时间",
+      "restRoundFallbackHelper": "未设置：使用 {duration} 中的某个练习",
+      "rhythmLabel": "节奏间隔",
+      "rhythmNextRound": "下一轮",
+      "rhythmNextRoundNoTimer": "下一轮（不计时）"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "下一步",
     "rest": "休息",
     "done": "训练完成：今天已记录 {sets} 组。",
-    "empty": "在此笔记中添加带有训练动作的 `workout-log` 或 `workout-sets` 代码块，即可将其作为引导训练来跟随。"
+    "empty": "在此笔记中添加带有训练动作的 `workout-log` 或 `workout-sets` 代码块，即可将其作为引导训练来跟随。",
+    "roundOf": "第 {round} 轮 {rounds}",
+    "roundNumber": "第 {round} 轮",
+    "roundExerciseOf": "练习 {current} 轮中的 {total}"
   },
   "sets": {
     "addSet": "添加组",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "该部分的计时器",
       "restValue": "{seconds}个，在每个集合后",
       "workoutDefault": "{note} (请注意)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} 轮",
+    "round": "圆 {round}",
+    "warmupRound": "预热 {round}",
+    "warmupNumber": "W{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "添加回合",
+    "removeRound": "移除回合"
   },
   "whatsNew": {
     "title": "新功能",

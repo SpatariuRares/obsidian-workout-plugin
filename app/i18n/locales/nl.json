@@ -873,7 +873,31 @@
     "rest": "Rust",
     "rounds": "Rondes",
     "work": "Inspanning",
-    "workout": "Training (optioneel)"
+    "workout": "Training (optioneel)",
+    "wizard": {
+      "exercises": "Oefeningen",
+      "exerciseSlot": "Oefening {letter}",
+      "chooseExerciseSlot": "Kies de oefening {letter}",
+      "moveExerciseUp": "Oefening {letter} naar boven verplaatsen",
+      "moveExerciseDown": "Oefening {letter} naar beneden verplaatsen",
+      "removeExercise": "Oefening verwijderen {letter}",
+      "addExercise": "Oefening toevoegen",
+      "groupLabel": {
+        "superset": "Superset · {count}",
+        "triset": "Triset · {count}",
+        "giantSet": "Grote set · {count}"
+      },
+      "warmupSets": "Sets voor het opwarmen",
+      "warmupRounds": "Voorbereidingsrondes",
+      "warmupHelper": "Uitsluit van werksets en rusttimer.",
+      "supersetTargetsNote": "De waarden uit de vorige keer, per oefening, geven aanwijzingen in een superset.",
+      "restBetweenLabel": "Rust tussen oefeningen",
+      "restRoundLabel": "Rusttijd per ronde",
+      "restRoundFallbackHelper": "Niet ingesteld: gebruikt {duration} uit de lijst met oefeningen",
+      "rhythmLabel": "Frequentie van de timing",
+      "rhythmNextRound": "volgende ronde",
+      "rhythmNextRoundNoTimer": "volgende ronde (zonder timer)"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "Volgende",
     "rest": "Rust",
     "done": "Training klaar. Vandaag geregistreerde series: {sets}.",
-    "empty": "Voeg een blok met een `workout-log` of `workout-sets` met een oefening toe aan deze notitie, zodat je die als sessie kunt volgen."
+    "empty": "Voeg een blok met een `workout-log` of `workout-sets` met een oefening toe aan deze notitie, zodat je die als sessie kunt volgen.",
+    "roundOf": "Ronde {round} van {rounds}",
+    "roundNumber": "Ronde {round}",
+    "roundExerciseOf": "Oefening {current} van {total} in ronde"
   },
   "sets": {
     "addSet": "Voeg serie toe",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "Timer van deze sectie",
       "restValue": "{seconds} na elke set",
       "workoutDefault": "{note} (dit bericht)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} ronden",
+    "round": "Ronde {round}",
+    "warmupRound": "Voorbereiding {round}",
+    "warmupNumber": "W{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "Voeg ronde toe",
+    "removeRound": "Verwijder ronde"
   },
   "whatsNew": {
     "title": "Wat is er nieuw",

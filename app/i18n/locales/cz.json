@@ -873,7 +873,31 @@
     "work": "Práce",
     "workout": "Trénink (volitelné)",
     "rest": "Odpočinek",
-    "rounds": "Kola"
+    "rounds": "Kola",
+    "wizard": {
+      "exercises": "Úlohy",
+      "exerciseSlot": "Cvičení {letter}",
+      "chooseExerciseSlot": "Vyberte cvičení {letter}",
+      "moveExerciseUp": "Přesun cvičení {letter} nahoru",
+      "moveExerciseDown": "Přesun cvičení {letter} dolů",
+      "removeExercise": "Odstranit cvičení {letter}",
+      "addExercise": "Přidat cvičení",
+      "groupLabel": {
+        "superset": "Superset · {count}",
+        "triset": "Triset · {count}",
+        "giantSet": "Velký set · {count}"
+      },
+      "warmupSets": "Sady pro zahřátí",
+      "warmupRounds": "Kola na zahřátí",
+      "warmupHelper": "Vyloučeno z pracovních sad a časovače pro odpočinek.",
+      "supersetTargetsNote": "Předchozí hodnoty pro každý cvičení poskytují vodítka v rámci supersetu.",
+      "restBetweenLabel": "Odpočinek mezi cviky",
+      "restRoundLabel": "Odpočinek po kole",
+      "restRoundFallbackHelper": "Neznastavení: používá {duration} z mezi cvičeními",
+      "rhythmLabel": "Rytmus běhu",
+      "rhythmNextRound": "další kolo",
+      "rhythmNextRoundNoTimer": "další kolo (bez časovače)"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "Další",
     "rest": "Odpočinek",
     "done": "Trénink hotov. Dnes zapsané série: {sets}.",
-    "empty": "Přidejte blok `workout-log` nebo `workout-sets` s cvičením do této poznámky, abyste ji mohli použít jako součást tréninku."
+    "empty": "Přidejte blok `workout-log` nebo `workout-sets` s cvičením do této poznámky, abyste ji mohli použít jako součást tréninku.",
+    "roundOf": "Kolo {round} z {rounds}",
+    "roundNumber": "Kolo {round}",
+    "roundExerciseOf": "Cvičení {current} z {total} v kole"
   },
   "sets": {
     "addSet": "Přidat sérii",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "Časovač pro tuto sekci",
       "restValue": "{seconds} po každém setu",
       "workoutDefault": "{note} (tato poznámka)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} kol",
+    "round": "Kruh {round}",
+    "warmupRound": "Rozcvička {round}",
+    "warmupNumber": "W{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "Přidat kolo",
+    "removeRound": "Odstranit kolo"
   },
   "whatsNew": {
     "title": "Co je nového",

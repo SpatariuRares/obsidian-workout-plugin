@@ -873,7 +873,31 @@
     "rest": "Repos",
     "rounds": "Tours",
     "work": "Travail",
-    "workout": "Entraînement (facultatif)"
+    "workout": "Entraînement (facultatif)",
+    "wizard": {
+      "exercises": "Exercices",
+      "exerciseSlot": "Exercice {letter}",
+      "chooseExerciseSlot": "Sélectionner l'exercice {letter}",
+      "moveExerciseUp": "Déplacer l'exercice {letter} vers le haut",
+      "moveExerciseDown": "Déplacer l'exercice {letter} vers le bas",
+      "removeExercise": "Supprimer l'exercice {letter}",
+      "addExercise": "Ajouter un exercice",
+      "groupLabel": {
+        "superset": "Superset · {count}",
+        "triset": "Triset · {count}",
+        "giantSet": "Ensemble \"Giant Set\" · {count}"
+      },
+      "warmupSets": "Ensembles de préparation",
+      "warmupRounds": "Rondes d'échauffement",
+      "warmupHelper": "Exclu des ensembles de travail et de l'horloge de repos.",
+      "supersetTargetsNote": "Les valeurs précédentes, par exercice, fournissent des indications dans un ensemble de données.",
+      "restBetweenLabel": "Repos entre les exercices",
+      "restRoundLabel": "Repos par tour",
+      "restRoundFallbackHelper": "Annulé : utilise {duration} parmi les exercices.",
+      "rhythmLabel": "Rythme de la répétition",
+      "rhythmNextRound": "prochaine manche",
+      "rhythmNextRoundNoTimer": "prochaine manche (sans minuteur)"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "Suivant",
     "rest": "Repos",
     "done": "Entraînement terminé. Séries enregistrées aujourd'hui : {sets}.",
-    "empty": "Ajoutez un bloc `workout-log` ou `workout-sets` contenant un exercice à cette note afin de pouvoir la suivre comme une séance."
+    "empty": "Ajoutez un bloc `workout-log` ou `workout-sets` contenant un exercice à cette note afin de pouvoir la suivre comme une séance.",
+    "roundOf": "Tour {round} de {rounds}",
+    "roundNumber": "Tour {round}",
+    "roundExerciseOf": "Exercice {current} de {total} au tour"
   },
   "sets": {
     "addSet": "Ajouter une série",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "Le minuteur de la section",
       "restValue": "{seconds} après chaque ensemble",
       "workoutDefault": "{note} (cette note)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} tours",
+    "round": "Tour {round}",
+    "warmupRound": "Échauffement {round}",
+    "warmupNumber": "W{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "Ajouter une manche",
+    "removeRound": "Supprimer le tour"
   },
   "whatsNew": {
     "title": "Nouveautés",

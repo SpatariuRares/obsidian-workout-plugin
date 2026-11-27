@@ -873,7 +873,31 @@
     "rest": "Pushim",
     "rounds": "Raundet",
     "work": "Punë",
-    "workout": "Stërvitja (opsionale)"
+    "workout": "Stërvitja (opsionale)",
+    "wizard": {
+      "exercises": "Koreks",
+      "exerciseSlot": "Të gjymte {letter}",
+      "chooseExerciseSlot": "Pëzgjidh {letter}",
+      "moveExerciseUp": "Shifterë ushtrimin {letter} në lartësi",
+      "moveExerciseDown": "Migjojni التمرين {letter} më poshtë",
+      "removeExercise": "Fshrimi i ushtrimit {letter}",
+      "addExercise": "Shto ushtrimin",
+      "groupLabel": {
+        "superset": "Superset · {count}",
+        "triset": "Grupi · {count}",
+        "giantSet": "Grupi i madh · {count}"
+      },
+      "warmupSets": "Seria e përzgjedhur për përmbledhjen",
+      "warmupRounds": "Rondat e përzgjedhur",
+      "warmupHelper": "Izhunuar nga set-et e punës dhe timeri i paqënderit.",
+      "supersetTargetsNote": "Vlerat e fundit për çdo veprim, ofrojnë ndihmë në një set të kompletuar.",
+      "restBetweenLabel": "Koha mes stilit",
+      "restRoundLabel": "Pëshpër",
+      "restRoundFallbackHelper": "Mos i vendos: përdor {duration} nga numri i ushtrimeve",
+      "rhythmLabel": "Ritmizohet kohës",
+      "rhythmNextRound": "ronda e ardhshme",
+      "rhythmNextRoundNoTimer": "ronda e ardhshme (pa kohëzim)"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "Tjetra",
     "rest": "Pushim",
     "done": "Stërvitja u përfundua. Seri të regjistruara sot: {sets}.",
-    "empty": "Shto një bllok `workout-log` ose `workout-sets` me një ushtrim në këtë shënim, për ta ndjekur si seancë."
+    "empty": "Shto një bllok `workout-log` ose `workout-sets` me një ushtrim në këtë shënim, për ta ndjekur si seancë.",
+    "roundOf": "Runda {round} e {rounds}",
+    "roundNumber": "Runda {round}",
+    "roundExerciseOf": "Kushtrimi {current} i {total} në raund"
   },
   "sets": {
     "addSet": "Shto seri",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "Timeri i seksionit",
       "restValue": "{seconds} pas secilës serise",
       "workoutDefault": "{note} (kjo notë)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} raunde",
+    "round": "Rondë {round}",
+    "warmupRound": "Rregullim {round}",
+    "warmupNumber": "W{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "Shto runden",
+    "removeRound": "Fshrimi"
   },
   "whatsNew": {
     "title": "Çfarë është e re",

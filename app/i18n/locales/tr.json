@@ -873,7 +873,31 @@
     "work": "Çalışma",
     "workout": "Antrenman (isteğe bağlı)",
     "rest": "Dinlenme",
-    "rounds": "Turlar"
+    "rounds": "Turlar",
+    "wizard": {
+      "exercises": "Egzersizler",
+      "exerciseSlot": "Egzersiz {letter}",
+      "chooseExerciseSlot": "Egzersizi seçin {letter}",
+      "moveExerciseUp": "{letter} egzersizi yukarı taşı",
+      "moveExerciseDown": "{letter} egzersizi aşağı taşı",
+      "removeExercise": "Egzersizi kaldır {letter}",
+      "addExercise": "Egzersiz ekle",
+      "groupLabel": {
+        "superset": "Superset · {count}",
+        "triset": "Triset · {count}",
+        "giantSet": "Dev set · {count}"
+      },
+      "warmupSets": "Isınma setleri",
+      "warmupRounds": "Isınma turu",
+      "warmupHelper": "Çalışma setlerinden ve dinlenme zamanlayıcısından hariç tutulmuştur.",
+      "supersetTargetsNote": "Son değerler, egzersiz başına göre, bir superset içinde ipuçları sunar.",
+      "restBetweenLabel": "Egzersizler arasında dinlenme",
+      "restRoundLabel": "Yuvarlak dinlenme",
+      "restRoundFallbackHelper": "Değer atanmadı: {duration} arasında bir egzersizden değer kullanır",
+      "rhythmLabel": "Ritim döngüsü",
+      "rhythmNextRound": "son tur",
+      "rhythmNextRoundNoTimer": "son tur (zamanlayıcı yok)"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "Sonraki",
     "rest": "Dinlenme",
     "done": "Antrenman tamamlandı. Bugün kaydedilen set: {sets}.",
-    "empty": "Bu nota, bir egzersizle birlikte bir `workout-log` veya `workout-sets` bloğu ekleyin; böylece onu bir antrenman oturumu olarak takip edebilirsiniz."
+    "empty": "Bu nota, bir egzersizle birlikte bir `workout-log` veya `workout-sets` bloğu ekleyin; böylece onu bir antrenman oturumu olarak takip edebilirsiniz.",
+    "roundOf": "Tur {round} - {rounds}",
+    "roundNumber": "Tur {round}",
+    "roundExerciseOf": "{current} numaralı egzersiz, {total} turunda"
   },
   "sets": {
     "addSet": "Set ekle",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "Bu bölümün zamanlayıcısı",
       "restValue": "{seconds} aded sonra her bir set",
       "workoutDefault": "{note} (bu not)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} tur",
+    "round": "Daire {round}",
+    "warmupRound": "Isınma {round}",
+    "warmupNumber": "W{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "Ronda ekle",
+    "removeRound": "Rondunu kaldır"
   },
   "whatsNew": {
     "title": "Yenilikler",

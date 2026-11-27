@@ -873,7 +873,31 @@
     "work": "運動",
     "workout": "運動（選填）",
     "rest": "休息",
-    "rounds": "輪數"
+    "rounds": "輪數",
+    "wizard": {
+      "exercises": "練習",
+      "exerciseSlot": "運動 {letter}",
+      "chooseExerciseSlot": "選擇運動 {letter}",
+      "moveExerciseUp": "將運動 {letter} 移至上方",
+      "moveExerciseDown": "將運動 {letter} 移至下方",
+      "removeExercise": "移除運動 {letter}",
+      "addExercise": "新增運動",
+      "groupLabel": {
+        "superset": "超集 · {count}",
+        "triset": "三組 · {count}",
+        "giantSet": "巨型組 · {count}"
+      },
+      "warmupSets": "暖機組",
+      "warmupRounds": "暖機階段",
+      "warmupHelper": "排除後，將不會包含在工作集和休息計時器中。",
+      "supersetTargetsNote": "上次的結果，針對每個訓練項目，提供在超集中的參考資訊。",
+      "restBetweenLabel": "運動之間休息",
+      "restRoundLabel": "休息時間",
+      "restRoundFallbackHelper": "取消：使用 {duration} 從運動列表中",
+      "rhythmLabel": "調整節奏頻率",
+      "rhythmNextRound": "下一個階段",
+      "rhythmNextRoundNoTimer": "下一個階段 (無計時)"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "下一步",
     "rest": "休息",
     "done": "訓練完成：今天已紀錄 {sets} 組。",
-    "empty": "在此筆記中加入含有動作的 `workout-log` 或 `workout-sets` 區塊，即可依此筆記的計畫進行訓練。"
+    "empty": "在此筆記中加入含有動作的 `workout-log` 或 `workout-sets` 區塊，即可依此筆記的計畫進行訓練。",
+    "roundOf": "第 {round} 輪的 {rounds}",
+    "roundNumber": "第 {round} 輪",
+    "roundExerciseOf": "{current} 輪的 {total} 練習"
   },
   "sets": {
     "addSet": "新增組",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "此頁面的計時器",
       "restValue": "{seconds}個，在每個組中",
       "workoutDefault": "{note} (此說明)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} 輪",
+    "round": "圓形 {round}",
+    "warmupRound": "暖機 {round}",
+    "warmupNumber": "W{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "新增一局",
+    "removeRound": "移除圓"
   },
   "whatsNew": {
     "title": "更新內容",

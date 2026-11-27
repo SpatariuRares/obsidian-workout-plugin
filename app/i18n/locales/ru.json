@@ -873,7 +873,31 @@
     "work": "Работа",
     "workout": "Тренировка (необязательно)",
     "rest": "Отдых",
-    "rounds": "Раунды"
+    "rounds": "Раунды",
+    "wizard": {
+      "exercises": "Упражнения",
+      "exerciseSlot": "Упражнение {letter}",
+      "chooseExerciseSlot": "Выберите упражнение {letter}",
+      "moveExerciseUp": "Переместить упражнение {letter} вверх",
+      "moveExerciseDown": "Переместить упражнение {letter} вниз",
+      "removeExercise": "Удалить упражнение {letter}",
+      "addExercise": "Добавить упражнение",
+      "groupLabel": {
+        "superset": "Superset · {count}",
+        "triset": "Группа \"Трисет\" · {count}",
+        "giantSet": "Большой набор · {count}"
+      },
+      "warmupSets": "Наборы для разогрева",
+      "warmupRounds": "Раунды разогрева",
+      "warmupHelper": "Исключены из наборов для работы и таймера отдыха.",
+      "supersetTargetsNote": "В прошлый раз, значения для каждого упражнения предоставляют подсказки в рамках комплексной тренировки.",
+      "restBetweenLabel": "Перерыв между упражнениями",
+      "restRoundLabel": "Отдых по кругу",
+      "restRoundFallbackHelper": "Не используется: использует {duration} из списка упражнений.",
+      "rhythmLabel": "Регулярность выполнения упражнений",
+      "rhythmNextRound": "следующий раунд",
+      "rhythmNextRoundNoTimer": "следующий раунд (без таймера)"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "Следующий",
     "rest": "Отдых",
     "done": "Тренировка завершена. Подходов за сегодня записано: {sets}.",
-    "empty": "Добавьте в эту заметку блок `workout-log` или `workout-sets` с упражнением, чтобы вести по ней тренировку с гидом."
+    "empty": "Добавьте в эту заметку блок `workout-log` или `workout-sets` с упражнением, чтобы вести по ней тренировку с гидом.",
+    "roundOf": "Раунд {round} из {rounds}",
+    "roundNumber": "Раунд {round}",
+    "roundExerciseOf": "Упражнение {current} из {total} в текущем раунде"
   },
   "sets": {
     "addSet": "Добавить подход",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "Таймер для этой секции",
       "restValue": "{seconds} после каждого этапа",
       "workoutDefault": "{note} (это заметка)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} раундов",
+    "round": "Круг {round}",
+    "warmupRound": "Разминка {round}",
+    "warmupNumber": "W{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "Добавить раунд",
+    "removeRound": "Удалить раунд"
   },
   "whatsNew": {
     "title": "Что нового",

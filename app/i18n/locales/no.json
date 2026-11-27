@@ -873,7 +873,31 @@
     "rest": "Hvile",
     "rounds": "Runder",
     "work": "Arbeid",
-    "workout": "Trening (valgfri)"
+    "workout": "Trening (valgfri)",
+    "wizard": {
+      "exercises": "Oppgaver",
+      "exerciseSlot": "Øvelse {letter}",
+      "chooseExerciseSlot": "Velg treningsøkt {letter}",
+      "moveExerciseUp": "Flytt øvelsen {letter} opp",
+      "moveExerciseDown": "Flytt øvelsen {letter} ned",
+      "removeExercise": "Fjern øvelse {letter}",
+      "addExercise": "Legg til øvelse",
+      "groupLabel": {
+        "superset": "Superset · {count}",
+        "triset": "Tersett · {count}",
+        "giantSet": "Stort sett · {count}"
+      },
+      "warmupSets": "Oppvarmingssett",
+      "warmupRounds": "Oppvarmingsrunder",
+      "warmupHelper": "Uutelatt fra arbeidssett og hviletimer.",
+      "supersetTargetsNote": "De siste verdiene per øvelse gir veiledning i en supersett.",
+      "restBetweenLabel": "Hvile mellom øvelser",
+      "restRoundLabel": "Pause for hvile",
+      "restRoundFallbackHelper": "Ukjent: bruker {duration} fra listen over øvelser",
+      "rhythmLabel": "Tempo for hver runde",
+      "rhythmNextRound": "neste runde",
+      "rhythmNextRoundNoTimer": "neste runde (uten tidstopp)"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "Neste",
     "rest": "Hvile",
     "done": "Trening ferdig. Sett registrert i dag: {sets}.",
-    "empty": "Legg til en `workout-log`- eller `workout-sets`-blokk med en øvelse i dette notatet for å følge det som en økt."
+    "empty": "Legg til en `workout-log`- eller `workout-sets`-blokk med en øvelse i dette notatet for å følge det som en økt.",
+    "roundOf": "Runde {round} av {rounds}",
+    "roundNumber": "Runde {round}",
+    "roundExerciseOf": "Øvelse {current} av {total} i runde"
   },
   "sets": {
     "addSet": "Legg til sett",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "Tidsbruken for denne seksjonen",
       "restValue": "{seconds} etter hver runde",
       "workoutDefault": "{note} (dette notatet)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} runder",
+    "round": "Runde {round}",
+    "warmupRound": "Oppvarming {round}",
+    "warmupNumber": "W{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "Legg til runde",
+    "removeRound": "Fjern runde"
   },
   "whatsNew": {
     "title": "Hva er nytt",

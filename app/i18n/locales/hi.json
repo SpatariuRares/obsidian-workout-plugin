@@ -873,7 +873,31 @@
     "work": "काम",
     "workout": "वर्कआउट (वैकल्पिक)",
     "rest": "आराम",
-    "rounds": "राउंड"
+    "rounds": "राउंड",
+    "wizard": {
+      "exercises": "अभ्यास",
+      "exerciseSlot": "व्यायाम {letter}",
+      "chooseExerciseSlot": "{letter} व्यायाम चुनें",
+      "moveExerciseUp": "{letter} को ऊपर ले जाएं",
+      "moveExerciseDown": "{letter} को नीचे ले जाएं",
+      "removeExercise": "{letter} व्यायाम हटाएं",
+      "addExercise": "अभ्यास जोड़ें",
+      "groupLabel": {
+        "superset": "सुपरसेट · {count}",
+        "triset": "ट्रिसेट · {count}",
+        "giantSet": "विशाल सेट · {count}"
+      },
+      "warmupSets": "वार्म-अप सेट",
+      "warmupRounds": "वार्म-अप राउंड",
+      "warmupHelper": "काम करने वाले सेट और रीसेट टाइमर से बाहर।",
+      "supersetTargetsNote": "पिछली बार के मान, प्रत्येक व्यायाम के लिए, एक समग्र दृष्टिकोण में संकेत प्रदान करते हैं।",
+      "restBetweenLabel": "व्यायामों के बीच आराम",
+      "restRoundLabel": "राउंड में आराम",
+      "restRoundFallbackHelper": "अनसेट: व्यायामों के बीच से {duration} का उपयोग करता है।",
+      "rhythmLabel": "राउंड टाइमिंग की लय",
+      "rhythmNextRound": "अगला दौर",
+      "rhythmNextRoundNoTimer": "अगला दौर (टाइमर नहीं)"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "अगला",
     "rest": "आराम",
     "done": "वर्कआउट पूरा: आज {sets} सेट दर्ज किए गए।",
-    "empty": "इस नोट में किसी व्यायाम वाला `workout-log` या `workout-sets` ब्लॉक जोड़ें, ताकि इसे एक सत्र के रूप में फ़ॉलो किया जा सके।"
+    "empty": "इस नोट में किसी व्यायाम वाला `workout-log` या `workout-sets` ब्लॉक जोड़ें, ताकि इसे एक सत्र के रूप में फ़ॉलो किया जा सके।",
+    "roundOf": "राउंड {round} में {rounds}",
+    "roundNumber": "राउंड {round}",
+    "roundExerciseOf": "{total} में {current}वीं एक्सरसाइज"
   },
   "sets": {
     "addSet": "सेट जोड़ें",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "इस अनुभाग का टाइमर",
       "restValue": "{seconds} सेट के बाद",
       "workoutDefault": "{note} (यह नोट)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} दौर",
+    "round": "राउंड {round}",
+    "warmupRound": "वार्म-अप {round}",
+    "warmupNumber": "डब्ल्यू{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "राउंड जोड़ें",
+    "removeRound": "राउंड हटाएं"
   },
   "whatsNew": {
     "title": "नया क्या है",

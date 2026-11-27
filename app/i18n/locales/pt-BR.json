@@ -873,7 +873,31 @@
     "rest": "Descanso",
     "rounds": "Rodadas",
     "work": "Trabalho",
-    "workout": "Treino (opcional)"
+    "workout": "Treino (opcional)",
+    "wizard": {
+      "exercises": "Exercícios",
+      "exerciseSlot": "Exercício {letter}",
+      "chooseExerciseSlot": "Selecione a atividade {letter}",
+      "moveExerciseUp": "Mover exercício {letter} para cima",
+      "moveExerciseDown": "Mover exercício {letter} para baixo",
+      "removeExercise": "Remover exercício {letter}",
+      "addExercise": "Adicionar exercício",
+      "groupLabel": {
+        "superset": "Superset · {count}",
+        "triset": "Treino em séries · {count}",
+        "giantSet": "Conjunto gigante · {count}"
+      },
+      "warmupSets": "Conjuntos de aquecimento",
+      "warmupRounds": "Rodadas de aquecimento",
+      "warmupHelper": "Excluído de conjuntos de trabalho e temporizador de descanso.",
+      "supersetTargetsNote": "Na última vez, os valores por exercício fornecem dicas em um superset.",
+      "restBetweenLabel": "Tempo de descanso entre os exercícios",
+      "restRoundLabel": "Descanso por rodada",
+      "restRoundFallbackHelper": "Não definido: utiliza {duration} entre os exercícios.",
+      "rhythmLabel": "Ritmo da sequência de rodadas",
+      "rhythmNextRound": "próxima rodada",
+      "rhythmNextRoundNoTimer": "próxima rodada (sem cronômetro)"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "Próximo",
     "rest": "Descanso",
     "done": "Treino concluído. Séries registradas hoje: {sets}.",
-    "empty": "Adicione um bloco de `workout-log` ou `workout-sets` com um exercício a esta nota para que você possa acompanhá-la como uma sessão."
+    "empty": "Adicione um bloco de `workout-log` ou `workout-sets` com um exercício a esta nota para que você possa acompanhá-la como uma sessão.",
+    "roundOf": "Rodada {round} de {rounds}",
+    "roundNumber": "Rodada {round}",
+    "roundExerciseOf": "Exercício {current} de {total} na rodada"
   },
   "sets": {
     "addSet": "Adicionar série",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "Temporizador da seção",
       "restValue": "{seconds} após cada conjunto",
       "workoutDefault": "{note} (esta nota)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} rodadas",
+    "round": "Rodada {round}",
+    "warmupRound": "Aquecimento {round}",
+    "warmupNumber": "W{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "Adicionar rodada",
+    "removeRound": "Remover rodada"
   },
   "whatsNew": {
     "title": "Novidades",

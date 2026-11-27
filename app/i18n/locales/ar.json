@@ -873,7 +873,31 @@
     "work": "العمل",
     "workout": "التدريب (اختياري)",
     "rest": "الراحة",
-    "rounds": "الجولات"
+    "rounds": "الجولات",
+    "wizard": {
+      "exercises": "تمارين",
+      "exerciseSlot": "تمارين {letter}",
+      "chooseExerciseSlot": "اختر تمرين {letter}",
+      "moveExerciseUp": "نقل التمرين {letter} إلى الأعلى",
+      "moveExerciseDown": "نقل التمرين {letter} إلى الأسفل",
+      "removeExercise": "حذف التمرين {letter}",
+      "addExercise": "إضافة تمرين",
+      "groupLabel": {
+        "superset": "Superset · {count}",
+        "triset": "مجموعة ثلاثية · {count}",
+        "giantSet": "مجموعة كبيرة · {count}"
+      },
+      "warmupSets": "مجموعات الإحماء",
+      "warmupRounds": "جولات الإحماء",
+      "warmupHelper": "مستبعد من مجموعات العمل وجهاز توقيت الراحة.",
+      "supersetTargetsNote": "تُقدم القيم السابقة لكل تمرين تلميحات في مجموعة بيانات واحدة.",
+      "restBetweenLabel": "الراحة بين التمارين",
+      "restRoundLabel": "راحة في الدورة",
+      "restRoundFallbackHelper": "تم إلغاء التعيين: يستخدم {duration} من بين التمارين.",
+      "rhythmLabel": "إيقاع الوقت",
+      "rhythmNextRound": "الجولة التالية",
+      "rhythmNextRoundNoTimer": "الجولة التالية (بدون مؤقت)"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "التالي",
     "rest": "راحة",
     "done": "اكتمل التدريب: تم تسجيل {sets} مجموعة اليوم.",
-    "empty": "أضف كتلة `workout-log` أو `workout-sets` تحتوي على تمرين إلى هذه الملاحظة لمتابعتها كجلسة."
+    "empty": "أضف كتلة `workout-log` أو `workout-sets` تحتوي على تمرين إلى هذه الملاحظة لمتابعتها كجلسة.",
+    "roundOf": "الجولة {round} من {rounds}",
+    "roundNumber": "الجولة {round}",
+    "roundExerciseOf": "التمرين {current} من {total} في الجولة"
   },
   "sets": {
     "addSet": "إضافة مجموعة",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "عداد الوقت الخاص بهذا القسم",
       "restValue": "{seconds} بعد كل مجموعة",
       "workoutDefault": "{note} (هذا الملاحظة)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} جولات",
+    "round": "الدورة {round}",
+    "warmupRound": "الإحماء {round}",
+    "warmupNumber": "W{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "إضافة جولة",
+    "removeRound": "إزالة الجولة"
   },
   "whatsNew": {
     "title": "ما الجديد",

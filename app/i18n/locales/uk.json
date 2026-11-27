@@ -873,7 +873,31 @@
     "rest": "Відпочинок",
     "rounds": "Раунди",
     "work": "Робота",
-    "workout": "Тренування (необов'язково)"
+    "workout": "Тренування (необов'язково)",
+    "wizard": {
+      "exercises": "Вправи",
+      "exerciseSlot": "Вправа {letter}",
+      "chooseExerciseSlot": "Виберіть заняття {letter}",
+      "moveExerciseUp": "Перемістити вправу {letter} вгору",
+      "moveExerciseDown": "Перемістити вправу {letter} вниз",
+      "removeExercise": "Видалити вправу {letter}",
+      "addExercise": "Додати вправу",
+      "groupLabel": {
+        "superset": "Superset · {count}",
+        "triset": "Трисет · {count}",
+        "giantSet": "Велика колекція · {count}"
+      },
+      "warmupSets": "Набори для розігріву",
+      "warmupRounds": "Раундів для розігріву",
+      "warmupHelper": "Виключено з наборів для роботи та таймера відпочинку.",
+      "supersetTargetsNote": "Останній раз, значення для кожного вправе надають підказки в сукупній вправі.",
+      "restBetweenLabel": "Відпочинок між вправами",
+      "restRoundLabel": "Відпочинок за раундами",
+      "restRoundFallbackHelper": "Не встановлено: використовує {duration} з набору вправ",
+      "rhythmLabel": "Ритм виконання кола",
+      "rhythmNextRound": "наступний раунд",
+      "rhythmNextRoundNoTimer": "наступний раунд (без таймера)"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "Далі",
     "rest": "Відпочинок",
     "done": "Тренування завершено: сьогодні записано підходів: {sets}.",
-    "empty": "Додайте блок `workout-log` або `workout-sets` з вправою до цієї нотатки, щоб вести її як тренування з супроводом."
+    "empty": "Додайте блок `workout-log` або `workout-sets` з вправою до цієї нотатки, щоб вести її як тренування з супроводом.",
+    "roundOf": "Раунд {round} з {rounds}",
+    "roundNumber": "Раунд {round}",
+    "roundExerciseOf": "Вправа {current} з {total} у раунді"
   },
   "sets": {
     "addSet": "Додати підхід",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "Таймер для цієї секції",
       "restValue": "{seconds} після кожного набору",
       "workoutDefault": "{note} (це примітка)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} раундів",
+    "round": "Раунд {round}",
+    "warmupRound": "Розминка {round}",
+    "warmupNumber": "W{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "Додати раунд",
+    "removeRound": "Видалити раунд"
   },
   "whatsNew": {
     "title": "Що нового",

@@ -873,7 +873,31 @@
     "work": "Kerja",
     "workout": "Latihan (opsional)",
     "rest": "Istirahat",
-    "rounds": "Putaran"
+    "rounds": "Putaran",
+    "wizard": {
+      "exercises": "Latihan",
+      "exerciseSlot": "Latihan {letter}",
+      "chooseExerciseSlot": "Pilih jenis latihan {letter}",
+      "moveExerciseUp": "Pindahkan latihan {letter} ke atas",
+      "moveExerciseDown": "Pindahkan latihan {letter} ke bawah",
+      "removeExercise": "Hapus latihan {letter}",
+      "addExercise": "Tambahkan latihan",
+      "groupLabel": {
+        "superset": "Superset · {count}",
+        "triset": "Triset · {count}",
+        "giantSet": "Set besar · {count}"
+      },
+      "warmupSets": "Set pemanasan",
+      "warmupRounds": "Putaran pemanasan",
+      "warmupHelper": "Tidak termasuk dalam set kerja dan timer istirahat.",
+      "supersetTargetsNote": "Nilai terakhir per latihan memberikan petunjuk dalam superset.",
+      "restBetweenLabel": "Istirahat di antara latihan",
+      "restRoundLabel": "Istirahat per putaran",
+      "restRoundFallbackHelper": "Tidak diatur: menggunakan {duration} dari antara latihan",
+      "rhythmLabel": "Jadwal waktu untuk setiap putaran",
+      "rhythmNextRound": "bab berikutnya",
+      "rhythmNextRoundNoTimer": "putaran berikutnya (tanpa timer)"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "Berikutnya",
     "rest": "Istirahat",
     "done": "Latihan selesai: {sets} set tercatat hari ini.",
-    "empty": "Tambahkan blok `workout-log` atau `workout-sets` dengan latihan ke catatan ini untuk melacaknya sebagai bagian dari sesi."
+    "empty": "Tambahkan blok `workout-log` atau `workout-sets` dengan latihan ke catatan ini untuk melacaknya sebagai bagian dari sesi.",
+    "roundOf": "Bab {round} dari {rounds}",
+    "roundNumber": "Bab {round}",
+    "roundExerciseOf": "Latihan {current} dari {total} pada putaran"
   },
   "sets": {
     "addSet": "Tambahkan set",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "Timer untuk bagian ini",
       "restValue": "{seconds} setelah setiap set",
       "workoutDefault": "{note} (catatan ini)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} putaran",
+    "round": "Putaran {round}",
+    "warmupRound": "Pemanasan {round}",
+    "warmupNumber": "W{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "Tambahkan ronde",
+    "removeRound": "Hapus putaran"
   },
   "whatsNew": {
     "title": "Yang baru",

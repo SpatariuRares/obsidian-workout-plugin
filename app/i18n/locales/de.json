@@ -873,7 +873,31 @@
     "work": "Arbeit",
     "workout": "Training (optional)",
     "rest": "Pause",
-    "rounds": "Runden"
+    "rounds": "Runden",
+    "wizard": {
+      "exercises": "Übungen",
+      "exerciseSlot": "Übung {letter}",
+      "chooseExerciseSlot": "Wählen Sie die Übung aus {letter}",
+      "moveExerciseUp": "Übung {letter} nach oben verschieben",
+      "moveExerciseDown": "Übung {letter} nach unten verschieben",
+      "removeExercise": "Übung entfernen {letter}",
+      "addExercise": "Übung hinzufügen",
+      "groupLabel": {
+        "superset": "Superset · {count}",
+        "triset": "Triset · {count}",
+        "giantSet": "Große Menge · {count}"
+      },
+      "warmupSets": "Aufwärmübungen",
+      "warmupRounds": "Aufwärmrunden",
+      "warmupHelper": "Ausgeschlossen von Arbeitssets und Ruhezeit.",
+      "supersetTargetsNote": "Die letzten Werte pro Übung geben Hinweise in einem Supersatz.",
+      "restBetweenLabel": "Pause zwischen den Übungen",
+      "restRoundLabel": "Runden Ruhe",
+      "restRoundFallbackHelper": "Nicht verwendet: verwendet {duration} aus der Liste der Übungen",
+      "rhythmLabel": "Rhythmus des Trainings",
+      "rhythmNextRound": "nächste Runde",
+      "rhythmNextRoundNoTimer": "nächste Runde (ohne Timer)"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "Weiter",
     "rest": "Pause",
     "done": "Training abgeschlossen. Heute erfasste Sätze: {sets}.",
-    "empty": "Füge einen `workout-log`- oder `workout-sets`-Block mit einer Übung zu dieser Notiz hinzu, um sie als geführte Einheit zu verfolgen."
+    "empty": "Füge einen `workout-log`- oder `workout-sets`-Block mit einer Übung zu dieser Notiz hinzu, um sie als geführte Einheit zu verfolgen.",
+    "roundOf": "Runde {round} von {rounds}",
+    "roundNumber": "Runde {round}",
+    "roundExerciseOf": "Übung {current} von {total} in Runde"
   },
   "sets": {
     "addSet": "Satz hinzufügen",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "Timer für diesen Abschnitt",
       "restValue": "{seconds} nach jedem Set",
       "workoutDefault": "{note} (dieser Hinweis)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} Runden",
+    "round": "Runde {round}",
+    "warmupRound": "Aufwärmphase {round}",
+    "warmupNumber": "W{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "Runde hinzufügen",
+    "removeRound": "Runde entfernen"
   },
   "whatsNew": {
     "title": "Neuigkeiten",

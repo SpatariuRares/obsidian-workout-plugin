@@ -873,7 +873,31 @@
     "rest": "Pauză",
     "rounds": "Runde",
     "work": "Efort",
-    "workout": "Antrenament (opțional)"
+    "workout": "Antrenament (opțional)",
+    "wizard": {
+      "exercises": "Exerciții",
+      "exerciseSlot": "Exercițiu {letter}",
+      "chooseExerciseSlot": "Alege exercițiul {letter}",
+      "moveExerciseUp": "Mută exercițiul {letter} în sus",
+      "moveExerciseDown": "Mută exercițiul {letter} în jos",
+      "removeExercise": "Elimină exercițiul {letter}",
+      "addExercise": "Adaugă exercițiu",
+      "groupLabel": {
+        "superset": "Superset · {count}",
+        "triset": "Triset · {count}",
+        "giantSet": "Set mare · {count}"
+      },
+      "warmupSets": "Seturi de încălzire",
+      "warmupRounds": "Ronde de încălzire",
+      "warmupHelper": "Exclusează din seturile de lucru și din temporizatorul de pauză.",
+      "supersetTargetsNote": "Valorile anterioare, specifici pentru fiecare exercițiu, oferă indicații într-un superset.",
+      "restBetweenLabel": "Pauză între exerciții",
+      "restRoundLabel": "Pauză pe rundă",
+      "restRoundFallbackHelper": "Anulat: utilizează {duration} dintr-o listă de exerciții",
+      "rhythmLabel": "Ritmul de execuție",
+      "rhythmNextRound": "următorul tur",
+      "rhythmNextRoundNoTimer": "următorul tur (fără cronometru)"
+    }
   },
   "settings": {
     "buttons": {
@@ -1216,7 +1240,10 @@
     "next": "Următor",
     "rest": "Pauză",
     "done": "Antrenament finalizat. Serii înregistrate azi: {sets}.",
-    "empty": "Adaugă un bloc `workout-log` sau `workout-sets` cu un exercițiu la această notă, ca s-o folosești ca sesiune."
+    "empty": "Adaugă un bloc `workout-log` sau `workout-sets` cu un exercițiu la această notă, ca s-o folosești ca sesiune.",
+    "roundOf": "Runda [{round}] din [{rounds}]",
+    "roundNumber": "Runda {round}",
+    "roundExerciseOf": "Exercițiul {current} din {total}, al [VAR_2]-lea tur"
   },
   "sets": {
     "addSet": "Adaugă serie",
@@ -1246,7 +1273,15 @@
       "restSectionTimer": "Cronometrul secțiunii",
       "restValue": "{seconds} după fiecare set",
       "workoutDefault": "{note} (această notă)"
-    }
+    },
+    "supersetProgress": "{done}/{rounds} runde",
+    "round": "Runda {round}",
+    "warmupRound": "Încălzire {round}",
+    "warmupNumber": "W{set}",
+    "warmupSlot": "W{round}.{slot}",
+    "workingSlot": "{round}.{slot}",
+    "addRound": "Adaugă rundă",
+    "removeRound": "Elimină rundă"
   },
   "whatsNew": {
     "title": "Ce e nou",

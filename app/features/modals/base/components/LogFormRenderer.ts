@@ -1,7 +1,9 @@
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
-import { Platform } from "obsidian";
-import type { LogFormElements, ProtocolChoice } from "@app/types/ModalTypes";
+import type {
+  LogFormElements,
+  ProtocolChoice,
+} from "@app/types/ModalTypes";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
@@ -17,8 +19,21 @@ import {
   ProtocolCatalog,
   protocolId,
 } from "@app/services/protocols/ProtocolCatalog";
-import { NotesField, ProtocolPicker } from "@app/components/molecules";
+import {
+  NotesField,
+  ProtocolPicker,
+} from "@app/components/molecules";
 import { DomUtils } from "@app/utils/DomUtils";
+
+/** Where each part of the form is drawn: one container per wizard step */
+export interface LogFormSections {
+  /** Exercise, with the recent exercises */
+  exercise: HTMLElement;
+  /** Last time and the exercise's parameter fields */
+  fields: HTMLElement;
+  /** Protocol, notes, date and workout */
+  details: HTMLElement;
+}
 
 export class LogFormRenderer {
   constructor(
@@ -33,7 +48,7 @@ export class LogFormRenderer {
    */
   async createFormElements(
     modal: BaseLogModal,
-    formContainer: HTMLElement,
+    sections: LogFormSections,
     initialExerciseName: string | undefined,
     initialCurrentPageLink: string | undefined,
     shouldShowDateField: boolean,
@@ -46,7 +61,7 @@ export class LogFormRenderer {
     const { elements: exerciseElements } =
       ExerciseAutocomplete.create(
         modal,
-        formContainer,
+        sections.exercise,
         this.plugin,
         initialExerciseName,
         {
@@ -54,7 +69,7 @@ export class LogFormRenderer {
         },
       );
 
-    const history = formContainer.createDiv({
+    const history = sections.fields.createDiv({
       cls: "workout-log-history",
       attr: { "aria-live": "polite" },
     });
@@ -78,17 +93,13 @@ export class LogFormRenderer {
       );
     });
 
-    const isMobile = Platform.isMobile;
-
-    if (!isMobile) {
-      this.createRecentExercisesChips(
-        formContainer,
-        exerciseElements.exerciseInput,
-      );
-    }
+    this.createRecentExercisesChips(
+      sections.exercise,
+      exerciseElements.exerciseInput,
+    );
 
     // Create container for dynamic parameter fields
-    const parametersContainer = formContainer.createDiv({
+    const parametersContainer = sections.fields.createDiv({
       cls: "workout-parameters-container",
     });
 
@@ -118,9 +129,9 @@ export class LogFormRenderer {
         },
       );
 
-    const protocol = this.createProtocolChoice(formContainer);
+    const protocol = this.createProtocolChoice(sections.details);
 
-    const notesInput = NotesField.create(formContainer, {
+    const notesInput = NotesField.create(sections.details, {
       label: t("modal.notes"),
       value: "",
       onChange: () => {},
@@ -131,7 +142,7 @@ export class LogFormRenderer {
     let dateInput: HTMLInputElement | undefined;
     if (shouldShowDateField) {
       dateInput = modal.createTextField(
-        formContainer,
+        sections.details,
         t("modal.date"),
         "",
         "",
@@ -139,26 +150,9 @@ export class LogFormRenderer {
       dateInput.type = "date";
     }
 
-    // Mobile Accordion Section
-    let workoutSectionParent = formContainer;
-    if (isMobile) {
-      workoutSectionParent = formContainer.createEl("details", {
-        cls: "workout-log-mobile-accordion",
-      });
-      workoutSectionParent.createEl("summary", {
-        text: t("modal.sections.mobileOptions"),
-        cls: "workout-log-mobile-summary",
-      });
-
-      this.createRecentExercisesChips(
-        workoutSectionParent,
-        exerciseElements.exerciseInput,
-      );
-    }
-
     // Workout section
     const workoutSection = modal.createSection(
-      workoutSectionParent,
+      sections.details,
       t("modal.sections.workout"),
     );
 
@@ -226,8 +220,12 @@ export class LogFormRenderer {
    * draws the chips again with the focus kept on the picked one.
    */
   private createProtocolChoice(parent: HTMLElement): ProtocolChoice {
-    const catalog = new ProtocolCatalog(this.plugin.settings.customProtocols);
-    let options = catalog.all().map((p) => ({ id: p.id, name: p.name }));
+    const catalog = new ProtocolCatalog(
+      this.plugin.settings.customProtocols,
+    );
+    let options = catalog
+      .all()
+      .map((p) => ({ id: p.id, name: p.name }));
     const holder = parent.createDiv({ cls: "workout-log-protocol" });
     let selected: string = WorkoutProtocol.STANDARD;
 
@@ -406,6 +404,7 @@ export class LogFormRenderer {
     );
 
     // Auto-fill protocol
-    if (lastEntry.protocol) formElements.protocol?.set(lastEntry.protocol);
+    if (lastEntry.protocol)
+      formElements.protocol?.set(lastEntry.protocol);
   }
 }

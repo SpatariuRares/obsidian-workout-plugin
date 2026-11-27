@@ -801,8 +801,7 @@
       "progressiveOverload": "渐进式超负荷",
       "tableType": "表格类型",
       "target": "目标",
-      "workout": "训练",
-      "mobileOptions": "最近的训练动作和训练"
+      "workout": "训练"
     },
     "selectOptions": {
       "allLogs": "所有记录",

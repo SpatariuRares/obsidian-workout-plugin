@@ -801,8 +801,7 @@
       "progressiveOverload": "Progressieve overbelasting",
       "tableType": "Tabeltype",
       "target": "Doel",
-      "workout": "Training",
-      "mobileOptions": "Recente oefeningen en trainingen"
+      "workout": "Training"
     },
     "selectOptions": {
       "allLogs": "Alle logs",

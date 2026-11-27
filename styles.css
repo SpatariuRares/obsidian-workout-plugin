@@ -2801,14 +2801,6 @@ body.is-mobile .workout-modal-actions {
   padding-bottom: var(--workout-space-sm);
 }
 
-.workout-log-mobile-summary {
-  cursor: pointer;
-  margin-top: var(--workout-space-lg);
-  margin-bottom: var(--workout-space-sm);
-  font-weight: var(--workout-font-weight-semibold);
-  color: var(--text-normal);
-}
-
 @media (max-width: 768px) {
   .workout-modal .workout-parameters-container {
     grid-template-columns: minmax(0, 1fr);
@@ -3878,9 +3870,16 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
 .workout-wizard-footer {
   /* The action row inside is the sticky one: the wrapper must not trap it */
   display: contents;
+  /* Delete (edit forms) and Back, together at the start; the rest sits at the end */
 }
-.workout-wizard-footer .workout-wizard-back {
-  margin-right: auto;
+.workout-wizard-footer .workout-wizard-start {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-md);
+  margin-inline-end: auto;
+}
+.workout-wizard-footer .workout-wizard-start .workout-modal-actions-delete {
+  margin-inline-end: 0;
 }
 
 body.is-mobile .workout-wizard-step {

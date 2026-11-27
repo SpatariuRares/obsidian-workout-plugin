@@ -818,7 +818,6 @@
       "chartType": "Chart type",
       "configuration": "Configuration",
       "displayOptions": "Display options",
-      "mobileOptions": "Recent exercises and workout",
       "preset": "Preset",
       "progressiveOverload": "Progressive overload",
       "tableType": "Table type",
@@ -1279,6 +1278,8 @@
     "stepDone": "{step}, done",
     "steps": {
       "exercise": "Exercise",
+      "fields": "Values",
+      "details": "Details",
       "plan": "Plan",
       "rest": "Rest",
       "target": "What to show",

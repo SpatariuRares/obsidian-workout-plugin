@@ -2,10 +2,16 @@
 // Extracts common form creation and validation logic
 
 import { App, Notice, Platform } from "obsidian";
-import type { WorkoutPluginContext, TemplateGeneratorPort } from "@app/types/PluginPorts";
+import type {
+  WorkoutPluginContext,
+  TemplateGeneratorPort,
+} from "@app/types/PluginPorts";
 import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { Button } from "@app/components/atoms";
+import {
+  WizardShell,
+  type WizardStep,
+} from "@app/features/modals/base/WizardShell";
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { DomUtils } from "@app/utils/DomUtils";
@@ -13,7 +19,10 @@ import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
 import { LogFormRenderer } from "@app/features/modals/base/components/LogFormRenderer";
 import { readLogForm } from "@app/features/modals/base/components/readLogForm";
-import { validate, type FormError } from "@app/features/modals/base/logic/LogEntryDraft";
+import {
+  validate,
+  type FormError,
+} from "@app/features/modals/base/logic/LogEntryDraft";
 
 import { fillDynamicInputsFromCustomFields } from "@app/utils/form/FormUtils";
 import { RecentExercisesService } from "@app/features/modals/base/services/RecentExercisesService";
@@ -36,6 +45,7 @@ export abstract class BaseLogModal extends ModalBase {
   protected currentParameters: ParameterDefinition[] = [];
   protected formElements?: LogFormElements;
   private stopKeepingFieldVisible?: () => void;
+  private shell?: WizardShell;
 
   constructor(
     app: App,
@@ -52,13 +62,19 @@ export abstract class BaseLogModal extends ModalBase {
     this.recentExercisesService = new RecentExercisesService(
       this.plugin,
     );
-    const templatePlugin = this.plugin as WorkoutPluginContext & TemplateGeneratorPort;
+    const templatePlugin = this.plugin as WorkoutPluginContext &
+      TemplateGeneratorPort;
     this.logFormRenderer = new LogFormRenderer(
       this.plugin,
       this.dynamicFieldsRenderer,
       this.recentExercisesService,
       "templateGeneratorService" in templatePlugin
-        ? (name) => new CreateExercisePageModal(this.app, templatePlugin, name).open()
+        ? (name) =>
+            new CreateExercisePageModal(
+              this.app,
+              templatePlugin,
+              name,
+            ).open()
         : undefined,
     );
   }
@@ -108,10 +124,30 @@ export abstract class BaseLogModal extends ModalBase {
     // Create styled main container
     const formContainer = this.createStyledMainContainer(contentEl);
 
+    // The steps are drawn first; the form fills their panels once it is built
+    this.shell = new WizardShell({
+      steps: this.logSteps(),
+      buttonText: () => this.getButtonText(),
+      // Logging happens mid-workout: Log / Update is reachable on every step
+      quickSubmit: () => true,
+      submit: () =>
+        this.formElements && this.handleFormSubmit(this.formElements),
+      close: () => this.close(),
+      startActions: (row) => this.createStartActions(row),
+      actionsClassName: "workout-log-actions",
+    });
+    formContainer.addClass("workout-wizard");
+    this.shell.mount(formContainer);
+    const panel = (id: string) => this.shell!.panel(id)!;
+
     // Create form elements via Renderer
     this.formElements = await this.logFormRenderer.createFormElements(
       this,
-      formContainer,
+      {
+        exercise: panel("exercise"),
+        fields: panel("fields"),
+        details: panel("details"),
+      },
       this.exerciseName,
       this.currentPageLink,
       this.shouldShowDateField(),
@@ -128,10 +164,9 @@ export abstract class BaseLogModal extends ModalBase {
     }
     // Note: Auto-fill logic is now handled within LogFormRenderer's setup
 
-    // Create buttons
-    // Saving the prefilled set shouldn't need a scroll past protocol, notes
-    // and workout
+    // Create buttons: saving the prefilled set never needs a step past the first
     this.createButtons(formContainer, this.formElements);
+    this.shell.refreshHeader();
 
     // Set focus
     this.setInitialFocus(this.formElements);
@@ -204,22 +239,63 @@ export abstract class BaseLogModal extends ModalBase {
     );
   }
 
-  /**
-   * The action row at the end of `parent`: submit, then Cancel
-   */
+  /** The footer (Back, Next, Log / Update, Cancel) at the end of `parent` */
   protected createButtons(
     parent: HTMLElement,
-    formElements: LogFormElements,
+    _formElements: LogFormElements,
   ): void {
-    Button.createModalActions(parent, {
-      className: "workout-log-actions",
-      start: (row) => this.createStartActions(row),
-      primary: {
-        text: this.getButtonText(),
-        onClick: () => this.handleFormSubmit(formElements),
+    this.shell?.createFooter(parent);
+  }
+
+  /**
+   * The form's steps: the exercise, its fields (with last time), then protocol,
+   * notes, date and workout. Moving forward is blocked by what LogEntryDraft
+   * says is missing, so a step only ever shows its own problem.
+   */
+  private logSteps(): WizardStep[] {
+    const problem = (): FormError | null => {
+      if (!this.formElements) return null;
+      const { data, fields } = readLogForm(
+        this.formElements,
+        this.getCurrentFileName(),
+        this.currentParameters,
+      );
+      return validate(data.exercise, fields, this.currentParameters);
+    };
+    const check = (own: (error: FormError) => boolean) => () => {
+      const error = problem();
+      this.clearFieldError();
+      if (!error || !own(error) || !this.formElements) return true;
+      this.showFieldError(this.formElements, error);
+      return false;
+    };
+    const isExercise = (e: FormError) => e.field === "exercise";
+    const isField = (e: FormError) => e.field !== "exercise";
+    const keepPanel = () => {};
+    return [
+      {
+        id: "exercise",
+        label: t("wizard.steps.exercise"),
+        render: keepPanel,
+        validate: check(isExercise),
+        isComplete: () => {
+          const error = problem();
+          return !error || !isExercise(error);
+        },
       },
-      onCancel: () => this.close(),
-    });
+      {
+        id: "fields",
+        label: t("wizard.steps.fields"),
+        render: keepPanel,
+        validate: check(isField),
+        isComplete: () => !problem(),
+      },
+      {
+        id: "details",
+        label: t("wizard.steps.details"),
+        render: keepPanel,
+      },
+    ];
   }
 
   /**
@@ -239,7 +315,11 @@ export abstract class BaseLogModal extends ModalBase {
       this.getCurrentFileName(),
       this.currentParameters,
     );
-    const error = validate(data.exercise, fields, this.currentParameters);
+    const error = validate(
+      data.exercise,
+      fields,
+      this.currentParameters,
+    );
     this.clearFieldError();
     if (error) {
       this.showFieldError(formElements, error);
@@ -273,7 +353,10 @@ export abstract class BaseLogModal extends ModalBase {
    * so on a phone the message isn't a notice far from the field. Falls back
    * to a notice when the form has no such field.
    */
-  private showFieldError(formElements: LogFormElements, error: FormError): void {
+  private showFieldError(
+    formElements: LogFormElements,
+    error: FormError,
+  ): void {
     const input =
       error.field === "exercise"
         ? formElements.exerciseElements.exerciseInput
@@ -295,7 +378,9 @@ export abstract class BaseLogModal extends ModalBase {
     const box = input.closest(".workout-number-field-box");
     input.closest(".workout-number-field")?.addClass("is-invalid");
     (box ?? input).after(message);
-    input.addEventListener("input", () => this.clearFieldError(), { once: true });
+    input.addEventListener("input", () => this.clearFieldError(), {
+      once: true,
+    });
     input.focus();
   }
 

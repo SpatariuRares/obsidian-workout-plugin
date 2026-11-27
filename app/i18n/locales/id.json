@@ -801,8 +801,7 @@
       "progressiveOverload": "Progressive overload",
       "tableType": "Jenis tabel",
       "target": "Target",
-      "workout": "Latihan",
-      "mobileOptions": "Latihan terbaru dan sesi latihan"
+      "workout": "Latihan"
     },
     "selectOptions": {
       "allLogs": "Semua catatan",

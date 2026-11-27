@@ -1356,10 +1356,38 @@ button.workout-icon-dropdown-item[aria-checked=true]::before {
   font-weight: var(--workout-font-weight-semibold);
   color: var(--workout-text-accent);
 }
+.workout-block-title .workout-block-title-link {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.workout-block-title .workout-block-title-link.is-unresolved {
+  color: inherit;
+  opacity: 1;
+}
+.workout-block-title .workout-block-title-link:focus-visible {
+  outline: var(--workout-border-medium) solid var(--interactive-accent);
+  outline-offset: var(--workout-space-2xs);
+  border-radius: var(--workout-radius-xs);
+}
+@media (hover: hover) {
+  .workout-block-title .workout-block-title-link:hover {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+}
 .workout-block-title.is-message {
   font-size: inherit;
   font-weight: normal;
   color: var(--text-muted);
+}
+
+body.is-mobile .workout-block-title .workout-block-title-link {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  min-height: var(--workout-touch-target-min);
 }
 
 .workout-block-meta {

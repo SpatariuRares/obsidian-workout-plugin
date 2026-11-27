@@ -139,6 +139,10 @@ describe("EmbeddedSessionView", () => {
     await flush();
 
     expect(text(el)).toContain("Squat");
+    expect(
+      el.querySelector(".workout-block-title a.internal-link.workout-block-title-link")
+        ?.textContent,
+    ).toBe("Squat");
     expect(text(el)).toContain(t("session.setOf", { set: 2, sets: 2 }));
     expect(text(el)).toContain(
       t("session.target", {

@@ -13,6 +13,7 @@ import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 import { BaseView } from "@app/features/common/views/BaseView";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { BlockCard } from "@app/components/molecules/BlockCard";
+import { exerciseTitleLink } from "@app/features/common/ui/exerciseTitleLink";
 import { Button } from "@app/components";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import { t } from "@app/i18n";
@@ -198,6 +199,12 @@ export class EmbeddedTableView extends BaseView {
     container.empty();
     const { el, header } = BlockCard.create(container, {
       title: params.exercise || params.workout,
+      titleLink: exerciseTitleLink({
+        plugin: this.plugin,
+        exerciseName: params.exercise,
+        sourcePath: where.sourcePath,
+        signal,
+      }),
       className: "workout-log",
     });
     ExerciseActionSelect.render(

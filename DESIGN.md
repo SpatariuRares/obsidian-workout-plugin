@@ -274,7 +274,7 @@ A polite `role="status"` region for what changed ("2/4 sets"). Create it once, o
 
 ### BlockCard (molecule)
 
-A block (`workout-log`, `workout-sets`, `workout-session`, `workout-chart`, `workout-duration`, and each widget of `workout-dashboard`) is a card: card color, control border, xl radius, 12px padding, its parts separated by an 8px gap. Its top row is the title (accent text; muted when it says what is missing), meta and the ⋮ menu, always in the top right corner. `BlockCard.footer` is a row of actions at the end.
+A block (`workout-log`, `workout-sets`, `workout-session`, `workout-chart`, `workout-duration`, and each widget of `workout-dashboard`) is a card: card color, control border, xl radius, 12px padding, its parts separated by an 8px gap. Its top row is the title (accent text; muted when it says what is missing; exercise card titles render as native internal links via `titleLink` / `exerciseTitleLink` with Mod/middle-click and Page Preview), meta and the ⋮ menu, always in the top right corner. `BlockCard.footer` is a row of actions at the end.
 
 ### StatCard (molecule)
 

@@ -5,6 +5,13 @@ import { logRow } from "@app/types/__tests__/logRow";
 
 // Mock obsidian
 jest.mock("obsidian", () => ({
+  Keymap: {
+    isModEvent: jest.fn(
+      (evt?: MouseEvent | KeyboardEvent | null): "tab" | boolean =>
+        evt && (evt.metaKey || evt.ctrlKey) ? "tab" : false,
+    ),
+  },
+  Modal: class {},
   MarkdownView: class {},
   MarkdownRenderChild: class {
     containerEl: HTMLElement;
@@ -437,6 +444,10 @@ describe("EmbeddedTableView", () => {
       const card = container.querySelector(".workout-block-card.workout-log")!;
       const header = card.querySelector(".workout-block-header")!;
       expect(header.querySelector(".workout-block-title")?.textContent).toBe("Bench Press");
+      expect(
+        header.querySelector(".workout-block-title a.internal-link.workout-block-title-link")
+          ?.textContent,
+      ).toBe("Bench Press");
       expect((ExerciseActionSelect.render as jest.Mock).mock.calls[0][0]).toBe(header);
       expect(Array.from(card.children).map((child) => child.className)).toEqual([
         "workout-block-header",
@@ -446,6 +457,16 @@ describe("EmbeddedTableView", () => {
       expect((LogCallouts.renderAddLogButton as jest.Mock).mock.calls[0][0]).toBe(
         card.children[1],
       );
+    });
+
+    it("keeps a workout-only table title as plain text without a link", async () => {
+      const container = document.createElement("div");
+
+      await view.createTable(container, [createLog()], { workout: "Push Day" });
+
+      const title = container.querySelector(".workout-block-title")!;
+      expect(title.textContent).toBe("Push Day");
+      expect(title.querySelector("a")).toBeNull();
     });
 
     it("renders fallback message when table rendering fails", async () => {

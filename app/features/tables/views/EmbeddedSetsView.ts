@@ -46,6 +46,7 @@ import { ProtocolPicker } from "@app/components/molecules/ProtocolPicker";
 import { NotesField } from "@app/components/molecules/NotesField";
 import { UndoNotice } from "@app/components/molecules/UndoNotice";
 import { BlockCard } from "@app/components/molecules/BlockCard";
+import { exerciseTitleLink } from "@app/features/common/ui/exerciseTitleLink";
 import { ICONS, mapColumnIdentifiersToLabels } from "@app/constants";
 import { DomUtils } from "@app/utils/DomUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
@@ -309,6 +310,11 @@ export class SetSheet extends MarkdownRenderChild {
   ): HTMLElement {
     const { el, header } = BlockCard.create(this.body(), {
       title: exercise ?? t("sets.noExercise"),
+      titleLink: exerciseTitleLink({
+        plugin: this.plugin,
+        exerciseName: exercise,
+        sourcePath: this.sourcePath,
+      }),
       titleIsMessage: !exercise,
       meta: progress,
       className: "workout-sets",

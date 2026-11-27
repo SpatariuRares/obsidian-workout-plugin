@@ -32,11 +32,25 @@ describe("openExercisePage", () => {
     const { vault, openFile, plugin: p } = plugin({
       "Exercises/Legs/Bench Press.md": { nome_esercizio: "Panca piana" },
     });
+    const getLeaf = jest.spyOn((p as { app: { workspace: { getLeaf: (newLeaf?: unknown) => unknown } } }).app.workspace, "getLeaf");
 
     openExercisePage(p, "panca piana");
 
+    expect(getLeaf).toHaveBeenCalledWith(false);
     expect(openFile).toHaveBeenCalledWith(vault.file("Exercises/Legs/Bench Press.md"));
     expect(CreateExercisePageModal).not.toHaveBeenCalled();
+  });
+
+  it("should open the exercise's page in the requested leaf target", () => {
+    const { vault, openFile, plugin: p } = plugin({
+      "Exercises/Legs/Bench Press.md": { nome_esercizio: "Panca piana" },
+    });
+    const getLeaf = jest.spyOn((p as { app: { workspace: { getLeaf: (newLeaf?: unknown) => unknown } } }).app.workspace, "getLeaf");
+
+    (openExercisePage as (plugin: unknown, name: string, newLeaf?: unknown) => void)(p, "panca piana", "tab");
+
+    expect(getLeaf).toHaveBeenCalledWith("tab");
+    expect(openFile).toHaveBeenCalledWith(vault.file("Exercises/Legs/Bench Press.md"));
   });
 
   it("should not open a note outside the exercise folder", () => {

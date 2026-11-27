@@ -80,6 +80,10 @@ describe("EmbeddedChartView", () => {
     const card = container.querySelector(".workout-block-card.workout-chart");
     expect(card).not.toBeNull();
     expect(card?.querySelector(".workout-block-title")?.textContent).toBe("Squat");
+    expect(
+      card?.querySelector(".workout-block-title a.internal-link.workout-block-title-link")
+        ?.textContent,
+    ).toBe("Squat");
     expect(card?.querySelector(".workout-block-header .workout-block-menu")).not.toBeNull();
     expect(card?.querySelector(".workout-chart-trend")).not.toBeNull();
     expect(card?.querySelector(".workout-charts-container")).not.toBeNull();
@@ -104,6 +108,7 @@ describe("EmbeddedChartView", () => {
     expect(container.querySelector(".workout-block-title")?.textContent).toBe(
       getDefaultChartTitle(CHART_DATA_TYPE.VOLUME),
     );
+    expect(container.querySelector(".workout-block-title a")).toBeNull();
     expect(container.querySelector(".workout-block-meta")).toBeNull();
   });
 

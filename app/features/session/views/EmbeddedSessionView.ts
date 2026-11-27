@@ -22,6 +22,7 @@ import type { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
 import { BlockCard } from "@app/components/molecules/BlockCard";
+import { exerciseTitleLink } from "@app/features/common/ui/exerciseTitleLink";
 import { ICONS } from "@app/constants";
 import { PathUtils } from "@app/utils/PathUtils";
 import { parametersOrNone } from "@app/services/exercise/ExerciseDefinitionService";
@@ -178,6 +179,11 @@ class SessionRenderChild extends MarkdownRenderChild {
 
       const { el: card, header } = BlockCard.create(this.containerEl, {
         title: step.exercise,
+        titleLink: exerciseTitleLink({
+          plugin: this.plugin,
+          exerciseName: step.exercise,
+          sourcePath: this.sourcePath,
+        }),
         meta: t("session.exerciseOf", { current: index + 1, total: steps.length }),
         className: "workout-session",
       });

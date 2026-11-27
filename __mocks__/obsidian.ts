@@ -534,3 +534,9 @@ export class TFolder {
   name: string = "";
   children: (TFile | TFolder)[] = [];
 }
+export const Keymap = {
+  isModEvent: jest.fn(
+    (evt?: MouseEvent | KeyboardEvent | null): "tab" | boolean =>
+      evt && (evt.metaKey || evt.ctrlKey) ? "tab" : false,
+  ),
+};

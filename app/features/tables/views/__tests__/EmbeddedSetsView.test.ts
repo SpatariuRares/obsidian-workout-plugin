@@ -633,5 +633,17 @@ describe("EmbeddedSetsView", () => {
     await flush();
 
     expect(el.textContent).toContain(t("sets.noExercise"));
+    expect(el.querySelector(".workout-block-title a")).toBeNull();
+  });
+
+  it("renders the exercise title as an internal link", async () => {
+    const { el } = setup([], { exercise: "Bench Press" });
+    await flush();
+
+    const link = el.querySelector<HTMLAnchorElement>(
+      ".workout-block-title a.internal-link.workout-block-title-link",
+    );
+    expect(link).not.toBeNull();
+    expect(link?.textContent).toBe("Bench Press");
   });
 });

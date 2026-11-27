@@ -6,9 +6,24 @@
  * corner. `workout-log`, `workout-sets`, `workout-session`, `workout-chart` and `workout-duration` are block cards.
  */
 
+export interface BlockCardTitleLink {
+  /** Vault path (or unresolved exercise name) used as link target */
+  href: string;
+  /** Marks the link as unresolved (`is-unresolved`) when no page exists yet */
+  unresolved?: boolean;
+  /** Invoked on primary click or middle-click (`auxclick` button 1) */
+  onOpen: (event: MouseEvent) => void;
+  /** Invoked on pointer hover (`mouseover`) for page preview */
+  onHover?: (event: MouseEvent, targetEl: HTMLElement) => void;
+  /** Optional signal to detach listeners when the caller re-renders */
+  signal?: AbortSignal;
+}
+
 export interface BlockCardProps {
   /** The block's subject (an exercise), in accent text */
   title?: string;
+  /** Renders the title as an interactive Obsidian internal link */
+  titleLink?: BlockCardTitleLink;
   /** The title says what is missing ("Choose an exercise"): muted, not accent */
   titleIsMessage?: boolean;
   /** Text before the menu ("2/4 sets") */
@@ -31,8 +46,52 @@ export class BlockCard {
     // Empty (no title, meta or menu) it is hidden by CSS
     const header = el.createDiv({ cls: "workout-block-header" });
     if (props.title !== undefined) {
-      const title = header.createDiv({ cls: "workout-block-title", text: props.title });
-      if (props.titleIsMessage) title.addClass("is-message");
+      if (props.titleIsMessage || !props.titleLink) {
+        const title = header.createDiv({ cls: "workout-block-title", text: props.title });
+        if (props.titleIsMessage) title.addClass("is-message");
+      } else {
+        const { titleLink } = props;
+        const title = header.createDiv({ cls: "workout-block-title" });
+        const link = title.createEl("a", {
+          cls: titleLink.unresolved
+            ? "internal-link workout-block-title-link is-unresolved"
+            : "internal-link workout-block-title-link",
+          text: props.title,
+          attr: {
+            href: titleLink.href,
+            "data-href": titleLink.href,
+            rel: "noopener",
+          },
+        });
+        const listenerOptions = titleLink.signal ? { signal: titleLink.signal } : undefined;
+        link.addEventListener(
+          "click",
+          (event) => {
+            event.preventDefault();
+            titleLink.onOpen(event);
+          },
+          listenerOptions,
+        );
+        link.addEventListener(
+          "auxclick",
+          (event) => {
+            if (event.button !== 1) return;
+            event.preventDefault();
+            titleLink.onOpen(event);
+          },
+          listenerOptions,
+        );
+        if (titleLink.onHover) {
+          const { onHover } = titleLink;
+          link.addEventListener(
+            "mouseover",
+            (event) => {
+              onHover(event, link);
+            },
+            listenerOptions,
+          );
+        }
+      }
     }
     if (props.meta) header.createDiv({ cls: "workout-block-meta", text: props.meta });
     return { el, header };

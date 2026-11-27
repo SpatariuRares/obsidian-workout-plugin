@@ -1,3 +1,4 @@
+import type { PaneType } from "obsidian";
 import type {
   TemplateGeneratorPort,
   WorkoutPluginContext,
@@ -11,10 +12,11 @@ import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExe
 export function openExercisePage(
   plugin: WorkoutPluginContext,
   exerciseName: string,
+  newLeaf: PaneType | boolean = false,
 ): void {
   const page = plugin.getExerciseLibrary().find(exerciseName);
   if (page) {
-    void plugin.app.workspace.getLeaf(false).openFile(page.file);
+    void plugin.app.workspace.getLeaf(newLeaf).openFile(page.file);
     return;
   }
   const templatePlugin = plugin as WorkoutPluginContext & TemplateGeneratorPort;

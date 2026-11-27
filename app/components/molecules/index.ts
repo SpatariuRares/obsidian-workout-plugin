@@ -83,6 +83,7 @@ export {
   BlockCard,
   type BlockCardProps,
   type BlockCardResult,
+  type BlockCardTitleLink,
 } from "@app/components/molecules/BlockCard";
 export {
   CardTable,

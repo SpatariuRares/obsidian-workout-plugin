@@ -23,6 +23,7 @@ import { BaseView } from "@app/features/common/views/BaseView";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { Feedback } from "@app/components/atoms/Feedback";
 import { BlockCard } from "@app/components/molecules/BlockCard";
+import { exerciseTitleLink } from "@app/features/common/ui/exerciseTitleLink";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import type { BlockMenuAction } from "@app/features/common/ui/BlockMenu";
 import { getDefaultChartTitle } from "@app/features/charts/config/ChartConstants";
@@ -136,6 +137,7 @@ export class EmbeddedChartView extends BaseView {
         volumeData,
         trendIndicators,
         params: resolvedParams,
+        sourcePath,
         editAction,
       });
     } catch (error) {
@@ -158,10 +160,11 @@ export class EmbeddedChartView extends BaseView {
       volumeData: number[];
       trendIndicators: TrendIndicators;
       params: EmbeddedChartParams;
+      sourcePath?: string;
       editAction?: BlockMenuAction;
     },
   ): void {
-    const { labels, datasets, volumeData, trendIndicators, params, editAction } =
+    const { labels, datasets, volumeData, trendIndicators, params, sourcePath, editAction } =
       data;
     const dataType = params.type || CHART_DATA_TYPE.VOLUME;
 
@@ -169,6 +172,11 @@ export class EmbeddedChartView extends BaseView {
     const subject = params.title || params.exercise || params.workout;
     const { el: card, header } = BlockCard.create(container, {
       title: subject || getDefaultChartTitle(dataType),
+      titleLink: exerciseTitleLink({
+        plugin: this.plugin,
+        exerciseName: params.exercise,
+        sourcePath,
+      }),
       // The default title already names the type
       meta: subject ? (getTypeNames()[dataType] ?? dataType) : undefined,
       className: "workout-chart",

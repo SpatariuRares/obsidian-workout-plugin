@@ -72,11 +72,17 @@ async function openModal(note = NOTE, withId = false) {
   // The update button appears once the data types are read
   await new Promise((resolve) => setTimeout(resolve, 0));
 
+  const tab = (n: number) =>
+    contentEl.querySelectorAll<HTMLButtonElement>(".workout-wizard-step")[n - 1];
+  const visible = () =>
+    [...contentEl.querySelectorAll<HTMLElement>("[data-step-id]")]
+      .filter((p) => !p.hidden)
+      .map((p) => p.dataset.stepId);
   const update = () =>
     [...contentEl.querySelectorAll("button")]
       .find((b) => b.textContent === t("modal.buttons.updateChart"))!
       .click();
-  return { state, contentEl, update };
+  return { state, contentEl, update, tab, visible };
 }
 
 describe("EditChartModal", () => {
@@ -85,6 +91,21 @@ describe("EditChartModal", () => {
     const inputs = [...contentEl.querySelectorAll<HTMLInputElement>("input")];
     expect(inputs.some((i) => i.value === "Squat")).toBe(true);
     expect(inputs.some((i) => i.value === "60")).toBe(true);
+  });
+
+  it("reaches every step from the stepper and offers Update on each", async () => {
+    const { contentEl, tab, visible } = await openModal();
+    const updates = () =>
+      [...contentEl.querySelectorAll("button")].filter(
+        (b) => b.textContent === t("modal.buttons.updateChart"),
+      );
+
+    tab(3).click();
+    expect(visible()).toEqual(["display"]);
+    expect(updates()).toHaveLength(1);
+    tab(2).click();
+    expect(visible()).toEqual(["data"]);
+    expect(updates()).toHaveLength(1);
   });
 
   it("leaves the note as typed when nothing changed", async () => {

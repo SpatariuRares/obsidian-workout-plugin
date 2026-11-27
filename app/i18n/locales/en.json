@@ -1270,6 +1270,13 @@
       "exercise": "Exercise",
       "plan": "Plan",
       "rest": "Rest"
+    },
+    "chart": {
+      "steps": {
+        "chartType": "Chart type",
+        "data": "Data",
+        "display": "Display"
+      }
     }
   }
 }

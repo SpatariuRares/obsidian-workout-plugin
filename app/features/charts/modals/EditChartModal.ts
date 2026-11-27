@@ -3,7 +3,11 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { InsertChartModal } from "@app/features/charts/modals/InsertChartModal";
 import { chartBlock } from "@app/features/charts/chartBlock";
 import type { EmbeddedChartParams } from "@app/features/charts/types";
-import type { EditTarget } from "@app/features/modals/base/components/createEditButtons";
+import {
+  applyBlockEdit,
+  changesSince,
+  type EditTarget,
+} from "@app/features/modals/base/components/createEditButtons";
 import { t } from "@app/i18n";
 
 /**
@@ -12,6 +16,9 @@ import { t } from "@app/i18n";
  * block, found by its ID or, without one, by its body.
  */
 export class EditChartModal extends InsertChartModal {
+  private formAtOpen?: EmbeddedChartParams;
+  private ready: Promise<void> = Promise.resolve();
+
   /** @param where - The note the block is written in, and how to find it without an id */
   constructor(
     app: App,
@@ -20,6 +27,7 @@ export class EditChartModal extends InsertChartModal {
     private readonly where: EditTarget,
   ) {
     super(app, plugin);
+    this.quickSubmit = true;
   }
 
   protected getModalTitle(): string {
@@ -32,11 +40,6 @@ export class EditChartModal extends InsertChartModal {
 
   protected getSuccessMessage(): string {
     return t("modal.notices.chartUpdated");
-  }
-
-  protected createConfigurationSections(container: HTMLElement): void {
-    super.createConfigurationSections(container);
-    this.prefillFields();
   }
 
   private prefillFields(): void {
@@ -72,18 +75,34 @@ export class EditChartModal extends InsertChartModal {
   }
 
   /**
-   * The data types on offer depend on the exercise, so they are read
-   * before the buttons snapshot the form.
+   * The data types on offer depend on the exercise, so they are read (and the
+   * form snapshotted) before an update can be written.
    */
-  protected createButtons(container: HTMLElement): void {
-    const { type, exercise, id } = this.initialParams;
-    void this.updateDataTypeOptions(exercise ?? "").then(() => {
+  protected createConfigurationSections(container: HTMLElement): void {
+    super.createConfigurationSections(container);
+    this.prefillFields();
+    const { type, exercise } = this.initialParams;
+    this.ready = this.updateDataTypeOptions(exercise ?? "").then(() => {
       if (type) this.dataType?.select(type);
-      this.editButtons(container, chartBlock, t("modal.notices.chartUpdateFailed"), {
-        target: this.where,
-        id,
-        collectParams: () => this.collectParams(),
-      });
+      this.formAtOpen = this.collectParams();
+      this.refreshHeader();
     });
+  }
+
+  protected async submit(): Promise<void> {
+    await this.ready;
+    const formNow = this.collectParams();
+    const changes = changesSince(this.formAtOpen ?? formNow, formNow, this.where);
+    applyBlockEdit(
+      this,
+      {
+        schema: chartBlock,
+        target: this.where,
+        id: this.initialParams.id,
+        successMessage: this.getSuccessMessage(),
+        failureMessage: t("modal.notices.chartUpdateFailed"),
+      },
+      changes,
+    );
   }
 }

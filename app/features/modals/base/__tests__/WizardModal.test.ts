@@ -359,4 +359,86 @@ describe("WizardModal", () => {
       contentEl.querySelector(".workout-wizard-step-meta")?.textContent,
     ).toBe(t("modal.wizard.stepOf", { current: 3, total: 3 }));
   });
+
+  it("jumps to an earlier failing validate-only step when quick-submitted from a later step", () => {
+    class ValidateOnlyStepWizardModal extends TestWizardModal {
+      protected override getSteps(): WizardStep<TestWizardState>[] {
+        const base = super.getSteps();
+        return [
+          {
+            ...base[0],
+            isComplete: undefined,
+            render: (container, state) => {
+              base[0].render(container, state);
+              const input = container.querySelector<HTMLInputElement>(
+                "input[data-field='name']",
+              )!;
+              const err = container.createDiv({ cls: "workout-field-error" });
+              err.hidden = !state.errorShown;
+              err.textContent = state.errorShown
+                ? t("modal.notices.validChooseExercise")
+                : "";
+              if (state.errorShown) {
+                input.focus();
+              }
+            },
+          },
+          base[1],
+          base[2],
+        ];
+      }
+
+      protected override getSecondaryActions(stepIndex: number) {
+        if (stepIndex < this.stepCount - 1) {
+          return [
+            {
+              text: t("modal.buttons.update"),
+              onClick: () => this.handleSubmit(),
+            },
+          ];
+        }
+        return [];
+      }
+    }
+
+    const modal = new ValidateOnlyStepWizardModal(new App());
+    const contentEl = createObsidianContainer();
+    document.body.appendChild(contentEl);
+    const close = jest.fn();
+    Object.assign(modal, { contentEl, close });
+    modal.onOpen();
+
+    // Jump to Step 2 while Step 1 is empty (no isComplete predicate on Step 1)
+    const nameInput = contentEl.querySelector<HTMLInputElement>(
+      "input[data-field='name']",
+    )!;
+    setInputValue(nameInput, "Bench Press");
+    contentEl
+      .querySelectorAll<HTMLButtonElement>(".workout-wizard-step-btn")[1]
+      .click();
+    expect(
+      contentEl.querySelector(".workout-wizard-step-meta")?.textContent,
+    ).toBe(t("modal.wizard.stepOf", { current: 2, total: 3 }));
+
+    // Simulate Step 1 state becoming invalid before quick Update on Step 2
+    modal.validateSpy.mockImplementationOnce((s) => {
+      s.errorShown = true;
+      return false;
+    });
+    buttonByText(contentEl, t("modal.buttons.update")).click();
+
+    expect(
+      contentEl.querySelector(".workout-wizard-step-meta")?.textContent,
+    ).toBe(t("modal.wizard.stepOf", { current: 1, total: 3 }));
+    const err = contentEl.querySelector<HTMLElement>(".workout-field-error");
+    expect(err?.hidden).toBe(false);
+    expect(err?.textContent).toBe(t("modal.notices.validChooseExercise"));
+    expect(document.activeElement).toBe(
+      contentEl.querySelector("input[data-field='name']"),
+    );
+    expect(modal.submitted).toBeNull();
+    expect(close).not.toHaveBeenCalled();
+
+    document.body.innerHTML = "";
+  });
 });

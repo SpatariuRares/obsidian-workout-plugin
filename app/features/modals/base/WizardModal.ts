@@ -57,6 +57,10 @@ export abstract class WizardModal<TState> extends ModalBase {
   protected abstract getSteps(): WizardStep<TState>[];
   protected abstract onSubmit(state: TState): void;
 
+  protected get stepCount(): number {
+    return this.steps.length;
+  }
+
   /**
    * Optional secondary actions rendered in the sticky footer next to the
    * primary button (e.g. a quick Update button in edit mode).
@@ -159,7 +163,8 @@ export abstract class WizardModal<TState> extends ModalBase {
       const step = this.steps[i];
       if (!step.validate) continue;
       if (i !== this.currentStepIndex) {
-        if (!this.isStepComplete(i)) {
+        const valid = this.isStepComplete(i) && step.validate(this.state);
+        if (!valid) {
           this.currentStepIndex = i;
           this.renderAll("none");
           step.validate(this.state);

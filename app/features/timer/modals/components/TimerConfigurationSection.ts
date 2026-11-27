@@ -49,6 +49,8 @@ export class TimerConfigurationSection {
     container: HTMLElement,
     plugin: WorkoutPluginContext,
     onTypeChange?: (type: TIMER_TYPE) => void,
+    /** Where the preset, exercise and display options go (a wizard's second step); default: `container` */
+    optionsContainer: HTMLElement = container,
   ): {
     elements: TimerConfigurationElements;
     handlers: TimerConfigurationHandlers;
@@ -70,8 +72,8 @@ export class TimerConfigurationSection {
       },
     });
 
-    // Presets of the selected type, between the type and its values
-    const presetGroup = modal.createFormGroup(container);
+    // Presets of the selected type
+    const presetGroup = modal.createFormGroup(optionsContainer);
 
     // Parameters container (grid: 1 col mobile, 2 col desktop)
     const parametersContainer = container.createDiv({
@@ -120,7 +122,7 @@ export class TimerConfigurationSection {
     const { elements: exerciseElements } =
       ExerciseAutocomplete.create(
         modal,
-        container,
+        optionsContainer,
         plugin,
         undefined,
         { showCreateButton: false },
@@ -128,7 +130,7 @@ export class TimerConfigurationSection {
 
     // Display options - compact row
     const displaySection = modal.createSection(
-      container,
+      optionsContainer,
       t("modal.sections.displayOptions"),
     );
 
@@ -208,6 +210,37 @@ export class TimerConfigurationSection {
     updateVisibility();
 
     return { elements, handlers };
+  }
+
+  /**
+   * The first timing field that cannot be used (a field the picked type shows
+   * must hold a positive whole number; rest may be empty or 0), with the
+   * message to show under it; null when the timing is fine
+   */
+  static invalidTiming(
+    elements: TimerConfigurationElements,
+  ): { field: HTMLInputElement; message: string } | null {
+    const type = elements.timerType.value();
+    const positive = (input: HTMLInputElement) => {
+      const n = Number(input.value);
+      return input.value.trim() !== "" && Number.isInteger(n) && n > 0;
+    };
+    if (type !== TIMER_TYPE.STOPWATCH && !positive(elements.durationInput)) {
+      return {
+        field: elements.durationInput,
+        message: t("wizard.timer.durationInvalid"),
+      };
+    }
+    if (type === TIMER_TYPE.INTERVAL) {
+      const rest = Number(elements.restInput.value || 0);
+      if (!Number.isInteger(rest) || rest < 0) {
+        return { field: elements.restInput, message: t("wizard.timer.restInvalid") };
+      }
+      if (!positive(elements.roundsInput)) {
+        return { field: elements.roundsInput, message: t("wizard.timer.roundsInvalid") };
+      }
+    }
+    return null;
   }
 
   /**

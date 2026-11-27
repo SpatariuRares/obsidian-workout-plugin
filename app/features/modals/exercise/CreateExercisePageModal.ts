@@ -6,7 +6,7 @@ import type {
   WorkoutPluginContext,
   TemplateGeneratorPort,
 } from "@app/types/PluginPorts";
-import { ModalBase } from "@app/features/modals/base/ModalBase";
+import { WizardModal, type WizardStep } from "@app/features/modals/base/WizardModal";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { MuscleTagSelector } from "@app/features/modals/components/MuscleTagSelector";
@@ -24,111 +24,106 @@ import { ExerciseTypeEditorModal } from "@app/features/settings/modals/ExerciseT
 import { saveExerciseType } from "@app/features/settings/business/saveExerciseType";
 import { describeFields } from "@app/features/settings/components/ExerciseTypesSettings";
 
-export class CreateExercisePageModal extends ModalBase {
+/**
+ * Creates an exercise page through two steps: Name and type (exercise name
+ * and its type with the fields it logs), then Muscles and folder. The page
+ * text is written by `fillExercisePageTemplate`, as before.
+ */
+export class CreateExercisePageModal extends WizardModal {
   private exerciseName?: string;
   private getSelectedTags?: () => string[];
+  private exerciseInput?: HTMLInputElement;
+  private typeSelect?: HTMLSelectElement;
+  private folderInput?: HTMLInputElement;
 
   constructor(
     app: App,
-    private plugin: WorkoutPluginContext & TemplateGeneratorPort,
+    private host: WorkoutPluginContext & TemplateGeneratorPort,
     exerciseName?: string,
   ) {
-    super(app);
+    super(app, host);
     this.exerciseName = exerciseName;
   }
 
-  onOpen() {
-    const { contentEl } = this;
-    contentEl.addClass("workout-modal");
-
-    // Add modal title
-    contentEl.createEl("h2", {
-      text: t("modal.titles.createExercisePage"),
-    });
-
-    // Create form container
-    const formContainer = contentEl.createDiv({
-      cls: "workout-charts-form",
-    });
-
-    // Exercise autocomplete using reusable component
-    const { elements: exerciseElements } =
-      ExerciseAutocomplete.create(
-        this,
-        formContainer,
-        this.plugin,
-        this.exerciseName,
-        { showCreateButton: false },
-      );
-
-    const exerciseTypeSelect = this.createSelectField(
-      formContainer,
-      t("modal.exerciseType"),
-      [],
-    );
-    this.createTypePicker(exerciseTypeSelect);
-
-    // Muscle tag selector (replaces plain text input)
-    const tagSelector = MuscleTagSelector.create(
-      formContainer,
-      this.plugin,
-    );
-    this.getSelectedTags = tagSelector.getSelectedTags;
-
-    // Folder path input
-    const folderInput = this.createTextField(
-      formContainer,
-      t("modal.folderPath"),
-      t("modal.placeholders.folderPath"),
-      this.plugin.settings.exerciseFolderPath,
-    );
-
-    Button.createModalActions(formContainer, {
-      primary: {
-        text: t("modal.buttons.createExercise"),
-        onClick: async () => {
-          const exerciseName =
-            exerciseElements.exerciseInput.value.trim();
-          const exerciseType = exerciseTypeSelect.value;
-          const selectedTags = this.getSelectedTags
-            ? this.getSelectedTags()
-            : [];
-          const folderPath = folderInput.value.trim();
-
-          if (!exerciseName) {
-            new Notice(t("modal.notices.exercisePageNameRequired"));
-            return;
-          }
-
-          try {
-            await this.createExercisePage(
-              exerciseName,
-              exerciseType,
-              selectedTags,
-              folderPath,
-            );
-            this.close();
-            new Notice(t("modal.notices.exercisePageCreated"));
-          } catch (error) {
-            const errorMessage = ErrorUtils.getErrorMessage(error);
-            new Notice(
-              t("modal.notices.exercisePageError", {
-                error: errorMessage,
-              }),
-            );
-          }
-        },
-      },
-      onCancel: () => this.close(),
-    });
-
-    // Focus on exercise input
-    exerciseElements.exerciseInput.focus();
+  protected getModalTitle(): string {
+    return t("modal.titles.createExercisePage");
   }
 
-  onClose() {
-    const { contentEl } = this;
-    contentEl.empty();
+  protected getButtonText(): string {
+    return t("modal.buttons.createExercise");
+  }
+
+  protected getSuccessMessage(): string {
+    return t("modal.notices.exercisePageCreated");
+  }
+
+  protected generateCode(): string {
+    return "";
+  }
+
+  protected getSteps(): WizardStep[] {
+    return [
+      {
+        id: "exercise",
+        label: t("createExercisePageWizard.steps.nameAndType"),
+        render: (el) => this.renderNameStep(el),
+        validate: () => this.validateName(),
+        isComplete: () => this.name() !== "",
+      },
+      {
+        id: "details",
+        label: t("createExercisePageWizard.steps.musclesAndFolder"),
+        render: (el) => this.renderDetailsStep(el),
+      },
+    ];
+  }
+
+  private name(): string {
+    return this.exerciseInput?.value.trim() ?? "";
+  }
+
+  private validateName(): boolean {
+    const ok = this.name() !== "";
+    this.setStepError(
+      "exercise",
+      ok ? null : t("modal.notices.exercisePageNameRequired"),
+      this.exerciseInput,
+    );
+    return ok;
+  }
+
+  private renderNameStep(el: HTMLElement): void {
+    const { elements } = ExerciseAutocomplete.create(this, el, this.host, this.exerciseName, {
+      showCreateButton: false,
+    });
+    this.exerciseInput = elements.exerciseInput;
+    this.typeSelect = this.createSelectField(el, t("modal.exerciseType"), []);
+    this.createTypePicker(this.typeSelect);
+  }
+
+  private renderDetailsStep(el: HTMLElement): void {
+    this.getSelectedTags = MuscleTagSelector.create(el, this.host).getSelectedTags;
+    this.folderInput = this.createTextField(
+      el,
+      t("modal.folderPath"),
+      t("modal.placeholders.folderPath"),
+      this.host.settings.exerciseFolderPath,
+    );
+  }
+
+  protected async submit(): Promise<void> {
+    try {
+      await this.createExercisePage(
+        this.name(),
+        this.typeSelect?.value ?? DEFAULT_EXERCISE_TYPE_ID,
+        this.getSelectedTags ? this.getSelectedTags() : [],
+        this.folderInput?.value.trim() ?? "",
+      );
+      this.close();
+      new Notice(this.getSuccessMessage());
+    } catch (error) {
+      new Notice(t("modal.notices.exercisePageError", { error: ErrorUtils.getErrorMessage(error) }));
+    }
   }
 
   /**
@@ -139,7 +134,7 @@ export class CreateExercisePageModal extends ModalBase {
     const fields = select.parentElement!.createDiv({
       cls: "workout-exercise-type-preview setting-item-description",
     });
-    const catalog = () => new ExerciseTypeCatalog(this.plugin.settings.exerciseTypes);
+    const catalog = () => new ExerciseTypeCatalog(this.host.settings.exerciseTypes);
     const show = () => {
       const type = catalog().resolve(select.value);
       fields.setText(type ? describeFields(type.parameters) : "");
@@ -163,7 +158,7 @@ export class CreateExercisePageModal extends ModalBase {
     Button.onClick(add, () => {
       const draft: CustomExerciseType = { id: "", name: "", parameters: [] };
       new ExerciseTypeEditorModal(this.app, draft, null, async () => {
-        const saved = await saveExerciseType(this.plugin, draft, null);
+        const saved = await saveExerciseType(this.host, draft, null);
         if (saved) fill(draft.id);
         return saved;
       }).open();
@@ -178,12 +173,12 @@ export class CreateExercisePageModal extends ModalBase {
     folderPath: string,
   ) {
     const template =
-      await this.plugin.templateGeneratorService.getExercisePageTemplate();
+      await this.host.templateGeneratorService.getExercisePageTemplate();
 
     const content = fillExercisePageTemplate(
       template,
       { name: exerciseName, typeId: exerciseType, muscleGroups: tags },
-      new ExerciseTypeCatalog(this.plugin.settings.exerciseTypes).resolve(exerciseType)?.name,
+      new ExerciseTypeCatalog(this.host.settings.exerciseTypes).resolve(exerciseType)?.name,
     );
 
     const safeExerciseName = exerciseName.replace(

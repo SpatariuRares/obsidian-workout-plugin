@@ -47,6 +47,7 @@ export class RestTimer {
   /** A set was logged: the rest starts over */
   restart(rest: EmbeddedTimerParams): void {
     const timer = this.timerFor(rest);
+    if (!rest.id) timer.configure?.(rest);
     timer.reset();
     timer.start();
   }

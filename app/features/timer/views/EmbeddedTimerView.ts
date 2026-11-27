@@ -1,5 +1,5 @@
 // Embedded Timer View for workout timing functionality
-import { TimerCore } from "@app/features/timer/business/TimerCore";
+import { TimerCore, type TimerConfig } from "@app/features/timer/business/TimerCore";
 import { TimerDisplay } from "@app/features/timer/components/TimerDisplay";
 import {
   TimerControls,
@@ -42,33 +42,25 @@ export class EmbeddedTimerView extends BaseView {
     editAction?: BlockMenuAction,
   ): void {
     try {
-      // Resolve parameters from preset and defaults
-      const resolveResult = resolveTimer(params, this.plugin.settings);
-      if (resolveResult.error) {
-        this.renderPresetError(container, resolveResult.error);
+      const resolved = this.resolveConfig(params);
+      if ("error" in resolved) {
+        this.renderPresetError(container, resolved.error);
         return;
       }
-      const resolvedParams = resolveResult.params;
+      const { params: resolvedParams, config } = resolved;
 
       // If timer is already running, we only re-render the UI components
       // without resetting the core timing state, unless parameters changed significantly
       const currentState = this.timerCore.getState();
-      const timerType = resolvedParams.type ?? TIMER_TYPE.COUNTDOWN;
-      const plan = intervalPlan(resolvedParams);
-      const isInterval = timerType === TIMER_TYPE.INTERVAL;
-      const duration = isInterval ? plan.work : resolvedParams.duration ?? 30;
-      const rest = isInterval ? plan.rest : 0;
-      const totalRounds = plan.rounds;
-
       const needsReset =
         !this.timerCore.isRunning() ||
-        currentState.timerType !== timerType ||
-        currentState.duration !== duration ||
-        currentState.rest !== rest ||
-        currentState.totalRounds !== totalRounds;
+        currentState.timerType !== config.timerType ||
+        currentState.duration !== config.duration ||
+        currentState.rest !== config.rest ||
+        currentState.totalRounds !== config.totalRounds;
 
       if (needsReset) {
-        this.timerCore.configure({ timerType, duration, rest, totalRounds });
+        this.timerCore.configure(config);
       }
 
       this.timerCore.setSoundEnabled(resolvedParams.sound !== false);
@@ -166,6 +158,35 @@ export class EmbeddedTimerView extends BaseView {
       this.timerCore.getState(),
       this.timerId,
     );
+  }
+
+  /** Reconfigures this timer's duration/type from block parameters (used for dual-rest switching) */
+  public configure(params: EmbeddedTimerParams): void {
+    const resolved = this.resolveConfig(params);
+    if ("error" in resolved) return;
+    this.timerCore.configure(resolved.config);
+    this.timerCore.setSoundEnabled(resolved.params.sound !== false);
+    TimerDisplay.updateDisplay(this.timerCore.getState(), this.timerId);
+  }
+
+  private resolveConfig(
+    params: EmbeddedTimerParams,
+  ): { params: EmbeddedTimerParams; config: TimerConfig } | { error: string } {
+    const resolveResult = resolveTimer(params, this.plugin.settings);
+    if (resolveResult.error) return { error: resolveResult.error };
+    const resolvedParams = resolveResult.params;
+    const timerType = resolvedParams.type ?? TIMER_TYPE.COUNTDOWN;
+    const plan = intervalPlan(resolvedParams);
+    const isInterval = timerType === TIMER_TYPE.INTERVAL;
+    return {
+      params: resolvedParams,
+      config: {
+        timerType,
+        duration: isInterval ? plan.work : resolvedParams.duration ?? 30,
+        rest: isInterval ? plan.rest : 0,
+        totalRounds: plan.rounds,
+      },
+    };
   }
 
   // Public methods for external control - delegated to TimerCore

@@ -1,6 +1,7 @@
 /** @jest-environment jsdom */
 
 import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
+import { RestTimer } from "@app/features/timer/views/RestTimer";
 import { TimerCore } from "@app/features/timer/business/TimerCore";
 import {
   attachObsidianHelpers,
@@ -194,6 +195,58 @@ describe("EmbeddedTimerView", () => {
       expect(container.textContent).toContain("01:00");
       expect(container.textContent).not.toContain(t("timer.phase.work"));
       view.destroy();
+    });
+  });
+
+  describe("RestTimer dual-rest reconfiguration", () => {
+    beforeEach(() => {
+      attachObsidianHelpers(document.body);
+      jest.useFakeTimers();
+      jest.setSystemTime(1_000_000);
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    it("reconfigures own timer duration on restart when switching between restBetween and round rest", () => {
+      const restTimer = new RestTimer(createPlugin(), new Map());
+      const container = createObsidianContainer();
+      document.body.appendChild(container);
+      const roundRest = { type: TIMER_TYPE.COUNTDOWN, duration: 120 };
+      const betweenRest = { type: TIMER_TYPE.COUNTDOWN, duration: 30 };
+
+      restTimer.draw(container, roundRest);
+      expect(container.textContent).toContain("02:00");
+
+      restTimer.restart(betweenRest);
+      expect(container.textContent).toContain("00:30");
+      expect(restTimer.isRunning(betweenRest)).toBe(true);
+
+      restTimer.restart(roundRest);
+      expect(container.textContent).toContain("02:00");
+      expect(restTimer.isRunning(roundRest)).toBe(true);
+
+      restTimer.destroy();
+      container.remove();
+    });
+
+    it("does not reconfigure shared timers (with id) on restart", () => {
+      const shared = new EmbeddedTimerView(createPlugin(), "shared");
+      const configureSpy = jest.spyOn(shared, "configure");
+      const activeTimers = new Map([["shared", shared]]);
+      const restTimer = new RestTimer(createPlugin(), activeTimers);
+      const container = createObsidianContainer();
+      document.body.appendChild(container);
+
+      const sharedRest = { id: "shared", type: TIMER_TYPE.COUNTDOWN, duration: 90 };
+      restTimer.draw(container, sharedRest);
+      restTimer.restart(sharedRest);
+
+      expect(configureSpy).not.toHaveBeenCalled();
+      restTimer.destroy();
+      shared.destroy();
+      container.remove();
     });
   });
 });

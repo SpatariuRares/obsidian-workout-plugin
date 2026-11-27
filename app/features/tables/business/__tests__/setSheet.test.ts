@@ -5,6 +5,8 @@ import {
   rowProtocol,
   rowToFormData,
   setRows,
+  supersetRounds,
+  supersetSlotRest,
   type SheetInput,
 } from "@app/features/tables/business/setSheet";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
@@ -370,5 +372,263 @@ describe("draftFromSet", () => {
     const row = { number: 1, placeholders: {} };
     const result = rowToFormData(row, draft, { exercise: "Bench Press", workout: "Push", parameters: STRENGTH });
     expect(result).toMatchObject({ data: { reps: 8, weight: 80, protocol: "warmup", notes: "easy" } });
+  });
+});
+
+describe("supersetRounds", () => {
+  const TIMED: ParameterDefinition[] = [
+    { key: "duration", label: "Duration", type: "number", unit: "s", required: true, min: 0 },
+  ];
+
+  it("builds warm-up rounds above working rounds in strict declared order with independent history and mixed parameters", () => {
+    const benchPrev = [
+      set(40, 10, { exercise: "Bench Press", protocol: "warmup" }),
+      set(80, 8, { exercise: "Bench Press" }),
+      set(85, 6, { exercise: "Bench Press" }),
+    ];
+    const plankPrev = [
+      logRow({ date: "2026-10-31T10:00:00.000Z", exercise: "Plank", customFields: { Duration: 45 } }),
+      logRow({ date: "2026-10-31T10:01:00.000Z", exercise: "Plank", customFields: { Duration: 60 } }),
+      logRow({ date: "2026-10-31T10:02:00.000Z", exercise: "Plank", customFields: { Duration: 60 } }),
+    ];
+    const benchToday = [set(40, 10, { exercise: "Bench Press", protocol: "warmup" })];
+
+    const rounds = supersetRounds({
+      exercises: [
+        { exercise: "Bench Press", parameters: STRENGTH, today: benchToday, previous: benchPrev },
+        { exercise: "Plank", parameters: TIMED, today: [], previous: plankPrev },
+      ],
+      warmups: 1,
+      extraRounds: 0,
+    });
+
+    // sets unset -> Math.max(1, 2, 3) = 3 working rounds + 1 warmup round
+    expect(rounds).toHaveLength(4);
+    expect(rounds.map((r) => ({ warmup: r.warmup, number: r.number }))).toEqual([
+      { warmup: true, number: 1 },
+      { warmup: false, number: 1 },
+      { warmup: false, number: 2 },
+      { warmup: false, number: 3 },
+    ]);
+
+    // Strict declared order A -> B
+    expect(rounds[0].slots.map((s) => s.exercise)).toEqual(["Bench Press", "Plank"]);
+    expect(rounds[0].slots[0].row.logged).toBe(benchToday[0]);
+    expect(rounds[0].slots[0].row.suggestedProtocol).toBe("warmup");
+    expect(rounds[0].slots[1].row.logged).toBeUndefined();
+    expect(rounds[0].slots[1].row.suggestedProtocol).toBe("warmup");
+    expect(rounds[0].slots[1].row.placeholders).toEqual({});
+
+    // Working placeholders paired independently per exercise
+    expect(rounds[1].slots[0].row.placeholders).toEqual({ reps: "8", weight: "80" });
+    expect(rounds[1].slots[1].row.placeholders).toEqual({ duration: "45" });
+    expect(rounds[3].slots[0].row.placeholders).toEqual({ reps: "6", weight: "85" });
+    expect(rounds[3].slots[1].row.placeholders).toEqual({ duration: "60" });
+  });
+
+  it("enforces protocol precedence: manual > last time > block (default superset) > standard, keeping warmups as warmup", () => {
+    const rounds = supersetRounds({
+      exercises: [
+        {
+          exercise: "Bench Press",
+          parameters: STRENGTH,
+          today: [],
+          previous: [
+            set(40, 10, { exercise: "Bench Press", protocol: "warmup" }),
+            set(80, 8, { exercise: "Bench Press", protocol: "drop_set" }),
+            set(80, 8, { exercise: "Bench Press", protocol: "standard" }),
+          ],
+        },
+        {
+          exercise: "Barbell Row",
+          parameters: STRENGTH,
+          today: [],
+          previous: [set(70, 8, { exercise: "Barbell Row" })],
+        },
+      ],
+      warmups: 1,
+      sets: 2,
+      extraRounds: 0,
+    });
+
+    // Default block protocol is superset; last time non-standard wins on slot 1.A
+    expect(rowProtocol(rounds[0].slots[0].row, emptyDraft())).toBe("warmup");
+    expect(rowProtocol(rounds[0].slots[1].row, emptyDraft())).toBe("warmup");
+    expect(rowProtocol(rounds[1].slots[0].row, emptyDraft())).toBe("drop_set");
+    expect(rowProtocol(rounds[1].slots[1].row, emptyDraft())).toBe("superset");
+    expect(rowProtocol(rounds[2].slots[0].row, emptyDraft())).toBe("superset");
+    expect(rowProtocol(rounds[2].slots[0].row, { ...emptyDraft(), protocol: "standard" })).toBe("standard");
+
+    // Explicit block protocol: standard overrides superset default
+    const standardBlock = supersetRounds({
+      exercises: [
+        { exercise: "Bench Press", parameters: STRENGTH, today: [], previous: [] },
+        { exercise: "Barbell Row", parameters: STRENGTH, today: [], previous: [] },
+      ],
+      sets: 1,
+      protocol: "standard",
+      extraRounds: 0,
+    });
+    expect(rowProtocol(standardBlock[0].slots[0].row, emptyDraft())).toBe("standard");
+  });
+
+  it("adds extraRounds and preserves extra logged sets beyond planned sets", () => {
+    const rounds = supersetRounds({
+      exercises: [
+        { exercise: "Bench Press", parameters: STRENGTH, today: [set(80, 8), set(80, 8)], previous: [] },
+        { exercise: "Barbell Row", parameters: STRENGTH, today: [], previous: [] },
+      ],
+      sets: 1,
+      extraRounds: 1,
+    });
+    expect(rounds).toHaveLength(3);
+  });
+});
+
+describe("supersetSlotRest", () => {
+  const sectionRest = { id: "sec", duration: 60 };
+
+  it("returns undefined for warm-up slots regardless of rest params", () => {
+    expect(
+      supersetSlotRest({ restBetween: 30, rest: 120 }, sectionRest, {
+        isWarmup: true,
+        exerciseIndex: 0,
+        exerciseCount: 2,
+        roundIndex: 0,
+        totalWorkingRounds: 3,
+      }),
+    ).toBeUndefined();
+    expect(
+      supersetSlotRest({ restBetween: 30, rest: 120 }, sectionRest, {
+        isWarmup: true,
+        exerciseIndex: 1,
+        exerciseCount: 2,
+        roundIndex: 0,
+        totalWorkingRounds: 3,
+      }),
+    ).toBeUndefined();
+  });
+
+  it("handles classic superset (restBetween: 0, rest: 120)", () => {
+    const params = { exercises: ["A", "B"], restBetween: 0, rest: 120 };
+    expect(
+      supersetSlotRest(params, sectionRest, {
+        isWarmup: false,
+        exerciseIndex: 0,
+        exerciseCount: 2,
+        roundIndex: 0,
+        totalWorkingRounds: 3,
+      }),
+    ).toBeUndefined();
+    expect(
+      supersetSlotRest(params, sectionRest, {
+        isWarmup: false,
+        exerciseIndex: 1,
+        exerciseCount: 2,
+        roundIndex: 0,
+        totalWorkingRounds: 3,
+      }),
+    ).toEqual({ type: "countdown", duration: 120 });
+    expect(
+      supersetSlotRest(params, sectionRest, {
+        isWarmup: false,
+        exerciseIndex: 1,
+        exerciseCount: 2,
+        roundIndex: 2,
+        totalWorkingRounds: 3,
+      }),
+    ).toBeUndefined();
+  });
+
+  it("handles antagonist paired sets (restBetween: 90, rest unset)", () => {
+    const params = { exercises: ["A", "B"], restBetween: 90 };
+    expect(
+      supersetSlotRest(params, sectionRest, {
+        isWarmup: false,
+        exerciseIndex: 0,
+        exerciseCount: 2,
+        roundIndex: 0,
+        totalWorkingRounds: 3,
+      }),
+    ).toEqual({ type: "countdown", duration: 90 });
+    expect(
+      supersetSlotRest(params, sectionRest, {
+        isWarmup: false,
+        exerciseIndex: 1,
+        exerciseCount: 2,
+        roundIndex: 0,
+        totalWorkingRounds: 3,
+      }),
+    ).toEqual({ type: "countdown", duration: 90 });
+    expect(
+      supersetSlotRest(params, sectionRest, {
+        isWarmup: false,
+        exerciseIndex: 1,
+        exerciseCount: 2,
+        roundIndex: 2,
+        totalWorkingRounds: 3,
+      }),
+    ).toBeUndefined();
+  });
+
+  it("handles hybrid superset (restBetween: 30, rest: 120)", () => {
+    const params = { exercises: ["A", "B", "C"], restBetween: 30, rest: 120 };
+    expect(
+      supersetSlotRest(params, sectionRest, {
+        isWarmup: false,
+        exerciseIndex: 0,
+        exerciseCount: 3,
+        roundIndex: 0,
+        totalWorkingRounds: 2,
+      }),
+    ).toEqual({ type: "countdown", duration: 30 });
+    expect(
+      supersetSlotRest(params, sectionRest, {
+        isWarmup: false,
+        exerciseIndex: 1,
+        exerciseCount: 3,
+        roundIndex: 0,
+        totalWorkingRounds: 2,
+      }),
+    ).toEqual({ type: "countdown", duration: 30 });
+    expect(
+      supersetSlotRest(params, sectionRest, {
+        isWarmup: false,
+        exerciseIndex: 2,
+        exerciseCount: 3,
+        roundIndex: 0,
+        totalWorkingRounds: 2,
+      }),
+    ).toEqual({ type: "countdown", duration: 120 });
+    expect(
+      supersetSlotRest(params, sectionRest, {
+        isWarmup: false,
+        exerciseIndex: 2,
+        exerciseCount: 3,
+        roundIndex: 1,
+        totalWorkingRounds: 2,
+      }),
+    ).toBeUndefined();
+  });
+
+  it("respects explicit rest: 0 and falls back to sectionRest when rest and restBetween are unset", () => {
+    expect(
+      supersetSlotRest({ restBetween: 30, rest: 0 }, sectionRest, {
+        isWarmup: false,
+        exerciseIndex: 1,
+        exerciseCount: 2,
+        roundIndex: 0,
+        totalWorkingRounds: 2,
+      }),
+    ).toBeUndefined();
+    expect(
+      supersetSlotRest({ exercises: ["A", "B"] }, sectionRest, {
+        isWarmup: false,
+        exerciseIndex: 1,
+        exerciseCount: 2,
+        roundIndex: 0,
+        totalWorkingRounds: 2,
+      }),
+    ).toEqual(sectionRest);
   });
 });

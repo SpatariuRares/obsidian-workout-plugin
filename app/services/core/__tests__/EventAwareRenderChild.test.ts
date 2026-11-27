@@ -173,6 +173,59 @@ describe("EventAwareRenderChild", () => {
       });
       expect(renderFn).not.toHaveBeenCalled();
     });
+
+    it("refreshes when exercises list includes a matching exercise (normalized exact match)", () => {
+      makeChild({ exercises: ["Bench Press", "Barbell Row"], exactMatch: true });
+
+      bus.emit({
+        type: "log:added",
+        payload: {
+          entry: makeEntry("  barbell  row "),
+          context: { exercise: "  barbell  row " },
+        },
+      });
+      expect(renderFn).toHaveBeenCalledTimes(1);
+
+      bus.emit({
+        type: "log:added",
+        payload: {
+          entry: makeEntry("Bench Press Incline"),
+          context: { exercise: "Bench Press Incline" },
+        },
+      });
+      expect(renderFn).toHaveBeenCalledTimes(1);
+    });
+
+    it("refreshes on log:updated and log:deleted when exercises list matches, and still filters by workout", () => {
+      makeChild({ exercises: ["Bench Press", "Barbell Row"], workout: "Push Day" });
+
+      bus.emit({
+        type: "log:updated",
+        payload: {
+          previous: makeEntry("Squat", "Push Day"),
+          updated: makeEntry("Bench Press", "Push Day"),
+        },
+      });
+      expect(renderFn).toHaveBeenCalledTimes(1);
+
+      bus.emit({
+        type: "log:deleted",
+        payload: {
+          entry: makeEntry("Barbell Row", "Pull Day"),
+          context: { exercise: "Barbell Row", workout: "Pull Day" },
+        },
+      });
+      expect(renderFn).toHaveBeenCalledTimes(1);
+
+      bus.emit({
+        type: "log:deleted",
+        payload: {
+          entry: makeEntry("Barbell Row", "Push Day"),
+          context: { exercise: "Barbell Row", workout: "Push Day" },
+        },
+      });
+      expect(renderFn).toHaveBeenCalledTimes(2);
+    });
   });
 
   // ---- log:updated (caso rename) ----

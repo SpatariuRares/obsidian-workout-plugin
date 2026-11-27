@@ -19,7 +19,8 @@ import {
 } from "@app/features/session/business/sessionPlan";
 import type { CodeBlockMatch } from "@app/services/editor/CodeBlockEditorService";
 import type { EmbeddedTimerParams } from "@app/features/timer/types";
-import type { EmbeddedSetsParams } from "@app/features/tables/setsBlock";
+import { blockRest, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
+import { TIMER_TYPE } from "@app/types/WorkoutConfigTypes";
 import {
   readSetFields,
   validate,
@@ -95,70 +96,194 @@ export function plannedSets({ sets, previous }: Pick<SheetInput, "sets" | "previ
   return sets ?? Math.max(previousWorking.length, 1);
 }
 
+function partitionSets(today: WorkoutLogData[], previous: WorkoutLogData[]) {
+  return {
+    todayWarmups: today.filter((s) => isWarmupProtocol(s.protocol)),
+    todayWorking: today.filter((s) => !isWarmupProtocol(s.protocol)),
+    previousWarmups: previous.filter((s) => isWarmupProtocol(s.protocol)),
+    previousWorking: previous.filter((s) => !isWarmupProtocol(s.protocol)),
+  };
+}
+
+function resolveBlockWorkingProtocol(protocol: string | undefined): string | undefined {
+  return protocol && !isStandardProtocol(protocol) && !isWarmupProtocol(protocol)
+    ? protocolId(protocol)
+    : undefined;
+}
+
+function buildWarmupRow(
+  index: number,
+  parameters: ParameterDefinition[],
+  todayWarmups: WorkoutLogData[],
+  previousWarmups: WorkoutLogData[],
+): SetRow {
+  const sameSet = previousWarmups[index];
+  return {
+    number: index + 1,
+    warmup: true,
+    logged: todayWarmups[index],
+    placeholders: placeholdersFor(
+      parameters,
+      sameSet ?? previousWarmups[previousWarmups.length - 1],
+    ),
+    suggestedProtocol: WorkoutProtocol.WARMUP,
+  };
+}
+
+function buildWorkingRow(
+  index: number,
+  parameters: ParameterDefinition[],
+  todayWorking: WorkoutLogData[],
+  previousWorking: WorkoutLogData[],
+  blockProtocol: string | undefined,
+  targets?: Pick<SheetInput, "targetReps" | "targetWeight">,
+): SetRow {
+  const sameSet = previousWorking[index];
+  return {
+    number: index + 1,
+    warmup: false,
+    logged: todayWorking[index],
+    placeholders: placeholdersFor(
+      parameters,
+      sameSet ?? previousWorking[previousWorking.length - 1],
+      targets,
+    ),
+    suggestedProtocol:
+      sameSet && !isStandardProtocol(sameSet.protocol) ? protocolId(sameSet.protocol) : blockProtocol,
+  };
+}
+
 /**
  * The rows the sheet shows: warm-up rows (`W1, W2, ...`) above working rows
  * (`1, 2, ...`). Warm-up and working sets pair independently with last time's
  * matching category; warm-up sets never reduce planned working rows.
  */
 export function setRows(input: SheetInput): SetRow[] {
-  const todayWarmups = input.today.filter((s) => isWarmupProtocol(s.protocol));
-  const todayWorking = input.today.filter((s) => !isWarmupProtocol(s.protocol));
-  const previousWarmups = input.previous.filter((s) => isWarmupProtocol(s.protocol));
-  const previousWorking = input.previous.filter((s) => !isWarmupProtocol(s.protocol));
+  const { todayWarmups, todayWorking, previousWarmups, previousWorking } = partitionSets(
+    input.today,
+    input.previous,
+  );
 
   const warmupTotal = Math.max(input.warmups ?? 0, todayWarmups.length) + (input.extraWarmups ?? 0);
   const workingTotal = Math.max(plannedSets(input), todayWorking.length) + input.extraRows;
+  const blockProtocol = resolveBlockWorkingProtocol(input.protocol);
+  const targets = { targetReps: input.targetReps, targetWeight: input.targetWeight };
 
-  const warmupRows: SetRow[] = Array.from({ length: warmupTotal }, (_, index) => {
-    const sameSet = previousWarmups[index];
-    return {
-      number: index + 1,
-      warmup: true,
-      logged: todayWarmups[index],
-      placeholders: placeholdersFor(
-        input,
-        sameSet ?? previousWarmups[previousWarmups.length - 1],
-        false,
-      ),
-      suggestedProtocol: WorkoutProtocol.WARMUP,
-    };
-  });
-
-  const blockProtocol =
-    input.protocol && !isStandardProtocol(input.protocol) && !isWarmupProtocol(input.protocol)
-      ? protocolId(input.protocol)
-      : undefined;
-
-  const workingRows: SetRow[] = Array.from({ length: workingTotal }, (_, index) => {
-    const sameSet = previousWorking[index];
-    return {
-      number: index + 1,
-      warmup: false,
-      logged: todayWorking[index],
-      placeholders: placeholdersFor(
-        input,
-        sameSet ?? previousWorking[previousWorking.length - 1],
-        true,
-      ),
-      suggestedProtocol:
-        sameSet && !isStandardProtocol(sameSet.protocol) ? protocolId(sameSet.protocol) : blockProtocol,
-    };
-  });
+  const warmupRows: SetRow[] = Array.from({ length: warmupTotal }, (_, index) =>
+    buildWarmupRow(index, input.parameters, todayWarmups, previousWarmups),
+  );
+  const workingRows: SetRow[] = Array.from({ length: workingTotal }, (_, index) =>
+    buildWorkingRow(index, input.parameters, todayWorking, previousWorking, blockProtocol, targets),
+  );
 
   return [...warmupRows, ...workingRows];
 }
 
+export interface SupersetExerciseInput {
+  exercise: string;
+  parameters: ParameterDefinition[];
+  today: WorkoutLogData[];
+  previous: WorkoutLogData[];
+}
+
+export interface SupersetInput {
+  exercises: SupersetExerciseInput[];
+  sets?: number;
+  warmups?: number;
+  /** Block protocol override; defaults to `superset` when unset */
+  protocol?: string;
+  extraRounds: number;
+  extraWarmups?: number;
+}
+
+export interface SupersetSlot {
+  exercise: string;
+  exerciseIndex: number;
+  parameters: ParameterDefinition[];
+  row: SetRow;
+}
+
+export interface SupersetRound {
+  /** 1-based within its group (warm-up vs working) */
+  number: number;
+  warmup: boolean;
+  slots: SupersetSlot[];
+}
+
+/** Planned working rounds: `sets` if given, else the max previous working sets across exercises (at least 1) */
+export function plannedSupersetRounds(
+  exercises: Pick<SupersetExerciseInput, "previous">[],
+  sets?: number,
+): number {
+  if (sets !== undefined) return sets;
+  return Math.max(
+    1,
+    ...exercises.map((e) => e.previous.filter((s) => !isWarmupProtocol(s.protocol)).length),
+  );
+}
+
+/**
+ * Builds round-by-round slots for a multi-exercise superset sheet in strict
+ * declared exercise order (`A -> B -> ...`). Each exercise's history and
+ * parameters are partitioned independently; working slots default to
+ * `superset` unless overridden by last time's non-standard protocol or `protocol`.
+ */
+export function supersetRounds(input: SupersetInput): SupersetRound[] {
+  const partitioned = input.exercises.map((ex) => ({
+    ...ex,
+    ...partitionSets(ex.today, ex.previous),
+  }));
+
+  const warmupTotal =
+    Math.max(input.warmups ?? 0, ...partitioned.map((p) => p.todayWarmups.length)) +
+    (input.extraWarmups ?? 0);
+  const plannedWorking = plannedSupersetRounds(input.exercises, input.sets);
+  const workingTotal =
+    Math.max(plannedWorking, ...partitioned.map((p) => p.todayWorking.length)) + input.extraRounds;
+  const blockProtocol = resolveBlockWorkingProtocol(input.protocol ?? WorkoutProtocol.SUPERSET);
+
+  const warmupRounds: SupersetRound[] = Array.from({ length: warmupTotal }, (_, roundIndex) => ({
+    number: roundIndex + 1,
+    warmup: true,
+    slots: partitioned.map((ex, exerciseIndex) => ({
+      exercise: ex.exercise,
+      exerciseIndex,
+      parameters: ex.parameters,
+      row: buildWarmupRow(roundIndex, ex.parameters, ex.todayWarmups, ex.previousWarmups),
+    })),
+  }));
+
+  const workingRounds: SupersetRound[] = Array.from({ length: workingTotal }, (_, roundIndex) => ({
+    number: roundIndex + 1,
+    warmup: false,
+    slots: partitioned.map((ex, exerciseIndex) => ({
+      exercise: ex.exercise,
+      exerciseIndex,
+      parameters: ex.parameters,
+      row: buildWorkingRow(
+        roundIndex,
+        ex.parameters,
+        ex.todayWorking,
+        ex.previousWorking,
+        blockProtocol,
+      ),
+    })),
+  }));
+
+  return [...warmupRounds, ...workingRounds];
+}
+
 function placeholdersFor(
-  input: SheetInput,
+  parameters: ParameterDefinition[],
   hint: WorkoutLogData | undefined,
-  useTargets: boolean,
+  targets?: Pick<SheetInput, "targetReps" | "targetWeight">,
 ): Record<string, string> {
   const placeholders: Record<string, string> = {};
-  for (const param of input.parameters) {
+  for (const param of parameters) {
     const field = fieldFor(param);
     const key = fieldKey(param.key);
     // A logged set's weight is in the settings unit
-    const value = hint ? fieldValue(hint, key) : useTargets ? targetValue(input, key) : undefined;
+    const value = hint ? fieldValue(hint, key) : targets ? targetValue(targets, key) : undefined;
     if (typeof value === "number") {
       placeholders[param.key] = formatFieldNumber(field, value);
     } else if (typeof value === "string" && value !== "") {
@@ -168,9 +293,12 @@ function placeholdersFor(
   return placeholders;
 }
 
-function targetValue(input: SheetInput, key: string): number | undefined {
-  if (key === "reps") return input.targetReps;
-  if (key === "weight") return input.targetWeight;
+function targetValue(
+  targets: Pick<SheetInput, "targetReps" | "targetWeight">,
+  key: string,
+): number | undefined {
+  if (key === "reps") return targets.targetReps;
+  if (key === "weight") return targets.targetWeight;
   return undefined;
 }
 
@@ -233,5 +361,47 @@ export function restOf(
   match: CodeBlockMatch | undefined,
 ): EmbeddedTimerParams | undefined {
   const sectionRest = note !== null && match ? sectionRestOf(note, match) : {};
+  return stepRest(params, sectionRest);
+}
+
+/**
+ * Determines the rest timer to run after logging a specific slot in a
+ * multi-exercise superset block:
+ * - Warm-up slots never trigger a timer.
+ * - Non-final exercises within a round use `restBetween` when positive.
+ * - The final exercise of a round uses `rest` / `timer.*` (unless final round
+ *   or `rest: 0`), falling back to `restBetween` when `rest` is unset, else
+ *   to `sectionRest` via `stepRest`.
+ */
+export function supersetSlotRest(
+  params: EmbeddedSetsParams,
+  sectionRest: EmbeddedTimerParams,
+  {
+    isWarmup,
+    exerciseIndex,
+    exerciseCount,
+    roundIndex,
+    totalWorkingRounds,
+  }: {
+    isWarmup: boolean;
+    exerciseIndex: number;
+    exerciseCount: number;
+    roundIndex: number;
+    totalWorkingRounds: number;
+  },
+): EmbeddedTimerParams | undefined {
+  if (isWarmup) return undefined;
+  if (exerciseIndex < exerciseCount - 1) {
+    return params.restBetween && params.restBetween > 0
+      ? { type: TIMER_TYPE.COUNTDOWN, duration: params.restBetween }
+      : undefined;
+  }
+  if (roundIndex >= totalWorkingRounds - 1) return undefined;
+  if (params.rest === 0) return undefined;
+  const own = blockRest(params);
+  if (own) return own;
+  if (params.rest === undefined && params.restBetween && params.restBetween > 0) {
+    return { type: TIMER_TYPE.COUNTDOWN, duration: params.restBetween };
+  }
   return stepRest(params, sectionRest);
 }

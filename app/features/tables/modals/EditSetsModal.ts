@@ -1,5 +1,6 @@
 import { App } from "obsidian";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
+import type { ModalAction } from "@app/components/atoms";
 import {
   InsertSetsModal,
   type InsertSetsState,
@@ -56,6 +57,16 @@ export class EditSetsModal extends InsertSetsModal {
     super.onOpen();
     // Snapshot initial form values once on open, never on footer re-renders
     this.formAtOpen = this.collectParams();
+  }
+
+  protected override getSecondaryActions(stepIndex: number): ModalAction[] {
+    if (stepIndex >= this.stepCount - 1) return [];
+    return [
+      {
+        text: this.getButtonText(),
+        onClick: () => this.handleSubmit(),
+      },
+    ];
   }
 
   protected override onSubmit(_state: InsertSetsState): void {

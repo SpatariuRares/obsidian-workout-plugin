@@ -147,15 +147,20 @@ export class InsertSetsModal extends WizardModal<InsertSetsState> {
   }
 
   private validateExerciseStep(state: InsertSetsState): boolean {
-    if (this.isActiveStepElement(this.exerciseInput)) {
+    const active = this.isActiveStepElement(this.exerciseInput);
+    if (active) {
       state.exercise = this.exerciseInput!.value;
     }
     if (!state.exercise.trim()) {
-      this.setExerciseError(t("modal.notices.validChooseExercise"));
-      this.exerciseInput?.focus();
+      if (active) {
+        this.setExerciseError(t("modal.notices.validChooseExercise"));
+        this.exerciseInput?.focus();
+      }
       return false;
     }
-    this.setExerciseError();
+    if (active) {
+      this.setExerciseError();
+    }
     return true;
   }
 

@@ -1,8 +1,12 @@
 import { App } from "obsidian";
 import { InsertDashboardModal } from "@app/features/dashboard/modals/InsertDashboardModal";
+import {
+  applyBlockEdit,
+  changesSince,
+  type EditTarget,
+} from "@app/features/modals/base/components/createEditButtons";
 import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
-import type { EditTarget } from "@app/features/modals/base/components/createEditButtons";
 import { t } from "@app/i18n";
 
 /**
@@ -12,6 +16,7 @@ import { t } from "@app/i18n";
  */
 export class EditDashboardModal extends InsertDashboardModal {
   private readonly target: EditTarget;
+  private formAtOpen?: EmbeddedDashboardParams;
 
   /**
    * @param where - The note the block is written in and how to find it
@@ -25,6 +30,7 @@ export class EditDashboardModal extends InsertDashboardModal {
   ) {
     super(app, params, where.noteWidth);
     this.target = where;
+    this.quickSubmit = true;
   }
 
   protected getModalTitle(): string {
@@ -39,13 +45,27 @@ export class EditDashboardModal extends InsertDashboardModal {
     return t("modal.notices.dashboardUpdated");
   }
 
-  protected createButtons(container: HTMLElement): void {
-    const { id } = this.initialParams;
-    this.editButtons(container, dashboardBlock, t("modal.notices.dashboardUpdateFailed"), {
-      target: this.target,
-      id,
-      collectParams: () => this.collectParams(),
-      validate: () => this.validateSettings(),
-    });
+  protected createConfigurationSections(container: HTMLElement): void {
+    super.createConfigurationSections(container);
+    // Snapshot after the prefill so only what the user changes is patched
+    this.formAtOpen = this.collectParams();
+    this.refreshHeader();
+  }
+
+  protected submit(): void {
+    if (!this.checkForm()) return;
+    const formNow = this.collectParams();
+    const changes = changesSince(this.formAtOpen ?? formNow, formNow, this.target);
+    applyBlockEdit(
+      this,
+      {
+        schema: dashboardBlock,
+        target: this.target,
+        id: this.initialParams.id,
+        successMessage: this.getSuccessMessage(),
+        failureMessage: t("modal.notices.dashboardUpdateFailed"),
+      },
+      changes,
+    );
   }
 }

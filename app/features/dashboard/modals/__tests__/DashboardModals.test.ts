@@ -98,7 +98,24 @@ function form(modal: InsertDashboardModal, buttonText: string) {
           `button[aria-label="${t("dashboard.modal.moveUp", { widget: label })}"]`,
         )!
         .click(),
-    submit: () => button(buttonText).click(),
+    // Insert lives on the last step: the stepper takes us there
+    submit: () => {
+      if (!button(buttonText)) {
+        contentEl
+          .querySelectorAll<HTMLButtonElement>(".workout-wizard-step")[1]
+          .click();
+      }
+      button(buttonText).click();
+    },
+    tab: (n: number) =>
+      contentEl.querySelectorAll<HTMLButtonElement>(".workout-wizard-step")[
+        n - 1
+      ],
+    visible: () =>
+      [...contentEl.querySelectorAll<HTMLElement>("[data-step-id]")]
+        .filter((p) => !p.hidden)
+        .map((p) => p.dataset.stepId),
+    button,
   };
 }
 
@@ -811,5 +828,92 @@ describe("EditWidgetModal", () => {
     });
 
     expect(button(t("dashboard.widgetModal.remove"))).toBeUndefined();
+  });
+});
+
+describe("dashboard wizard", () => {
+  const dateRange = (contentEl: HTMLElement) =>
+    contentEl.querySelector<HTMLElement>("[data-step-id='general']")!
+      .querySelectorAll<HTMLInputElement>("input")[1];
+
+  it("has General and Widgets steps, opening on General", () => {
+    const { app } = fakeApp();
+    const f = form(new InsertDashboardModal(app), t("modal.buttons.insertDashboard"));
+
+    expect(f.visible()).toEqual(["general"]);
+    expect(
+      [...f.contentEl.querySelectorAll(".workout-wizard-step-label")].map(
+        (e) => e.textContent,
+      ),
+    ).toEqual([t("dashboard.wizard.stepGeneral"), t("dashboard.wizard.stepWidgets")]);
+    expect(f.contentEl.querySelector(".workout-wizard-counter")!.textContent).toBe(
+      t("wizard.stepCounter", { current: 1, total: 2 }),
+    );
+  });
+
+  it("blocks Next on an invalid date range, with an inline error and focus", () => {
+    const { app } = fakeApp();
+    const f = form(new InsertDashboardModal(app), t("modal.buttons.insertDashboard"));
+    const input = dateRange(f.contentEl);
+    input.value = "-3";
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+
+    f.button(t("wizard.next")).click();
+
+    expect(f.visible()).toEqual(["general"]);
+    expect(f.contentEl.querySelector(".workout-wizard-error")!.textContent).toBe(
+      t("dashboard.wizard.dateRangeInvalid"),
+    );
+    expect(document.activeElement).toBe(input);
+    expect(f.tab(2).disabled).toBe(true);
+  });
+
+  it("keeps typed values when going Back", () => {
+    const { app } = fakeApp();
+    const f = form(new InsertDashboardModal(app), t("modal.buttons.insertDashboard"));
+    dateRange(f.contentEl).value = "14";
+    f.button(t("wizard.next")).click();
+    f.button(t("wizard.back")).click();
+
+    expect(f.visible()).toEqual(["general"]);
+    expect(dateRange(f.contentEl).value).toBe("14");
+  });
+
+  it("writes nothing when cancelled", () => {
+    const { app, state } = fakeApp();
+    const f = form(new InsertDashboardModal(app), t("modal.buttons.insertDashboard"));
+    f.checkbox(t("dashboard.summary.title")).click();
+    f.button(t("modal.buttons.cancel")).click();
+
+    expect(state.inserted).toBe("");
+  });
+
+  it("shows the widgets step with the invalid setting when submitting from step 1", async () => {
+    const { app, state } = fakeApp(
+      note("```workout-dashboard", "id: d1", "```"),
+    );
+    const modal = new EditDashboardModal(app, { id: "d1" }, { sourcePath: "Stats.md" });
+    const f = form(modal, t("modal.buttons.updateDashboard"));
+    const days = [...f.contentEl.querySelectorAll<HTMLInputElement>(".workout-number-field-input")].find(
+      (i) => i.closest(".workout-charts-form-group")?.textContent?.includes(t("dashboard.widgetModal.volumeTrendDays")),
+    )!;
+    days.value = "0";
+    f.button(t("modal.buttons.updateDashboard")).click();
+    await flush();
+
+    expect(f.visible()).toEqual(["widgets"]);
+    expect(document.activeElement).toBe(days);
+    expect(state.content).toBe(note("```workout-dashboard", "id: d1", "```"));
+  });
+
+  it("edit opens with every step reachable and Update on every step", () => {
+    const { app } = fakeApp("");
+    const modal = new EditDashboardModal(app, { id: "d1", title: "T" }, { sourcePath: "Stats.md" });
+    const f = form(modal, t("modal.buttons.updateDashboard"));
+
+    expect(f.tab(2).disabled).toBe(false);
+    expect(f.button(t("modal.buttons.updateDashboard"))).toBeDefined();
+    f.tab(2).click();
+    expect(f.button(t("modal.buttons.updateDashboard"))).toBeDefined();
   });
 });

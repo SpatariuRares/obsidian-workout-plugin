@@ -103,13 +103,6 @@
   padding-bottom: var(--workout-space-sm);
 }
 
-.workout-log-mobile-summary {
-  cursor: pointer;
-  margin-top: var(--workout-space-lg);
-  margin-bottom: var(--workout-space-sm);
-  font-weight: var(--workout-font-weight-semibold);
-  color: var(--text-normal);
-}
 
 @media (max-width: variables.$breakpoint-tablet) {
   .workout-modal {

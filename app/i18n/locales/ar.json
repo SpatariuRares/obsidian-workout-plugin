@@ -801,8 +801,7 @@
       "progressiveOverload": "التحميل التدريجي",
       "tableType": "نوع الجدول",
       "target": "الهدف",
-      "workout": "التدريب",
-      "mobileOptions": "التمارين الأخيرة والتدريب"
+      "workout": "التدريب"
     },
     "selectOptions": {
       "allLogs": "كل السجلات",

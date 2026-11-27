@@ -1,5 +1,5 @@
 import { App, MarkdownView } from "obsidian";
-import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
+import { WizardModal, type WizardStep } from "@app/features/modals/base/WizardModal";
 import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import {
   DASHBOARD_WIDGET_IDS,
@@ -47,6 +47,8 @@ const FORM_SETTINGS = [
   ["volume", "volumeTrendDays"],
 ] as const;
 
+const GENERAL_STEP = "general";
+
 interface FormSetting {
   widget: DashboardWidgetId;
   key: string;
@@ -59,7 +61,7 @@ interface FormSetting {
  * (which ones, in what order) or as a grid (each widget in its cells).
  * Opens on `initialParams`, so the edit modal reuses it as is.
  */
-export class InsertDashboardModal extends BaseInsertModal {
+export class InsertDashboardModal extends WizardModal {
   /** Every widget, in the order the form shows them */
   private order: DashboardWidgetId[];
   private shown: Set<DashboardWidgetId>;
@@ -123,11 +125,47 @@ export class InsertDashboardModal extends BaseInsertModal {
     return t("modal.notices.dashboardInserted");
   }
 
-  protected createConfigurationSections(
-    container: HTMLElement,
-  ): void {
+  protected createConfigurationSections(container: HTMLElement): void {
     // Long list: the buttons stay at the bottom of the modal (see _form.scss)
     container.addClass("workout-dashboard-form");
+    super.createConfigurationSections(container);
+  }
+
+  protected getSteps(): WizardStep[] {
+    return [
+      {
+        id: GENERAL_STEP,
+        label: t("dashboard.wizard.stepGeneral"),
+        render: (el) => this.renderGeneralStep(el),
+        validate: () => this.validateDateRange(),
+        isComplete: () => this.dateRangeValid(),
+      },
+      {
+        id: "widgets",
+        label: t("dashboard.wizard.stepWidgets"),
+        render: (el) => this.renderWidgetsStep(el),
+      },
+    ];
+  }
+
+  private dateRangeValid(): boolean {
+    const value = this.dateRangeInput?.value.trim() ?? "";
+    if (value === "") return true;
+    const num = Number(value);
+    return Number.isInteger(num) && num >= 0;
+  }
+
+  private validateDateRange(): boolean {
+    const ok = this.dateRangeValid();
+    this.setStepError(
+      GENERAL_STEP,
+      ok ? null : t("dashboard.wizard.dateRangeInvalid"),
+      this.dateRangeInput,
+    );
+    return ok;
+  }
+
+  private renderGeneralStep(container: HTMLElement): void {
     const params = this.initialParams;
     const general = this.createSection(
       container,
@@ -147,7 +185,10 @@ export class InsertDashboardModal extends BaseInsertModal {
       undefined,
       t("dashboard.modal.allHistory"),
     );
+  }
 
+  private renderWidgetsStep(container: HTMLElement): void {
+    const params = this.initialParams;
     const widgets = this.createSection(
       container,
       t("dashboard.modal.widgets"),
@@ -194,7 +235,26 @@ export class InsertDashboardModal extends BaseInsertModal {
   }
 
   protected canInsert(): boolean {
-    return this.validateSettings();
+    return this.checkForm();
+  }
+
+  /**
+   * Every check: a bad date range or widget setting brings the user to its
+   * step with the problem shown and the field focused
+   */
+  protected checkForm(): boolean {
+    if (!this.validateDateRange()) {
+      this.goTo(0);
+      return false;
+    }
+    if (!this.validateSettings()) {
+      this.goTo(1);
+      this.contentEl
+        .querySelector<HTMLElement>("[data-step-id='widgets'] [aria-invalid='true']")
+        ?.focus();
+      return false;
+    }
+    return true;
   }
 
   /**

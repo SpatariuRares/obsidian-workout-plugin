@@ -190,4 +190,32 @@ describe("EditLogModal", () => {
       expect.objectContaining({ protocol: WorkoutProtocol.DROP_SET }),
     );
   });
+
+  it("offers Update on every step, keeps delete in the footer and saves from the last step", async () => {
+    const { contentEl, save, updateWorkoutLogEntry } = await openModal();
+    const button = (text: string) =>
+      [...contentEl.querySelectorAll("button")].find((b) => b.textContent === text)!;
+    const visible = () =>
+      [...contentEl.querySelectorAll<HTMLElement>("[data-step-id]")]
+        .filter((p) => !p.hidden)
+        .map((p) => p.dataset.stepId);
+
+    for (const step of ["exercise", "fields", "details"]) {
+      expect(visible()).toEqual([step]);
+      expect(button(t("modal.buttons.update"))).toBeDefined();
+      expect(
+        contentEl.querySelector(
+          `.workout-log-actions button[aria-label="${t("modal.buttons.deleteSet")}"]`,
+        ),
+      ).not.toBeNull();
+      if (step !== "details") button(t("wizard.next")).click();
+    }
+
+    await save();
+
+    expect(updateWorkoutLogEntry).toHaveBeenCalledWith(
+      original,
+      expect.objectContaining({ reps: 5, notes: "late session" }),
+    );
+  });
 });

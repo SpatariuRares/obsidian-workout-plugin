@@ -1,6 +1,5 @@
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
-import { Platform } from "obsidian";
 import type { LogFormElements, ProtocolChoice } from "@app/types/ModalTypes";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { WorkoutProtocol } from "@app/types/WorkoutLogData";
@@ -20,6 +19,17 @@ import {
 import { NotesField, ProtocolPicker } from "@app/components/molecules";
 import { DomUtils } from "@app/utils/DomUtils";
 
+/**
+ * The wizard steps of the log form, in order: the exercise (with the recent
+ * exercises), last time and the exercise's parameter fields, then protocol,
+ * notes, date and workout
+ */
+export const LOG_STEP_IDS = ["exercise", "fields", "details"] as const;
+export type LogStepId = (typeof LOG_STEP_IDS)[number];
+
+/** Where each part of the form is drawn: one container per wizard step */
+export type LogFormSections = Record<LogStepId, HTMLElement>;
+
 export class LogFormRenderer {
   constructor(
     private plugin: WorkoutPluginContext,
@@ -33,7 +43,7 @@ export class LogFormRenderer {
    */
   async createFormElements(
     modal: BaseLogModal,
-    formContainer: HTMLElement,
+    sections: LogFormSections,
     initialExerciseName: string | undefined,
     initialCurrentPageLink: string | undefined,
     shouldShowDateField: boolean,
@@ -46,7 +56,7 @@ export class LogFormRenderer {
     const { elements: exerciseElements } =
       ExerciseAutocomplete.create(
         modal,
-        formContainer,
+        sections.exercise,
         this.plugin,
         initialExerciseName,
         {
@@ -54,7 +64,7 @@ export class LogFormRenderer {
         },
       );
 
-    const history = formContainer.createDiv({
+    const history = sections.fields.createDiv({
       cls: "workout-log-history",
       attr: { "aria-live": "polite" },
     });
@@ -78,17 +88,13 @@ export class LogFormRenderer {
       );
     });
 
-    const isMobile = Platform.isMobile;
-
-    if (!isMobile) {
-      this.createRecentExercisesChips(
-        formContainer,
-        exerciseElements.exerciseInput,
-      );
-    }
+    this.createRecentExercisesChips(
+      sections.exercise,
+      exerciseElements.exerciseInput,
+    );
 
     // Create container for dynamic parameter fields
-    const parametersContainer = formContainer.createDiv({
+    const parametersContainer = sections.fields.createDiv({
       cls: "workout-parameters-container",
     });
 
@@ -118,9 +124,9 @@ export class LogFormRenderer {
         },
       );
 
-    const protocol = this.createProtocolChoice(formContainer);
+    const protocol = this.createProtocolChoice(sections.details);
 
-    const notesInput = NotesField.create(formContainer, {
+    const notesInput = NotesField.create(sections.details, {
       label: t("modal.notes"),
       value: "",
       onChange: () => {},
@@ -131,7 +137,7 @@ export class LogFormRenderer {
     let dateInput: HTMLInputElement | undefined;
     if (shouldShowDateField) {
       dateInput = modal.createTextField(
-        formContainer,
+        sections.details,
         t("modal.date"),
         "",
         "",
@@ -139,26 +145,9 @@ export class LogFormRenderer {
       dateInput.type = "date";
     }
 
-    // Mobile Accordion Section
-    let workoutSectionParent = formContainer;
-    if (isMobile) {
-      workoutSectionParent = formContainer.createEl("details", {
-        cls: "workout-log-mobile-accordion",
-      });
-      workoutSectionParent.createEl("summary", {
-        text: t("modal.sections.mobileOptions"),
-        cls: "workout-log-mobile-summary",
-      });
-
-      this.createRecentExercisesChips(
-        workoutSectionParent,
-        exerciseElements.exerciseInput,
-      );
-    }
-
     // Workout section
     const workoutSection = modal.createSection(
-      workoutSectionParent,
+      sections.details,
       t("modal.sections.workout"),
     );
 

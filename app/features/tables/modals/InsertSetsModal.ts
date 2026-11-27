@@ -1,5 +1,6 @@
 import { App, Notice } from "obsidian";
-import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
+import { reviewRows } from "@app/features/tables/business/setsReview";
+import { WizardModal, type WizardStep } from "@app/features/modals/base/WizardModal";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { AdjustField } from "@app/components/molecules/AdjustField";
 import { setsBlock, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
@@ -7,6 +8,7 @@ import {
   PlanFields,
   type PlanFieldsElements,
 } from "@app/features/tables/modals/components/PlanFields";
+import { getDynamicModalLabels } from "@app/constants";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { t } from "@app/i18n";
@@ -14,14 +16,21 @@ import { t } from "@app/i18n";
 const DEFAULT_SETS = 3;
 const REST_INCREMENT = 15;
 
-/** Inserts a `workout-sets` block: exercise, workout, planned sets and targets */
-export class InsertSetsModal extends BaseInsertModal {
+/**
+ * Inserts a `workout-sets` block through three steps: Exercise (exercise and
+ * workout), Plan (planned sets and targets) and Rest, with a review of the
+ * choices before Insert
+ */
+export class InsertSetsModal extends WizardModal {
   protected exerciseInput?: HTMLInputElement;
   protected workoutInput?: HTMLInputElement;
   protected planFields?: PlanFieldsElements;
   protected restInput?: HTMLInputElement;
   /** The rest the form starts with; 0 leaves `rest` out */
   protected defaultRest = 0;
+
+  private planContext?: HTMLElement;
+  private review?: HTMLElement;
 
   constructor(app: App, plugin: WorkoutPluginContext) {
     super(app, plugin);
@@ -39,10 +48,33 @@ export class InsertSetsModal extends BaseInsertModal {
     return t("modal.notices.setsInserted");
   }
 
-  protected createConfigurationSections(container: HTMLElement): void {
-    if (!this.plugin) throw new Error(t("modal.errors.missingElements"));
+  protected getSteps(): WizardStep[] {
+    return [
+      {
+        id: "exercise",
+        label: t("wizard.steps.exercise"),
+        render: (el) => this.renderExerciseStep(el),
+        validate: () => this.validateExercise(),
+        isComplete: () => this.exerciseName() !== "",
+      },
+      {
+        id: "plan",
+        label: t("wizard.steps.plan"),
+        render: (el) => this.renderPlanStep(el),
+        onEnter: () => this.refreshPlanContext(),
+      },
+      {
+        id: "rest",
+        label: t("wizard.steps.rest"),
+        render: (el) => this.renderRestStep(el),
+        onEnter: () => this.refreshReview(),
+      },
+    ];
+  }
 
-    const target = this.createSection(container, t("modal.sections.target"));
+  private renderExerciseStep(el: HTMLElement): void {
+    if (!this.plugin) throw new Error(t("modal.errors.missingElements"));
+    const target = this.createSection(el, t("modal.sections.target"));
     const { elements } = ExerciseAutocomplete.create(this, target, this.plugin, undefined, {
       showCreateButton: false,
     });
@@ -52,11 +84,18 @@ export class InsertSetsModal extends BaseInsertModal {
       t("sets.workoutLabel"),
       t("sets.workoutPlaceholder", { note: this.getCurrentFileName() }),
     );
+  }
 
-    const plan = this.createSection(container, t("modal.sections.progressiveOverload"));
+  private renderPlanStep(el: HTMLElement): void {
+    this.planContext = el.createDiv({ cls: "workout-wizard-context" });
+    const plan = this.createSection(el, t("modal.sections.progressiveOverload"));
     this.planFields = PlanFields.create(plan, DEFAULT_SETS);
+  }
+
+  private renderRestStep(el: HTMLElement): void {
+    const rest = this.createSection(el, t("modal.rest"));
     // 0 leaves `rest` out: the rest of the section's workout-timer
-    this.restInput = AdjustField.create(plan, {
+    this.restInput = AdjustField.create(rest, {
       label: t("sets.restLabel"),
       value: this.defaultRest,
       min: 0,
@@ -64,15 +103,55 @@ export class InsertSetsModal extends BaseInsertModal {
       step: REST_INCREMENT,
       unit: "s",
     });
+    this.restInput.addEventListener("input", () => this.refreshReview());
+    el.createEl("h3", { text: t("sets.wizard.review"), cls: "workout-wizard-review-title" });
+    this.review = el.createDiv({ cls: "workout-wizard-review" });
+  }
+
+  private exerciseName(): string {
+    return this.exerciseInput?.value.trim() ?? "";
+  }
+
+  private validateExercise(): boolean {
+    const ok = this.exerciseName() !== "";
+    this.setStepError(
+      "exercise",
+      ok ? null : t("modal.notices.validChooseExercise"),
+      this.exerciseInput,
+    );
+    return ok;
+  }
+
+  private refreshPlanContext(): void {
+    this.planContext?.setText(t("sets.wizard.planningFor", { exercise: this.exerciseName() }));
+  }
+
+  /** A compact key/value summary of what Insert will write */
+  private refreshReview(): void {
+    const review = this.review;
+    if (!review) return;
+    review.empty();
+    const rows = reviewRows(this.collectParams(), {
+      weightUnit: this.plugin?.settings.weightUnit ?? "",
+      noteName: this.getCurrentFileName(),
+      targetWeightLabel: getDynamicModalLabels().TARGET_WEIGHT,
+    });
+    for (const [key, value] of rows) {
+      const row = review.createDiv({ cls: "workout-wizard-review-row" });
+      row.createSpan({ cls: "workout-wizard-review-key", text: key });
+      row.createSpan({ cls: "workout-wizard-review-value", text: value });
+    }
+  }
+
+  /** A direct submit (Update from any step, Insert) needs an exercise too */
+  protected canInsert(): boolean {
+    if (this.exerciseName() !== "") return true;
+    new Notice(t("modal.notices.validChooseExercise"));
+    return false;
   }
 
   protected generateCode(): string {
-    const params = this.collectParams();
-    if (!params.exercise) {
-      new Notice(t("modal.notices.validChooseExercise"));
-      throw new Error(t("modal.notices.validChooseExercise"));
-    }
-    return setsBlock.serialize({ id: generateCodeBlockId(), ...params });
+    return setsBlock.serialize({ id: generateCodeBlockId(), ...this.collectParams() });
   }
 
   /** The block parameters the form sets; empty or zero ones are left out */

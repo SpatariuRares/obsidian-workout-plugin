@@ -5,13 +5,21 @@ import { App, Notice, Platform } from "obsidian";
 import type { WorkoutPluginContext, TemplateGeneratorPort } from "@app/types/PluginPorts";
 import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { Button } from "@app/components/atoms";
+import {
+  WizardShell,
+  type WizardStep,
+} from "@app/features/modals/base/WizardShell";
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { DomUtils } from "@app/utils/DomUtils";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
-import { LogFormRenderer } from "@app/features/modals/base/components/LogFormRenderer";
+import {
+  LOG_STEP_IDS,
+  LogFormRenderer,
+  type LogFormSections,
+  type LogStepId,
+} from "@app/features/modals/base/components/LogFormRenderer";
 import { readLogForm } from "@app/features/modals/base/components/readLogForm";
 import { validate, type FormError } from "@app/features/modals/base/logic/LogEntryDraft";
 
@@ -36,6 +44,9 @@ export abstract class BaseLogModal extends ModalBase {
   protected currentParameters: ParameterDefinition[] = [];
   protected formElements?: LogFormElements;
   private stopKeepingFieldVisible?: () => void;
+  private shell?: WizardShell;
+  /** What the form is missing, read once per pass over the steps (see WizardShellHost.beginPass) */
+  private problemCache?: { error: FormError | null };
 
   constructor(
     app: App,
@@ -108,10 +119,28 @@ export abstract class BaseLogModal extends ModalBase {
     // Create styled main container
     const formContainer = this.createStyledMainContainer(contentEl);
 
+    // The steps are drawn first; the form fills their panels once it is built
+    this.shell = new WizardShell({
+      steps: this.logSteps(),
+      buttonText: () => this.getButtonText(),
+      // Logging happens mid-workout: Log / Update is reachable on every step
+      quickSubmit: () => true,
+      beginPass: () => {
+        this.problemCache = undefined;
+      },
+      submit: () =>
+        this.formElements && this.handleFormSubmit(this.formElements),
+      close: () => this.close(),
+      startActions: (row) => this.createStartActions(row),
+      actionsClassName: "workout-log-actions",
+    });
+    this.shell.mount(formContainer);
+    const sections = this.sectionsOf(this.shell);
+
     // Create form elements via Renderer
     this.formElements = await this.logFormRenderer.createFormElements(
       this,
-      formContainer,
+      sections,
       this.exerciseName,
       this.currentPageLink,
       this.shouldShowDateField(),
@@ -128,10 +157,9 @@ export abstract class BaseLogModal extends ModalBase {
     }
     // Note: Auto-fill logic is now handled within LogFormRenderer's setup
 
-    // Create buttons
-    // Saving the prefilled set shouldn't need a scroll past protocol, notes
-    // and workout
+    // Create buttons: saving the prefilled set never needs a step past the first
     this.createButtons(formContainer, this.formElements);
+    this.shell.refreshHeader();
 
     // Set focus
     this.setInitialFocus(this.formElements);
@@ -204,22 +232,74 @@ export abstract class BaseLogModal extends ModalBase {
     );
   }
 
-  /**
-   * The action row at the end of `parent`: submit, then Cancel
-   */
+  /** The footer (Back, Next, Log / Update, Cancel) at the end of `parent` */
   protected createButtons(
     parent: HTMLElement,
-    formElements: LogFormElements,
+    _formElements: LogFormElements,
   ): void {
-    Button.createModalActions(parent, {
-      className: "workout-log-actions",
-      start: (row) => this.createStartActions(row),
-      primary: {
-        text: this.getButtonText(),
-        onClick: () => this.handleFormSubmit(formElements),
+    this.shell?.createFooter(parent);
+  }
+
+  /**
+   * The form's steps: the exercise, its fields (with last time), then protocol,
+   * notes, date and workout. Moving forward is blocked by what LogEntryDraft
+   * says is missing, so a step only ever shows its own problem.
+   */
+  private logSteps(): WizardStep[] {
+    const problem = (): FormError | null => {
+      if (!this.formElements) return null;
+      if (!this.problemCache) {
+        const { data, fields } = readLogForm(
+          this.formElements,
+          this.getCurrentFileName(),
+          this.currentParameters,
+        );
+        this.problemCache = {
+          error: validate(data.exercise, fields, this.currentParameters),
+        };
+      }
+      return this.problemCache.error;
+    };
+    const check = (own: (error: FormError) => boolean) => () => {
+      const error = problem();
+      this.clearFieldError();
+      if (!error || !own(error) || !this.formElements) return true;
+      this.showFieldError(this.formElements, error);
+      return false;
+    };
+    const isExercise = (e: FormError) => e.field === "exercise";
+    const isField = (e: FormError) => e.field !== "exercise";
+    const label: Record<LogStepId, string> = {
+      exercise: t("wizard.steps.exercise"),
+      fields: t("wizard.steps.fields"),
+      details: t("wizard.steps.details"),
+    };
+    const steps: Record<LogStepId, Omit<WizardStep, "id" | "label">> = {
+      exercise: {
+        validate: check(isExercise),
+        isComplete: () => {
+          const error = problem();
+          return !error || !isExercise(error);
+        },
       },
-      onCancel: () => this.close(),
-    });
+      fields: {
+        validate: check(isField),
+        isComplete: () => !problem(),
+      },
+      details: {},
+    };
+    return LOG_STEP_IDS.map((id) => ({ id, label: label[id], ...steps[id] }));
+  }
+
+  /** The panel of each step, which the form is drawn into */
+  private sectionsOf(shell: WizardShell): LogFormSections {
+    const [exercise, fields, details] = LOG_STEP_IDS.map((id) =>
+      shell.panel(id),
+    );
+    if (!exercise || !fields || !details) {
+      throw new Error("The log form's step panels were not drawn");
+    }
+    return { exercise, fields, details };
   }
 
   /**

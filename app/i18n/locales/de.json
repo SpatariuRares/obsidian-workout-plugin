@@ -801,8 +801,7 @@
       "progressiveOverload": "Progressive Überlastung",
       "tableType": "Tabellentyp",
       "target": "Ziel",
-      "workout": "Training",
-      "mobileOptions": "Zuletzt verwendete Übungen und Trainings"
+      "workout": "Training"
     },
     "selectOptions": {
       "allLogs": "Alle Einträge",

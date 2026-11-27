@@ -802,8 +802,7 @@
       "progressiveOverload": "Surcharge progressive",
       "tableType": "Type de tableau",
       "target": "Cible",
-      "workout": "Entraînement",
-      "mobileOptions": "Exercices et séances d'entraînement récents"
+      "workout": "Entraînement"
     },
     "selectOptions": {
       "allLogs": "Toutes les entrées",

@@ -1270,6 +1270,15 @@
       "exercise": "Exercise",
       "plan": "Plan",
       "rest": "Rest"
+    },
+    "timerSteps": {
+      "timing": "Timing",
+      "options": "Options"
+    },
+    "timer": {
+      "durationInvalid": "Enter a duration of at least 1 second",
+      "restInvalid": "Enter a rest of 0 seconds or more",
+      "roundsInvalid": "Enter at least 1 round"
     }
   }
 }

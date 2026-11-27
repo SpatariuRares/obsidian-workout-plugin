@@ -11,6 +11,8 @@ import { t } from "@app/i18n";
  */
 export function openWizard(
   ModalClass: new (app: App, plugin: WorkoutPluginContext) => unknown,
+  /** Extra plugin members (and settings) for a modal that needs more than the defaults */
+  extras: { settings?: Record<string, unknown>; [key: string]: unknown } = {},
 ) {
   const inserted: string[] = [];
   const app = {
@@ -27,15 +29,17 @@ export function openWizard(
     vault: { getMarkdownFiles: () => [] },
     metadataCache: { getFileCache: () => null },
   } as unknown as App;
+  const defaultSettings = { timerPresets: {}, defaultTimerPreset: null, recentExercises: [] };
   const plugin = {
     app,
-    settings: { timerPresets: {}, defaultTimerPreset: null, recentExercises: [] },
     getWorkoutLogData: async () => [],
     getExerciseLibrary: () => ({ pages: () => [], find: () => undefined }),
     getExerciseDefinitionService: () => ({
       getExerciseNames: async () => [],
       getExerciseDefinitions: async () => [],
     }),
+    ...extras,
+    settings: { ...defaultSettings, ...extras.settings },
   } as unknown as WorkoutPluginContext;
 
   const modal = new ModalClass(app, plugin) as { onOpen(): void };

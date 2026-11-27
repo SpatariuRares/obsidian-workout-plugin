@@ -5,6 +5,8 @@ import { EditSetsModal } from "@app/features/tables/modals/EditSetsModal";
 import { setsBlock, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
 import type { EditTarget } from "@app/features/modals/base/components/createEditButtons";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
+import { defaultProtocolEntries } from "@app/services/protocols/ProtocolCatalog";
+import type { CustomProtocolConfig } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 const FULL_NOTE = [
@@ -27,6 +29,7 @@ function openEditModal(options?: {
   note?: string;
   params?: EmbeddedSetsParams;
   target?: Partial<EditTarget>;
+  customProtocols?: CustomProtocolConfig[];
 }) {
   const note = options?.note ?? FULL_NOTE;
   const noteState = { content: note };
@@ -69,6 +72,7 @@ function openEditModal(options?: {
       timerPresets: {},
       defaultTimerPreset: null,
       recentExercises: [],
+      customProtocols: options?.customProtocols ?? defaultProtocolEntries(),
     },
     getWorkoutLogData: async () => [],
     getExerciseLibrary: () => ({ pages: () => pages, find: () => undefined }),
@@ -393,5 +397,204 @@ describe("EditSetsModal", () => {
     const reparsed = setsBlock.parse(updatedBody);
     expect(reparsed.params.id).toBeTruthy();
     expect(reparsed.errors).toEqual([]);
+  });
+
+  it("keeps a deleted protocol via optionsIncluding in edit mode and patches protocol changes cleanly", async () => {
+    const note = [
+      "# Push Day",
+      "```workout-sets",
+      "id: ws-del",
+      "exercise: Leg Extension",
+      "protocol: tempo",
+      "sets: 3",
+      "```",
+    ].join("\n");
+
+    const { contentEl, close, noteState } = openEditModal({
+      note,
+      customProtocols: defaultProtocolEntries(),
+    });
+
+    const tempoChip = buttonByText(contentEl, "tempo");
+    expect(tempoChip.getAttribute("aria-pressed")).toBe("true");
+
+    // Switch to Drop set -> patches only protocol
+    buttonByText(contentEl, t("modal.selectOptions.dropSet")).click();
+    buttonByText(contentEl, t("modal.buttons.update")).click();
+    await flush();
+
+    expect(close).toHaveBeenCalledTimes(1);
+    expect(noteState.content).toBe(
+      note.replace("protocol: tempo", "protocol: drop_set"),
+    );
+  });
+
+  it("prefills Superset params across all 3 steps (including omitted protocol: superset) and patches only changed keys", async () => {
+    const supersetNote = [
+      "# Upper",
+      "```workout-sets",
+      "id: ws-ss",
+      "exercises: [Bench Press, Bent Over Row]",
+      "# paired push/pull",
+      "sets: 4",
+      "warmups: 1",
+      "restBetween: 30",
+      "rest: 120",
+      "```",
+    ].join("\n");
+
+    // 1. No-op leaves block untouched (does not inject protocol: superset)
+    const noop = openEditModal({ note: supersetNote });
+    expect(
+      buttonByText(noop.contentEl, t("modal.selectOptions.superset")).getAttribute(
+        "aria-pressed",
+      ),
+    ).toBe("true");
+    const slots = noop.contentEl.querySelectorAll<HTMLInputElement>(
+      ".workout-superset-slot input[type='text']",
+    );
+    expect([...slots].map((i) => i.value)).toEqual([
+      "Bench Press",
+      "Bent Over Row",
+    ]);
+
+    stepButtons(noop.contentEl)[1].click();
+    expect(adjustFieldInput(noop.contentEl, t("modal.rounds")).value).toBe("4");
+    expect(
+      adjustFieldInput(noop.contentEl, t("modal.wizard.warmupRounds")).value,
+    ).toBe("1");
+
+    stepButtons(noop.contentEl)[2].click();
+    expect(
+      adjustFieldInput(noop.contentEl, t("modal.wizard.restBetweenLabel")).value,
+    ).toBe("30");
+    expect(
+      adjustFieldInput(noop.contentEl, t("modal.wizard.restRoundLabel")).value,
+    ).toBe("120");
+
+    buttonByText(noop.contentEl, t("modal.buttons.update")).click();
+    await flush();
+    expect(noop.noteState.content).toBe(supersetNote);
+
+    document.body.innerHTML = "";
+    jest.clearAllMocks();
+
+    // 2. Reorder exercises + change restBetween -> patches only those two
+    const edit = openEditModal({ note: supersetNote });
+    edit.contentEl
+      .querySelector<HTMLButtonElement>(
+        `button[aria-label="${t("modal.wizard.moveExerciseUp", { letter: "B" })}"]`,
+      )!
+      .click();
+    stepButtons(edit.contentEl)[2].click();
+    setFieldValue(
+      adjustFieldInput(edit.contentEl, t("modal.wizard.restBetweenLabel")),
+      "45",
+    );
+    buttonByText(edit.contentEl, t("modal.buttons.update")).click();
+    await flush();
+
+    expect(edit.close).toHaveBeenCalledTimes(1);
+    expect(edit.noteState.content).toBe(
+      supersetNote
+        .replace(
+          "exercises: [Bench Press, Bent Over Row]",
+          "exercises: [Bent Over Row, Bench Press]",
+        )
+        .replace("restBetween: 30", "restBetween: 45"),
+    );
+  });
+
+  it("converts Single -> Superset cleanly via changedParams (removes exercise/targets, adds exercises/protocol/restBetween)", async () => {
+    const { contentEl, close, noteState, process } = openEditModal();
+
+    buttonByText(contentEl, t("modal.selectOptions.superset")).click();
+    const slots = contentEl.querySelectorAll<HTMLInputElement>(
+      ".workout-superset-slot input[type='text']",
+    );
+    expect(slots[0].value).toBe("Bench Press");
+    expect(document.activeElement).toBe(slots[1]);
+
+    // Empty slot B blocks Update and focuses slot B
+    buttonByText(contentEl, t("modal.buttons.update")).click();
+    await flush();
+    expect(process).not.toHaveBeenCalled();
+    expect(document.activeElement).toBe(slots[1]);
+
+    setFieldValue(slots[1], "Bent Over Row");
+    stepButtons(contentEl)[2].click();
+    setFieldValue(
+      adjustFieldInput(contentEl, t("modal.wizard.restBetweenLabel")),
+      "30",
+    );
+    setFieldValue(
+      adjustFieldInput(contentEl, t("modal.wizard.restRoundLabel")),
+      "120",
+    );
+
+    buttonByText(contentEl, t("modal.buttons.update")).click();
+    await flush();
+
+    expect(close).toHaveBeenCalledTimes(1);
+    const body = /```workout-sets\n([\s\S]*?)```/.exec(noteState.content)![1];
+    const parsed = setsBlock.parse(body).params;
+    expect(parsed).toEqual({
+      id: "ws-1",
+      exercises: ["Bench Press", "Bent Over Row"],
+      protocol: "superset",
+      workout: "Upper A",
+      sets: 4,
+      warmups: 2,
+      restBetween: 30,
+      rest: 120,
+      "timer.sound": false,
+    });
+    expect(noteState.content).toContain("# warm-up and top set");
+    expect(noteState.content).not.toContain("exercise:");
+    expect(noteState.content).not.toContain("targetWeight:");
+    expect(noteState.content).not.toContain("targetReps:");
+  });
+
+  it("converts Superset -> Single cleanly via changedParams (removes exercises/protocol/restBetween, adds exercise)", async () => {
+    const supersetNote = [
+      "# Upper",
+      "```workout-sets",
+      "id: ws-ss",
+      "exercises: [Bench Press, Bent Over Row]",
+      "protocol: superset",
+      "# keep note",
+      "sets: 4",
+      "warmups: 1",
+      "restBetween: 30",
+      "rest: 120",
+      "```",
+    ].join("\n");
+
+    const { contentEl, close, noteState } = openEditModal({
+      note: supersetNote,
+    });
+
+    buttonByText(contentEl, t("modal.selectOptions.standard")).click();
+    const singleInput = contentEl.querySelector<HTMLInputElement>(
+      "input[type='text']",
+    )!;
+    expect(singleInput.value).toBe("Bench Press");
+
+    buttonByText(contentEl, t("modal.buttons.update")).click();
+    await flush();
+
+    expect(close).toHaveBeenCalledTimes(1);
+    const body = /```workout-sets\n([\s\S]*?)```/.exec(noteState.content)![1];
+    expect(setsBlock.parse(body).params).toEqual({
+      id: "ws-ss",
+      exercise: "Bench Press",
+      sets: 4,
+      warmups: 1,
+      rest: 120,
+    });
+    expect(noteState.content).toContain("# keep note");
+    expect(noteState.content).not.toContain("exercises:");
+    expect(noteState.content).not.toContain("protocol:");
+    expect(noteState.content).not.toContain("restBetween:");
   });
 });

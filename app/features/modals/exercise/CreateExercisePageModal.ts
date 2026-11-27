@@ -158,7 +158,7 @@ export class CreateExercisePageModal extends WizardModal {
     Button.onClick(add, () => {
       const draft: CustomExerciseType = { id: "", name: "", parameters: [] };
       new ExerciseTypeEditorModal(this.app, draft, null, async () => {
-        const saved = await saveExerciseType(this.plugin, draft, null);
+        const saved = await saveExerciseType(this.host, draft, null);
         if (saved) fill(draft.id);
         return saved;
       }).open();

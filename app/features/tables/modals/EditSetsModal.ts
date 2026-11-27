@@ -1,8 +1,17 @@
 import { App } from "obsidian";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { InsertSetsModal } from "@app/features/tables/modals/InsertSetsModal";
-import { PlanFields } from "@app/features/tables/modals/components/PlanFields";
-import { setsBlock, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
+import {
+  setsBlock,
+  isSupersetBlock,
+  type EmbeddedSetsParams,
+} from "@app/features/tables/setsBlock";
+import {
+  ProtocolCatalog,
+  protocolId,
+  type ProtocolInfo,
+} from "@app/services/protocols/ProtocolCatalog";
+import { WorkoutProtocol } from "@app/types/WorkoutLogData";
 import {
   applyBlockEdit,
   changesSince,
@@ -11,7 +20,7 @@ import {
 import { t } from "@app/i18n";
 
 /**
- * Edits a `workout-sets` block: the insert form, filled in with the block's
+ * Edits a `workout-sets` block: the insert wizard, filled in with the block's
  * parameters, patching only the ones the user changed.
  */
 export class EditSetsModal extends InsertSetsModal {
@@ -40,13 +49,18 @@ export class EditSetsModal extends InsertSetsModal {
     return t("sets.blockUpdated");
   }
 
+  protected override getProtocolOptions(catalog: ProtocolCatalog): ProtocolInfo[] {
+    const initial = isSupersetBlock(this.initialParams)
+      ? WorkoutProtocol.SUPERSET
+      : protocolId(this.initialParams.protocol);
+    return catalog
+      .optionsIncluding(initial)
+      .filter((p) => p.id !== (WorkoutProtocol.WARMUP as string));
+  }
+
   protected createConfigurationSections(container: HTMLElement): void {
+    this.applyInitialParams(this.initialParams);
     super.createConfigurationSections(container);
-    const { exercise, workout } = this.initialParams;
-    if (this.exerciseInput) this.exerciseInput.value = exercise ?? "";
-    if (this.workoutInput) this.workoutInput.value = workout ?? "";
-    if (this.planFields) PlanFields.fill(this.planFields, this.initialParams);
-    if (this.restInput) this.restInput.value = String(this.initialParams.rest ?? 0);
     // Snapshot after the prefill so only what the user changes is patched
     this.formAtOpen = this.collectParams();
     // The prefill sets values without events: unlock the stepper for them
@@ -67,5 +81,24 @@ export class EditSetsModal extends InsertSetsModal {
       },
       changes,
     );
+  }
+
+  private applyInitialParams(params: EmbeddedSetsParams): void {
+    const superset = isSupersetBlock(params);
+    this.selectedProtocol = superset
+      ? WorkoutProtocol.SUPERSET
+      : protocolId(params.protocol);
+    this.singleExercise = params.exercise ?? "";
+    this.supersetExercises =
+      params.exercises && params.exercises.length >= 2
+        ? [...params.exercises]
+        : [params.exercise ?? "", ""];
+    this.workoutValue = params.workout ?? "";
+    this.plannedSets = params.sets;
+    this.warmupsValue = params.warmups ?? 0;
+    this.targetWeightValue = params.targetWeight;
+    this.targetRepsValue = params.targetReps;
+    this.restBetweenValue = params.restBetween ?? 0;
+    this.restValue = params.rest ?? 0;
   }
 }

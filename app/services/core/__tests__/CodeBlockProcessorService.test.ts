@@ -17,6 +17,7 @@ jest.mock(
     },
     MarkdownRenderChild: class MockMarkdownRenderChild {
       constructor(public containerEl: HTMLElement) {}
+      register(_fn: () => void) {}
       onload() {}
       onunload() {}
     },
@@ -477,6 +478,60 @@ describe("CodeBlockProcessorService", () => {
         expect.objectContaining({ edits: true }),
       );
       expect(ctx.addChild).toHaveBeenCalledWith(expect.any(EventAwareRenderChild));
+    });
+  });
+
+  describe("handleWorkoutSets", () => {
+    it("refreshes superset blocks when any exercise in exercises: changes in the log", async () => {
+      const sheetRender = jest.fn().mockResolvedValue(undefined);
+      mockSetsView.createSets.mockReturnValue({ render: sheetRender });
+      const el = createObsidianContainer();
+      const children: any[] = [];
+      const ctx = {
+        addChild: jest.fn((child) => children.push(child)),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutSets(
+        "exercises: [Bench Press, Barbell Row]\nsets: 3\nrestBetween: 30",
+        el,
+        ctx,
+      );
+
+      expect(mockSetsView.createSets).toHaveBeenCalledWith(
+        blockBody(el),
+        expect.objectContaining({
+          exercises: ["Bench Press", "Barbell Row"],
+          sets: 3,
+          restBetween: 30,
+        }),
+        "test/path.md",
+        expect.objectContaining({ edits: true }),
+        expect.objectContaining({ sourcePath: "test/path.md" }),
+      );
+
+      const watcher = children.find((c) => c instanceof EventAwareRenderChild);
+      expect(watcher).toBeDefined();
+      watcher.onload();
+      sheetRender.mockClear();
+
+      eventBus.emit({
+        type: "log:added",
+        payload: {
+          entry: { exercise: "Barbell Row", workout: "Push Day" } as any,
+          context: { exercise: "Barbell Row", workout: "Push Day" },
+        },
+      });
+      expect(sheetRender).toHaveBeenCalledTimes(1);
+
+      eventBus.emit({
+        type: "log:added",
+        payload: {
+          entry: { exercise: "Squat", workout: "Push Day" } as any,
+          context: { exercise: "Squat", workout: "Push Day" },
+        },
+      });
+      expect(sheetRender).toHaveBeenCalledTimes(1);
     });
   });
 

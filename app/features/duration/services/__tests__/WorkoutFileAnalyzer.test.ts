@@ -271,6 +271,34 @@ describe("WorkoutFileAnalyzer", () => {
       expect(r.restPeriodCount).toBe(3);
     });
 
+    it("should count planned warmups work duration without adding working rest time", async () => {
+      const md = [
+        "## Squat",
+        "```workout-sets",
+        "exercise: Squat",
+        "warmups: 2",
+        "sets: 3",
+        "targetReps: 6",
+        "rest: 120",
+        "```",
+        "## Bench",
+        "```workout-log",
+        "exercise: Bench",
+        "```",
+        "```workout-sets",
+        "exercise: Bench",
+        "warmups: 1",
+        "sets: 2",
+        "rest: 0",
+        "```",
+      ].join("\n");
+      const r = await analyze(md);
+      expect(r.setCount).toBe(8);
+      expect(r.totalSetTime).toBe(5 * 6 * 5 + 3 * 60);
+      expect(r.totalRestTime).toBe(3 * 120);
+      expect(r.restPeriodCount).toBe(3);
+    });
+
     it("should count a workout-log's planned sets, not its limit", async () => {
       const md = "## A\n```workout-log\nexercise: Squat\nsets: 3\nlimit: 10\n```";
       const r = await analyze(md);
@@ -356,6 +384,75 @@ describe("WorkoutFileAnalyzer", () => {
         rest: 300 + 8 * 60 + 240 + 30 + 30,
         work: 5 * 60,
       });
+    });
+
+    it("should estimate a composite superset block with restBetween, round rest, and warmups without working rest", async () => {
+      const md = [
+        "## Superset",
+        "```workout-sets",
+        "exercises: [Bench Press, Barbell Row]",
+        "sets: 3",
+        "warmups: 1",
+        "restBetween: 30",
+        "rest: 90",
+        "```",
+      ].join("\n");
+      const r = await analyze(md);
+      // 3 rounds * 2 exercises + 1 warmup * 2 exercises = 8 sets * 60s = 480s
+      expect(r.setCount).toBe(8);
+      expect(r.totalSetTime).toBe(480);
+      // 3 * (2 - 1) * 30 + max(3 - 1, 0) * 90 = 90 + 180 = 270s (5 rest periods)
+      expect(r.totalRestTime).toBe(270);
+      expect(r.restPeriodCount).toBe(5);
+      expect(r.totalDuration).toBe(750);
+    });
+
+    it("should handle superset rest: 0, restBetween fallback for round rest, N=3, and single round", async () => {
+      // N=3, 4 rounds, restBetween: 20, rest unset -> effectiveRoundRest = 20
+      const fallback = await analyze(
+        [
+          "## Giant Set",
+          "```workout-sets",
+          "exercises: [A, B, C]",
+          "sets: 4",
+          "restBetween: 20",
+          "```",
+        ].join("\n"),
+      );
+      expect(fallback.setCount).toBe(12);
+      // 4 * (3 - 1) * 20 + max(4 - 1, 0) * 20 = 160 + 60 = 220
+      expect(fallback.totalRestTime).toBe(220);
+      expect(fallback.restPeriodCount).toBe(11);
+
+      // rest: 0 -> no round rest, only intra-round restBetween
+      const noRoundRest = await analyze(
+        [
+          "## Superset",
+          "```workout-sets",
+          "exercises: [A, B]",
+          "sets: 3",
+          "restBetween: 25",
+          "rest: 0",
+          "```",
+        ].join("\n"),
+      );
+      expect(noRoundRest.totalRestTime).toBe(3 * 25);
+      expect(noRoundRest.restPeriodCount).toBe(3);
+
+      // 1 round -> max(1 - 1, 0) = 0 round rests
+      const oneRound = await analyze(
+        [
+          "## Superset",
+          "```workout-sets",
+          "exercises: [A, B]",
+          "sets: 1",
+          "restBetween: 15",
+          "rest: 120",
+          "```",
+        ].join("\n"),
+      );
+      expect(oneRound.totalRestTime).toBe(15);
+      expect(oneRound.restPeriodCount).toBe(1);
     });
   });
 

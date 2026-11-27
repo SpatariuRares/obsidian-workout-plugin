@@ -2477,6 +2477,50 @@ body.is-mobile .workout-timer-strip .workout-timer .workout-timer-controls .work
   padding-top: var(--workout-space-sm);
 }
 
+.workout-session-superset-active {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--workout-space-xs) var(--workout-space-sm);
+  font-weight: var(--workout-font-weight-semibold);
+}
+.workout-session-superset-active .workout-block-title-link {
+  color: var(--workout-text-accent);
+}
+
+body.is-mobile .workout-session-superset-active .workout-block-title-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--workout-touch-target-min);
+}
+
+.workout-session-superset-exercises {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--workout-space-xs);
+}
+
+.workout-session-superset-exercise {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--workout-space-2xs) var(--workout-space-sm);
+  border-radius: var(--workout-radius-full);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
+  background: var(--background-primary);
+  color: var(--text-muted);
+  font-size: var(--workout-font-xs);
+}
+.workout-session-superset-exercise.is-active {
+  border-color: var(--interactive-accent);
+  color: var(--workout-text-accent);
+  font-weight: var(--workout-font-weight-semibold);
+}
+.workout-session-superset-exercise.is-done {
+  background: var(--workout-accent-fill);
+  border-color: var(--workout-accent-fill);
+  color: var(--text-on-accent);
+}
+
 /* ============================================================================
    WORKOUT CHARTS PLUGIN - STYLES
    Modern styles using Obsidian CSS Variables
@@ -2551,6 +2595,12 @@ body.is-mobile .workout-timer-strip .workout-timer .workout-timer-controls .work
 
 .workout-sets-row {
   border-top: var(--workout-border-thin) solid var(--workout-border-color);
+}
+.workout-sets-row.is-warmup .workout-sets-number {
+  font-weight: var(--workout-font-weight-medium);
+}
+.workout-sets-row.is-warmup + .workout-sets-row:not(.is-warmup) {
+  border-top-width: var(--workout-border-medium);
 }
 .workout-sets-row .workout-field-error {
   padding: 0 var(--workout-space-xs) var(--workout-space-sm);
@@ -2631,6 +2681,105 @@ body.is-mobile .workout-timer-strip .workout-timer .workout-timer-controls .work
     padding-block: var(--workout-space-sm);
   }
   .workout-sets-rows.is-stacked .workout-sets-value {
+    font-size: var(--workout-font-base);
+  }
+}
+/* ============================================================================
+   SUPERSET ROUNDS & SLOTS
+   ============================================================================ */
+.workout-sets-round {
+  display: flex;
+  flex-direction: column;
+  border-top: var(--workout-border-thin) solid var(--workout-border-color);
+  padding-top: var(--workout-space-xs);
+}
+.workout-sets-round.is-warmup + .workout-sets-round:not(.is-warmup) {
+  border-top-width: var(--workout-border-medium);
+}
+
+.workout-sets-round-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--workout-space-sm);
+  padding: var(--workout-space-xs) var(--workout-space-xs) var(--workout-space-2xs);
+}
+
+.workout-sets-round-title {
+  font-size: var(--workout-font-xs);
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.workout-sets-slot {
+  border-top-color: var(--workout-border-subtle);
+}
+
+.workout-sets-slot-header {
+  padding: var(--workout-space-xs) var(--workout-space-xs) 0 2.75rem;
+}
+
+.workout-sets-slot-title {
+  font-size: var(--workout-font-base);
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--workout-text-accent);
+  overflow-wrap: anywhere;
+}
+.workout-sets-slot-title .workout-block-title-link {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.workout-sets-slot-title .workout-block-title-link.is-unresolved {
+  color: inherit;
+  opacity: 1;
+}
+.workout-sets-slot-title .workout-block-title-link:focus-visible {
+  outline: var(--workout-border-medium) solid var(--interactive-accent);
+  outline-offset: var(--workout-space-2xs);
+  border-radius: var(--workout-radius-xs);
+}
+@media (hover: hover) {
+  .workout-sets-slot-title .workout-block-title-link:hover {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+}
+
+body.is-mobile .workout-sets-slot-title .workout-block-title-link {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  min-height: var(--workout-touch-target-min);
+}
+
+.workout-sets-rows.is-superset .workout-sets-cell-label {
+  display: block;
+  padding-left: calc(var(--workout-space-sm) + var(--workout-border-thin));
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+.workout-sets-rows.is-superset .workout-sets-cells {
+  align-items: start;
+}
+.workout-sets-rows.is-superset .workout-sets-row-main {
+  align-items: end;
+  padding-block: var(--workout-space-xs);
+}
+
+@media (max-width: 484px) {
+  .workout-sets-slot.is-stacked .workout-sets-cells {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: var(--workout-space-xs);
+    align-items: start;
+  }
+  .workout-sets-slot.is-stacked .workout-sets-row-main {
+    padding-block: var(--workout-space-sm);
+  }
+  .workout-sets-slot.is-stacked .workout-sets-value {
     font-size: var(--workout-font-base);
   }
 }
@@ -3900,6 +4049,154 @@ body.is-mobile .workout-wizard-step:not(.is-current) .workout-wizard-step-label 
 .workout-wizard .workout-modal-actions button:focus-visible {
   outline: var(--workout-border-medium) solid var(--interactive-accent);
   outline-offset: var(--workout-space-2xs);
+}
+
+/* Adaptive sets wizard: protocol picker + help, superset exercise list, rhythm preview */
+.workout-wizard .workout-field-helper[hidden] {
+  display: none;
+}
+
+.workout-wizard .workout-field-helper {
+  color: var(--text-muted);
+  font-size: var(--workout-font-xs);
+  line-height: 1.35;
+}
+
+.workout-wizard input.workout-form-field-input[aria-invalid=true] {
+  border-color: var(--workout-text-error);
+}
+
+.workout-wizard-protocol-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-xs);
+  min-width: 0;
+}
+
+.workout-wizard .workout-protocol-picker .workout-chip-group-chips {
+  flex-wrap: wrap;
+  overflow-x: visible;
+}
+
+.workout-superset-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+  min-width: 0;
+}
+
+.workout-superset-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--workout-space-sm);
+}
+
+.workout-superset-count {
+  color: var(--workout-text-accent);
+  font-size: var(--workout-font-xs);
+  font-weight: var(--workout-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.workout-superset-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+}
+
+.workout-superset-slot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-2xs);
+  min-width: 0;
+}
+
+.workout-superset-slot-row {
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--workout-space-xs);
+  min-width: 0;
+}
+
+.workout-superset-letter {
+  display: grid;
+  place-items: center;
+  width: 1.625rem;
+  height: 1.625rem;
+  border-radius: var(--workout-radius-sm);
+  border: var(--workout-border-thin) solid var(--workout-border-subtle);
+  background: var(--background-primary);
+  color: var(--text-muted);
+  font-size: var(--workout-font-xs);
+  font-weight: var(--workout-font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.workout-superset-slot-field {
+  min-width: 0;
+}
+.workout-superset-slot-field .workout-charts-form-group {
+  margin: 0;
+}
+.workout-superset-slot-field .workout-form-field-input {
+  width: 100%;
+}
+
+.workout-superset-slot-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-2xs);
+  flex: none;
+}
+
+button.workout-superset-move-btn {
+  min-width: 2rem;
+  min-height: 2.25rem;
+  padding: 0 var(--workout-space-xs);
+}
+
+button.workout-superset-add-btn {
+  align-self: flex-start;
+}
+
+body.is-mobile button.workout-superset-move-btn {
+  min-width: var(--workout-touch-target-min);
+  min-height: var(--workout-touch-target-min);
+}
+
+body.is-mobile button.workout-superset-add-btn {
+  width: 100%;
+  min-height: var(--workout-touch-target-min);
+}
+
+.workout-wizard-rhythm-preview {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--workout-space-2xs);
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  border-radius: var(--workout-radius-md);
+  border: var(--workout-border-thin) solid var(--workout-border-subtle);
+  background: var(--background-primary);
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.workout-rhythm-step {
+  color: var(--text-normal);
+  font-weight: var(--workout-font-weight-semibold);
+}
+
+.workout-rhythm-rest {
+  color: var(--workout-text-accent);
+  font-weight: var(--workout-font-weight-semibold);
+}
+
+.workout-rhythm-arrow {
+  color: var(--text-muted);
 }
 
 /* ============================================================================

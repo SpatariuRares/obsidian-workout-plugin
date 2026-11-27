@@ -5,21 +5,34 @@ import {
   PLAN_FIELDS,
 } from "@app/features/tables/exerciseBlockFields";
 import { TIMER_TYPE } from "@app/types/WorkoutConfigTypes";
+import { WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { withoutUndefined } from "@app/utils/ObjectUtils";
 import type { EmbeddedTimerParams } from "@app/features/timer/types";
 
 /**
  * The `workout-sets` code block, the `workout-log` table made for logging on
- * the phone: today's sets of one exercise as rows to fill in and tick. Its
- * parameters are the table's exercise and plan ones: `workout` unset means
- * the note's name, `sets` unset as many rows as last time (at least one).
+ * the phone: today's sets of one exercise as rows to fill in and tick (or
+ * rounds of a multi-exercise superset via `exercises`). Its parameters are
+ * the table's exercise and plan ones: `workout` unset means the note's name,
+ * `sets` unset as many rows as last time (at least one).
  * See "Set sheet" in CONTEXT.md.
  */
 export const setsBlock = defineCodeBlock("workout-sets", {
   /** Written by the insert modal so the block can be edited in place */
   id: { kind: "string" },
   ...EXERCISE_FIELDS,
+  /** Ordered exercises for a multi-exercise superset block (takes precedence over `exercise`) */
+  exercises: { kind: "list" },
   ...PLAN_FIELDS,
+  /** Default protocol for the block's working sets (unset = standard, or superset when multi-exercise) */
+  protocol: { kind: "string" },
+  /** Warm-up rows above the working sets; excluded from working set counts and rest */
+  warmups: { kind: "number", min: 0 },
+  /**
+   * Seconds of rest between exercises within a superset round (0/unset = no
+   * intra-round timer; when `rest` is unset on a superset, also used between rounds)
+   */
+  restBetween: { kind: "number", min: 0 },
   /**
    * Seconds of rest after each set, counted down at the top of the block
    * (with `timer.type: interval`, the work of each round); 0 = no rest
@@ -42,6 +55,48 @@ export const setsBlock = defineCodeBlock("workout-sets", {
 });
 
 export type EmbeddedSetsParams = BlockParams<typeof setsBlock>;
+
+/**
+ * The exercises in a `workout-sets` block: `exercises` when 2 or more are
+ * listed (taking precedence over `exercise`), else `[exercise]` when set.
+ */
+export function blockExercises(params: EmbeddedSetsParams): string[] {
+  if (params.exercises && params.exercises.length >= 2) {
+    return params.exercises;
+  }
+  return params.exercise ? [params.exercise] : [];
+}
+
+/** Whether a `workout-sets` block defines a multi-exercise superset */
+export function isSupersetBlock(params: EmbeddedSetsParams): boolean {
+  return blockExercises(params).length >= 2;
+}
+
+/** Slot letter for a superset exercise index (`A`, `B`, ...; `27`+ beyond `Z`) */
+export function slotLetter(index: number): string {
+  return index < 26 ? String.fromCharCode(65 + index) : String(index + 1);
+}
+
+/**
+ * Countdown timer for intra-round rest between superset exercises
+ * (`restBetween`), or undefined when unset / 0.
+ */
+export function betweenRest(
+  params: Pick<EmbeddedSetsParams, "restBetween">,
+): EmbeddedTimerParams | undefined {
+  return params.restBetween && params.restBetween > 0
+    ? { type: TIMER_TYPE.COUNTDOWN, duration: params.restBetween }
+    : undefined;
+}
+
+/**
+ * Effective block-level working protocol: explicit `protocol:` if set,
+ * otherwise `superset` for multi-exercise blocks, else undefined.
+ */
+export function blockProtocol(params: EmbeddedSetsParams): string | undefined {
+  if (params.protocol !== undefined) return params.protocol;
+  return isSupersetBlock(params) ? WorkoutProtocol.SUPERSET : undefined;
+}
 
 /**
  * The block's own rest timer: `rest` seconds with its `timer.*` options;

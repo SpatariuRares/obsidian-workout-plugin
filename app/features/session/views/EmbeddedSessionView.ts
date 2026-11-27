@@ -7,10 +7,13 @@ import { describeLastTime, describeTarget } from "@app/features/modals/log/LogHi
 import { prefillFromLast } from "@app/features/modals/base/logic/LogEntryDraft";
 import {
   readNotePlan,
-  stepOf,
+  stepExercises,
   sessionProgress,
+  supersetProgress,
   type SessionStep,
+  type SupersetStepProgress,
 } from "@app/features/session/business/sessionPlan";
+import type { EmbeddedTimerParams } from "@app/features/timer/types";
 import { BlockMenu } from "@app/features/common/ui/BlockMenu";
 import { restBlockAction } from "@app/features/tables/modals/restBlockAction";
 import {
@@ -19,13 +22,22 @@ import {
   sameWorkout,
 } from "@app/services/history/TrainingHistory";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { betweenRest } from "@app/features/tables/setsBlock";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
+import { ProtocolBadge } from "@app/components/atoms/ProtocolBadge";
 import { BlockCard } from "@app/components/molecules/BlockCard";
 import { exerciseTitleLink } from "@app/features/common/ui/exerciseTitleLink";
 import { ICONS } from "@app/constants";
 import { PathUtils } from "@app/utils/PathUtils";
 import { parametersOrNone } from "@app/services/exercise/ExerciseDefinitionService";
+import {
+  ProtocolCatalog,
+  isStandardProtocol,
+  isWarmupProtocol,
+  protocolId,
+} from "@app/services/protocols/ProtocolCatalog";
+import { StringUtils } from "@app/utils/StringUtils";
 import { t } from "@app/i18n";
 
 /**
@@ -67,6 +79,8 @@ class SessionRenderChild extends MarkdownRenderChild {
   private position?: number;
   /** The step just logged, whose rest is shown while it runs */
   private restingStep?: SessionStep;
+  /** The specific rest timer params just triggered (may differ from step.rest for superset restBetween) */
+  private restingRest?: EmbeddedTimerParams;
   private renders = 0;
   /** The plan last drawn, to skip redraws when the note changes elsewhere */
   private drawnPlan?: string;
@@ -87,7 +101,7 @@ class SessionRenderChild extends MarkdownRenderChild {
     const { eventBus, app } = this.plugin;
     const refresh = () => void this.render();
     this.register(
-      eventBus.on("log:added", ({ entry, context }) => void this.logged(context, entry.block)),
+      eventBus.on("log:added", ({ entry, context }) => void this.logged(context, entry)),
     );
     this.register(eventBus.on("log:updated", refresh));
     this.register(eventBus.on("log:deleted", refresh));
@@ -107,29 +121,83 @@ class SessionRenderChild extends MarkdownRenderChild {
 
   /**
    * A set was logged. One of this workout's: back to the progress and rest
-   * after it, unless it was the plan's last set.
+   * after it, unless it was a warm-up or the plan's last set.
    */
   private async logged(
     context: {
       exercise: string;
       workout?: string;
     },
-    block: string | undefined,
+    entry: Pick<WorkoutLogData, "block" | "protocol">,
   ): Promise<void> {
     if (!sameWorkout(context.workout, this.workout)) {
       await this.render();
       return;
     }
     this.position = undefined;
-    const plan = await this.readPlan();
-    // The step the set was logged for (its block), else the exercise's first
-    const step = plan
-      ? (plan.find((s) => block !== undefined && s.block === block) ??
-        stepOf(plan, context.exercise))
+    if (isWarmupProtocol(entry.protocol)) {
+      await this.render();
+      return;
+    }
+    const [plan, logs] = await Promise.all([
+      this.readPlan(),
+      this.plugin.getWorkoutLogData(),
+    ]);
+    const matched = plan
+      ? this.resolveLoggedStepAndRest(plan, logs, context.exercise, entry.block)
       : undefined;
-    if (step) this.restingStep = step;
-    const restShown = await this.render(step !== undefined);
-    if (step?.rest && restShown) this.restTimer.restart(step.rest);
+    const prevRest = this.restingRest;
+    if (prevRest && (!matched?.rest || prevRest.id !== matched.rest.id)) {
+      this.restTimer.cancel(prevRest);
+    }
+    this.restingStep = matched?.rest ? matched.step : undefined;
+    this.restingRest = matched?.rest;
+    const restShown = await this.render(matched?.rest !== undefined);
+    if (matched?.rest && restShown) this.restTimer.restart(matched.rest);
+  }
+
+  private resolveLoggedStepAndRest(
+    plan: SessionStep[],
+    logs: WorkoutLogData[],
+    exercise: string,
+    block: string | undefined,
+  ): { step: SessionStep; rest: EmbeddedTimerParams | undefined } | undefined {
+    const wanted = StringUtils.normalize(exercise);
+    let stepIndex =
+      block !== undefined
+        ? plan.findIndex((s) => s.block === block)
+        : -1;
+    if (stepIndex < 0) {
+      stepIndex = plan.findIndex((s) =>
+        stepExercises(s).some((ex) => StringUtils.normalize(ex) === wanted),
+      );
+    }
+    if (stepIndex < 0) return undefined;
+
+    const step = plan[stepIndex];
+    const exercises = stepExercises(step);
+    if (exercises.length < 2) {
+      return { step, rest: step.rest };
+    }
+
+    const exerciseIndex = exercises.findIndex(
+      (ex) => StringUtils.normalize(ex) === wanted,
+    );
+    if (exerciseIndex < 0) return { step, rest: undefined };
+    if (exerciseIndex < exercises.length - 1) {
+      return { step, rest: betweenRest(step) };
+    }
+
+    const today = localDay(new Date());
+    const todaysSets =
+      new TrainingHistory(logs)
+        .sessions({ workout: this.workout })
+        .find((session) => session.day === today)?.sets ?? [];
+    const { done } = sessionProgress(plan, todaysSets);
+    const progress = supersetProgress(step, done[stepIndex] ?? []);
+    const finalRound =
+      step.sets !== undefined && progress.counts[exerciseIndex] >= step.sets;
+    return { step, rest: finalRound ? undefined : step.rest };
   }
 
   /** The note was saved: redraw only if its plan is not the one shown */
@@ -169,7 +237,14 @@ class SessionRenderChild extends MarkdownRenderChild {
           ? Math.min(this.position, steps.length - 1)
           : current;
       const step = steps[index];
-      const parameters = step ? await parametersOrNone(this.plugin, step.exercise) : [];
+      const superset =
+        step && stepExercises(step).length >= 2
+          ? supersetProgress(step, done[index])
+          : undefined;
+      const activeExercise = superset ? superset.exercise : step?.exercise;
+      const parameters = activeExercise
+        ? await parametersOrNone(this.plugin, activeExercise)
+        : [];
       if (render !== this.renders) return false;
 
       this.drawnPlan = JSON.stringify(steps);
@@ -186,29 +261,39 @@ class SessionRenderChild extends MarkdownRenderChild {
 
       const { el: card, header } = BlockCard.create(this.containerEl, {
         title: step.exercise,
-        titleLink: exerciseTitleLink({
-          plugin: this.plugin,
-          exerciseName: step.exercise,
-          sourcePath: this.sourcePath,
-        }),
+        titleLink: superset
+          ? undefined
+          : exerciseTitleLink({
+              plugin: this.plugin,
+              exerciseName: step.exercise,
+              sourcePath: this.sourcePath,
+            }),
         meta: t("session.exerciseOf", { current: index + 1, total: steps.length }),
-        className: "workout-session",
+        className: superset
+          ? "workout-session workout-session-superset"
+          : "workout-session",
       });
 
-      const setsDone = done[index].length;
-      card.createDiv({
-        cls: "workout-session-set",
-        text:
-          step.sets !== undefined && setsDone < step.sets
-            ? t("session.setOf", { set: setsDone + 1, sets: step.sets })
-            : t("session.setNumber", { set: setsDone + 1 }),
-      });
+      if (superset) {
+        this.renderSupersetBody(card, step, superset);
+      } else {
+        const setsDone = done[index].length;
+        card.createDiv({
+          cls: "workout-session-set",
+          text:
+            step.sets !== undefined && setsDone < step.sets
+              ? t("session.setOf", { set: setsDone + 1, sets: step.sets })
+              : t("session.setNumber", { set: setsDone + 1 }),
+        });
 
-      const target = describeTarget(step.targetReps, step.targetWeight, this.plugin.settings.weightUnit);
-      if (target) {
-        card.createDiv({ cls: "workout-session-meta", text: t("session.target", { target }) });
+        const target = describeTarget(step.targetReps, step.targetWeight, this.plugin.settings.weightUnit);
+        if (target) {
+          card.createDiv({ cls: "workout-session-meta", text: t("session.target", { target }) });
+        }
       }
-      const lastTime = history.previousDay(step.exercise, today, { block: step.block });
+
+      const targetExercise = activeExercise ?? step.exercise;
+      const lastTime = history.previousDay(targetExercise, today, { block: step.block });
       if (lastTime) {
         card.createDiv({
           cls: "workout-session-meta",
@@ -216,22 +301,27 @@ class SessionRenderChild extends MarkdownRenderChild {
         });
       }
 
+      const activeDone = superset ? superset.exerciseDone : done[index];
       this.renderNavigation(card, index, steps.length, () =>
-        this.openLogForm(step, done[index], lastTime?.sets ?? [], history),
+        this.openLogForm(step, targetExercise, activeDone, lastTime?.sets ?? [], history),
       );
 
-      const restingTimer = this.restingStep?.rest;
-      const restStep =
-        this.restingStep && restingTimer && (resting || this.restTimer.isRunning(restingTimer))
-          ? this.restingStep
-          : step;
+      const restingTimer = this.restingRest;
+      const keepResting =
+        this.restingStep &&
+        restingTimer &&
+        (resting || this.restTimer.isRunning(restingTimer));
+      const restStep = keepResting ? this.restingStep : step;
+      const displayRest = keepResting
+        ? restingTimer
+        : (step.rest ?? (superset ? betweenRest(step) : undefined));
       // A step with `rest: 0` rests on nothing (see stepRest)
-      if (restStep.rest) {
+      if (displayRest) {
         const restEl = card.createDiv({ cls: "workout-session-rest" });
         restEl.createDiv({ cls: "workout-session-meta", text: t("session.rest") });
-        this.restTimer.draw(restEl.createDiv(), restStep.rest);
+        this.restTimer.draw(restEl.createDiv(), displayRest);
       }
-      if (restStep.restBlock) {
+      if (restStep?.restBlock) {
         // Edits the rest where it is written (see RestBlock)
         BlockMenu.render(header, [
           restBlockAction(this.plugin, this.sourcePath, restStep.restBlock, restStep.rest ?? {}),
@@ -242,6 +332,58 @@ class SessionRenderChild extends MarkdownRenderChild {
       this.onError(error);
       return false;
     }
+  }
+
+  private renderSupersetBody(
+    card: HTMLElement,
+    step: SessionStep,
+    superset: SupersetStepProgress,
+  ): void {
+    const exercises = step.exercises ?? [];
+    card.createDiv({
+      cls: "workout-session-set",
+      text:
+        step.sets !== undefined && superset.completedRounds < step.sets
+          ? t("session.roundOf", { round: superset.round, rounds: step.sets })
+          : t("session.roundNumber", { round: superset.round }),
+    });
+
+    const activeRow = card.createDiv({ cls: "workout-session-superset-active" });
+    const titleLink = exerciseTitleLink({
+      plugin: this.plugin,
+      exerciseName: superset.exercise,
+      sourcePath: this.sourcePath,
+    });
+    if (titleLink) {
+      BlockCard.renderTitleLink(activeRow, superset.exercise, titleLink);
+    } else {
+      activeRow.createSpan({ text: superset.exercise });
+    }
+    if (step.protocol) {
+      const info = new ProtocolCatalog(this.plugin.settings.customProtocols).resolve(step.protocol);
+      ProtocolBadge.forProtocol(activeRow, info);
+    }
+    activeRow.createSpan({
+      cls: "workout-session-meta",
+      text: t("session.roundExerciseOf", {
+        current: superset.exerciseIndex + 1,
+        total: exercises.length,
+      }),
+    });
+
+    const list = card.createDiv({ cls: "workout-session-superset-exercises" });
+    exercises.forEach((exerciseName, i) => {
+      const chip = list.createSpan({
+        cls: "workout-session-superset-exercise",
+        text: exerciseName,
+      });
+      if (superset.counts[i] >= superset.round) {
+        chip.addClass("is-done");
+      } else if (i === superset.exerciseIndex) {
+        chip.addClass("is-active");
+        chip.setAttribute("aria-current", "step");
+      }
+    });
   }
 
   /** Every planned set is logged; Previous goes back to the last exercise */
@@ -301,6 +443,7 @@ class SessionRenderChild extends MarkdownRenderChild {
    */
   private openLogForm(
     step: SessionStep,
+    exercise: string,
     doneToday: WorkoutLogData[],
     lastTime: WorkoutLogData[],
     history: TrainingHistory,
@@ -308,10 +451,10 @@ class SessionRenderChild extends MarkdownRenderChild {
     const last =
       doneToday[doneToday.length - 1] ??
       lastTime[lastTime.length - 1] ??
-      history.lastSet(step.exercise);
+      history.lastSet(exercise);
     const first = doneToday.length === 0;
     const prefill = prefillFromLast(last, {
-      exercise: step.exercise,
+      exercise,
       // The set belongs to this note's workout, not to the last set's
       workout: this.workout,
       targetReps: first ? step.targetReps : undefined,
@@ -319,10 +462,20 @@ class SessionRenderChild extends MarkdownRenderChild {
     });
     // The set is this step's: logged with its block, it counts for it
     if (step.block) prefill.block = step.block;
+    if (
+      step.protocol &&
+      !isStandardProtocol(step.protocol) &&
+      !isWarmupProtocol(step.protocol) &&
+      (!prefill.protocol ||
+        isStandardProtocol(prefill.protocol) ||
+        isWarmupProtocol(prefill.protocol))
+    ) {
+      prefill.protocol = protocolId(step.protocol);
+    }
     new CreateLogModal(
       this.plugin.app,
       this.plugin,
-      step.exercise,
+      exercise,
       PathUtils.toWikiLink(this.sourcePath),
       prefill,
     ).open();

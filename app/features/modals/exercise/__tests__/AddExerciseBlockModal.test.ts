@@ -14,6 +14,7 @@ jest.mock("obsidian", () => {
 });
 import { AddExerciseBlockModal } from "@app/features/modals/exercise/AddExerciseBlockModal";
 import { openWizard, blockParams } from "@app/features/modals/base/__tests__/wizardHarness";
+import { defaultProtocolEntries } from "@app/services/protocols/ProtocolCatalog";
 import { t } from "@app/i18n";
 
 /** Walks the three steps and presses Insert */
@@ -60,5 +61,38 @@ describe("AddExerciseBlockModal", () => {
 
     expect(w.contentEl.querySelector(".workout-wizard-error")).not.toBeNull();
     expect(w.inserted).toHaveLength(0);
+  });
+
+  it("writes ## A + B + C heading and superset block with defaultRest = 90", () => {
+    const w = openWizard(AddExerciseBlockModal, {
+      settings: { customProtocols: defaultProtocolEntries() },
+    });
+    w.button(t("modal.selectOptions.superset"))!.click();
+
+    const slots = () =>
+      w.panel("exercise").querySelectorAll<HTMLInputElement>(
+        ".workout-superset-slot input[type='text']",
+      );
+    slots()[0].value = "Bench Press";
+    slots()[0].dispatchEvent(new Event("input", { bubbles: true }));
+    slots()[1].value = "Bent Over Row";
+    slots()[1].dispatchEvent(new Event("input", { bubbles: true }));
+
+    w.button(t("modal.wizard.addExercise"))!.click();
+    slots()[2].value = "Plank";
+    slots()[2].dispatchEvent(new Event("input", { bubbles: true }));
+
+    w.tab(3).click();
+    w.button(t("modal.buttons.insertExerciseBlock"))!.click();
+
+    expect(
+      w.inserted[0].startsWith("## Bench Press + Bent Over Row + Plank\n\n```workout-sets\n"),
+    ).toBe(true);
+    expect(blockParams(w.inserted[0])).toMatchObject({
+      exercises: ["Bench Press", "Bent Over Row", "Plank"],
+      protocol: "superset",
+      rest: 90,
+    });
+    expect(w.inserted[0]).not.toContain("restBetween:");
   });
 });

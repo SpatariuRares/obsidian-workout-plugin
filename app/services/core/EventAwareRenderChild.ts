@@ -13,6 +13,7 @@ import { workoutMatches } from "@app/services/history/TrainingHistory";
 
 export interface ViewFilter {
   exercise?: string;
+  exercises?: string[];
   workout?: string;
   exactMatch?: boolean;
   /** Se true, questa view deve aggiornarsi anche su muscle-tags:changed */
@@ -140,15 +141,20 @@ export class EventAwareRenderChild extends MarkdownRenderChild {
     exercise: string,
     workout?: string,
   ): boolean {
-    const hasFilter = this.filter.exercise || this.filter.workout;
+    const exercises = this.filter.exercises?.filter((e) => e.trim().length > 0);
+    const hasExercises = Boolean(exercises && exercises.length > 0);
+    const hasFilter = hasExercises || Boolean(this.filter.exercise || this.filter.workout);
 
     // Nessun filtro → view mostra tutto → aggiorna sempre
     if (!hasFilter) return true;
 
-    // Match exercise se specificato
-    if (this.filter.exercise) {
+    const evtNorm = normalizeExercise(exercise);
+    if (hasExercises) {
+      if (!exercises!.some((ex) => normalizeExercise(ex) === evtNorm)) {
+        return false;
+      }
+    } else if (this.filter.exercise) {
       const filterNorm = normalizeExercise(this.filter.exercise);
-      const evtNorm = normalizeExercise(exercise);
 
       if (this.filter.exactMatch) {
         if (evtNorm !== filterNorm) return false;

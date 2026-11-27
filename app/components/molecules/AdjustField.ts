@@ -20,7 +20,7 @@ export interface AdjustFieldProps {
   /** Shown at the end of the field, e.g. "s" */
   unit?: string;
   /** Muted text in the empty field ("All" for a limit that is optional) */
-  suggestion?: string;
+  suggestion?: string | number | (() => string | number | undefined);
 }
 
 export class AdjustField {

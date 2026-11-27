@@ -22,7 +22,11 @@ export class AddExerciseBlockModal extends InsertSetsModal {
 
   protected generateCode(): string {
     const block = super.generateCode();
+    const params = this.collectParams();
+    const heading = params.exercises?.length
+      ? params.exercises.join(" + ")
+      : params.exercise;
     // eslint-disable-next-line i18next/no-literal-string -- markdown heading
-    return `## ${this.collectParams().exercise}\n\n${block}`;
+    return `## ${heading}\n\n${block}`;
   }
 }

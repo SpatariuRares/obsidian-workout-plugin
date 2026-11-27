@@ -285,6 +285,11 @@
       "editTitle": "編輯 {widget}",
       "sortMostSets": "組數最多",
       "lastWidget": "這是儀表板上唯一的小工具，無法移除：請改為刪除區塊。"
+    },
+    "wizard": {
+      "stepGeneral": "一般",
+      "stepWidgets": "小工具",
+      "dateRangeInvalid": "請輸入一個整數，可以是 0 或以上"
     }
   },
   "duration": {
@@ -1234,7 +1239,14 @@
     "logSet": "紀錄第 {set} 組",
     "unlogSet": "從紀錄中移除第 {set} 組",
     "setRemoved": "第 {set} 組已移除",
-    "valueOfSet": "{field}，第 {set} 組：{value}"
+    "valueOfSet": "{field}，第 {set} 組：{value}",
+    "wizard": {
+      "planningFor": "規劃 {exercise}",
+      "review": "確認",
+      "restSectionTimer": "此頁面的計時器",
+      "restValue": "{seconds}個，在每個組中",
+      "workoutDefault": "{note} (此說明)"
+    }
   },
   "whatsNew": {
     "title": "更新內容",
@@ -1250,6 +1262,47 @@
       "v3_2_1": "**新增動作區塊**現在會把動作加為獨立的段落，內含一個運動組區塊（計畫組數與 90 秒休息），與範例筆記的版面相同。「動作區塊範本」設定已移除，「建立動作段落」指令也一併移除，它以舊版版面做同一件事：若您為它設定了快捷鍵，請改為設定在新增動作區塊上。\n\n編輯一組，或從上一組開始時，現在會填入那些在紀錄中以其他方式寫成欄位的值（例如 `HR` 或 `Duration (s)`）。\n\n更多外掛內容已有繁體中文：肌肉標籤訊息、錯誤標題、肌群熱度圖的訓練分析，以及動作轉換視窗。肌肉標籤參考也已改用繁體中文撰寫。\n\n產生預設範本現在會在失敗時說明原因。\n\n「最近的動作」不再因同一動作的空白或大小寫不同而重複顯示。",
       "v3_2_0": "**修正。** 引導訓練中，`workout-sets` 區塊設定 `rest: 0` 時不再啟動該段落的計時器。「最近 N 天」在各處一致（圖表、儀表板小工具、篩選），並包含整個邊界日。圖表以訓練日分組數據點，趨勢線採用同一套規則。動作卡、組表與目標標題中的「上次」與目標文字一致。`HR`、`Duration (s)` 等自訂欄位在各處都能讀取。動作轉換不再以錯誤的單位寫入重量。訓練法的成效依組的順序計算。動作頁面名稱含有 `:` 或 `#` 時，frontmatter 現在有效。畫布匯出能正確讀取段落與計時器長度。計時器預設與「新增動作區塊」視窗已完整翻譯。\n\n**改進。** 計時器預設改以選項標籤選取，並提供「無」選項；編輯區塊時，即使預設已不在設定中，仍會保留該預設。各視窗的按鈕順序一致，按鈕列一律顯示在底部。時長的格式在各處都相同。",
       "v3_1_0": "**外掛的新內容。** 更新後，外掛會在首次顯示變更內容。之後隨時可在指令面板中執行 **顯示更新內容**，或在「設定 → Workout Planner → 開始使用」中點擊 **顯示更新紀錄**。\n\n**所有人都能使用運動組。** `workout-sets` 區塊不再是 β 版本功能：無需開啟任何設定即可使用，指令面板中也一律提供 **插入運動組**。"
+    }
+  },
+  "wizard": {
+    "table": {
+      "planUnavailable": "「漸進式負荷」只適用於單一運動的表格。請選擇特定的運動或運動組合，以便設定。"
+    },
+    "chart": {
+      "steps": {
+        "chartType": "圖表類型",
+        "data": "數據",
+        "display": "顯示"
+      }
+    },
+    "timerSteps": {
+      "timing": "計時",
+      "options": "選項"
+    },
+    "timer": {
+      "durationInvalid": "請輸入至少 1 秒的時長",
+      "restInvalid": "請輸入至少 0 秒的休息時間",
+      "roundsInvalid": "請輸入至少 1 局"
+    },
+    "back": "返回",
+    "next": "下一",
+    "stepCounter": "步驟 {current} 中 {total}",
+    "stepperLabel": "步驟",
+    "stepDone": "{step}, done",
+    "steps": {
+      "exercise": "運動",
+      "fields": "值",
+      "details": "詳細",
+      "plan": "計畫",
+      "rest": "休息",
+      "target": "顯示什麼",
+      "display": "顯示"
+    }
+  },
+  "createExercisePageWizard": {
+    "steps": {
+      "nameAndType": "名稱和類型",
+      "musclesAndFolder": "肌肉和資料夾"
     }
   }
 }

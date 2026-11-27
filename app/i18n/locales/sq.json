@@ -285,6 +285,11 @@
       "editTitle": "Redakto {widget}",
       "sortMostSets": "Më shumë seri",
       "lastWidget": "Ky është elementi i vetëm i panelit, prandaj nuk mund të hiqet: fshije bllokun."
+    },
+    "wizard": {
+      "stepGeneral": "Përgjithshëm",
+      "stepWidgets": "Komponentët",
+      "dateRangeInvalid": "Vendosni një numër të plotë të ditëve, 0 ose më shumë"
     }
   },
   "duration": {
@@ -1234,7 +1239,14 @@
     "logSet": "Regjistro serinë {set}",
     "unlogSet": "Hiq serinë {set} nga regjistri",
     "setRemoved": "Seria {set} u hoq",
-    "valueOfSet": "{field}, seria {set}: {value}"
+    "valueOfSet": "{field}, seria {set}: {value}",
+    "wizard": {
+      "planningFor": "Planifikimi {exercise}",
+      "review": "Përshkak",
+      "restSectionTimer": "Timeri i seksionit",
+      "restValue": "{seconds} pas secilës serise",
+      "workoutDefault": "{note} (kjo notë)"
+    }
   },
   "whatsNew": {
     "title": "Çfarë është e re",
@@ -1250,6 +1262,47 @@
       "v3_2_1": "**Shto bllok ushtrimi** tani e shton ushtrimin si seksion të veçantë me një bllok serish (seritë e planifikuara dhe pushim 90 s), me strukturën e shënimeve shembull. Cilësimi i shabllonit për bllokun e ushtrimit është hequr, po ashtu edhe komanda Krijo seksion ushtrimi, e cila bënte të njëjtën gjë me strukturën e vjetër: nëse keni pasur një shkurtore për të, vendoseni te Shto bllok ushtrimi.\n\nRedaktimi i një serie, ose nisja nga e fundit, tani plotëson fushat me kolona të shkruara ndryshe në regjistër (për shembull `HR` ose `Duration (s)`).\n\nMë shumë nga plugin-i është në gjuhën tuaj: mesazhet e etiketave të muskujve, titujt e gabimeve, analiza e stërvitjes te harta termike e muskujve dhe dritarja e konvertimit të ushtrimeve. Referenca e etiketave të muskujve është shkruar edhe ajo në gjuhën tuaj.\n\nGjenero shabllonet e parazgjedhura njofton tani kur dështon.\n\nUshtrimet e fundit nuk shfaqen më dy herë kur i njëjti ushtrim është shkruar me hapësira ose shkronja të ndryshme.",
       "v3_2_0": "**Ndreqje.** Një bllok `workout-sets` me `rest: 0` nuk e nis më timerin e seksionit në një seancë të udhëzuar. \"Ditët e fundit\" janë të njëjta kudo (grafikët, widget-et e panelit, filtrat) dhe përfshijnë plotësisht ditën kufi. Grafikët grupojnë pikat sipas ditës së stërvitjes, dhe vijat e trendit ndjekin një rregull. \"Herë e fundit\" dhe fjalët për objektivin përputhen te karta e seancës, fleta e serive dhe titulli i objektivit. Kolonat e personalizuara si `HR` ose `Duration (s)` lexohen kudo. Konvertimi i ushtrimeve nuk shkruan më peshat me njësi të gabuar. Efektiviteti i protokollit ndjek renditjen e serive. Faqet e ushtrimeve me `:` ose `#` në emër marrin frontmatter të vlefshëm. Eksportimi në canvas lexon saktë seksionet dhe gjatësitë e timerit. Paracaktimet e timerit dhe modali \"Shto bllok ushtrimi\" janë përkthyer plotësisht.\n\n**Përmirësime.** Paracaktimet e timerit zgjidhen si çipa, me opsionin \"Asnjë\"; redaktimi i një bloku mban një paracaktim që nuk është më në cilësime. Butonat e modaleve kanë të njëjtën renditje kudo, me rreshtin e butonave gjithmonë të dukshëm në fund. Kohëzgjatjet formatohen njësoj kudo.",
       "v3_1_0": "**Çfarë është e re në plugin.** Pas një përditësimi, plugini shfaq një herë atë që ka ndryshuar. Hapeni sërish në çdo kohë me **Shfaq çfarë është e re** në paletën e komandave, ose me **Shfaq ndryshimet** te Cilësimet → Workout Planner → Fillimi.\n\n**Seritë e stërvitjes për të gjithë.** Blloku `workout-sets` nuk është më funksion beta: funksionon pa aktivizuar asgjë, dhe **Shto seritë e stërvitjes** është gjithmonë në paletën e komandave."
+    }
+  },
+  "wizard": {
+    "table": {
+      "planUnavailable": "Programimi progresiv zëvendos vetëm një tabelë me një veprim. Përcaktoni një veprim ose një serije veprimeve dhe stilit të ushtrimit për t'i përdorur."
+    },
+    "chart": {
+      "steps": {
+        "chartType": "Lloj shart",
+        "data": "Detyra",
+        "display": "Shfaq"
+      }
+    },
+    "timerSteps": {
+      "timing": "Koha",
+      "options": "Zgjidhjet"
+    },
+    "timer": {
+      "durationInvalid": "Vendosni një kohë të paktë 1 sekondë",
+      "restInvalid": "Vendosni një kohë pauze prej 0 sekondave ose më shumë.",
+      "roundsInvalid": "Vendosni të paktën 1 raund"
+    },
+    "back": "Para",
+    "next": "Tjetër",
+    "stepCounter": "Hapit {current} nga {total}",
+    "stepperLabel": "Hape",
+    "stepDone": "{step}, mbaruar",
+    "steps": {
+      "exercise": "Tregimi",
+      "fields": "Vlera",
+      "details": "Detajet",
+      "plan": "Plan",
+      "rest": "Përfundoj",
+      "target": "Ç'të shfaq",
+      "display": "Shfaq"
+    }
+  },
+  "createExercisePageWizard": {
+    "steps": {
+      "nameAndType": "Emër dhe tip",
+      "musclesAndFolder": "Zorrë dhe folder"
     }
   }
 }

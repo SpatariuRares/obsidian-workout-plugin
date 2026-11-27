@@ -285,6 +285,11 @@
       "editTitle": "Modifier {widget}",
       "sortMostSets": "Le plus de séries",
       "lastWidget": "C'est le seul widget du tableau de bord, il ne peut pas être retiré : supprimez plutôt le bloc."
+    },
+    "wizard": {
+      "stepGeneral": "Général",
+      "stepWidgets": "Éléments de l'interface",
+      "dateRangeInvalid": "Entrez un nombre entier de jours, 0 ou plus."
     }
   },
   "duration": {
@@ -1234,7 +1239,14 @@
     "logSet": "Enregistrer la série {set}",
     "unlogSet": "Retirer la série {set} du journal",
     "setRemoved": "Série {set} supprimée",
-    "valueOfSet": "{field}, série {set} : {value}"
+    "valueOfSet": "{field}, série {set} : {value}",
+    "wizard": {
+      "planningFor": "Planification {exercise}",
+      "review": "Revoir",
+      "restSectionTimer": "Le minuteur de la section",
+      "restValue": "{seconds} après chaque ensemble",
+      "workoutDefault": "{note} (cette note)"
+    }
   },
   "whatsNew": {
     "title": "Nouveautés",
@@ -1250,6 +1262,47 @@
       "v3_2_1": "**Ajouter un bloc d'exercice** ajoute désormais l'exercice dans sa propre section, avec un bloc de séries (séries prévues et repos de 90 s), la mise en page des notes d'exemple. Le réglage du modèle de bloc d'exercice n'existe plus, et la commande Créer une section d'exercice, qui faisait la même chose avec l'ancienne mise en page, a disparu : si vous aviez attribué un raccourci à cette commande, attribuez-le à Ajouter un bloc d'exercice.\n\nModifier une série, ou partir de votre dernière série, remplit désormais les champs dont la colonne est écrite autrement dans le journal (par exemple `HR` ou `Duration (s)`).\n\nUne partie de plus du plugin est dans votre langue : messages des tags musculaires, titres d'erreur, analyse de l'entraînement de la carte thermique musculaire et fenêtre de conversion des exercices. La référence des tags musculaires est elle aussi rédigée en français.\n\nGénérer les modèles par défaut indique désormais quand l'opération échoue.\n\nLes exercices récents n'apparaissent plus deux fois lorsqu'un même exercice a été saisi avec un autre espacement ou une autre casse.",
       "v3_2_0": "**Corrections.** Un bloc `workout-sets` avec `rest: 0` ne lance plus le minuteur de la section dans une séance guidée. « Les N derniers jours » a le même sens partout (graphiques, widgets du tableau de bord, filtres) et compte le jour limite en entier. Les graphiques regroupent les points par jour d'entraînement, et les courbes de tendance suivent une seule règle. « Dernière fois » et la formulation de l'objectif sont identiques dans la carte de séance, la feuille de séries et l'en-tête des objectifs. Les colonnes personnalisées comme `HR` ou `Duration (s)` sont lues partout. La conversion d'exercices n'écrit plus les poids dans la mauvaise unité. L'efficacité des protocoles suit l'ordre des séries. Les pages d'exercice dont le nom contient `:` ou `#` ont un frontmatter valide. L'export canvas lit correctement les sections et la durée des minuteurs. Les préréglages de minuteur et la fenêtre « Ajouter un bloc d'exercice » sont entièrement traduits.\n\n**Améliorations.** Les préréglages de minuteur se choisissent sous forme de puces, avec une option « Aucun » ; modifier un bloc conserve un préréglage qui n'est plus dans les paramètres. Les boutons des fenêtres suivent le même ordre partout, avec la rangée de boutons toujours visible en bas. Les durées s'affichent de la même façon partout.",
       "v3_1_0": "**Les nouveautés du plugin.** Après une mise à jour, le plugin affiche une fois ce qui a changé. Rouvrez-la à tout moment avec **Afficher les nouveautés** dans la palette de commandes, ou **Voir le journal des modifications** sous Paramètres → Workout Planner → Premiers pas.\n\n**Les séries sur votre téléphone pour tout le monde.** Le bloc `workout-sets` n'est plus une fonctionnalité bêta : il fonctionne sans rien activer, et **Ajouter des séries d'exercices** est toujours dans la palette de commandes."
+    }
+  },
+  "wizard": {
+    "table": {
+      "planUnavailable": "Les programmes d'entraînement progressif ne s'appliquent qu'à un seul exercice. Choisissez un exercice spécifique ou une combinaison d'exercices et de séances pour les mettre en place."
+    },
+    "chart": {
+      "steps": {
+        "chartType": "Type de graphique",
+        "data": "Données",
+        "display": "Afficher"
+      }
+    },
+    "timerSteps": {
+      "timing": "Durée",
+      "options": "Options"
+    },
+    "timer": {
+      "durationInvalid": "Indiquez une durée d'au moins 1 seconde.",
+      "restInvalid": "Entrez une durée de repos de 0 secondes ou plus.",
+      "roundsInvalid": "Indiquez au moins 1 manche."
+    },
+    "back": "Retour",
+    "next": "Suivant",
+    "stepCounter": "Étape {current} de {total}",
+    "stepperLabel": "Étapes",
+    "stepDone": "{step}, terminé",
+    "steps": {
+      "exercise": "Exercice",
+      "fields": "Valeurs",
+      "details": "Détails",
+      "plan": "Plan",
+      "rest": "Repose",
+      "target": "Que montrer",
+      "display": "Afficher"
+    }
+  },
+  "createExercisePageWizard": {
+    "steps": {
+      "nameAndType": "Nom et type",
+      "musclesAndFolder": "Muscles et dossier"
     }
   }
 }

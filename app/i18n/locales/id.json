@@ -285,6 +285,11 @@
       "editTitle": "Sunting {widget}",
       "sortMostSets": "Set terbanyak",
       "lastWidget": "Ini satu-satunya widget di dasbor, jadi tidak bisa dihapus: hapus blok-nya saja."
+    },
+    "wizard": {
+      "stepGeneral": "Umum",
+      "stepWidgets": "Komponen",
+      "dateRangeInvalid": "Masukkan jumlah hari berupa bilangan bulat, 0 atau lebih."
     }
   },
   "duration": {
@@ -1234,7 +1239,14 @@
     "logSet": "Catat set {set}",
     "unlogSet": "Hapus set {set} dari log",
     "setRemoved": "Set {set} dihapus",
-    "valueOfSet": "{field}, set {set}: {value}"
+    "valueOfSet": "{field}, set {set}: {value}",
+    "wizard": {
+      "planningFor": "Perencanaan {exercise}",
+      "review": "Tinjau",
+      "restSectionTimer": "Timer untuk bagian ini",
+      "restValue": "{seconds} setelah setiap set",
+      "workoutDefault": "{note} (catatan ini)"
+    }
   },
   "whatsNew": {
     "title": "Yang baru",
@@ -1250,6 +1262,47 @@
       "v3_2_1": "**Tambah blok latihan** kini menambahkan latihan sebagai bagiannya sendiri dengan blok set (set yang direncanakan dan istirahat 90 dtk), sesuai tata letak catatan contoh. Pengaturan templat blok latihan sudah dihapus, begitu pula perintah Buat bagian latihan, yang melakukan hal yang sama dengan tata letak lama: jika Anda punya hotkey untuknya, pasang hotkey itu pada Tambah blok latihan.\n\nMengedit set, atau memulai dari set terakhir Anda, kini mengisi kolom yang ditulis berbeda di log (misalnya `HR` atau `Duration (s)`).\n\nLebih banyak bagian plugin kini tersedia dalam bahasa Anda: pesan tag otot, judul galat, analisis latihan di peta panas, dan jendela konversi latihan. Referensi tag otot juga ditulis dalam bahasa Anda.\n\nBuat templat standar kini memberi tahu saat gagal.\n\nLatihan terbaru tidak lagi menampilkan latihan yang sama dua kali jika ditulis dengan spasi atau huruf besar-kecil yang berbeda.",
       "v3_2_0": "**Perbaikan.** Blok `workout-sets` dengan `rest: 0` tidak lagi memulai timer bagian dalam sesi terpandu. \"N hari terakhir\" sama di mana saja (grafik, widget dasbor, filter) dan mencakup seluruh hari batas. Grafik mengelompokkan titik per hari latihan, dan garis tren memakai satu aturan. \"Terakhir kali\" dan teks target sama di kartu sesi, lembar set, dan header target. Kolom kustom seperti `HR` atau `Duration (s)` dibaca di mana saja. Konversi latihan tidak lagi menulis berat dengan satuan yang salah. Efektivitas protokol mengikuti urutan set. Halaman latihan dengan `:` atau `#` di namanya mendapat frontmatter yang valid. Ekspor kanvas membaca bagian dan panjang timer dengan benar. Preset timer dan modal \"Tambah blok latihan\" sudah diterjemahkan sepenuhnya.\n\n**Peningkatan.** Preset timer dipilih sebagai chip, dengan pilihan \"Tidak ada\"; saat mengedit blok, preset yang sudah tidak ada di pengaturan tetap dipertahankan. Tombol modal memakai urutan yang sama di mana saja, dengan baris tombol selalu terlihat di bawah. Durasi diformat dengan cara yang sama di mana saja.",
       "v3_1_0": "**Yang baru di plugin.** Setelah pembaruan, plugin menampilkan apa yang berubah, sekali saja. Buka lagi kapan saja dengan **Tampilkan yang baru** di palet perintah, atau **Tampilkan catatan perubahan** di Pengaturan → Workout Planner → Memulai.\n\n**Set latihan untuk semua orang.** Blok `workout-sets` tidak lagi menjadi fitur beta: blok ini berfungsi tanpa perlu mengaktifkan apa pun, dan **Sisipkan set latihan** selalu ada di palet perintah."
+    }
+  },
+  "wizard": {
+    "table": {
+      "planUnavailable": "\"Progresif overload\" hanya berlaku untuk satu latihan dalam tabel. Pilih latihan atau rangkaian latihan tertentu untuk menjalankannya."
+    },
+    "chart": {
+      "steps": {
+        "chartType": "Jenis grafik",
+        "data": "Data",
+        "display": "Tampilkan"
+      }
+    },
+    "timerSteps": {
+      "timing": "Durasi",
+      "options": "Pilihan"
+    },
+    "timer": {
+      "durationInvalid": "Masukkan durasi minimal 1 detik",
+      "restInvalid": "Masukkan waktu istirahat minimal 0 detik.",
+      "roundsInvalid": "Masukkan minimal 1 ronde"
+    },
+    "back": "Kembali",
+    "next": "Berikut",
+    "stepCounter": "Langkah {current} dari {total}",
+    "stepperLabel": "Langkah-langkah",
+    "stepDone": "{step}, selesai",
+    "steps": {
+      "exercise": "Latihan",
+      "fields": "Nilai",
+      "details": "Rincian",
+      "plan": "Rencanakan",
+      "rest": "Istirahat",
+      "target": "Apa yang akan ditampilkan",
+      "display": "Tampilkan"
+    }
+  },
+  "createExercisePageWizard": {
+    "steps": {
+      "nameAndType": "Nama dan jenis",
+      "musclesAndFolder": "Otot dan folder"
     }
   }
 }

@@ -285,6 +285,11 @@
       "editTitle": "Upravit {widget}",
       "sortMostSets": "Nejvíce sérií",
       "lastWidget": "Toto je jediný widget dashboardu, nelze ho tedy odebrat: smažte místo něj blok."
+    },
+    "wizard": {
+      "stepGeneral": "Obecné",
+      "stepWidgets": "Prvek",
+      "dateRangeInvalid": "Zadejte celé číslo dní, 0 nebo více"
     }
   },
   "duration": {
@@ -1234,7 +1239,14 @@
     "logSet": "Zapsat sérii {set}",
     "unlogSet": "Odebrat sérii {set} ze záznamu",
     "setRemoved": "Série {set} odebrána",
-    "valueOfSet": "{field}, série {set}: {value}"
+    "valueOfSet": "{field}, série {set}: {value}",
+    "wizard": {
+      "planningFor": "Plánování {exercise}",
+      "review": "Zkontrolujte",
+      "restSectionTimer": "Časovač pro tuto sekci",
+      "restValue": "{seconds} po každém setu",
+      "workoutDefault": "{note} (tato poznámka)"
+    }
   },
   "whatsNew": {
     "title": "Co je nového",
@@ -1250,6 +1262,47 @@
       "v3_2_1": "**Přidat blok cvičení** teď přidá cvik jako vlastní sekci s blokem sérií (plánované série a 90s odpočinek), tedy s rozvržením ukázkových poznámek. Nastavení šablony bloku cvičení zmizelo a spolu s ním i příkaz „Vytvořit sekci cvičení“, který dělal totéž se starým rozvržením: pokud jste měli na něj klávesovou zkratku, nastavte ji na „Přidat blok cvičení“.\n\nPři úpravě série nebo při začátku od poslední série se nyní doplňují pole, jejichž sloupec je v záznamu zapsán jinak (například `HR` nebo `Duration (s)`).\n\nVíce pluginu je ve vašem jazyce: zprávy o štítcích svalů, nadpisy chyb, analýza tréninku v tepelné mapě svalů a okno převodu cvičení. Referenční přehled štítků svalů je také napsán ve vašem jazyce.\n\n„Generovat výchozí šablony“ nyní oznámí, když selže.\n\nNedávná cvičení už neukazují stejné cvičení dvakrát, když bylo zadáno s jinými mezerami nebo velikostí písmen.",
       "v3_2_0": "**Opravy.** Blok `workout-sets` s `rest: 0` už v vedené relaci nespouští časovač sekce. „Posledních N dní“ je všude stejné (grafy, widgety dashboardu, filtry) a zahrnuje celý hraniční den. Grafy seskupují body podle tréninkového dne a trendové čáry používají jedno pravidlo. „Minule“ a formulace cíle se shodují v kartě relace, v tabulce sérií i v záhlaví cíle. Vlastní sloupce jako `HR` nebo `Duration (s)` se čtou všude. Převod cviků už nezapisuje váhy v chybné jednotce. Účinnost protokolů sleduje pořadí sérií. Stránky cviků se znaky `:` nebo `#` v názvu mají platný frontmatter. Export na plátno správně čte sekce a délky časovačů. Předvolby časovače a okno „Přidat blok cvičení“ jsou plně přeloženy.\n\n**Vylepšení.** Předvolby časovače se vybírají jako čipy s možností „Žádná“; úprava bloku zachová předvolbu, která už není v nastavení. Tlačítka v oknech mají všude stejné pořadí a řádek tlačítek je vždy viditelný dole. Trvání se formátuje stejně všude.",
       "v3_1_0": "**Co je nového v pluginu.** Po aktualizaci plugin jednou zobrazí, co se změnilo. Kdykoli ho můžete znovu otevřít příkazem **Zobrazit novinky** v paletě příkazů nebo tlačítkem **Zobrazit seznam změn** v Nastavení → Workout Planner → Začít.\n\n**Série tréninku pro všechny.** Blok `workout-sets` už není funkce v beta verzi: funguje bez zapínání čehokoli a příkaz **Vložit série tréninku** je vždy v paletě příkazů."
+    }
+  },
+  "wizard": {
+    "table": {
+      "planUnavailable": "Postupné zatížení se vztahuje pouze k jedné konkrétní cvičení. Vyberte si konkrétní cvičení nebo sadu cvičení a trénink, abyste je nastavili."
+    },
+    "chart": {
+      "steps": {
+        "chartType": "Typ grafu",
+        "data": "Data",
+        "display": "Zobrazit"
+      }
+    },
+    "timerSteps": {
+      "timing": "Doba trvání",
+      "options": "Možnosti"
+    },
+    "timer": {
+      "durationInvalid": "Zadejte dobu trvání alespoň 1 sekundu.",
+      "restInvalid": "Zadejte dobu odpočinku 0 sekund nebo více.",
+      "roundsInvalid": "Zadejte alespoň 1 kolo"
+    },
+    "back": "Zpět",
+    "next": "Další",
+    "stepCounter": "Krok {current} z {total}",
+    "stepperLabel": "Kroky",
+    "stepDone": "{step}, dokončeno",
+    "steps": {
+      "exercise": "Cvičení",
+      "fields": "Hodnoty",
+      "details": "Podrobnosti",
+      "plan": "Plán",
+      "rest": "Odpočinek",
+      "target": "Co zobrazit",
+      "display": "Zobrazit"
+    }
+  },
+  "createExercisePageWizard": {
+    "steps": {
+      "nameAndType": "Název a typ",
+      "musclesAndFolder": "Svaly a složka"
     }
   }
 }

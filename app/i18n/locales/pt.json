@@ -285,6 +285,11 @@
       "editTitle": "Editar {widget}",
       "sortMostSets": "Mais séries",
       "lastWidget": "Este é o único widget do painel, por isso não o pode remover: elimine o bloco."
+    },
+    "wizard": {
+      "stepGeneral": "Geral",
+      "stepWidgets": "Componentes",
+      "dateRangeInvalid": "Insira um número inteiro de dias, 0 ou mais"
     }
   },
   "duration": {
@@ -1234,7 +1239,14 @@
     "logSet": "Registar série {set}",
     "unlogSet": "Remover a série {set} do registo",
     "setRemoved": "Série {set} removida",
-    "valueOfSet": "{field}, série {set}: {value}"
+    "valueOfSet": "{field}, série {set}: {value}",
+    "wizard": {
+      "planningFor": "Planejamento {exercise}",
+      "review": "Revisar",
+      "restSectionTimer": "Temporizador da seção",
+      "restValue": "{seconds} após cada conjunto",
+      "workoutDefault": "{note} (esta nota)"
+    }
   },
   "whatsNew": {
     "title": "Novidades",
@@ -1250,6 +1262,47 @@
       "v3_2_1": "**Adicionar bloco de exercício** passa a adicionar o exercício como uma secção própria, com um bloco de séries (séries planeadas e descanso de 90 s), o layout das notas de exemplo. A definição de modelo do bloco de exercício desapareceu, e também o comando Criar secção de exercício, que fazia o mesmo com o layout antigo: se tinha uma tecla de atalho nele, atribua-a a Adicionar bloco de exercício.\n\nAo editar uma série, ou ao começar a partir da última, passam a ser preenchidos os campos cuja coluna está escrita de outra forma no registo (por exemplo `HR` ou `Duration (s)`).\n\nMais do plugin está traduzido: mensagens das tags musculares, títulos de erros, a análise de treino do mapa de calor e a janela de conversão de exercícios. A referência de tags musculares também está traduzida.\n\nGerar modelos predefinidos passa a indicar quando falha.\n\nOs exercícios recentes deixam de repetir o mesmo exercício quando foi escrito com espaçamento ou maiúsculas diferentes.",
       "v3_2_0": "**Correções.** Um bloco `workout-sets` com `rest: 0` deixa de iniciar o temporizador da secção numa sessão guiada. \"Últimos N dias\" é igual em todo o lado (gráficos, widgets do painel, filtros) e inclui o dia limite por completo. Os gráficos agrupam os pontos por dia de treino, e as linhas de tendência usam uma só regra. \"Última vez\" e o texto dos objetivos coincidem no cartão da sessão, na folha de séries e no cabeçalho do objetivo. Colunas personalizadas como `HR` ou `Duration (s)` são lidas em todo o lado. A conversão de exercícios deixa de escrever pesos na unidade errada. A eficácia dos protocolos segue a ordem das séries. As páginas de exercício com `:` ou `#` no nome passam a ter frontmatter válido. A exportação para canvas lê corretamente as secções e a duração dos temporizadores. As predefinições de temporizador e a janela \"Adicionar bloco de exercícios\" estão totalmente traduzidas.\n\n**Melhorias.** As predefinições de temporizador escolhem-se em chips, com a opção \"Nenhum\"; ao editar um bloco, mantém-se uma predefinição que já não está nas definições. Os botões das janelas usam a mesma ordem em todo o lado, com a linha de botões sempre visível no fundo. As durações são formatadas da mesma forma em todo o lado.",
       "v3_1_0": "**Novidades no plugin.** Depois de uma atualização, o plugin mostra uma única vez o que mudou. Pode voltar a abri-las a qualquer momento com **Mostrar novidades** na paleta de comandos, ou com **Mostrar alterações** em Definições → Workout Planner → Como começar.\n\n**Séries no telemóvel para todos.** O bloco `workout-sets` deixou de ser uma funcionalidade beta: funciona sem ativar nada, e **Inserir séries de exercícios** está sempre disponível na paleta de comandos."
+    }
+  },
+  "wizard": {
+    "table": {
+      "planUnavailable": "O princípio de sobrecarga progressiva se aplica apenas a uma tabela com um único exercício. Selecione um exercício específico ou uma série de exercícios e treinos para aplicá-lo."
+    },
+    "chart": {
+      "steps": {
+        "chartType": "Tipo de gráfico",
+        "data": "Dados",
+        "display": "Exibir"
+      }
+    },
+    "timerSteps": {
+      "timing": "Tempo",
+      "options": "Opções"
+    },
+    "timer": {
+      "durationInvalid": "Insira uma duração de pelo menos 1 segundo",
+      "restInvalid": "Insira um tempo de descanso de 0 segundos ou mais",
+      "roundsInvalid": "Insira pelo menos 1 rodada"
+    },
+    "back": "Voltar",
+    "next": "Próximo",
+    "stepCounter": "Passo {current} de {total}",
+    "stepperLabel": "Etapas",
+    "stepDone": "{step}, concluído",
+    "steps": {
+      "exercise": "Exercício",
+      "fields": "Valores",
+      "details": "Detalhes",
+      "plan": "Plano",
+      "rest": "Descansar",
+      "target": "O que exibir",
+      "display": "Exibir"
+    }
+  },
+  "createExercisePageWizard": {
+    "steps": {
+      "nameAndType": "Nome e tipo",
+      "musclesAndFolder": "Músculos e pasta"
     }
   }
 }

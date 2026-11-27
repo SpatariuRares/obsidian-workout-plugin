@@ -285,6 +285,11 @@
       "editTitle": "Rediger {widget}",
       "sortMostSets": "Flest sett",
       "lastWidget": "Dette er dashbordets eneste widget, så den kan ikke fjernes: slett blokken i stedet."
+    },
+    "wizard": {
+      "stepGeneral": "Generelt",
+      "stepWidgets": "Widgeter",
+      "dateRangeInvalid": "Skriv inn et helt antall dager, 0 eller mer."
     }
   },
   "duration": {
@@ -1234,7 +1239,14 @@
     "logSet": "Logg sett {set}",
     "unlogSet": "Fjern sett {set} fra loggen",
     "setRemoved": "Sett {set} fjernet",
-    "valueOfSet": "{field}, sett {set}: {value}"
+    "valueOfSet": "{field}, sett {set}: {value}",
+    "wizard": {
+      "planningFor": "Planlegging {exercise}",
+      "review": "Gjennomgå",
+      "restSectionTimer": "Tidsbruken for denne seksjonen",
+      "restValue": "{seconds} etter hver runde",
+      "workoutDefault": "{note} (dette notatet)"
+    }
   },
   "whatsNew": {
     "title": "Hva er nytt",
@@ -1250,6 +1262,47 @@
       "v3_2_1": "**Legg til øvelsesblokk** legger nå til øvelsen som en egen seksjon med en settblokk (planlagte sett og 90 s hvile), oppsettet i eksempelnotatene. Innstillingen for mal til øvelsesblokk er borte, og det samme gjelder kommandoen Opprett øvelsesseksjon, som gjorde det samme med det gamle oppsettet: hadde du en hurtigtast på den, sett den på Legg til øvelsesblokk.\n\nNår du redigerer et sett, eller starter fra forrige, fylles nå felt inn der kolonnen er skrevet på en annen måte i loggen (for eksempel `HR` eller `Duration (s)`).\n\nMer av plugin-en er på norsk: meldinger om muskeltagger, feiltitler, varmekartets treningsanalyse og vinduet for øvelseskonvertering. Oversikten over muskeltagger er også skrevet på norsk.\n\nGenerer standardmaler sier nå fra når det mislykkes.\n\nNylige øvelser viser ikke lenger samme øvelse to ganger når den er skrevet med ulik mellomrom eller store og små bokstaver.",
       "v3_2_0": "**Feilrettinger.** Et `workout-sets`-blokk med `rest: 0` starter ikke lenger seksjonens timer i en veiledet økt. «Siste N dager» er likt overalt (diagrammer, dashbord-widgeter, filtre) og tar med hele grensedagen. Diagrammer grupperer punktene etter treningsdag, og trendlinjer bruker én regel. «Sist gang» og målteksten er like i øktkortet, settarket og målhodet. Egne kolonner som `HR` eller `Duration (s)` leses overalt. Øvelseskonvertering skriver ikke lenger vekter i feil enhet. Protokolleffektivitet følger settrekkefølgen. Øvelsessider med `:` eller `#` i navnet får gyldig frontmatter. Canvas-eksport leser seksjoner og timerlengder riktig. Timer-forhåndsinnstillinger og dialogen «Legg til øvelsesblokk» er fullt oversatt.\n\n**Forbedringer.** Timer-forhåndsinnstillinger velges som brikker, med et «Ingen»-valg; redigering av en blokk beholder en forhåndsinnstilling som ikke lenger står i innstillingene. Dialogknappene bruker samme rekkefølge overalt, med knapperaden alltid synlig nederst. Varigheter formateres likt overalt.",
       "v3_1_0": "**Hva er nytt i pluginen.** Etter en oppdatering viser pluginen hva som er endret, én gang. Åpne den igjen når som helst med **Vis hva som er nytt** i kommandopaletten, eller **Vis endringslogg** under Innstillinger → Komme i gang.\n\n**Sett på telefonen for alle.** `workout-sets`-blokken er ikke lenger en beta-funksjon: den fungerer uten at du slår på noe, og **Legg til treningssett** står alltid i kommandopaletten."
+    }
+  },
+  "wizard": {
+    "table": {
+      "planUnavailable": "Progressiv belastning gjelder kun for en enkelt øvelse. Velg en spesifikk øvelse eller en øvelse og treningsprogram for å sette dem opp."
+    },
+    "chart": {
+      "steps": {
+        "chartType": "Type av diagram",
+        "data": "Data",
+        "display": "Vis"
+      }
+    },
+    "timerSteps": {
+      "timing": "Tidsinnstilling",
+      "options": "Alternativer"
+    },
+    "timer": {
+      "durationInvalid": "Angi en varighet på minst 1 sekund",
+      "restInvalid": "Skriv inn en rest på 0 sekunder eller mer.",
+      "roundsInvalid": "Angi minst 1 runde"
+    },
+    "back": "Tilbake",
+    "next": "Neste",
+    "stepCounter": "Trinn {current} av {total}",
+    "stepperLabel": "Trinn",
+    "stepDone": "{step}, fullført",
+    "steps": {
+      "exercise": "Øvelse",
+      "fields": "Verdier",
+      "details": "Detaljer",
+      "plan": "Plan",
+      "rest": "Pause",
+      "target": "Hva som skal vises",
+      "display": "Vis"
+    }
+  },
+  "createExercisePageWizard": {
+    "steps": {
+      "nameAndType": "Navn og type",
+      "musclesAndFolder": "Muskler og mappe"
     }
   }
 }

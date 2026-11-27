@@ -285,6 +285,11 @@
       "editTitle": "{widget} widget'ını düzenle",
       "sortMostSets": "En çok set",
       "lastWidget": "Bu, gösterge panelinin tek widget'ı olduğu için kaldırılamaz: bunun yerine bloğu silin."
+    },
+    "wizard": {
+      "stepGeneral": "Genel",
+      "stepWidgets": "Widget'ler",
+      "dateRangeInvalid": "Lütfen, tam bir gün sayısını (0 veya daha fazla) girin."
     }
   },
   "duration": {
@@ -1234,7 +1239,14 @@
     "logSet": "Set {set} kaydet",
     "unlogSet": "Set {set} kaydını kayıtlardan kaldır",
     "setRemoved": "Set {set} kaldırıldı",
-    "valueOfSet": "{field}, set {set}: {value}"
+    "valueOfSet": "{field}, set {set}: {value}",
+    "wizard": {
+      "planningFor": "Planlama {exercise}",
+      "review": "Gözden geçirin",
+      "restSectionTimer": "Bu bölümün zamanlayıcısı",
+      "restValue": "{seconds} aded sonra her bir set",
+      "workoutDefault": "{note} (bu not)"
+    }
   },
   "whatsNew": {
     "title": "Yenilikler",
@@ -1250,6 +1262,47 @@
       "v3_2_1": "**Egzersiz bloğu ekle** artık egzersizi kendi bölümü olarak ekler: planlanan setler ve 90 sn dinlenme içeren bir set bloğu, örnek notların düzeni. Egzersiz bloğu şablonu ayarı kaldırıldı; eski düzenle aynı işi yapan Egzersiz bölümü oluştur komutu da kaldırıldı. Bu komuta bir kısayol atadıysanız onu Egzersiz bloğu ekle komutuna atayın.\n\nBir seti düzenlerken ya da son setinizden başlarken, kayıtta sütunu başka bir biçimde yazılmış alanlar artık doldurulur (örneğin `HR` veya `Duration (s)`).\n\nEklentinin daha fazlası artık Türkçe: kas etiketi mesajları, hata başlıkları, ısı haritasının antrenman analizi ve egzersiz dönüştürme penceresi. Kas etiketleri başvurusu da Türkçe yazıldı.\n\nVarsayılan şablonları oluştur artık başarısız olduğunda bunu söyler.\n\nSon egzersizlerde, aynı egzersiz farklı boşluk veya büyük/küçük harfle yazıldığında artık iki kez gösterilmez.",
       "v3_2_0": "**Düzeltmeler.** Rehberli oturumda `workout-sets` bloğunda `rest: 0` varsa blok artık bölümün zamanlayıcısını başlatmaz. \"Son N gün\" her yerde aynıdır (grafikler, gösterge paneli bileşenleri, filtreler) ve sınır günün tamamını kapsar. Grafikler noktaları antrenman gününe göre gruplar; eğilim çizgileri tek bir kuralı kullanır. \"Son kez\" ve hedef ifadesi oturum kartında, set tablosunda ve hedef başlığında aynıdır. `HR` veya `Duration (s)` gibi özel sütunlar her yerde okunur. Egzersiz dönüştürme artık ağırlıkları yanlış birimde yazmaz. Protokol etkinliği set sırasını izler. Adında `:` veya `#` bulunan egzersiz sayfaları geçerli frontmatter alır. Kanvas dışa aktarımı bölümleri ve zamanlayıcı sürelerini doğru okur. Zamanlayıcı ön ayarları ve \"Egzersiz bloğu ekle\" penceresi tamamen çevrildi.\n\n**İyileştirmeler.** Zamanlayıcı ön ayarları \"Yok\" seçeneğiyle çip olarak seçilir; bir bloğu düzenlerken ayarlarda artık bulunmayan bir ön ayar korunur. Pencere düğmeleri her yerde aynı sırada gösterilir ve düğme satırı her zaman altta görünür. Süreler her yerde aynı biçimde gösterilir.",
       "v3_1_0": "**Eklentide neler yeni.** Güncellemeden sonra eklenti, neyin değiştiğini bir kez gösterir. Bunu daha sonra komut panelinde **Yenilikleri göster** ile ya da Ayarlar → Workout Planner → Başlangıç bölümündeki **Değişiklik günlüğünü göster** ile tekrar açabilirsiniz.\n\n**Herkes için antrenman setleri.** `workout-sets` bloğu artık bir beta özellik değil: hiçbir şeyi açmadan çalışır ve **Egzersiz setlerini ekle** komutu komut panelinde her zaman bulunur."
+    }
+  },
+  "wizard": {
+    "table": {
+      "planUnavailable": "\"Aşamalı yüklenme\" özelliği yalnızca bir egzersiz için geçerlidir. Belirli bir egzersiz veya egzersiz ve antrenman seçerek bunları ayarlayın."
+    },
+    "chart": {
+      "steps": {
+        "chartType": "Grafik türü",
+        "data": "Veri",
+        "display": "Görüntüleme"
+      }
+    },
+    "timerSteps": {
+      "timing": "Zamanlama",
+      "options": "Seçenekler"
+    },
+    "timer": {
+      "durationInvalid": "En az 1 saniyelik bir süre girin",
+      "restInvalid": "0 saniye veya daha fazla dinlenme süresi girin",
+      "roundsInvalid": "En az 1 tur girin"
+    },
+    "back": "Geri",
+    "next": "Sonra",
+    "stepCounter": "Adım {current} / {total}",
+    "stepperLabel": "Adımlar",
+    "stepDone": "{step}, tamamlandı",
+    "steps": {
+      "exercise": "Egzersiz",
+      "fields": "Değerler",
+      "details": "Ayrıntılar",
+      "plan": "Plan",
+      "rest": "Dinlenme",
+      "target": "Ne görüntülenmeli",
+      "display": "Görüntüleme"
+    }
+  },
+  "createExercisePageWizard": {
+    "steps": {
+      "nameAndType": "Ad ve tür",
+      "musclesAndFolder": "Kaslar ve klasör"
     }
   }
 }

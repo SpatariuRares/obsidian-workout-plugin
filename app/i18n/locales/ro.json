@@ -285,6 +285,11 @@
       "editTitle": "Editează {widget}",
       "sortMostSets": "Cele mai multe serii",
       "lastWidget": "Acesta este singurul widget al tabloului de bord, deci nu poate fi scos: șterge blocul."
+    },
+    "wizard": {
+      "stepGeneral": "General",
+      "stepWidgets": "Elemente de interfață",
+      "dateRangeInvalid": "Introduceți un număr întreg de zile, 0 sau mai mult"
     }
   },
   "duration": {
@@ -1234,7 +1239,14 @@
     "logSet": "Înregistrează seria {set}",
     "unlogSet": "Scoate seria {set} din jurnal",
     "setRemoved": "Seria {set} a fost ștearsă",
-    "valueOfSet": "{field}, seria {set}: {value}"
+    "valueOfSet": "{field}, seria {set}: {value}",
+    "wizard": {
+      "planningFor": "Planificare {exercise}",
+      "review": "Revizuiește",
+      "restSectionTimer": "Cronometrul secțiunii",
+      "restValue": "{seconds} după fiecare set",
+      "workoutDefault": "{note} (această notă)"
+    }
   },
   "whatsNew": {
     "title": "Ce e nou",
@@ -1250,6 +1262,47 @@
       "v3_2_1": "**Adaugă bloc de exercițiu** adaugă acum exercițiul ca secțiune proprie, cu un bloc de serii (serii planificate și pauză de 90 s), aceeași structură ca în notițele de exemplu. Setarea șablonului de bloc de exercițiu a dispărut, la fel și comanda Creează secțiune de exercițiu, care făcea același lucru cu vechea structură: dacă ai pus o tastă rapidă pe ea, pune-o pe Adaugă bloc de exercițiu.\n\nEditând o serie, sau pornind de la ultima, acum se completează și câmpurile a căror coloană este scrisă altfel în jurnal (de exemplu `HR` sau `Duration (s)`).\n\nMai mult din plugin este în limba ta: mesajele pentru etichetele de mușchi, titlurile erorilor, analiza antrenamentului din harta termică a mușchilor și fereastra de conversie a exercițiilor. Referința etichetelor pentru mușchi este scrisă și ea în limba ta.\n\nGenerarea șabloanelor implicite acum spune când eșuează.\n\nExercițiile recente nu mai apar de două ori atunci când au fost scrise cu alt spațiu sau altă majusculă.",
       "v3_2_0": "**Corecturi.** Un bloc `workout-sets` cu `rest: 0` nu mai pornește cronometrul secțiunii într-o sesiune ghidată. „Ultimele N zile” are același sens peste tot (grafice, widgeturi ale tabloului de bord, filtre) și include întreaga zi de la limită. Graficele grupează punctele pe zi de antrenament, iar liniile de tendință folosesc aceeași regulă. „Ultima dată” și formularea țintei sunt identice în cardul sesiunii, în foaia de serii și în antetul țintei. Coloanele personalizate, precum `HR` sau `Duration (s)`, sunt citite peste tot. Conversia exercițiilor nu mai scrie greutățile în unitatea greșită. Eficiența protocoalelor urmează ordinea seriilor. Paginile de exerciții cu `:` sau `#` în nume primesc un frontmatter valid. Exportul pe canvas citește corect secțiunile și duratele cronometrelor. Presetările de temporizator și fereastra „Adaugă bloc de exercițiu” sunt traduse complet.\n\n**Îmbunătățiri.** Presetările de temporizator se aleg ca cipuri, cu opțiunea „Niciunul”; la editarea unui bloc se păstrează un preset care nu mai există în setări. Butoanele din ferestre au aceeași ordine peste tot, iar rândul de butoane rămâne mereu vizibil jos. Duratele sunt formatate la fel peste tot.",
       "v3_1_0": "**Ce e nou în plugin.** După o actualizare, pluginul arată o singură dată ce s-a schimbat. Deschide-l din nou oricând cu **Afișează ce e nou** din paleta de comenzi sau cu **Afișează modificările** din Setări → Workout Planner → Începe.\n\n**Serii de antrenament pentru toată lumea.** Blocul `workout-sets` nu mai este o funcționalitate beta: funcționează fără să activezi nimic, iar **Adaugă serii de exerciții** este mereu în paleta de comenzi."
+    }
+  },
+  "wizard": {
+    "table": {
+      "planUnavailable": "Aplicarea progresivă a sarcinii se aplică doar pentru un singur exercițiu. Alegeți un exercițiu specific sau un set de exerciții și antrenament pentru a le configura."
+    },
+    "chart": {
+      "steps": {
+        "chartType": "Tip de grafic",
+        "data": "Date",
+        "display": "Afișare"
+      }
+    },
+    "timerSteps": {
+      "timing": "Durata",
+      "options": "Opțiuni"
+    },
+    "timer": {
+      "durationInvalid": "Introduceți o durată de cel puțin 1 secundă",
+      "restInvalid": "Introduceți o durată de odihnă de 0 secunde sau mai mult.",
+      "roundsInvalid": "Introduceți cel puțin 1 rundă"
+    },
+    "back": "Înapoi",
+    "next": "Următor",
+    "stepCounter": "Pasul {current} din {total}",
+    "stepperLabel": "Pași",
+    "stepDone": "{step}, finalizat",
+    "steps": {
+      "exercise": "Exercițiu",
+      "fields": "Valori",
+      "details": "Detalii",
+      "plan": "Plan",
+      "rest": "Repaus",
+      "target": "Ce să afișeze",
+      "display": "Afișează"
+    }
+  },
+  "createExercisePageWizard": {
+    "steps": {
+      "nameAndType": "Nume și tip",
+      "musclesAndFolder": "Mușchi și folder"
     }
   }
 }

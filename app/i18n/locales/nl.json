@@ -285,6 +285,11 @@
       "editTitle": "{widget} bewerken",
       "sortMostSets": "Meeste series",
       "lastWidget": "Dit is de enige widget van het dashboard, dus die kan niet worden verwijderd: verwijder het blok in plaats daarvan."
+    },
+    "wizard": {
+      "stepGeneral": "Algemeen",
+      "stepWidgets": "Widgets",
+      "dateRangeInvalid": "Voer een geheel aantal dagen in, 0 of meer"
     }
   },
   "duration": {
@@ -1234,7 +1239,14 @@
     "logSet": "Serie {set} registreren",
     "unlogSet": "Serie {set} uit het logboek verwijderen",
     "setRemoved": "Serie {set} verwijderd",
-    "valueOfSet": "{field}, serie {set}: {value}"
+    "valueOfSet": "{field}, serie {set}: {value}",
+    "wizard": {
+      "planningFor": "Planning {exercise}",
+      "review": "Bekijk",
+      "restSectionTimer": "Timer van deze sectie",
+      "restValue": "{seconds} na elke set",
+      "workoutDefault": "{note} (dit bericht)"
+    }
   },
   "whatsNew": {
     "title": "Wat is er nieuw",
@@ -1250,6 +1262,47 @@
       "v3_2_1": "**Oefeningsblok toevoegen** voegt de oefening nu toe als eigen sectie met een seriesblok (geplande series en 90 s rust), de indeling van de voorbeeldnotities. De instelling voor het sjabloon van het oefeningsblok is verdwenen, en ook het commando Oefeningssectie maken, dat hetzelfde deed met de oude indeling: had je een sneltoets daarop, stel die dan in op Oefeningsblok toevoegen.\n\nEen serie bewerken, of beginnen vanaf je vorige, vult nu velden in waarvan de kolom in het log anders is geschreven (bijvoorbeeld `HR` of `Duration (s)`).\n\nMeer van de plugin is in jouw taal: berichten over spierlabels, fouttitels, de trainingsanalyse van de spierheatmap en het venster voor het omzetten van oefeningen. De referentie voor spierlabels is ook in jouw taal.\n\nStandaard sjablonen genereren meldt nu wanneer het mislukt.\n\nRecente oefeningen tonen dezelfde oefening niet langer twee keer als die met andere spaties of hoofdletters is ingevoerd.",
       "v3_2_0": "**Oplossingen.** Een `workout-sets`-blok met `rest: 0` start in een begeleide sessie niet langer de timer van de sectie. \"Laatste N dagen\" is overal hetzelfde (grafieken, dashboardwidgets, filters) en telt de hele grensdag mee. Grafieken groeperen punten per trainingsdag, en trendlijnen volgen één regel. \"Laatste keer\" en de doelformulering komen overeen in de sessiekaart, de seriekaart en de doelkop. Eigen kolommen zoals `HR` of `Duration (s)` worden overal gelezen. Oefeningen omzetten schrijft gewichten niet langer in de verkeerde eenheid. De effectiviteit van protocollen volgt de volgorde van de series. Oefeningpagina's met `:` of `#` in de naam krijgen geldige frontmatter. De canvas-export leest secties en timerlengtes goed. Timervoorinstellingen en de modal \"Oefeningsblok toevoegen\" zijn volledig vertaald.\n\n**Verbeteringen.** Timervoorinstellingen kies je met chips, met een \"Geen\"-optie; een blok bewerken behoudt een voorinstelling die niet meer in de instellingen staat. Knoppen in modals gebruiken overal dezelfde volgorde, en de knoppenrij staat altijd zichtbaar onderaan. Duren worden overal op dezelfde manier opgemaakt.",
       "v3_1_0": "**Wat er nieuw is in de plugin.** Na een update toont de plugin één keer wat er is veranderd. Open het altijd opnieuw met **Toon wat er nieuw is** in het opdrachtenpalet, of met **Changelog tonen** onder Instellingen → Workout Planner → Beginnen.\n\n**Trainingsseries voor iedereen.** Het `workout-sets`-blok is geen bètafunctie meer: het werkt zonder iets aan te zetten, en **Trainingsseries invoegen** staat altijd in het opdrachtenpalet."
+    }
+  },
+  "wizard": {
+    "table": {
+      "planUnavailable": "De functie \"Progressive overload\" is alleen van toepassing op één oefening per tabel. Selecteer een specifieke oefening of een oefening en trainingsplan om deze in te stellen."
+    },
+    "chart": {
+      "steps": {
+        "chartType": "Type van grafiek",
+        "data": "Data",
+        "display": "Weergave"
+      }
+    },
+    "timerSteps": {
+      "timing": "Timing",
+      "options": "Opties"
+    },
+    "timer": {
+      "durationInvalid": "Voer een duur in van minstens 1 seconde in.",
+      "restInvalid": "Voer een rusttijd van 0 seconden of meer in.",
+      "roundsInvalid": "Voer minimaal 1 ronde in"
+    },
+    "back": "Terug",
+    "next": "Volgende",
+    "stepCounter": "Stap {current} van {total}",
+    "stepperLabel": "Stappen",
+    "stepDone": "{step}, voltooid",
+    "steps": {
+      "exercise": "Oefening",
+      "fields": "Waarden",
+      "details": "Details",
+      "plan": "Plan",
+      "rest": "Rust",
+      "target": "Wat te tonen",
+      "display": "Weergave"
+    }
+  },
+  "createExercisePageWizard": {
+    "steps": {
+      "nameAndType": "Naam en type",
+      "musclesAndFolder": "Spieren en map"
     }
   }
 }

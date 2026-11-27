@@ -3,7 +3,11 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { InsertSetsModal } from "@app/features/tables/modals/InsertSetsModal";
 import { PlanFields } from "@app/features/tables/modals/components/PlanFields";
 import { setsBlock, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
-import type { EditTarget } from "@app/features/modals/base/components/createEditButtons";
+import { changedParams } from "@app/services/codeblocks/CodeBlockSchema";
+import {
+  applyBlockEdit,
+  type EditTarget,
+} from "@app/features/modals/base/components/createEditButtons";
 import { t } from "@app/i18n";
 
 /**
@@ -11,6 +15,8 @@ import { t } from "@app/i18n";
  * parameters, patching only the ones the user changed.
  */
 export class EditSetsModal extends InsertSetsModal {
+  private formAtOpen?: EmbeddedSetsParams;
+
   /** @param where - The note the block is written in, and how to find it without an id */
   constructor(
     app: App,
@@ -19,6 +25,7 @@ export class EditSetsModal extends InsertSetsModal {
     private readonly where: EditTarget,
   ) {
     super(app, plugin);
+    this.quickSubmit = true;
   }
 
   protected getModalTitle(): string {
@@ -40,13 +47,26 @@ export class EditSetsModal extends InsertSetsModal {
     if (this.workoutInput) this.workoutInput.value = workout ?? "";
     if (this.planFields) PlanFields.fill(this.planFields, this.initialParams);
     if (this.restInput) this.restInput.value = String(this.initialParams.rest ?? 0);
+    // Snapshot after the prefill so only what the user changes is patched
+    this.formAtOpen = this.collectParams();
   }
 
-  protected createButtons(container: HTMLElement): void {
-    this.editButtons(container, setsBlock, t("sets.blockUpdateFailed"), {
-      target: this.where,
-      id: this.initialParams.id,
-      collectParams: () => this.collectParams(),
-    });
+  protected submit(): void {
+    const formNow = this.collectParams();
+    const changes = changedParams(this.formAtOpen ?? formNow, formNow);
+    for (const key of this.where.invalidKeys ?? []) {
+      changes[key as keyof EmbeddedSetsParams] = formNow[key as keyof EmbeddedSetsParams] as never;
+    }
+    applyBlockEdit(
+      this,
+      {
+        schema: setsBlock,
+        target: this.where,
+        id: this.initialParams.id,
+        successMessage: this.getSuccessMessage(),
+        failureMessage: t("sets.blockUpdateFailed"),
+      },
+      changes,
+    );
   }
 }

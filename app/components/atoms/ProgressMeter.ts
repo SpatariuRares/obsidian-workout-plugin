@@ -17,7 +17,6 @@ export interface ProgressMeterProps {
 export class ProgressMeter {
   static create(parent: HTMLElement, props: ProgressMeterProps): HTMLElement {
     const { value, max, label } = props;
-    const ratio = max > 0 ? Math.min(Math.max(value / max, 0), 1) : 0;
     const meter = parent.createDiv({
       cls: ["workout-progress-meter", props.className ?? ""].join(" ").trim(),
       attr: {
@@ -28,9 +27,18 @@ export class ProgressMeter {
         "aria-valuenow": String(Math.min(value, max)),
       },
     });
-    if (ratio >= 1) meter.addClass("is-done");
-    const fill = meter.createDiv({ cls: "workout-progress-meter-fill" });
-    DomUtils.setCssProps(fill, { "--workout-progress-value": `${ratio * 100}%` });
+    meter.createDiv({ cls: "workout-progress-meter-fill" });
+    ProgressMeter.update(meter, value);
     return meter;
+  }
+
+  /** Moves an existing meter to `value` (of its own max), keeping the done look in step */
+  static update(meter: HTMLElement, value: number): void {
+    const max = Number(meter.getAttribute("aria-valuemax")) || 0;
+    const ratio = max > 0 ? Math.min(Math.max(value / max, 0), 1) : 0;
+    meter.setAttribute("aria-valuenow", String(Math.min(value, max)));
+    meter.classList.toggle("is-done", ratio >= 1);
+    const fill = meter.querySelector<HTMLElement>(".workout-progress-meter-fill");
+    if (fill) DomUtils.setCssProps(fill, { "--workout-progress-value": `${ratio * 100}%` });
   }
 }

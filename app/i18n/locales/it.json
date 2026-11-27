@@ -801,8 +801,7 @@
       "progressiveOverload": "Sovraccarico progressivo",
       "tableType": "Tipo di tabella",
       "target": "Obiettivo",
-      "workout": "Allenamento",
-      "mobileOptions": "Esercizi e allenamenti più recenti"
+      "workout": "Allenamento"
     },
     "selectOptions": {
       "allLogs": "Tutti i registri",

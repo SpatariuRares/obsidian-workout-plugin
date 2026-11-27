@@ -1227,6 +1227,10 @@ button.workout-icon-dropdown-item[aria-checked=true]::before {
   white-space: nowrap;
 }
 
+body.is-mobile .workout-number-field .workout-number-field-box {
+  height: calc(var(--workout-touch-target-min) + 2 * var(--workout-border-thin));
+}
+
 .workout-number-field-error {
   font-size: var(--workout-font-xs);
 }
@@ -2946,14 +2950,6 @@ body.is-mobile .workout-modal-actions {
   padding-bottom: var(--workout-space-sm);
 }
 
-.workout-log-mobile-summary {
-  cursor: pointer;
-  margin-top: var(--workout-space-lg);
-  margin-bottom: var(--workout-space-sm);
-  font-weight: var(--workout-font-weight-semibold);
-  color: var(--text-normal);
-}
-
 @media (max-width: 768px) {
   .workout-modal .workout-parameters-container {
     grid-template-columns: minmax(0, 1fr);
@@ -3842,253 +3838,232 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
 }
 
 /* ============================================================================
-   WORKOUT CHARTS PLUGIN - STYLES
-   Modern styles using Obsidian CSS Variables
-
-   This stylesheet uses a modular approach with component-based CSS files.
-   All components follow Obsidian's theming system for consistent appearance.
-   ============================================================================ */
-/* ============================================================================
-   WIZARD MODAL SHELL (WizardModal)
+   WIZARD MODAL (WizardModal): stepper, counter, progress bar, steps, footer
    ============================================================================
-   Multi-step modal with clickable horizontal stepper, tabular step counter,
-   3px progress track, directional 150ms step transitions, and sticky actions.
+   A clickable stepper (done = accent check badge, current = accent badge and
+   label, upcoming = muted), a `Step X of N` counter and a 3px progress bar
+   (neutral on the way, accent fill on the last step). One step shows at a
+   time; the sticky footer is the shared `.workout-modal-actions` row.
    ============================================================================ */
-.workout-charts-form.workout-wizard-container {
-  gap: var(--workout-space-md);
-}
-
 .workout-wizard-header {
-  display: flex;
-  flex-direction: column;
-  gap: var(--workout-space-sm);
-}
-
-.workout-wizard-title-row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--workout-space-sm);
-}
-.workout-wizard-title-row .workout-wizard-title {
-  margin: 0;
-  flex: 1 1 auto;
-  min-width: 0;
-  color: var(--text-normal);
-  font-size: var(--workout-font-2xl);
-  font-weight: var(--workout-font-weight-bold);
-}
-
-.workout-wizard-step-meta {
-  flex: none;
-  color: var(--text-muted);
-  font-size: var(--workout-font-xs);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-/* Clickable horizontal stepper */
-.workout-wizard-stepper {
   display: grid;
-  grid-template-columns: repeat(var(--workout-wizard-steps, 3), minmax(0, 1fr));
-  gap: var(--workout-space-xs);
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--workout-space-sm) var(--workout-space-md);
+  margin-bottom: var(--workout-space-lg);
 }
-.workout-wizard-stepper button.workout-wizard-step-btn {
+
+.workout-wizard-stepper {
+  display: flex;
+  gap: var(--workout-space-xs);
+  min-width: 0;
+}
+
+.workout-wizard-step {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: var(--workout-space-xs);
   min-width: 0;
-  min-height: 36px;
-  padding: var(--workout-space-xs) var(--workout-space-sm);
+  min-height: var(--workout-touch-target-min);
+  padding: 0 var(--workout-space-sm);
   border: none;
-  border-radius: var(--workout-radius-md);
   background: transparent;
   box-shadow: none;
   color: var(--text-muted);
   font-size: var(--workout-font-sm);
-  font-weight: var(--workout-font-weight-medium);
   cursor: pointer;
-  transition: background-color 150ms ease, color 150ms ease;
 }
-.workout-wizard-stepper button.workout-wizard-step-btn:hover:not(:disabled) {
-  background: var(--background-modifier-hover);
+.workout-wizard-step.is-blocked, .workout-wizard-step:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.workout-wizard-step.is-current {
+  color: var(--workout-text-accent);
+  font-weight: var(--workout-font-weight-semibold);
+  opacity: 1;
+}
+.workout-wizard-step.is-done {
   color: var(--text-normal);
 }
-.workout-wizard-stepper button.workout-wizard-step-btn:focus-visible {
+.workout-wizard-step:focus-visible {
   outline: var(--workout-border-medium) solid var(--interactive-accent);
   outline-offset: var(--workout-space-2xs);
 }
-.workout-wizard-stepper button.workout-wizard-step-btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-.workout-wizard-stepper button.workout-wizard-step-btn.is-current {
-  color: var(--workout-text-accent);
-  font-weight: var(--workout-font-weight-semibold);
-}
-.workout-wizard-stepper button.workout-wizard-step-btn.is-completed {
-  color: var(--text-normal);
-}
-
-body.is-mobile .workout-wizard-stepper button.workout-wizard-step-btn {
-  min-height: var(--workout-touch-target-min);
-  padding: var(--workout-space-xs);
-}
 
 .workout-wizard-step-badge {
-  display: grid;
-  place-items: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex: none;
   width: 22px;
   height: 22px;
   border-radius: var(--workout-radius-full);
-  border: var(--workout-border-thin) solid var(--workout-border-color);
-  background: var(--background-primary);
-  color: var(--text-muted);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
   font-size: var(--workout-font-xs);
-  font-weight: var(--workout-font-weight-bold);
   font-variant-numeric: tabular-nums;
 }
-.workout-wizard-step-btn.is-current .workout-wizard-step-badge, .workout-wizard-step-btn.is-completed .workout-wizard-step-badge {
+.workout-wizard-step.is-current .workout-wizard-step-badge, .workout-wizard-step.is-done .workout-wizard-step-badge {
   background: var(--workout-accent-fill);
   border-color: var(--workout-accent-fill);
   color: var(--text-on-accent);
 }
-
-.workout-wizard-step-check {
-  display: grid;
-  place-items: center;
+.workout-wizard-step-badge .workout-icon {
+  display: inline-flex;
+  width: 14px;
+  height: 14px;
 }
-.workout-wizard-step-check svg {
-  width: 12px;
-  height: 12px;
-  stroke-width: 2.75;
+.workout-wizard-step-badge .workout-icon svg {
+  width: 100%;
+  height: 100%;
 }
 
 .workout-wizard-step-label {
-  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* Slim 3px progress track */
-.workout-wizard-progress-track {
+.workout-wizard-counter {
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.workout-wizard-progress {
+  grid-column: 1/-1;
   height: 3px;
-  width: 100%;
-  border-radius: var(--workout-radius-full);
-  background: var(--background-modifier-border);
-  overflow: hidden;
 }
 
-.workout-wizard-progress-fill {
-  width: var(--workout-wizard-progress, 0%);
-  height: 100%;
-  border-radius: inherit;
-  background: var(--text-muted);
-  transition: width 180ms ease, background-color 180ms ease;
-}
-.workout-wizard-progress-fill.is-done {
-  background: var(--workout-accent-fill);
-}
-
-/* Step content & directional transitions */
-.workout-wizard-body {
-  min-width: 0;
-}
-
-.workout-wizard-step-pane {
-  display: flex;
-  flex-direction: column;
+/* Steps: only the current one shows; the others keep their fields */
+.workout-wizard-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--workout-space-md);
 }
-.workout-wizard-step-pane.anim-forward {
-  animation: workoutWizardStepForward 150ms cubic-bezier(0.16, 1, 0.3, 1);
+.workout-wizard-panel[hidden] {
+  display: none;
 }
-.workout-wizard-step-pane.anim-backward {
-  animation: workoutWizardStepBackward 150ms cubic-bezier(0.16, 1, 0.3, 1);
+.workout-wizard-panel.is-forward {
+  animation: workout-wizard-in-forward 150ms ease-out;
 }
-
-@keyframes workoutWizardStepForward {
-  from {
-    opacity: 0;
-    transform: translateX(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-@keyframes workoutWizardStepBackward {
-  from {
-    opacity: 0;
-    transform: translateX(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.workout-wizard-panel.is-backward {
+  animation: workout-wizard-in-backward 150ms ease-out;
 }
 @media (prefers-reduced-motion: reduce) {
-  .workout-wizard-stepper button.workout-wizard-step-btn,
-  .workout-wizard-progress-fill {
-    transition: none;
-  }
-  .workout-wizard-step-pane.anim-forward,
-  .workout-wizard-step-pane.anim-backward {
+  .workout-wizard-panel.is-forward, .workout-wizard-panel.is-backward {
     animation: none;
   }
 }
-.workout-wizard-context-line {
+
+@keyframes workout-wizard-in-forward {
+  from {
+    opacity: 0;
+    transform: translateX(var(--workout-space-md));
+  }
+}
+@keyframes workout-wizard-in-backward {
+  from {
+    opacity: 0;
+    transform: translateX(calc(-1 * var(--workout-space-md)));
+  }
+}
+.workout-wizard-error {
+  margin-top: calc(-1 * var(--workout-space-sm));
+  color: var(--workout-text-error);
+  font-size: var(--workout-font-sm);
+}
+
+.workout-wizard-context {
   color: var(--text-muted);
   font-size: var(--workout-font-sm);
-  padding: 0 var(--workout-space-2xs);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* Compact inset Review key/value summary (no nested cards) */
-.workout-wizard-review-inset {
+/* The review: an inset key/value list, not a card inside a card */
+.workout-wizard-review-title {
+  margin: 0;
+  font-size: var(--workout-font-base);
+  font-weight: var(--workout-font-weight-semibold);
+}
+
+.workout-wizard-review {
   display: grid;
-  grid-template-columns: minmax(0, 6.5rem) minmax(0, 1fr);
-  gap: var(--workout-space-sm) var(--workout-space-md);
-  padding: var(--workout-space-md);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--workout-space-xs);
+  padding: var(--workout-space-sm) var(--workout-space-md);
   border-radius: var(--workout-radius-md);
-  border: var(--workout-border-thin) solid var(--workout-border-subtle);
   background: var(--background-primary);
+  border: var(--workout-border-thin) solid var(--workout-border-subtle);
+}
+
+.workout-wizard-review-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: var(--workout-space-sm);
   font-size: var(--workout-font-sm);
 }
 
 .workout-wizard-review-key {
   color: var(--text-muted);
-  font-weight: var(--workout-font-weight-medium);
 }
 
-.workout-wizard-review-val {
-  min-width: 0;
-  color: var(--text-normal);
-  font-weight: var(--workout-font-weight-semibold);
-  font-variant-numeric: tabular-nums;
+.workout-wizard-review-value {
   overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
 }
 
-/* Error state on wizard text field (two classes deep to outrank Obsidian) */
-.workout-charts-form-group .workout-form-field.is-invalid .workout-form-field-input,
-.workout-superset-slot.is-invalid .workout-superset-slot-field .workout-form-field-input {
-  border-color: var(--workout-text-error);
+/* Back sits at the left of the footer, Next/Insert and Cancel on the right */
+.workout-wizard-footer {
+  /* The action row inside is the sticky one: the wrapper must not trap it */
+  display: contents;
+  /* Delete (edit forms) and Back, together at the start; the rest sits at the end */
+}
+.workout-wizard-footer .workout-wizard-start {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-md);
+  margin-inline-end: auto;
+}
+.workout-wizard-footer .workout-wizard-start .workout-modal-actions-delete {
+  margin-inline-end: 0;
 }
 
-.workout-wizard-container .workout-field-error[hidden],
-.workout-wizard-container .workout-field-helper[hidden] {
+body.is-mobile .workout-wizard-step {
+  min-height: var(--workout-touch-target-min);
+  min-width: var(--workout-touch-target-min);
+}
+body.is-mobile {
+  /* On a phone only the current step keeps its label */
+}
+body.is-mobile .workout-wizard-step:not(.is-current) .workout-wizard-step-label {
   display: none;
 }
 
-.workout-wizard-container .workout-field-helper {
+/* Visible keyboard focus on the wizard's fields and action buttons */
+.workout-wizard input:focus-visible,
+.workout-wizard select:focus-visible,
+.workout-wizard textarea:focus-visible,
+.workout-wizard .workout-modal-actions button:focus-visible {
+  outline: var(--workout-border-medium) solid var(--interactive-accent);
+  outline-offset: var(--workout-space-2xs);
+}
+
+/* Adaptive sets wizard: protocol picker + help, superset exercise list, rhythm preview */
+.workout-wizard .workout-field-helper[hidden] {
+  display: none;
+}
+
+.workout-wizard .workout-field-helper {
   color: var(--text-muted);
   font-size: var(--workout-font-xs);
   line-height: 1.35;
+}
+
+.workout-wizard input.workout-form-field-input[aria-invalid=true] {
+  border-color: var(--workout-text-error);
 }
 
 .workout-wizard-protocol-wrap {
@@ -4098,22 +4073,11 @@ body.is-mobile .workout-wizard-stepper button.workout-wizard-step-btn {
   min-width: 0;
 }
 
-.workout-wizard-container .workout-protocol-picker .workout-chip-group-chips {
+.workout-wizard .workout-protocol-picker .workout-chip-group-chips {
   flex-wrap: wrap;
   overflow-x: visible;
 }
 
-.workout-wizard-container .workout-parameters-container {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--workout-space-md);
-}
-
-@media (max-width: 484px) {
-  .workout-wizard-container .workout-parameters-container {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-/* Superset ordered exercise list (A, B, C...) */
 .workout-superset-section {
   display: flex;
   flex-direction: column;
@@ -4207,7 +4171,6 @@ body.is-mobile button.workout-superset-add-btn {
   min-height: var(--workout-touch-target-min);
 }
 
-/* Live superset rest cadence preview */
 .workout-wizard-rhythm-preview {
   display: flex;
   align-items: center;
@@ -4234,29 +4197,6 @@ body.is-mobile button.workout-superset-add-btn {
 
 .workout-rhythm-arrow {
   color: var(--text-muted);
-}
-
-body.is-mobile .workout-wizard-container input.workout-form-field-input {
-  min-height: var(--workout-touch-target-min);
-}
-
-/* Sticky footer wraps Button.createModalActions so it stays pinned to the
-   modal scroll container while step panes scroll underneath */
-.workout-wizard-footer {
-  position: sticky;
-  bottom: 0;
-  z-index: 2;
-  background: var(--modal-background, var(--background-primary));
-}
-
-.workout-wizard-footer .workout-modal-actions {
-  margin-top: 0;
-  flex-wrap: wrap;
-}
-
-/* Back action sits at the start (left) of the sticky footer */
-.workout-buttons-container button.workout-wizard-back {
-  margin-inline-end: auto;
 }
 
 /* ============================================================================

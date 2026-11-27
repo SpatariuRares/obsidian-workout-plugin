@@ -801,8 +801,7 @@
       "progressiveOverload": "점진적 과부하",
       "tableType": "표 유형",
       "target": "목표",
-      "workout": "운동 루틴",
-      "mobileOptions": "최근 운동 종목 및 운동 루틴"
+      "workout": "운동 루틴"
     },
     "selectOptions": {
       "allLogs": "모든 기록",

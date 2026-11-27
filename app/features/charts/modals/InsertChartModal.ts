@@ -4,7 +4,7 @@ import { AdjustField } from "@app/components/molecules/AdjustField";
 import { getYAxisLabel } from "@app/features/charts/config/ChartConstants";
 import { App } from "obsidian";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
+import { WizardModal, type WizardStep } from "@app/features/modals/base/WizardModal";
 import {
   TargetSectionWithAutocomplete,
   TargetSectionWithAutocompleteElements,
@@ -38,7 +38,11 @@ import { CONSTANTS } from "@app/constants";
 const DATE_RANGE_INCREMENT = 7;
 const LIMIT_INCREMENT = 10;
 
-export class InsertChartModal extends BaseInsertModal {
+/**
+ * Inserts a `workout-chart` block through three steps: Chart type (chart and
+ * data type), Data (what to chart and over which days) and Display
+ */
+export class InsertChartModal extends WizardModal {
   protected chartType?: ChipGroupResult<CHART_TYPE>;
   protected dataType?: ChipGroupResult;
   protected targetElements?: TargetSectionWithAutocompleteElements;
@@ -68,9 +72,27 @@ export class InsertChartModal extends BaseInsertModal {
     return t("modal.notices.chartInserted");
   }
 
-  protected createConfigurationSections(
-    container: HTMLElement,
-  ): void {
+  protected getSteps(): WizardStep[] {
+    return [
+      {
+        id: "chartType",
+        label: t("wizard.chart.steps.chartType"),
+        render: (el) => this.renderChartTypeStep(el),
+      },
+      {
+        id: "data",
+        label: t("wizard.chart.steps.data"),
+        render: (el) => this.renderDataStep(el),
+      },
+      {
+        id: "display",
+        label: t("wizard.chart.steps.display"),
+        render: (el) => this.renderDisplayStep(el),
+      },
+    ];
+  }
+
+  private renderChartTypeStep(container: HTMLElement): void {
     // Chart Type Section
     const chartTypeSection = this.createSection(
       container,
@@ -101,12 +123,16 @@ export class InsertChartModal extends BaseInsertModal {
       className: "workout-modal-type-chips",
     });
 
+  }
+
+  private renderDataStep(container: HTMLElement): void {
     // Target Section using reusable component with autocomplete
     if (!this.plugin) {
       throw new Error("Plugin is required for InsertChartModal");
     }
 
     const chartType = this.chartType;
+    if (!chartType) throw new Error(t("modal.errors.missingElements"));
     const { elements: targetElements, handlers } =
       TargetSectionWithAutocomplete.create(
         this,
@@ -120,20 +146,14 @@ export class InsertChartModal extends BaseInsertModal {
     this.targetElements = targetElements;
 
     // Listen for exercise changes to update data type options
-    this.targetElements.exerciseInput.addEventListener(
-      "change",
-      () => {
-        void this.updateDataTypeOptions(
-          this.targetElements!.exerciseInput.value,
-        );
-      },
-    );
+    const exerciseInput = targetElements.exerciseInput;
+    exerciseInput.addEventListener("change", () => {
+      void this.updateDataTypeOptions(exerciseInput.value);
+    });
 
     // Initial update if exercise is already populated
-    if (this.targetElements.exerciseInput.value) {
-      void this.updateDataTypeOptions(
-        this.targetElements.exerciseInput.value,
-      );
+    if (exerciseInput.value) {
+      void this.updateDataTypeOptions(exerciseInput.value);
     }
 
     // Configuration Section
@@ -165,6 +185,9 @@ export class InsertChartModal extends BaseInsertModal {
       step: LIMIT_INCREMENT,
     });
 
+  }
+
+  private renderDisplayStep(container: HTMLElement): void {
     // Display Options Section
     const displaySection = this.createSection(
       container,
@@ -214,7 +237,7 @@ export class InsertChartModal extends BaseInsertModal {
 
     // Set exact match default based on plugin settings
     this.advancedElements.exactMatchToggle.checked =
-      this.plugin.settings.defaultExactMatch;
+      this.plugin?.settings.defaultExactMatch ?? false;
   }
 
   /** The data types of an exercise without a definition */

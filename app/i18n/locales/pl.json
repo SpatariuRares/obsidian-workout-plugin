@@ -801,8 +801,7 @@
       "progressiveOverload": "Progresja obciążeń",
       "tableType": "Typ tabeli",
       "target": "Cel",
-      "workout": "Trening",
-      "mobileOptions": "Ostatnie ćwiczenia i trening"
+      "workout": "Trening"
     },
     "selectOptions": {
       "allLogs": "Wszystkie wpisy",

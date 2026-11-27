@@ -1,20 +1,13 @@
 import { App, Notice } from "obsidian";
-import {
-  WizardModal,
-  type WizardStep,
-} from "@app/features/modals/base/WizardModal";
+import { reviewRows } from "@app/features/tables/business/setsReview";
+import { WizardModal, type WizardStep } from "@app/features/modals/base/WizardModal";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { AdjustField } from "@app/components/molecules/AdjustField";
 import { ProtocolPicker } from "@app/components/molecules/ProtocolPicker";
-import {
-  Button,
-  BUTTONVARIANT,
-  DeleteButton,
-} from "@app/components/atoms";
+import { Button, BUTTONVARIANT, DeleteButton } from "@app/components/atoms";
 import { ICONS } from "@app/constants/ui.constants";
 import {
   setsBlock,
-  isSupersetBlock,
   slotLetter,
   type EmbeddedSetsParams,
 } from "@app/features/tables/setsBlock";
@@ -30,17 +23,16 @@ import {
   type ProtocolInfo,
 } from "@app/services/protocols/ProtocolCatalog";
 import { WorkoutProtocol } from "@app/types/WorkoutLogData";
-import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
-import { FormatUtils } from "@app/utils/FormatUtils";
-import { describeTarget } from "@app/features/modals/log/LogHistory";
+import { getDynamicModalLabels } from "@app/constants";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
+import { FormatUtils } from "@app/utils/FormatUtils";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { t } from "@app/i18n";
 
 const DEFAULT_SETS = 3;
 const MAX_WARMUPS = 10;
 const REST_INCREMENT = 15;
-let nextExerciseErrorId = 0;
+const MAX_REST = 600;
 
 function supersetGroupLabel(count: number): string {
   if (count <= 2) return t("modal.wizard.groupLabel.superset", { count });
@@ -48,24 +40,18 @@ function supersetGroupLabel(count: number): string {
   return t("modal.wizard.groupLabel.giantSet", { count });
 }
 
-export interface InsertSetsState {
-  protocol: string;
-  exercise: string;
-  exercises: string[];
-  workout: string;
-  sets?: number;
-  warmups: number;
-  targetWeight?: number;
-  targetReps?: number;
-  restBetween: number;
-  rest: number;
+function clampNonNegativeInt(raw: string | undefined, max?: number): number {
+  const n = Math.max(0, parseInt(raw ?? "", 10) || 0);
+  return max === undefined ? n : Math.min(max, n);
 }
 
 /**
- * Inserts a `workout-sets` block using a 3-step wizard:
- * Exercise -> Plan -> Rest & Review.
+ * Inserts a `workout-sets` block through three adaptive steps:
+ * Exercise (protocol + single or superset exercises + workout),
+ * Plan (sets/rounds, warm-ups, targets in single mode), and
+ * Rest (with restBetween + rhythm preview in superset mode, and Review).
  */
-export class InsertSetsModal extends WizardModal<InsertSetsState> {
+export class InsertSetsModal extends WizardModal {
   protected exerciseInput?: HTMLInputElement;
   protected workoutInput?: HTMLInputElement;
   protected planFields?: PlanFieldsElements;
@@ -76,13 +62,27 @@ export class InsertSetsModal extends WizardModal<InsertSetsState> {
   /** The rest the form starts with; 0 leaves `rest` out */
   protected defaultRest = 0;
 
+  protected selectedProtocol: string = WorkoutProtocol.STANDARD;
+  protected singleExercise = "";
+  protected supersetExercises: string[] = ["", ""];
+  protected workoutValue = "";
+  protected plannedSets: number | undefined = DEFAULT_SETS;
+  protected warmupsValue = 0;
+  protected targetWeightValue: number | undefined;
+  protected targetRepsValue: number | undefined;
+  protected restBetweenValue = 0;
+  protected restValue?: number;
+
   private exerciseBodyEl?: HTMLElement;
-  private exerciseErrorEl?: HTMLElement;
   private supersetSlotInputs: HTMLInputElement[] = [];
-  private supersetSlotErrors: HTMLElement[] = [];
+  private planPanelEl?: HTMLElement;
+  private planContext?: HTMLElement;
+  private renderedPlanSuperset?: boolean;
+  private restPanelEl?: HTMLElement;
+  private renderedRestSuperset?: boolean;
   private restFallbackHelperEl?: HTMLElement;
   private rhythmPreviewEl?: HTMLElement;
-  private reviewContainer?: HTMLElement;
+  private review?: HTMLElement;
 
   constructor(app: App, plugin: WorkoutPluginContext) {
     super(app, plugin);
@@ -100,78 +100,58 @@ export class InsertSetsModal extends WizardModal<InsertSetsState> {
     return t("modal.notices.setsInserted");
   }
 
-  protected createInitialState(): InsertSetsState {
-    return {
-      protocol: WorkoutProtocol.STANDARD,
-      exercise: "",
-      exercises: ["", ""],
-      workout: "",
-      sets: DEFAULT_SETS,
-      warmups: 0,
-      targetWeight: undefined,
-      targetReps: undefined,
-      restBetween: 0,
-      rest: this.defaultRest,
-    };
+  protected createConfigurationSections(container: HTMLElement): void {
+    if (this.restValue === undefined) this.restValue = this.defaultRest;
+    super.createConfigurationSections(container);
   }
 
-  protected isSupersetMode(state: InsertSetsState = this.state): boolean {
-    return protocolId(state.protocol) === (WorkoutProtocol.SUPERSET as string);
-  }
-
-  protected getProtocolOptions(catalog: ProtocolCatalog): ProtocolInfo[] {
-    return catalog.all().filter((p) => p.id !== (WorkoutProtocol.WARMUP as string));
+  protected isSupersetMode(): boolean {
+    return protocolId(this.selectedProtocol) === (WorkoutProtocol.SUPERSET as string);
   }
 
   protected protocolCatalog(): ProtocolCatalog {
     return new ProtocolCatalog(this.plugin?.settings?.customProtocols);
   }
 
-  protected getSteps(): WizardStep<InsertSetsState>[] {
+  protected getProtocolOptions(catalog: ProtocolCatalog): ProtocolInfo[] {
+    return catalog.all().filter((p) => p.id !== (WorkoutProtocol.WARMUP as string));
+  }
+
+  protected getSteps(): WizardStep[] {
     return [
       {
         id: "exercise",
-        label: t("modal.wizard.steps.exercise"),
-        isComplete: (state) =>
-          this.isSupersetMode(state)
-            ? state.exercises.length >= 2 &&
-              state.exercises.every((e) => e.trim().length > 0)
-            : state.exercise.trim().length > 0,
-        validate: (state) => this.validateExerciseStep(state),
-        render: (container, state) => this.renderExerciseStep(container, state),
+        label: t("wizard.steps.exercise"),
+        render: (el) => this.renderExerciseStep(el),
+        validate: () => this.validateExercise(),
+        isComplete: () => this.isExerciseStepComplete(),
       },
       {
         id: "plan",
-        label: t("modal.wizard.steps.plan"),
-        render: (container, state) => this.renderPlanStep(container, state),
+        label: t("wizard.steps.plan"),
+        render: (el) => this.renderPlanStep(el),
+        onEnter: () => this.enterPlanStep(),
       },
       {
         id: "rest",
-        label: t("modal.wizard.steps.rest"),
-        render: (container, state) => this.renderRestStep(container, state),
+        label: t("wizard.steps.rest"),
+        render: (el) => this.renderRestStep(el),
+        onEnter: () => this.enterRestStep(),
       },
     ];
   }
 
-  protected onSubmit(_state: InsertSetsState): void {
-    const code = this.generateCode();
-    this.insertIntoEditor(code, this.getSuccessMessage());
-    this.close();
-  }
-
-  private renderExerciseStep(
-    container: HTMLElement,
-    state: InsertSetsState,
-  ): void {
+  private renderExerciseStep(el: HTMLElement): void {
     if (!this.plugin) throw new Error(t("modal.errors.missingElements"));
 
-    const target = this.createSection(container, t("modal.sections.target"));
+    const target = this.createSection(el, t("modal.sections.target"));
     const catalog = this.protocolCatalog();
     const protocolOptions = this.getProtocolOptions(catalog);
     const protocolWrap = target.createDiv({ cls: "workout-wizard-protocol-wrap" });
     const helpEl = protocolWrap.createDiv({
       cls: "workout-field-helper workout-protocol-help",
     });
+
     const syncProtocolHelp = (id: string) => {
       const help = protocolHelp(id);
       helpEl.textContent = help ?? "";
@@ -181,98 +161,97 @@ export class InsertSetsModal extends WizardModal<InsertSetsState> {
     const picker = ProtocolPicker.create(protocolWrap, {
       label: t("modal.protocol"),
       options: protocolOptions.map(({ id, name }) => ({ id, name })),
-      selected: state.protocol,
-      onPick: (id) => {
-        const wasSuperset = this.isSupersetMode(state);
-        state.protocol = id;
-        syncProtocolHelp(id);
-        const nowSuperset = this.isSupersetMode(state);
-
-        if (!wasSuperset && nowSuperset) {
-          const first = state.exercise.trim();
-          if (state.exercises.length < 2) {
-            state.exercises = [first, ""];
-          } else if (first) {
-            state.exercises[0] = first;
-          }
-          while (state.exercises.length < 2) state.exercises.push("");
-          this.renderExerciseBody(state);
-          this.notifyStateChange();
-          const second = this.supersetSlotInputs[1];
-          if (second && !second.value.trim()) second.focus();
-          return;
-        }
-
-        if (wasSuperset && !nowSuperset) {
-          const first = state.exercises[0]?.trim();
-          if (first) state.exercise = first;
-          this.renderExerciseBody(state);
-          this.notifyStateChange();
-          return;
-        }
-
-        this.notifyStateChange();
-      },
+      selected: this.selectedProtocol,
+      onPick: (id) => this.handleProtocolPick(id, syncProtocolHelp),
       focusKeyPrefix: "wizard-protocol",
     });
     protocolWrap.prepend(picker);
-    syncProtocolHelp(state.protocol);
+    syncProtocolHelp(this.selectedProtocol);
 
     this.exerciseBodyEl = target.createDiv({ cls: "workout-wizard-exercise-body" });
-    this.renderExerciseBody(state);
+    this.renderExerciseBody();
 
     this.workoutInput = this.createTextField(
       target,
       t("sets.workoutLabel"),
       t("sets.workoutPlaceholder", { note: this.getCurrentFileName() }),
-      state.workout,
+      this.workoutValue,
     );
     const syncWorkout = () => {
-      state.workout = this.workoutInput?.value ?? "";
+      this.workoutValue = this.workoutInput?.value ?? "";
     };
     this.workoutInput.addEventListener("input", syncWorkout);
     this.workoutInput.addEventListener("change", syncWorkout);
   }
 
-  private renderExerciseBody(state: InsertSetsState): void {
+  private handleProtocolPick(
+    id: string,
+    syncProtocolHelp: (id: string) => void,
+  ): void {
+    const wasSuperset = this.isSupersetMode();
+    if (wasSuperset) this.syncSupersetFromDom();
+    else this.syncSingleFromDom();
+
+    this.selectedProtocol = id;
+    syncProtocolHelp(id);
+    const nowSuperset = this.isSupersetMode();
+
+    if (!wasSuperset && nowSuperset) {
+      const first = this.singleExercise.trim();
+      if (this.supersetExercises.length < 2) {
+        this.supersetExercises = [first, ""];
+      } else if (first) {
+        this.supersetExercises[0] = first;
+      }
+      while (this.supersetExercises.length < 2) this.supersetExercises.push("");
+      this.renderExerciseBody();
+      this.refreshHeader();
+      const second = this.supersetSlotInputs[1];
+      if (second && !second.value.trim()) second.focus();
+      return;
+    }
+
+    if (wasSuperset && !nowSuperset) {
+      const first = this.supersetExercises[0]?.trim();
+      if (first) this.singleExercise = first;
+      this.renderExerciseBody();
+      this.refreshHeader();
+      return;
+    }
+
+    this.refreshHeader();
+  }
+
+  private renderExerciseBody(): void {
     if (!this.exerciseBodyEl || !this.plugin) return;
+    this.setStepError("exercise", null);
     this.exerciseBodyEl.empty();
     this.exerciseInput = undefined;
-    this.exerciseErrorEl = undefined;
     this.supersetSlotInputs = [];
-    this.supersetSlotErrors = [];
 
-    if (!this.isSupersetMode(state)) {
+    if (!this.isSupersetMode()) {
       const { elements } = ExerciseAutocomplete.create(
         this,
         this.exerciseBodyEl,
         this.plugin,
-        state.exercise,
+        this.singleExercise,
         { showCreateButton: false },
       );
       this.exerciseInput = elements.exerciseInput;
 
-      const fieldWrapper = this.exerciseInput.parentElement ?? this.exerciseBodyEl;
-      const errorId = `workout-sets-exercise-error-${++nextExerciseErrorId}`;
-      this.exerciseErrorEl = fieldWrapper.createDiv({
-        cls: "workout-field-error",
-        attr: { id: errorId, role: "alert" },
-      });
-      this.exerciseErrorEl.hidden = true;
-
       const syncExercise = () => {
-        state.exercise = this.exerciseInput?.value ?? "";
-        if (state.exercise.trim().length > 0) {
-          this.setExerciseError();
+        this.singleExercise = this.exerciseInput?.value ?? "";
+        if (this.singleExercise.trim() !== "") {
+          this.setStepError("exercise", null, this.exerciseInput);
         }
-        this.notifyStateChange();
+        this.refreshHeader();
       };
       this.exerciseInput.addEventListener("input", syncExercise);
       this.exerciseInput.addEventListener("change", syncExercise);
       return;
     }
 
-    while (state.exercises.length < 2) state.exercises.push("");
+    while (this.supersetExercises.length < 2) this.supersetExercises.push("");
 
     const supersetWrap = this.exerciseBodyEl.createDiv({
       cls: "workout-superset-section",
@@ -284,11 +263,11 @@ export class InsertSetsModal extends WizardModal<InsertSetsState> {
     });
     headerRow.createSpan({
       cls: "workout-superset-count",
-      text: supersetGroupLabel(state.exercises.length),
+      text: supersetGroupLabel(this.supersetExercises.length),
     });
 
     const listEl = supersetWrap.createDiv({ cls: "workout-superset-list" });
-    state.exercises.forEach((name, idx) => {
+    this.supersetExercises.forEach((name, idx) => {
       const letter = slotLetter(idx);
       const slotEl = listEl.createDiv({ cls: "workout-superset-slot" });
       const rowEl = slotEl.createDiv({ cls: "workout-superset-slot-row" });
@@ -317,13 +296,14 @@ export class InsertSetsModal extends WizardModal<InsertSetsState> {
         cls: "workout-superset-slot-controls",
       });
       const move = (delta: number) => {
+        this.syncSupersetFromDom();
         const targetIdx = idx + delta;
-        if (targetIdx < 0 || targetIdx >= state.exercises.length) return;
-        const copy = [...state.exercises];
+        if (targetIdx < 0 || targetIdx >= this.supersetExercises.length) return;
+        const copy = [...this.supersetExercises];
         [copy[idx], copy[targetIdx]] = [copy[targetIdx], copy[idx]];
-        state.exercises = copy;
-        this.renderExerciseBody(state);
-        this.notifyStateChange();
+        this.supersetExercises = copy;
+        this.renderExerciseBody();
+        this.refreshHeader();
       };
 
       const upBtn = Button.create(controls, {
@@ -340,37 +320,30 @@ export class InsertSetsModal extends WizardModal<InsertSetsState> {
         variant: BUTTONVARIANT.SECONDARY,
         className: "workout-superset-move-btn",
         ariaLabel: t("modal.wizard.moveExerciseDown", { letter }),
-        disabled: idx === state.exercises.length - 1,
+        disabled: idx === this.supersetExercises.length - 1,
       });
       Button.onClick(downBtn, () => move(1));
 
-      if (state.exercises.length > 2) {
+      if (this.supersetExercises.length > 2) {
         DeleteButton.create(controls, {
           label: t("modal.wizard.removeExercise", { letter }),
           onClick: () => {
-            state.exercises.splice(idx, 1);
-            this.renderExerciseBody(state);
-            this.notifyStateChange();
+            this.syncSupersetFromDom();
+            this.supersetExercises.splice(idx, 1);
+            this.renderExerciseBody();
+            this.refreshHeader();
           },
         });
       }
 
-      const errorId = `workout-sets-exercise-error-${++nextExerciseErrorId}`;
-      const errorEl = slotEl.createDiv({
-        cls: "workout-field-error",
-        attr: { id: errorId, role: "alert" },
-      });
-      errorEl.hidden = true;
-
       this.supersetSlotInputs.push(elements.exerciseInput);
-      this.supersetSlotErrors.push(errorEl);
 
       const syncSlot = () => {
-        state.exercises[idx] = elements.exerciseInput.value;
-        if (state.exercises[idx].trim().length > 0) {
-          this.setSlotError(idx);
+        this.supersetExercises[idx] = elements.exerciseInput.value;
+        if (elements.exerciseInput.value.trim() !== "") {
+          this.setStepError("exercise", null, elements.exerciseInput);
         }
-        this.notifyStateChange();
+        this.refreshHeader();
       };
       elements.exerciseInput.addEventListener("input", syncSlot);
       elements.exerciseInput.addEventListener("change", syncSlot);
@@ -383,143 +356,42 @@ export class InsertSetsModal extends WizardModal<InsertSetsState> {
       className: "workout-superset-add-btn",
     });
     Button.onClick(addBtn, () => {
-      state.exercises.push("");
-      this.renderExerciseBody(state);
-      this.notifyStateChange();
-      this.supersetSlotInputs[state.exercises.length - 1]?.focus();
+      this.syncSupersetFromDom();
+      this.supersetExercises.push("");
+      this.renderExerciseBody();
+      this.refreshHeader();
+      this.supersetSlotInputs[this.supersetExercises.length - 1]?.focus();
     });
   }
 
-  private validateExerciseStep(state: InsertSetsState): boolean {
-    if (this.isSupersetMode(state)) {
-      const active = this.isActiveStepElement(this.exerciseBodyEl);
-      if (active) {
-        this.supersetSlotInputs.forEach((input, idx) => {
-          state.exercises[idx] = input.value;
-        });
-      }
-      let firstEmpty = -1;
-      state.exercises.forEach((name, idx) => {
-        if (!name.trim()) {
-          if (firstEmpty === -1) firstEmpty = idx;
-          if (active) {
-            this.setSlotError(
-              idx,
-              t("modal.wizard.chooseExerciseSlot", {
-                letter: slotLetter(idx),
-              }),
-            );
-          }
-        } else if (active) {
-          this.setSlotError(idx);
-        }
-      });
-      if (firstEmpty !== -1) {
-        if (active) {
-          this.supersetSlotInputs[firstEmpty]?.focus();
-        }
-        return false;
-      }
-      return state.exercises.length >= 2;
-    }
-
-    const active = this.isActiveStepElement(this.exerciseInput);
-    if (active) {
-      state.exercise = this.exerciseInput!.value;
-    }
-    if (!state.exercise.trim()) {
-      if (active) {
-        this.setExerciseError(t("modal.notices.validChooseExercise"));
-        this.exerciseInput?.focus();
-      }
-      return false;
-    }
-    if (active) {
-      this.setExerciseError();
-    }
-    return true;
+  private renderPlanStep(el: HTMLElement): void {
+    this.planPanelEl = el;
+    this.buildPlanStepBody();
   }
 
-  private setSlotError(index: number, message?: string): void {
-    const input = this.supersetSlotInputs[index];
-    const errorEl = this.supersetSlotErrors[index];
-    if (!input || !errorEl) return;
-    errorEl.textContent = message ?? "";
-    errorEl.hidden = !message;
-    input.closest(".workout-superset-slot")?.classList.toggle("is-invalid", !!message);
-    if (message) {
-      input.setAttribute("aria-invalid", "true");
-      input.setAttribute("aria-describedby", errorEl.id);
-    } else {
-      input.removeAttribute("aria-invalid");
-      input.removeAttribute("aria-describedby");
-    }
-  }
+  private buildPlanStepBody(): void {
+    const el = this.planPanelEl;
+    if (!el) return;
+    el.empty();
 
-  private setExerciseError(message?: string): void {
-    if (!this.exerciseErrorEl || !this.exerciseInput) return;
-    this.exerciseErrorEl.textContent = message ?? "";
-    this.exerciseErrorEl.hidden = !message;
-    this.exerciseInput.parentElement?.classList.toggle("is-invalid", !!message);
-    if (message) {
-      this.exerciseInput.setAttribute("aria-invalid", "true");
-      this.exerciseInput.setAttribute(
-        "aria-describedby",
-        this.exerciseErrorEl.id,
-      );
-    } else {
-      this.exerciseInput.removeAttribute("aria-invalid");
-      this.exerciseInput.removeAttribute("aria-describedby");
-    }
-  }
-
-  private renderPlanStep(
-    container: HTMLElement,
-    state: InsertSetsState,
-  ): void {
-    const superset = this.isSupersetMode(state);
-    const proto = protocolId(state.protocol);
-    const protoName = this.protocolCatalog().resolve(proto).name;
-    const contextText = superset
-      ? [
-          protoName,
-          state.exercises
-            .map((e) => e.trim())
-            .filter(Boolean)
-            .join(" + "),
-        ].join(" · ")
-      : proto === (WorkoutProtocol.STANDARD as string)
-        ? state.exercise.trim()
-        : [protoName, state.exercise.trim()].join(" · ");
-    container.createDiv({
-      cls: "workout-wizard-context-line",
-      text: contextText,
-    });
-
-    const plan = this.createSection(
-      container,
-      t("modal.wizard.sections.plan"),
-    );
-
-    const readWarmups = () =>
-      Math.min(
-        MAX_WARMUPS,
-        Math.max(0, parseInt(this.warmupsInput?.value ?? "", 10) || 0),
-      );
+    this.planContext = el.createDiv({ cls: "workout-wizard-context" });
+    const superset = this.isSupersetMode();
+    this.renderedPlanSuperset = superset;
+    const plan = this.createSection(el, t("modal.sections.progressiveOverload"));
 
     if (superset) {
       this.planFields = undefined;
       const grid = plan.createDiv({ cls: "workout-parameters-container" });
       this.roundsInput = AdjustField.create(grid, {
         label: t("modal.rounds"),
-        value: state.sets ?? 0,
+        value: this.plannedSets ?? 0,
         min: 0,
         max: MAX_PLANNED_SETS,
         step: 1,
       });
       this.warmupsInput = AdjustField.create(grid, {
         label: t("modal.wizard.warmupRounds"),
-        value: state.warmups,
+        value: this.warmupsValue,
         min: 0,
         max: MAX_WARMUPS,
         step: 1,
@@ -535,30 +407,22 @@ export class InsertSetsModal extends WizardModal<InsertSetsState> {
         text: t("modal.wizard.supersetTargetsNote"),
       });
 
-      const syncRounds = () => {
-        const rounds = Math.max(
-          0,
-          parseInt(this.roundsInput?.value ?? "", 10) || 0,
-        );
-        state.sets = rounds > 0 ? rounds : undefined;
-      };
+      const syncRounds = () => this.syncPlanFromDom();
       this.roundsInput.addEventListener("input", syncRounds);
       this.roundsInput.addEventListener("change", syncRounds);
     } else {
       this.roundsInput = undefined;
-      this.planFields = PlanFields.create(plan, state.sets ?? 0);
+      this.planFields = PlanFields.create(plan, this.plannedSets ?? 0);
       PlanFields.fill(this.planFields, {
-        sets: state.sets,
-        targetWeight: state.targetWeight,
-        targetReps: state.targetReps,
+        sets: this.plannedSets,
+        targetWeight: this.targetWeightValue,
+        targetReps: this.targetRepsValue,
       });
       const grid =
-        this.planFields.sets.closest<HTMLElement>(
-          ".workout-parameters-container",
-        ) ?? plan;
+        this.planFields.sets.closest<HTMLElement>(".workout-parameters-container") ?? plan;
       this.warmupsInput = AdjustField.create(grid, {
         label: t("modal.wizard.warmupSets"),
-        value: state.warmups,
+        value: this.warmupsValue,
         min: 0,
         max: MAX_WARMUPS,
         step: 1,
@@ -570,13 +434,7 @@ export class InsertSetsModal extends WizardModal<InsertSetsState> {
           text: t("modal.wizard.warmupHelper"),
         });
 
-      const syncPlan = () => {
-        if (!this.planFields) return;
-        const values = PlanFields.read(this.planFields);
-        state.sets = values.sets;
-        state.targetWeight = values.targetWeight;
-        state.targetReps = values.targetReps;
-      };
+      const syncPlan = () => this.syncPlanFromDom();
       for (const input of [
         this.planFields.sets,
         this.planFields.targetWeight,
@@ -588,46 +446,59 @@ export class InsertSetsModal extends WizardModal<InsertSetsState> {
     }
 
     const syncWarmups = () => {
-      state.warmups = readWarmups();
+      this.warmupsValue = clampNonNegativeInt(this.warmupsInput?.value, MAX_WARMUPS);
     };
     this.warmupsInput.addEventListener("input", syncWarmups);
     this.warmupsInput.addEventListener("change", syncWarmups);
   }
 
-  private renderRestStep(
-    container: HTMLElement,
-    state: InsertSetsState,
-  ): void {
-    const superset = this.isSupersetMode(state);
+  private enterPlanStep(): void {
+    if (this.renderedPlanSuperset !== this.isSupersetMode()) {
+      this.syncPlanFromDom();
+      this.buildPlanStepBody();
+    }
+    this.refreshPlanContext();
+  }
+
+  private renderRestStep(el: HTMLElement): void {
+    this.restPanelEl = el;
+    this.buildRestStepBody();
+  }
+
+  private buildRestStepBody(): void {
+    const el = this.restPanelEl;
+    if (!el) return;
+    el.empty();
     this.restBetweenInput = undefined;
     this.restFallbackHelperEl = undefined;
     this.rhythmPreviewEl = undefined;
 
-    const restSection = this.createSection(container, t("modal.rest"));
+    const superset = this.isSupersetMode();
+    this.renderedRestSuperset = superset;
+    const restSection = this.createSection(el, t("modal.rest"));
+    const currentRest = this.restValue ?? this.defaultRest;
 
     if (superset) {
-      const grid = restSection.createDiv({
-        cls: "workout-parameters-container",
-      });
+      const grid = restSection.createDiv({ cls: "workout-parameters-container" });
       this.restBetweenInput = AdjustField.create(grid, {
         label: t("modal.wizard.restBetweenLabel"),
-        value: state.restBetween,
+        value: this.restBetweenValue,
         min: 0,
-        max: 600,
+        max: MAX_REST,
         step: REST_INCREMENT,
         unit: "s",
       });
 
-      const hasFallback = state.rest === 0 && state.restBetween > 0;
+      const hasFallback = currentRest === 0 && this.restBetweenValue > 0;
       this.restInput = AdjustField.create(grid, {
         label: t("modal.wizard.restRoundLabel"),
-        value: hasFallback ? undefined : state.rest,
+        value: hasFallback ? undefined : currentRest,
         suggestion: () =>
-          state.rest === 0 && state.restBetween > 0
-            ? state.restBetween
+          (this.restValue ?? 0) === 0 && this.restBetweenValue > 0
+            ? this.restBetweenValue
             : undefined,
         min: 0,
-        max: 600,
+        max: MAX_REST,
         step: REST_INCREMENT,
         unit: "s",
       });
@@ -641,94 +512,89 @@ export class InsertSetsModal extends WizardModal<InsertSetsState> {
         attr: { "aria-label": t("modal.wizard.rhythmLabel") },
       });
 
-      const syncFallbackAndPreview = () => {
-        const showFallback = state.rest === 0 && state.restBetween > 0;
-        if (this.restInput) {
-          this.restInput.placeholder = showFallback
-            ? String(state.restBetween)
-            : "";
-          if (showFallback && this.restInput.value === "0") {
-            this.restInput.value = "";
-          } else if (
-            !showFallback &&
-            this.restInput.value === "" &&
-            state.rest === 0
-          ) {
-            this.restInput.value = "0";
-          }
-        }
-        if (this.restFallbackHelperEl) {
-          this.restFallbackHelperEl.textContent = showFallback
-            ? t("modal.wizard.restRoundFallbackHelper", {
-                duration: FormatUtils.formatDuration(state.restBetween),
-              })
-            : "";
-          this.restFallbackHelperEl.hidden = !showFallback;
-        }
-        this.renderRhythmPreview(state);
-        this.renderReviewValues(state);
-      };
-
       const syncRestBetween = () => {
-        state.restBetween = Math.max(
-          0,
-          parseInt(this.restBetweenInput?.value ?? "", 10) || 0,
-        );
-        syncFallbackAndPreview();
+        this.restBetweenValue = clampNonNegativeInt(this.restBetweenInput?.value);
+        this.syncSupersetRestUi();
       };
       this.restBetweenInput.addEventListener("input", syncRestBetween);
       this.restBetweenInput.addEventListener("change", syncRestBetween);
 
       const syncRest = () => {
-        state.rest = Math.max(
-          0,
-          parseInt(this.restInput?.value ?? "", 10) || 0,
-        );
-        syncFallbackAndPreview();
+        this.restValue = clampNonNegativeInt(this.restInput?.value);
+        this.syncSupersetRestUi();
       };
       this.restInput.addEventListener("input", syncRest);
       this.restInput.addEventListener("change", syncRest);
-
-      syncFallbackAndPreview();
     } else {
       // 0 leaves `rest` out: the rest of the section's workout-timer
       this.restInput = AdjustField.create(restSection, {
         label: t("sets.restLabel"),
-        value: state.rest,
+        value: currentRest,
         min: 0,
-        max: 600,
+        max: MAX_REST,
         step: REST_INCREMENT,
         unit: "s",
       });
-
       const syncRest = () => {
-        state.rest = Math.max(
-          0,
-          parseInt(this.restInput?.value ?? "", 10) || 0,
-        );
-        this.renderReviewValues(state);
+        this.restValue = clampNonNegativeInt(this.restInput?.value);
+        this.refreshReview();
       };
       this.restInput.addEventListener("input", syncRest);
       this.restInput.addEventListener("change", syncRest);
     }
 
-    const reviewSection = this.createSection(
-      container,
-      t("modal.wizard.sections.review"),
-    );
-    this.reviewContainer = reviewSection.createDiv({
-      cls: "workout-wizard-review-inset",
-    });
-    this.renderReviewValues(state);
+    el.createEl("h3", { text: t("sets.wizard.review"), cls: "workout-wizard-review-title" });
+    this.review = el.createDiv({ cls: "workout-wizard-review" });
+
+    if (superset) {
+      this.syncSupersetRestUi();
+    }
   }
 
-  private renderRhythmPreview(state: InsertSetsState): void {
+  private enterRestStep(): void {
+    if (this.renderedRestSuperset !== this.isSupersetMode()) {
+      this.syncRestFromDom();
+      this.buildRestStepBody();
+    } else if (this.isSupersetMode()) {
+      this.syncSupersetRestUi();
+      return;
+    }
+    this.refreshReview();
+  }
+
+  private syncSupersetRestUi(): void {
+    const rest = this.restValue ?? 0;
+    const restBetween = this.restBetweenValue;
+    const showFallback = rest === 0 && restBetween > 0;
+
+    if (this.restInput) {
+      this.restInput.placeholder = showFallback ? String(restBetween) : "";
+      if (showFallback && this.restInput.value === "0") {
+        this.restInput.value = "";
+      } else if (!showFallback && this.restInput.value === "" && rest === 0) {
+        this.restInput.value = "0";
+      }
+    }
+    if (this.restFallbackHelperEl) {
+      this.restFallbackHelperEl.textContent = showFallback
+        ? t("modal.wizard.restRoundFallbackHelper", {
+            duration: FormatUtils.formatDuration(restBetween),
+          })
+        : "";
+      this.restFallbackHelperEl.hidden = !showFallback;
+    }
+    this.renderRhythmPreview();
+    this.refreshReview();
+  }
+
+  private renderRhythmPreview(): void {
     if (!this.rhythmPreviewEl) return;
     this.rhythmPreviewEl.empty();
 
-    const count = Math.max(state.exercises.length, 2);
-    const between = state.restBetween;
-    const roundRest = state.rest > 0 ? state.rest : state.restBetween;
+    const count = Math.max(this.currentExerciseValues().length, 2);
+    const between = this.restBetweenValue;
+    const rest = this.restValue ?? 0;
+    const roundRest = rest > 0 ? rest : between;
     const arrow = " → ";
 
     for (let i = 0; i < count; i++) {
@@ -777,189 +643,176 @@ export class InsertSetsModal extends WizardModal<InsertSetsState> {
     }
   }
 
-  private renderReviewValues(state: InsertSetsState): void {
-    if (!this.reviewContainer) return;
-    this.reviewContainer.empty();
-
-    const addRow = (key: string, value: string) => {
-      this.reviewContainer!.createSpan({
-        cls: "workout-wizard-review-key",
-        text: key,
-      });
-      this.reviewContainer!.createSpan({
-        cls: "workout-wizard-review-val",
-        text: value,
-      });
-    };
-
-    const superset = this.isSupersetMode(state);
-    addRow(
-      t("modal.wizard.review.protocol"),
-      this.protocolCatalog().resolve(state.protocol).name,
-    );
-    if (superset) {
-      addRow(
-        t("modal.wizard.review.exercises"),
-        state.exercises
-          .map((e) => e.trim())
-          .filter(Boolean)
-          .join(" + "),
-      );
-    } else {
-      addRow(t("modal.wizard.review.exercise"), state.exercise.trim());
-    }
-    if (state.workout.trim()) {
-      addRow(t("modal.wizard.review.workout"), state.workout.trim());
-    }
-    addRow(t("modal.wizard.review.plan"), this.formatPlanSummary(state));
-
-    if (superset) {
-      const roundRest = state.rest > 0 ? state.rest : state.restBetween;
-      const betweenText =
-        state.restBetween > 0
-          ? t("modal.wizard.review.restBetween", {
-              duration: FormatUtils.formatDuration(state.restBetween),
-            })
-          : t("modal.wizard.review.noRestBetween");
-      const roundText =
-        roundRest > 0
-          ? t("modal.wizard.review.restAfterRound", {
-              duration: FormatUtils.formatDuration(roundRest),
-            })
-          : t("modal.wizard.review.noRoundTimer");
-      addRow(t("modal.wizard.review.rest"), [betweenText, roundText].join(" · "));
-    } else {
-      addRow(
-        t("modal.wizard.review.rest"),
-        state.rest > 0
-          ? FormatUtils.formatDuration(state.rest)
-          : t("modal.wizard.review.sectionTimer"),
-      );
+  private syncSingleFromDom(): void {
+    if (this.exerciseInput) {
+      this.singleExercise = this.exerciseInput.value;
     }
   }
 
-  private formatPlanSummary(state: InsertSetsState): string {
-    const superset = this.isSupersetMode(state);
-    const parts: string[] = [
-      state.sets && state.sets > 0
-        ? t(
-            superset
-              ? "modal.wizard.review.roundsCount"
-              : "modal.wizard.review.setsCount",
-            { count: state.sets },
-          )
-        : t("modal.wizard.review.lastTime"),
-    ];
-    if (state.warmups > 0) {
-      parts.push(
-        state.warmups === 1
-          ? t("modal.wizard.review.warmupsOne")
-          : t("modal.wizard.review.warmupsMany", { count: state.warmups }),
-      );
+  private syncSupersetFromDom(): void {
+    if (this.supersetSlotInputs.length > 0) {
+      this.supersetExercises = this.supersetSlotInputs.map((i) => i.value);
     }
-    if (!superset) {
-      const unit =
-        this.plugin?.settings?.weightUnit ?? ParameterUtils.getWeightUnit();
-      const target = describeTarget(
-        state.targetReps && state.targetReps > 0 ? state.targetReps : undefined,
-        state.targetWeight && state.targetWeight > 0
-          ? state.targetWeight
-          : undefined,
-        unit,
-      );
-      if (target) parts.push(target);
+  }
+
+  private syncPlanFromDom(): void {
+    if (this.planFields) {
+      const plan = PlanFields.read(this.planFields);
+      this.plannedSets = plan.sets;
+      this.targetWeightValue = plan.targetWeight;
+      this.targetRepsValue = plan.targetReps;
     }
-    return parts.join(" · ");
+    if (this.roundsInput) {
+      const rounds = clampNonNegativeInt(this.roundsInput.value);
+      this.plannedSets = rounds > 0 ? rounds : undefined;
+    }
+    if (this.warmupsInput) {
+      this.warmupsValue = clampNonNegativeInt(this.warmupsInput.value, MAX_WARMUPS);
+    }
+  }
+
+  private syncRestFromDom(): void {
+    if (this.restBetweenInput) {
+      this.restBetweenValue = clampNonNegativeInt(this.restBetweenInput.value);
+    }
+    if (this.restInput) {
+      this.restValue = clampNonNegativeInt(this.restInput.value);
+    }
+  }
+
+  private currentExerciseValues(): string[] {
+    if (this.supersetSlotInputs.length > 0) {
+      return this.supersetSlotInputs.map((i) => i.value);
+    }
+    return this.supersetExercises;
+  }
+
+  private exerciseName(): string {
+    return (this.exerciseInput?.value ?? this.singleExercise).trim();
+  }
+
+  private isExerciseStepComplete(): boolean {
+    if (this.isSupersetMode()) {
+      const values = this.currentExerciseValues();
+      return values.length >= 2 && values.every((e) => e.trim() !== "");
+    }
+    return this.exerciseName() !== "";
+  }
+
+  private validateExercise(): boolean {
+    if (this.isSupersetMode()) {
+      this.syncSupersetFromDom();
+      const firstEmpty = this.supersetExercises.findIndex((e) => e.trim() === "");
+      if (firstEmpty !== -1) {
+        this.setStepError(
+          "exercise",
+          t("modal.wizard.chooseExerciseSlot", { letter: slotLetter(firstEmpty) }),
+          this.supersetSlotInputs[firstEmpty],
+        );
+        return false;
+      }
+      this.setStepError("exercise", null);
+      return this.supersetExercises.length >= 2;
+    }
+
+    const ok = this.exerciseName() !== "";
+    this.setStepError(
+      "exercise",
+      ok ? null : t("modal.notices.validChooseExercise"),
+      this.exerciseInput,
+    );
+    return ok;
+  }
+
+  private refreshPlanContext(): void {
+    if (!this.planContext) return;
+    if (this.isSupersetMode()) {
+      const names = this.currentExerciseValues()
+        .map((e) => e.trim())
+        .filter(Boolean)
+        .join(" + ");
+      const protoName = this.protocolCatalog().resolve(this.selectedProtocol).name;
+      this.planContext.setText([protoName, names].filter(Boolean).join(" · "));
+      return;
+    }
+
+    const proto = protocolId(this.selectedProtocol);
+    const name = this.exerciseName();
+    if (proto === (WorkoutProtocol.STANDARD as string)) {
+      this.planContext.setText(t("sets.wizard.planningFor", { exercise: name }));
+    } else {
+      const protoName = this.protocolCatalog().resolve(proto).name;
+      this.planContext.setText([protoName, name].filter(Boolean).join(" · "));
+    }
+  }
+
+  /** A compact key/value summary of what Insert will write */
+  private refreshReview(): void {
+    const review = this.review;
+    if (!review) return;
+    review.empty();
+    const rows = reviewRows(this.collectParams(), {
+      weightUnit: this.plugin?.settings.weightUnit ?? "",
+      noteName: this.getCurrentFileName(),
+      targetWeightLabel: getDynamicModalLabels().TARGET_WEIGHT,
+      customProtocols: this.plugin?.settings.customProtocols,
+    });
+    for (const [key, value] of rows) {
+      const row = review.createDiv({ cls: "workout-wizard-review-row" });
+      row.createSpan({ cls: "workout-wizard-review-key", text: key });
+      row.createSpan({ cls: "workout-wizard-review-value", text: value });
+    }
+  }
+
+  /** A direct submit (Update from any step, Insert) needs valid exercise(s) too */
+  protected canInsert(): boolean {
+    if (this.isExerciseStepComplete()) return true;
+    new Notice(t("modal.notices.validChooseExercise"));
+    return false;
   }
 
   protected generateCode(): string {
-    const params = this.collectParams();
-    const valid = isSupersetBlock(params)
-      ? Boolean(params.exercises && params.exercises.length >= 2)
-      : !this.isSupersetMode() && Boolean(params.exercise);
-    if (!valid) {
-      new Notice(t("modal.notices.validChooseExercise"));
-      throw new Error(t("modal.notices.validChooseExercise"));
-    }
-    return setsBlock.serialize({ id: generateCodeBlockId(), ...params });
+    return setsBlock.serialize({ id: generateCodeBlockId(), ...this.collectParams() });
   }
 
   /** The block parameters the form sets; empty or zero ones are left out */
   protected collectParams(): EmbeddedSetsParams {
-    if (this.isActiveStepElement(this.exerciseInput)) {
-      this.state.exercise = this.exerciseInput!.value;
-    }
-    if (this.isActiveStepElement(this.exerciseBodyEl) && this.isSupersetMode()) {
-      this.supersetSlotInputs.forEach((input, idx) => {
-        this.state.exercises[idx] = input.value;
-      });
-    }
-    if (this.isActiveStepElement(this.workoutInput)) {
-      this.state.workout = this.workoutInput!.value;
-    }
-    if (this.isActiveStepElement(this.planFields?.sets)) {
-      const plan = PlanFields.read(this.planFields!);
-      this.state.sets = plan.sets;
-      this.state.targetWeight = plan.targetWeight;
-      this.state.targetReps = plan.targetReps;
-    }
-    if (this.isActiveStepElement(this.roundsInput)) {
-      const rounds = Math.max(
-        0,
-        parseInt(this.roundsInput!.value, 10) || 0,
-      );
-      this.state.sets = rounds > 0 ? rounds : undefined;
-    }
-    if (this.isActiveStepElement(this.warmupsInput)) {
-      this.state.warmups = Math.min(
-        MAX_WARMUPS,
-        Math.max(0, parseInt(this.warmupsInput!.value, 10) || 0),
-      );
-    }
-    if (this.isActiveStepElement(this.restBetweenInput)) {
-      this.state.restBetween = Math.max(
-        0,
-        parseInt(this.restBetweenInput!.value, 10) || 0,
-      );
-    }
-    if (this.isActiveStepElement(this.restInput)) {
-      this.state.rest = Math.max(
-        0,
-        parseInt(this.restInput!.value, 10) || 0,
-      );
-    }
-
     const superset = this.isSupersetMode();
-    const proto = protocolId(this.state.protocol);
-    const validExercises = this.state.exercises
-      .map((e) => e.trim())
-      .filter(Boolean);
+    if (superset) this.syncSupersetFromDom();
+    else this.syncSingleFromDom();
+
+    if (this.workoutInput) {
+      this.workoutValue = this.workoutInput.value;
+    }
+    this.syncPlanFromDom();
+    this.syncRestFromDom();
+
+    const proto = protocolId(this.selectedProtocol);
+    const validExercises = this.supersetExercises.map((e) => e.trim()).filter(Boolean);
+    const rest = this.restValue ?? this.defaultRest;
 
     return {
-      exercise: superset ? undefined : this.state.exercise.trim() || undefined,
-      exercises:
-        superset && validExercises.length >= 2 ? validExercises : undefined,
+      exercise: superset ? undefined : this.singleExercise.trim() || undefined,
+      exercises: superset && validExercises.length >= 2 ? validExercises : undefined,
       protocol: superset
         ? WorkoutProtocol.SUPERSET
         : proto === (WorkoutProtocol.STANDARD as string)
           ? undefined
           : proto,
-      workout: this.state.workout.trim() || undefined,
-      sets: this.state.sets && this.state.sets > 0 ? this.state.sets : undefined,
-      warmups: this.state.warmups > 0 ? this.state.warmups : undefined,
+      workout: this.workoutValue.trim() || undefined,
+      sets: this.plannedSets && this.plannedSets > 0 ? this.plannedSets : undefined,
+      warmups: this.warmupsValue > 0 ? this.warmupsValue : undefined,
       targetWeight:
-        !superset && this.state.targetWeight && this.state.targetWeight > 0
-          ? this.state.targetWeight
+        !superset && this.targetWeightValue && this.targetWeightValue > 0
+          ? this.targetWeightValue
           : undefined,
       targetReps:
-        !superset && this.state.targetReps && this.state.targetReps > 0
-          ? this.state.targetReps
+        !superset && this.targetRepsValue && this.targetRepsValue > 0
+          ? this.targetRepsValue
           : undefined,
       restBetween:
-        superset && this.state.restBetween > 0
-          ? this.state.restBetween
-          : undefined,
-      rest: this.state.rest > 0 ? this.state.rest : undefined,
+        superset && this.restBetweenValue > 0 ? this.restBetweenValue : undefined,
+      rest: rest > 0 ? rest : undefined,
     };
   }
 }

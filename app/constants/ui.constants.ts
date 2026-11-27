@@ -582,7 +582,6 @@ export const GENERAL_UI = {
 export const ICONS = {
   ACTIONS: {
     ADD: "plus",
-    BACK: "arrow-left",
     DELETE: "trash-2",
     EDIT: "pencil",
     GOTO: "link",

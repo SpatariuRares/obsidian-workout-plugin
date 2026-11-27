@@ -801,8 +801,7 @@
       "progressiveOverload": "Прогресивне навантаження",
       "tableType": "Тип таблиці",
       "target": "Ціль",
-      "workout": "Тренування",
-      "mobileOptions": "Нещодавні вправи та тренування"
+      "workout": "Тренування"
     },
     "selectOptions": {
       "allLogs": "Усі записи",

@@ -1,444 +1,295 @@
 /** @jest-environment jsdom */
 import { App } from "obsidian";
-import { LocalizationService, t } from "@app/i18n";
-import {
-  WizardModal,
-  type WizardStep,
-} from "@app/features/modals/base/WizardModal";
+
+jest.mock("obsidian", () => {
+  const actual = jest.requireActual("obsidian");
+  return {
+    ...actual,
+    Modal: class {
+      constructor(public app: App) {}
+      open() {}
+      close() {}
+    },
+  };
+});
+import { WizardModal, type WizardStep } from "@app/features/modals/base/WizardModal";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
+import { t } from "@app/i18n";
 
-interface TestWizardState {
-  name: string;
-  count: number;
-  note: string;
-  errorShown: boolean;
-}
+class TestWizard extends WizardModal {
+  name!: HTMLInputElement;
+  note!: HTMLInputElement;
+  submitted = jest.fn();
+  entered: string[] = [];
 
-class TestWizardModal extends WizardModal<TestWizardState> {
-  public submitted: TestWizardState | null = null;
-  public validateSpy = jest.fn((state: TestWizardState) => {
-    const valid = state.name.trim().length > 0;
-    state.errorShown = !valid;
-    return valid;
-  });
-
-  protected getModalTitle(): string {
-    return t("modal.titles.insertSets");
+  constructor(quick = false) {
+    super({} as App);
+    this.quickSubmit = quick;
   }
-
-  protected getButtonText(): string {
-    return t("modal.buttons.insertSets");
+  protected getModalTitle() {
+    return "Wizard";
   }
-
-  protected createInitialState(): TestWizardState {
-    return { name: "", count: 3, note: "", errorShown: false };
+  protected getButtonText() {
+    return "Finish";
   }
-
-  protected getSteps(): WizardStep<TestWizardState>[] {
+  protected getSuccessMessage() {
+    return "";
+  }
+  protected generateCode() {
+    return "";
+  }
+  protected submit() {
+    this.submitted(this.name.value, this.note.value);
+  }
+  protected getSteps(): WizardStep[] {
     return [
       {
-        id: "step1",
-        label: t("modal.wizard.steps.exercise"),
-        isComplete: (s) => s.name.trim().length > 0,
-        validate: (s) => this.validateSpy(s),
-        render: (container, state) => {
-          const input = container.createEl("input", {
-            value: state.name,
-            attr: { type: "text", "data-field": "name" },
-          });
-          input.addEventListener("input", () => {
-            state.name = input.value;
-            this.notifyStateChange();
-          });
+        id: "one",
+        label: "One",
+        render: (el) => {
+          this.name = el.createEl("input", { attr: { type: "text" } });
         },
+        validate: () => {
+          const ok = this.name.value.trim() !== "";
+          this.setStepError("one", ok ? null : "Name needed", this.name);
+          return ok;
+        },
+        isComplete: () => this.name.value.trim() !== "",
+        onEnter: () => this.entered.push("one"),
       },
       {
-        id: "step2",
-        label: t("modal.wizard.steps.plan"),
-        render: (container, state) => {
-          const input = container.createEl("input", {
-            value: String(state.count),
-            attr: { type: "text", "data-field": "count" },
-          });
-          input.addEventListener("input", () => {
-            state.count = Number(input.value) || 0;
-            this.notifyStateChange();
-          });
+        id: "two",
+        label: "Two",
+        render: (el) => {
+          this.note = el.createEl("input", { attr: { type: "text" } });
         },
+        onEnter: () => this.entered.push("two"),
       },
-      {
-        id: "step3",
-        label: t("modal.wizard.steps.rest"),
-        render: (container, state) => {
-          container.createDiv({
-            text: state.name,
-            attr: { "data-summary": "name" },
-          });
-          const input = container.createEl("input", {
-            value: state.note,
-            attr: { type: "text", "data-field": "note" },
-          });
-          input.addEventListener("input", () => {
-            state.note = input.value;
-          });
-        },
-      },
+      { id: "three", label: "Three", render: (el) => el.createDiv({ text: "review" }) },
     ];
   }
-
-  protected onSubmit(state: TestWizardState): void {
-    this.submitted = { ...state };
-    this.close();
-  }
 }
 
-function openWizard() {
-  const modal = new TestWizardModal(new App());
-  const contentEl = createObsidianContainer();
-  const close = jest.fn();
-  Object.assign(modal, { contentEl, close });
-  modal.onOpen();
-  return { modal, contentEl, close };
-}
-
-function setInputValue(input: HTMLInputElement, value: string): void {
+/** Types into a field the way the user does (the stepper listens to input events) */
+function type(input: HTMLInputElement, value: string) {
   input.value = value;
   input.dispatchEvent(new Event("input", { bubbles: true }));
 }
 
-function buttonByText(root: HTMLElement, text: string): HTMLButtonElement {
-  const btn = [...root.querySelectorAll<HTMLButtonElement>("button")].find(
-    (b) => b.textContent?.trim() === text,
-  );
-  if (!btn) throw new Error(`Button "${text}" not found`);
-  return btn;
+function open(quick = false) {
+  const modal = new TestWizard(quick);
+  const contentEl = createObsidianContainer();
+  document.body.appendChild(contentEl);
+  Object.assign(modal, { contentEl, close: jest.fn() });
+  modal.onOpen();
+  const panel = (id: string) => contentEl.querySelector<HTMLElement>(`[data-step-id="${id}"]`)!;
+  const visible = () => ["one", "two", "three"].filter((id) => !panel(id).hidden);
+  const button = (text: string) =>
+    [...contentEl.querySelectorAll("button")].find((b) => b.textContent === text) as
+      | HTMLButtonElement
+      | undefined;
+  const tab = (n: number) =>
+    contentEl.querySelectorAll<HTMLButtonElement>(".workout-wizard-step")[n - 1];
+  return { modal, contentEl, panel, visible, button, tab };
 }
 
-beforeAll(() => {
-  LocalizationService.initialize({} as never);
-});
-
 describe("WizardModal", () => {
-  it("renders header counter, horizontal stepper, progress track, step 1 body, and modal actions on open", () => {
-    const { contentEl } = openWizard();
+  it("opens on the first step with its counter", () => {
+    const { visible, contentEl } = open();
 
-    expect(contentEl.querySelector("h2")?.textContent).toBe(
-      t("modal.titles.insertSets"),
+    expect(visible()).toEqual(["one"]);
+    expect(contentEl.querySelector(".workout-wizard-counter")!.textContent).toBe(
+      t("wizard.stepCounter", { current: 1, total: 3 }),
     );
-    expect(
-      contentEl.querySelector(".workout-wizard-step-meta")?.textContent,
-    ).toBe(t("modal.wizard.stepOf", { current: 1, total: 3 }));
-
-    const stepBtns = [
-      ...contentEl.querySelectorAll<HTMLButtonElement>(
-        ".workout-wizard-step-btn",
-      ),
-    ];
-    expect(stepBtns.map((b) => b.textContent?.trim())).toEqual([
-      `1${t("modal.wizard.steps.exercise")}`,
-      `2${t("modal.wizard.steps.plan")}`,
-      `3${t("modal.wizard.steps.rest")}`,
-    ]);
-    expect(stepBtns[0].classList.contains("is-current")).toBe(true);
-    expect(stepBtns[0].getAttribute("aria-current")).toBe("step");
-    expect(stepBtns[1].disabled).toBe(true);
-    expect(stepBtns[2].disabled).toBe(true);
-
-    const progressFill = contentEl.querySelector<HTMLElement>(
-      ".workout-wizard-progress-fill",
-    );
-    expect(progressFill).not.toBeNull();
-    expect(progressFill!.classList.contains("is-done")).toBe(false);
-
-    expect(
-      contentEl.querySelector("input[data-field='name']"),
-    ).not.toBeNull();
-
-    const actionBtns = [
-      ...contentEl.querySelectorAll<HTMLButtonElement>(
-        ".workout-modal-actions button",
-      ),
-    ];
-    expect(actionBtns.map((b) => b.textContent)).toEqual([
-      t("modal.buttons.next"),
-      t("modal.buttons.cancel"),
-    ]);
   });
 
-  it("blocks Next when step 1 validation fails, then advances forward and preserves state backward", () => {
-    const { modal, contentEl } = openWizard();
+  it("shows Next and Cancel on the first step, no Back", () => {
+    const { button } = open();
 
-    buttonByText(contentEl, t("modal.buttons.next")).click();
-    expect(modal.validateSpy).toHaveBeenCalledTimes(1);
-    expect(
-      contentEl.querySelector(".workout-wizard-step-meta")?.textContent,
-    ).toBe(t("modal.wizard.stepOf", { current: 1, total: 3 }));
-
-    const nameInput = contentEl.querySelector<HTMLInputElement>(
-      "input[data-field='name']",
-    )!;
-    setInputValue(nameInput, "Bench Press");
-
-    const stepBtnsAfterInput = [
-      ...contentEl.querySelectorAll<HTMLButtonElement>(
-        ".workout-wizard-step-btn",
-      ),
-    ];
-    expect(stepBtnsAfterInput[1].disabled).toBe(false);
-    expect(stepBtnsAfterInput[2].disabled).toBe(false);
-
-    buttonByText(contentEl, t("modal.buttons.next")).click();
-
-    expect(
-      contentEl.querySelector(".workout-wizard-step-meta")?.textContent,
-    ).toBe(t("modal.wizard.stepOf", { current: 2, total: 3 }));
-    expect(
-      contentEl
-        .querySelector(".workout-wizard-step-pane")
-        ?.classList.contains("anim-forward"),
-    ).toBe(true);
-
-    const stepBtnsOn2 = [
-      ...contentEl.querySelectorAll<HTMLButtonElement>(
-        ".workout-wizard-step-btn",
-      ),
-    ];
-    expect(stepBtnsOn2[0].classList.contains("is-completed")).toBe(true);
-    expect(
-      stepBtnsOn2[0].querySelector(".workout-wizard-step-check"),
-    ).not.toBeNull();
-    expect(stepBtnsOn2[1].classList.contains("is-current")).toBe(true);
-
-    const actionsOn2 = [
-      ...contentEl.querySelectorAll<HTMLButtonElement>(
-        ".workout-modal-actions button",
-      ),
-    ];
-    expect(actionsOn2.map((b) => b.textContent)).toEqual([
-      t("modal.buttons.back"),
-      t("modal.buttons.next"),
-      t("modal.buttons.cancel"),
-    ]);
-    expect(actionsOn2[0].classList.contains("workout-wizard-back")).toBe(true);
-
-    const countInput = contentEl.querySelector<HTMLInputElement>(
-      "input[data-field='count']",
-    )!;
-    setInputValue(countInput, "5");
-
-    buttonByText(contentEl, t("modal.buttons.back")).click();
-    expect(
-      contentEl.querySelector(".workout-wizard-step-meta")?.textContent,
-    ).toBe(t("modal.wizard.stepOf", { current: 1, total: 3 }));
-    expect(
-      contentEl
-        .querySelector(".workout-wizard-step-pane")
-        ?.classList.contains("anim-backward"),
-    ).toBe(true);
-    expect(
-      contentEl.querySelector<HTMLInputElement>("input[data-field='name']")
-        ?.value,
-    ).toBe("Bench Press");
-
-    buttonByText(contentEl, t("modal.buttons.next")).click();
-    expect(
-      contentEl.querySelector<HTMLInputElement>("input[data-field='count']")
-        ?.value,
-    ).toBe("5");
+    expect(button(t("wizard.next"))).toBeDefined();
+    expect(button(t("modal.buttons.cancel"))).toBeDefined();
+    expect(button(t("wizard.back"))).toBeUndefined();
+    expect(button("Finish")).toBeUndefined();
   });
 
-  it("jumps directly via stepper buttons once earlier steps are valid, submits preserved state, and supports secondary actions", () => {
-    class SecondaryActionWizardModal extends TestWizardModal {
-      public quickActionSpy = jest.fn();
+  it("blocks Next while the step is invalid, showing the error and focusing the field", () => {
+    const { visible, button, contentEl, modal } = open();
 
-      protected override getSecondaryActions(stepIndex: number) {
-        if (stepIndex < 2) {
-          return [
-            {
-              text: t("modal.buttons.update"),
-              onClick: () => this.quickActionSpy(stepIndex),
-            },
-          ];
-        }
-        return [];
-      }
-    }
+    button(t("wizard.next"))!.click();
 
-    const modal = new SecondaryActionWizardModal(new App());
-    const contentEl = createObsidianContainer();
-    const close = jest.fn();
-    Object.assign(modal, { contentEl, close });
-    modal.onOpen();
-
-    // Quick secondary action is present on step 1
-    buttonByText(contentEl, t("modal.buttons.update")).click();
-    expect(modal.quickActionSpy).toHaveBeenCalledWith(0);
-
-    const nameInput = contentEl.querySelector<HTMLInputElement>(
-      "input[data-field='name']",
-    )!;
-    setInputValue(nameInput, "Squat");
-
-    // Jump directly from step 1 to step 3 via stepper
-    const step3Btn = contentEl.querySelectorAll<HTMLButtonElement>(
-      ".workout-wizard-step-btn",
-    )[2];
-    step3Btn.click();
-
-    expect(
-      contentEl.querySelector(".workout-wizard-step-meta")?.textContent,
-    ).toBe(t("modal.wizard.stepOf", { current: 3, total: 3 }));
-    expect(
-      contentEl
-        .querySelector(".workout-wizard-progress-fill")
-        ?.classList.contains("is-done"),
-    ).toBe(true);
-    expect(
-      contentEl.querySelector("[data-summary='name']")?.textContent,
-    ).toBe("Squat");
-
-    const noteInput = contentEl.querySelector<HTMLInputElement>(
-      "input[data-field='note']",
-    )!;
-    setInputValue(noteInput, "Heavy day");
-
-    buttonByText(contentEl, t("modal.buttons.insertSets")).click();
-    expect(modal.submitted).toEqual({
-      name: "Squat",
-      count: 3,
-      note: "Heavy day",
-      errorShown: false,
-    });
-    expect(close).toHaveBeenCalledTimes(1);
+    expect(visible()).toEqual(["one"]);
+    expect(contentEl.querySelector(".workout-wizard-error")!.textContent).toBe("Name needed");
+    expect(document.activeElement).toBe(modal.name);
   });
 
-  it("closes when Cancel is clicked", () => {
-    const { contentEl, close } = openWizard();
+  it("clears the error once the field is edited", () => {
+    const { button, contentEl, modal } = open();
+    button(t("wizard.next"))!.click();
 
-    buttonByText(contentEl, t("modal.buttons.cancel")).click();
-    expect(close).toHaveBeenCalledTimes(1);
+    modal.name.value = "Squat";
+    modal.name.dispatchEvent(new Event("input"));
+
+    expect(contentEl.querySelector(".workout-wizard-error")).toBeNull();
   });
 
-  it("skips rendering intermediate steps without validate when jumping directly to a later step", () => {
-    const step2RenderSpy = jest.fn();
+  it("moves forward and back, keeping what was typed", () => {
+    const { visible, button, modal } = open();
+    modal.name.value = "Squat";
+    button(t("wizard.next"))!.click();
+    modal.note.value = "heavy";
 
-    class JumpSpyWizardModal extends TestWizardModal {
-      protected override getSteps(): WizardStep<TestWizardState>[] {
-        const base = super.getSteps();
-        const originalRender = base[1].render;
-        return [
-          base[0],
-          {
-            ...base[1],
-            render: (container, state) => {
-              step2RenderSpy();
-              originalRender(container, state);
-            },
-          },
-          base[2],
-        ];
-      }
-    }
+    button(t("wizard.next"))!.click();
+    expect(visible()).toEqual(["three"]);
+    button(t("wizard.back"))!.click();
+    button(t("wizard.back"))!.click();
 
-    const modal = new JumpSpyWizardModal(new App());
-    const contentEl = createObsidianContainer();
-    Object.assign(modal, { contentEl, close: jest.fn() });
-    modal.onOpen();
-
-    const nameInput = contentEl.querySelector<HTMLInputElement>(
-      "input[data-field='name']",
-    )!;
-    setInputValue(nameInput, "Deadlift");
-
-    contentEl
-      .querySelectorAll<HTMLButtonElement>(".workout-wizard-step-btn")[2]
-      .click();
-
-    expect(step2RenderSpy).not.toHaveBeenCalled();
-    expect(
-      contentEl.querySelector(".workout-wizard-step-meta")?.textContent,
-    ).toBe(t("modal.wizard.stepOf", { current: 3, total: 3 }));
+    expect(visible()).toEqual(["one"]);
+    expect(modal.name.value).toBe("Squat");
+    expect(modal.note.value).toBe("heavy");
   });
 
-  it("jumps to an earlier failing validate-only step when quick-submitted from a later step", () => {
-    class ValidateOnlyStepWizardModal extends TestWizardModal {
-      protected override getSteps(): WizardStep<TestWizardState>[] {
-        const base = super.getSteps();
-        return [
-          {
-            ...base[0],
-            isComplete: undefined,
-            render: (container, state) => {
-              base[0].render(container, state);
-              const input = container.querySelector<HTMLInputElement>(
-                "input[data-field='name']",
-              )!;
-              const err = container.createDiv({ cls: "workout-field-error" });
-              err.hidden = !state.errorShown;
-              err.textContent = state.errorShown
-                ? t("modal.notices.validChooseExercise")
-                : "";
-              if (state.errorShown) {
-                input.focus();
-              }
-            },
-          },
-          base[1],
-          base[2],
-        ];
-      }
+  it("shows Insert and Cancel on the last step", () => {
+    const { button, modal } = open();
+    modal.name.value = "Squat";
+    button(t("wizard.next"))!.click();
+    button(t("wizard.next"))!.click();
 
-      protected override getSecondaryActions(stepIndex: number) {
-        if (stepIndex < this.stepCount - 1) {
-          return [
-            {
-              text: t("modal.buttons.update"),
-              onClick: () => this.handleSubmit(),
-            },
-          ];
-        }
-        return [];
-      }
-    }
+    expect(button("Finish")).toBeDefined();
+    expect(button(t("wizard.next"))).toBeUndefined();
+    expect(button(t("wizard.back"))).toBeDefined();
+    expect(button(t("modal.buttons.cancel"))).toBeDefined();
+  });
 
-    const modal = new ValidateOnlyStepWizardModal(new App());
-    const contentEl = createObsidianContainer();
-    document.body.appendChild(contentEl);
-    const close = jest.fn();
-    Object.assign(modal, { contentEl, close });
-    modal.onOpen();
+  it("disables the later tabs while the first step is invalid", () => {
+    const { visible, tab, button, contentEl } = open();
 
-    // Jump to Step 2 while Step 1 is empty (no isComplete predicate on Step 1)
-    const nameInput = contentEl.querySelector<HTMLInputElement>(
-      "input[data-field='name']",
-    )!;
-    setInputValue(nameInput, "Bench Press");
-    contentEl
-      .querySelectorAll<HTMLButtonElement>(".workout-wizard-step-btn")[1]
-      .click();
-    expect(
-      contentEl.querySelector(".workout-wizard-step-meta")?.textContent,
-    ).toBe(t("modal.wizard.stepOf", { current: 2, total: 3 }));
+    expect(tab(2).disabled).toBe(true);
+    expect(tab(3).getAttribute("aria-disabled")).toBe("true");
+    tab(3).click();
+    expect(visible()).toEqual(["one"]);
 
-    // Simulate Step 1 state becoming invalid before quick Update on Step 2
-    modal.validateSpy.mockImplementationOnce((s) => {
-      s.errorShown = true;
-      return false;
-    });
-    buttonByText(contentEl, t("modal.buttons.update")).click();
+    button(t("wizard.next"))!.click();
+    expect(contentEl.querySelector(".workout-wizard-error")).not.toBeNull();
+  });
 
-    expect(
-      contentEl.querySelector(".workout-wizard-step-meta")?.textContent,
-    ).toBe(t("modal.wizard.stepOf", { current: 1, total: 3 }));
-    const err = contentEl.querySelector<HTMLElement>(".workout-field-error");
-    expect(err?.hidden).toBe(false);
-    expect(err?.textContent).toBe(t("modal.notices.validChooseExercise"));
-    expect(document.activeElement).toBe(
-      contentEl.querySelector("input[data-field='name']"),
-    );
-    expect(modal.submitted).toBeNull();
-    expect(close).not.toHaveBeenCalled();
+  it("enables the tabs as soon as the first step is filled in", () => {
+    const { tab, modal } = open();
 
-    document.body.innerHTML = "";
+    modal.name.value = "Squat";
+    modal.name.dispatchEvent(new Event("input", { bubbles: true }));
+
+    expect(tab(3).disabled).toBe(false);
+    expect(tab(3).hasAttribute("aria-disabled")).toBe(false);
+  });
+
+  it("shows a check icon, not the number, on a completed step", () => {
+    const { tab, modal } = open();
+    type(modal.name, "Squat");
+    tab(2).click();
+
+    const badge = tab(1).querySelector(".workout-wizard-step-badge")!;
+    expect(badge.querySelector(".workout-icon")).not.toBeNull();
+    expect(badge.textContent).not.toBe("1");
+    expect(tab(1).getAttribute("aria-label")).toBe(t("wizard.stepDone", { step: "One" }));
+    expect(tab(2).querySelector(".workout-wizard-step-badge")!.textContent).toBe("2");
+  });
+
+  it("focuses the first field of the new step", () => {
+    const { button, modal } = open();
+    modal.name.value = "Squat";
+
+    button(t("wizard.next"))!.click();
+
+    expect(document.activeElement).toBe(modal.note);
+  });
+
+  it("keeps Enter in a field from reaching the editor", () => {
+    const { modal, contentEl } = open();
+    const spy = jest.fn();
+    document.addEventListener("keydown", spy);
+
+    modal.name.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true }));
+    document.removeEventListener("keydown", spy);
+
+    expect(spy).not.toHaveBeenCalled();
+    expect(contentEl).toBeDefined();
+  });
+
+  it("jumps straight to step 3 from the stepper once step 1 is valid", () => {
+    const { visible, tab, modal } = open();
+    modal.name.value = "Squat";
+    modal.name.dispatchEvent(new Event("input", { bubbles: true }));
+
+    tab(3).click();
+
+    expect(visible()).toEqual(["three"]);
+  });
+
+  it("marks completed, current and upcoming steps", () => {
+    const { tab, modal } = open();
+    type(modal.name, "Squat");
+    tab(2).click();
+
+    expect(tab(1).classList.contains("is-done")).toBe(true);
+    expect(tab(2).getAttribute("aria-current")).toBe("step");
+    expect(tab(3).classList.contains("is-done")).toBe(false);
+  });
+
+  it("fills the progress bar on the last step only", () => {
+    const { tab, modal, contentEl } = open();
+    const bar = () => contentEl.querySelector(".workout-wizard-progress")!;
+    expect(bar().classList.contains("is-done")).toBe(false);
+    type(modal.name, "Squat");
+
+    tab(3).click();
+
+    expect(bar().classList.contains("is-done")).toBe(true);
+  });
+
+  it("tells a step when it is entered", () => {
+    const { tab, modal } = open();
+    type(modal.name, "Squat");
+
+    tab(2).click();
+
+    expect(modal.entered).toEqual(["one", "two"]);
+  });
+
+  it("submits from the last step", () => {
+    const { button, modal } = open();
+    modal.name.value = "Squat";
+    modal.note.value = "x";
+    button(t("wizard.next"))!.click();
+    button(t("wizard.next"))!.click();
+
+    button("Finish")!.click();
+
+    expect(modal.submitted).toHaveBeenCalledWith("Squat", "x");
+  });
+
+  it("offers no submit on intermediate steps by default", () => {
+    const { button } = open(false);
+
+    expect(button("Finish")).toBeUndefined();
+  });
+
+  it("offers the submit on every step in quick mode (edit), still gated by validation", () => {
+    const { button, modal, contentEl } = open(true);
+
+    button("Finish")!.click();
+    expect(modal.submitted).not.toHaveBeenCalled();
+    expect(contentEl.querySelector(".workout-wizard-error")).not.toBeNull();
+
+    modal.name.value = "Squat";
+    button("Finish")!.click();
+    expect(modal.submitted).toHaveBeenCalledTimes(1);
+  });
+
+  it("cancel closes the modal", () => {
+    const { button, modal } = open();
+
+    button(t("modal.buttons.cancel"))!.click();
+
+    expect((modal as unknown as { close: jest.Mock }).close).toHaveBeenCalled();
   });
 });

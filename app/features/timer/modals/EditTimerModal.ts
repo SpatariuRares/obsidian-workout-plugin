@@ -3,7 +3,11 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { InsertTimerModal } from "@app/features/timer/modals/InsertTimerModal";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
 import { timerBlock } from "@app/features/timer/timerBlock";
-import type { EditTarget } from "@app/features/modals/base/components/createEditButtons";
+import {
+  applyBlockEdit,
+  changesSince,
+  type EditTarget,
+} from "@app/features/modals/base/components/createEditButtons";
 import { t } from "@app/i18n";
 
 /**
@@ -15,6 +19,7 @@ import { t } from "@app/i18n";
  */
 export class EditTimerModal extends InsertTimerModal {
   protected readonly initialParams: EmbeddedTimerParams;
+  private formAtOpen?: EmbeddedTimerParams;
 
   /** @param where - The note the block is written in, and how to find it without an id */
   constructor(
@@ -25,6 +30,7 @@ export class EditTimerModal extends InsertTimerModal {
   ) {
     super(app, plugin);
     this.initialParams = params;
+    this.quickSubmit = true;
   }
 
   protected getModalTitle(): string {
@@ -67,6 +73,10 @@ export class EditTimerModal extends InsertTimerModal {
   ): void {
     super.createConfigurationSections(container);
     this.prefillFields();
+    // Snapshot after the prefill so only what the user changes is patched
+    this.formAtOpen = this.collectParams();
+    // The prefill sets values without events: unlock the stepper for them
+    this.refreshHeader();
   }
 
   /**
@@ -112,12 +122,19 @@ export class EditTimerModal extends InsertTimerModal {
     }
   }
 
-  protected createButtons(container: HTMLElement): void {
-    const { id } = this.initialParams;
-    this.editButtons(container, timerBlock, t("modal.notices.timerUpdateFailed"), {
-      target: this.where,
-      id,
-      collectParams: () => this.collectParams(),
-    });
+  protected submit(): void {
+    const formNow = this.collectParams();
+    const changes = changesSince(this.formAtOpen ?? formNow, formNow, this.where);
+    applyBlockEdit(
+      this,
+      {
+        schema: timerBlock,
+        target: this.where,
+        id: this.initialParams.id,
+        successMessage: this.getSuccessMessage(),
+        failureMessage: t("modal.notices.timerUpdateFailed"),
+      },
+      changes,
+    );
   }
 }

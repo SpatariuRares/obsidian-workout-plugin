@@ -801,8 +801,7 @@
       "progressiveOverload": "Progressiv overbelastning",
       "tableType": "Tabeltype",
       "target": "Mål",
-      "workout": "Træning",
-      "mobileOptions": "Seneste øvelser og træning"
+      "workout": "Træning"
     },
     "selectOptions": {
       "allLogs": "Alle logposter",

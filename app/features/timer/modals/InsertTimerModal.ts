@@ -1,7 +1,7 @@
 // Refactored InsertTimerModal extending BaseInsertModal
 
 import { App } from "obsidian";
-import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
+import { WizardModal, type WizardStep } from "@app/features/modals/base/WizardModal";
 import {
   TimerConfigurationSection,
   TimerConfigurationElements,
@@ -24,7 +24,7 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { t } from "@app/i18n";
 
-export class InsertTimerModal extends BaseInsertModal {
+export class InsertTimerModal extends WizardModal {
   protected timerElements?: TimerConfigurationElements;
   protected timerHandlers?: TimerConfigurationHandlers;
   /** The presets of the picked type; none picked = no preset */
@@ -46,16 +46,60 @@ export class InsertTimerModal extends BaseInsertModal {
     return t("modal.notices.timerInserted");
   }
 
-  protected createConfigurationSections(
-    container: HTMLElement,
-  ): void {
+  protected getSteps(): WizardStep[] {
+    return [
+      {
+        id: "timing",
+        label: t("wizard.timerSteps.timing"),
+        render: (el) => this.renderFields(el),
+        validate: () => this.validateTiming(),
+        isComplete: () => this.invalidTiming() === null,
+      },
+      {
+        id: "options",
+        label: t("wizard.timerSteps.options"),
+        // Built with the timing step, which owns the fields of both
+        render: (el) => this.optionsPanel(el),
+      },
+    ];
+  }
+
+  private optionsHost?: HTMLElement;
+
+  /** The first step builds every field; the second step's panel receives the options half */
+  private renderFields(timing: HTMLElement): void {
+    this.optionsHost = timing.createDiv();
+    this.buildFields(timing, this.optionsHost);
+  }
+
+  private optionsPanel(panel: HTMLElement): void {
+    if (this.optionsHost) panel.appendChild(this.optionsHost);
+  }
+
+  private invalidTiming() {
+    return this.timerElements ? TimerConfigurationSection.invalidTiming(this.timerElements) : null;
+  }
+
+  private validateTiming(): boolean {
+    const problem = this.invalidTiming();
+    const message = problem ? problem.message : null;
+    // eslint-disable-next-line i18next/no-literal-string -- step id, not UI text
+    this.setStepError("timing", message, problem?.field);
+    return problem === null;
+  }
+
+  private buildFields(container: HTMLElement, optionsContainer: HTMLElement): void {
     if (!this.plugin) {
       throw new Error("Plugin is required for InsertTimerModal");
     }
 
     const { elements: timerElements, handlers: timerHandlers } =
-      TimerConfigurationSection.create(this, container, this.plugin, (type) =>
-        this.showPresetsFor(type),
+      TimerConfigurationSection.create(
+        this,
+        container,
+        this.plugin,
+        (type) => this.showPresetsFor(type),
+        optionsContainer,
       );
     this.timerElements = timerElements;
     this.timerHandlers = timerHandlers;

@@ -801,8 +801,7 @@
       "progressiveOverload": "Progresif yükleme",
       "tableType": "Tablo türü",
       "target": "Hedef",
-      "workout": "Antrenman",
-      "mobileOptions": "Son egzersizler ve antrenman"
+      "workout": "Antrenman"
     },
     "selectOptions": {
       "allLogs": "Tüm kayıtlar",

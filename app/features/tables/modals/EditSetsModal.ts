@@ -1,16 +1,11 @@
 import { App } from "obsidian";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import type { ModalAction } from "@app/components/atoms";
-import {
-  InsertSetsModal,
-  type InsertSetsState,
-} from "@app/features/tables/modals/InsertSetsModal";
+import { InsertSetsModal } from "@app/features/tables/modals/InsertSetsModal";
 import {
   setsBlock,
   isSupersetBlock,
   type EmbeddedSetsParams,
 } from "@app/features/tables/setsBlock";
-import { changedParams } from "@app/services/codeblocks/CodeBlockSchema";
 import {
   ProtocolCatalog,
   protocolId,
@@ -19,6 +14,7 @@ import {
 import { WorkoutProtocol } from "@app/types/WorkoutLogData";
 import {
   applyBlockEdit,
+  changesSince,
   type EditTarget,
 } from "@app/features/modals/base/components/createEditButtons";
 import { t } from "@app/i18n";
@@ -38,6 +34,7 @@ export class EditSetsModal extends InsertSetsModal {
     private readonly where: EditTarget,
   ) {
     super(app, plugin);
+    this.quickSubmit = true;
   }
 
   protected getModalTitle(): string {
@@ -52,27 +49,6 @@ export class EditSetsModal extends InsertSetsModal {
     return t("sets.blockUpdated");
   }
 
-  protected override createInitialState(): InsertSetsState {
-    const superset = isSupersetBlock(this.initialParams);
-    return {
-      protocol: superset
-        ? WorkoutProtocol.SUPERSET
-        : protocolId(this.initialParams.protocol),
-      exercise: this.initialParams.exercise ?? "",
-      exercises:
-        this.initialParams.exercises && this.initialParams.exercises.length >= 2
-          ? [...this.initialParams.exercises]
-          : [this.initialParams.exercise ?? "", ""],
-      workout: this.initialParams.workout ?? "",
-      sets: this.initialParams.sets,
-      warmups: this.initialParams.warmups ?? 0,
-      targetWeight: this.initialParams.targetWeight,
-      targetReps: this.initialParams.targetReps,
-      restBetween: this.initialParams.restBetween ?? 0,
-      rest: this.initialParams.rest ?? 0,
-    };
-  }
-
   protected override getProtocolOptions(catalog: ProtocolCatalog): ProtocolInfo[] {
     const initial = isSupersetBlock(this.initialParams)
       ? WorkoutProtocol.SUPERSET
@@ -82,30 +58,18 @@ export class EditSetsModal extends InsertSetsModal {
       .filter((p) => p.id !== (WorkoutProtocol.WARMUP as string));
   }
 
-  override onOpen(): void {
-    super.onOpen();
-    // Snapshot initial form values once on open, never on footer re-renders
+  protected createConfigurationSections(container: HTMLElement): void {
+    this.applyInitialParams(this.initialParams);
+    super.createConfigurationSections(container);
+    // Snapshot after the prefill so only what the user changes is patched
     this.formAtOpen = this.collectParams();
+    // The prefill sets values without events: unlock the stepper for them
+    this.refreshHeader();
   }
 
-  protected override getSecondaryActions(stepIndex: number): ModalAction[] {
-    if (stepIndex >= this.stepCount - 1) return [];
-    return [
-      {
-        text: this.getButtonText(),
-        onClick: () => this.handleSubmit(),
-      },
-    ];
-  }
-
-  protected override onSubmit(_state: InsertSetsState): void {
+  protected submit(): void {
     const formNow = this.collectParams();
-    const formAtOpen = this.formAtOpen ?? formNow;
-    const changes = changedParams(formAtOpen, formNow);
-    for (const key of this.where.invalidKeys ?? []) {
-      const invalidKey = key as keyof EmbeddedSetsParams;
-      Object.assign(changes, { [invalidKey]: formNow[invalidKey] });
-    }
+    const changes = changesSince(this.formAtOpen ?? formNow, formNow, this.where);
     applyBlockEdit(
       this,
       {
@@ -117,5 +81,24 @@ export class EditSetsModal extends InsertSetsModal {
       },
       changes,
     );
+  }
+
+  private applyInitialParams(params: EmbeddedSetsParams): void {
+    const superset = isSupersetBlock(params);
+    this.selectedProtocol = superset
+      ? WorkoutProtocol.SUPERSET
+      : protocolId(params.protocol);
+    this.singleExercise = params.exercise ?? "";
+    this.supersetExercises =
+      params.exercises && params.exercises.length >= 2
+        ? [...params.exercises]
+        : [params.exercise ?? "", ""];
+    this.workoutValue = params.workout ?? "";
+    this.plannedSets = params.sets;
+    this.warmupsValue = params.warmups ?? 0;
+    this.targetWeightValue = params.targetWeight;
+    this.targetRepsValue = params.targetReps;
+    this.restBetweenValue = params.restBetween ?? 0;
+    this.restValue = params.rest ?? 0;
   }
 }

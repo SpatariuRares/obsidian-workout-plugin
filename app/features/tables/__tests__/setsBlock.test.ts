@@ -1,4 +1,11 @@
-import { blockRest, restParams, setsBlock } from "@app/features/tables/setsBlock";
+import {
+  blockExercises,
+  blockProtocol,
+  blockRest,
+  isSupersetBlock,
+  restParams,
+  setsBlock,
+} from "@app/features/tables/setsBlock";
 import { tableBlock } from "@app/features/tables/tableBlock";
 
 describe("the rest timer written in a workout-sets block", () => {
@@ -84,5 +91,62 @@ describe("the rest timer written in a workout-sets block", () => {
     expect(tableBlock.parse("exercise: Bench\nprotocol: drop_set").params).toEqual({
       exercise: "Bench",
     });
+  });
+
+  it("round-trips exercises and restBetween without affecting tableBlock, and rejects negative restBetween", () => {
+    const source = "exercises: [Bench Press, Barbell Row]\nsets: 3\nrestBetween: 30\nrest: 120";
+    const { params, errors } = setsBlock.parse(source);
+    expect(errors).toEqual([]);
+    expect(params).toEqual({
+      exercises: ["Bench Press", "Barbell Row"],
+      sets: 3,
+      restBetween: 30,
+      rest: 120,
+    });
+
+    const serialized = setsBlock.serialize(params);
+    const body = serialized.replace(/^```workout-sets\n|\n```$/g, "");
+    expect(setsBlock.parse(body).params).toEqual(params);
+
+    const patched = setsBlock.patch("exercises: [Bench Press, Barbell Row]\nsets: 3", {
+      restBetween: 45,
+    });
+    expect(setsBlock.parse(patched).params).toEqual({
+      exercises: ["Bench Press", "Barbell Row"],
+      sets: 3,
+      restBetween: 45,
+    });
+    expect(setsBlock.parse(setsBlock.patch(patched, { restBetween: undefined })).params).toEqual({
+      exercises: ["Bench Press", "Barbell Row"],
+      sets: 3,
+    });
+
+    expect(setsBlock.parse("restBetween: -10").invalidKeys).toEqual(["restBetween"]);
+    expect(tableBlock.parse(source).params).toEqual({ sets: 3 });
+  });
+
+  it("derives blockExercises, isSupersetBlock, and default superset protocol", () => {
+    expect(blockExercises({ exercise: "Squat" })).toEqual(["Squat"]);
+    expect(isSupersetBlock({ exercise: "Squat" })).toBe(false);
+    expect(blockProtocol({ exercise: "Squat" })).toBeUndefined();
+
+    expect(
+      blockExercises({ exercise: "Squat", exercises: ["Bench Press", "Barbell Row"] }),
+    ).toEqual(["Bench Press", "Barbell Row"]);
+    expect(
+      isSupersetBlock({ exercise: "Squat", exercises: ["Bench Press", "Barbell Row"] }),
+    ).toBe(true);
+    expect(blockProtocol({ exercises: ["Bench Press", "Barbell Row"] })).toBe("superset");
+    expect(
+      blockProtocol({ exercises: ["Bench Press", "Barbell Row"], protocol: "drop_set" }),
+    ).toBe("drop_set");
+    expect(
+      blockProtocol({ exercises: ["Bench Press", "Barbell Row"], protocol: "standard" }),
+    ).toBe("standard");
+
+    expect(blockExercises({ exercise: "Squat", exercises: ["OnlyOne"] })).toEqual(["Squat"]);
+    expect(isSupersetBlock({ exercise: "Squat", exercises: ["OnlyOne"] })).toBe(false);
+    expect(blockExercises({ exercises: ["OnlyOne"] })).toEqual([]);
+    expect(blockExercises({})).toEqual([]);
   });
 });

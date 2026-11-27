@@ -2636,6 +2636,105 @@ body.is-mobile .workout-timer-strip .workout-timer .workout-timer-controls .work
     font-size: var(--workout-font-base);
   }
 }
+/* ============================================================================
+   SUPERSET ROUNDS & SLOTS
+   ============================================================================ */
+.workout-sets-round {
+  display: flex;
+  flex-direction: column;
+  border-top: var(--workout-border-thin) solid var(--workout-border-color);
+  padding-top: var(--workout-space-xs);
+}
+.workout-sets-round.is-warmup + .workout-sets-round:not(.is-warmup) {
+  border-top-width: var(--workout-border-medium);
+}
+
+.workout-sets-round-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--workout-space-sm);
+  padding: var(--workout-space-xs) var(--workout-space-xs) var(--workout-space-2xs);
+}
+
+.workout-sets-round-title {
+  font-size: var(--workout-font-xs);
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.workout-sets-slot {
+  border-top-color: var(--workout-border-subtle);
+}
+
+.workout-sets-slot-header {
+  padding: var(--workout-space-xs) var(--workout-space-xs) 0 2.75rem;
+}
+
+.workout-sets-slot-title {
+  font-size: var(--workout-font-base);
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--workout-text-accent);
+  overflow-wrap: anywhere;
+}
+.workout-sets-slot-title .workout-block-title-link {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.workout-sets-slot-title .workout-block-title-link.is-unresolved {
+  color: inherit;
+  opacity: 1;
+}
+.workout-sets-slot-title .workout-block-title-link:focus-visible {
+  outline: var(--workout-border-medium) solid var(--interactive-accent);
+  outline-offset: var(--workout-space-2xs);
+  border-radius: var(--workout-radius-xs);
+}
+@media (hover: hover) {
+  .workout-sets-slot-title .workout-block-title-link:hover {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+}
+
+body.is-mobile .workout-sets-slot-title .workout-block-title-link {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  min-height: var(--workout-touch-target-min);
+}
+
+.workout-sets-rows.is-superset .workout-sets-cell-label {
+  display: block;
+  padding-left: calc(var(--workout-space-sm) + var(--workout-border-thin));
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+.workout-sets-rows.is-superset .workout-sets-cells {
+  align-items: start;
+}
+.workout-sets-rows.is-superset .workout-sets-row-main {
+  align-items: end;
+  padding-block: var(--workout-space-xs);
+}
+
+@media (max-width: 484px) {
+  .workout-sets-slot.is-stacked .workout-sets-cells {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: var(--workout-space-xs);
+    align-items: start;
+  }
+  .workout-sets-slot.is-stacked .workout-sets-row-main {
+    padding-block: var(--workout-space-sm);
+  }
+  .workout-sets-slot.is-stacked .workout-sets-value {
+    font-size: var(--workout-font-base);
+  }
+}
 /* Modal styles entrypoint (split into app/styles/modal/*) */
 /* ============================================================================
    MODAL STYLES

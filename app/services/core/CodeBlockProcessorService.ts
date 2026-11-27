@@ -28,7 +28,7 @@ import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { durationBlock } from "@app/features/duration/durationBlock";
 import { sessionBlock } from "@app/features/session/sessionBlock";
 import { EmbeddedSessionView } from "@app/features/session/views/EmbeddedSessionView";
-import { setsBlock } from "@app/features/tables/setsBlock";
+import { blockExercises, isSupersetBlock, setsBlock } from "@app/features/tables/setsBlock";
 import { EmbeddedSetsView } from "@app/features/tables/views/EmbeddedSetsView";
 import { EditSetsModal } from "@app/features/tables/modals/EditSetsModal";
 import type { CodeBlockSchema } from "@app/services/codeblocks/CodeBlockSchema";
@@ -175,7 +175,9 @@ export class CodeBlockProcessorService {
         this.refreshOnLogChange(
           ctx,
           body,
-          { exercise: params.exercise, exactMatch: true },
+          isSupersetBlock(params)
+            ? { exercises: blockExercises(params), exactMatch: true }
+            : { exercise: params.exercise, exactMatch: true },
           () => sheet.render().finally(syncMenu),
         );
       },
@@ -441,6 +443,7 @@ export class CodeBlockProcessorService {
     body: HTMLElement,
     filter: {
       exercise?: string;
+      exercises?: string[];
       workout?: string;
       exactMatch?: boolean;
     },
@@ -452,6 +455,7 @@ export class CodeBlockProcessorService {
         this.eventBus,
         {
           exercise: filter.exercise,
+          exercises: filter.exercises,
           workout: filter.workout,
           exactMatch: filter.exactMatch,
           muscleTagsAware: false,

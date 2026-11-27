@@ -50,51 +50,60 @@ export class BlockCard {
         const title = header.createDiv({ cls: "workout-block-title", text: props.title });
         if (props.titleIsMessage) title.addClass("is-message");
       } else {
-        const { titleLink } = props;
         const title = header.createDiv({ cls: "workout-block-title" });
-        const link = title.createEl("a", {
-          cls: titleLink.unresolved
-            ? "internal-link workout-block-title-link is-unresolved"
-            : "internal-link workout-block-title-link",
-          text: props.title,
-          attr: {
-            href: titleLink.href,
-            "data-href": titleLink.href,
-            rel: "noopener",
-          },
-        });
-        const listenerOptions = titleLink.signal ? { signal: titleLink.signal } : undefined;
-        link.addEventListener(
-          "click",
-          (event) => {
-            event.preventDefault();
-            titleLink.onOpen(event);
-          },
-          listenerOptions,
-        );
-        link.addEventListener(
-          "auxclick",
-          (event) => {
-            if (event.button !== 1) return;
-            event.preventDefault();
-            titleLink.onOpen(event);
-          },
-          listenerOptions,
-        );
-        if (titleLink.onHover) {
-          const { onHover } = titleLink;
-          link.addEventListener(
-            "mouseover",
-            (event) => {
-              onHover(event, link);
-            },
-            listenerOptions,
-          );
-        }
+        BlockCard.renderTitleLink(title, props.title, props.titleLink);
       }
     }
     if (props.meta) header.createDiv({ cls: "workout-block-meta", text: props.meta });
     return { el, header };
+  }
+
+  /** Renders an interactive Obsidian internal link with middle-click and Page Preview support */
+  static renderTitleLink(
+    parent: HTMLElement,
+    title: string,
+    titleLink: BlockCardTitleLink,
+  ): HTMLAnchorElement {
+    const link = parent.createEl("a", {
+      cls: titleLink.unresolved
+        ? "internal-link workout-block-title-link is-unresolved"
+        : "internal-link workout-block-title-link",
+      text: title,
+      attr: {
+        href: titleLink.href,
+        "data-href": titleLink.href,
+        rel: "noopener",
+      },
+    });
+    const listenerOptions = titleLink.signal ? { signal: titleLink.signal } : undefined;
+    link.addEventListener(
+      "click",
+      (event) => {
+        event.preventDefault();
+        titleLink.onOpen(event);
+      },
+      listenerOptions,
+    );
+    link.addEventListener(
+      "auxclick",
+      (event) => {
+        if (event.button !== 1) return;
+        event.preventDefault();
+        titleLink.onOpen(event);
+      },
+      listenerOptions,
+    );
+    if (titleLink.onHover) {
+      const { onHover } = titleLink;
+      link.addEventListener(
+        "mouseover",
+        (event) => {
+          onHover(event, link);
+        },
+        listenerOptions,
+      );
+    }
+    return link;
   }
 
   /** The card's last row, for its actions (Add set, Add log), at the right end */

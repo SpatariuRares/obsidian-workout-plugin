@@ -219,6 +219,11 @@
       "size": "{width} × {height}",
       "remove": "Take {widget} off the dashboard"
     },
+    "wizard": {
+      "stepGeneral": "General",
+      "stepWidgets": "Widgets",
+      "dateRangeInvalid": "Enter a whole number of days, 0 or more"
+    },
     "grid": {
       "outside": "{widget} goes past the {columns} columns of the grid",
       "narrow": "{widget} needs at least {min} columns",

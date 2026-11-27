@@ -896,7 +896,6 @@
       "defaultRepsPerSet": "Angenommene Anzahl an Wiederholungen, wenn nicht angegeben. Bei 0 wird die 'Fallback-Satzdauer' verwendet.",
       "defaultTimerPreset": "Wähle eine Standard-Voreinstellung für neue Timer",
       "exerciseFolder": "Pfad zum Ordner mit Übungsseiten",
-      "generateDefaultTemplates": "Erstellt die Standardvorlage für Übungsseiten und die Tag-Referenz im Ordner 'Workout Templates'. Du kannst diese Dateien anpassen, um Sprache und Struktur zu ändern.",
       "noPresets": "Keine Timer-Voreinstellungen konfiguriert. Klicke auf „Voreinstellung hinzufügen“, um eine zu erstellen.",
       "presetDurationDesc": "Dauer in Sekunden (z. B. 90 für einen Timer von 90 Sekunden).",
       "presetNameDesc": "Eindeutiger Name für diese Timer-Voreinstellung (z. B. 'Pause 90s', 'HIIT 30/10').",

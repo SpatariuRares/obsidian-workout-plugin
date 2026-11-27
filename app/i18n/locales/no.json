@@ -896,7 +896,6 @@
       "defaultRepsPerSet": "Antatt antall repetisjoner når det ikke er angitt. Hvis 0, brukes 'Reservevarighet per sett'.",
       "defaultTimerPreset": "Velg en standard forhåndsinnstilling for nye timere",
       "exerciseFolder": "Sti til mappen som inneholder øvelsessider",
-      "generateDefaultTemplates": "Generer standardmal for øvelsessider og tag-referanse i mappen 'Workout Templates'. Du kan tilpasse disse filene for å endre språk og struktur.",
       "noPresets": "Ingen timer-forhåndsinnstillinger er konfigurert. Klikk på «Legg til forhåndsinnstilling» for å opprette en.",
       "presetDurationDesc": "Varighet i sekunder (f.eks. 90 for en 90-sekunders timer).",
       "presetNameDesc": "Unikt navn for denne timer-forhåndsinnstillingen (f.eks. 'Rest 90s', 'HIIT 30/10').",

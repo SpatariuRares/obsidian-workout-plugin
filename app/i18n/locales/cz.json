@@ -896,7 +896,6 @@
       "defaultRepsPerSet": "Předpokládaný počet opakování, pokud není zadán. Pokud je 0, použije se 'Záložní doba série'.",
       "defaultTimerPreset": "Vyberte výchozí předvolbu pro nové časovače",
       "exerciseFolder": "Cesta ke složce obsahující stránky cvičení",
-      "generateDefaultTemplates": "Vygeneruje výchozí šablonu stránky cvičení a přehled štítků ve složce 'Workout Templates'. Úpravou těchto souborů můžete změnit jazyk a strukturu.",
       "noPresets": "Nejsou nastaveny žádné předvolby časovače. Klikněte na „Přidat předvolbu“ a vytvořte novou.",
       "presetDurationDesc": "Doba trvání v sekundách (např. 90 pro časovač 90 sekund).",
       "presetNameDesc": "Jedinečný název této předvolby časovače (např. 'Odpočinek 90s', 'HIIT 30/10').",

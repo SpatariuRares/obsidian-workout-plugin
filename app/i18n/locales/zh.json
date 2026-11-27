@@ -896,7 +896,6 @@
       "defaultRepsPerSet": "未指定时的默认次数。若为 0，则使用“备用组时长”。",
       "defaultTimerPreset": "选择新计时器的默认预设",
       "exerciseFolder": "包含训练动作页面的文件夹路径",
-      "generateDefaultTemplates": "在“训练模板”文件夹中生成默认的训练页面模板和标签参考。您可以自定义这些文件以更改语言和结构。",
       "noPresets": "未配置计时器预设。点击“添加预设”即可创建一个。",
       "presetDurationDesc": "时长（秒）（例如：90 表示 90 秒计时器）。",
       "presetNameDesc": "为此计时器预设设置唯一名称（例如：“休息90秒”、“HIIT 30/10”）。",

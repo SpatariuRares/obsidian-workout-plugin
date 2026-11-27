@@ -896,7 +896,6 @@
       "defaultRepsPerSet": "Número de repeticiones asumido cuando no se especifica. Si es 0, se usa la 'Duración de serie alternativa'.",
       "defaultTimerPreset": "Elige un preajuste predeterminado para los nuevos temporizadores.",
       "exerciseFolder": "Ruta a la carpeta que contiene las páginas de ejercicios.",
-      "generateDefaultTemplates": "Genera una plantilla predeterminada de página de ejercicio y una referencia de etiquetas en la carpeta 'Workout Templates'. Puedes personalizar estos archivos para modificar el idioma y la estructura.",
       "noPresets": "No hay preajustes de temporizador configurados. Haz clic en «Añadir preajuste» para crear uno.",
       "presetDurationDesc": "Duración en segundos (por ejemplo, 90 para un temporizador de 90 segundos).",
       "presetNameDesc": "Nombre único para este preajuste de temporizador (por ejemplo, 'Descanso 90s', 'HIIT 30/10').",

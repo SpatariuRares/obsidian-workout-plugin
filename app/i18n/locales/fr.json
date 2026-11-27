@@ -896,7 +896,6 @@
       "defaultRepsPerSet": "Nombre de répétitions supposé lorsqu'il n'est pas précisé. Si 0, la « Durée de série par défaut » est utilisée.",
       "defaultTimerPreset": "Sélectionnez un préréglage par défaut pour les nouveaux minuteurs.",
       "exerciseFolder": "Chemin d'accès au dossier contenant les pages d'exercices.",
-      "generateDefaultTemplates": "Générez le modèle de page d'exercice par défaut et la référence des tags dans le dossier 'Workout Templates'. Vous pouvez personnaliser ces fichiers pour modifier la langue et la structure.",
       "noPresets": "Aucun préréglage de minuteur configuré. Cliquez sur « Ajouter un préréglage » pour en créer un.",
       "presetDurationDesc": "Durée en secondes (par exemple, 90 pour un minuteur de 90 secondes).",
       "presetNameDesc": "Nom unique pour ce préréglage de minuteur (par exemple, « Repos 90 s », « HIIT 30/10 »).",

@@ -896,7 +896,6 @@
       "defaultRepsPerSet": "Numero di ripetizioni presunto quando non specificato. Se 0, usa 'Durata serie di riserva'.",
       "defaultTimerPreset": "Seleziona un preset predefinito per i nuovi timer",
       "exerciseFolder": "Percorso alla cartella contenente le pagine degli esercizi",
-      "generateDefaultTemplates": "Genera template predefinito pagina esercizio e riferimento tag nella cartella 'Workout Templates'. Puoi personalizzare questi file per cambiare lingua e struttura.",
       "noPresets": "Nessun preset timer configurato. Clicca «Aggiungi preset» per crearne uno.",
       "presetDurationDesc": "Durata in secondi (ad esempio, 90 per un timer di 90 secondi).",
       "presetNameDesc": "Nome univoco per questo preset del timer (ad esempio, 'Riposo 90s', 'HIIT 30/10').",

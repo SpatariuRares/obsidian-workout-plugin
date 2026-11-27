@@ -2,7 +2,7 @@ import { App, normalizePath, Notice, stringifyYaml, TFile } from "obsidian";
 import { PathUtils } from "@app/utils/PathUtils";
 import { t } from "@app/i18n";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
-import type { MuscleTagPort } from "@app/types/PluginPorts";
+import type { MuscleTagPort, SettingsPort } from "@app/types/PluginPorts";
 import { exercisePageTemplate } from "@app/services/exercise/ExercisePageContent";
 
 /**
@@ -15,15 +15,20 @@ export class TemplateGeneratorService {
 
   constructor(
     private app: App,
-    private plugin: MuscleTagPort,
+    private plugin: MuscleTagPort & SettingsPort,
   ) {}
 
   /**
-   * Get the template folder path.
-   * Can be customized via settings in the future.
+   * Get the configured template folder path, falling back to the default folder
+   * when unset or empty.
    */
   private getTemplateFolderPath(): string {
-    return normalizePath(this.defaultTemplateFolder);
+    const configured = this.plugin.settings?.templateFolderPath?.trim();
+    if (!configured) {
+      return normalizePath(this.defaultTemplateFolder);
+    }
+    const normalized = normalizePath(configured).replace(/^\/+|\/+$/g, "");
+    return normalized || normalizePath(this.defaultTemplateFolder);
   }
 
   /**
@@ -51,7 +56,7 @@ export class TemplateGeneratorService {
 
       new Notice(
         t("messages.templatesGenerated", {
-          folder: this.defaultTemplateFolder,
+          folder: templateFolder,
         }),
       );
     } catch (error) {

@@ -1,6 +1,7 @@
-import type { Setting } from "obsidian";
+import { App, normalizePath, type Setting } from "obsidian";
 import { t } from "@app/i18n";
 import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
+import { FolderSuggest } from "@app/features/common/suggest/FolderSuggest";
 import { runWithBusyButton } from "@app/features/settings/runWithBusyButton";
 import type {
   WorkoutPluginContext,
@@ -9,6 +10,7 @@ import type {
 
 export class TemplatesSettings {
   constructor(
+    private app: App,
     private plugin: WorkoutPluginContext & TemplateGeneratorPort,
   ) {}
 
@@ -19,6 +21,11 @@ export class TemplatesSettings {
         heading: t("settings.sections.templates"),
         items: [
           {
+            name: t("settings.labels.templateFolder"),
+            desc: t("settings.descriptions.templateFolder"),
+            render: (setting) => this.renderTemplateFolder(setting),
+          },
+          {
             name: t("settings.labels.generateDefaultTemplates"),
             desc: t("settings.descriptions.generateDefaultTemplates"),
             render: (setting) => this.renderGenerate(setting),
@@ -26,6 +33,22 @@ export class TemplatesSettings {
         ],
       },
     ];
+  }
+
+  private renderTemplateFolder(setting: Setting): void {
+    setting.addText((text) => {
+      new FolderSuggest(this.app, text.inputEl);
+      text
+        .setPlaceholder(t("forms.enterFolderPath"))
+        .setValue(this.plugin.settings.templateFolderPath)
+        .onChange(async (value) => {
+          const trimmed = value.trim();
+          this.plugin.settings.templateFolderPath = trimmed
+            ? normalizePath(trimmed).replace(/^\/+|\/+$/g, "")
+            : "";
+          await this.plugin.saveSettings();
+        });
+    });
   }
 
   private renderGenerate(setting: Setting): void {

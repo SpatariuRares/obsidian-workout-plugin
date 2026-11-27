@@ -896,7 +896,6 @@
       "defaultRepsPerSet": "Numri i supozuar i përsëritjeve kur nuk është specifikuar. Nëse është 0, përdoret 'Kohëzgjatja rezervë e serisë'.",
       "defaultTimerPreset": "Zgjidhni një paracaktim të parazgjedhur për timerët e rinj",
       "exerciseFolder": "Shtegu i dosjes që përmban faqet e ushtrimeve",
-      "generateDefaultTemplates": "Gjeneron shabllonin e parazgjedhur të faqes së ushtrimit dhe referencën e etiketave në dosjen 'Workout Templates'. Mund t'i personalizoni këta skedarë për të ndryshuar gjuhën dhe strukturën.",
       "noPresets": "Nuk ka paracaktime timeri të konfiguruara. Klikoni 'Shto paracaktim' për të krijuar një.",
       "presetDurationDesc": "Kohëzgjatja në sekonda (p.sh., 90 për një timer prej 90 sekondash).",
       "presetNameDesc": "Emër unik për këtë paracaktim timeri (p.sh., 'Pushim 90s', 'HIIT 30/10').",

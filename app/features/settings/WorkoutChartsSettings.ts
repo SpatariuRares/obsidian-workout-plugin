@@ -59,7 +59,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     );
     this.exerciseTypes = new ExerciseTypesSettings(app, plugin, refresh);
     this.durationEstimation = new DurationEstimationSettings(plugin);
-    this.templates = new TemplatesSettings(plugin);
+    this.templates = new TemplatesSettings(app, plugin);
     this.maintenance = new MaintenanceSettings(app, plugin);
     this.beta = new BetaFeaturesSettings(plugin);
     // A type made outside the tab (the create-exercise form): Obsidian 1.13

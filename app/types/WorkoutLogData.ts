@@ -102,6 +102,8 @@ export type TimedLogEntryInput = LogEntryInput & { timestamp: number };
 export interface WorkoutChartsSettings {
   csvLogFilePath: string;
   exerciseFolderPath: string;
+  /** Folder path for template files (exercise-page.md, Muscle Tags Reference.md) */
+  templateFolderPath: string;
   defaultExactMatch: boolean;
   timerPresets: Record<string, TimerPresetConfig>;
   defaultTimerPreset: string | null;

@@ -896,7 +896,6 @@
       "defaultRepsPerSet": "Numărul presupus de repetări, dacă nu este specificat. Dacă este 0, se folosește „Durată implicită a seriei”.",
       "defaultTimerPreset": "Selectează un preset implicit pentru temporizatoarele noi",
       "exerciseFolder": "Calea către folderul care conține paginile cu exerciții",
-      "generateDefaultTemplates": "Generează șablonul implicit pentru pagina de exercițiu și referința etichetelor în folderul „Workout Templates”. Poți personaliza aceste fișiere ca să schimbi limba și structura.",
       "noPresets": "Nu sunt configurate preseturi pentru temporizator. Apasă pe „Adaugă preset” ca să creezi unul.",
       "presetDurationDesc": "Durata în secunde (de exemplu, 90 pentru un temporizator de 90 de secunde).",
       "presetNameDesc": "Nume unic pentru acest preset de temporizator (de exemplu, 'Pauză 90s', 'HIIT 30/10').",

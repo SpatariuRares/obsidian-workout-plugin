@@ -896,7 +896,6 @@
       "defaultRepsPerSet": "Belirtilmediğinde varsayılan tekrar sayısı. 0 ise 'Yedek set süresi' kullanılır.",
       "defaultTimerPreset": "Yeni zamanlayıcılar için varsayılan bir ön ayar seçin",
       "exerciseFolder": "Egzersiz sayfalarının bulunduğu klasörün yolu",
-      "generateDefaultTemplates": "'Workout Templates' klasöründe varsayılan egzersiz sayfası şablonunu ve etiket başvurusunu oluşturun. Dili ve yapıyı değiştirmek için bu dosyaları özelleştirebilirsiniz.",
       "noPresets": "Zamanlayıcı ön ayarı yapılandırılmamış. Yeni bir tane oluşturmak için 'Ön ayar ekle'ye tıklayın.",
       "presetDurationDesc": "Saniye cinsinden süre (örneğin, 90 saniyelik bir zamanlayıcı için 90).",
       "presetNameDesc": "Bu zamanlayıcı ön ayarı için benzersiz bir isim (örneğin, '90 saniye dinlenme', 'HIIT 30/10').",

@@ -896,7 +896,6 @@
       "defaultRepsPerSet": "Aangenomen aantal herhalingen indien niet opgegeven. Bij 0 wordt de 'Terugvalduur per serie' gebruikt.",
       "defaultTimerPreset": "Selecteer een standaardvoorinstelling voor nieuwe timers",
       "exerciseFolder": "Pad naar de map met de oefenpagina's",
-      "generateDefaultTemplates": "Genereer een standaardsjabloon voor oefeningspagina's en een labeloverzicht in de map 'Workout Templates'. Je kunt deze bestanden aanpassen om de taal en structuur te wijzigen.",
       "noPresets": "Geen timervoorinstellingen geconfigureerd. Klik op 'Voorinstelling toevoegen' om er een aan te maken.",
       "presetDurationDesc": "Duur in seconden (bijvoorbeeld 90 voor een timer van 90 seconden).",
       "presetNameDesc": "Unieke naam voor deze timervoorinstelling (bijvoorbeeld: 'Rust 90s', 'HIIT 30/10').",

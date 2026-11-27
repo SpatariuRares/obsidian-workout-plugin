@@ -1,19 +1,31 @@
 /** @jest-environment jsdom */
 import { mockSettingNamed, withHelpers } from "obsidian";
+import type { App } from "obsidian";
 import { TemplatesSettings } from "@app/features/settings/components/TemplatesSettings";
 import { renderSettingDefinitions } from "@app/features/settings/renderSettingDefinitions";
+import { FolderSuggest } from "@app/features/common/suggest/FolderSuggest";
 import { t } from "@app/i18n";
 
-function setup(generate: jest.Mock) {
+jest.mock("@app/features/common/suggest/FolderSuggest", () => ({
+  FolderSuggest: jest.fn(),
+}));
+
+function setup(
+  generate: jest.Mock = jest.fn(),
+  templateFolderPath = "Workout Templates",
+) {
+  const app = {} as App;
   const plugin = {
-    settings: {},
+    settings: { templateFolderPath },
+    saveSettings: jest.fn().mockResolvedValue(undefined),
     templateGeneratorService: { generateDefaultTemplates: generate },
   };
   const container = withHelpers(document.createElement("div"));
   renderSettingDefinitions(
     container,
     new TemplatesSettings(
-      plugin as unknown as ConstructorParameters<typeof TemplatesSettings>[0],
+      app,
+      plugin as unknown as ConstructorParameters<typeof TemplatesSettings>[1],
     ).definitions(),
   );
   const row = mockSettingNamed(
@@ -21,6 +33,9 @@ function setup(generate: jest.Mock) {
     t("settings.labels.generateDefaultTemplates"),
   );
   return {
+    app,
+    plugin,
+    container,
     generate: row.component("button", 0),
     overwrite: row.component("button", 1),
   };
@@ -29,8 +44,49 @@ function setup(generate: jest.Mock) {
 const flush = () => Promise.resolve().then(() => Promise.resolve());
 
 describe("templates section", () => {
-  beforeEach(() => jest.useFakeTimers());
+  beforeEach(() => {
+    jest.useFakeTimers();
+    (FolderSuggest as jest.Mock).mockClear();
+  });
   afterEach(() => jest.useRealTimers());
+
+  it("displays the configured template folder path and attaches FolderSuggest", () => {
+    const { app, container } = setup(jest.fn(), "Custom/Templates");
+    const folderRow = mockSettingNamed(
+      container,
+      t("settings.labels.templateFolder"),
+    );
+    const text = folderRow.component("text");
+
+    expect(text.value).toBe("Custom/Templates");
+    expect(FolderSuggest).toHaveBeenCalledWith(app, text.inputEl);
+  });
+
+  it("normalizes and saves templateFolderPath on change", async () => {
+    const { plugin, container } = setup();
+    const text = mockSettingNamed(
+      container,
+      t("settings.labels.templateFolder"),
+    ).component("text");
+
+    await text.change(" /My//Templates/ " as never);
+
+    expect(plugin.settings.templateFolderPath).toBe("My/Templates");
+    expect(plugin.saveSettings).toHaveBeenCalledTimes(1);
+  });
+
+  it("saves an empty string when templateFolderPath is cleared", async () => {
+    const { plugin, container } = setup();
+    const text = mockSettingNamed(
+      container,
+      t("settings.labels.templateFolder"),
+    ).component("text");
+
+    await text.change("   " as never);
+
+    expect(plugin.settings.templateFolderPath).toBe("");
+    expect(plugin.saveSettings).toHaveBeenCalledTimes(1);
+  });
 
   it("shows the button busy while generating, then done, then as it was", async () => {
     let finish: () => void = () => {};

@@ -896,7 +896,6 @@
       "defaultRepsPerSet": "Przyjęta liczba powtórzeń, gdy nie jest podana. Jeśli wynosi 0, używana jest „Rezerwowy czas trwania serii”.",
       "defaultTimerPreset": "Wybierz domyślne ustawienie dla nowych timerów",
       "exerciseFolder": "Ścieżka do folderu zawierającego strony ćwiczeń",
-      "generateDefaultTemplates": "Utwórz domyślny szablon strony ćwiczenia i spis tagów w folderze 'Workout Templates'. Możesz dostosować te pliki, aby zmienić język i strukturę.",
       "noPresets": "Brak skonfigurowanych ustawień timera. Kliknij „Dodaj ustawienie”, aby je utworzyć.",
       "presetDurationDesc": "Czas w sekundach (np. 90 dla timera o czasie trwania 90 sekund).",
       "presetNameDesc": "Unikalna nazwa dla tego ustawienia timera (np. 'Odpoczynek 90s', 'HIIT 30/10').",

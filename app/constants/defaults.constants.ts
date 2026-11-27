@@ -24,6 +24,8 @@ export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
   csvLogFilePath: "theGYM/Log/workout_logs.csv",
   /** Default folder path for exercise pages */
   exerciseFolderPath: "Esercizi",
+  /** Default folder path for template files */
+  templateFolderPath: "Workout Templates",
   /** Whether exercise filtering uses exact matching by default */
   defaultExactMatch: true,
   /** Saved timer presets (empty by default) */

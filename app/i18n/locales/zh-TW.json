@@ -896,7 +896,6 @@
       "defaultRepsPerSet": "未指定時預設的每組次數。如果為 0，則使用「備用每組時長」。",
       "defaultTimerPreset": "為新計時器選擇預設使用的計時器預設",
       "exerciseFolder": "包含動作頁面的資料夾路徑",
-      "generateDefaultTemplates": "在「運動範本」資料夾中產生預設的動作頁面範本和標籤參考。您可以自訂這些檔案，以更改語言和結構。",
       "noPresets": "尚未設定任何計時器預設。點擊「新增預設」即可建立。",
       "presetDurationDesc": "時間長度（以秒為單位，例如：90 秒，用於 90 秒計時器）。",
       "presetNameDesc": "為此計時器預設指定一個不重複的名稱（例如：「休息 90 秒」、「HIIT 30/10」）。",

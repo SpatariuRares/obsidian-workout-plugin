@@ -27,6 +27,7 @@ function makePlugin() {
     settings: {
       csvLogFilePath: "Workouts/workout_logs.csv",
       exerciseFolderPath: "Exercises",
+      templateFolderPath: "Workout Templates",
       weightUnit: "kg",
       defaultExactMatch: false,
       showRibbonIcon: true,
@@ -100,6 +101,7 @@ const EXPECTED_ROWS = [
   "settings.labels.repDuration",
   "settings.labels.defaultRepsPerSet",
   "settings.labels.setDuration",
+  "settings.labels.templateFolder",
   "settings.labels.generateDefaultTemplates",
   "settings.labels.runAllMaintenance",
 ];
@@ -122,6 +124,9 @@ describe("WorkoutChartsSettingTab definitions (settings search)", () => {
 
     expect(page?.name).toBe(t("settings.sections.advanced"));
     const advancedNames = rowNames(page?.items ?? []);
+    expect(advancedNames).toContain(
+      t("settings.labels.templateFolder"),
+    );
     expect(advancedNames).toContain(
       t("settings.labels.generateDefaultTemplates"),
     );

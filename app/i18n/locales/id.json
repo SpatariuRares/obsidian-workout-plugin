@@ -896,7 +896,6 @@
       "defaultRepsPerSet": "Jumlah repetisi yang diasumsikan jika tidak ditentukan. Jika 0, menggunakan 'Durasi set cadangan'.",
       "defaultTimerPreset": "Pilih preset default untuk timer baru",
       "exerciseFolder": "Jalur ke folder yang berisi halaman-halaman latihan",
-      "generateDefaultTemplates": "Buat templat halaman latihan dan referensi tag standar di folder 'Workout Templates'. Anda dapat menyesuaikan file-file ini untuk mengubah bahasa dan struktur.",
       "noPresets": "Belum ada preset timer. Klik 'Tambahkan preset' untuk membuatnya.",
       "presetDurationDesc": "Durasi dalam detik (misalnya, 90 untuk timer 90 detik).",
       "presetNameDesc": "Nama unik untuk preset timer ini (misalnya, 'Istirahat 90 detik', 'HIIT 30/10').",

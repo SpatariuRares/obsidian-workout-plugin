@@ -11,6 +11,7 @@ describe("TemplateGeneratorService", () => {
   let tagMap: Map<string, string>;
   let service: TemplateGeneratorService;
   let existing: Record<string, unknown>;
+  let settings: { templateFolderPath: string };
 
   const createdContent = (path: string): string | undefined =>
     (app.vault.create as jest.Mock).mock.calls.find((c) => c[0] === path)?.[1];
@@ -27,7 +28,9 @@ describe("TemplateGeneratorService", () => {
       ["abs", "core"],
       ["gambe", "quads"],
     ]);
+    settings = { templateFolderPath: FOLDER };
     service = new TemplateGeneratorService(app, {
+      settings,
       getMuscleTagService: () => ({ tagMap: async () => tagMap }),
     } as any);
   });
@@ -135,6 +138,56 @@ describe("TemplateGeneratorService", () => {
         t("messages.errors.templateGenError", { error: "denied" }),
       );
     });
+
+    it("should use a custom templateFolderPath from settings and report it in the notice", async () => {
+      settings.templateFolderPath = "Custom/Templates";
+
+      await service.generateDefaultTemplates();
+
+      expect(app.vault.createFolder).toHaveBeenCalledWith("Custom/Templates");
+      const paths = (app.vault.create as jest.Mock).mock.calls.map((c) => c[0]);
+      expect(paths).toEqual([
+        "Custom/Templates/exercise-page.md",
+        "Custom/Templates/Muscle Tags Reference.md",
+      ]);
+      expect(Notice).toHaveBeenCalledWith(
+        t("messages.templatesGenerated", { folder: "Custom/Templates" }),
+      );
+    });
+
+    it("should normalize whitespace and slashes in templateFolderPath", async () => {
+      settings.templateFolderPath = " /Custom//Templates/ ";
+
+      await service.generateDefaultTemplates();
+
+      expect(app.vault.createFolder).toHaveBeenCalledWith("Custom/Templates");
+      const paths = (app.vault.create as jest.Mock).mock.calls.map((c) => c[0]);
+      expect(paths).toEqual([
+        "Custom/Templates/exercise-page.md",
+        "Custom/Templates/Muscle Tags Reference.md",
+      ]);
+      expect(Notice).toHaveBeenCalledWith(
+        t("messages.templatesGenerated", { folder: "Custom/Templates" }),
+      );
+    });
+
+    it.each(["", "   ", "/"])(
+      "should fall back to the default folder when templateFolderPath is %j",
+      async (folder) => {
+        settings.templateFolderPath = folder;
+
+        await service.generateDefaultTemplates();
+
+        expect(app.vault.createFolder).toHaveBeenCalledWith(FOLDER);
+        const paths = (app.vault.create as jest.Mock).mock.calls.map(
+          (c) => c[0],
+        );
+        expect(paths).toEqual([EXERCISE_PATH, TAGS_PATH]);
+        expect(Notice).toHaveBeenCalledWith(
+          t("messages.templatesGenerated", { folder: FOLDER }),
+        );
+      },
+    );
   });
 
   describe("generateTagReference", () => {
@@ -213,6 +266,30 @@ describe("TemplateGeneratorService", () => {
       await expect(service.getExercisePageTemplate()).resolves.toBe(
         createdContent(EXERCISE_PATH),
       );
+    });
+
+    it("should read exercise-page.md from a custom templateFolderPath", async () => {
+      settings.templateFolderPath = "My/Templates";
+      const file = new TFile();
+      existing["My/Templates/exercise-page.md"] = file;
+      (app.vault.read as jest.Mock).mockResolvedValue("custom folder template");
+
+      await expect(service.getExercisePageTemplate()).resolves.toBe(
+        "custom folder template",
+      );
+      expect(app.vault.read).toHaveBeenCalledWith(file);
+    });
+
+    it("should fall back to the default folder when templateFolderPath is empty", async () => {
+      settings.templateFolderPath = "   ";
+      const file = new TFile();
+      existing[EXERCISE_PATH] = file;
+      (app.vault.read as jest.Mock).mockResolvedValue("default folder template");
+
+      await expect(service.getExercisePageTemplate()).resolves.toBe(
+        "default folder template",
+      );
+      expect(app.vault.read).toHaveBeenCalledWith(file);
     });
   });
 });

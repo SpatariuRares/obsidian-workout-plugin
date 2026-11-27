@@ -332,7 +332,7 @@ Everything. `isDesktopOnly: false`. No Node.js/Electron APIs. No regex lookbehin
 | **Protocols**           | Protocol list (name, abbreviation, color), built-ins included         |
 | **Exercise types**      | Types of your own (fields), Duplicate from a built-in                 |
 | **Training parameters** | Progressive overload increment, set/rep duration for estimates        |
-| **Templates**           | Generate the default templates                                        |
+| **Templates**           | Templates folder path, generate the default templates                 |
 | **Maintenance**         | Run all maintenance (block ids, weight units, ...)                    |
 | **Beta features**       | One toggle per feature in beta (hidden when there is none)            |
 

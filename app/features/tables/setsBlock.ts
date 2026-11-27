@@ -20,6 +20,8 @@ export const setsBlock = defineCodeBlock("workout-sets", {
   id: { kind: "string" },
   ...EXERCISE_FIELDS,
   ...PLAN_FIELDS,
+  /** Default protocol for the block's working sets (unset = standard) */
+  protocol: { kind: "string" },
   /** Warm-up rows above the working sets; excluded from working set counts and rest */
   warmups: { kind: "number", min: 0 },
   /**

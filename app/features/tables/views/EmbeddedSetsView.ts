@@ -259,6 +259,7 @@ export class SetSheet extends MarkdownRenderChild {
         previous: previous?.sets ?? [],
         sets: this.params.sets,
         warmups: this.params.warmups,
+        protocol: this.params.protocol,
         targetReps: this.params.targetReps,
         targetWeight: this.params.targetWeight,
         extraRows: this.extraRows,

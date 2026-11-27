@@ -1,16 +1,24 @@
 import { App } from "obsidian";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import { InsertSetsModal } from "@app/features/tables/modals/InsertSetsModal";
-import { PlanFields } from "@app/features/tables/modals/components/PlanFields";
+import {
+  InsertSetsModal,
+  type InsertSetsState,
+} from "@app/features/tables/modals/InsertSetsModal";
 import { setsBlock, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
-import type { EditTarget } from "@app/features/modals/base/components/createEditButtons";
+import { changedParams } from "@app/services/codeblocks/CodeBlockSchema";
+import {
+  applyBlockEdit,
+  type EditTarget,
+} from "@app/features/modals/base/components/createEditButtons";
 import { t } from "@app/i18n";
 
 /**
- * Edits a `workout-sets` block: the insert form, filled in with the block's
+ * Edits a `workout-sets` block: the insert wizard, filled in with the block's
  * parameters, patching only the ones the user changed.
  */
 export class EditSetsModal extends InsertSetsModal {
+  private formAtOpen?: EmbeddedSetsParams;
+
   /** @param where - The note the block is written in, and how to find it without an id */
   constructor(
     app: App,
@@ -33,20 +41,41 @@ export class EditSetsModal extends InsertSetsModal {
     return t("sets.blockUpdated");
   }
 
-  protected createConfigurationSections(container: HTMLElement): void {
-    super.createConfigurationSections(container);
-    const { exercise, workout } = this.initialParams;
-    if (this.exerciseInput) this.exerciseInput.value = exercise ?? "";
-    if (this.workoutInput) this.workoutInput.value = workout ?? "";
-    if (this.planFields) PlanFields.fill(this.planFields, this.initialParams);
-    if (this.restInput) this.restInput.value = String(this.initialParams.rest ?? 0);
+  protected override createInitialState(): InsertSetsState {
+    return {
+      exercise: this.initialParams.exercise ?? "",
+      workout: this.initialParams.workout ?? "",
+      sets: this.initialParams.sets,
+      targetWeight: this.initialParams.targetWeight,
+      targetReps: this.initialParams.targetReps,
+      rest: this.initialParams.rest ?? 0,
+    };
   }
 
-  protected createButtons(container: HTMLElement): void {
-    this.editButtons(container, setsBlock, t("sets.blockUpdateFailed"), {
-      target: this.where,
-      id: this.initialParams.id,
-      collectParams: () => this.collectParams(),
-    });
+  override onOpen(): void {
+    super.onOpen();
+    // Snapshot initial form values once on open, never on footer re-renders
+    this.formAtOpen = this.collectParams();
+  }
+
+  protected override onSubmit(_state: InsertSetsState): void {
+    const formNow = this.collectParams();
+    const formAtOpen = this.formAtOpen ?? formNow;
+    const changes = changedParams(formAtOpen, formNow);
+    for (const key of this.where.invalidKeys ?? []) {
+      const invalidKey = key as keyof EmbeddedSetsParams;
+      Object.assign(changes, { [invalidKey]: formNow[invalidKey] });
+    }
+    applyBlockEdit(
+      this,
+      {
+        schema: setsBlock,
+        target: this.where,
+        id: this.initialParams.id,
+        successMessage: this.getSuccessMessage(),
+        failureMessage: t("sets.blockUpdateFailed"),
+      },
+      changes,
+    );
   }
 }

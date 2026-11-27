@@ -39,4 +39,23 @@ describe("the rest timer written in a workout-sets block", () => {
       sound: false,
     });
   });
+
+  it("round-trips warmups through parse, serialize, and patch, rejecting negative values", () => {
+    const { params, errors } = setsBlock.parse("exercise: Bench\nsets: 4\nwarmups: 2");
+    expect(errors).toEqual([]);
+    expect(params).toEqual({ exercise: "Bench", sets: 4, warmups: 2 });
+
+    const serialized = setsBlock.serialize({ exercise: "Bench", sets: 4, warmups: 2 });
+    const body = serialized.replace(/^```workout-sets\n|\n```$/g, "");
+    expect(setsBlock.parse(body).params).toEqual({ exercise: "Bench", sets: 4, warmups: 2 });
+
+    const patched = setsBlock.patch("exercise: Bench\nsets: 4", { warmups: 0 });
+    expect(setsBlock.parse(patched).params).toEqual({ exercise: "Bench", sets: 4, warmups: 0 });
+    expect(setsBlock.parse(setsBlock.patch(patched, { warmups: undefined })).params).toEqual({
+      exercise: "Bench",
+      sets: 4,
+    });
+
+    expect(setsBlock.parse("warmups: -1").invalidKeys).toEqual(["warmups"]);
+  });
 });

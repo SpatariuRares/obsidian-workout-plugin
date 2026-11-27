@@ -271,6 +271,34 @@ describe("WorkoutFileAnalyzer", () => {
       expect(r.restPeriodCount).toBe(3);
     });
 
+    it("should count planned warmups work duration without adding working rest time", async () => {
+      const md = [
+        "## Squat",
+        "```workout-sets",
+        "exercise: Squat",
+        "warmups: 2",
+        "sets: 3",
+        "targetReps: 6",
+        "rest: 120",
+        "```",
+        "## Bench",
+        "```workout-log",
+        "exercise: Bench",
+        "```",
+        "```workout-sets",
+        "exercise: Bench",
+        "warmups: 1",
+        "sets: 2",
+        "rest: 0",
+        "```",
+      ].join("\n");
+      const r = await analyze(md);
+      expect(r.setCount).toBe(8);
+      expect(r.totalSetTime).toBe(5 * 6 * 5 + 3 * 60);
+      expect(r.totalRestTime).toBe(3 * 120);
+      expect(r.restPeriodCount).toBe(3);
+    });
+
     it("should count a workout-log's planned sets, not its limit", async () => {
       const md = "## A\n```workout-log\nexercise: Squat\nsets: 3\nlimit: 10\n```";
       const r = await analyze(md);

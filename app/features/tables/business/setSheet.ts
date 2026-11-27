@@ -8,7 +8,11 @@ import {
   fieldValue,
   formatFieldNumber,
 } from "@app/services/exercise/ExerciseFields";
-import { isStandardProtocol, protocolId } from "@app/services/protocols/ProtocolCatalog";
+import {
+  isStandardProtocol,
+  isWarmupProtocol,
+  protocolId,
+} from "@app/services/protocols/ProtocolCatalog";
 import {
   sectionRestOf,
   stepRest,
@@ -52,13 +56,15 @@ export function draftFromSet(set: WorkoutLogData, parameters: ParameterDefinitio
 
 /** One row of the sheet */
 export interface SetRow {
-  /** 1-based */
+  /** 1-based within its group (warm-up vs working) */
   number: number;
+  /** True for warm-up rows (W1, W2, ...) above working sets */
+  warmup?: boolean;
   /** The set logged today for this row; undefined for a row to fill in */
   logged?: WorkoutLogData;
-  /** Grey hint per field key: the same set last time, else the target */
+  /** Grey hint per field key: the same set last time, else the target (working only) */
   placeholders: Record<string, string>;
-  /** Protocol of the same set last time, when not standard */
+  /** Protocol of the same set last time (working), or warmup (warm-up rows) */
   suggestedProtocol?: string;
 }
 
@@ -69,51 +75,83 @@ export interface SheetInput {
   today: WorkoutLogData[];
   /** The sets of the last earlier day the exercise was done, in set order */
   previous: WorkoutLogData[];
-  /** Planned sets (the block's `sets`) */
+  /** Planned working sets (the block's `sets`) */
   sets?: number;
+  /** Planned warm-up sets (the block's `warmups`) */
+  warmups?: number;
   targetReps?: number;
   targetWeight?: number;
-  /** Rows to fill in, beyond the plan, the user added */
+  /** Working rows to fill in, beyond the plan, the user added */
   extraRows: number;
+  /** Unlogged warm-up rows kept after unticking an extra warm-up set */
+  extraWarmups?: number;
 }
 
-/** Planned sets: the block's `sets`, else as many as last time (at least one) */
+/** Planned working sets: the block's `sets`, else as many working sets as last time (at least one) */
 export function plannedSets({ sets, previous }: Pick<SheetInput, "sets" | "previous">): number {
-  return sets ?? Math.max(previous.length, 1);
+  const previousWorking = previous.filter((s) => !isWarmupProtocol(s.protocol));
+  return sets ?? Math.max(previousWorking.length, 1);
 }
 
 /**
- * The rows the sheet shows: today's sets first (logged), then rows to fill
- * in up to the planned sets (as many as last time without a plan, at least
- * one), plus the ones the user added.
+ * The rows the sheet shows: warm-up rows (`W1, W2, ...`) above working rows
+ * (`1, 2, ...`). Warm-up and working sets pair independently with last time's
+ * matching category; warm-up sets never reduce planned working rows.
  */
 export function setRows(input: SheetInput): SetRow[] {
-  const planned = plannedSets(input);
-  const pending = Math.max(planned - input.today.length, 0) + input.extraRows;
-  const total = input.today.length + pending;
+  const todayWarmups = input.today.filter((s) => isWarmupProtocol(s.protocol));
+  const todayWorking = input.today.filter((s) => !isWarmupProtocol(s.protocol));
+  const previousWarmups = input.previous.filter((s) => isWarmupProtocol(s.protocol));
+  const previousWorking = input.previous.filter((s) => !isWarmupProtocol(s.protocol));
 
-  return Array.from({ length: total }, (_, index) => {
-    const sameSet = input.previous[index];
+  const warmupTotal = Math.max(input.warmups ?? 0, todayWarmups.length) + (input.extraWarmups ?? 0);
+  const workingTotal = Math.max(plannedSets(input), todayWorking.length) + input.extraRows;
+
+  const warmupRows: SetRow[] = Array.from({ length: warmupTotal }, (_, index) => {
+    const sameSet = previousWarmups[index];
     return {
       number: index + 1,
-      logged: input.today[index],
-      placeholders: placeholdersFor(input, sameSet ?? input.previous[input.previous.length - 1]),
+      warmup: true,
+      logged: todayWarmups[index],
+      placeholders: placeholdersFor(
+        input,
+        sameSet ?? previousWarmups[previousWarmups.length - 1],
+        false,
+      ),
+      suggestedProtocol: WorkoutProtocol.WARMUP,
+    };
+  });
+
+  const workingRows: SetRow[] = Array.from({ length: workingTotal }, (_, index) => {
+    const sameSet = previousWorking[index];
+    return {
+      number: index + 1,
+      warmup: false,
+      logged: todayWorking[index],
+      placeholders: placeholdersFor(
+        input,
+        sameSet ?? previousWorking[previousWorking.length - 1],
+        true,
+      ),
       suggestedProtocol:
         sameSet && !isStandardProtocol(sameSet.protocol) ? protocolId(sameSet.protocol) : undefined,
     };
   });
+
+  return [...warmupRows, ...workingRows];
 }
 
 function placeholdersFor(
   input: SheetInput,
   hint: WorkoutLogData | undefined,
+  useTargets: boolean,
 ): Record<string, string> {
   const placeholders: Record<string, string> = {};
   for (const param of input.parameters) {
     const field = fieldFor(param);
     const key = fieldKey(param.key);
     // A logged set's weight is in the settings unit
-    const value = hint ? fieldValue(hint, key) : targetValue(input, key);
+    const value = hint ? fieldValue(hint, key) : useTargets ? targetValue(input, key) : undefined;
     if (typeof value === "number") {
       placeholders[param.key] = formatFieldNumber(field, value);
     } else if (typeof value === "string" && value !== "") {

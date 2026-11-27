@@ -183,6 +183,33 @@ describe("readSessionPlan", () => {
       { exercise: "Bench", sets: undefined },
     ]);
   });
+
+  it("carries warmups on workout-sets steps, including when joined with a table", () => {
+    const steps = readSessionPlan(
+      [
+        "## Bench",
+        "```workout-sets",
+        "exercise: Bench",
+        "sets: 4",
+        "warmups: 2",
+        "```",
+        "## Squat",
+        "```workout-log",
+        "exercise: Squat",
+        "```",
+        "```workout-sets",
+        "exercise: Squat",
+        "sets: 3",
+        "warmups: 1",
+        "```",
+      ].join("\n"),
+    );
+
+    expect(steps).toMatchObject([
+      { exercise: "Bench", sets: 4, warmups: 2 },
+      { exercise: "Squat", sets: 3, warmups: 1 },
+    ]);
+  });
 });
 
 describe("readSectionPlan", () => {

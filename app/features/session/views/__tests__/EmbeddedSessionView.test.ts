@@ -260,6 +260,26 @@ describe("EmbeddedSessionView", () => {
     expect(el.querySelector(".workout-session-rest")).toBeNull();
   });
 
+  it("does not start the rest timer when a warm-up set is logged", async () => {
+    const rows: WorkoutLogData[] = [];
+    const { el, eventBus } = setup(rows);
+    await flush();
+
+    const warmup = { ...set("Squat", 60), protocol: "warmup" };
+    rows.push(warmup);
+    eventBus.emit({
+      type: "log:added",
+      payload: {
+        entry: warmup,
+        context: { exercise: "Squat", workout: "Lower Body A" },
+      },
+    });
+    await flush();
+
+    expect(text(el)).toContain("Squat");
+    expect(timers.every((timer) => timer.started === 0)).toBe(true);
+  });
+
   it("logs the set in this note's workout, not the last set's", async () => {
     const { el } = setup([
       { ...set("Squat", 95, "2020-01-01"), workout: "Other note" },

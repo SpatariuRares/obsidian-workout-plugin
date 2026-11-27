@@ -20,6 +20,8 @@ export const setsBlock = defineCodeBlock("workout-sets", {
   id: { kind: "string" },
   ...EXERCISE_FIELDS,
   ...PLAN_FIELDS,
+  /** Warm-up rows above the working sets; excluded from working set counts and rest */
+  warmups: { kind: "number", min: 0 },
   /**
    * Seconds of rest after each set, counted down at the top of the block
    * (with `timer.type: interval`, the work of each round); 0 = no rest

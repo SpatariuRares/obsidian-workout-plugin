@@ -3706,6 +3706,271 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
    All components follow Obsidian's theming system for consistent appearance.
    ============================================================================ */
 /* ============================================================================
+   WIZARD MODAL SHELL (WizardModal)
+   ============================================================================
+   Multi-step modal with clickable horizontal stepper, tabular step counter,
+   3px progress track, directional 150ms step transitions, and sticky actions.
+   ============================================================================ */
+.workout-charts-form.workout-wizard-container {
+  gap: var(--workout-space-md);
+}
+
+.workout-wizard-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+}
+
+.workout-wizard-title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--workout-space-sm);
+}
+.workout-wizard-title-row .workout-wizard-title {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--text-normal);
+  font-size: var(--workout-font-2xl);
+  font-weight: var(--workout-font-weight-bold);
+}
+
+.workout-wizard-step-meta {
+  flex: none;
+  color: var(--text-muted);
+  font-size: var(--workout-font-xs);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Clickable horizontal stepper */
+.workout-wizard-stepper {
+  display: grid;
+  grid-template-columns: repeat(var(--workout-wizard-steps, 3), minmax(0, 1fr));
+  gap: var(--workout-space-xs);
+}
+.workout-wizard-stepper button.workout-wizard-step-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--workout-space-xs);
+  min-width: 0;
+  min-height: 36px;
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  border: none;
+  border-radius: var(--workout-radius-md);
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  font-weight: var(--workout-font-weight-medium);
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+.workout-wizard-stepper button.workout-wizard-step-btn:hover:not(:disabled) {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+.workout-wizard-stepper button.workout-wizard-step-btn:focus-visible {
+  outline: var(--workout-border-medium) solid var(--interactive-accent);
+  outline-offset: var(--workout-space-2xs);
+}
+.workout-wizard-stepper button.workout-wizard-step-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.workout-wizard-stepper button.workout-wizard-step-btn.is-current {
+  color: var(--workout-text-accent);
+  font-weight: var(--workout-font-weight-semibold);
+}
+.workout-wizard-stepper button.workout-wizard-step-btn.is-completed {
+  color: var(--text-normal);
+}
+
+body.is-mobile .workout-wizard-stepper button.workout-wizard-step-btn {
+  min-height: var(--workout-touch-target-min);
+  padding: var(--workout-space-xs);
+}
+
+.workout-wizard-step-badge {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--workout-radius-full);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
+  background: var(--background-primary);
+  color: var(--text-muted);
+  font-size: var(--workout-font-xs);
+  font-weight: var(--workout-font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+.workout-wizard-step-btn.is-current .workout-wizard-step-badge, .workout-wizard-step-btn.is-completed .workout-wizard-step-badge {
+  background: var(--workout-accent-fill);
+  border-color: var(--workout-accent-fill);
+  color: var(--text-on-accent);
+}
+
+.workout-wizard-step-check {
+  display: grid;
+  place-items: center;
+}
+.workout-wizard-step-check svg {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.75;
+}
+
+.workout-wizard-step-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Slim 3px progress track */
+.workout-wizard-progress-track {
+  height: 3px;
+  width: 100%;
+  border-radius: var(--workout-radius-full);
+  background: var(--background-modifier-border);
+  overflow: hidden;
+}
+
+.workout-wizard-progress-fill {
+  width: var(--workout-wizard-progress, 0%);
+  height: 100%;
+  border-radius: inherit;
+  background: var(--text-muted);
+  transition: width 180ms ease, background-color 180ms ease;
+}
+.workout-wizard-progress-fill.is-done {
+  background: var(--workout-accent-fill);
+}
+
+/* Step content & directional transitions */
+.workout-wizard-body {
+  min-width: 0;
+}
+
+.workout-wizard-step-pane {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-md);
+}
+.workout-wizard-step-pane.anim-forward {
+  animation: workoutWizardStepForward 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.workout-wizard-step-pane.anim-backward {
+  animation: workoutWizardStepBackward 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes workoutWizardStepForward {
+  from {
+    opacity: 0;
+    transform: translateX(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes workoutWizardStepBackward {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .workout-wizard-stepper button.workout-wizard-step-btn,
+  .workout-wizard-progress-fill {
+    transition: none;
+  }
+  .workout-wizard-step-pane.anim-forward,
+  .workout-wizard-step-pane.anim-backward {
+    animation: none;
+  }
+}
+.workout-wizard-context-line {
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  padding: 0 var(--workout-space-2xs);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Compact inset Review key/value summary (no nested cards) */
+.workout-wizard-review-inset {
+  display: grid;
+  grid-template-columns: minmax(0, 6.5rem) minmax(0, 1fr);
+  gap: var(--workout-space-sm) var(--workout-space-md);
+  padding: var(--workout-space-md);
+  border-radius: var(--workout-radius-md);
+  border: var(--workout-border-thin) solid var(--workout-border-subtle);
+  background: var(--background-primary);
+  font-size: var(--workout-font-sm);
+}
+
+.workout-wizard-review-key {
+  color: var(--text-muted);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+.workout-wizard-review-val {
+  min-width: 0;
+  color: var(--text-normal);
+  font-weight: var(--workout-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+/* Error state on wizard text field (two classes deep to outrank Obsidian) */
+.workout-charts-form-group .workout-form-field.is-invalid .workout-form-field-input {
+  border-color: var(--workout-text-error);
+}
+
+.workout-wizard-container .workout-field-error[hidden] {
+  display: none;
+}
+
+body.is-mobile .workout-wizard-container input.workout-form-field-input {
+  min-height: var(--workout-touch-target-min);
+}
+
+/* Sticky footer wraps Button.createModalActions so it stays pinned to the
+   modal scroll container while step panes scroll underneath */
+.workout-wizard-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  background: var(--modal-background, var(--background-primary));
+}
+
+.workout-wizard-footer .workout-modal-actions {
+  margin-top: 0;
+  flex-wrap: wrap;
+}
+
+/* Back action sits at the start (left) of the sticky footer */
+.workout-buttons-container button.workout-wizard-back {
+  margin-inline-end: auto;
+}
+
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
+/* ============================================================================
    DASHBOARD LAYOUT - Bento Grid
    Uses small fixed row tracks + JS auto-sizing for masonry-like dense packing
    ============================================================================ */

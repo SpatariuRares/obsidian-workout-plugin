@@ -633,7 +633,9 @@
     "buttons": {
       "adjustMinus": "-",
       "adjustPlus": "+",
+      "back": "Back",
       "cancel": "Cancel",
+      "next": "Next",
       "confirm": "Confirm",
       "create": "Create log",
       "createExercise": "Create exercise page",
@@ -868,6 +870,31 @@
       "insertSets": "Insert workout sets"
     },
     "weightUnitToggle": "Unit for this entry",
+    "wizard": {
+      "stepOf": "Step {current} of {total}",
+      "stepsLabel": "Steps",
+      "steps": {
+        "exercise": "Exercise",
+        "plan": "Plan",
+        "rest": "Rest"
+      },
+      "sections": {
+        "plan": "Plan",
+        "review": "Review"
+      },
+      "review": {
+        "exercise": "Exercise",
+        "workout": "Workout",
+        "plan": "Plan",
+        "rest": "Rest",
+        "setsCount": "{count} sets",
+        "lastTime": "Last time",
+        "targetWeightReps": "{weight} {unit} × {reps}",
+        "targetWeight": "{weight} {unit}",
+        "targetReps": "{reps} reps",
+        "sectionTimer": "Section timer"
+      }
+    },
     "work": "Work",
     "workout": "Workout (optional)"
   },

@@ -1227,6 +1227,10 @@ button.workout-icon-dropdown-item[aria-checked=true]::before {
   white-space: nowrap;
 }
 
+body.is-mobile .workout-number-field .workout-number-field-box {
+  height: calc(var(--workout-touch-target-min) + 2 * var(--workout-border-thin));
+}
+
 .workout-number-field-error {
   font-size: var(--workout-font-xs);
 }

@@ -169,4 +169,47 @@ describe("EditTableModal", () => {
       expect(shown(contentEl.querySelector(".workout-target-exercise"))).toBe(false);
     });
   });
+
+  describe("wizard", () => {
+    const tabs = (contentEl: HTMLElement) =>
+      [...contentEl.querySelectorAll<HTMLButtonElement>(".workout-wizard-step")];
+
+    it("makes every step reachable from the stepper on open", () => {
+      const { contentEl } = openModal();
+
+      expect(tabs(contentEl)).toHaveLength(3);
+      expect(tabs(contentEl).every((tab) => !tab.disabled)).toBe(true);
+    });
+
+    it("offers Update on every step and patches only the changed parameter", async () => {
+      const { state, contentEl } = openModal();
+      tabs(contentEl)[1].click();
+      const dateRange = [...contentEl.querySelectorAll(".workout-field-with-adjust")]
+        .find((el) => el.textContent?.includes(t("modal.dateRange")))!
+        .querySelector("input")!;
+      dateRange.value = "14";
+      tabs(contentEl)[2].click();
+
+      [...contentEl.querySelectorAll("button")]
+        .find((b) => b.textContent === t("modal.buttons.updateTable"))!
+        .click();
+      await flush();
+
+      expect(state.content).toBe(
+        NOTE.replace("limit: 12\n", "").replace("showProtocol: false", "showProtocol: false\ndateRange: 14"),
+      );
+    });
+
+    it("Cancel leaves the note unchanged", async () => {
+      const { state, contentEl } = openModal();
+      tabs(contentEl)[1].click();
+
+      [...contentEl.querySelectorAll("button")]
+        .find((b) => b.textContent === t("modal.buttons.cancel"))!
+        .click();
+      await flush();
+
+      expect(state.content).toBe(NOTE);
+    });
+  });
 });

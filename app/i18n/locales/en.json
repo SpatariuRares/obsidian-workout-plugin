@@ -1280,7 +1280,12 @@
     "steps": {
       "exercise": "Exercise",
       "plan": "Plan",
-      "rest": "Rest"
+      "rest": "Rest",
+      "target": "What to show",
+      "display": "Display"
+    },
+    "table": {
+      "planUnavailable": "Progressive overload targets only apply to a table of one exercise. Pick a specific exercise or exercise and workout to set them."
     },
     "chart": {
       "steps": {

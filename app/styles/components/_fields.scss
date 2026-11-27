@@ -86,6 +86,12 @@
   white-space: nowrap;
 }
 
+// The box border is inside its height, so the − / + inside measured 44x42:
+// grow the box by its border so they are a full 44x44 target on phones
+body.is-mobile .workout-number-field .workout-number-field-box {
+  height: calc(var(--workout-touch-target-min) + 2 * var(--workout-border-thin));
+}
+
 .workout-number-field-error {
   font-size: var(--workout-font-xs);
 }

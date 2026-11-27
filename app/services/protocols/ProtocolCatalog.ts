@@ -115,6 +115,11 @@ export function isStandardProtocol(raw: string | undefined | null): boolean {
   return protocolId(raw) === (WorkoutProtocol.STANDARD as string);
 }
 
+/** Whether a set was logged as a warm-up (excluded from working counts and PRs) */
+export function isWarmupProtocol(raw: string | undefined | null): boolean {
+  return protocolId(raw) === (WorkoutProtocol.WARMUP as string);
+}
+
 /** The id a new protocol gets from its name: lower case, `_` for spaces, nothing else but letters and digits */
 export function protocolIdFromName(name: string): string {
   return name

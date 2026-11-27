@@ -142,10 +142,11 @@ export class WorkoutFileAnalyzer {
     if (steps.length > 0) {
       for (const step of steps) {
         const sets = step.sets ?? prose.sets ?? 1;
+        const warmups = step.warmups ?? 0;
         const rest = step.rest
           ? timerRunSeconds(step.rest, this.plugin.settings)
           : 0;
-        this.addSets(result, sets, step.targetReps ?? prose.reps);
+        this.addSets(result, sets + warmups, step.targetReps ?? prose.reps);
         if (rest > 0) {
           result.totalRestTime += rest * sets;
           result.restPeriodCount += sets;

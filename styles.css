@@ -2548,6 +2548,12 @@ body.is-mobile .workout-timer-strip .workout-timer .workout-timer-controls .work
 .workout-sets-row {
   border-top: var(--workout-border-thin) solid var(--workout-border-color);
 }
+.workout-sets-row.is-warmup .workout-sets-number {
+  font-weight: var(--workout-font-weight-medium);
+}
+.workout-sets-row.is-warmup + .workout-sets-row:not(.is-warmup) {
+  border-top-width: var(--workout-border-medium);
+}
 .workout-sets-row .workout-field-error {
   padding: 0 var(--workout-space-xs) var(--workout-space-sm);
 }

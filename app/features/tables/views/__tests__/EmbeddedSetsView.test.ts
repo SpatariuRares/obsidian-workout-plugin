@@ -11,7 +11,7 @@ import type { LogEntryInput, WorkoutLogData } from "@app/types/WorkoutLogData";
 import { logRow } from "@app/types/__tests__/logRow";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { defaultProtocolEntries } from "@app/services/protocols/ProtocolCatalog";
-import { t } from "@app/i18n";
+import { LocalizationService, t } from "@app/i18n";
 import { Notice } from "obsidian";
 
 // Obsidian's global: a fragment with createEl/createSpan
@@ -302,7 +302,7 @@ describe("EmbeddedSetsView", () => {
   });
 
   it("suggests the protocol of the same set last time", async () => {
-    const { el, added } = setup([set(40, 12, "2020-01-01", { protocol: "warmup" })], {
+    const { el, added } = setup([set(80, 12, "2020-01-01", { protocol: "drop_set" })], {
       exercise: "Bench Press",
       sets: 1,
     });
@@ -311,7 +311,7 @@ describe("EmbeddedSetsView", () => {
     expect(rowsOf(el)[0].querySelector(".workout-protocol-badge")).not.toBeNull();
     check(rowsOf(el)[0]).click();
     await flush();
-    expect(added[0].protocol).toBe("warmup");
+    expect(added[0].protocol).toBe("drop_set");
   });
 
   it("adds a row with the add button", async () => {
@@ -381,7 +381,7 @@ describe("EmbeddedSetsView", () => {
   });
 
   it("offers to undo a removed set, putting the very set back in its place", async () => {
-    const first = set(80, 8, today, { timestamp: 1, protocol: "warmup", notes: "easy" });
+    const first = set(80, 8, today, { timestamp: 1, protocol: "drop_set", notes: "easy" });
     const second = set(85, 6, today, { timestamp: 2 });
     const { el, added, deleted } = setup([first, second]);
     await flush();
@@ -395,7 +395,7 @@ describe("EmbeddedSetsView", () => {
     await flush();
 
     expect(notices[0].hidden).toBe(true);
-    expect(added[0]).toMatchObject({ reps: 8, weight: 80, protocol: "warmup", notes: "easy" });
+    expect(added[0]).toMatchObject({ reps: 8, weight: 80, protocol: "drop_set", notes: "easy" });
     const rows = rowsOf(el);
     expect(rows.filter((row) => row.classList.contains("is-logged"))).toHaveLength(2);
     expect(rows[0].textContent).toContain("80");
@@ -645,5 +645,178 @@ describe("EmbeddedSetsView", () => {
     );
     expect(link).not.toBeNull();
     expect(link?.textContent).toBe("Bench Press");
+  });
+
+  describe("warm-up separation", () => {
+    beforeAll(() => LocalizationService.initialize({} as never));
+
+    const numberText = (row: HTMLElement) =>
+      row.querySelector(".workout-sets-number")?.firstChild?.textContent;
+    const badgeText = (row: HTMLElement) =>
+      row.querySelector(".workout-sets-number .workout-protocol-badge")?.textContent;
+
+    it("renders warm-up rows W1, W2 with WU badge above working sets and excludes warm-ups from progress and rest", async () => {
+      const { el, added } = setup(
+        [
+          set(40, 10, "2020-01-01", { protocol: "warmup" }),
+          set(80, 8, "2020-01-01"),
+        ],
+        {
+          exercise: "Bench Press",
+          warmups: 2,
+          sets: 2,
+          rest: 90,
+        },
+      );
+      await flush();
+
+      const rows = rowsOf(el);
+      expect(rows).toHaveLength(4);
+      expect(rows.map(numberText)).toEqual(["W1", "W2", "1", "2"]);
+      expect(rows.map(badgeText)).toEqual(["WU", "WU", undefined, undefined]);
+      expect(inputsOf(rows[0]).map((i) => i.placeholder)).toEqual(["10", "40"]);
+      expect(inputsOf(rows[2]).map((i) => i.placeholder)).toEqual(["8", "80"]);
+      expect(el.textContent).toContain(t("sets.progress", { done: 0, sets: 2 }));
+
+      // Ticking W1 logs warmup and does NOT start working rest timer
+      check(rows[0]).click();
+      await flush();
+      expect(added[0].protocol).toBe("warmup");
+      expect(timers[0].started).toBe(0);
+      expect(el.textContent).toContain(t("sets.progress", { done: 0, sets: 2 }));
+
+      // Ticking Working 1 starts working rest timer and updates progress to 1/2
+      check(rowsOf(el)[2]).click();
+      await flush();
+      expect(added[1].protocol).toBe("standard");
+      expect(timers[0].started).toBe(1);
+      expect(el.textContent).toContain(t("sets.progress", { done: 1, sets: 2 }));
+    });
+
+    it("separates a manually switched warmup row without reducing planned working rows or starting rest", async () => {
+      const { el, added } = setup([], {
+        exercise: "Bench Press",
+        sets: 2,
+        targetReps: 8,
+        targetWeight: 80,
+        rest: 90,
+      });
+      await flush();
+
+      // Switch working row 1 protocol to warmup and log it
+      rowsOf(el)[0].querySelector<HTMLButtonElement>(".workout-disclosure-toggle")!.click();
+      await flush();
+      const warmupChip = Array.from(
+        rowsOf(el)[0].querySelectorAll<HTMLButtonElement>(".workout-chip"),
+      ).find((c) => c.textContent === t("modal.selectOptions.warmup"))!;
+      warmupChip.click();
+      await flush();
+
+      type(inputsOf(rowsOf(el)[0])[1], "40");
+      check(rowsOf(el)[0]).click();
+      await flush();
+
+      expect(added[0]).toMatchObject({ protocol: "warmup", weight: 40, reps: 8 });
+      expect(timers[0].started).toBe(0);
+      const rows = rowsOf(el);
+      expect(rows).toHaveLength(3);
+      expect(rows.map(numberText)).toEqual(["W1", "1", "2"]);
+      expect(rows[0].classList.contains("is-logged")).toBe(true);
+      expect(rows[1].classList.contains("is-logged")).toBe(false);
+      expect(rows[2].classList.contains("is-logged")).toBe(false);
+      expect(el.textContent).toContain(t("sets.progress", { done: 0, sets: 2 }));
+    });
+
+    it("keeps warm-up and working drafts, open details, and focus keys isolated across redraws", async () => {
+      const { el } = setup([], {
+        exercise: "Bench Press",
+        warmups: 2,
+        sets: 2,
+        targetReps: 8,
+        targetWeight: 80,
+      });
+      document.body.appendChild(el);
+      await flush();
+
+      const rows = rowsOf(el);
+      // Every focus key across W1, W2, 1, 2 is unique
+      const focusKeys = Array.from(el.querySelectorAll("[data-focus-key]")).map((n) =>
+        n.getAttribute("data-focus-key"),
+      );
+      expect(new Set(focusKeys).size).toBe(focusKeys.length);
+
+      // Type in W1, W2, and Working 1; open details on Working 1 (not W1)
+      type(inputsOf(rows[0])[0], "10");
+      type(inputsOf(rows[0])[1], "40");
+      type(inputsOf(rows[1])[0], "6");
+      type(inputsOf(rows[1])[1], "60");
+      type(inputsOf(rows[2])[1], "85");
+      rows[2].querySelector<HTMLButtonElement>(".workout-disclosure-toggle")!.click();
+      await flush();
+
+      expect(rowsOf(el)[0].classList.contains("is-open")).toBe(false);
+      expect(rowsOf(el)[2].classList.contains("is-open")).toBe(true);
+
+      // Log W1: W2 and Working 1 keep their drafts, Working 1 stays open, focus lands on W2
+      check(rowsOf(el)[0]).click();
+      await flush();
+
+      const afterLog = rowsOf(el);
+      expect(inputsOf(afterLog[1]).map((i) => i.value)).toEqual(["6", "60"]);
+      expect(inputsOf(afterLog[2]).map((i) => i.value)).toEqual(["", "85"]);
+      expect(afterLog[2].classList.contains("is-open")).toBe(true);
+      expect(document.activeElement).toBe(inputsOf(afterLog[1])[0]);
+
+      // Add set focuses the new working row (3), not a colliding key
+      const add = Array.from(el.querySelectorAll("button")).find((b) =>
+        b.textContent?.includes(t("sets.addSet")),
+      )!;
+      add.click();
+      await flush();
+      expect(rowsOf(el)).toHaveLength(5);
+      expect(document.activeElement).toBe(inputsOf(rowsOf(el)[4])[0]);
+      el.remove();
+    });
+
+    it("unticks a logged warm-up set into a draft without warmups: set, and Undo restores its timestamp", async () => {
+      const warmup = set(40, 10, today, { timestamp: 42, protocol: "warmup", notes: "bar only" });
+      const timestamps: (number | undefined)[] = [];
+      const { el, plugin, deleted, added } = setup([warmup], {
+        exercise: "Bench Press",
+        sets: 2,
+      });
+      const origAdd = plugin.addWorkoutLogEntry;
+      plugin.addWorkoutLogEntry = async (entry, opts) => {
+        timestamps.push(opts?.timestamp);
+        return origAdd(entry, opts);
+      };
+      await flush();
+
+      // Type into Working 1 before unticking W1
+      type(inputsOf(rowsOf(el)[1])[1], "82.5");
+      check(rowsOf(el)[0]).click();
+      await flush();
+
+      expect(deleted).toEqual([warmup]);
+      expect(notices[0].message.textContent).toContain(t("sets.setRemoved", { set: "W1" }));
+      // W1 becomes an unlogged warm-up draft with its values & WU badge; Working 1 keeps its draft
+      const afterUnlog = rowsOf(el);
+      expect(afterUnlog).toHaveLength(3);
+      expect(afterUnlog[0].classList.contains("is-logged")).toBe(false);
+      expect(badgeText(afterUnlog[0])).toBe("WU");
+      expect(inputsOf(afterUnlog[0]).map((i) => i.value)).toEqual(["10", "40"]);
+      expect(inputsOf(afterUnlog[1]).map((i) => i.value)).toEqual(["", "82.5"]);
+
+      // Undo restores the exact set with timestamp 42 and removes the temporary warm-up draft
+      notices[0].message.querySelector<HTMLButtonElement>("button")!.click();
+      await flush();
+
+      expect(timestamps).toEqual([42]);
+      expect(added[0]).toMatchObject({ protocol: "warmup", weight: 40, reps: 10, notes: "bar only" });
+      const afterUndo = rowsOf(el);
+      expect(afterUndo).toHaveLength(3);
+      expect(afterUndo[0].classList.contains("is-logged")).toBe(true);
+      expect(inputsOf(afterUndo[1]).map((i) => i.value)).toEqual(["", "82.5"]);
+    });
   });
 });

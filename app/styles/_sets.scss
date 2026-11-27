@@ -77,6 +77,14 @@
 .workout-sets-row {
   border-top: var(--workout-border-thin) solid var(--workout-border-color);
 
+  &.is-warmup .workout-sets-number {
+    font-weight: var(--workout-font-weight-medium);
+  }
+
+  &.is-warmup + .workout-sets-row:not(.is-warmup) {
+    border-top-width: var(--workout-border-medium);
+  }
+
   .workout-field-error {
     padding: 0 var(--workout-space-xs) var(--workout-space-sm);
   }

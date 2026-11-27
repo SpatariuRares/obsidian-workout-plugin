@@ -16,11 +16,8 @@ import {
   findBlock,
   type CodeBlockMatch,
 } from "@app/services/editor/CodeBlockEditorService";
-import {
-  WorkoutProtocol,
-  type WorkoutLogData,
-} from "@app/types/WorkoutLogData";
-import { protocolId } from "@app/services/protocols/ProtocolCatalog";
+import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { isWarmupProtocol } from "@app/services/protocols/ProtocolCatalog";
 import { StringUtils } from "@app/utils/StringUtils";
 
 /** One exercise of the plan a workout note describes */
@@ -33,6 +30,8 @@ export interface SessionStep {
   block?: string;
   /** Planned sets; undefined when the table doesn't say */
   sets?: number;
+  /** Planned warm-up sets (workout-sets only); excluded from working counts and rest */
+  warmups?: number;
   targetReps?: number;
   targetWeight?: number;
   /**
@@ -83,6 +82,7 @@ export function readSectionPlan(section: NoteSection): SessionStep[] {
     if (!read) continue;
     const { params, errors } = read;
     if (errors.length > 0 || !params.exercise) continue;
+    const warmups = "warmups" in params ? params.warmups : undefined;
     const setsRest: RestBlock | undefined = isSets
       ? { type: "workout-sets", params, match: matchOf(block) }
       : undefined;
@@ -91,6 +91,7 @@ export function readSectionPlan(section: NoteSection): SessionStep[] {
     if (same) {
       if (isSets) same.block ??= params.id;
       same.sets ??= params.sets;
+      same.warmups ??= warmups;
       same.targetReps ??= params.targetReps;
       same.targetWeight ??= params.targetWeight;
       if (setsRest && same.restBlock?.type !== setsBlock.type) {
@@ -103,6 +104,7 @@ export function readSectionPlan(section: NoteSection): SessionStep[] {
       exercise: params.exercise,
       block: isSets ? params.id : undefined,
       sets: params.sets,
+      warmups,
       targetReps: params.targetReps,
       targetWeight: params.targetWeight,
       rest: isSets ? stepRest(params, rest) : rest,
@@ -216,7 +218,7 @@ export function sessionProgress(
 ): SessionProgress {
   const done: WorkoutLogData[][] = steps.map(() => []);
   for (const set of todaysSets) {
-    if (protocolId(set.protocol) === protocolId(WorkoutProtocol.WARMUP)) {
+    if (isWarmupProtocol(set.protocol)) {
       continue;
     }
     const exercise = StringUtils.normalize(set.exercise);

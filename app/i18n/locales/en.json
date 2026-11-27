@@ -1219,6 +1219,7 @@
     "progress": "{done}/{sets} sets",
     "lastTime": "Last time ({date}): {sets}",
     "setColumn": "Set",
+    "warmupNumber": "W{set}",
     "fieldOfSet": "{field}, set {set}",
     "details": "Protocol and notes of set {set}",
     "logSet": "Log set {set}",

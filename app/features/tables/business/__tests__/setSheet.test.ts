@@ -77,13 +77,78 @@ describe("setRows", () => {
   });
 
   it("suggests the protocol of the same set last time only", () => {
-    const previous = [set(60, 10, { protocol: "warmup" }), set(80, 8)];
+    const previous = [set(80, 10, { protocol: "drop_set" }), set(80, 8)];
     const rows = setRows(input({ previous, sets: 3 }));
 
-    expect(rows.map((r) => r.suggestedProtocol)).toEqual(["warmup", undefined, undefined]);
-    expect(rowProtocol(rows[0], emptyDraft())).toBe("warmup");
+    expect(rows.map((r) => r.suggestedProtocol)).toEqual(["drop_set", undefined, undefined]);
+    expect(rowProtocol(rows[0], emptyDraft())).toBe("drop_set");
     expect(rowProtocol(rows[0], { ...emptyDraft(), protocol: "standard" })).toBe("standard");
     expect(rowProtocol(rows[1], emptyDraft())).toBe("standard");
+  });
+
+  it("separates today's warm-up sets above working sets without reducing planned working rows", () => {
+    const today = [set(40, 10, { protocol: "warmup" }), set(80, 8)];
+    const rows = setRows(input({ today, sets: 3 }));
+
+    expect(rows.map((r) => ({ warmup: !!r.warmup, number: r.number, logged: r.logged }))).toEqual([
+      { warmup: true, number: 1, logged: today[0] },
+      { warmup: false, number: 1, logged: today[1] },
+      { warmup: false, number: 2, logged: undefined },
+      { warmup: false, number: 3, logged: undefined },
+    ]);
+  });
+
+  it("pre-populates N warm-up rows with warmup suggestion and pairs hints independently", () => {
+    const previous = [
+      set(40, 10, { protocol: "warmup" }),
+      set(60, 5, { protocol: "warmup" }),
+      set(80, 8),
+      set(82.5, 6),
+    ];
+    const rows = setRows(input({ previous, warmups: 3, sets: 3, targetReps: 8, targetWeight: 85 }));
+
+    expect(
+      rows.map((r) => ({
+        warmup: !!r.warmup,
+        number: r.number,
+        placeholders: r.placeholders,
+        suggestedProtocol: r.suggestedProtocol,
+      })),
+    ).toEqual([
+      { warmup: true, number: 1, placeholders: { reps: "10", weight: "40" }, suggestedProtocol: "warmup" },
+      { warmup: true, number: 2, placeholders: { reps: "5", weight: "60" }, suggestedProtocol: "warmup" },
+      { warmup: true, number: 3, placeholders: { reps: "5", weight: "60" }, suggestedProtocol: "warmup" },
+      { warmup: false, number: 1, placeholders: { reps: "8", weight: "80" }, suggestedProtocol: undefined },
+      { warmup: false, number: 2, placeholders: { reps: "6", weight: "82.5" }, suggestedProtocol: undefined },
+      { warmup: false, number: 3, placeholders: { reps: "6", weight: "82.5" }, suggestedProtocol: undefined },
+    ]);
+  });
+
+  it("prevents warm-ups from hinting working sets or inflating plannedSets, and does not hint working targets on warm-up rows", () => {
+    const previous = [set(40, 10, { protocol: "warmup" }), set(80, 8)];
+    const noWarmupsParam = setRows(input({ previous }));
+    expect(noWarmupsParam).toHaveLength(1);
+    expect(noWarmupsParam[0]).toMatchObject({
+      warmup: false,
+      number: 1,
+      placeholders: { reps: "8", weight: "80" },
+    });
+
+    const onlyWarmupsLastTime = setRows(
+      input({
+        previous: [set(40, 10, { protocol: "warmup" })],
+        warmups: 1,
+        targetReps: 8,
+        targetWeight: 100,
+      }),
+    );
+    expect(onlyWarmupsLastTime).toHaveLength(2);
+    expect(onlyWarmupsLastTime[0]).toMatchObject({ warmup: true, placeholders: { reps: "10", weight: "40" } });
+    expect(onlyWarmupsLastTime[1]).toMatchObject({ warmup: false, placeholders: { reps: "8", weight: "100" } });
+
+    const noPreviousWarmups = setRows(input({ warmups: 1, sets: 1, targetReps: 8, targetWeight: 100 }));
+    expect(noPreviousWarmups[0]).toMatchObject({ warmup: true, placeholders: {} });
+    expect(noPreviousWarmups[1]).toMatchObject({ warmup: false, placeholders: { reps: "8", weight: "100" } });
   });
 });
 
@@ -91,7 +156,7 @@ describe("rowToFormData", () => {
   const context = { exercise: "Bench Press", workout: "Push", parameters: STRENGTH };
 
   it("logs the placeholders of an untouched row", () => {
-    const [row] = setRows(input({ previous: [set(80, 8, { protocol: "warmup" })] }));
+    const [row] = setRows(input({ previous: [set(80, 8, { protocol: "drop_set" })] }));
     const result = rowToFormData(row, emptyDraft(), context);
 
     expect(result).toEqual({
@@ -102,7 +167,7 @@ describe("rowToFormData", () => {
         weight: 80,
         customFields: undefined,
         notes: "",
-        protocol: "warmup",
+        protocol: "drop_set",
       },
     });
   });

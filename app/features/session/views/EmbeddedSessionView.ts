@@ -26,6 +26,7 @@ import { exerciseTitleLink } from "@app/features/common/ui/exerciseTitleLink";
 import { ICONS } from "@app/constants";
 import { PathUtils } from "@app/utils/PathUtils";
 import { parametersOrNone } from "@app/services/exercise/ExerciseDefinitionService";
+import { isWarmupProtocol } from "@app/services/protocols/ProtocolCatalog";
 import { t } from "@app/i18n";
 
 /**
@@ -87,7 +88,7 @@ class SessionRenderChild extends MarkdownRenderChild {
     const { eventBus, app } = this.plugin;
     const refresh = () => void this.render();
     this.register(
-      eventBus.on("log:added", ({ entry, context }) => void this.logged(context, entry.block)),
+      eventBus.on("log:added", ({ entry, context }) => void this.logged(context, entry)),
     );
     this.register(eventBus.on("log:updated", refresh));
     this.register(eventBus.on("log:deleted", refresh));
@@ -107,24 +108,28 @@ class SessionRenderChild extends MarkdownRenderChild {
 
   /**
    * A set was logged. One of this workout's: back to the progress and rest
-   * after it, unless it was the plan's last set.
+   * after it, unless it was a warm-up or the plan's last set.
    */
   private async logged(
     context: {
       exercise: string;
       workout?: string;
     },
-    block: string | undefined,
+    entry: Pick<WorkoutLogData, "block" | "protocol">,
   ): Promise<void> {
     if (!sameWorkout(context.workout, this.workout)) {
       await this.render();
       return;
     }
     this.position = undefined;
+    if (isWarmupProtocol(entry.protocol)) {
+      await this.render();
+      return;
+    }
     const plan = await this.readPlan();
     // The step the set was logged for (its block), else the exercise's first
     const step = plan
-      ? (plan.find((s) => block !== undefined && s.block === block) ??
+      ? (plan.find((s) => entry.block !== undefined && s.block === entry.block) ??
         stepOf(plan, context.exercise))
       : undefined;
     if (step) this.restingStep = step;

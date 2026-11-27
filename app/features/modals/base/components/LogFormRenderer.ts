@@ -1,9 +1,6 @@
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
-import type {
-  LogFormElements,
-  ProtocolChoice,
-} from "@app/types/ModalTypes";
+import type { LogFormElements, ProtocolChoice } from "@app/types/ModalTypes";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
@@ -19,21 +16,19 @@ import {
   ProtocolCatalog,
   protocolId,
 } from "@app/services/protocols/ProtocolCatalog";
-import {
-  NotesField,
-  ProtocolPicker,
-} from "@app/components/molecules";
+import { NotesField, ProtocolPicker } from "@app/components/molecules";
 import { DomUtils } from "@app/utils/DomUtils";
 
+/**
+ * The wizard steps of the log form, in order: the exercise (with the recent
+ * exercises), last time and the exercise's parameter fields, then protocol,
+ * notes, date and workout
+ */
+export const LOG_STEP_IDS = ["exercise", "fields", "details"] as const;
+export type LogStepId = (typeof LOG_STEP_IDS)[number];
+
 /** Where each part of the form is drawn: one container per wizard step */
-export interface LogFormSections {
-  /** Exercise, with the recent exercises */
-  exercise: HTMLElement;
-  /** Last time and the exercise's parameter fields */
-  fields: HTMLElement;
-  /** Protocol, notes, date and workout */
-  details: HTMLElement;
-}
+export type LogFormSections = Record<LogStepId, HTMLElement>;
 
 export class LogFormRenderer {
   constructor(
@@ -220,12 +215,8 @@ export class LogFormRenderer {
    * draws the chips again with the focus kept on the picked one.
    */
   private createProtocolChoice(parent: HTMLElement): ProtocolChoice {
-    const catalog = new ProtocolCatalog(
-      this.plugin.settings.customProtocols,
-    );
-    let options = catalog
-      .all()
-      .map((p) => ({ id: p.id, name: p.name }));
+    const catalog = new ProtocolCatalog(this.plugin.settings.customProtocols);
+    let options = catalog.all().map((p) => ({ id: p.id, name: p.name }));
     const holder = parent.createDiv({ cls: "workout-log-protocol" });
     let selected: string = WorkoutProtocol.STANDARD;
 
@@ -404,7 +395,6 @@ export class LogFormRenderer {
     );
 
     // Auto-fill protocol
-    if (lastEntry.protocol)
-      formElements.protocol?.set(lastEntry.protocol);
+    if (lastEntry.protocol) formElements.protocol?.set(lastEntry.protocol);
   }
 }

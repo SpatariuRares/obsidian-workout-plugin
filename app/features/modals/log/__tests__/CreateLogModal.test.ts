@@ -207,7 +207,7 @@ describe("CreateLogModal wizard", () => {
   });
 
   it("Log from the first step with an empty required field shows its step and error, and writes nothing", async () => {
-    const { visible, log, input, addWorkoutLogEntry } =
+    const { contentEl, visible, log, input, addWorkoutLogEntry } =
       await openModal("Squat", {
         exercise: "Squat",
         reps: 8,
@@ -220,6 +220,11 @@ describe("CreateLogModal wizard", () => {
     expect(visible()).toEqual(["fields"]);
     expect(document.activeElement).toBe(input("Reps"));
     expect(addWorkoutLogEntry).not.toHaveBeenCalled();
+    expect(
+      contentEl.querySelectorAll(
+        "#workout-log-field-error, .workout-wizard-error",
+      ),
+    ).toHaveLength(1);
   });
 
   it("closing on any step writes nothing", async () => {

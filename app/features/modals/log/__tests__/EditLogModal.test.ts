@@ -30,10 +30,7 @@ const mockOpened: HTMLElement[] = [];
 import { EditLogModal } from "@app/features/modals/log/EditLogModal";
 import { getExerciseTypeById } from "@app/constants/exerciseTypes.constants";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
-import {
-  WorkoutProtocol,
-  type WorkoutLogData,
-} from "@app/types/WorkoutLogData";
+import { WorkoutProtocol, type WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { t } from "@app/i18n";
 
@@ -59,12 +56,8 @@ async function openModal(log: WorkoutLogData = original) {
     vault: { getMarkdownFiles: () => [] },
     metadataCache: { getFileCache: () => null },
   } as unknown as App;
-  const updateWorkoutLogEntry = jest
-    .fn()
-    .mockResolvedValue(undefined);
-  const deleteWorkoutLogEntry = jest
-    .fn()
-    .mockResolvedValue(undefined);
+  const updateWorkoutLogEntry = jest.fn().mockResolvedValue(undefined);
+  const deleteWorkoutLogEntry = jest.fn().mockResolvedValue(undefined);
   const plugin = {
     app,
     settings: {
@@ -77,10 +70,7 @@ async function openModal(log: WorkoutLogData = original) {
     saveSettings: jest.fn(),
     getWorkoutLogData: async () => [],
     findLastEntryForExercise: async () => undefined,
-    getExerciseLibrary: () => ({
-      pages: () => [],
-      find: () => undefined,
-    }),
+    getExerciseLibrary: () => ({ pages: () => [], find: () => undefined }),
     getExerciseDefinitionService: () => ({
       getParametersForExercise: async () =>
         getExerciseTypeById("strength")!.parameters,
@@ -101,23 +91,14 @@ async function openModal(log: WorkoutLogData = original) {
       .click();
     await new Promise((resolve) => setTimeout(resolve, 0));
   };
-  return {
-    contentEl,
-    save,
-    close,
-    updateWorkoutLogEntry,
-    deleteWorkoutLogEntry,
-  };
+  return { contentEl, save, close, updateWorkoutLogEntry, deleteWorkoutLogEntry };
 }
 
 describe("EditLogModal", () => {
   it("deletes the set from the save bar icon, only after a confirmation that names it", async () => {
-    const { contentEl, close, deleteWorkoutLogEntry } =
-      await openModal();
+    const { contentEl, close, deleteWorkoutLogEntry } = await openModal();
     const button = (text: string) =>
-      [...document.querySelectorAll("button")].find(
-        (b) => b.textContent === text,
-      )!;
+      [...document.querySelectorAll("button")].find((b) => b.textContent === text)!;
 
     const trash = contentEl.querySelector<HTMLButtonElement>(
       `.workout-log-actions button[aria-label="${t("modal.buttons.deleteSet")}"]`,
@@ -128,14 +109,10 @@ describe("EditLogModal", () => {
     expect(deleteWorkoutLogEntry).not.toHaveBeenCalled();
     expect(mockOpened).toHaveLength(1);
     expect(mockOpened[0].textContent).toContain(
-      t("table.deleteSetMessage", {
-        set: "Squat · 45.36 kg × 5 · 10/03",
-      }),
+      t("table.deleteSetMessage", { set: "Squat · 45.36 kg × 5 · 10/03" }),
     );
     const confirmButton = button(t("table.deleteTitle"));
-    expect(
-      confirmButton.classList.contains("workout-btn-danger"),
-    ).toBe(true);
+    expect(confirmButton.classList.contains("workout-btn-danger")).toBe(true);
 
     confirmButton.click();
     await new Promise((resolve) => setTimeout(resolve, 0));
@@ -147,38 +124,24 @@ describe("EditLogModal", () => {
   it("shows the day the set was done, not the UTC day", async () => {
     const { contentEl } = await openModal();
 
-    expect(
-      contentEl.querySelector<HTMLInputElement>('input[type="date"]')!
-        .value,
-    ).toBe("2026-03-10");
+    expect(contentEl.querySelector<HTMLInputElement>('input[type="date"]')!.value).toBe(
+      "2026-03-10",
+    );
   });
 
   it("shows why a set can't be saved under the field to fix, until it is edited", async () => {
-    const { contentEl, save, updateWorkoutLogEntry } =
-      await openModal();
+    const { contentEl, save, updateWorkoutLogEntry } = await openModal();
     document.body.append(contentEl); // focus needs a connected element
-    const reps = contentEl.querySelector<HTMLInputElement>(
-      'input[aria-label="Reps"]',
-    )!;
+    const reps = contentEl.querySelector<HTMLInputElement>('input[aria-label="Reps"]')!;
     reps.value = "";
 
     await save();
 
-    const error = contentEl.querySelector(
-      "#workout-log-field-error",
-    )!;
-    expect(error.textContent).toBe(
-      t("modal.notices.validMissingField", { field: "Reps" }),
-    );
+    const error = contentEl.querySelector("#workout-log-field-error")!;
+    expect(error.textContent).toBe(t("modal.notices.validMissingField", { field: "Reps" }));
     expect(error.getAttribute("role")).toBe("alert");
-    expect(
-      reps.closest(".workout-number-field-box")!.nextElementSibling,
-    ).toBe(error);
-    expect(
-      reps
-        .closest(".workout-number-field")!
-        .classList.contains("is-invalid"),
-    ).toBe(true);
+    expect(reps.closest(".workout-number-field-box")!.nextElementSibling).toBe(error);
+    expect(reps.closest(".workout-number-field")!.classList.contains("is-invalid")).toBe(true);
     expect(reps.getAttribute("aria-invalid")).toBe("true");
     expect(document.activeElement).toBe(reps);
     expect(updateWorkoutLogEntry).not.toHaveBeenCalled();
@@ -186,14 +149,8 @@ describe("EditLogModal", () => {
     reps.value = "5";
     reps.dispatchEvent(new Event("input"));
 
-    expect(
-      contentEl.querySelector("#workout-log-field-error"),
-    ).toBeNull();
-    expect(
-      reps
-        .closest(".workout-number-field")!
-        .classList.contains("is-invalid"),
-    ).toBe(false);
+    expect(contentEl.querySelector("#workout-log-field-error")).toBeNull();
+    expect(reps.closest(".workout-number-field")!.classList.contains("is-invalid")).toBe(false);
     expect(reps.hasAttribute("aria-invalid")).toBe(false);
   });
 
@@ -218,21 +175,13 @@ describe("EditLogModal", () => {
 
   it("keeps the protocol of a set whose protocol is no longer in the settings list", async () => {
     // Drop set deleted from Settings → Protocols: the list is empty here
-    const dropSet = {
-      ...original,
-      protocol: WorkoutProtocol.DROP_SET,
-    };
-    const { contentEl, save, updateWorkoutLogEntry } =
-      await openModal(dropSet);
+    const dropSet = { ...original, protocol: WorkoutProtocol.DROP_SET };
+    const { contentEl, save, updateWorkoutLogEntry } = await openModal(dropSet);
 
-    const picked = [
-      ...contentEl.querySelectorAll(
-        ".workout-protocol-picker .workout-chip",
-      ),
-    ].filter((chip) => chip.getAttribute("aria-pressed") === "true");
-    expect(picked.map((chip) => chip.textContent)).toEqual([
-      t("modal.selectOptions.dropSet"),
-    ]);
+    const picked = [...contentEl.querySelectorAll(".workout-protocol-picker .workout-chip")].filter(
+      (chip) => chip.getAttribute("aria-pressed") === "true",
+    );
+    expect(picked.map((chip) => chip.textContent)).toEqual([t("modal.selectOptions.dropSet")]);
 
     await save();
 
@@ -243,12 +192,9 @@ describe("EditLogModal", () => {
   });
 
   it("offers Update on every step, keeps delete in the footer and saves from the last step", async () => {
-    const { contentEl, save, updateWorkoutLogEntry } =
-      await openModal();
+    const { contentEl, save, updateWorkoutLogEntry } = await openModal();
     const button = (text: string) =>
-      [...contentEl.querySelectorAll("button")].find(
-        (b) => b.textContent === text,
-      )!;
+      [...contentEl.querySelectorAll("button")].find((b) => b.textContent === text)!;
     const visible = () =>
       [...contentEl.querySelectorAll<HTMLElement>("[data-step-id]")]
         .filter((p) => !p.hidden)

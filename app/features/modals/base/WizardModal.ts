@@ -31,9 +31,7 @@ export abstract class WizardModal extends BaseInsertModal {
     this.close();
   }
 
-  protected createConfigurationSections(
-    container: HTMLElement,
-  ): void {
+  protected createConfigurationSections(container: HTMLElement): void {
     this.shell = new WizardShell({
       steps: this.getSteps(),
       buttonText: () => this.getButtonText(),

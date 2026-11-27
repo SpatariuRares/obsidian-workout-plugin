@@ -9,8 +9,11 @@ export interface WizardStep {
   id: string;
   /** Shown in the stepper */
   label: string;
-  /** Draws the step once, when the modal opens; its fields keep their value across navigation */
-  render: (container: HTMLElement) => void;
+  /**
+   * Draws the step once, when the modal opens; its fields keep their value across
+   * navigation. Unset when the host fills the panel itself (see `panel`)
+   */
+  render?: (container: HTMLElement) => void;
   /**
    * Checks the step when the user tries to leave it forward: shows the problem
    * (`setStepError`), focuses the field and returns false to keep them here
@@ -29,6 +32,11 @@ export interface WizardShellHost {
   buttonText: () => string;
   /** Edit mode: the submit button shows on every step, next to Next */
   quickSubmit: () => boolean;
+  /**
+   * Called when a pass over the steps starts (a refresh of the stepper, a
+   * navigation, a submit): a host that caches what its checks read drops it here
+   */
+  beginPass?: () => void;
   /** Runs once every step is valid */
   submit: () => void | Promise<void>;
   close: () => void;
@@ -67,9 +75,7 @@ export class WizardShell {
     this.current = 0;
     container.addClass("workout-wizard");
 
-    const header = container.createDiv({
-      cls: "workout-wizard-header",
-    });
+    const header = container.createDiv({ cls: "workout-wizard-header" });
     const nav = header.createEl("nav", {
       cls: "workout-wizard-stepper",
       attr: { "aria-label": t("wizard.stepperLabel") },
@@ -81,21 +87,13 @@ export class WizardShell {
         attr: { type: "button" },
       });
       this.badges.push(
-        tab.createSpan({
-          cls: "workout-wizard-step-badge",
-          text: String(i + 1),
-        }),
+        tab.createSpan({ cls: "workout-wizard-step-badge", text: String(i + 1) }),
       );
-      tab.createSpan({
-        cls: "workout-wizard-step-label",
-        text: step.label,
-      });
+      tab.createSpan({ cls: "workout-wizard-step-label", text: step.label });
       tab.addEventListener("click", () => this.goTo(i));
       return tab;
     });
-    this.counter = header.createDiv({
-      cls: "workout-wizard-counter",
-    });
+    this.counter = header.createDiv({ cls: "workout-wizard-counter" });
     this.progress = ProgressMeter.create(header, {
       value: 0,
       max: this.steps.length,
@@ -110,7 +108,7 @@ export class WizardShell {
         cls: "workout-wizard-panel",
         attr: { "data-step-id": step.id },
       });
-      step.render(panel);
+      step.render?.(panel);
       return panel;
     });
     this.show(0);
@@ -129,9 +127,7 @@ export class WizardShell {
 
   /** The sticky footer, drawn into `parent` */
   createFooter(parent: HTMLElement): void {
-    this.footerHost = parent.createDiv({
-      cls: "workout-wizard-footer",
-    });
+    this.footerHost = parent.createDiv({ cls: "workout-wizard-footer" });
     this.renderFooter();
   }
 
@@ -159,26 +155,17 @@ export class WizardShell {
     const error = createErrorAfter(field, message);
     this.errors[index] = error;
     field.setAttribute("aria-invalid", "true");
-    field.addEventListener(
-      "input",
-      () => this.setStepError(stepId, null, field),
-      {
-        once: true,
-      },
-    );
+    field.addEventListener("input", () => this.setStepError(stepId, null, field), {
+      once: true,
+    });
     field.focus();
   }
 
   /** Moves to a step; going forward first checks every step before it */
   goTo(target: number): void {
-    if (
-      target < 0 ||
-      target >= this.steps.length ||
-      target === this.current
-    )
-      return;
-    const blocked =
-      target > this.current ? this.firstIncomplete(target) : null;
+    this.host.beginPass?.();
+    if (target < 0 || target >= this.steps.length || target === this.current) return;
+    const blocked = target > this.current ? this.firstIncomplete(target) : null;
     if (blocked !== null) {
       this.stopAt(blocked);
       return;
@@ -188,6 +175,7 @@ export class WizardShell {
 
   /** Checks every step in order; the first one not filled in is shown with its problem */
   validateAll(): boolean {
+    this.host.beginPass?.();
     const blocked = this.firstIncomplete(this.steps.length);
     if (blocked === null) return true;
     this.stopAt(blocked);
@@ -223,30 +211,25 @@ export class WizardShell {
 
   /** Redraws the stepper, counter and progress (call after filling fields programmatically) */
   refreshHeader(): void {
+    this.host.beginPass?.();
     const last = this.steps.length - 1;
     this.steps.forEach((step, i) => {
       const tab = this.tabs[i];
-      const done =
-        i !== this.current &&
-        (i < this.current || step.isComplete?.() === true);
+      const done = i !== this.current && (i < this.current || step.isComplete?.() === true);
       tab.classList.toggle("is-done", done);
       tab.classList.toggle("is-current", i === this.current);
       tab.classList.toggle("is-upcoming", i > this.current && !done);
-      const blocked =
-        i > this.current && this.firstIncomplete(i) !== null;
+      const blocked = i > this.current && this.firstIncomplete(i) !== null;
       tab.classList.toggle("is-blocked", blocked);
       tab.disabled = blocked;
       if (blocked) tab.setAttribute("aria-disabled", "true");
       else tab.removeAttribute("aria-disabled");
       this.drawBadge(i, done);
-      if (i === this.current)
-        tab.setAttribute("aria-current", "step");
+      if (i === this.current) tab.setAttribute("aria-current", "step");
       else tab.removeAttribute("aria-current");
       tab.setAttribute(
         "aria-label",
-        done
-          ? t("wizard.stepDone", { step: step.label })
-          : step.label,
+        done ? t("wizard.stepDone", { step: step.label }) : step.label,
       );
     });
     if (this.counter) {
@@ -322,10 +305,7 @@ export class WizardShell {
   }
 }
 
-function createErrorAfter(
-  field: HTMLElement,
-  message: string,
-): HTMLElement {
+function createErrorAfter(field: HTMLElement, message: string): HTMLElement {
   // After the field's own group (autocomplete lists live inside it)
   const anchor = field.closest(".workout-charts-form-group") ?? field;
   const error = (anchor.parentElement ?? anchor).createDiv({

@@ -3693,6 +3693,199 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
 }
 
 /* ============================================================================
+   WIZARD MODAL (WizardModal): stepper, counter, progress bar, steps, footer
+   ============================================================================
+   A clickable stepper (done = accent check badge, current = accent badge and
+   label, upcoming = muted), a `Step X of N` counter and a 3px progress bar
+   (neutral on the way, accent fill on the last step). One step shows at a
+   time; the sticky footer is the shared `.workout-modal-actions` row.
+   ============================================================================ */
+.workout-wizard-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--workout-space-sm) var(--workout-space-md);
+  margin-bottom: var(--workout-space-lg);
+}
+
+.workout-wizard-stepper {
+  display: flex;
+  gap: var(--workout-space-xs);
+  min-width: 0;
+}
+
+.workout-wizard-step {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-xs);
+  min-width: 0;
+  min-height: var(--workout-touch-target-min);
+  padding: 0 var(--workout-space-sm);
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  cursor: pointer;
+}
+.workout-wizard-step.is-blocked {
+  opacity: 0.6;
+}
+.workout-wizard-step.is-current {
+  color: var(--workout-text-accent);
+  font-weight: var(--workout-font-weight-semibold);
+  opacity: 1;
+}
+.workout-wizard-step.is-done {
+  color: var(--text-normal);
+}
+.workout-wizard-step:focus-visible {
+  outline: var(--workout-border-medium) solid var(--interactive-accent);
+  outline-offset: var(--workout-space-2xs);
+}
+
+.workout-wizard-step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--workout-radius-full);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  font-size: var(--workout-font-xs);
+  font-variant-numeric: tabular-nums;
+}
+.workout-wizard-step.is-current .workout-wizard-step-badge {
+  background: var(--workout-accent-fill);
+  border-color: var(--workout-accent-fill);
+  color: var(--text-on-accent);
+}
+.workout-wizard-step.is-done .workout-wizard-step-badge {
+  background: var(--workout-accent-fill);
+  border-color: var(--workout-accent-fill);
+  color: var(--text-on-accent);
+}
+
+.workout-wizard-step-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workout-wizard-counter {
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.workout-wizard-progress {
+  grid-column: 1/-1;
+  height: 3px;
+}
+
+/* Steps: only the current one shows; the others keep their fields */
+.workout-wizard-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--workout-space-md);
+}
+.workout-wizard-panel[hidden] {
+  display: none;
+}
+.workout-wizard-panel.is-forward {
+  animation: workout-wizard-in-forward 150ms ease-out;
+}
+.workout-wizard-panel.is-backward {
+  animation: workout-wizard-in-backward 150ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .workout-wizard-panel.is-forward, .workout-wizard-panel.is-backward {
+    animation: none;
+  }
+}
+
+@keyframes workout-wizard-in-forward {
+  from {
+    opacity: 0;
+    transform: translateX(var(--workout-space-md));
+  }
+}
+@keyframes workout-wizard-in-backward {
+  from {
+    opacity: 0;
+    transform: translateX(calc(-1 * var(--workout-space-md)));
+  }
+}
+.workout-wizard-error {
+  margin-top: calc(-1 * var(--workout-space-sm));
+  color: var(--workout-text-error);
+  font-size: var(--workout-font-sm);
+}
+
+.workout-wizard-context {
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The review: an inset key/value list, not a card inside a card */
+.workout-wizard-review-title {
+  margin: 0;
+  font-size: var(--workout-font-base);
+  font-weight: var(--workout-font-weight-semibold);
+}
+
+.workout-wizard-review {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--workout-space-xs);
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  border-radius: var(--workout-radius-md);
+  background: var(--background-primary);
+  border: var(--workout-border-thin) solid var(--workout-border-subtle);
+}
+
+.workout-wizard-review-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: var(--workout-space-sm);
+  font-size: var(--workout-font-sm);
+}
+
+.workout-wizard-review-key {
+  color: var(--text-muted);
+}
+
+.workout-wizard-review-value {
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Back sits at the left of the footer, Next/Insert and Cancel on the right */
+.workout-wizard-footer {
+  /* The action row inside is the sticky one: the wrapper must not trap it */
+  display: contents;
+}
+.workout-wizard-footer .workout-wizard-back {
+  margin-right: auto;
+}
+
+body.is-mobile .workout-wizard-step {
+  min-height: var(--workout-touch-target-min);
+  min-width: var(--workout-touch-target-min);
+}
+body.is-mobile {
+  /* On a phone only the current step keeps its label */
+}
+body.is-mobile .workout-wizard-step:not(.is-current) .workout-wizard-step-label {
+  display: none;
+}
+
+/* ============================================================================
    WORKOUT CHARTS PLUGIN - STYLES
    Modern styles using Obsidian CSS Variables
 

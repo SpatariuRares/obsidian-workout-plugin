@@ -13,79 +13,52 @@ jest.mock("obsidian", () => {
   };
 });
 import { AddExerciseBlockModal } from "@app/features/modals/exercise/AddExerciseBlockModal";
-import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
-import { setsBlock } from "@app/features/tables/setsBlock";
-import type { WorkoutPluginContext } from "@app/types/PluginPorts";
+import { openWizard, blockParams } from "@app/features/modals/base/__tests__/wizardHarness";
+import { t } from "@app/i18n";
 
-function openModal() {
-  const app = {
-    workspace: {
-      getActiveViewOfType: () => ({ file: { path: "Leg day.md", basename: "Leg day" } }),
-      getActiveFile: () => ({ path: "Leg day.md", basename: "Leg day" }),
-    },
-    vault: { getMarkdownFiles: () => [] },
-    metadataCache: { getFileCache: () => null },
-  } as unknown as App;
-  const plugin = {
-    app,
-    settings: { timerPresets: {}, defaultTimerPreset: null, recentExercises: [] },
-    getWorkoutLogData: async () => [],
-    getExerciseLibrary: () => ({ pages: () => [], find: () => undefined }),
-    getExerciseDefinitionService: () => ({
-      getExerciseNames: async () => [],
-      getExerciseDefinitions: async () => [],
-    }),
-  } as unknown as WorkoutPluginContext;
-
-  const modal = new AddExerciseBlockModal(app, plugin);
-  const contentEl = createObsidianContainer();
-  Object.assign(modal, { contentEl, close: jest.fn() });
-  modal.onOpen();
-  const generate = () =>
-    (modal as unknown as { generateCode(): string }).generateCode();
-  const exercise = () =>
-    contentEl.querySelector<HTMLInputElement>("input[type='text']")!;
-  return { generate, exercise };
-}
-
-/** The block's parameters, read back with its schema */
-function blockParams(code: string) {
-  const body = /```workout-sets\n([\s\S]*?)```/.exec(code)?.[1] ?? "";
-  return setsBlock.parse(body);
+/** Walks the three steps and presses Insert */
+function insertExercise(name: string) {
+  const w = openWizard(AddExerciseBlockModal);
+  w.exercise().value = name;
+  w.next();
+  w.next();
+  w.button(t("modal.buttons.insertExerciseBlock"))!.click();
+  return w;
 }
 
 describe("AddExerciseBlockModal", () => {
+  it("uses the same three steps", () => {
+    const { visible, contentEl } = openWizard(AddExerciseBlockModal);
+
+    expect(visible()).toEqual(["exercise"]);
+    expect(contentEl.querySelectorAll(".workout-wizard-step")).toHaveLength(3);
+  });
+
   it("writes the exercise's section with its workout-sets block", () => {
-    const { generate, exercise } = openModal();
-    exercise().value = "Squat";
+    const { inserted } = insertExercise("Squat");
 
-    const code = generate();
-
-    expect(code.startsWith("## Squat\n\n```workout-sets\n")).toBe(true);
-    expect(blockParams(code)).toMatchObject({
-      params: { exercise: "Squat", sets: 3, rest: 90 },
-    });
+    expect(inserted[0].startsWith("## Squat\n\n```workout-sets\n")).toBe(true);
+    expect(blockParams(inserted[0])).toMatchObject({ exercise: "Squat", sets: 3, rest: 90 });
   });
 
   it("gives the block an id, so it can be edited later", () => {
-    const { generate, exercise } = openModal();
-    exercise().value = "Squat";
+    const { inserted } = insertExercise("Squat");
 
-    expect(blockParams(generate())).toMatchObject({
-      params: { id: expect.any(String) },
-    });
+    expect(blockParams(inserted[0])).toMatchObject({ id: expect.any(String) });
   });
 
   it("leaves the workout out, so the block follows the note's name", () => {
-    const { generate, exercise } = openModal();
-    exercise().value = "Squat";
+    const { inserted } = insertExercise("Squat");
 
-    expect(generate()).not.toContain("workout:");
+    expect(inserted[0]).not.toContain("workout:");
   });
 
-  it("asks for an exercise", () => {
-    const { generate } = openModal();
+  it("asks for an exercise and inserts nothing without one", () => {
+    const w = openWizard(AddExerciseBlockModal);
 
-    expect(() => generate()).toThrow();
+    w.next();
+
+    expect(w.contentEl.querySelector(".workout-wizard-error")).not.toBeNull();
+    expect(w.inserted).toHaveLength(0);
   });
 });

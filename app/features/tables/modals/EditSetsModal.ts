@@ -5,8 +5,18 @@ import {
   InsertSetsModal,
   type InsertSetsState,
 } from "@app/features/tables/modals/InsertSetsModal";
-import { setsBlock, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
+import {
+  setsBlock,
+  isSupersetBlock,
+  type EmbeddedSetsParams,
+} from "@app/features/tables/setsBlock";
 import { changedParams } from "@app/services/codeblocks/CodeBlockSchema";
+import {
+  ProtocolCatalog,
+  protocolId,
+  type ProtocolInfo,
+} from "@app/services/protocols/ProtocolCatalog";
+import { WorkoutProtocol } from "@app/types/WorkoutLogData";
 import {
   applyBlockEdit,
   type EditTarget,
@@ -43,14 +53,33 @@ export class EditSetsModal extends InsertSetsModal {
   }
 
   protected override createInitialState(): InsertSetsState {
+    const superset = isSupersetBlock(this.initialParams);
     return {
+      protocol: superset
+        ? WorkoutProtocol.SUPERSET
+        : protocolId(this.initialParams.protocol),
       exercise: this.initialParams.exercise ?? "",
+      exercises:
+        this.initialParams.exercises && this.initialParams.exercises.length >= 2
+          ? [...this.initialParams.exercises]
+          : [this.initialParams.exercise ?? "", ""],
       workout: this.initialParams.workout ?? "",
       sets: this.initialParams.sets,
+      warmups: this.initialParams.warmups ?? 0,
       targetWeight: this.initialParams.targetWeight,
       targetReps: this.initialParams.targetReps,
+      restBetween: this.initialParams.restBetween ?? 0,
       rest: this.initialParams.rest ?? 0,
     };
+  }
+
+  protected override getProtocolOptions(catalog: ProtocolCatalog): ProtocolInfo[] {
+    const initial = isSupersetBlock(this.initialParams)
+      ? WorkoutProtocol.SUPERSET
+      : protocolId(this.initialParams.protocol);
+    return catalog
+      .optionsIncluding(initial)
+      .filter((p) => p.id !== (WorkoutProtocol.WARMUP as string));
   }
 
   override onOpen(): void {

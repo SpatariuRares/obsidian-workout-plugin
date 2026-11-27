@@ -7,9 +7,21 @@ import { AddExerciseBlockModal } from "@app/features/modals/exercise/AddExercise
 import { EditSetsModal } from "@app/features/tables/modals/EditSetsModal";
 import { setsBlock } from "@app/features/tables/setsBlock";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
+import {
+  defaultProtocolEntries,
+  protocolHelp,
+} from "@app/services/protocols/ProtocolCatalog";
+import {
+  WorkoutProtocol,
+  type CustomProtocolConfig,
+} from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
-function createTestEnv(options?: { exercises?: string[]; noteContent?: string }) {
+function createTestEnv(options?: {
+  exercises?: string[];
+  noteContent?: string;
+  customProtocols?: CustomProtocolConfig[];
+}) {
   const editor = {
     getCursor: jest.fn(() => ({ line: 0, ch: 0 })),
     replaceRange: jest.fn(),
@@ -51,6 +63,7 @@ function createTestEnv(options?: { exercises?: string[]; noteContent?: string })
       timerPresets: {},
       defaultTimerPreset: null,
       recentExercises: [],
+      customProtocols: options?.customProtocols ?? defaultProtocolEntries(),
     },
     getWorkoutLogData: async () => [],
     getExerciseLibrary: () => ({ pages: () => pages, find: () => undefined }),
@@ -379,6 +392,392 @@ describe("InsertSetsModal wizard", () => {
     const [inserted] = editor.replaceRange.mock.calls[0] as [string, unknown];
     expect(inserted).not.toContain("sets:");
     expect(inserted).not.toContain("rest:");
+    expect(inserted).not.toContain("protocol:");
     expect(inserted).toContain("targetReps: 10");
+  });
+
+  it("renders ProtocolPicker excluding warm-up with protocolHelp hint, updates Step 2 context, and writes non-standard protocol", () => {
+    const { app, plugin, editor } = createTestEnv({
+      exercises: ["Leg Extension", "Bench Press"],
+    });
+    const { contentEl } = mountModal(new InsertSetsModal(app, plugin));
+
+    const chipTexts = [
+      ...contentEl.querySelectorAll<HTMLButtonElement>(
+        ".workout-protocol-picker .workout-chip",
+      ),
+    ].map((c) => c.textContent?.trim());
+    expect(chipTexts).toContain(t("modal.selectOptions.standard"));
+    expect(chipTexts).toContain(t("modal.selectOptions.dropSet"));
+    expect(chipTexts).toContain(t("modal.selectOptions.superset"));
+    expect(chipTexts).not.toContain(t("modal.selectOptions.warmup"));
+
+    const helpEl = contentEl.querySelector<HTMLElement>(".workout-protocol-help");
+    expect(helpEl).not.toBeNull();
+    expect(helpEl!.hidden).toBe(true);
+
+    // Pick Drop set -> help hint appears
+    buttonByText(contentEl, t("modal.selectOptions.dropSet")).click();
+    expect(helpEl!.hidden).toBe(false);
+    expect(helpEl!.textContent).toBe(protocolHelp(WorkoutProtocol.DROP_SET));
+
+    const exerciseInput = contentEl.querySelector<HTMLInputElement>(
+      "input[type='text']",
+    )!;
+    setFieldValue(exerciseInput, "Leg Extension");
+
+    // Step 2 context reflects protocol + exercise
+    buttonByText(contentEl, t("modal.buttons.next")).click();
+    expect(
+      contentEl.querySelector(".workout-wizard-context-line")?.textContent,
+    ).toBe(`${t("modal.selectOptions.dropSet")} · Leg Extension`);
+
+    // Step 3 Review and submit
+    buttonByText(contentEl, t("modal.buttons.next")).click();
+    const reviewText = contentEl.querySelector(
+      ".workout-wizard-review-inset",
+    )?.textContent;
+    expect(reviewText).toContain(t("modal.selectOptions.dropSet"));
+
+    buttonByText(contentEl, t("modal.buttons.insertSets")).click();
+    const [inserted] = editor.replaceRange.mock.calls[0] as [string, unknown];
+    const body = /```workout-sets\n([\s\S]*?)```/.exec(inserted)?.[1] ?? "";
+    expect(setsBlock.parse(body).params).toMatchObject({
+      exercise: "Leg Extension",
+      protocol: WorkoutProtocol.DROP_SET,
+    });
+  });
+
+  it("toggles Step 1 to ordered Superset Exercises list with preserve/focus, dynamic labels, reorder, delete > 2, and empty-slot validation", () => {
+    const { app, plugin } = createTestEnv({
+      exercises: ["Bench Press", "Bent Over Row", "Plank", "Calf Raise"],
+    });
+    const { contentEl } = mountModal(new InsertSetsModal(app, plugin));
+
+    // Type Exercise A in single mode
+    const singleInput = contentEl.querySelector<HTMLInputElement>(
+      "input[type='text']",
+    )!;
+    setFieldValue(singleInput, "Bench Press");
+
+    // Switch Single -> Superset: preserves A, ensures 2 slots, focuses empty B
+    buttonByText(contentEl, t("modal.selectOptions.superset")).click();
+
+    const getSlotInputs = () =>
+      [
+        ...contentEl.querySelectorAll<HTMLInputElement>(
+          ".workout-superset-slot input[type='text']",
+        ),
+      ];
+
+    let slotInputs = getSlotInputs();
+    expect(slotInputs).toHaveLength(2);
+    expect(slotInputs[0].value).toBe("Bench Press");
+    expect(slotInputs[1].value).toBe("");
+    expect(document.activeElement).toBe(slotInputs[1]);
+
+    expect(
+      contentEl.querySelector(".workout-superset-count")?.textContent,
+    ).toBe(t("modal.wizard.groupLabel.superset", { count: 2 }));
+    expect(
+      contentEl.querySelectorAll(".workout-delete-button"),
+    ).toHaveLength(0);
+
+    // Step 2 & Step 3 locked while slot B is empty
+    const stepBtns = contentEl.querySelectorAll<HTMLButtonElement>(
+      ".workout-wizard-step-btn",
+    );
+    expect(stepBtns[1].disabled).toBe(true);
+
+    // Clicking Next validates slots, shows inline error under empty slot B, focuses it
+    buttonByText(contentEl, t("modal.buttons.next")).click();
+    expect(
+      contentEl.querySelector(".workout-wizard-step-meta")?.textContent,
+    ).toBe(t("modal.wizard.stepOf", { current: 1, total: 3 }));
+    const slotErrors = contentEl.querySelectorAll<HTMLElement>(
+      ".workout-superset-slot .workout-field-error",
+    );
+    expect(slotErrors[0].hidden).toBe(true);
+    expect(slotErrors[1].hidden).toBe(false);
+    expect(slotErrors[1].textContent).toBe(
+      t("modal.wizard.chooseExerciseSlot", { letter: "B" }),
+    );
+    expect(slotInputs[1].getAttribute("aria-invalid")).toBe("true");
+    expect(document.activeElement).toBe(slotInputs[1]);
+
+    // Autocomplete suggestion click ("change" event) clears slot B error and unlocks steps
+    slotInputs[1].value = "Bent";
+    slotInputs[1].dispatchEvent(new Event("input", { bubbles: true }));
+    const suggestion = contentEl.querySelectorAll<HTMLElement>(
+      ".workout-superset-slot .workout-exercise-autocomplete-suggestion",
+    );
+    expect(suggestion.length).toBeGreaterThan(0);
+    suggestion[0].click();
+
+    expect(slotInputs[1].value).toBe("Bent Over Row");
+    expect(slotErrors[1].hidden).toBe(true);
+    expect(stepBtns[1].disabled).toBe(false);
+
+    // Add 3rd and 4th exercises -> Triset · 3, Giant set · 4, DeleteButton appears when > 2
+    buttonByText(contentEl, t("modal.wizard.addExercise")).click();
+    slotInputs = getSlotInputs();
+    expect(slotInputs).toHaveLength(3);
+    expect(document.activeElement).toBe(slotInputs[2]);
+    expect(
+      contentEl.querySelector(".workout-superset-count")?.textContent,
+    ).toBe(t("modal.wizard.groupLabel.triset", { count: 3 }));
+    expect(
+      contentEl.querySelectorAll(".workout-delete-button"),
+    ).toHaveLength(3);
+    setFieldValue(slotInputs[2], "Plank");
+
+    buttonByText(contentEl, t("modal.wizard.addExercise")).click();
+    slotInputs = getSlotInputs();
+    expect(slotInputs).toHaveLength(4);
+    expect(
+      contentEl.querySelector(".workout-superset-count")?.textContent,
+    ).toBe(t("modal.wizard.groupLabel.giantSet", { count: 4 }));
+    setFieldValue(slotInputs[3], "Calf Raise");
+
+    // Reorder: move B up to A
+    contentEl
+      .querySelector<HTMLButtonElement>(
+        `button[aria-label="${t("modal.wizard.moveExerciseUp", { letter: "B" })}"]`,
+      )!
+      .click();
+    slotInputs = getSlotInputs();
+    expect(slotInputs.map((i) => i.value)).toEqual([
+      "Bent Over Row",
+      "Bench Press",
+      "Plank",
+      "Calf Raise",
+    ]);
+
+    // Remove D and C -> back to 2 slots with no DeleteButton
+    contentEl
+      .querySelector<HTMLButtonElement>(
+        `button[aria-label="${t("modal.wizard.removeExercise", { letter: "D" })}"]`,
+      )!
+      .click();
+    expect(getSlotInputs()).toHaveLength(3);
+    contentEl
+      .querySelector<HTMLButtonElement>(
+        `button[aria-label="${t("modal.wizard.removeExercise", { letter: "C" })}"]`,
+      )!
+      .click();
+    expect(getSlotInputs()).toHaveLength(2);
+    expect(
+      contentEl.querySelectorAll(".workout-delete-button"),
+    ).toHaveLength(0);
+
+    // Switch Superset -> Single preserves Exercise A ("Bent Over Row")
+    buttonByText(contentEl, t("modal.selectOptions.standard")).click();
+    const singleBack = contentEl.querySelector<HTMLInputElement>(
+      "input[type='text']",
+    )!;
+    expect(singleBack.value).toBe("Bent Over Row");
+  });
+
+  it("adapts Step 2 Plan for warm-up sets (0-10) in single mode and Rounds + Warm-up rounds without targets in superset mode", () => {
+    const { app, plugin, editor } = createTestEnv({
+      exercises: ["Bench Press", "Bent Over Row"],
+    });
+    const { contentEl } = mountModal(new InsertSetsModal(app, plugin));
+
+    // Single mode: Bench Press with 2 warm-ups
+    const singleInput = contentEl.querySelector<HTMLInputElement>(
+      "input[type='text']",
+    )!;
+    setFieldValue(singleInput, "Bench Press");
+
+    buttonByText(contentEl, t("modal.buttons.next")).click();
+
+    const warmupSetsInput = adjustFieldInput(
+      contentEl,
+      t("modal.wizard.warmupSets"),
+    );
+    expect(warmupSetsInput.value).toBe("0");
+    expect(contentEl.textContent).toContain(t("modal.wizard.warmupHelper"));
+
+    // Increment warm-ups to 2 and test max clamp at 10
+    setFieldValue(warmupSetsInput, "2");
+
+    buttonByText(contentEl, t("modal.buttons.next")).click();
+    expect(
+      contentEl.querySelector(".workout-wizard-review-inset")?.textContent,
+    ).toContain(t("modal.wizard.review.warmupsMany", { count: 2 }));
+
+    // Go back to Step 1 and switch to Superset
+    buttonByText(contentEl, t("modal.buttons.back")).click();
+    buttonByText(contentEl, t("modal.buttons.back")).click();
+    buttonByText(contentEl, t("modal.selectOptions.superset")).click();
+
+    const slotInputs = contentEl.querySelectorAll<HTMLInputElement>(
+      ".workout-superset-slot input[type='text']",
+    );
+    setFieldValue(slotInputs[1], "Bent Over Row");
+
+    buttonByText(contentEl, t("modal.buttons.next")).click();
+
+    expect(
+      contentEl.querySelector(".workout-wizard-context-line")?.textContent,
+    ).toBe(`${t("modal.selectOptions.superset")} · Bench Press + Bent Over Row`);
+
+    // Rounds & Warm-up rounds shown; Target weight & Target reps hidden; quiet Last time note shown
+    const roundsInput = adjustFieldInput(contentEl, t("modal.rounds"));
+    expect(roundsInput.value).toBe("3");
+    const warmupRoundsInput = adjustFieldInput(
+      contentEl,
+      t("modal.wizard.warmupRounds"),
+    );
+    expect(warmupRoundsInput.value).toBe("2");
+    expect(contentEl.textContent).not.toContain(
+      t("modal.labels.plannedSets"),
+    );
+    expect(contentEl.textContent).not.toContain(
+      t("modal.labels.targetWeight", { unit: "kg" }),
+    );
+    expect(contentEl.textContent).not.toContain(t("modal.labels.targetReps"));
+    expect(contentEl.textContent).toContain(
+      t("modal.wizard.supersetTargetsNote"),
+    );
+
+    // Also verify single mode insert with warmups: 2
+    buttonByText(contentEl, t("modal.buttons.back")).click();
+    buttonByText(contentEl, t("modal.selectOptions.dropSet")).click();
+    buttonByText(contentEl, t("modal.buttons.next")).click();
+    buttonByText(contentEl, t("modal.buttons.next")).click();
+    buttonByText(contentEl, t("modal.buttons.insertSets")).click();
+
+    const [inserted] = editor.replaceRange.mock.calls[0] as [string, unknown];
+    const body = /```workout-sets\n([\s\S]*?)```/.exec(inserted)?.[1] ?? "";
+    expect(setsBlock.parse(body).params).toMatchObject({
+      exercise: "Bench Press",
+      protocol: WorkoutProtocol.DROP_SET,
+      warmups: 2,
+    });
+  });
+
+  it("renders Superset Step 3 with restBetween + Round rest fallback hint + live rhythm preview, and serializes superset block", () => {
+    const { app, plugin, editor } = createTestEnv({
+      exercises: ["Bench Press", "Bent Over Row"],
+    });
+    const { contentEl, close } = mountModal(new InsertSetsModal(app, plugin));
+
+    buttonByText(contentEl, t("modal.selectOptions.superset")).click();
+    const slotInputs = contentEl.querySelectorAll<HTMLInputElement>(
+      ".workout-superset-slot input[type='text']",
+    );
+    setFieldValue(slotInputs[0], "Bench Press");
+    setFieldValue(slotInputs[1], "Bent Over Row");
+
+    contentEl
+      .querySelectorAll<HTMLButtonElement>(".workout-wizard-step-btn")[2]
+      .click();
+
+    // No chips on Step 3
+    expect(contentEl.querySelectorAll(".workout-chip")).toHaveLength(0);
+
+    const restBetweenInput = adjustFieldInput(
+      contentEl,
+      t("modal.wizard.restBetweenLabel"),
+    );
+    const roundRestInput = adjustFieldInput(
+      contentEl,
+      t("modal.wizard.restRoundLabel"),
+    );
+    expect(restBetweenInput.value).toBe("0");
+    expect(roundRestInput.value).toBe("0");
+
+    const rhythmEl = contentEl.querySelector<HTMLElement>(
+      ".workout-wizard-rhythm-preview",
+    );
+    expect(rhythmEl).not.toBeNull();
+    expect(rhythmEl!.textContent).toContain("A");
+    expect(rhythmEl!.textContent).toContain("B");
+    expect(rhythmEl!.textContent).toContain(
+      t("modal.wizard.rhythmNextRoundNoTimer"),
+    );
+
+    // Paired 90s: restBetween = 90 while rest = 0 -> fallback hint + live rhythm preview
+    setFieldValue(restBetweenInput, "90");
+    expect(roundRestInput.value).toBe("");
+    expect(roundRestInput.placeholder).toBe("90");
+    expect(contentEl.textContent).toContain(
+      t("modal.wizard.restRoundFallbackHelper", {
+        duration: FormatUtils.formatDuration(90),
+      }),
+    );
+    expect(rhythmEl!.textContent).toBe(
+      `A → ${FormatUtils.formatDuration(90)} → B → ${FormatUtils.formatDuration(90)} → ${t("modal.wizard.rhythmNextRound")}`,
+    );
+
+    // Override Round rest to 120s and Rest between to 30s
+    setFieldValue(restBetweenInput, "30");
+    setFieldValue(roundRestInput, "120");
+    expect(rhythmEl!.textContent).toBe(
+      `A → ${FormatUtils.formatDuration(30)} → B → ${FormatUtils.formatDuration(120)} → ${t("modal.wizard.rhythmNextRound")}`,
+    );
+
+    const reviewText = contentEl.querySelector(
+      ".workout-wizard-review-inset",
+    )?.textContent;
+    expect(reviewText).toContain("Bench Press + Bent Over Row");
+    expect(reviewText).toContain(FormatUtils.formatDuration(30));
+    expect(reviewText).toContain(FormatUtils.formatDuration(120));
+
+    buttonByText(contentEl, t("modal.buttons.insertSets")).click();
+    const [inserted] = editor.replaceRange.mock.calls[0] as [string, unknown];
+    const body = /```workout-sets\n([\s\S]*?)```/.exec(inserted)?.[1] ?? "";
+    const parsed = setsBlock.parse(body).params;
+    expect(parsed).toMatchObject({
+      exercises: ["Bench Press", "Bent Over Row"],
+      protocol: WorkoutProtocol.SUPERSET,
+      sets: 3,
+      restBetween: 30,
+      rest: 120,
+    });
+    expect(inserted).not.toContain("exercise:");
+    expect(inserted).not.toContain("targetWeight:");
+    expect(inserted).not.toContain("targetReps:");
+    expect(inserted).not.toContain("warmups:");
+    expect(close).toHaveBeenCalledTimes(1);
+  });
+
+  it("generates ## A + B heading for AddExerciseBlockModal in Superset mode", () => {
+    const { app, plugin, editor } = createTestEnv({
+      exercises: ["Bench Press", "Bent Over Row", "Plank"],
+    });
+    const { contentEl } = mountModal(new AddExerciseBlockModal(app, plugin));
+
+    buttonByText(contentEl, t("modal.selectOptions.superset")).click();
+    const slotInputs = contentEl.querySelectorAll<HTMLInputElement>(
+      ".workout-superset-slot input[type='text']",
+    );
+    setFieldValue(slotInputs[0], "Bench Press");
+    setFieldValue(slotInputs[1], "Bent Over Row");
+
+    buttonByText(contentEl, t("modal.wizard.addExercise")).click();
+    const updatedSlots = contentEl.querySelectorAll<HTMLInputElement>(
+      ".workout-superset-slot input[type='text']",
+    );
+    setFieldValue(updatedSlots[2], "Plank");
+
+    contentEl
+      .querySelectorAll<HTMLButtonElement>(".workout-wizard-step-btn")[2]
+      .click();
+    buttonByText(contentEl, t("modal.buttons.insertExerciseBlock")).click();
+
+    const [inserted] = editor.replaceRange.mock.calls[0] as [string, unknown];
+    expect(
+      inserted.startsWith("## Bench Press + Bent Over Row + Plank\n\n```workout-sets\n"),
+    ).toBe(true);
+    const body = /```workout-sets\n([\s\S]*?)```/.exec(inserted)?.[1] ?? "";
+    expect(setsBlock.parse(body).params).toMatchObject({
+      exercises: ["Bench Press", "Bent Over Row", "Plank"],
+      protocol: WorkoutProtocol.SUPERSET,
+      rest: 90,
+    });
+    expect(inserted).not.toContain("restBetween:");
   });
 });

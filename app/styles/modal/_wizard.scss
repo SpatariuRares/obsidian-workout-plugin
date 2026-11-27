@@ -252,12 +252,168 @@ body.is-mobile .workout-wizard-stepper button.workout-wizard-step-btn {
 }
 
 /* Error state on wizard text field (two classes deep to outrank Obsidian) */
-.workout-charts-form-group .workout-form-field.is-invalid .workout-form-field-input {
+.workout-charts-form-group .workout-form-field.is-invalid .workout-form-field-input,
+.workout-superset-slot.is-invalid .workout-superset-slot-field .workout-form-field-input {
   border-color: var(--workout-text-error);
 }
 
-.workout-wizard-container .workout-field-error[hidden] {
+.workout-wizard-container .workout-field-error[hidden],
+.workout-wizard-container .workout-field-helper[hidden] {
   display: none;
+}
+
+.workout-wizard-container .workout-field-helper {
+  color: var(--text-muted);
+  font-size: var(--workout-font-xs);
+  line-height: 1.35;
+}
+
+.workout-wizard-protocol-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-xs);
+  min-width: 0;
+}
+
+.workout-wizard-container .workout-protocol-picker .workout-chip-group-chips {
+  flex-wrap: wrap;
+  overflow-x: visible;
+}
+
+.workout-wizard-container .workout-parameters-container {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--workout-space-md);
+}
+
+@media (max-width: variables.$breakpoint-mobile) {
+  .workout-wizard-container .workout-parameters-container {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Superset ordered exercise list (A, B, C...) */
+.workout-superset-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+  min-width: 0;
+}
+
+.workout-superset-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--workout-space-sm);
+}
+
+.workout-superset-count {
+  color: var(--workout-text-accent);
+  font-size: var(--workout-font-xs);
+  font-weight: var(--workout-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.workout-superset-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+}
+
+.workout-superset-slot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-2xs);
+  min-width: 0;
+}
+
+.workout-superset-slot-row {
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--workout-space-xs);
+  min-width: 0;
+}
+
+.workout-superset-letter {
+  display: grid;
+  place-items: center;
+  width: 1.625rem;
+  height: 1.625rem;
+  border-radius: var(--workout-radius-sm);
+  border: var(--workout-border-thin) solid var(--workout-border-subtle);
+  background: var(--background-primary);
+  color: var(--text-muted);
+  font-size: var(--workout-font-xs);
+  font-weight: var(--workout-font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.workout-superset-slot-field {
+  min-width: 0;
+
+  .workout-charts-form-group {
+    margin: 0;
+  }
+
+  .workout-form-field-input {
+    width: 100%;
+  }
+}
+
+.workout-superset-slot-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-2xs);
+  flex: none;
+}
+
+button.workout-superset-move-btn {
+  min-width: 2rem;
+  min-height: 2.25rem;
+  padding: 0 var(--workout-space-xs);
+}
+
+button.workout-superset-add-btn {
+  align-self: flex-start;
+}
+
+body.is-mobile button.workout-superset-move-btn {
+  min-width: var(--workout-touch-target-min);
+  min-height: var(--workout-touch-target-min);
+}
+
+body.is-mobile button.workout-superset-add-btn {
+  width: 100%;
+  min-height: var(--workout-touch-target-min);
+}
+
+/* Live superset rest cadence preview */
+.workout-wizard-rhythm-preview {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--workout-space-2xs);
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  border-radius: var(--workout-radius-md);
+  border: var(--workout-border-thin) solid var(--workout-border-subtle);
+  background: var(--background-primary);
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.workout-rhythm-step {
+  color: var(--text-normal);
+  font-weight: var(--workout-font-weight-semibold);
+}
+
+.workout-rhythm-rest {
+  color: var(--workout-text-accent);
+  font-weight: var(--workout-font-weight-semibold);
+}
+
+.workout-rhythm-arrow {
+  color: var(--text-muted);
 }
 
 body.is-mobile .workout-wizard-container input.workout-form-field-input {

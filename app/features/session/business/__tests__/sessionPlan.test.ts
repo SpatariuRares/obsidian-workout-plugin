@@ -2,6 +2,8 @@ import {
   readSectionPlan,
   readSessionPlan,
   sessionProgress,
+  stepOf,
+  supersetProgress,
   type SessionStep,
 } from "@app/features/session/business/sessionPlan";
 import { logRow } from "@app/types/__tests__/logRow";
@@ -210,6 +212,74 @@ describe("readSessionPlan", () => {
       { exercise: "Squat", sets: 3, warmups: 1 },
     ]);
   });
+
+  it("reads a multi-exercise workout-sets block as one composite superset step", () => {
+    const steps = readSessionPlan(
+      [
+        "## Superset",
+        "```workout-sets",
+        "id: ss1",
+        "exercises: [Bench Press, Barbell Row]",
+        "sets: 3",
+        "warmups: 1",
+        "restBetween: 30",
+        "rest: 90",
+        "```",
+      ].join("\n"),
+    );
+
+    expect(steps).toHaveLength(1);
+    expect(steps[0]).toMatchObject({
+      exercise: "Bench Press + Barbell Row",
+      exercises: ["Bench Press", "Barbell Row"],
+      block: "ss1",
+      sets: 3,
+      warmups: 1,
+      restBetween: 30,
+      protocol: "superset",
+      rest: { type: "countdown", duration: 90 },
+      restBlock: { type: "workout-sets", params: { id: "ss1" } },
+    });
+  });
+
+  it("handles superset round rest fallback (rest: 0 -> none, unset -> restBetween -> sectionRest) and stepOf matching", () => {
+    const steps = readSessionPlan(
+      [
+        "## S1",
+        "```workout-timer",
+        "duration: 120",
+        "```",
+        "```workout-sets",
+        "exercises: [A, B]",
+        "restBetween: 25",
+        "```",
+        "## S2",
+        "```workout-timer",
+        "duration: 120",
+        "```",
+        "```workout-sets",
+        "exercises: [C, D]",
+        "restBetween: 25",
+        "rest: 0",
+        "protocol: drop_set",
+        "```",
+        "## S3",
+        "```workout-timer",
+        "duration: 75",
+        "```",
+        "```workout-sets",
+        "exercises: [E, F]",
+        "```",
+      ].join("\n"),
+    );
+
+    expect(steps[0].rest).toEqual({ type: "countdown", duration: 25 });
+    expect(steps[1].rest).toBeUndefined();
+    expect(steps[1].protocol).toBe("drop_set");
+    expect(steps[2].rest).toEqual({ duration: 75 });
+    expect(stepOf(steps, "b")).toBe(steps[0]);
+    expect(stepOf(steps, "F")).toBe(steps[2]);
+  });
 });
 
 describe("readSectionPlan", () => {
@@ -296,6 +366,75 @@ describe("sessionProgress", () => {
 
     expect(done.map((sets) => sets.length)).toEqual([1, 0, 2]);
     expect(current).toBe(0);
+  });
+
+  it("tracks composite superset progress round by round by blockId or exercise name, skipping warm-ups", () => {
+    const superset: SessionStep = {
+      exercise: "Bench + Row",
+      exercises: ["Bench", "Row"],
+      block: "ss1",
+      sets: 2,
+      rest: {},
+    };
+    const steps = [superset, { ...step("Bench", 1), block: "b2" }];
+
+    const r1Start = sessionProgress(steps, [{ ...set("Bench"), block: "ss1", protocol: "warmup" }]);
+    expect(r1Start.current).toBe(0);
+    expect(supersetProgress(superset, r1Start.done[0])).toMatchObject({
+      counts: [0, 0],
+      completedRounds: 0,
+      round: 1,
+      exerciseIndex: 0,
+      exercise: "Bench",
+    });
+
+    const r1Mid = sessionProgress(steps, [{ ...set("Bench"), block: "ss1" }]);
+    expect(r1Mid.current).toBe(0);
+    expect(supersetProgress(superset, r1Mid.done[0])).toMatchObject({
+      counts: [1, 0],
+      completedRounds: 0,
+      round: 1,
+      exerciseIndex: 1,
+      exercise: "Row",
+    });
+
+    const r2Start = sessionProgress(steps, [
+      { ...set("Bench"), block: "ss1" },
+      set("Row"), // block undefined matches superset's exercises
+    ]);
+    expect(r2Start.current).toBe(0);
+    expect(supersetProgress(superset, r2Start.done[0])).toMatchObject({
+      counts: [1, 1],
+      completedRounds: 1,
+      round: 2,
+      exerciseIndex: 0,
+      exercise: "Bench",
+    });
+
+    // Completing round 2 finishes the superset step and advances to b2;
+    // a set tagged for b2 stays on b2 instead of leaking into ss1
+    const afterSs = sessionProgress(steps, [
+      { ...set("Bench"), block: "b2" },
+      { ...set("Bench"), block: "ss1" },
+      { ...set("Row"), block: "ss1" },
+      { ...set("Bench"), block: "ss1" },
+      { ...set("Row"), block: "ss1" },
+    ]);
+    expect(afterSs.done[0]).toHaveLength(4);
+    expect(afterSs.done[1]).toHaveLength(1);
+    expect(afterSs.current).toBe(-1);
+  });
+
+  it("stays on an unplanned superset step until a later step has a set", () => {
+    const superset: SessionStep = {
+      exercise: "Bench + Row",
+      exercises: ["Bench", "Row"],
+      rest: {},
+    };
+    const steps = [superset, step("Curl", 2)];
+
+    expect(sessionProgress(steps, [set("Bench"), set("Row")]).current).toBe(0);
+    expect(sessionProgress(steps, [set("Bench"), set("Curl")]).current).toBe(1);
   });
 });
 

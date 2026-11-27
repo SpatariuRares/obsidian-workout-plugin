@@ -146,6 +146,26 @@ export class WorkoutFileAnalyzer {
         const rest = step.rest
           ? timerRunSeconds(step.rest, this.plugin.settings)
           : 0;
+        if (step.exercises && step.exercises.length >= 2) {
+          const exerciseCount = step.exercises.length;
+          this.addSets(
+            result,
+            (sets + warmups) * exerciseCount,
+            step.targetReps ?? prose.reps,
+          );
+          const restBetween = step.restBetween ?? 0;
+          if (restBetween > 0) {
+            const intraCount = sets * (exerciseCount - 1);
+            result.totalRestTime += intraCount * restBetween;
+            result.restPeriodCount += intraCount;
+          }
+          const roundRestCount = Math.max(sets - 1, 0);
+          if (rest > 0 && roundRestCount > 0) {
+            result.totalRestTime += roundRestCount * rest;
+            result.restPeriodCount += roundRestCount;
+          }
+          continue;
+        }
         this.addSets(result, sets + warmups, step.targetReps ?? prose.reps);
         if (rest > 0) {
           result.totalRestTime += rest * sets;

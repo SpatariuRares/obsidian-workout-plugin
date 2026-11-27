@@ -24,13 +24,14 @@ jest.mock("@app/features/modals/log/CreateLogModal", () => ({
 interface TimerState {
   id?: string;
   params: unknown;
+  configured: unknown;
   started: number;
   destroyed: boolean;
 }
 const timers: TimerState[] = [];
 jest.mock("@app/features/timer/views/EmbeddedTimerView", () => ({
   EmbeddedTimerView: class {
-    state: TimerState = { params: undefined, started: 0, destroyed: false };
+    state: TimerState = { params: undefined, configured: undefined, started: 0, destroyed: false };
     constructor(_plugin: unknown, id?: string) {
       this.state.id = id;
       timers.push(this.state);
@@ -40,6 +41,9 @@ jest.mock("@app/features/timer/views/EmbeddedTimerView", () => ({
     }
     createTimer(_el: HTMLElement, params: unknown) {
       this.state.params = params;
+    }
+    configure(params: unknown) {
+      this.state.configured = params;
     }
     reset() {}
     start() {
@@ -444,5 +448,151 @@ describe("EmbeddedSessionView with a section timer that has an id", () => {
 
     const shared = timers.find((timer) => timer.id === "squat-rest");
     expect(shared?.destroyed).toBe(false);
+  });
+});
+
+describe("EmbeddedSessionView with a composite superset step", () => {
+  const SUPERSET_NOTE = [
+    "```workout-session",
+    "```",
+    "## Push + Pull",
+    "```workout-sets",
+    "id: ss1",
+    "exercises: [Bench Press, Barbell Row]",
+    "sets: 2",
+    "restBetween: 30",
+    "rest: 90",
+    "```",
+    "## Squat",
+    "```workout-sets",
+    "id: sq1",
+    "exercise: Squat",
+    "sets: 3",
+    "rest: 120",
+    "```",
+  ].join("\n");
+
+  const ssSet = (
+    exercise: string,
+    weight: number,
+    options: { day?: string; block?: string; protocol?: string } = {},
+  ): WorkoutLogData => ({
+    ...set(exercise, weight, options.day ?? today),
+    block: options.block,
+    protocol: options.protocol,
+  });
+
+  it("displays the composite superset step, active exercise, history, and navigates cleanly past the whole superset", async () => {
+    const { el } = setup(
+      [
+        ssSet("Bench Press", 80, { day: "2020-01-01", block: "ss1", protocol: "superset" }),
+        ssSet("Barbell Row", 70, { day: "2020-01-01", block: "ss1", protocol: "superset" }),
+        ssSet("Bench Press", 82.5, { block: "ss1", protocol: "superset" }),
+      ],
+      SUPERSET_NOTE,
+    );
+    await flush();
+
+    expect(el.querySelector(".workout-block-title")?.textContent).toBe(
+      "Bench Press + Barbell Row",
+    );
+    expect(text(el)).toContain(t("session.exerciseOf", { current: 1, total: 2 }));
+    expect(text(el)).toContain(t("session.roundOf", { round: 1, rounds: 2 }));
+    expect(
+      el.querySelector(".workout-session-superset-active a.internal-link.workout-block-title-link")
+        ?.textContent,
+    ).toBe("Barbell Row");
+    expect(text(el)).toContain(
+      t("session.roundExerciseOf", { current: 2, total: 2 }),
+    );
+    expect(text(el)).toContain(
+      t("sets.lastTime", {
+        date: "01/01",
+        sets: t("logs.weightedSet", { weight: 70, unit: "kg", reps: 8 }),
+      }),
+    );
+
+    // Next skips the entire composite superset step directly to Squat
+    button(el, t("session.next")).click();
+    await flush();
+    expect(el.querySelector(".workout-block-title")?.textContent).toBe("Squat");
+
+    button(el, t("session.previous")).click();
+    await flush();
+    expect(el.querySelector(".workout-block-title")?.textContent).toBe(
+      "Bench Press + Barbell Row",
+    );
+  });
+
+  it("prefills CreateLogModal with the active exercise, block, and non-standard protocol", async () => {
+    const { el } = setup(
+      [ssSet("Bench Press", 80, { day: "2020-01-01", protocol: "standard" })],
+      SUPERSET_NOTE,
+    );
+    await flush();
+
+    button(el, t("session.logSet")).click();
+    const [, , exercise, , prefill] = openedModals[0];
+    expect(exercise).toBe("Bench Press");
+    expect(prefill).toMatchObject({
+      exercise: "Bench Press",
+      weight: 80,
+      block: "ss1",
+      protocol: "superset",
+      workout: "Lower Body A",
+    });
+  });
+
+  it("switches between restBetween and round rest on log:added, ignores warmups, and skips round rest after the final round", async () => {
+    const rows: WorkoutLogData[] = [];
+    const { el, eventBus } = setup(rows, SUPERSET_NOTE);
+    await flush();
+
+    const emitLog = (exercise: string, weight: number, protocol = "superset") => {
+      const entry = ssSet(exercise, weight, { block: "ss1", protocol });
+      rows.push(entry);
+      eventBus.emit({
+        type: "log:added",
+        payload: {
+          entry,
+          context: { exercise, workout: "Lower Body A" },
+        },
+      });
+    };
+
+    // Warm-up set does not trigger any timer or advance the round
+    emitLog("Bench Press", 40, "warmup");
+    await flush();
+    expect(timers[timers.length - 1].started).toBe(0);
+    expect(text(el)).toContain(t("session.roundOf", { round: 1, rounds: 2 }));
+
+    // Round 1, exercise 0 (Bench Press) -> restBetween (30s)
+    emitLog("Bench Press", 80);
+    await flush();
+    expect(timers[timers.length - 1].params).toEqual({ type: "countdown", duration: 30 });
+    expect(timers[timers.length - 1].configured).toEqual({ type: "countdown", duration: 30 });
+    expect(timers[timers.length - 1].started).toBe(1);
+    expect(text(el)).toContain("Barbell Row");
+
+    // Round 1, exercise 1 (Barbell Row) -> round rest (90s)
+    emitLog("Barbell Row", 70);
+    await flush();
+    expect(timers[timers.length - 1].params).toEqual({ type: "countdown", duration: 90 });
+    expect(timers[timers.length - 1].configured).toEqual({ type: "countdown", duration: 90 });
+    expect(timers[timers.length - 1].started).toBe(2);
+    expect(text(el)).toContain(t("session.roundOf", { round: 2, rounds: 2 }));
+
+    // Round 2, exercise 0 (Bench Press) -> restBetween (30s)
+    emitLog("Bench Press", 80);
+    await flush();
+    expect(timers[timers.length - 1].params).toEqual({ type: "countdown", duration: 30 });
+    expect(timers[timers.length - 1].configured).toEqual({ type: "countdown", duration: 30 });
+    expect(timers[timers.length - 1].started).toBe(3);
+
+    // Round 2 (final round), exercise 1 (Barbell Row) -> skips round rest and advances to Squat
+    emitLog("Barbell Row", 70);
+    await flush();
+    expect(el.querySelector(".workout-block-title")?.textContent).toBe("Squat");
+    expect(timers[timers.length - 1].started).toBe(3);
   });
 });

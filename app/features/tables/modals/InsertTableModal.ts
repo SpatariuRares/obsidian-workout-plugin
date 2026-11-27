@@ -2,9 +2,9 @@
 import { AdjustField } from "@app/components/molecules/AdjustField";
 import { CONSTANTS } from "@app/constants";
 import { DomUtils } from "@app/utils/DomUtils";
-import { App, Notice } from "obsidian";
+import { App } from "obsidian";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
+import { WizardModal, type WizardStep } from "@app/features/modals/base/WizardModal";
 import {
   TargetSectionWithAutocomplete,
   TargetSectionWithAutocompleteElements,
@@ -31,8 +31,14 @@ import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { t } from "@app/i18n";
 
 const DATE_RANGE_INCREMENT = 7;
+const TARGET_STEP = "target";
 
-export class InsertTableModal extends BaseInsertModal {
+/**
+ * Inserts a `workout-log` table through three steps: what to show (type and
+ * target), display (date range, matching, add button) and the progressive
+ * overload plan
+ */
+export class InsertTableModal extends WizardModal {
   protected tableType?: ChipGroupResult<TABLE_TYPE>;
   protected targetElements?: TargetSectionWithAutocompleteElements;
   private targetHandlers?: TargetSectionWithAutocompleteHandlers;
@@ -40,6 +46,7 @@ export class InsertTableModal extends BaseInsertModal {
   protected advancedElements?: AdvancedOptionsElements;
   protected planFields?: PlanFieldsElements;
   protected progressiveSection?: HTMLElement;
+  private planUnavailable?: HTMLElement;
   protected currentFileName: string;
 
   constructor(app: App, plugin: WorkoutPluginContext) {
@@ -59,18 +66,36 @@ export class InsertTableModal extends BaseInsertModal {
     return t("modal.notices.tableInserted");
   }
 
-  protected createConfigurationSections(
-    container: HTMLElement,
-  ): void {
-    // Table Type Section
+  protected getSteps(): WizardStep[] {
+    return [
+      {
+        id: TARGET_STEP,
+        label: t("wizard.steps.target"),
+        render: (el) => this.renderTargetStep(el),
+        validate: () => this.validateTarget(),
+        isComplete: () => this.targetProblem() === null,
+      },
+      {
+        id: "display",
+        label: t("wizard.steps.display"),
+        render: (el) => this.renderDisplayStep(el),
+      },
+      {
+        id: "plan",
+        label: t("wizard.steps.plan"),
+        render: (el) => this.renderPlanStep(el),
+      },
+    ];
+  }
+
+  private renderTargetStep(container: HTMLElement): void {
+    if (!this.plugin) {
+      throw new Error("Plugin is required for InsertTableModal");
+    }
     const tableTypeSection = this.createSection(
       container,
       t("modal.sections.tableType"),
     );
-
-    if (!this.plugin) {
-      throw new Error("Plugin is required for InsertTableModal");
-    }
 
     // The table type picks which target fields and sections show
     this.tableType = ChipGroup.create<TABLE_TYPE>(tableTypeSection, {
@@ -81,7 +106,10 @@ export class InsertTableModal extends BaseInsertModal {
       ),
       selected: TABLE_TYPE.COMBINED,
       className: "workout-modal-type-chips",
-      onPick: () => this.updateSectionsVisibility(),
+      onPick: () => {
+        this.updateSectionsVisibility();
+        this.refreshHeader();
+      },
     });
 
     const tableType = this.tableType;
@@ -94,19 +122,19 @@ export class InsertTableModal extends BaseInsertModal {
     );
     this.targetElements = target.elements;
     this.targetHandlers = target.handlers;
+  }
 
-    // Configuration Section
+  private renderDisplayStep(container: HTMLElement): void {
+    if (!this.plugin) {
+      throw new Error("Plugin is required for InsertTableModal");
+    }
     const configSection = this.createSection(
       container,
       t("modal.sections.configuration"),
     );
-
-    // Parameters container (grid layout)
     const parametersContainer = configSection.createDiv({
       cls: "workout-parameters-container",
     });
-
-    // Date range with +/- adjust
     this.dateRangeInput = AdjustField.create(parametersContainer, {
       label: t("modal.dateRange"),
       value: 0,
@@ -116,16 +144,6 @@ export class InsertTableModal extends BaseInsertModal {
       unit: "d",
     });
 
-    // Progressive Overload Section
-    this.progressiveSection = this.createSection(
-      container,
-      t("modal.sections.progressiveOverload"),
-    );
-
-    this.planFields = PlanFields.create(this.progressiveSection);
-    this.updateSectionsVisibility();
-
-    // Advanced Options Section using reusable component
     this.advancedElements = AdvancedOptionsSection.create(
       this,
       container,
@@ -134,10 +152,48 @@ export class InsertTableModal extends BaseInsertModal {
         compact: true,
       },
     );
-
-    // Set default values based on plugin settings
     this.advancedElements.exactMatchToggle.checked =
       this.plugin.settings.defaultExactMatch;
+  }
+
+  private renderPlanStep(container: HTMLElement): void {
+    this.progressiveSection = this.createSection(
+      container,
+      t("modal.sections.progressiveOverload"),
+    );
+    this.planFields = PlanFields.create(this.progressiveSection);
+    this.planUnavailable = container.createDiv({
+      cls: "workout-wizard-context",
+      text: t("wizard.table.planUnavailable"),
+    });
+    this.updateSectionsVisibility();
+  }
+
+  /** What is missing from the target, as the field to show it under; null when complete */
+  private targetProblem(): { field?: HTMLInputElement } | null {
+    if (!this.tableType || !this.targetElements) return null;
+    if (this.tableType.value() !== TABLE_TYPE.COMBINED) return null;
+    const { exerciseInput, workoutInput, currentWorkoutToggle } = this.targetElements;
+    if (!exerciseInput.value.trim()) return { field: exerciseInput };
+    if (!currentWorkoutToggle.checked && !workoutInput.value.trim()) {
+      return { field: workoutInput };
+    }
+    return null;
+  }
+
+  private validateTarget(): boolean {
+    const problem = this.targetProblem();
+    this.setStepError(
+      TARGET_STEP,
+      problem ? t("modal.notices.validationCombinedMode") : null,
+      problem?.field,
+    );
+    return problem === null;
+  }
+
+  /** The step's own check also guards a direct submit (Update from any step, Insert) */
+  protected canInsert(): boolean {
+    return this.validateTarget();
   }
 
   protected updateSectionsVisibility(): void {
@@ -158,6 +214,7 @@ export class InsertTableModal extends BaseInsertModal {
         display: showProgressive ? "flex" : "none",
       });
     }
+    this.planUnavailable?.classList.toggle("workout-display-none", showProgressive);
 
     if (showTarget) {
       this.targetHandlers.updateVisibility();
@@ -196,14 +253,6 @@ export class InsertTableModal extends BaseInsertModal {
       this.advancedElements,
     );
     const plan = this.planFields ? PlanFields.read(this.planFields) : {};
-
-    if (
-      tableType === TABLE_TYPE.COMBINED &&
-      (!target.exercise || !target.workout)
-    ) {
-      new Notice(t("modal.notices.validationCombinedMode"));
-      throw new Error(t("modal.errors.validationCombinedMode"));
-    }
 
     return {
       exercise: target.exercise || undefined,

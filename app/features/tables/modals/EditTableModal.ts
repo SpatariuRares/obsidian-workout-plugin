@@ -7,7 +7,11 @@ import {
 } from "@app/features/tables/types";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { PlanFields } from "@app/features/tables/modals/components/PlanFields";
-import type { EditTarget } from "@app/features/modals/base/components/createEditButtons";
+import {
+  applyBlockEdit,
+  changesSince,
+  type EditTarget,
+} from "@app/features/modals/base/components/createEditButtons";
 import { t } from "@app/i18n";
 
 /**
@@ -19,6 +23,7 @@ import { t } from "@app/i18n";
  */
 export class EditTableModal extends InsertTableModal {
   private readonly initialParams: EmbeddedTableParams;
+  private formAtOpen?: EmbeddedTableParams;
 
   /** @param where - The note the block is written in, and how to find it without an id */
   constructor(
@@ -29,6 +34,7 @@ export class EditTableModal extends InsertTableModal {
   ) {
     super(app, plugin);
     this.initialParams = params;
+    this.quickSubmit = true;
   }
 
   protected getModalTitle(): string {
@@ -48,6 +54,10 @@ export class EditTableModal extends InsertTableModal {
   ): void {
     super.createConfigurationSections(container);
     this.prefillFields();
+    // Snapshot after the prefill so only what the user changes is patched
+    this.formAtOpen = this.collectParams();
+    // The prefill sets values without events: refresh the stepper for them
+    this.refreshHeader();
   }
 
   /**
@@ -103,14 +113,25 @@ export class EditTableModal extends InsertTableModal {
     return TABLE_TYPE.ALL;
   }
 
-  protected createButtons(container: HTMLElement): void {
-    const { id } = this.initialParams;
-    this.editButtons(container, tableBlock, t("modal.notices.tableUpdateFailed"), {
-      target: this.where,
-      id,
-      collectParams: () => this.collectParams(),
+  protected submit(): void {
+    const formNow = this.collectParams();
+    const changes = changesSince(
+      this.formAtOpen ?? formNow,
+      formNow,
+      this.where,
       // The rows now follow the planned sets (tableRowLimit)
-      retiredParams: ["limit"],
-    });
+      ["limit"],
+    );
+    applyBlockEdit(
+      this,
+      {
+        schema: tableBlock,
+        target: this.where,
+        id: this.initialParams.id,
+        successMessage: this.getSuccessMessage(),
+        failureMessage: t("modal.notices.tableUpdateFailed"),
+      },
+      changes,
+    );
   }
 }

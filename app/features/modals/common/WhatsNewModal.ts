@@ -1,12 +1,14 @@
 import { App, Component, MarkdownRenderer } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { Button } from "@app/components/atoms";
+import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { t } from "@app/i18n";
 import {
   RELEASES_URL,
   type ReleaseNotes,
 } from "@app/services/onboarding/WhatsNew";
 import logo from "@app/features/modals/common/whatsNewLogo.webp";
+
+const SUPPORT_URL = "https://buymeacoffee.com/spatariurares";
 
 /**
  * The release notes of one or more versions, newest first
@@ -34,6 +36,14 @@ export class WhatsNewModal extends ModalBase {
       attr: { src: logo, alt: "" },
     });
     header.createEl("h2", { text: t("whatsNew.title") });
+    const supportButton = Button.create(header, {
+      text: t("whatsNew.buyMeACoffee"),
+      variant: BUTTONVARIANT.PRIMARY,
+    });
+    Button.onClick(supportButton, () => {
+      // eslint-disable-next-line i18next/no-literal-string -- Browser target and flags, not UI text.
+      window.open(SUPPORT_URL, "_blank", "noopener,noreferrer");
+    });
 
     // The newest release open, older ones folded
     this.releases.forEach((release, index) => {
@@ -59,7 +69,7 @@ export class WhatsNewModal extends ModalBase {
     });
 
     Button.createModalActions(contentEl, {
-      primary: { text: t("whatsNew.close"), onClick: () => this.close() },
+      others: [{ text: t("whatsNew.close"), onClick: () => this.close() }],
     });
   }
 

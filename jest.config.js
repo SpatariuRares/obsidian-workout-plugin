@@ -17,6 +17,10 @@ module.exports = {
   // Test file patterns
   testMatch: ["**/__tests__/**/*.test.ts", "**/*.test.ts"],
 
+  // Agent worktrees under .claude/ hold other branches' copies of the tests
+  testPathIgnorePatterns: ["/node_modules/", "<rootDir>/.claude/"],
+  modulePathIgnorePatterns: ["<rootDir>/.claude/"],
+
   // Module file extensions
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
 

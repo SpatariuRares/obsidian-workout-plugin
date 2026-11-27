@@ -32,3 +32,50 @@
   border-top: var(--workout-border-thin) solid var(--workout-border-color);
   padding-top: var(--workout-space-sm);
 }
+
+.workout-session-superset-active {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--workout-space-xs) var(--workout-space-sm);
+  font-weight: var(--workout-font-weight-semibold);
+
+  .workout-block-title-link {
+    color: var(--workout-text-accent);
+  }
+}
+
+body.is-mobile .workout-session-superset-active .workout-block-title-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--workout-touch-target-min);
+}
+
+.workout-session-superset-exercises {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--workout-space-xs);
+}
+
+.workout-session-superset-exercise {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--workout-space-2xs) var(--workout-space-sm);
+  border-radius: var(--workout-radius-full);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
+  background: var(--background-primary);
+  color: var(--text-muted);
+  font-size: var(--workout-font-xs);
+
+  &.is-active {
+    border-color: var(--interactive-accent);
+    color: var(--workout-text-accent);
+    font-weight: var(--workout-font-weight-semibold);
+  }
+
+  &.is-done {
+    background: var(--workout-accent-fill);
+    border-color: var(--workout-accent-fill);
+    color: var(--text-on-accent);
+  }
+}

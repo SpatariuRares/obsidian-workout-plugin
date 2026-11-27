@@ -169,6 +169,25 @@ describe("NumberField molecule", () => {
       expect(input.value).toBe("2");
     });
 
+    it("reads a dynamic suggestion callback when stepping from an empty field", () => {
+      let current: number | undefined = 30;
+      const { container, input } = NumberField.create(createObsidianContainer(), {
+        label: "Round rest",
+        suggestion: () => current,
+        integer: true,
+        min: 0,
+        step: 15,
+      });
+      expect(input.placeholder).toBe("30");
+
+      current = 90;
+      const [, plus] = Array.from(
+        container.querySelectorAll<HTMLButtonElement>(".workout-number-field-step"),
+      );
+      plus.click();
+      expect(input.value).toBe("105");
+    });
+
     it("leaves the arrow keys alone without a step", () => {
       const { input } = NumberField.create(createObsidianContainer(), { label: "Reps", value: "5" });
 

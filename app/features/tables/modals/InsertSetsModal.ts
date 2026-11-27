@@ -15,6 +15,7 @@ import { ICONS } from "@app/constants/ui.constants";
 import {
   setsBlock,
   isSupersetBlock,
+  slotLetter,
   type EmbeddedSetsParams,
 } from "@app/features/tables/setsBlock";
 import {
@@ -31,6 +32,7 @@ import {
 import { WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { FormatUtils } from "@app/utils/FormatUtils";
+import { describeTarget } from "@app/features/modals/log/LogHistory";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { t } from "@app/i18n";
@@ -39,10 +41,6 @@ const DEFAULT_SETS = 3;
 const MAX_WARMUPS = 10;
 const REST_INCREMENT = 15;
 let nextExerciseErrorId = 0;
-
-function slotLetter(index: number): string {
-  return String.fromCharCode(65 + (index % 26));
-}
 
 function supersetGroupLabel(count: number): string {
   if (count <= 2) return t("modal.wizard.groupLabel.superset", { count });
@@ -624,7 +622,10 @@ export class InsertSetsModal extends WizardModal<InsertSetsState> {
       this.restInput = AdjustField.create(grid, {
         label: t("modal.wizard.restRoundLabel"),
         value: hasFallback ? undefined : state.rest,
-        suggestion: hasFallback ? String(state.restBetween) : undefined,
+        suggestion: () =>
+          state.rest === 0 && state.restBetween > 0
+            ? state.restBetween
+            : undefined,
         min: 0,
         max: 600,
         step: REST_INCREMENT,
@@ -857,25 +858,16 @@ export class InsertSetsModal extends WizardModal<InsertSetsState> {
       );
     }
     if (!superset) {
-      const unit = ParameterUtils.getWeightUnit();
-      const { targetWeight, targetReps } = state;
-      if (targetWeight && targetWeight > 0 && targetReps && targetReps > 0) {
-        parts.push(
-          t("modal.wizard.review.targetWeightReps", {
-            weight: targetWeight,
-            unit,
-            reps: targetReps,
-          }),
-        );
-      } else if (targetWeight && targetWeight > 0) {
-        parts.push(
-          t("modal.wizard.review.targetWeight", { weight: targetWeight, unit }),
-        );
-      } else if (targetReps && targetReps > 0) {
-        parts.push(
-          t("modal.wizard.review.targetReps", { reps: targetReps }),
-        );
-      }
+      const unit =
+        this.plugin?.settings?.weightUnit ?? ParameterUtils.getWeightUnit();
+      const target = describeTarget(
+        state.targetReps && state.targetReps > 0 ? state.targetReps : undefined,
+        state.targetWeight && state.targetWeight > 0
+          ? state.targetWeight
+          : undefined,
+        unit,
+      );
+      if (target) parts.push(target);
     }
     return parts.join(" · ");
   }

@@ -6,6 +6,7 @@ import {
 } from "@app/services/notes/WorkoutNote";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import {
+  betweenRest,
   blockExercises,
   blockProtocol,
   blockRest,
@@ -15,7 +16,6 @@ import {
 } from "@app/features/tables/setsBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
 import type { EmbeddedTimerParams } from "@app/features/timer/types";
-import { TIMER_TYPE } from "@app/types/WorkoutConfigTypes";
 import {
   findBlock,
   type CodeBlockMatch,
@@ -110,7 +110,7 @@ export function readSectionPlan(section: NoteSection): SessionStep[] {
     const exercises = blockExercises(params);
     if (exercises.length === 0) continue;
 
-    const superset = exercises.length >= 2;
+    const superset = isSupersetBlock(params);
     const warmups = params.warmups;
     const protocol = blockProtocol(params);
     const setsRest: RestBlock = {
@@ -212,9 +212,7 @@ export function stepRest(
   if (params.rest === 0) return undefined;
   const own = blockRest(params);
   if (own) return own;
-  if (isSupersetBlock(params) && params.restBetween && params.restBetween > 0) {
-    return { type: TIMER_TYPE.COUNTDOWN, duration: params.restBetween };
-  }
+  if (isSupersetBlock(params)) return betweenRest(params) ?? sectionRest;
   return sectionRest;
 }
 
@@ -320,7 +318,7 @@ function exerciseSetCount(
   stepDone: WorkoutLogData[],
   normalizedExercise: string,
 ): number {
-  if (!step.exercises || step.exercises.length < 2) return stepDone.length;
+  if (stepExercises(step).length < 2) return stepDone.length;
   return stepDone.filter(
     (s) => StringUtils.normalize(s.exercise) === normalizedExercise,
   ).length;
@@ -376,7 +374,7 @@ export function sessionProgress(
     if (planned === undefined) {
       return done.slice(index + 1).some((sets) => sets.length > 0);
     }
-    if (step.exercises && step.exercises.length >= 2) {
+    if (stepExercises(step).length >= 2) {
       return supersetProgress(step, done[index]).completedRounds >= planned;
     }
     return done[index].length >= planned;

@@ -72,6 +72,23 @@ export function isSupersetBlock(params: EmbeddedSetsParams): boolean {
   return blockExercises(params).length >= 2;
 }
 
+/** Slot letter for a superset exercise index (`A`, `B`, ...; `27`+ beyond `Z`) */
+export function slotLetter(index: number): string {
+  return index < 26 ? String.fromCharCode(65 + index) : String(index + 1);
+}
+
+/**
+ * Countdown timer for intra-round rest between superset exercises
+ * (`restBetween`), or undefined when unset / 0.
+ */
+export function betweenRest(
+  params: Pick<EmbeddedSetsParams, "restBetween">,
+): EmbeddedTimerParams | undefined {
+  return params.restBetween && params.restBetween > 0
+    ? { type: TIMER_TYPE.COUNTDOWN, duration: params.restBetween }
+    : undefined;
+}
+
 /**
  * Effective block-level working protocol: explicit `protocol:` if set,
  * otherwise `superset` for multi-exercise blocks, else undefined.

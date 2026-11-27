@@ -29,8 +29,7 @@ import {
   type SupersetRound,
   type SupersetSlot,
 } from "@app/features/tables/business/setSheet";
-import { blockExercises, isSupersetBlock, setsBlock, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
-import { TIMER_TYPE } from "@app/types/WorkoutConfigTypes";
+import { betweenRest, blockExercises, isSupersetBlock, setsBlock, slotLetter, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
 import {
   TrainingHistory,
   localDay,
@@ -141,8 +140,7 @@ const setLabel = (row: Pick<SetRow, "warmup" | "number">): string =>
   row.warmup ? t("sets.warmupNumber", { set: row.number }) : String(row.number);
 
 const slotLabel = (row: Pick<SetRow, "warmup" | "number">, exerciseIndex: number): string => {
-  const slot =
-    exerciseIndex < 26 ? String.fromCharCode(65 + exerciseIndex) : String(exerciseIndex + 1);
+  const slot = slotLetter(exerciseIndex);
   return row.warmup
     ? t("sets.warmupSlot", { round: row.number, slot })
     : t("sets.workingSlot", { round: row.number, slot });
@@ -440,11 +438,7 @@ export class SetSheet extends MarkdownRenderChild {
       roundIndex: 0,
       totalWorkingRounds: Math.max(workingRounds, 2),
     });
-    const betweenRest =
-      this.params.restBetween && this.params.restBetween > 0
-        ? { type: TIMER_TYPE.COUNTDOWN, duration: this.params.restBetween }
-        : undefined;
-    const idleRest = roundRest ?? betweenRest;
+    const idleRest = roundRest ?? betweenRest(this.params);
 
     let mostRecentWorkingSet: WorkoutLogData | undefined;
     for (const ex of exerciseInputs) {
@@ -1060,6 +1054,9 @@ export class SetSheet extends MarkdownRenderChild {
       if (slotRest) {
         this.activeRest = slotRest;
         this.restTimer.restart(slotRest);
+      } else if (this.activeRest) {
+        this.restTimer.cancel(this.activeRest);
+        this.activeRest = undefined;
       }
     } catch (error) {
       await this.rollBack(restore, error);

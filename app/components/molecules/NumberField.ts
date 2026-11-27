@@ -16,9 +16,9 @@ export interface NumberFieldProps {
   value?: string;
   /**
    * Shown in the empty field and used when it stays empty: readable (muted),
-   * lighter than a typed value
+   * lighter than a typed value. May be a function for live-updated defaults.
    */
-  suggestion?: string;
+  suggestion?: string | number | (() => string | number | undefined);
   /** Whole numbers: numeric keyboard, steppers round */
   integer?: boolean;
   /** Free text (a grade, a style): the normal keyboard */
@@ -77,6 +77,15 @@ export class NumberField {
       ? stepper(-props.step, t("modal.buttons.adjustMinus"), t("modal.buttons.decreaseBy", increment))
       : undefined;
 
+    const resolveSuggestion = (): string | undefined => {
+      const raw =
+        typeof props.suggestion === "function"
+          ? props.suggestion()
+          : props.suggestion;
+      if (raw === undefined) return undefined;
+      return typeof raw === "number" ? String(raw) : raw;
+    };
+
     const input = box.createEl("input", {
       cls: "workout-number-field-input",
       attr: {
@@ -86,7 +95,7 @@ export class NumberField {
         enterkeyhint: props.enterKeyHint ?? "done",
         autocomplete: "off",
         "aria-label": label,
-        placeholder: props.suggestion ?? "",
+        placeholder: resolveSuggestion() ?? "",
       },
     });
     input.value = props.value ?? "";
@@ -123,10 +132,11 @@ export class NumberField {
     /** From the typed value, else the suggestion, else the lower limit */
     const move = (delta: number) => {
       const typed = parseNumber(input.value);
+      const suggested = parseNumber(resolveSuggestion());
       const base = Number.isFinite(typed)
         ? typed
-        : Number.isFinite(parseNumber(props.suggestion))
-          ? parseNumber(props.suggestion)
+        : Number.isFinite(suggested)
+          ? suggested
           : (props.min ?? 0);
       let next = base + delta;
       if (props.min !== undefined) next = Math.max(props.min, next);

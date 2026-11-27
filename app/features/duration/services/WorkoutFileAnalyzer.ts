@@ -13,7 +13,7 @@ import {
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
 import { setsBlock } from "@app/features/tables/setsBlock";
-import { readSectionPlan } from "@app/features/session/business/sessionPlan";
+import { readSectionPlan, stepExercises } from "@app/features/session/business/sessionPlan";
 import { timerRunSeconds } from "@app/features/timer/business/timerRunSeconds";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import { PathUtils } from "@app/utils/PathUtils";
@@ -146,8 +146,9 @@ export class WorkoutFileAnalyzer {
         const rest = step.rest
           ? timerRunSeconds(step.rest, this.plugin.settings)
           : 0;
-        if (step.exercises && step.exercises.length >= 2) {
-          const exerciseCount = step.exercises.length;
+        const exercises = stepExercises(step);
+        if (exercises.length >= 2) {
+          const exerciseCount = exercises.length;
           this.addSets(
             result,
             (sets + warmups) * exerciseCount,

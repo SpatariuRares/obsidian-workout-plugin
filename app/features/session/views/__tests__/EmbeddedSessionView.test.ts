@@ -26,12 +26,21 @@ interface TimerState {
   params: unknown;
   configured: unknown;
   started: number;
+  running: boolean;
+  resets: number;
   destroyed: boolean;
 }
 const timers: TimerState[] = [];
 jest.mock("@app/features/timer/views/EmbeddedTimerView", () => ({
   EmbeddedTimerView: class {
-    state: TimerState = { params: undefined, configured: undefined, started: 0, destroyed: false };
+    state: TimerState = {
+      params: undefined,
+      configured: undefined,
+      started: 0,
+      running: false,
+      resets: 0,
+      destroyed: false,
+    };
     constructor(_plugin: unknown, id?: string) {
       this.state.id = id;
       timers.push(this.state);
@@ -45,12 +54,16 @@ jest.mock("@app/features/timer/views/EmbeddedTimerView", () => ({
     configure(params: unknown) {
       this.state.configured = params;
     }
-    reset() {}
+    reset() {
+      this.state.running = false;
+      this.state.resets++;
+    }
     start() {
       this.state.started++;
+      this.state.running = true;
     }
     isTimerRunning() {
-      return this.state.started > 0;
+      return this.state.running;
     }
     destroy() {
       this.state.destroyed = true;
@@ -589,10 +602,45 @@ describe("EmbeddedSessionView with a composite superset step", () => {
     expect(timers[timers.length - 1].configured).toEqual({ type: "countdown", duration: 30 });
     expect(timers[timers.length - 1].started).toBe(3);
 
-    // Round 2 (final round), exercise 1 (Barbell Row) -> skips round rest and advances to Squat
+    // Round 2 (final round), exercise 1 (Barbell Row) -> cancels active restBetween, skips round rest, and advances to Squat
     emitLog("Barbell Row", 70);
     await flush();
     expect(el.querySelector(".workout-block-title")?.textContent).toBe("Squat");
     expect(timers[timers.length - 1].started).toBe(3);
+    expect(timers[timers.length - 1].running).toBe(false);
+  });
+
+  it("cancels an active restBetween timer on round-end when rest: 0 and does not start a new timer", async () => {
+    const zeroRoundRestNote = SUPERSET_NOTE.replace("rest: 90", "rest: 0");
+    const rows: WorkoutLogData[] = [];
+    const { el, eventBus } = setup(rows, zeroRoundRestNote);
+    await flush();
+
+    const emitLog = (exercise: string, weight: number) => {
+      const entry = ssSet(exercise, weight, { block: "ss1", protocol: "superset" });
+      rows.push(entry);
+      eventBus.emit({
+        type: "log:added",
+        payload: {
+          entry,
+          context: { exercise, workout: "Lower Body A" },
+        },
+      });
+    };
+
+    // Round 1, exercise 0 (Bench Press) -> starts 30s restBetween
+    emitLog("Bench Press", 80);
+    await flush();
+    const timer = timers[timers.length - 1];
+    expect(timer.started).toBe(1);
+    expect(timer.running).toBe(true);
+    expect(timer.params).toEqual({ type: "countdown", duration: 30 });
+
+    // Round 1, exercise 1 (Barbell Row) with rest: 0 -> cancels 30s restBetween and does not restart
+    emitLog("Barbell Row", 70);
+    await flush();
+    expect(text(el)).toContain(t("session.roundOf", { round: 2, rounds: 2 }));
+    expect(timer.started).toBe(1);
+    expect(timer.running).toBe(false);
   });
 });

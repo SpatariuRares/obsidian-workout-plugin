@@ -1,10 +1,12 @@
 import {
+  betweenRest,
   blockExercises,
   blockProtocol,
   blockRest,
   isSupersetBlock,
   restParams,
   setsBlock,
+  slotLetter,
 } from "@app/features/tables/setsBlock";
 import { tableBlock } from "@app/features/tables/tableBlock";
 
@@ -148,5 +150,16 @@ describe("the rest timer written in a workout-sets block", () => {
     expect(isSupersetBlock({ exercise: "Squat", exercises: ["OnlyOne"] })).toBe(false);
     expect(blockExercises({ exercises: ["OnlyOne"] })).toEqual([]);
     expect(blockExercises({})).toEqual([]);
+  });
+
+  it("derives betweenRest countdown and superset slotLetter", () => {
+    expect(betweenRest({})).toBeUndefined();
+    expect(betweenRest({ restBetween: 0 })).toBeUndefined();
+    expect(betweenRest({ restBetween: 45 })).toEqual({ type: "countdown", duration: 45 });
+
+    expect(slotLetter(0)).toBe("A");
+    expect(slotLetter(1)).toBe("B");
+    expect(slotLetter(25)).toBe("Z");
+    expect(slotLetter(26)).toBe("27");
   });
 });

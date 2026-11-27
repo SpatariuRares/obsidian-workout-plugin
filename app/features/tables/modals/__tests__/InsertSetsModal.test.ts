@@ -219,6 +219,9 @@ describe("InsertSetsModal wizard", () => {
     expect(reviewInset!.textContent).toContain("Bench Press");
     expect(reviewInset!.textContent).toContain("Upper A");
     expect(reviewInset!.textContent).toContain("4");
+    expect(reviewInset!.textContent).toContain(
+      t("logs.weightedSet", { weight: 85, unit: "kg", reps: 8 }),
+    );
 
     // Increment rest via +15 button and check live Review update
     const incBtn = restInput
@@ -383,9 +386,7 @@ describe("InsertSetsModal wizard", () => {
       ".workout-wizard-review-inset",
     )?.textContent;
     expect(reviewText).toContain(t("modal.wizard.review.lastTime"));
-    expect(reviewText).toContain(
-      t("modal.wizard.review.targetReps", { reps: 10 }),
-    );
+    expect(reviewText).toContain(t("session.targetReps", { reps: 10 }));
     expect(reviewText).toContain(t("modal.wizard.review.sectionTimer"));
 
     buttonByText(contentEl, t("modal.buttons.insertSets")).click();
@@ -711,6 +712,13 @@ describe("InsertSetsModal wizard", () => {
     expect(rhythmEl!.textContent).toBe(
       `A → ${FormatUtils.formatDuration(90)} → B → ${FormatUtils.formatDuration(90)} → ${t("modal.wizard.rhythmNextRound")}`,
     );
+
+    // Clicking + on empty Round rest steps from the live restBetween suggestion (90 -> 105)
+    const roundRestInc = roundRestInput
+      .closest(".workout-number-field")!
+      .querySelectorAll<HTMLButtonElement>(".workout-number-field-step")[1];
+    roundRestInc.click();
+    expect(roundRestInput.value).toBe("105");
 
     // Override Round rest to 120s and Rest between to 30s
     setFieldValue(restBetweenInput, "30");

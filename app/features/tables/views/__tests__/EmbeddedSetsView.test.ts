@@ -1263,5 +1263,57 @@ describe("EmbeddedSetsView", () => {
       await flush();
       expect(timers[0].started).toBe(0);
     });
+
+    it("cancels active restBetween timer on final slot of final round and on round-end with rest: 0", async () => {
+      // Final round case (restBetween: 30, rest: 120, sets: 1)
+      const finalRound = setup([], {
+        exercises: ["Bench Press", "Barbell Row"],
+        sets: 1,
+        restBetween: 30,
+        rest: 120,
+      });
+      await flush();
+
+      // Tick 1.A -> starts 30s restBetween
+      type(inputsOf(rowsOf(finalRound.el)[0])[0], "8");
+      type(inputsOf(rowsOf(finalRound.el)[0])[1], "80");
+      check(rowsOf(finalRound.el)[0]).click();
+      await flush();
+      expect(timers[0].started).toBe(1);
+      expect(timers[0].params).toEqual({ type: "countdown", duration: 30 });
+
+      // Tick 1.B (final slot of final round) -> cancels active restBetween, leaves no rest running
+      type(inputsOf(rowsOf(finalRound.el)[1])[0], "10");
+      type(inputsOf(rowsOf(finalRound.el)[1])[1], "70");
+      check(rowsOf(finalRound.el)[1]).click();
+      await flush();
+      expect(timers[0].startCalls).toBe(1);
+      expect(timers[0].started).toBe(0);
+      expect(timers[0].params).toEqual({ type: "countdown", duration: 120 });
+
+      // rest: 0 round-end case (restBetween: 30, rest: 0, sets: 2)
+      const zeroRoundRest = setup([], {
+        exercises: ["Bench Press", "Barbell Row"],
+        sets: 2,
+        restBetween: 30,
+        rest: 0,
+      });
+      await flush();
+      const timer = timers[timers.length - 1];
+
+      type(inputsOf(rowsOf(zeroRoundRest.el)[0])[0], "8");
+      type(inputsOf(rowsOf(zeroRoundRest.el)[0])[1], "80");
+      check(rowsOf(zeroRoundRest.el)[0]).click();
+      await flush();
+      expect(timer.started).toBe(1);
+      expect(timer.params).toEqual({ type: "countdown", duration: 30 });
+
+      type(inputsOf(rowsOf(zeroRoundRest.el)[1])[0], "10");
+      type(inputsOf(rowsOf(zeroRoundRest.el)[1])[1], "70");
+      check(rowsOf(zeroRoundRest.el)[1]).click();
+      await flush();
+      expect(timer.startCalls).toBe(1);
+      expect(timer.started).toBe(0);
+    });
   });
 });

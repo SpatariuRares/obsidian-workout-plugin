@@ -22,8 +22,8 @@ import {
   sameWorkout,
 } from "@app/services/history/TrainingHistory";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { betweenRest } from "@app/features/tables/setsBlock";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import { TIMER_TYPE } from "@app/types/WorkoutConfigTypes";
 import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
 import { ProtocolBadge } from "@app/components/atoms/ProtocolBadge";
 import { BlockCard } from "@app/components/molecules/BlockCard";
@@ -147,7 +147,7 @@ class SessionRenderChild extends MarkdownRenderChild {
       ? this.resolveLoggedStepAndRest(plan, logs, context.exercise, entry.block)
       : undefined;
     const prevRest = this.restingRest;
-    if (prevRest && matched?.rest && prevRest.id !== matched.rest.id) {
+    if (prevRest && (!matched?.rest || prevRest.id !== matched.rest.id)) {
       this.restTimer.cancel(prevRest);
     }
     this.restingStep = matched?.rest ? matched.step : undefined;
@@ -175,20 +175,17 @@ class SessionRenderChild extends MarkdownRenderChild {
     if (stepIndex < 0) return undefined;
 
     const step = plan[stepIndex];
-    if (!step.exercises || step.exercises.length < 2) {
+    const exercises = stepExercises(step);
+    if (exercises.length < 2) {
       return { step, rest: step.rest };
     }
 
-    const exerciseIndex = step.exercises.findIndex(
+    const exerciseIndex = exercises.findIndex(
       (ex) => StringUtils.normalize(ex) === wanted,
     );
     if (exerciseIndex < 0) return { step, rest: undefined };
-    if (exerciseIndex < step.exercises.length - 1) {
-      const between =
-        step.restBetween && step.restBetween > 0
-          ? { type: TIMER_TYPE.COUNTDOWN, duration: step.restBetween }
-          : undefined;
-      return { step, rest: between };
+    if (exerciseIndex < exercises.length - 1) {
+      return { step, rest: betweenRest(step) };
     }
 
     const today = localDay(new Date());
@@ -241,7 +238,7 @@ class SessionRenderChild extends MarkdownRenderChild {
           : current;
       const step = steps[index];
       const superset =
-        step && step.exercises && step.exercises.length >= 2
+        step && stepExercises(step).length >= 2
           ? supersetProgress(step, done[index])
           : undefined;
       const activeExercise = superset ? superset.exercise : step?.exercise;
@@ -317,10 +314,7 @@ class SessionRenderChild extends MarkdownRenderChild {
       const restStep = keepResting ? this.restingStep : step;
       const displayRest = keepResting
         ? restingTimer
-        : (step.rest ??
-          (step.exercises && step.restBetween && step.restBetween > 0
-            ? { type: TIMER_TYPE.COUNTDOWN, duration: step.restBetween }
-            : undefined));
+        : (step.rest ?? (superset ? betweenRest(step) : undefined));
       // A step with `rest: 0` rests on nothing (see stepRest)
       if (displayRest) {
         const restEl = card.createDiv({ cls: "workout-session-rest" });

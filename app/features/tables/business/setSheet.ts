@@ -19,8 +19,7 @@ import {
 } from "@app/features/session/business/sessionPlan";
 import type { CodeBlockMatch } from "@app/services/editor/CodeBlockEditorService";
 import type { EmbeddedTimerParams } from "@app/features/timer/types";
-import { blockRest, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
-import { TIMER_TYPE } from "@app/types/WorkoutConfigTypes";
+import { betweenRest, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
 import {
   readSetFields,
   validate,
@@ -391,17 +390,7 @@ export function supersetSlotRest(
   },
 ): EmbeddedTimerParams | undefined {
   if (isWarmup) return undefined;
-  if (exerciseIndex < exerciseCount - 1) {
-    return params.restBetween && params.restBetween > 0
-      ? { type: TIMER_TYPE.COUNTDOWN, duration: params.restBetween }
-      : undefined;
-  }
+  if (exerciseIndex < exerciseCount - 1) return betweenRest(params);
   if (roundIndex >= totalWorkingRounds - 1) return undefined;
-  if (params.rest === 0) return undefined;
-  const own = blockRest(params);
-  if (own) return own;
-  if (params.rest === undefined && params.restBetween && params.restBetween > 0) {
-    return { type: TIMER_TYPE.COUNTDOWN, duration: params.restBetween };
-  }
   return stepRest(params, sectionRest);
 }

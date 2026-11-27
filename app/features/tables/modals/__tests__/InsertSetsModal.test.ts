@@ -49,6 +49,7 @@ describe("InsertSetsModal wizard", () => {
   it("jumps from the stepper once the exercise is chosen", () => {
     const { visible, tab, exercise } = openWizard(InsertSetsModal);
     exercise().value = "Squat";
+    exercise().dispatchEvent(new Event("input", { bubbles: true }));
 
     tab(3).click();
 
@@ -119,6 +120,16 @@ describe("InsertSetsModal wizard", () => {
     w.button(t("wizard.back"))!.click();
 
     expect(w.field(t("modal.labels.plannedSets")).value).toBe("5");
+  });
+
+  it("blocks a direct submit without an exercise", () => {
+    const w = openWizard(InsertSetsModal);
+    const modal = w.modal as unknown as { submit(): void };
+
+    modal.submit();
+
+    expect(w.inserted).toHaveLength(0);
+    expect(w.close).not.toHaveBeenCalled();
   });
 
   it("cancel inserts nothing", () => {

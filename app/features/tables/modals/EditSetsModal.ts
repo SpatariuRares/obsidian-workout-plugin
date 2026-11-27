@@ -3,9 +3,9 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { InsertSetsModal } from "@app/features/tables/modals/InsertSetsModal";
 import { PlanFields } from "@app/features/tables/modals/components/PlanFields";
 import { setsBlock, type EmbeddedSetsParams } from "@app/features/tables/setsBlock";
-import { changedParams } from "@app/services/codeblocks/CodeBlockSchema";
 import {
   applyBlockEdit,
+  changesSince,
   type EditTarget,
 } from "@app/features/modals/base/components/createEditButtons";
 import { t } from "@app/i18n";
@@ -49,14 +49,13 @@ export class EditSetsModal extends InsertSetsModal {
     if (this.restInput) this.restInput.value = String(this.initialParams.rest ?? 0);
     // Snapshot after the prefill so only what the user changes is patched
     this.formAtOpen = this.collectParams();
+    // The prefill sets values without events: unlock the stepper for them
+    this.refreshHeader();
   }
 
   protected submit(): void {
     const formNow = this.collectParams();
-    const changes = changedParams(this.formAtOpen ?? formNow, formNow);
-    for (const key of this.where.invalidKeys ?? []) {
-      changes[key as keyof EmbeddedSetsParams] = formNow[key as keyof EmbeddedSetsParams] as never;
-    }
+    const changes = changesSince(this.formAtOpen ?? formNow, formNow, this.where);
     applyBlockEdit(
       this,
       {

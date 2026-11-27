@@ -70,6 +70,12 @@ class TestWizard extends WizardModal {
   }
 }
 
+/** Types into a field the way the user does (the stepper listens to input events) */
+function type(input: HTMLInputElement, value: string) {
+  input.value = value;
+  input.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
 function open(quick = false) {
   const modal = new TestWizard(quick);
   const contentEl = createObsidianContainer();
@@ -154,18 +160,65 @@ describe("WizardModal", () => {
     expect(button(t("modal.buttons.cancel"))).toBeDefined();
   });
 
-  it("does not jump ahead from the stepper while the first step is invalid", () => {
-    const { visible, tab, contentEl } = open();
+  it("disables the later tabs while the first step is invalid", () => {
+    const { visible, tab, button, contentEl } = open();
 
+    expect(tab(2).disabled).toBe(true);
+    expect(tab(3).getAttribute("aria-disabled")).toBe("true");
     tab(3).click();
-
     expect(visible()).toEqual(["one"]);
+
+    button(t("wizard.next"))!.click();
     expect(contentEl.querySelector(".workout-wizard-error")).not.toBeNull();
+  });
+
+  it("enables the tabs as soon as the first step is filled in", () => {
+    const { tab, modal } = open();
+
+    modal.name.value = "Squat";
+    modal.name.dispatchEvent(new Event("input", { bubbles: true }));
+
+    expect(tab(3).disabled).toBe(false);
+    expect(tab(3).hasAttribute("aria-disabled")).toBe(false);
+  });
+
+  it("shows a check icon, not the number, on a completed step", () => {
+    const { tab, modal } = open();
+    type(modal.name, "Squat");
+    tab(2).click();
+
+    const badge = tab(1).querySelector(".workout-wizard-step-badge")!;
+    expect(badge.querySelector(".workout-icon")).not.toBeNull();
+    expect(badge.textContent).not.toBe("1");
+    expect(tab(1).getAttribute("aria-label")).toBe(t("wizard.stepDone", { step: "One" }));
+    expect(tab(2).querySelector(".workout-wizard-step-badge")!.textContent).toBe("2");
+  });
+
+  it("focuses the first field of the new step", () => {
+    const { button, modal } = open();
+    modal.name.value = "Squat";
+
+    button(t("wizard.next"))!.click();
+
+    expect(document.activeElement).toBe(modal.note);
+  });
+
+  it("keeps Enter in a field from reaching the editor", () => {
+    const { modal, contentEl } = open();
+    const spy = jest.fn();
+    document.addEventListener("keydown", spy);
+
+    modal.name.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true }));
+    document.removeEventListener("keydown", spy);
+
+    expect(spy).not.toHaveBeenCalled();
+    expect(contentEl).toBeDefined();
   });
 
   it("jumps straight to step 3 from the stepper once step 1 is valid", () => {
     const { visible, tab, modal } = open();
     modal.name.value = "Squat";
+    modal.name.dispatchEvent(new Event("input", { bubbles: true }));
 
     tab(3).click();
 
@@ -174,7 +227,7 @@ describe("WizardModal", () => {
 
   it("marks completed, current and upcoming steps", () => {
     const { tab, modal } = open();
-    modal.name.value = "Squat";
+    type(modal.name, "Squat");
     tab(2).click();
 
     expect(tab(1).classList.contains("is-done")).toBe(true);
@@ -186,7 +239,7 @@ describe("WizardModal", () => {
     const { tab, modal, contentEl } = open();
     const bar = () => contentEl.querySelector(".workout-wizard-progress")!;
     expect(bar().classList.contains("is-done")).toBe(false);
-    modal.name.value = "Squat";
+    type(modal.name, "Squat");
 
     tab(3).click();
 
@@ -195,7 +248,7 @@ describe("WizardModal", () => {
 
   it("tells a step when it is entered", () => {
     const { tab, modal } = open();
-    modal.name.value = "Squat";
+    type(modal.name, "Squat");
 
     tab(2).click();
 

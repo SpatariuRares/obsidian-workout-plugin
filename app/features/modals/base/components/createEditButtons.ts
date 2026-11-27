@@ -63,17 +63,36 @@ export function createEditButtons<P extends { id?: string }>(
       text: options.buttonText,
       onClick: () => {
         if (options.validate && !options.validate()) return;
-        const formNow = options.collectParams();
-        const changes = changedParams(formAtOpen, formNow);
-        for (const key of options.target.invalidKeys ?? []) {
-          changes[key as keyof P] = formNow[key as keyof P];
-        }
-        for (const key of options.retiredParams ?? []) changes[key] = undefined as P[keyof P];
+        const changes = changesSince(
+          formAtOpen,
+          options.collectParams(),
+          options.target,
+          options.retiredParams,
+        );
         applyBlockEdit(modal, options, changes);
       },
     },
     onCancel: () => modal.close(),
   });
+}
+
+/**
+ * What to patch into the block: the parameters changed since the form
+ * opened, the ones the block held invalid (written even if untouched) and
+ * the retired ones (removed)
+ */
+export function changesSince<P extends { id?: string }>(
+  formAtOpen: P,
+  formNow: P,
+  target: EditTarget,
+  retiredParams: (keyof P)[] = [],
+): P {
+  const changes = changedParams(formAtOpen, formNow);
+  for (const key of target.invalidKeys ?? []) {
+    changes[key as keyof P] = formNow[key as keyof P];
+  }
+  for (const key of retiredParams) changes[key] = undefined as P[keyof P];
+  return changes;
 }
 
 /**

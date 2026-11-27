@@ -1,7 +1,8 @@
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import { ProgressMeter } from "@app/components/atoms/ProgressMeter";
 import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
-import { DomUtils } from "@app/utils/DomUtils";
+import { Icon } from "@app/components/atoms/Icon";
+import { ICONS } from "@app/constants/ui.constants";
 import { t } from "@app/i18n";
 
 /** One screen of a wizard */
@@ -39,6 +40,9 @@ export abstract class WizardModal extends BaseInsertModal {
   private steps: WizardStep[] = [];
   private panels: HTMLElement[] = [];
   private tabs: HTMLButtonElement[] = [];
+  private badges: HTMLElement[] = [];
+  /** False while the first step is drawn: the modal opens with its own focus */
+  private opened = false;
   private errors: Array<HTMLElement | null> = [];
   private current = 0;
   private counter?: HTMLElement;
@@ -65,12 +69,15 @@ export abstract class WizardModal extends BaseInsertModal {
       cls: "workout-wizard-stepper",
       attr: { "aria-label": t("wizard.stepperLabel") },
     });
+    this.badges = [];
     this.tabs = this.steps.map((step, i) => {
       const tab = nav.createEl("button", {
         cls: "workout-wizard-step",
         attr: { type: "button" },
       });
-      tab.createSpan({ cls: "workout-wizard-step-badge", text: String(i + 1) });
+      this.badges.push(
+        tab.createSpan({ cls: "workout-wizard-step-badge", text: String(i + 1) }),
+      );
       tab.createSpan({ cls: "workout-wizard-step-label", text: step.label });
       tab.addEventListener("click", () => this.goTo(i));
       return tab;
@@ -94,6 +101,17 @@ export abstract class WizardModal extends BaseInsertModal {
       return panel;
     });
     this.show(0);
+    this.opened = true;
+
+    // What is typed can unlock the stepper; Enter in a field must not reach the editor
+    container.addEventListener("input", () => this.refreshHeader());
+    container.addEventListener("change", () => this.refreshHeader());
+    container.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && e.target instanceof HTMLInputElement) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    });
   }
 
   /** The sticky footer; an edit modal that wants its own row overrides this */
@@ -170,9 +188,11 @@ export abstract class WizardModal extends BaseInsertModal {
     this.steps[index].onEnter?.();
     this.refreshHeader();
     this.renderFooter();
+    if (this.opened) this.focusFirstField(index);
   }
 
-  private refreshHeader(): void {
+  /** Redraws the stepper, counter and progress (call after filling fields programmatically) */
+  protected refreshHeader(): void {
     const last = this.steps.length - 1;
     this.steps.forEach((step, i) => {
       const tab = this.tabs[i];
@@ -180,7 +200,12 @@ export abstract class WizardModal extends BaseInsertModal {
       tab.classList.toggle("is-done", done);
       tab.classList.toggle("is-current", i === this.current);
       tab.classList.toggle("is-upcoming", i > this.current && !done);
-      tab.classList.toggle("is-blocked", i > this.current && this.firstIncomplete(i) !== null);
+      const blocked = i > this.current && this.firstIncomplete(i) !== null;
+      tab.classList.toggle("is-blocked", blocked);
+      tab.disabled = blocked;
+      if (blocked) tab.setAttribute("aria-disabled", "true");
+      else tab.removeAttribute("aria-disabled");
+      this.drawBadge(i, done);
       if (i === this.current) tab.setAttribute("aria-current", "step");
       else tab.removeAttribute("aria-current");
       tab.setAttribute(
@@ -195,16 +220,24 @@ export abstract class WizardModal extends BaseInsertModal {
       });
     }
     if (this.progress) {
-      const value = this.current === last ? this.steps.length : this.current + 1;
-      this.progress.setAttribute("aria-valuenow", String(value));
-      this.progress.classList.toggle("is-done", this.current === last);
-      const fill = this.progress.querySelector<HTMLElement>(".workout-progress-meter-fill");
-      if (fill) {
-        DomUtils.setCssProps(fill, {
-          "--workout-progress-value": `${(value / this.steps.length) * 100}%`,
-        });
-      }
+      ProgressMeter.update(this.progress, this.current === last ? this.steps.length : this.current + 1);
     }
+  }
+
+  /** A done step shows an accent check in its badge, the others their number */
+  private drawBadge(index: number, done: boolean): void {
+    const badge = this.badges[index];
+    if (!badge) return;
+    badge.empty();
+    if (done) Icon.create(badge, { name: ICONS.ACTIONS.DONE });
+    else badge.setText(String(index + 1));
+  }
+
+  /** Focuses the first field of the step just shown */
+  private focusFirstField(index: number): void {
+    this.panels[index]
+      .querySelector<HTMLElement>("input:not([type='hidden']), select, textarea")
+      ?.focus();
   }
 
   private renderFooter(): void {

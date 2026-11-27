@@ -1,4 +1,5 @@
-import { App } from "obsidian";
+import { App, Notice } from "obsidian";
+import { reviewRows } from "@app/features/tables/business/setsReview";
 import { WizardModal, type WizardStep } from "@app/features/modals/base/WizardModal";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { AdjustField } from "@app/components/molecules/AdjustField";
@@ -103,7 +104,6 @@ export class InsertSetsModal extends WizardModal {
       unit: "s",
     });
     this.restInput.addEventListener("input", () => this.refreshReview());
-    this.restInput.addEventListener("change", () => this.refreshReview());
     el.createEl("h3", { text: t("sets.wizard.review"), cls: "workout-wizard-review-title" });
     this.review = el.createDiv({ cls: "workout-wizard-review" });
   }
@@ -131,26 +131,23 @@ export class InsertSetsModal extends WizardModal {
     const review = this.review;
     if (!review) return;
     review.empty();
-    const params = this.collectParams();
-    const labels = getDynamicModalLabels();
-    const rows: Array<[string, string]> = [
-      [t("modal.labels.exercise"), params.exercise ?? ""],
-      [t("sets.workoutLabel"), params.workout ?? t("sets.wizard.workoutDefault", { note: this.getCurrentFileName() })],
-    ];
-    if (params.sets) rows.push([t("modal.labels.plannedSets"), String(params.sets)]);
-    if (params.targetWeight) rows.push([labels.TARGET_WEIGHT, String(params.targetWeight)]);
-    if (params.targetReps) rows.push([t("modal.labels.targetReps"), String(params.targetReps)]);
-    rows.push([
-      t("modal.rest"),
-      params.rest
-        ? t("sets.wizard.restValue", { seconds: params.rest })
-        : t("sets.wizard.restSectionTimer"),
-    ]);
+    const rows = reviewRows(this.collectParams(), {
+      weightUnit: this.plugin?.settings.weightUnit ?? "",
+      noteName: this.getCurrentFileName(),
+      targetWeightLabel: getDynamicModalLabels().TARGET_WEIGHT,
+    });
     for (const [key, value] of rows) {
       const row = review.createDiv({ cls: "workout-wizard-review-row" });
       row.createSpan({ cls: "workout-wizard-review-key", text: key });
       row.createSpan({ cls: "workout-wizard-review-value", text: value });
     }
+  }
+
+  /** A direct submit (Update from any step, Insert) needs an exercise too */
+  protected canInsert(): boolean {
+    if (this.exerciseName() !== "") return true;
+    new Notice(t("modal.notices.validChooseExercise"));
+    return false;
   }
 
   protected generateCode(): string {

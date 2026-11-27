@@ -3728,8 +3728,9 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
   font-size: var(--workout-font-sm);
   cursor: pointer;
 }
-.workout-wizard-step.is-blocked {
+.workout-wizard-step.is-blocked, .workout-wizard-step:disabled {
   opacity: 0.6;
+  cursor: not-allowed;
 }
 .workout-wizard-step.is-current {
   color: var(--workout-text-accent);
@@ -3756,15 +3757,19 @@ body.is-mobile .workout-field-with-adjust .workout-field-label {
   font-size: var(--workout-font-xs);
   font-variant-numeric: tabular-nums;
 }
-.workout-wizard-step.is-current .workout-wizard-step-badge {
+.workout-wizard-step.is-current .workout-wizard-step-badge, .workout-wizard-step.is-done .workout-wizard-step-badge {
   background: var(--workout-accent-fill);
   border-color: var(--workout-accent-fill);
   color: var(--text-on-accent);
 }
-.workout-wizard-step.is-done .workout-wizard-step-badge {
-  background: var(--workout-accent-fill);
-  border-color: var(--workout-accent-fill);
-  color: var(--text-on-accent);
+.workout-wizard-step-badge .workout-icon {
+  display: inline-flex;
+  width: 14px;
+  height: 14px;
+}
+.workout-wizard-step-badge .workout-icon svg {
+  width: 100%;
+  height: 100%;
 }
 
 .workout-wizard-step-label {
@@ -3883,6 +3888,15 @@ body.is-mobile {
 }
 body.is-mobile .workout-wizard-step:not(.is-current) .workout-wizard-step-label {
   display: none;
+}
+
+/* Visible keyboard focus on the wizard's fields and action buttons */
+.workout-wizard input:focus-visible,
+.workout-wizard select:focus-visible,
+.workout-wizard textarea:focus-visible,
+.workout-wizard .workout-modal-actions button:focus-visible {
+  outline: var(--workout-border-medium) solid var(--interactive-accent);
+  outline-offset: var(--workout-space-2xs);
 }
 
 /* ============================================================================

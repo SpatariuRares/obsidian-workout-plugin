@@ -50,25 +50,39 @@ Every block is drawn as a card with the same layout, controls and ⋮ menu (see 
 
 ### 1. `workout-sets` - Set Sheet (Logging on the Phone)
 
-The main interaction point. One exercise, today's sets as rows with one input per field of the exercise type (kg + reps for strength, duration/distance for cardio, the fields of a type of your own). It shares the `workout-log` table's pieces (columns, values as entered, protocol badges, target with progress and achievement badge, menu):
+The main interaction point. One exercise (`exercise:`) or multiple alternating exercises (`exercises:` for supersets, trisets, and giant sets), with today's sets as rows and one input per field of each exercise's type (kg + reps for strength, duration/distance for cardio, the fields of a type of your own). It shares the `workout-log` table's pieces (columns, values as entered, protocol badges, target with progress and achievement badge, menu):
 
 ```yaml
 exercise: Bench Press
-sets: 4 # rows to fill in; unset: as many as last time
+sets: 4 # working rows to fill in; unset: as many as last time
+warmups: 2 # optional warm-up rows at the top
+protocol: drop_set # optional default protocol for the block (built-in or custom)
 targetReps: 8
 targetWeight: 80
 workout: Push Day # unset: the note's name
-rest: 90 # seconds of rest after each set; 0 = none; unset (and no timer.*) = the section's workout-timer
+rest: 90 # seconds of rest after each working set; 0 = none; unset (and no timer.*) = the section's workout-timer
 timer.type: countdown # the rest timer's other options: timer.preset, timer.type, timer.rest, timer.rounds, timer.sound, timer.showControls
+```
+
+Multi-exercise (superset) block:
+
+```yaml
+exercises: [Bench Press, Bent Over Row]
+protocol: superset
+sets: 4 # rounds
+warmups: 1 # warm-up rounds
+restBetween: 90 # optional rest between exercises inside a round (default 0)
+rest: 120 # rest after completing a round (falls back to restBetween if unset)
 ```
 
 **Set sheet** rules:
 
-- **Rows**: today's sets of the exercise in this workout come first, ticked; then rows to fill in up to `sets`. A block with an `id` shows only the sets ticked in it (plus those logged from no block), so two blocks of the same exercise in one workout keep theirs apart. "Add set" adds one more row for this view only.
-- **Hints** (input placeholders): the same set number on the last earlier day the block was logged (before its first set: the day the exercise was last done, any workout), the last set of that day past its end, else the targets. Ticking a row with an empty field logs its hint, so "same as last time" is one tap.
-- **Protocol and notes**: the arrow opens a row's protocol chips (the settings list) and notes. A row starts with the protocol of the same set last time when that was not standard (a warm-up stays a warm-up). On a logged row they change the set in the log.
-- **Rest**: a rest timer at the top starts by itself when a set is ticked (not after the last row to fill in). The block can carry every option of that timer (`rest` is its length; `timer.*` the rest), so a day's note needs no `workout-timer`: ⋮ → "Edit rest timer" opens the timer form and writes them into the block. Without them it runs on the section's `workout-timer`, so both show one countdown.
-- **Ticking** logs the set at once (in the settings unit, origin = the note). Unticking a logged set deletes it and puts its values back in the first row to fill in; Undo (8 seconds) puts the very set back. What is typed in rows not ticked yet is kept while the note is open, never stored.
+- **Rows (Working sets vs Warm-up sets)**: **Warm-up sets** (`protocol: warmup`) never count toward `sets` (matching `workout-session`) and are kept separate above the **working sets**. `warmups: N` pre-populates N warm-up rows (or N warm-up **rounds** in a superset). A block with an `id` shows only the sets ticked in it (plus those logged from no block), so two blocks of the same exercise in one workout keep theirs apart. "Add set" adds one working row for this view only; in a superset, "Add round" adds one full round.
+- **Hints** (input placeholders): paired separately for **warm-up sets** (from last time's warm-ups) and **working sets** (from last time's working sets), isolated per exercise and `blockId` (before the block's first set: the day the exercise was last done, any workout), falling back to the last set of that category past its end, else the targets. Ticking a row with an empty field logs its hint, so "same as last time" is one tap.
+- **Protocol and notes**: the arrow opens a row's protocol chips (the settings list) and notes. Optional `protocol:` on the block sets the default protocol for its rows (any built-in or custom protocol from Settings; modals always write `protocol: superset` explicitly for multi-exercise blocks). Precedence: manual pick on the row > same set's non-standard protocol from last time > block's `protocol:` (or `superset` for `exercises:`) > `standard`. No automatic rep fallback for `21s`. On a logged row they change the set in the log.
+- **Superset set sheet (`exercises:`)**: 2 or more exercises displayed round by round (`Round 1: A → B`, `Round 2: A → B`, …) in declared order. Supports mixed exercise types (each row shows its exercise name and its own fields); `targetWeight`/`targetReps` apply only to single-exercise blocks.
+- **Rest**: ticking a **warm-up set** never auto-starts the working rest timer. In a single-exercise block, `rest` starts after each **working set** except the last (or uses the section's `workout-timer` when `rest` and `timer.*` are unset, edited via ⋮ → "Edit rest timer"). In a superset, exercises run in declared order: every exercise before the last in a **round** starts `restBetween` (when > 0), and the last exercise of a **round** starts `rest` (falling back to `restBetween` if `rest` is unset, and not after the final round).
+- **Ticking / Unticking**: ticking logs the set at once (in the settings unit, origin = the note). Unticking a logged set deletes it and puts its values back in the first row to fill in; Undo (8 seconds) puts the very set back. In a superset, unticking/undoing acts on the individual exercise slot within its round. What is typed in rows not ticked yet is kept while the note is open, never stored.
 - On a phone, exercises with more than two fields show two per line, each with its label.
 
 ### 2. `workout-log` - Exercise History Table
@@ -95,7 +109,7 @@ Features: protocol badges (color-coded), target weight/reps with progress and an
 
 ### 3. `workout-session` - Guided Session
 
-No parameters. Turns the note into a **guided session**: the note's `workout-log` and `workout-sets` blocks are the **plan** (one step per exercise, in note order; a section's table and sets of the same exercise are one step), shown one exercise at a time with its target and last time. `sets` and targets come from the block; the rest from its `workout-sets` block's own timer, else the section's `workout-timer` (`rest: 0` = no rest); the card's ⋮ edits it where it is written. Progress is today's sets of this workout in the log, never stored elsewhere. There is no weekly schedule: the user opens the note they want to train.
+No parameters. Turns the note into a **guided session**: the note's `workout-log` and `workout-sets` blocks are the **plan** (one step per exercise, in note order; a section's table and sets of the same exercise are one step), shown one exercise at a time with its target and last time. A multi-exercise (`exercises:`) `workout-sets` block is **one composite step** in the plan: it walks through the exercises round by round in declared order (`Round 1: A → B`, `Round 2: A → B`, …) using today's sets logged for that `blockId`, running `restBetween` between exercises and `rest` after each round. **Warm-up sets** stay excluded from planned sets. `sets` and targets come from the block; the rest from its `workout-sets` block's own timer, else the section's `workout-timer` (`rest: 0` = no rest); the card's ⋮ edits it where it is written. Progress is today's sets of this workout in the log, never stored elsewhere. There is no weekly schedule: the user opens the note they want to train.
 
 ### 4. `workout-timer` - Timer
 
@@ -153,7 +167,7 @@ volumeTrendDays: 30
 workout: Lower Body A # unset = this note
 ```
 
-Estimates how long the note's workout takes from its plan, section by section: each step's `sets`, `targetReps` and rest, with headings like `### 3 sets x 10 reps` only filling in what the blocks leave out, and timer-only sections (a warm-up) counted as they run. Falls back to the set duration in the settings (default 45s).
+Estimates how long the note's workout takes from its plan, section by section: each step's `sets`, `targetReps` and rest, with headings like `### 3 sets x 10 reps` only filling in what the blocks leave out, and timer-only sections (a warm-up) counted as they run. A multi-exercise (`exercises:`) block counts, for each round, the work of every exercise plus `(N - 1) × restBetween`, plus `(rounds - 1) × rest` between rounds; planned `warmups` count their work without working rest. Falls back to the set duration in the settings (default 45s).
 
 ---
 
@@ -207,6 +221,8 @@ Custom columns added dynamically per exercise type (duration, distance, heartRat
 
 Every protocol except Standard is an entry of the protocol list in the settings, with name, abbreviation (max 3 chars) and color. The built-in ones are added to that list once, on install or on the first update that has them, so users see how protocols work and can edit or delete them like their own. A protocol's id keeps its meaning whatever its entry says (warm-up and drop sets never count as PRs), and a deleted built-in keeps its name on sets already logged.
 
+In `workout-sets`, **Superset** has dedicated multi-exercise round structure (`exercises:`, `restBetween`, `rest`), and **Warm-up** is a pre-working phase separated from working set counts, **Last time** hints, and working rest. **21s**, **Drop Set**, **Myo-Reps**, and **Rest-Pause** stay lightweight in `workout-sets` (block-level or per-row `protocol:` plus `notes`; **Myo-Reps** and **Rest-Pause** share the same intra-set cluster/micro-rest mechanic if dedicated UX is added later).
+
 ### Exercise Pages
 
 **Exercise page**:
@@ -242,6 +258,22 @@ How logged sets are read back as training. Every view (dashboard, charts, tables
 **Set**:
 One row of the workout log: one exercise performed once, with its reps/weight or other fields and the moment it was logged.
 _Avoid_: entry, log (for a single row)
+
+**Working set**:
+A **Set** counted toward a block's planned `sets` (any protocol other than `warmup`).
+_Avoid_: main set, real set
+
+**Warm-up set**:
+A **Set** logged with protocol `warmup`, excluded from planned working set counts, personal records, estimated 1RM, and working-set **Last time** hints.
+_Avoid_: prep set
+
+**Round**:
+One pass through every exercise of a multi-exercise (`exercises:`) **Set sheet** in declared order (`A → B → …`).
+_Avoid_: cycle, circuit (for a superset pass)
+
+**Rest between exercises**:
+Optional rest interval (`restBetween`, default `0`) between consecutive exercises within the same **Round**, distinct from **Round rest** (`rest`) after the last exercise of a **Round**.
+_Avoid_: intra-rest, transition timer
 
 **Training day**:
 The calendar day, in the device's local time, on which a set was logged.

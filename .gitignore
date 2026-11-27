@@ -32,3 +32,5 @@ strings_found/*
 # Screenshot captures (obsidian-verify recipes)
 .shots/
 docs/ui-*
+.atl/.skill-registry.cache.json
+.atl/skill-registry.md

@@ -1241,6 +1241,7 @@
     "title": "What's new",
     "version": "Version {version}",
     "close": "Got it",
+    "buyMeACoffee": "Buy me a coffee",
     "olderReleases": "Older versions on GitHub",
     "releases": {
       "v3_4_0": "**The same exercise twice in one workout.** When a workout note has two `workout-sets` blocks of the same exercise (for example leg extensions in a superset, then again as drop sets), each block now keeps its own sets: the sets you tick in one no longer show up in the other, last time's hints come from that block, and the guided session counts each set for the right exercise. The log gets a new `blockId` column for this; sets logged before the update, or from the log form, still show in every block of the exercise.",

@@ -1241,6 +1241,7 @@
     "title": "Novità",
     "version": "Versione {version}",
     "close": "Ho capito",
+    "buyMeACoffee": "Offrimi un caffè",
     "olderReleases": "Versioni precedenti su GitHub",
     "releases": {
       "v3_4_0": "**Lo stesso esercizio due volte in un allenamento.** Quando una nota di allenamento ha due blocchi `workout-sets` dello stesso esercizio (per esempio leg extension in un superset, poi di nuovo come drop set), ogni blocco ora mantiene le sue serie: le serie che spunti in uno non compaiono più nell'altro, i suggerimenti dell'ultima volta arrivano da quel blocco, e la sessione guidata conta ogni serie per l'esercizio giusto. Il registro ha una nuova colonna `blockId` per questo; le serie registrate prima dell'aggiornamento, o dal modulo di registrazione, restano visibili in ogni blocco dell'esercizio.",
